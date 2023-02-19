@@ -15,6 +15,7 @@ public class testController {
 	
 	@GetMapping("/layout")
 	public String index() {
+		//채은
 		return "layout";
 	}
 }
