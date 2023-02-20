@@ -13,9 +13,14 @@ public class testController {
 		return "test";
 	}
 	
-	@GetMapping("/layout")
-	public String index() {
-		//채은
-		return "layout";
+//	@GetMapping("/layout")
+//	public String index() {
+//		//채은
+//		return "layout";
+//	}
+	
+	@GetMapping("/dealform")
+	public String dealform() {
+		return "fragments/dealform";
 	}
 }
