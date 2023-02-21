@@ -18,4 +18,14 @@ public class testController {
 		//채은
 		return "layout";
 	}
+	
+	@GetMapping("/book01")
+	public String book01() {
+		return "book01";
+	}
+	
+	@GetMapping("/book02")
+	public String book02() {
+		return "book02";
+	}
 }
