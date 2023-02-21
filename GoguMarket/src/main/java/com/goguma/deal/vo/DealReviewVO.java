@@ -14,15 +14,3 @@ public class DealReviewVO {
 	private String rvYn; 	// 숨김여부
 	private String dlNo;	// 글번호
 }
-
-//CREATE TABLE `RV` ( 총아홉개
-//`RV_NO`	VARCHAR2(25)	NOT NULL,
-//`USER_ID`	VARCHAR2(25)	NULL,
-//`PST_SE`	VARCHAR2(25)	NULL,
-//`RV_YMD`	VARCHAR(255)	NULL,
-//`RV_CN`	VARCHAR2(1000)	NULL,
-//`ATCH_ID`	VARCHAR2(25)	NULL,
-//`HASH`	VARCHAR2(25)	NULL	COMMENT '감상평(예약일)',
-//`RV_YN`	VARCHAR2(5)	NULL,
-//`DL_NO`	VARCHAR2(25)	NULL
-//); 

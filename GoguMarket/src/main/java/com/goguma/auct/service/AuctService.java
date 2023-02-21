@@ -1,5 +1,5 @@
 package com.goguma.auct.service;
 
-public interface AuctionService {
+public interface AuctService {
 
 }

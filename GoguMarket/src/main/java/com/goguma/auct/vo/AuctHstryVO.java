@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class AuctionHistoryVO {
+public class AuctHstryVO {
 	private String auctPrchsNo;
 	private String auctPrchsId;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정

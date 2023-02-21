@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class AuctionMemVO {
+public class AuctMemVO {
 	private String auctMemNo;	// 경매참여자 번호
 	private String auctMem;		// 참여자
 	private String auctNo;		// 경매번호
