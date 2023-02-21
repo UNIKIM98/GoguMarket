@@ -1,4 +1,4 @@
-package com.goguma.mem.web;
+package com.goguma.mem.controller;
 
 public class AttendController {
 
