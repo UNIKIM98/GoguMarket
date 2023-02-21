@@ -29,10 +29,16 @@ public class testController {
 		return "rsvt/book01";
 	}
 	
-	@GetMapping("/book02")
-	public String book02() {
-		return "rsvt/book02";
+	@GetMapping("/book0205")
+	public String book0205() {
+		return "rsvt/book0205";
 	}
+	
+	@GetMapping("/book0601")
+	public String book0601() {
+		return "rsvt/book0601";
+	}
+	
 	@GetMapping("/auctSelectList")
 	public String auctSelectList() {
 		//효근
