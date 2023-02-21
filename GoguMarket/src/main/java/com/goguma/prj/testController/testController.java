@@ -13,11 +13,11 @@ public class testController {
 		return "test";
 	}
 	
-//	@GetMapping("/layout")
-//	public String index() {
-//		//채은
-//		return "layout";
-//	}
+	@GetMapping("/layout")
+	public String index() {
+		//채은
+		return "layout";
+	}
 	
 	@GetMapping("/dealform")
 	public String dealform() {
@@ -32,5 +32,16 @@ public class testController {
 	@GetMapping("/book02")
 	public String book02() {
 		return "book02";
+	}
+	@GetMapping("/auctSelectList")
+	public String auctSelectList() {
+		//효근
+		return "auction/auctSelectList";
+	}
+
+	@GetMapping("/auctSelect")
+	public String auctSelect() {
+		//효근
+		return "auction/auctSelect";
 	}
 }
