@@ -1,4 +1,4 @@
-package com.goguma.deal.impl;
+package com.goguma.deal.serviceImpl;
 
 import com.goguma.deal.service.DealHistoryService;
 
