@@ -23,4 +23,14 @@ public class testController {
 	public String dealform() {
 		return "fragments/dealform";
 	}
+	
+	@GetMapping("/book01")
+	public String book01() {
+		return "book01";
+	}
+	
+	@GetMapping("/book02")
+	public String book02() {
+		return "book02";
+	}
 }
