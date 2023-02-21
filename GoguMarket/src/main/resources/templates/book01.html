@@ -2,37 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
-<head>
-<meta charset="UTF-8">
-<title>book01</title>
-<link rel="shortcut icon" type="image/x-icon"
-	href="img/icon/favicon.png">
-
-<!-- All CSS Files -->
-<!-- Bootstrap fremwork main css -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- Nivo-slider css -->
-<link rel="stylesheet" href="lib/css/nivo-slider.css">
-<!-- This core.css file contents all plugings css file. -->
-<link rel="stylesheet" href="css/core.css">
-<!-- Theme shortcodes/elements style -->
-<link rel="stylesheet" href="css/shortcode/shortcodes.css">
-<!-- Theme main style -->
-<link rel="stylesheet" href="style.css">
-<!-- Responsive css -->
-<link rel="stylesheet" href="css/responsive.css">
-<!-- User style -->
-<link rel="stylesheet" href="css/custom.css">
-<!-- Style customizer (Remove these two lines please) -->
-<link rel="stylesheet" href="css/style-customizer.css">
-<link href="#" data-style="styles" rel="stylesheet">
-
-<!-- Modernizr JS -->
-<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-
-<!-- 헤더 -->
-<th:block th:replace="fragments/header :: headerFragment"></th:block>
-</head>
 
 <body>
 	<div layout:fragment="content">
@@ -172,7 +141,5 @@
 		</div>
 		<!-- End page content -->
 	</div>
-	<!-- 푸터 -->
-	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </body>
 </html>
