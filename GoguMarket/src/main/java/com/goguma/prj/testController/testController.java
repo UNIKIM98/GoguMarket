@@ -21,7 +21,7 @@ public class testController {
 	
 	@GetMapping("/dealform")
 	public String dealform() {
-		return "fragments/dealform";
+		return "deal/dealform";
 	}
 	
 	@GetMapping("/book01")
