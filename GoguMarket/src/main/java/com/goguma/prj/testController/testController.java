@@ -16,7 +16,7 @@ public class testController {
 	@GetMapping("/layout")
 	public String index() {
 		//채은
-		return "layout";
+		return "layouts/layout";
 	}
 	
 	@GetMapping("/dealform")
@@ -26,12 +26,12 @@ public class testController {
 	
 	@GetMapping("/book01")
 	public String book01() {
-		return "book01";
+		return "rsvt/book01";
 	}
 	
 	@GetMapping("/book02")
 	public String book02() {
-		return "book02";
+		return "rsvt/book02";
 	}
 	@GetMapping("/auctSelectList")
 	public String auctSelectList() {
