@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>book01</title>
+<link rel="shortcut icon" type="image/x-icon"
+	href="img/icon/favicon.png">
+
+<!-- All CSS Files -->
+<!-- Bootstrap fremwork main css -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Nivo-slider css -->
+<link rel="stylesheet" href="lib/css/nivo-slider.css">
+<!-- This core.css file contents all plugings css file. -->
+<link rel="stylesheet" href="css/core.css">
+<!-- Theme shortcodes/elements style -->
+<link rel="stylesheet" href="css/shortcode/shortcodes.css">
+<!-- Theme main style -->
+<link rel="stylesheet" href="style.css">
+<!-- Responsive css -->
+<link rel="stylesheet" href="css/responsive.css">
+<!-- User style -->
+<link rel="stylesheet" href="css/custom.css">
+<!-- Style customizer (Remove these two lines please) -->
+<link rel="stylesheet" href="css/style-customizer.css">
+<link href="#" data-style="styles" rel="stylesheet">
+
+<!-- Modernizr JS -->
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+
+<!-- 헤더 -->
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+		<!-- Start page content -->
+		<div id="page-content" class="page-wrapper section">
+
+			<!-- SHOP SECTION START -->
+			<div class="shop-section mb-80">
+				<div class="container">
+					<!--제목-->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="section-title text-start ">
+								<h2 class="uppercase">동네 이웃들이 자주 가는 동네 가게</h2>
+								<h6 class="mb-40">우리동네 사람들이 자주 이용하는 가게를 찾아보세요호우</h6>
+							</div>
+						</div>
+						<!--  hr -->
+						<hr>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-6 order-lg-2 order-1">
+							<div class="shop-content">
+
+								<!-- Tab Content start -->
+								<div class="tab-content">
+									<!-- 검색창 -->
+									<aside class="widget-search mb-30">
+										<form action="#">
+											<input type="text" placeholder="Search here...">
+											<button type="submit" style="height: 55px;">
+												<i class="zmdi zmdi-search"></i>
+											</button>
+										</form>
+										<!--검색창 카테고리 목록 FOR문-->
+										<div class="mt-20">
+											<ul class="blog-meta">
+												<li><a href="#">카테고리1 </a></li>
+												<li><a href="#">카테고리2</a></li>
+												<li><a href="#">카테고리3</a></li>
+											</ul>
+										</div>
+									</aside>
+
+									<!-- list-view -->
+									<div id="list-view" class="tab-pane active show"
+										role="tabpanel">
+										<div class="row">
+											<!-- product-item start 이거 for문 돌려서 상점목록 출력하면됨-->
+											<div class="col-lg-12">
+												<div class="shop-list product-item">
+													<div class="product-img">
+														<a href="single-product.html"> <img
+															src="img/product/7.jpg" alt="" />
+														</a>
+													</div>
+													<div class="product-info">
+														<div class="clearfix">
+															<h6 class="product-title f-left">
+																<a href="single-product.html">김펭귄의 아이스께끼(가게이름) </a>
+															</h6>
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> <a
+																	href="#"><i class="zmdi zmdi-star"></i></a> <a href="#"><i
+																	class="zmdi zmdi-star"></i></a> <a href="#"><i
+																	class="zmdi zmdi-star-half"></i></a> <a href="#"><i
+																	class="zmdi zmdi-star-outline"></i></a>
+															</div>
+														</div>
+														<h6 class="brand-name mb-30">범어동(주소)</h6>
+														<p>김펭귄의 아이스께끼는 남극에서 채굴한 얼음으로 손수 장인정신으로 한땀한땀 만드는 아이스크림
+															장인의 전문점입니다. 존맛탱임 먹으면 남극감</p>
+														<ul class="blog-meta">
+															<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
+																	123 </a></li>
+															<li><a href="#"><i class="zmdi zmdi-comments"></i>후기
+																	59 </a></li>
+															<li><a href="#">카테고리이름</a></li>
+														</ul>
+
+													</div>
+												</div>
+
+											</div>
+											<!-- product-item end -->
+
+										</div>
+									</div>
+								</div>
+								<!-- Tab Content end -->
+								<!-- shop-pagination start -->
+								<ul class="shop-pagination box-shadow text-center ptblr-10-30">
+									<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+									<li><a href="#">01</a></li>
+									<li><a href="#">02</a></li>
+									<li><a href="#">03</a></li>
+									<li><a href="#">...</a></li>
+									<li><a href="#">05</a></li>
+									<li class="active"><a href="#"><i
+											class="zmdi zmdi-chevron-right"></i></a></li>
+								</ul>
+								<!-- shop-pagination end -->
+							</div>
+						</div>
+
+						<!-- 오른쪽에 지도를 넣으면 될까..? -->
+						<div class="col-lg-6 order-lg-2 order-1">
+							<div class="">
+								<h1>지도자리</h1>
+								<!-- GOOGLE MAP SECTION START -->
+								<div class="google-map-section">
+									<div class="container-fluid">
+										<div class="google-map plr-185">
+											<div id="googleMap"></div>
+										</div>
+									</div>
+								</div>
+								<!-- GOOGLE MAP SECTION END -->
+							</div>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-lg-3"></div>
+						<div class="col-lg-3"></div>
+						<div class="col-lg-3"></div>
+						<div class="col-lg-3">
+							<a class="button" href="#"><span>💥가게 프로필 만들기 </span> </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- SHOP SECTION END -->
+
+		</div>
+		<!-- End page content -->
+	</div>
+	<!-- 푸터 -->
+	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</body>
+</html>
