@@ -9,8 +9,54 @@ layout:decorate="~{layouts/layout}">
 </head>
 <body>
 <div layout:fragment="content">
-	[[ ${lists} ]] <hr>
-======================
+<!-- 	[[ ${lists} ]] <hr>
+====================== -->
+<script>
+function gopage(page){
+	location.href="dealList?page="+page;
+	//frmSearch.page.value = page;
+	//frmSearch.submit(); 
+}
+</script>
+<h2>중고상품 리스트</h2>
+<!-- 테스트용으로 카테고리는 판매자 별로 정리 -->
+<!-- <form name="frmSearch">
+	<input type="hidden" name="page" value="1">
+	<select>
+		<option value="">선택
+		<option th:each="deal : ${lists}"
+				th:value="${deal.ntslId}"
+				th:selected="${deal.ntslId}==${dsvo.ntslId}">
+	</select>
+	<button>검색</button>
+</form> -->
+
+<!-- 페이지번호관련  -->
+<div>	
+	<a  th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" 
+		th:href="|javascript:gopage(${num})|"
+		th:class="${paging.page}==${num} ? 'active'"
+		>[[${num}]]</a>
+</div>
+
+<table border="1">
+	<tr>
+		<th>글번호</th>
+		<th>판매자</th>
+		<th>구매자</th>
+		<th>등록일</th>
+		<th>가격</th>	
+	</tr>
+	<tr th:each="deal : ${lists}">
+		<td th:text="${deal.dlNo}"></td>
+		<td th:text="${deal.ntslId}"></td>
+		<td th:text="${deal.prchsId}"></td>
+		<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
+		<td th:text="${deal.dlPrc}"></td>
+	</tr>
+</table>
+
+
 </div>
 </body>
 </html>
