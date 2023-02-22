@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="wrapper">
+
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
+
+				<!-- SHOP SECTION START -->
+				<div class="shop-section mb-80">
+					<div class="container">
+						<div class="d-flex justify-content-center">
+							<!-- Tab panes -->
+							<div class="tab-content">
+
+								<!-- order-complete start 예약완료 안내 폼-->
+								<div class="tab-pane active" id="order-complete">
+									<div class="order-complete-content box-shadow">
+
+										<div class="thank-you p-30 text-center">
+											<h6 class="text-black-5 mb-0">예약이 완료되었습니다. 감사합니다</h6>
+										</div>
+
+										<div class="order-info p-30 mb-10">
+											<ul class="order-info-list">
+												<li>
+													<h6>주문번호</h6>
+													<p>m 2653257</p>
+												</li>
+												<li>
+													<h6>상호명</h6>
+													<p>커피 맛을 조금 아는 남자 본점</p>
+												</li>
+												<li>
+													<h6>예약일시</h6>
+													<p>2023. 02. 12(일) 오후 4:30</p>
+												</li>
+												<li>
+													<h6>예약인원</h6>
+													<p>3명</p>
+												</li>
+											</ul>
+										</div>
+
+										<div class="row">
+											<!-- our order -->
+											<!-- 주문내역 -->
+											<div class="col-md-6">
+												<div class="payment-details p-30">
+													<h6 class="widget-title border-left mb-20">주문내역</h6>
+													<table>
+														<tr>
+															<td class="td-title-1">메뉴</td>
+															<td class="td-title-1">수량</td>
+															<td class="td-title-2">가격</td>
+														</tr>
+														<tr>
+															<td class="td-title-1">커피커피커피</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">4,000원</td>
+														</tr>
+														<tr>
+															<td class="td-title-1">니가만든쿠키</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">6,000원</td>
+														</tr>
+														<tr>
+															<td class="td-title-1">내가만든쿠키</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">7,000원</td>
+														</tr>
+														<tr>
+															<th class="order-total">합계</th>
+															<td class="order-total"></td>
+															<td class="order-total-price">10,000원</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+											<!-- 결제정보 -->
+											<div class="col-md-6">
+												<div class="bill-details p-30">
+													<h6 class="widget-title border-left mb-20">예약자정보</h6>
+													<ul class="bill-address">
+														<li><span>이름 : </span> 도리눈아</li>
+														<li><span>전화번호 : </span> 010-0123-0123</li>
+														<li><span>요청사항 : </span> 없음</li>
+													</ul>
+												</div>
+												<div class="bill-details pl-30">
+													<h6 class="widget-title border-left mb-20">결제정보</h6>
+													<ul class="bill-address">
+														<li><span>계좌이체 : </span> 카카오뱅크 (1002-9**-******) |
+															일시불</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- order-complete end -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- SHOP SECTION END -->
+
+			</section>
+			<!-- End page content -->
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>

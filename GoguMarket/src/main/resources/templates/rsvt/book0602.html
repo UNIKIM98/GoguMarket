@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<body>
+
+	<div layout:fragment="content">
+		<!-- Body main wrapper start -->
+		<div class="wrapper">
+
+
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
+
+				<!-- SHOP SECTION START -->
+				<div class="shop-section mb-80">
+					<div class="container">
+
+						<!-- 가게이름 -->
+						<div class="row">
+							<div class="col-lg-1">
+								<div class="media-left">
+									<a href="#"><img class="media-object"
+										src="img/author/1.jpg" alt="#"></a>
+								</div>
+							</div>
+							<div class="col-lg-8">
+								<div class="section-title text-start mt-15">
+									<h2 class="uppercase">커피맛을 조금 아는 남자 본점</h2>
+									<h6>
+										<ul class="blog-meta">
+											<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
+													123 </a></li>
+											<li><a href="#"><i class="zmdi zmdi-comments"></i>후기
+													59 </a></li>
+											<li><a href="#">카테고리이름</a></li>
+										</ul>
+									</h6>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="product-tab pro-tab-menu">
+									<!-- Nav tabs -->
+									<ul class="nav">
+
+										<li><a href="#" data-bs-toggle="tab"> <i
+												class="zmdi zmdi-phone"></i>
+												<h6>전화문의</h6>
+										</a></li>
+										<li><a class="active" href="#" data-bs-toggle="tab">
+												<i class="zmdi zmdi-email"></i>
+												<h6>채팅문의</h6>
+										</a></li>
+										<li><a href="#" data-bs-toggle="tab"> <i
+												class="zmdi zmdi-email"></i>
+												<h6>후기작성</h6>
+										</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+						<hr>
+
+						<div class="f-right mb-30">
+							<button class="btn btn-warning btn-sm" type="submit">함께주문하기
+								취소</button>
+						</div>
+						<!-- 내용 부분 -->
+						<div class="wrapper">
+
+							<!-- Start page content -->
+							<section id="page-content" class="page-wrapper section">
+								<!-- SHOP SECTION START -->
+								<div class="shop-section mb-80">
+									<div class="container">
+										<div class="row">
+
+											<div class="col-lg-12">
+												<!-- Tab panes -->
+												<div class="tab-content">
+
+													<!-- checkout start -->
+													<div class="tab-pane active" id="checkout">
+														<div class="checkout-content box-shadow p-30">
+															<form action="#">
+																<div class="row">
+
+																	<!-- billing details 왼쪽부분 예약하기 -->
+																	<div class="col-md-6">
+																		<div class="billing-details pr-10">
+																			<h6 class="widget-title border-left mb-20">예약하기
+																			</h6>
+																		</div>
+																		<div class="payment-method">
+																			<div id="accordion">
+
+																				<!--1.메뉴 선택-->
+																				<div class="panel">
+																					<h4 class="payment-title box-shadow">
+																						<a data-bs-toggle="collapse" href="#bank-transfer">
+																							1.메뉴선택 </a>
+																					</h4>
+																					<div id="bank-transfer"
+																						class="panel-collapse collapse show"
+																						data-bs-parent="#accordion">
+																						<div class="payment-content">
+
+																							<table>
+																								<tr>
+																									<td class="td-title-1">커피커피커피커피</td>
+																									<td>
+																										<div class="cart-plus-minus f-left">
+																											<input type="text" value="02"
+																												name="qtybutton" class="cart-plus-minus-box">
+																										</div>
+																									</td>
+																									<td class="td-title-2">4,000원</td>
+																									<td class="td-title-2">
+																										<button class="btn btn-warning btn-sm"
+																											type="submit">담기</button>
+																									</td>
+																								</tr>
+																								<tr>
+																									<td class="td-title-1">쿠키쿠키쿠키쿠키</td>
+																									<td>
+																										<div class="cart-plus-minus f-left">
+																											<input type="text" value="02"
+																												name="qtybutton" class="cart-plus-minus-box">
+																										</div>
+																									</td>
+																									<td class="td-title-2">6,000원</td>
+																									<td class="td-title-2">
+																										<button class="btn btn-warning btn-sm"
+																											type="submit">담기</button>
+																									</td>
+																								</tr>
+																							</table>
+
+																						</div>
+																					</div>
+																				</div>
+
+																				<!--2. 예약일 선택-->
+																				<div class="panel">
+																					<h4 class="payment-title box-shadow">
+																						<a class="collapsed" data-bs-toggle="collapse"
+																							href="#collapseTwo"> 2. 예약일 선택 </a>
+																					</h4>
+																					<div id="collapseTwo"
+																						class="panel-collapse collapse"
+																						data-bs-parent="#accordion">
+																						<div class="payment-content">
+																							<div class="row">
+																								<div class="col-sm-3">날짜/시간 선택</div>
+																								<div class="col-sm-5">
+																									<input type="date" id="" name="">
+																								</div>
+																								<div class="col-sm-4">
+																									<select class="custom-select">
+																										<option value="defalt">1시</option>
+																										<option value="c-1">2시</option>
+																										<option value="c-2">3시</option>
+																										<option value="c-3">4시</option>
+																										<option value="c-4">5시</option>
+																									</select>
+																								</div>
+																							</div>
+
+																						</div>
+																					</div>
+																				</div>
+
+																				<!--3. 예약인원 선택-->
+																				<div class="panel">
+																					<h4 class="payment-title box-shadow">
+																						<div class="row">
+																							<div class="col-sm-3">
+																								<a data-bs-toggle="collapse"
+																									href="#collapseThree"> 3. 맴버 주문 현황 </a>
+																							</div>
+																							<div class="col-sm-6">
+																								<a> 1명이 아직 고르고 있어요</a>
+																							</div>
+
+																							<div class="col-sm-3">
+																								<button class="btn btn-warning btn-sm"
+																									type="submit">맴버초대</button>
+																							</div>
+																						</div>
+																					</h4>
+																					<div id="collapseThree"
+																						class="panel-collapse collapse"
+																						data-bs-parent="#accordion">
+																						<div class="payment-content">
+																							<div class="payment-method">
+																								<div id="accordion">
+
+																									<!-- 한칸 반복스 :  for -->
+																									<div class="panel">
+																										<h4 class="payment-title box-shadow">
+																											<div class="row">
+																												<div class="col-sm-2">
+																													<a data-bs-toggle="collapse"
+																														href="#bank-transfer"> 머루언니 </a>
+																												</div>
+																												<div class="col-sm-3">
+																													<button class="btn btn-danger btn-sm"
+																														type="submit">담는중</button>
+																												</div>
+																											</div>
+
+																										</h4>
+																										<div id="bank-transfer"
+																											class="panel-collapse collapse show"
+																											data-bs-parent="#accordion">
+																											<div class="payment-content">
+
+																												<table>
+																													<tr>
+																														<td class="td-title-1">커피커피커피커피</td>
+																														<td class="td-title-1">1개</td>
+																														<td class="td-title-2">4,000원</td>
+																													</tr>
+																													<tr>
+																														<td class="td-title-1">쿠키쿠키쿠키퀴</td>
+																														<td class="td-title-1">1개</td>
+																														<td class="td-title-2">4,000원</td>
+																													</tr>
+																												</table>
+
+
+																											</div>
+																										</div>
+																									</div>
+
+																									<!-- 한칸2 -->
+																									<div class="panel">
+																										<h4 class="payment-title box-shadow">
+																											<div class="row">
+																												<div class="col-sm-2">
+																													<a data-bs-toggle="collapse"
+																														href="#bank-transfer"> 폴누나 </a>
+																												</div>
+																												<div class="col-sm-3">
+																													<button class="btn btn-primary btn-sm"
+																														type="submit">다 담음</button>
+																												</div>
+																											</div>
+
+																										</h4>
+																										<div id="bank-transfer"
+																											class="panel-collapse collapse show"
+																											data-bs-parent="#accordion">
+																											<div class="payment-content">
+
+																												<table>
+																													<tr>
+																														<td class="td-title-1">커피커피커피커피</td>
+																														<td class="td-title-1">1개</td>
+																														<td class="td-title-2">4,000원</td>
+																													</tr>
+																													<tr>
+																														<td class="td-title-1">쿠키쿠키쿠키퀴</td>
+																														<td class="td-title-1">1개</td>
+																														<td class="td-title-2">4,000원</td>
+																													</tr>
+																												</table>
+
+
+																											</div>
+																										</div>
+																									</div>
+
+
+																								</div>
+																							</div>
+
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="mt-30">
+																			<button class="btn btn-success btn-sm" type="submit">쿠폰사용</button>
+																		</div>
+																	</div>
+
+
+																	<div class="col-md-6">
+																		<!-- our order 오른쪽부분-->
+																		<div class="payment-details pl-10 mb-50">
+																			<h6 class="widget-title border-left mb-20">예약확인
+																			</h6>
+																			<!--테이블1 : 주문메뉴-->
+																			<table>
+																				<tr>
+																					<th class="td-title-1">내 메뉴</th>
+																					<td class="td-title-1">수량</td>
+																					<td class="td-title-2">가격</td>
+																				</tr>
+																				<tr>
+																					<td class="td-title-1">커피커피커피</td>
+																					<td class="td-title-1">1</td>
+																					<td class="td-title-2">4,000원</td>
+																				</tr>
+																				<tr>
+																					<td class="td-title-1">쿠키쿠키쿠키</td>
+																					<td class="td-title-1">1</td>
+																					<td class="td-title-2">6,000원</td>
+																				</tr>
+																				<tr>
+																					<td></td>
+																				</tr>
+																				<tr>
+																					<th class="td-title-1">머루언니 메뉴</th>
+																				</tr>
+																				<tr>
+																					<td class="td-title-1">메뉴 고르는 중</td>
+																				</tr>
+
+																				<tr>
+																					<td></td>
+																				</tr>
+																				<tr>
+																					<th class="td-title-1">폴누나 메뉴</th>
+																				</tr>
+																				<tr>
+																					<td class="td-title-1">쿠키쿠키쿠키</td>
+																					<td class="td-title-1">1</td>
+																					<td class="td-title-2">6,000원</td>
+																				</tr>
+
+																				<tr>
+																					<th class="order-total">합계</th>
+																					<td class="order-total"></td>
+																					<td class="order-total-price">20,000원</td>
+																				</tr>
+																			</table>
+																			<hr>
+																			<!--테이블2 : 시간, 인원, 요청사항-->
+																			<table>
+																				<tr>
+																					<th class="td-title-1">예약일자</th>
+																					<td class="td-title-1">2023. 02. 12(일) 오후 4:30</td>
+																				</tr>
+																				<tr>
+																					<th class="td-title-1">예약인원</th>
+																					<td class="td-title-1">3명</td>
+																				</tr>
+																				<tr>
+																					<th class="td-title-1">대표 예약자 정보</th>
+																					<td class="td-title-1">도리눈아</td>
+																					<td class="td-title-1">010-0123-0123</td>
+																				</tr>
+																				<tr>
+																				</tr>
+																				<tr>
+																					<td class="td-title-1">요청사항</td>
+																					<td class="td-title-1" colspan="2"><textarea
+																							class="custom-textarea"
+																							placeholder="요청사항을 입력하세요."></textarea></td>
+																				</tr>
+																			</table>
+																			<hr>
+																		</div>
+																		<div class="f-right">
+																			<button class="submit-btn-1 mt-30 btn-hover-1"
+																				type="submit">결제하기</button>
+																		</div>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+													<!-- checkout end -->
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- SHOP SECTION END -->
+
+							</section>
+							<!-- End page content -->
+
+							<!--style-customizer end -->
+						</div>
+						<!-- Body main wrapper end -->
+
+					</div>
+				</div>
+				<!-- SHOP SECTION END -->
+
+			</section>
+			<!-- End page content -->
+
+		</div>
+		<!-- Body main wrapper end -->
+	</div>
+
+</body>
+
+</html>
