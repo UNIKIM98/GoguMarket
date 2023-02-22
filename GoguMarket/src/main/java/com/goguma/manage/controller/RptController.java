@@ -14,5 +14,18 @@ public class RptController {
 	public String manageMain() {
 		return "manage/manageMain";
 	}
+	
+	
+	@GetMapping("/memberManage")
+	public String memberManage() {
+		return "manage/memberManage";
+	}
+	
+	@GetMapping("/boardManage")
+	public String boardManage() {
+		return "manage/boardManage";
+	}
+	
+	
 
 }
