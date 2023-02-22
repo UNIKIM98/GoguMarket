@@ -13,34 +13,9 @@ public class AuctServiceImpl implements AuctService{
 	AuctMapper auctMapper;
 
 	@Override
-	public List<AuctVO> getAuctList(AuctVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AuctVO> getAuctList() {
+		// 경매 리스트 전체 조회
+		return auctMapper.getAuctList();
 	}
-
-	@Override
-	public AuctVO getAuct(String id) {
-		// TODO Auto-generated method stub
-		return auctMapper.getAuct(id);
-	}
-
-	@Override
-	public int insertAuct(AuctVO auct) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateAuct(AuctVO auct) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteAuct(String id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	
 }
