@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<body>
+
+<div layout:fragment="content">
+
+<div class="container">
+        <div class="d-flex justify-content-center">
+
+            <div class="registered-customers">
+                <h3 class="blog-details-title">도리눈아 님과 함께 메뉴를 골라보세요</h3>
+                <form action="#">
+                    <div class="login-account p-30 box-shadow">
+                        <p>아이디</p>
+                        <input type="text" name="name">
+                        <p>비밀번호</p>
+                        <input type="password" name="password">
+
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <p><small><a href="#">아이디찾기</a></small></p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p><small><a href="#">비밀번호찾기</a></small></p>
+                            </div>
+                        </div>
+
+                        <div>
+                            ---- <br>
+                            소셜로그인 자리<br>
+                            ---- 
+                        </div>
+
+                        <div class="mb-20">
+                            <div class="f-left">
+                                <button class="submit-btn-1 btn-hover-1" type="submit">로그인</button>
+                            </div>
+                            <div class="f-right">
+                                <button class="submit-btn-1 btn-hover-1" type="submit">회원가입</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
