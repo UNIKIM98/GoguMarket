@@ -6,6 +6,8 @@
 			parameterType="com.goguma.deal.vo.DealVO"
 			resultType="com.goguma.deal.vo.DealVO">
 	
+	
+	
 	select * from (select rownum rn,a.* from(
 			SELECT *
 			FROM DEAL
@@ -26,12 +28,11 @@
 			order="BEFORE">
 			SELECT
 			CASE WHEN MAX(dl_no) IS NULL THEN 1 ELSE
-			MAX(dl_no) + 1 END AS
-			dlNo
+			MAX(dl_no) + 1 END as dlNo
 			FROM deal
 		</selectKey>		
-			
 	insert into deal (
+		dl_no,
 		dl_ttl,
 		dl_cn,
 		ctgry,
@@ -39,6 +40,7 @@
 		area,
 		nego_yn
 	) values (
+		#{dlNo},
 		#{dlTtl},
 		#{dlCn},
 		#{ctgry},

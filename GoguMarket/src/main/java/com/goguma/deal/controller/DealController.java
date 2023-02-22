@@ -42,12 +42,16 @@ public class DealController {
 	}
 	
 	// 판매상품 단건 조회
-	
-	
 	@RequestMapping("/dealform") // 딜폼창확인
-	public String dealform(DealVO vo) {
-		dealMapper.insertDeal(vo);
+	public String dealform() {
 		return "deal/dealform";
+	}
+	
+	@RequestMapping("/dealformsubmit") // 딜폼창확인
+	public String dealform(DealVO vo) {
+		System.out.println(vo+"넘어온 vo");
+		dealMapper.insertDeal(vo);
+		return "deal/dealList";
 	}
 	
 	// 판매상품 등록 : 계좌정보와 아이디값이 없으면 등록할 수 없다 => @PostMapping("/deal/{acntno}/{id}")
