@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-@Controller
+//@Controller
 public class testController {
 //
 //	@GetMapping("/test")
@@ -23,11 +23,11 @@ public class testController {
 //	public String dealform() {
 //		return "deal/dealform";
 //	}
-	
-	@GetMapping("/book01")
-	public String book01() {
-		return "rsvt/book01";
-	}
+//	
+//	@GetMapping("/book01")
+//	public String book01() {
+//		return "rsvt/book01";
+//	}
 //	
 //	@GetMapping("/book0205")
 //	public String book0205() {

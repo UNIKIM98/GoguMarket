@@ -42,10 +42,7 @@ public class RsvtController {
 		return "rsvt/book0604";
 	}
 	
-	@GetMapping("/mybook04")
-	public String mybook04() {
-		return "rsvt/mybook04";
-	}
+	
 	
 }
 
