@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.goguma.deal.mapper.DealMapper;
+import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
@@ -23,8 +23,8 @@ import com.goguma.deal.vo.Paging;
 public class DealController {
 	
 	@Autowired
-	//private DealService dealService;
-	private DealMapper dealMapper;
+	private DealService dealService;
+	//private DealMapper dealMapper;
 	
 	@RequestMapping("/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
@@ -34,9 +34,9 @@ public class DealController {
 		 
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
-		paging.setTotalRecord(dealMapper.getcountTotal(svo));
+		paging.setTotalRecord(dealService.getcountTotal(svo));
 		
-		model.addAttribute("lists", dealMapper.dealListSelect(svo));
+		model.addAttribute("lists", dealService.dealListSelect(svo));
 		
 		return"deal/dealList"; // 뷰페이지명
 	}
@@ -50,7 +50,7 @@ public class DealController {
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo) {
 		System.out.println(vo+"넘어온 vo");
-		dealMapper.insertDeal(vo);
+		dealService.insertDeal(vo);
 		return "deal/dealList";
 	}
 	
@@ -59,7 +59,7 @@ public class DealController {
 	@PostMapping("/deal")
 	@ResponseBody
 	public DealVO insertDeal(DealVO vo) {
-		dealMapper.insertDeal(vo);
+		dealService.insertDeal(vo);
 		return vo;
 	}
 
@@ -67,12 +67,24 @@ public class DealController {
 	@PutMapping("/deal")
 	@ResponseBody
 	public DealVO updateDeal(DealVO vo) {
-		dealMapper.updateDeal(vo);
+		dealService.updateDeal(vo);
 		return vo;
 	}
 	// 판매상품 삭제
 	public Map<String, Object> deleteDeal(@PathVariable String id){
-		dealMapper.deleteDeal(id);
+		dealService.deleteDeal(id);
 		return Collections.singletonMap("result", "success delete");
 	}
+	
+	// 걍 상세정보 볼려고 띄우는거 d이거왜 dealDetail 대문자는 인식이안되냐?;
+	@RequestMapping("/dealdetail") // 
+	public String dealdetail() {
+		return "deal/dealdetail";
+	}
+	
+	@RequestMapping("/dealMain") // 
+	public String dealMain() {
+		return "deal/dealMain";
+	}
+	
 }

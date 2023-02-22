@@ -4,6 +4,12 @@
 	xmlns:layout="http://ultraq.net/thymeleaf/layout">
 
 <head>
+<style>
+	.padding{
+		padding-bottom:50px;
+	}
+	
+</style>
 <meta charset="UTF-8">
 <title>LAYOUT</title>
 <link rel="shortcut icon" type="image/x-icon"
@@ -31,15 +37,19 @@
 <!-- Modernizr JS -->
 <script src="js/vendor/modernizr-3.11.2.min.js"></script>
 
+
 <!-- 헤더 -->
 <th:block th:replace="layouts/header :: headerFragment"></th:block>
 </head>
+
+<div class=padding></div>
 
 <!-- 레이아웃에 담길 본문 content 링크 -->
 <body>
 	<div layout:fragment="content"></div>
 </body>
 
+<div class=padding></div>
 <!-- 푸터 -->
 <th:block th:replace="layouts/footer :: footerFragment"></th:block>
 
