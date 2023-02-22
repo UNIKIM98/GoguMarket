@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="wrapper">
+			<!-- Start page content -->
+			<div id="page-content" class="page-wrapper section"></div>
+			<!-- SECTION START -->
+			<div class="shop-section mb-80">
+				<div class="container">
+					<div class="row">
+						<!-- ▶ 컨텐츠 적는 공간!-->
+						<div class="col-lg-9 order-lg-2 order-1">
+							<div layout:fragment="ManageContent"></div>
+						</div>
+						<div class="col-lg-3 order-lg-1 order-2">
+							<!-- ▶ 사이드바입니다 -->
+							<aside class="widget widget-categories pt-0">
+								<h6 class="widget-title border-left mt-30"><a href="manageMain">관리자 페이지</a></h6>
+								<div id="cat-treeview" class="product-cat">
+									<ul>
+										<li class="open"><a href="manageMain">관리자 메인</a>
+											<ul>
+
+											</ul></li>
+										<li class="closed"><a href="#">회원관리</a>
+											<ul>
+												<li><a href="memberManage">회원정보 관리</a></li>
+												<li><a href="boardManage">게시글 관리</a></li>
+												<li><a href="#">답글 관리</a></li>
+											</ul></li>
+										<li class="open"><a href="#">신고관리</a>
+											<ul>
+
+											</ul></li>
+										<li class="open"><a href="#">문의 관리</a>
+											<ul>
+
+											</ul></li>
+
+									</ul>
+								</div>
+							</aside>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
