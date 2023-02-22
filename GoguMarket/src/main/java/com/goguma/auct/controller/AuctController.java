@@ -1,20 +1,57 @@
 package com.goguma.auct.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.goguma.auct.mapper.AuctMapper;
+import com.goguma.auct.vo.AuctVO;
 
 @Controller
 public class AuctController {
 
-	@GetMapping("/auctSelectList")
-	public String auctSelectList() {
-		//효근
-		return "auction/auctSelectList";
+	@Autowired AuctMapper auctMapper;
+	
+	@GetMapping("/auctList")
+	public String auctList(Model model, @ModelAttribute("vvo") AuctVO vo) {
+		//경매 메인페이지
+		
+		
+		
+		
+		
+		
+		
+		
+		return "auction/auctList";
 	}
 	
+	
+	
+	
 	@GetMapping("/auctSelect")
-	public String auctSelect() {
-		//효근
-		return "auction/auctSelect";
+	public String auctSelect(Model model) {
+		//단일품 
+		model.addAttribute("auct",auctMapper.getAuct("1"));
+		System.out.println(model.getAttribute("auct"));
+		return "auction/auctSelect111";
+	}
+	
+//	@GetMapping("/auctSelect/{id}")
+//	@ResponseBody
+//	public AuctVO getAuct(@PathVariable String id) {
+//		//단일품목 값
+//		return auctMapper.getAuct(id);
+//	}
+
+	
+	
+	
+	@GetMapping("/auctInsertForm")
+	public String auctInsertForm() {
+		//상품등록폼
+		return "auction/auctInsertForm";
 	}
 }
