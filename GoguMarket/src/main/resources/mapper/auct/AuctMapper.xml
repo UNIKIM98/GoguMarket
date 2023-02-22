@@ -2,14 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.auct.mapper.AuctMapper">
 
-	<select id="getAuctList" parameterType="com.goguma.auct.vo.AuctVO">
-		Select	auct_no		"auctNo",
-				user_id		"userId",
-				atch_id		"atchId",
-				ddln_ymd	"ddlnYmd"
-		from auct
+	<select id="getAuctList" 
+			parameterType="com.goguma.auct.vo.AuctVO"
+			resultType="com.goguma.auct.vo.AuctVO">
+		SELECT *
+		FROM AUCT
 	</select>
-
 
 	<select id="getAuct" parameterType="string"
 							resultType="com.goguma.auct.vo.AuctVO">
