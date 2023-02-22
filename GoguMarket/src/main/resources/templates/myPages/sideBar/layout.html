@@ -1,36 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
-<title>LAYOUT</title>
-<link rel="shortcut icon" type="image/x-icon"
-	href="img/icon/favicon.png">
-
-<!-- All CSS Files -->
-<!-- Bootstrap fremwork main css -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- Nivo-slider css -->
-<link rel="stylesheet" href="lib/css/nivo-slider.css">
-<!-- This core.css file contents all plugings css file. -->
-<link rel="stylesheet" href="css/core.css">
-<!-- Theme shortcodes/elements style -->
-<link rel="stylesheet" href="css/shortcode/shortcodes.css">
-<!-- Theme main style -->
-<link rel="stylesheet" href="style.css">
-<!-- Responsive css -->
-<link rel="stylesheet" href="css/responsive.css">
-<!-- User style -->
-<link rel="stylesheet" href="css/custom.css">
-<!-- Style customizer (Remove these two lines please) -->
-<link rel="stylesheet" href="css/style-customizer.css">
-<link href="#" data-style="styles" rel="stylesheet">
-
-<!-- Modernizr JS -->
-<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-
-<!-- 헤더 -->
-<th:block th:replace="layouts/header :: headerFragment"></th:block>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -41,7 +14,7 @@
 			<div class="shop-section mb-80">
 				<div class="container">
 					<div class="row">
-						<!-- ▶ 컨텐츠 적는 공간!-->
+						<!-- ▶ 컨텐츠 적는 공간! ((타임리프))-->
 						<div class="col-lg-9 order-lg-2 order-1">
 							<div layout:fragment="myPageContent"></div>
 						</div>
@@ -97,7 +70,6 @@
 												<li><a href="#">고객센터</a></li>
 												<li><a href="#">나의 문의사항</a></li>
 												<li><a href="#">친구초대</a></li>
-
 											</ul></li>
 									</ul>
 								</div>
@@ -109,16 +81,4 @@
 		</div>
 	</div>
 </body>
-
-<!-- jquery latest version -->
-<script src="js/vendor/jquery-3.6.0.min.js"></script>
-<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-<!-- Bootstrap framework js -->
-<script src="js/bootstrap.bundle.min.js"></script>
-<!-- jquery.nivo.slider js -->
-<script src="lib/js/jquery.nivo.slider.js"></script>
-<!-- All js plugins included in this file. -->
-<script src="js/plugins.js"></script>
-<!-- Main js file that contents all jQuery plugins activation. -->
-<script src="js/main.js"></script>
 </html>
