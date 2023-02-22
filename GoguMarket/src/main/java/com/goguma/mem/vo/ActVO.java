@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ActVO {
 
-	private String ActNO;
-	private String UserId;
-	private String BankNm;
+	private String actNO;
+	private String userId;
+	private String bankNm;
 }
