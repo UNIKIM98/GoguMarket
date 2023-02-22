@@ -85,7 +85,7 @@ layout:decorate="~{layouts/layout}">
                     </div>
                 </div>
             </div>
-   
+   		</header>
       <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
 
@@ -95,7 +95,7 @@ layout:decorate="~{layouts/layout}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="message-box box-shadow white-bg">
-                                <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php">
+                                <!-- <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php"> -->
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h4 class="blog-section-title border-left mb-30">중고거래상품등록</h4>
@@ -116,7 +116,7 @@ layout:decorate="~{layouts/layout}">
                                             <img src="img/mega-menu/1.jpg" alt="mega menu image">
                                         </a>
                                     </div>
-                                        <form id="frm" action="dealform" method="get">
+                                        <form id="frm" action="dealformsubmit" method="post">
                                         <div class="col-lg-10">
                                             <input type="text" name="dlTtl" id="dlTtl" placeholder="상품제목">
                                         </div>
@@ -127,9 +127,9 @@ layout:decorate="~{layouts/layout}">
                                         <div class="col-lg-10">
                                             <input type="text" name="ctgry" id="ctgry" placeholder="카테고리">
                                         </div>
-                                        <div class="col-lg-10">
+                                      <!--   <div class="col-lg-10">
                                             <input type="text" name="dlNo" id="dlNo" placeholder="나눔하기 : 카테고리의 공통코드사용">
-                                        </div>
+                                        </div> -->
                                         <div class="col-lg-10">
                                             <input type="text" name="dlPrc" id="dlPrc" placeholder="가격">
                                         </div>
@@ -143,15 +143,16 @@ layout:decorate="~{layouts/layout}">
                                     	</div>
                                     	</form>
                                     <p class="form-message"></p>
-                                </form>
+                                <!-- </form> -->
                             </div>
                         </div>
                     </div>
                 </div>
+        </section>
             </div>
             <!-- MESSAGE BOX SECTION END -->
-        </section>
         <!-- End page content -->
+           </div>
     <!-- Placed JS at the end of the document so the pages load faster -->
 
     <!-- jquery latest version -->
