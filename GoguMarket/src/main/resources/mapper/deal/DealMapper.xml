@@ -5,7 +5,63 @@
 	<select id="dealListSelect" 
 			parameterType="com.goguma.deal.vo.DealVO"
 			resultType="com.goguma.deal.vo.DealVO">
-		SELECT *
+	
+	select * from (select rownum rn,a.* from(
+			SELECT *
+			FROM DEAL
+	<![CDATA[
+		) a where rownum <= #{last} )b where rn >= #{first}
+		]]>	
+	</select>
+	
+	<select id="getcountTotal" 
+			resultType="int">
+		SELECT COUNT(*)
 		FROM DEAL
 	</select>
+	
+	<insert id="insertDeal"
+			parameterType="com.goguma.deal.vo.DealVO">
+	<selectKey keyProperty="dlNo" resultType="int"
+			order="BEFORE">
+			SELECT
+			CASE WHEN MAX(dl_no) IS NULL THEN 1 ELSE
+			MAX(dl_no) + 1 END AS
+			dlNo
+			FROM deal
+		</selectKey>		
+			
+	insert into deal (
+		dl_ttl,
+		dl_cn,
+		ctgry,
+		dl_prc,
+		area,
+		nego_yn
+	) values (
+		#{dlTtl},
+		#{dlCn},
+		#{ctgry},
+		#{dlPrc},
+		#{area},
+		#{negoYn}
+	)	
+	</insert>
+	
+	<insert id="deleteDeal"
+			parameterType="string">
+		DELETE FROM DEAL
+		WHERE ntsl_id = #{ntslId}
+	</insert>
+	
+	<update id="updateDeal"
+			parameterType="com.goguma.deal.vo.DealVO">
+		update deal
+		   set dl_no = #{dlNo},
+			   ntsl_id = #{ntslId},
+			   prchs_id = #{prchsId},
+			   dl_ymd = #{dlYmd},
+			   dl_prc = #{dlPrc}  
+		WHERE ntsl_id = #{ntslId}	
+	</update>
 </mapper>
