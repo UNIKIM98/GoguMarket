@@ -12,30 +12,32 @@ import lombok.Data;
 @Data
 public class MemVO {
 
-	private String UserId;
-	private String UserSe;
-	private String UserPw;
-	private String UserNm;
-	private String Gender;
-	private String NickNm;
-	private String Addr;
-	private String DealArea;
-	private String Eml;
+	private String userId;
+	private String userSe;
+	private String userPw;
+	private String userNm;
+	private String gender;
+	private String nickNm;
+	private String addr;
+	private String dealArea;
+	private String eml;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date BirthYmd;
-	private String MblTelno;
-	private String BankNm;
-	private String ActNo;
-	private String RcmdCode;
+	private Date birthYmd;
+	private String mblTelno;
+	private String bankNm;
+	private String actNo;
+	private String rcmdCode;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date JoinYmd;
-	private String UserStts;
-	private String SocialToken;
-	private String RfshToken;
-	private String SocialSe;
-	private String AtechId;
+	private Date joinYmd;
+	private String userStts;
+	private String socialToken;
+	private String rfshToken;
+	private String socialSe;
+	private String atechId;
 	
 	
 }

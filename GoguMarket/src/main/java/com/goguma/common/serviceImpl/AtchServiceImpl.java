@@ -1,5 +1,7 @@
 package com.goguma.common.serviceImpl;
 
-public class AtchServiceImpl {
+import com.goguma.common.service.AtchService;
+
+public class AtchServiceImpl implements AtchService{
 
 }

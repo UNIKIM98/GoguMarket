@@ -13,7 +13,7 @@ public class AttendVO {
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date AttendYmd;
-	private String UserId;
+	private Date attendYmd;
+	private String userId;
 	
 }

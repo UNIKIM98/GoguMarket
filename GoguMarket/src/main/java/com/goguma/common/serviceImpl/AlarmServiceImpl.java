@@ -1,5 +1,7 @@
 package com.goguma.common.serviceImpl;
 
-public class AlarmServiceImpl {
+import com.goguma.common.service.AlarmService;
+
+public class AlarmServiceImpl implements AlarmService{
 
 }

@@ -1,3 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.goguma.mem.mapper.MemMapper"></mapper>
+<mapper namespace="com.goguma.mem.mapper.MemMapper">
+
+	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO" >
+		INSERT INTO MEM
+		(USER_ID,
+		USER_SE, USER_PW, USER_NM, NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
+		BANK_NM, ACT_NO, JOIN_YMD, USER_STTS)
+		VALUES(#{userId}, #{userSe},
+		#{userPw}, #{userNm},
+		#{nickNm}, #{addr}, #{dealArea}, #{mblTelno},
+		#{bankNm}, #{actNo}, SYSDATE,
+		#{userStts})
+	</insert>
+	
+	<!-- ▶ 아이디 중복 확인 -->
+	<select id="isIdCheck" resultType="boolean" parameterType="String">
+		SELECT CASE WHEN
+		COUNT(USER_ID) = 1 THEN 0 ELSE 1 END
+		FROM MEM
+		WHERE USER_ID =
+		#{userId}
+	</select>
+	
+	<!-- ▶ 닉네임 중복 확인 -->
+	<select id="isNickNmCheck" resultType="boolean" parameterType="String">
+		SELECT CASE WHEN COUNT(NICK_NM) = 1
+					THEN 0
+					ELSE 1
+				END
+		FROM MEM
+		WHERE NICK_NM = #{nickNm}
+	</select>
+
+</mapper>

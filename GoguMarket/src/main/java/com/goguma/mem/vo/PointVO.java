@@ -10,12 +10,12 @@ import lombok.Data;
 
 @Data
 public class PointVO {
-	private String PointNo;
-	private String UserId;
-	private String Point;
-	private String PointMthd;
+	private String pointNo;
+	private String userId;
+	private String point;
+	private String pointMthd;
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date SaveYmd;
+	private Date saveYmd;
 }
