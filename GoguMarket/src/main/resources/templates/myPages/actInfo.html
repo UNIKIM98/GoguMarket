@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="myPageContent">
+		<p>actInfo...</p>
+		[[${actOne}]]
+		[[${bankNmOne}]]
+		<hr>
+		[[${bankList[0].bankNm}]]
+		<button>안녕</button>
+	</div>
+
+</body>
+</html>

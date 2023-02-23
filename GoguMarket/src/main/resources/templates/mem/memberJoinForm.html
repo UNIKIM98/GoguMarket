@@ -29,15 +29,15 @@
 												placeholder="아이디를 입력하세요." required="required"
 												style="width: 40%; margin-right: 50px;">
 												<button class="submit-btn-1 btn-hover-1"
-													onclick="userIdCkAjax()" id="userIdBtn" value="No">중복확인</button>
-											</td>
+													onclick="userIdCkAjax()" id="userIdBtn" value="No"
+													type="button">중복확인</button></td>
 										</tr>
 										<tr>
 											<th><span style="margin-bottom: 30px;">비밀번호</span></th>
 											<td><input type="password" id="userPw" name="userPw"
 												placeholder="영문,숫자,특수문자 포함 9자리 이상 입력해주세요."
-												required="required" style="width: 60%;"></td>
-											<div class="errorMsg"></div>
+												required="required" style="width: 60%;"> <br> <span
+												class="errorMsg"></span></td>
 										</tr>
 										<tr>
 											<th><span>비밀번호 확인</span></th>
@@ -57,8 +57,8 @@
 												placeholder="닉네임을 입력하세요." required="required"
 												style="width: 40%; margin-right: 50px;">
 												<button class="submit-btn-1 btn-hover-1"
-													onclick="nickNmCkAjax()" id="nickNmBtn" value="No">중복확인</button>
-											</td>
+													onclick="nickNmCkAjax()" id="nickNmBtn" value="No"
+													type="button">중복확인</button></td>
 										</tr>
 										<tr>
 											<th><span>주소</span></th>
@@ -71,7 +71,7 @@
 											<td><input type="text" id="mblTelno" name="mblTelno"
 												placeholder="휴대폰 번호를 입력해주세요."
 												style="width: 40%; margin-right: 50px;">
-												<button class="submit-btn-1 btn-hover-1">인증하기</button></td>
+												<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button></td>
 										</tr>
 
 									</tbody>
@@ -102,23 +102,23 @@
 					userPwCk.val("");
 					userPw.focus();
 					return false;
-				} else if ($('userIdBtn').val() == 'No') {
+				} else if ($('#userIdBtn').val() == 'No') {
 					alert("아이디 중복체크를 해주세요.");
+					return false;
+				} else if ($('#nickNmBtn').val() == 'No') {
+					alert("닉네임 중복체크를 해주세요.");
 					return false;
 				}
 			}
 
 			//▶ 아이디 중복 체크 아작스 
 			function userIdCkAjax() {
-				console.log($('#userId').val());
-
 				$.ajax({
 					url : 'userIdChk/' + $('#userId').val(),
 					type : 'get',
 					dataType : 'json', //==header (html, json, text 등)
 					contentType : 'application/json; charset = utf-8',
 					success : function(data) {
-						console.log("=====왔니=======" + data);
 						userIdCk(data);
 					},
 					error : function(error) {
@@ -129,7 +129,7 @@
 
 			//▶ 아이디 중복 체크 결과 출력
 			function userIdCk(bool) {
-				if (bool == "1") {
+				if (bool == "0") {
 					alert("사용할 수 있는 아이디입니다. :)");
 					$('#userIdBtn').val("Yes");
 					$('#userIdBtn').attr("disabled", true);
@@ -148,7 +148,7 @@
 					type : 'get',
 					contentType : 'application/json; charset = utf-8',
 					success : function(result) {
-						console.log("=====왔니..." + result);
+						console.log("===== 왔니..." + result);
 						nickNmCk(result);
 					},
 					error : function(err) {
@@ -159,7 +159,7 @@
 
 			//▶ 닉네임 중복 체크 결과 출력
 			function nickNmCk(str) {
-				if (str == "1") {
+				if (str == "0") {
 					alert("사용가능한 닉네임입니다.");
 					$('#nickNmBtn').val("Yes");
 					$('#nickNmBtn').attr("disabled", true);
@@ -188,7 +188,7 @@
 							isPwValid = false;
 							pwErrMsg
 									.text("9~20자의 영문, 숫자, 특수문자를 포함한 비밀번호를 입력해주세요");
-							// pwInputEl.val(""); //지우는 건 너무 야박한감....
+							pwInputEl.val(""); //지우는 건 너무 야박한감....
 							pwInputEl.focus();
 						}
 					})
