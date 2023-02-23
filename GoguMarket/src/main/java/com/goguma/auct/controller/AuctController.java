@@ -15,29 +15,21 @@ public class AuctController {
 	@Autowired AuctMapper auctMapper;
 	
 	@GetMapping("/auctList")
-	public String auctList(Model model, @ModelAttribute("vvo") AuctVO vo) {
-		//경매 메인페이지
-		
-		
-		
-		
-		
-		
-		
-		
+
+	public String getauctList(Model model) {
+		model.addAttribute("lists",auctMapper.getAuctList());
+
 		return "auction/auctList";
 	}
 	
 	
-	
-	
-	@GetMapping("/auctSelect")
-	public String auctSelect(Model model) {
-		//단일품 
-		model.addAttribute("auct",auctMapper.getAuct("1"));
-		System.out.println(model.getAttribute("auct"));
-		return "auction/auctSelect111";
-	}
+//	@GetMapping("/auctSelect")
+//	public String auctSelect(Model model) {
+//		//단일품 
+//		model.addAttribute("auct",auctMapper.getAuct("1"));
+//		System.out.println(model.getAttribute("auct"));
+//		return "auction/auctSelect111";
+//	}
 	
 //	@GetMapping("/auctSelect/{id}")
 //	@ResponseBody

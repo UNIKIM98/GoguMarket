@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="wrapper">
+			<!-- Start page content -->
+			<div id="page-content" class="page-wrapper section"></div>
+			<!-- SECTION START -->
+			<div class="shop-section mb-80">
+				<div class="container">
+					<div class="row">
+						<!-- ▶ 컨텐츠 적는 공간! ((타임리프))-->
+						<div class="col-lg-9 order-lg-2 order-1">
+							<div layout:fragment="myPageContent"></div>
+						</div>
+						<div class="col-lg-3 order-lg-1 order-2">
+							<!-- ▶ 사이드바입니다 -->
+							<aside class="widget widget-categories box-shadow mb-30">
+								<h6 class="widget-title border-left mb-20">마이페이지</h6>
+								<div id="cat-treeview" class="product-cat">
+									<ul>
+										<li class="open"><a href="#">내정보</a>
+											<ul>
+												<li><a href="#">내 정보 수정</a></li>
+												<li><a href="#">우리 동네 설정</a></li>
+												<li><a href="#">포인트/쿠폰 조회</a></li>
+												<li><a href="attend">출석이벤트</a></li>
+												<li><a href="#">출석이벤트</a></li>
+
+											</ul></li>
+										<li class="closed"><a href="#">나의 거래</a>
+											<ul>
+												<li><a href="#">결제계좌정보</a></li>
+												<li class="closed"><a href="#">중고거래</a>
+													<ul>
+														<li><a href="#">판매내역</a></li>
+														<li><a href="#">구매내역</a></li>
+													</ul></li>
+												<li class="closed"><a href="#">경매</a>
+													<ul>
+														<li><a href="#">주최경매</a></li>
+														<li><a href="#">참여경매</a></li>
+													</ul></li>
+												<li><a href="#">중고거래가계부</a></li>
+												<li><a href="#">거래후기</a></li>
+											</ul></li>
+										<li class="closed"><a href="#">동네생활</a>
+											<ul>
+												<li><a href="#">나의 글/댓글</a></li>
+												<li><a href="#">내가 좋아요한 글</a></li>
+											</ul></li>
+										<li class="closed"><a href="#">동네가게</a>
+											<ul>
+												<li><a href="#">나의예약</a></li>
+												<li><a href="#">1/N 정산하기</a></li>
+												<li><a href="#">나의 예약 후기</a></li>
+												<li><a href="#">단골가게</a></li>
+											</ul></li>
+										<li class="closed"><a href="#">나의 비즈니스</a>
+											<ul>
+												<li><a href="#">비즈니스 관리</a></li>
+											</ul></li>
+										<li class="closed"><a href="#">기타</a>
+											<ul>
+												<li><a href="#">고객센터</a></li>
+												<li><a href="#">나의 문의사항</a></li>
+												<li><a href="#">친구초대</a></li>
+											</ul></li>
+									</ul>
+								</div>
+							</aside>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

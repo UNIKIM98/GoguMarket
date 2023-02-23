@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{biz/slide/slide}">
+
+<body>
+
+	<div layout:fragment="bizContent">
+		<div class="row">
+
+			<div class="col-lg-12">
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<!-- shopping-cart start -->
+					<div class="tab-pane active" id="shopping-cart">
+						<div class="shopping-cart-content">
+							<form action="#">
+
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="section-title text-start mb-20">
+											<h2 class="uppercase">후기 관리</h2>
+											<h6>고객들의 소리를 들어보세요</h6>
+										</div>
+									</div>
+								</div>
+								<hr>
+
+								<div class="row">
+									<div class="col-md-12">
+
+										<div class="table-content table-responsive mb-30">
+											<table class="text-center">
+												<thead>
+													<tr>
+														<th style="width: 5%;">번호</th>
+														<th style="width: 20%;">글쓴이</th>
+														<th style="width: 85%">후기 미리보기</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- tr -->
+													<tr>
+														<td class="">1</td>
+														<td class="">도리눈아</td>
+														<td class="">리뷰 많아서 와봤는데 만족하고 갑니당...</td>
+													</tr>
+													<!-- tr -->
+													<tr>
+														<td class="">1</td>
+														<td class="">폴눈아</td>
+														<td class="">존맛탱 반박시 맛알못ㅇㅈ?...</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- 페이지번호 -->
+								<div class="row">
+									<div class="col-lg-12">
+										<!-- shop-pagination start -->
+										<ul class="shop-pagination box-shadow text-center ptblr-10-30">
+											<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+											<li><a href="#">01</a></li>
+											<li><a href="#">02</a></li>
+											<li><a href="#">03</a></li>
+											<li><a href="#">...</a></li>
+											<li><a href="#">05</a></li>
+											<li class="active"><a href="#"><i
+													class="zmdi zmdi-chevron-right"></i></a></li>
+										</ul>
+										<!-- shop-pagination end -->
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<!-- shopping-cart end -->
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</body>
+
+</html>
