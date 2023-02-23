@@ -17,5 +17,11 @@ public class AuctServiceImpl implements AuctService{
 		// 경매 리스트 전체 조회
 		return auctMapper.getAuctList();
 	}
+
+	@Override
+	public int insertAuct(AuctVO vo) {
+		// 등록
+		return 0;
+	}
 	
 }
