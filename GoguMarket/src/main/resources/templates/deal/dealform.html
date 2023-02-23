@@ -11,81 +11,25 @@ layout:decorate="~{layouts/layout}">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/icon/favicon.png">
-
-    <!-- All CSS Files -->
-    <!-- Bootstrap fremwork main css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Nivo-slider css -->
-    <link rel="stylesheet" href="lib/css/nivo-slider.css">
-    <!-- This core.css file contents all plugings css file. -->
-    <link rel="stylesheet" href="css/core.css">
-    <!-- Theme shortcodes/elements style -->
-    <link rel="stylesheet" href="css/shortcode/shortcodes.css">
-    <!-- Theme main style -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- User style -->
-    <link rel="stylesheet" href="css/custom.css">
-
-    <!-- Style customizer (Remove these two lines please) -->
-    <link rel="stylesheet" href="css/style-customizer.css">
-    <link href="#" data-style="styles" rel="stylesheet">
-
-    <!-- Modernizr JS -->
-    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+ 
+    <style>
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+	}
+	* {
+        font-family : 'S-CoreDream-3Light'; 
+    }
+</style>
 </head>
 
 <body>
 	 <div layout:fragment="content">
-    <!--[if lt IE 8]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
     <!-- Body main wrapper start -->
     <div class="wrapper">
-
-        <!-- START HEADER AREA -->
-        <header class="header-area header-wrapper">
-            <!-- header-top-bar -->
-            <div class="header-top-bar plr-185">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 d-none d-md-block">
-                            <div class="call-us">
-                                <p class="mb-0 roboto">현재페이지는 중고거래 상품등록 페이지입니다</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="top-link clearfix">
-                                <ul class="link f-right">
-                                    <li>
-                                        <a href="my-account.html">
-                                            <i class="zmdi zmdi-account"></i>
-                                            내정보
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="wishlist.html">
-                                            <i class="zmdi zmdi-favorite"></i>
-                                            위시리스트
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="login.html">
-                                            <i class="zmdi zmdi-lock"></i>
-                                            로그인
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-   		</header>
       <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
 
@@ -96,6 +40,7 @@ layout:decorate="~{layouts/layout}">
                         <div class="col-lg-12">
                             <div class="message-box box-shadow white-bg">
                                 <!-- <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php"> -->
+                                <form id="frm" action="dealformsubmit" method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h4 class="blog-section-title border-left mb-30">중고거래상품등록</h4>
@@ -116,7 +61,7 @@ layout:decorate="~{layouts/layout}">
                                             <img src="img/mega-menu/1.jpg" alt="mega menu image">
                                         </a>
                                     </div>
-                                        <form id="frm" action="dealformsubmit" method="post">
+                                        
                                         <div class="col-lg-10">
                                             <input type="text" name="dlTtl" id="dlTtl" placeholder="상품제목">
                                         </div>
@@ -139,9 +84,12 @@ layout:decorate="~{layouts/layout}">
                                         <div class="col-lg-10">
                                             <input type="text" name="negoYn" id="negoYn" placeholder="네고여부">
                                         </div>
+                                        <div class="col-lg-10">
+                                            <input type="file" name="file" id="file" placeholder="첨부파일">
+                                        </div>
                                         <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">등록하기</button>
-                                    	</div>
-                                    	</form>
+                                    </form>
+                              </div>         
                                     <p class="form-message"></p>
                                 <!-- </form> -->
                             </div>

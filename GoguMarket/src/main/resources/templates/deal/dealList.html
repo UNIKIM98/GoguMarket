@@ -6,6 +6,20 @@ layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
 <title>판매상품전체조회 테스트 페이지입니다</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+
+<style>
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+	}
+	* {
+        font-family : 'S-CoreDream-3Light'; 
+    }
+</style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,46 +31,90 @@ function gopage(page){
 	//frmSearch.page.value = page;
 	//frmSearch.submit(); 
 }
+
+$(function(){
+	$(".btnInfo").on("click",function(){
+		// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
+		let url = $(this).closest("tr").children().first().text();
+		//location.href="dealdetail/"+url
+		location.href=`dealdetail/${url}`
+		console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
+	})
+})
 </script>
 <h2>중고상품 리스트</h2>
 <!-- 테스트용으로 카테고리는 판매자 별로 정리 -->
-<!-- <form name="frmSearch">
+<form name="frmSearch" align="center">
 	<input type="hidden" name="page" value="1">
 	<select>
 		<option value="">선택
 		<option th:each="deal : ${lists}"
-				th:value="${deal.ntslId}"
-				th:selected="${deal.ntslId}==${dsvo.ntslId}">
+				th:value="${deal.ctgry}">
+				<!-- th:selected="${deal.ctgry}==${dsvo.ctgry}" -->
 	</select>
 	<button>검색</button>
-</form> -->
+	<button type="reset">초기화</button>
+</form>
 
+
+
+<table class="table" border="1">
+	<thead>
+		<tr>
+			<th>글번호</th>
+			<th>판매자</th>
+			<th>구매자</th>
+			<th>카테고리</th>
+			<th>등록일</th>
+			<th>제목</th>
+			<th>내용</th>
+			<th>가격</th>
+			<th>거래상태</th>
+			<th>조회수</th>
+			<th>첨부파일</th>	
+			<th>상세정보</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="deal : ${lists}" 
+			onmouseover='this.style.background="#fcecae";' 
+			onmouseleave='this.style.background="#FFFFFF";'>
+			<td th:text="${deal.dlNo}"></td>
+			<td th:text="${deal.ntslId}"></td> 
+			<td th:text="${deal.prchsId}"></td>
+			<td th:text="${deal.ctgry}"></td>
+			<td th:text="${#dates.format(deal.dlYmd)}"></td>
+			<td th:text="${deal.dlTtl}"></td>
+			<td th:text="${deal.dlCn}"></td>
+			<td th:text="${deal.dlPrc}"></td>
+			<td th:text="${deal.stts}"></td>
+			<td th:text="${deal.inqCnt}"></td>
+			<td th:text="${deal.atchId}"></td>
+			<td>
+				<button type="button" class="btnInfo">조회</button>
+			</td>
+		</tr>
+	</tbody>
+	<div>
+		<form id="hiddenFrm" action="dealdetail" method="post">
+			<input type="hidden" name="dlNo" id="dlNo">
+		</form>
+	</div>
+</table>
 <!-- 페이지번호관련  -->
-<div>	
+<div align="center">	
 	<a  th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" 
 		th:href="|javascript:gopage(${num})|"
 		th:class="${paging.page}==${num} ? 'active'"
-		>[[${num}]]</a>
+		> [[${num}]]</a>
 </div>
-
-<table border="1">
-	<tr>
-		<th>글번호</th>
-		<th>판매자</th>
-		<th>구매자</th>
-		<th>등록일</th>
-		<th>가격</th>	
-	</tr>
-	<tr th:each="deal : ${lists}">
-		<td th:text="${deal.dlNo}"></td>
-		<td th:text="${deal.ntslId}"></td>
-		<td th:text="${deal.prchsId}"></td>
-		<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
-		<td th:text="${deal.dlPrc}"></td>
-	</tr>
-</table>
-
-
+<script type="text/javascript">
+function dealDetailView(d){
+	// 상세보기호출
+	document.getElementById("dlNo").value = d;
+	hiddenFrm.submit();
+}
+</script>
 </div>
 </body>
 </html>

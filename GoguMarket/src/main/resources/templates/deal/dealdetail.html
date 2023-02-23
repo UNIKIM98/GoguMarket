@@ -11,83 +11,53 @@ layout:decorate="~{layouts/layout}">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/icon/favicon.png">
 
-    <!-- All CSS Files -->
-    <!-- Bootstrap fremwork main css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Nivo-slider css -->
-    <link rel="stylesheet" href="lib/css/nivo-slider.css">
-    <!-- This core.css file contents all plugings css file. -->
-    <link rel="stylesheet" href="css/core.css">
-    <!-- Theme shortcodes/elements style -->
-    <link rel="stylesheet" href="css/shortcode/shortcodes.css">
-    <!-- Theme main style -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- User style -->
-    <link rel="stylesheet" href="css/custom.css">
-    
-    <!-- Style customizer (Remove these two lines please) -->
-    <link rel="stylesheet" href="css/style-customizer.css">
-    <link href="#" data-style="styles" rel="stylesheet">
-
-    <!-- Modernizr JS -->
-    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+      <style>
+	@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+	}
+	* {
+        font-family : 'S-CoreDream-3Light'; 
+    }
+</style>
 </head>
 
 <body class="wide-layout">
 	<div layout:fragment="content">
-    <!--[if lt IE 8]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->  
+<script>
+/* let dlNo = location.href.split("/")[4];
+console.log(dlNo); */
 
+</script>
+	<table class="table" border="1">
+	<thead>
+		<tr>
+			<th>글번호</th>
+			<th>판매자</th>
+			<th>구매자</th>
+			<th>등록일</th>
+			<th>가격</th>	
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="deal : ${deal}" 
+			onmouseover='this.style.background="#fcecae";' 
+			onmouseleave='this.style.background="#FFFFFF";'>
+			<td th:text="${deal.dlNo}"></td>
+			<td th:text="${deal.ntslId}"></td> 
+			<td th:text="${deal.prchsId}"></td>
+			<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
+			<td th:text="${deal.dlPrc}"></td>
+		</tr>
+	</tbody>
+</table>
+<hr>
     <!-- Body main wrapper start -->
     <div class="wrapper">
-
-        <!-- START HEADER AREA -->
-        <header class="header-area header-wrapper">
-            <!-- header-top-bar -->
-            <div class="header-top-bar plr-185">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 d-none d-md-block">
-                            <div class="call-us">
-                                <p class="mb-0 roboto">중고거래 상품 상세  페이지 1번입니다</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="top-link clearfix">
-                                <ul class="link f-right">
-                                    <li>
-                                        <a href="my-account.html">
-                                            <i class="zmdi zmdi-account"></i>
-                                            My Account
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="wishlist.html">
-                                            <i class="zmdi zmdi-favorite"></i>
-                                            Wish List (0)
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="login.html">
-                                            <i class="zmdi zmdi-lock"></i>
-                                            Login
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-      </header>
-
-        <!-- Start page content -->
+ <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
 
             <!-- SHOP SECTION START -->
@@ -101,38 +71,38 @@ layout:decorate="~{layouts/layout}">
                                     <!-- imgs-zoom-area start -->
                                     <div class="col-md-5">
                                         <div class="imgs-zoom-area">
-                                            <img id="zoom_03" src="img/product/6.jpg" data-zoom-image="img/product/6.jpg" alt="">
+                                            <img id="zoom_03" src="/img/product/6.jpg" data-zoom-image="/img/product/6.jpg" alt="">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
                                                         <div class="p-c">
-                                                            <a href="#" data-image="img/product/2.jpg" data-zoom-image="img/product/2.jpg">
-                                                                <img class="zoom_03" src="img/product/2.jpg" alt="">
+                                                            <a href="#" data-image="/img/product/2.jpg" data-zoom-image="/img/product/2.jpg">
+                                                                <img class="zoom_03" src="/img/product/2.jpg" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="p-c">
-                                                            <a href="#" data-image="img/product/3.jpg" data-zoom-image="img/product/3.jpg">
-                                                                <img class="zoom_03" src="img/product/3.jpg" alt="">
+                                                            <a href="#" data-image="/img/product/3.jpg" data-zoom-image="/img/product/3.jpg">
+                                                                <img class="zoom_03" src="/img/product/3.jpg" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="p-c">
-                                                            <a href="#" data-image="img/product/4.jpg" data-zoom-image="img/product/4.jpg">
-                                                                <img class="zoom_03" src="img/product/4.jpg" alt="">
+                                                            <a href="#" data-image="/img/product/4.jpg" data-zoom-image="/img/product/4.jpg">
+                                                                <img class="zoom_03" src="/img/product/4.jpg" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="p-c">
-                                                            <a href="#" data-image="img/product/5.jpg" data-zoom-image="img/product/5.jpg">
-                                                                <img class="zoom_03" src="img/product/5.jpg" alt="">
+                                                            <a href="#" data-image="/img/product/5.jpg" data-zoom-image="/img/product/5.jpg">
+                                                                <img class="zoom_03" src="/img/product/5.jpg" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="p-c">
-                                                            <a href="#" data-image="img/product/6.jpg" data-zoom-image="img/product/6.jpg">
-                                                                <img class="zoom_03" src="img/product/6.jpg" alt="">
+                                                            <a href="#" data-image="/img/product/6.jpg" data-zoom-image="/img/product/6.jpg">
+                                                                <img class="zoom_03" src="/img/product/6.jpg" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="p-c">
-                                                            <a href="#" data-image="img/product/7.jpg" data-zoom-image="img/product/7.jpg">
-                                                                <img class="zoom_03" src="img/product/7.jpg" alt="">
+                                                            <a href="#" data-image="/img/product/7.jpg" data-zoom-image="/img/product/7.jpg">
+                                                                <img class="zoom_03" src="/img/product/7.jpg" alt="">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -143,18 +113,19 @@ layout:decorate="~{layouts/layout}">
                                     <!-- imgs-zoom-area end -->
                                     <!-- single-product-info start -->
                                     <div class="col-md-7"> 
-                                        <div class="single-product-info">
-                                            <h3 class="text-black-1">김펭귄 </h3>
-                                            <h6 class="brand-name-2">달서구 두류3동</h6>
+                                        <div class="single-product-info">     
+										<tr th:each="deal : ${deal}">
+											<h3 th:text="${deal.ntslId}" class="text-black-1">김펭귄 </h3>
+                                            <h6 th:text="${deal.area}" class="brand-name-2">달서구 두류3동</h6>
                                             <div class="f-right"><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">끌어올리기</button></div>
                                             <!-- hr -->
                                             <hr>
-                                            <h3 class="text-black-1">뽀로로 인형 팝니다 </h3>
+                                            <h3 th:text="${deal.dlTtl}" class="text-black-1">뽀로로 인형 팝니다 </h3>
                                             
-                                            <h6 class="brand-name-2">2일전</h6>
+                                            <h6 th:text="${deal.dlYmd}" class="brand-name-2">2일전</h6>
                                             <h6 class="brand-name-2 f-right">#생활잡화 #인형 #아기용품</h6>
-                                            <h6 class="brand-name-2">생활용품잡화</h6>
-                                            
+                                            <h6 th:text="${deal.ctgry}" class="brand-name-2">생활용품잡화</h6>
+                                          
                                          </div>   
                                             <!-- single-product-tab -->
                                             <div class="single-product-tab reviews-tab">
@@ -166,7 +137,7 @@ layout:decorate="~{layouts/layout}">
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div role="tabpanel" class="tab-pane active show" id="description">
-                                                        <p>노는게 제일 좋아 <br> 귀여운 뽀로로 인형입니다</p>    
+                                                        <p th:text="${deal.dlCn}"></p>    
                                                     </div>
                                                     <div role="tabpanel" class="tab-pane" id="information">
                                                         <p>시세조회가 들어갈 그래프 자리입니다</p>
@@ -200,7 +171,7 @@ layout:decorate="~{layouts/layout}">
                                                             <!-- 관련판매상품2 -->
                                                             <div class="media mt-30">
                                                                 <div class="media-left">
-                                                                    <a href="#"><img class="media-object" src="img/author/2.jpg" alt="#"></a>
+                                                                    <a href="#"><img class="media-object" src="/img/author/2.jpg" alt="#"></a>
                                                                 </div>
                                                                 <div class="media-body">
                                                                     <div class="clearfix">
@@ -234,7 +205,7 @@ layout:decorate="~{layouts/layout}">
                                                     <li><h6 class="brand-name-2">조회수 47</h6></li>
                                                 </ul>
                                                 </div>
-                                                
+                                                </tr>  
                                             </div>
                                             <!-- hr -->
                                             <hr>
@@ -263,25 +234,147 @@ layout:decorate="~{layouts/layout}">
                 </div>
             </div>
             <!-- SHOP SECTION END -->             
-       </section>
-      
+        </section>
+        <!-- End page content -->
+
+        <!-- START QUICKVIEW PRODUCT -->
+        <div id="quickview-wrapper">
+            <!-- Modal -->
+            <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-product clearfix">
+                                <div class="product-images">
+                                    <div class="main-image images">
+                                        <img alt="" src="/img/product/quickview.jpg">
+                                    </div>
+                                </div><!-- .product-images -->
+                                
+                                <div class="product-info">
+                                    <h1>Aenean eu tristique</h1>
+                                    <div class="price-box-3">
+                                        <div class="s-price-box">
+                                            <span class="new-price">£160.00</span>
+                                            <span class="old-price">£190.00</span>
+                                        </div>
+                                    </div>
+                                    <a href="single-product-left-sidebar.html" class="see-all">See all features</a>
+                                    <div class="quick-add-to-cart">
+                                        <form method="post" class="cart">
+                                            <div class="numbers-row">
+                                                <input type="number" id="french-hens" value="3" min="1">
+                                            </div>
+                                            <button class="single_add_to_cart_button" type="submit">Add to cart</button>
+                                        </form>
+                                    </div>
+                                    <div class="quick-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero.
+                                    </div>
+                                    <div class="social-sharing">
+                                        <div class="widget widget_socialsharing_widget">
+                                            <h3 class="widget-title-modal">Share this product</h3>
+                                            <ul class="social-icons clearfix">
+                                                <li>
+                                                    <a class="facebook" href="#" title="Facebook">
+                                                        <i class="zmdi zmdi-facebook"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="google-plus" href="#" title="Google +">
+                                                        <i class="zmdi zmdi-google-plus"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="twitter" href="#" title="Twitter">
+                                                        <i class="zmdi zmdi-twitter"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="pinterest" href="#" title="Pinterest">
+                                                        <i class="zmdi zmdi-pinterest"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="rss" href="#" title="RSS">
+                                                        <i class="zmdi zmdi-rss"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div><!-- .product-info -->
+                            </div><!-- .modal-product -->
+                        </div><!-- .modal-body -->
+                    </div><!-- .modal-content -->
+                </div><!-- .modal-dialog -->
+            </div>
+            <!-- END Modal -->
+        </div>
+        <!-- END QUICKVIEW PRODUCT -->
+
+        <!--style-customizer start -->
+        <div class="style-customizer closed">
+            <div class="buy-button">
+                <a href="index.html" class="customizer-logo"><img src="images/logo/logo.png" alt="Theme Logo"></a>
+                <a class="opener" href="#"><i class="zmdi zmdi-settings"></i></a>
+            </div>
+            <div class="clearfix content-chooser">
+                <h3>Layout Options</h3>
+                <p>Which layout option you want to use?</p>
+                <ul class="layoutstyle clearfix">
+                    <li class="wide-layout selected" data-style="wide" title="wide"> Wide </li>
+                    <li class="boxed-layout" data-style="boxed" title="boxed"> Boxed </li>
+                </ul>
+                <h3>Color Schemes</h3>
+                <p>Which theme color you want to use? Select from here.</p>
+                <ul class="styleChange clearfix">
+                    <li class="skin-default selected" title="skin-default" data-style="skin-default" ></li>
+                    <li class="skin-green" title="green" data-style="skin-green"></li>
+                    <li class="skin-purple" title="purple" data-style="skin-purple"></li>
+                    <li class="skin-blue" title="blue" data-style="skin-blue"></li>
+                    <li class="skin-cyan" title="cyan" data-style="skin-cyan"></li>
+                    <li class="skin-amber" title="amber" data-style="skin-amber"></li>
+                    <li class="skin-blue-grey" title="blue-grey" data-style="skin-blue-grey"></li>
+                    <li class="skin-teal" title="teal" data-style="skin-teal"></li>
+                </ul>
+                <h3>Background Patterns</h3>
+                <p>Which background pattern you want to use?</p>
+                    <ul class="patternChange clearfix">
+                    <li class="pattern-1" data-style="pattern-1" title="pattern-1"></li>
+                    <li class="pattern-2" data-style="pattern-2" title="pattern-2"></li>
+                    <li class="pattern-3" data-style="pattern-3" title="pattern-3"></li>
+                    <li class="pattern-4" data-style="pattern-4" title="pattern-4"></li>
+                    <li class="pattern-5" data-style="pattern-5" title="pattern-5"></li>
+                    <li class="pattern-6" data-style="pattern-6" title="pattern-6"></li>
+                    <li class="pattern-7" data-style="pattern-7" title="pattern-7"></li>
+                    <li class="pattern-8" data-style="pattern-8" title="pattern-8"></li>
+                </ul>
+                <h3>Background Images</h3>
+                <p>Which background image you want to use?</p>
+                <ul class="patternChange main-bg-change clearfix">
+                    <li class="main-bg-1" data-style="main-bg-1" title="Background 1"> <img src="images/customizer/bodybg/01.jpg" alt=""></li>
+                    <li class="main-bg-2" data-style="main-bg-2" title="Background 2"> <img src="images/customizer/bodybg/02.jpg" alt=""></li>
+                    <li class="main-bg-3" data-style="main-bg-3" title="Background 3"> <img src="images/customizer/bodybg/03.jpg" alt=""></li>
+                    <li class="main-bg-4" data-style="main-bg-4" title="Background 4"> <img src="images/customizer/bodybg/04.jpg" alt=""></li>
+                    <li class="main-bg-5" data-style="main-bg-5" title="Background 5"> <img src="images/customizer/bodybg/05.jpg" alt=""></li>
+                    <li class="main-bg-6" data-style="main-bg-6" title="Background 6"> <img src="images/customizer/bodybg/06.jpg" alt=""></li>
+                    <li class="main-bg-7" data-style="main-bg-7" title="Background 7"> <img src="images/customizer/bodybg/07.jpg" alt=""></li>
+                    <li class="main-bg-8" data-style="main-bg-8" title="Background 8"> <img src="images/customizer/bodybg/08.jpg" alt=""></li>
+                </ul>
+                <ul class="resetAll">
+                    <li><a class="button button-border button-reset" href="#">Reset All</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--style-customizer end -->
     </div>
+   
     <!-- Body main wrapper end -->
 
-
-    <!-- Placed JS at the end of the document so the pages load faster -->
-
-    <!-- jquery latest version -->
-    <script src="js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-    <!-- Bootstrap framework js -->
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <!-- jquery.nivo.slider js -->
-    <script src="lib/js/jquery.nivo.slider.js"></script>
-    <!-- All js plugins included in this file. -->
-    <script src="js/plugins.js"></script>
-    <!-- Main js file that contents all jQuery plugins activation. -->
-    <script src="js/main.js"></script>
 
 </body>
 
