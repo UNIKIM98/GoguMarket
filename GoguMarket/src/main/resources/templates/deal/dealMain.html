@@ -35,6 +35,18 @@ layout:decorate="~{layouts/layout}">
 
     <!-- Modernizr JS -->
     <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    
+    <style>
+	@font-face {
+	     font-family: 'S-CoreDream-3Light';
+	     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+	     font-weight: normal;
+	     font-style: normal;
+		}
+	* {
+        font-family : 'S-CoreDream-3Light'; 
+    }
+</style>
 </head>
 
 <body>
@@ -164,7 +176,7 @@ layout:decorate="~{layouts/layout}">
                             </div>
                         </div>
                         <div class="col-lg-10"><input type="hidden"></div>
-                        <div class="col-lg-2"><a class="button small mb-20" href="#"><span>판매글등록</span></a></div>
+                        <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/dealform'"><span>판매글등록</span></a></div>
                         
                         <hr>
                         <div class="col-lg-12">
