@@ -14,13 +14,56 @@
 
 
 				<!-- Page Heading -->
-				<h1 class="h3 mb-2 text-gray-800 mt-15">회원정보관리</h1>
-				<p class="mb-4">이곳은 고구마켓의 모든 회원을 관리하는 곳입니다.</p>
+				<h1 class="h3 mb-2 text-gray-800 mt-15">회원 관리</h1>
+				<p class="mb-4">이곳은 고구마켓의 모든 회우너들을 관리 하는곳입니다.</p>
 				<!-- DataTales Example -->
+
+				<hr class="sidebar-divider">
+
+				<!-- main -->
+				<!--search-->
+				<div class="newsletter-section pt-0 pb-30 mt-20">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 offset-lg-2">
+								<div class="newsletter">
+									<div class="newsletter-info text-center"></div>
+									<div class="subcribe clearfix">
+										<form action="#">
+											<input type="text" name="email"
+												placeholder="Enter your email here..." />
+											<button class="submit-btn-2 btn-hover-2" type="submit">검색</button>
+										</form>
+									</div>
+								</div>
+							</div>
+
+						</div>
+				
+							<select>
+								<option>아이디</option>
+								<option>이름</option>
+								<option>닉네임</option>
+								<option>이메일</option>
+								<option>이메일</option>
+							</select>
+			
+					</div>
+				</div>
+				<!--search-->
+				<!-- nurmal -->
 				<div class="card shadow mb-4">
+
 					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary">DataTables
-							Example</h6>
+						<h6 class="m-0 font-weight-bold text-primary">
+							일반유저<select class="f-right">
+								<option>정상</option>
+								<option>정지</option>
+								<option>채금</option>
+								<option>회원가입순</option>
+							</select>
+						</h6>
+
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
@@ -28,12 +71,13 @@
 								cellspacing="0">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
+										<th>회원가입 날짜</th>
+										<th>아이디</th>
+										<th>이름</th>
+										<th>문의</th>
+										<th>신고</th>
+										<th>상세정보</th>
+										<th>회원 상태</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -61,32 +105,79 @@
 						</div>
 					</div>
 				</div>
+				<!--biz-->
+				<div class="card shadow mb-4">
+
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">
+							비지니스 유저<select class="f-right">
+								<option>정상</option>
+								<option>정지</option>
+								<option>채금</option>
+								<option>회원가입순</option>
+							</select>
+						</h6>
+
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-bordered" id="dataTable" width="100%"
+								cellspacing="0">
+								<thead>
+									<tr>
+										<th>회원가입 날짜</th>
+										<th>아이디</th>
+										<th>이름</th>
+										<th>문의</th>
+										<th>신고</th>
+										<th>상세정보</th>
+										<th>회원 상태</th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>Name</th>
+										<th>Position</th>
+										<th>Office</th>
+										<th>Age</th>
+										<th>Start date</th>
+										<th>Salary</th>
+									</tr>
+								</tfoot>
+								<tbody>
+									<tr>
+										<td>Tiger Nixon</td>
+										<td>System Architect</td>
+										<td>Edinburgh</td>
+										<td>61</td>
+										<td>2011/04/25</td>
+										<td>$320,800</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!--biz-->
+
 
 			</div>
 			<!-- /.container-fluid -->
 
 		</div>
-		<!-- End of Main Content -->
-
-		<!-- Footer -->
-		<footer class="sticky-footer bg-white">
-			<div class="container my-auto">
-				<div class="copyright text-center my-auto">
-					<span>Copyright &copy; Your Website 2020</span>
-				</div>
-			</div>
-		</footer>
-		<!-- End of Footer -->
-
-
 
 	</div>
+	<!-- End of Main Content -->
 
-
-
-
-
-
-
+	<!-- Footer -->
+	<footer class="sticky-footer bg-white">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; Your Website 2020</span>
+			</div>
+		</div>
+	</footer>
+	<!-- End of Footer -->
 </body>
 </html>

@@ -1,11 +1,11 @@
 package com.goguma.rsvt.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.goguma.rsvt.service.RsvtService;
+
 
 @Controller
 public class RsvtController {
@@ -42,10 +42,7 @@ public class RsvtController {
 		return "rsvt/book0604";
 	}
 	
-	@GetMapping("/mybook04")
-	public String mybook04() {
-		return "rsvt/mybook04";
-	}
+	
 	
 }
 
