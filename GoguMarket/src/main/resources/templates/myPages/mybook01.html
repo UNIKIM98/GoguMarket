@@ -9,8 +9,6 @@
 <body>
 	<div layout:fragment="myPageContent">
 		<div class="col-lg-12">
-
-
 			<form action="#">
 
 				<div class="row">
@@ -110,15 +108,13 @@
 						</div>
 					</div>
 					<div class="col-lg-4">
-						<div class="tab-pane active" id="order-complete">
-							<div class="order-complete-content box-shadow"
-								style="padding: 20px;">
-								<a class="button extra-small mb-20" href="#"><span>1/n정산하기 </span></a> 
-								<a class="button extra-small mb-20" href="#"><span>예약변경신청</span></a> 
-								<a class="button extra-small mb-20" href="#"><span>예약취소하기</span> </a>
-								<a class="button extra-small mb-20" href="#"><span>알림설정</span> </a>
+						<div class="tab-pane active pt-30" id="order-complete">
+							<a class="button extra-small mb-20" href="#"><span>1/n정산하기
+							</span></a> <a class="button extra-small mb-20" href="#"><span>예약변경신청</span></a>
+							<a class="button extra-small mb-20" href="#"><span>예약취소하기</span>
+							</a> <a class="button extra-small mb-20" href="#" id="modalBtn"><span>알림설정</span>
+							</a>
 
-							</div>
 						</div>
 					</div>
 				</div>
@@ -127,6 +123,34 @@
 			</form>
 
 		</div>
+
+		<!-- 모달창 시작 -->
+		<div id="myBookModal" class="bookmodal">
+			<div class="bookmodal-content">
+				<span class="close">&times;</span>
+
+				<div class="row">
+					<div class="widget operating-systemmb-30">
+						<h4 class="widget-title mb-20">알림설정</h4>
+						<form action="action_page.php">
+							<label><input type="checkbox" name="" value="">일주일
+								전 알림</label><br> <label><input type="checkbox" name=""
+								value="">하루 전 알림</label><br> <label><input
+								type="checkbox" name="" value="">당일 알림</label><br> <br>
+							<label><input type="checkbox" name="" value="">알림
+								끄기</label><br> <br>
+							<div class="d-flex justify-content-center">
+								<a class="button extra-small button-black mb-20" href="#"><span>설정
+								</span> </a>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- 모달창 끝-->
+
 
 	</div>
 
