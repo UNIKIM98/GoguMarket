@@ -3,22 +3,47 @@
 <mapper namespace="com.goguma.auct.mapper.AuctMapper">
 
 
-	<select id="getAuctList" 
-			parameterType="com.goguma.auct.vo.AuctVO"
-			resultType="com.goguma.auct.vo.AuctVO">
+	<select id="getAuctList"
+		parameterType="com.goguma.auct.vo.AuctVO"
+		resultType="com.goguma.auct.vo.AuctVO">
 		SELECT *
 		FROM AUCT
 	</select>
 
 	<select id="getAuct" parameterType="string"
-							resultType="com.goguma.auct.vo.AuctVO">
+		resultType="com.goguma.auct.vo.AuctVO">
 		SELECT *
 		FROM AUCT
 		WHERE AUCT_NO = #{auctNo}
 	</select>
 
+	<insert id="insertAuct"
+		parameterType="com.goguma.auct.vo.AuctVO">
+		<selectKey keyProperty="auctNo" resultType="int"
+			order="BEFORE">
+			SELECT
+			CASE WHEN MAX(AUCT_NO) IS NULL THEN 1 ELSE
+			MAX(AUCT_NO) +
+			1 END AS auctNo
+			FROM AUCT
+		</selectKey>
 
-
+		INSERT INTO AUCT (
+		AUCT_NO, REG_YMD, DDLN_YMD, AUCT_TTL, CTGRY,
+		AUCT_CN,
+		LOW_PRC, QUICK_PRC, ATCH_ID, USER_ID
+		) VALUES (
+		#{auctNo},
+		SYSDATE,
+		#{ddlnYmd},
+		#{auctTtl},
+		#{ctgry},
+		#{auctCn},
+		#{lowPrc},
+		#{quickPrc},
+		#{atchId}, #{userId}
+		)
+	</insert>
 
 
 

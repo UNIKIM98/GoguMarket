@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>전체조회 테스트</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		[[ ${lists} ]]
+		<hr>
+<!-- 		
+<table>
+<tr th:each="auct : ${lists}">
+<td th:text="${auct.auctNo}"></td>
+<td th:text="${auct.userId}"></td>
+<td th:text="${auct.auctTtl}"></td>
+<td th:text="${auct.ctgry}"></td>
+</tr>
+</table>
+ -->
+<div th:each="auct : ${lists}">
+
+	<a th:text="${auct.auctNo}"></a>
+	<a th:text="${auct.userId}"></a>
+	<a th:text="${auct.auctTtl}"></a>
+	<a th:text="${auct.ctgry}"></a>
+</div>
+
+	</div>
+</body>
+</html>
