@@ -16,35 +16,36 @@
 
 <!-- All CSS Files -->
 <!-- Bootstrap fremwork main css -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
 <!-- Nivo-slider css -->
-<link rel="stylesheet" href="lib/css/nivo-slider.css">
+<link rel="stylesheet" href="/lib/css/nivo-slider.css">
 <!-- This core.css file contents all plugings css file. -->
-<link rel="stylesheet" href="css/core.css">
+<link rel="stylesheet" href="/css/core.css">
 <!-- Theme shortcodes/elements style -->
-<link rel="stylesheet" href="css/shortcode/shortcodes.css">
+<link rel="stylesheet" href="/css/shortcode/shortcodes.css">
 <!-- Theme main style -->
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 <!-- Responsive css -->
-<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="/css/responsive.css">
 <!-- User style -->
-<link rel="stylesheet" href="css/custom.css">
+<link rel="stylesheet" href="/css/custom.css">
 <!-- Style customizer (Remove these two lines please) -->
-<link rel="stylesheet" href="css/style-customizer.css">
+<link rel="stylesheet" href="/css/style-customizer.css">
 <link href="#" data-style="styles" rel="stylesheet">
 
-<!-- Modernizr JS -->
-<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<!-- shop 모달 css -->
+<link rel="stylesheet" href="css/shopmodal.css">
 
 
-<!-- 헤더 -->
-<th:block th:replace="layouts/header :: headerFragment"></th:block>
+
 </head>
 
-<div class=padding></div>
 
 <!-- 레이아웃에 담길 본문 content 링크 -->
 <body>
+	<!-- 헤더 -->
+	<th:block th:replace="layouts/header :: headerFragment"></th:block>
+	<div class=padding></div>
 	<div layout:fragment="content"></div>
 </body>
 
@@ -53,10 +54,11 @@
 <th:block th:replace="layouts/footer :: footerFragment"></th:block>
 
 <!-- Placed JS at the end of the document so the pages load faster -->
-
+<!-- Modernizr JS -->
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
 <!-- jquery latest version -->
 <script src="js/vendor/jquery-3.6.0.min.js"></script>
-<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+<!-- <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script> -->
 <!-- Bootstrap framework js -->
 <script src="js/bootstrap.bundle.min.js"></script>
 <!-- jquery.nivo.slider js -->
@@ -65,6 +67,10 @@
 <script src="js/plugins.js"></script>
 <!-- Main js file that contents all jQuery plugins activation. -->
 <script src="js/main.js"></script>
+<!-- shop 모달 js -->
+<script src ="js/shopmodal.js"></script>
+
+
 
 <!-- 모달창 -->
 <link rel="stylesheet" href="css/modal.css">
