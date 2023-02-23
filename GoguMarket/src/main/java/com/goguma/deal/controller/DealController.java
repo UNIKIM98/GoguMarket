@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +20,6 @@ import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
-
-
 
 @Controller
 
@@ -45,8 +42,7 @@ public class DealController {
 		paging.setTotalRecord(dealService.getcountTotal(svo));
 
 		model.addAttribute("lists", dealService.dealListSelect(svo));
-		
- 
+
 		return "deal/dealList"; // 뷰페이지명
 	}
 
@@ -54,10 +50,10 @@ public class DealController {
 	@RequestMapping("/dealdetail/{dlNo}")
 	public String getDeal(@PathVariable String dlNo, Model model) {
 		System.out.println("=================" + dlNo);
-		
+
 		int cnt = dealService.dealHitUpdate(Integer.parseInt(dlNo));
 		System.out.println(cnt);
-		
+
 		model.addAttribute("deal", dealService.getDeal(dlNo));
 		return "deal/dealdetail";
 	}
@@ -68,10 +64,28 @@ public class DealController {
 	}
 
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
-	public String dealform(DealVO vo) {
+	public String dealform(DealVO vo, MultipartFile file) {
 		System.out.println(vo + "넘어온 vo");
-		dealService.insertDeal(vo); // db 저장
-		return "deal/dealList";
+
+		String saveFolder = ("D:\\upload"); // 파일저장위치 : c 나 d 밑에다가
+
+		if (!file.isEmpty()) {// 첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼
+			String fileName = UUID.randomUUID().toString();
+			fileName = fileName + file.getOriginalFilename();
+			File uploadFile = new File(saveFolder, fileName);
+
+			try {
+				file.transferTo(uploadFile); // 실제파일저장
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			vo.setAtchId(file.getOriginalFilename()); // 저장할때는 원본파일명
+			vo.setAtchPath(saveFolder + fileName); // 물리적 위치 디렉토리포함원본파일명
+		}
+
+		dealService.insertDeal(vo);
+
+		return "redirect:dealList";
 	}
 
 	// 판매상품 등록 : 계좌정보와 아이디값이 없으면 등록할 수 없다 => @PostMapping("/deal/{acntno}/{id}")
@@ -79,24 +93,6 @@ public class DealController {
 	@PostMapping("/deal")
 	@ResponseBody
 	public DealVO insertDeal(DealVO vo, MultipartFile file) {
-
-		String saveFolder = ("D:\\upload"); // 파일저장위치 : c 나 d 밑에다가
-		
-		if (!file.isEmpty()) {//첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼 
-			String fileName = UUID.randomUUID().toString(); 
-			fileName = fileName + file.getOriginalFilename();
-			File uploadFile = new File(saveFolder, fileName);
-			
-			try {
-				file.transferTo(uploadFile); // 실제파일저장
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			vo.setAtchId(file.getOriginalFilename()); //저장할때는 원본파일명
-			vo.setAtchPath(saveFolder + fileName); //물리적 위치 디렉토리포함원본파일명
-		}
-		
-		dealService.insertDeal(vo);
 		return vo;
 
 	}
