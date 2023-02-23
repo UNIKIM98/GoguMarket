@@ -15,11 +15,9 @@ public class MemRestController {
 	// 아이디체크
 	@GetMapping("/userIdChk/{userId}")
 	public String userIdChk(@PathVariable String userId) {
-		System.out.println("=======================" + userId);
 		// 있으면 1 없으면 0
 		int chk = mService.isIdCheck(userId);
 		String result = "1";
-		System.out.println("=============" + chk);
 		if (chk == 0) {
 			result = "0";
 		}

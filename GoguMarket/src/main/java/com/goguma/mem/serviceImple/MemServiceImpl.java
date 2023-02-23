@@ -39,8 +39,10 @@ public class MemServiceImpl implements MemService {
 	}
 
 	@Override
-	public int deleteAct(MemVO mVO) {
-		return mapper.deleteAct(mVO);
+	public int deleteAct(String userId) {
+		// TODO Auto-generated method stub
+		return mapper.deleteAct(userId);
 	}
+
 
 }
