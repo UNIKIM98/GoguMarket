@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class DealVO {
 
-	private String dlNo; 	// 글번호
+	private int dlNo; 	// 글번호
 	private String ntslId; 	// 판매자
 	private String prchsId;	// 구매자
 	private String ctgry;	// 카테고리

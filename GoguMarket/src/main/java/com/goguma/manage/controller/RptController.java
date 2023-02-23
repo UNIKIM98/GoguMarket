@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RptController {
-	@GetMapping("/report")
-	public String Report() {
-		return "manage/report";
-	}
+	
 
 	@GetMapping("/manageMain")
 	public String manageMain() {
@@ -25,6 +22,13 @@ public class RptController {
 	public String boardManage() {
 		return "manage/boardManage";
 	}
+	
+	@GetMapping("/reportManage")
+	public String reportManage() {
+		return "manage/reportManage";
+	}
+	
+	
 	
 	
 
