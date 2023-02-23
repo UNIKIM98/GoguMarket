@@ -1,190 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{/layouts/layout}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-3.6.3.js"
-		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 	<script src="https://code.jquery.com/jquery-3.6.3.js" -->
+<!-- 		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
-	<div class="message-box-section mb-80">
-		<div class="container">
-			<div class="message-box box-shadow white-bg">
-				<form id="contact-form" action="/memberJoin.do" method="post" onsubmit="return frmChk()">
-					<div class="row">
-						<div class="col-lg-12">
-							<h4 class="blog-section-title border-left mb-30">회원가입</h4>
-						</div>
-						<div class="join_form" id="join_form">
-							<table>
-								<tbody>
-									<tr>
-										<th><span>아이디</span></th>
-										<td><input type="text" id="userId" name="userId" placeholder="아이디를 입력하세요."
-												required="required" style="width: 40%; margin-right: 50px;">
-											<button class="submit-btn-1 btn-hover-1" onclick="userIdCkAjax()"
-												id="userIdBtn" value="No">중복확인</button>
-										</td>
-									</tr>
-									<tr>
-										<th><span style="margin-bottom: 30px;">비밀번호</span></th>
-										<td><input type="password" id="userPw" name="userPw"
-												placeholder="영문,숫자,특수문자 포함 9자리 이상 입력해주세요." required="required"
-												style="width: 60%;"></td>
-										<div class="errorMsg"></div>
-									</tr>
-									<tr>
-										<th><span>비밀번호 확인</span></th>
-										<td><input type="password" id="userPwCk" name="userPwCk" required="required"
-												placeholder="비밀번호를 한 번 더 입력해주세요." style="width: 60%;"></td>
-									</tr>
-									<tr>
-										<th><span>이름</span></th>
-										<td><input type="text" id="userNm" name="userNm" placeholder="이름을 입력하세요."
-												required="required" style="width: 40%; margin-right: 50px;"></td>
-									</tr>
-									<tr>
-										<th><span>닉네임</span></th>
-										<td><input type="text" id="nickNm" name="nickNm" placeholder="닉네임을 입력하세요."
-												required="required" style="width: 40%; margin-right: 50px;">
-											<button class="submit-btn-1 btn-hover-1" onclick="nickNmCkAjax()"
-												id="nickNmBtn" value="No">중복확인</button>
-										</td>
-									</tr>
-									<tr>
-										<th><span>주소</span></th>
-										<td><input type="text" id="addr" name="addr" placeholder="주소를 입력해주세요."
-												style="width: 40%; margin-right: 50px;"></td>
-									</tr>
-									<tr>
-										<th class="noAfter"><span>전화번호</span></th>
-										<td><input type="text" id="mblTelno" name="mblTelno"
-												placeholder="휴대폰 번호를 입력해주세요." style="width: 40%; margin-right: 50px;">
-											<button class="submit-btn-1 btn-hover-1">인증하기</button>
-										</td>
-									</tr>
-
-								</tbody>
-							</table>
+	<div layout:fragment="content">
+		<div class="message-box-section mb-80">
+			<div class="container">
+				<div class="message-box box-shadow white-bg">
+					<form id="contact-form" action="/memberJoin.do" method="post"
+						onsubmit="return frmChk()">
+						<div class="row">
 							<div class="col-lg-12">
-								<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">회원가입</button>
-								&nbsp;&nbsp;
-								<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+								<h4 class="blog-section-title border-left mb-30">회원가입</h4>
+							</div>
+							<div class="join_form" id="join_form">
+								<table>
+									<tbody>
+										<tr>
+											<th><span>아이디</span></th>
+											<td><input type="text" id="userId" name="userId"
+												placeholder="아이디를 입력하세요." required="required"
+												style="width: 40%; margin-right: 50px;">
+												<button class="submit-btn-1 btn-hover-1"
+													onclick="userIdCkAjax()" id="userIdBtn" value="No">중복확인</button>
+											</td>
+										</tr>
+										<tr>
+											<th><span style="margin-bottom: 30px;">비밀번호</span></th>
+											<td><input type="password" id="userPw" name="userPw"
+												placeholder="영문,숫자,특수문자 포함 9자리 이상 입력해주세요."
+												required="required" style="width: 60%;"></td>
+											<div class="errorMsg"></div>
+										</tr>
+										<tr>
+											<th><span>비밀번호 확인</span></th>
+											<td><input type="password" id="userPwCk" name="userPwCk"
+												required="required" placeholder="비밀번호를 한 번 더 입력해주세요."
+												style="width: 60%;"></td>
+										</tr>
+										<tr>
+											<th><span>이름</span></th>
+											<td><input type="text" id="userNm" name="userNm"
+												placeholder="이름을 입력하세요." required="required"
+												style="width: 40%; margin-right: 50px;"></td>
+										</tr>
+										<tr>
+											<th><span>닉네임</span></th>
+											<td><input type="text" id="nickNm" name="nickNm"
+												placeholder="닉네임을 입력하세요." required="required"
+												style="width: 40%; margin-right: 50px;">
+												<button class="submit-btn-1 btn-hover-1"
+													onclick="nickNmCkAjax()" id="nickNmBtn" value="No">중복확인</button>
+											</td>
+										</tr>
+										<tr>
+											<th><span>주소</span></th>
+											<td><input type="text" id="addr" name="addr"
+												placeholder="주소를 입력해주세요."
+												style="width: 40%; margin-right: 50px;"></td>
+										</tr>
+										<tr>
+											<th class="noAfter"><span>전화번호</span></th>
+											<td><input type="text" id="mblTelno" name="mblTelno"
+												placeholder="휴대폰 번호를 입력해주세요."
+												style="width: 40%; margin-right: 50px;">
+												<button class="submit-btn-1 btn-hover-1">인증하기</button></td>
+										</tr>
 
+									</tbody>
+								</table>
+								<div class="col-lg-12">
+									<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">회원가입</button>
+									&nbsp;&nbsp;
+									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+
+								</div>
 							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-	<script type="text/javascript">
-		console.log("111");
+		<script type="text/javascript">
+			console.log("111");
 
-		//▶ submit하기 전 마지막 체크 함수
-		function frmChk() {
-			let userPw = $('#userPw');
-			let userPwCk = $('#userPwCk');
+			//▶ submit하기 전 마지막 체크 함수
+			function frmChk() {
+				let userPw = $('#userPw');
+				let userPwCk = $('#userPwCk');
 
-			if (userPw.val() != userPwCk.val()) {
-				alert("비밀번호가 일치하지 않습니다.");
-				userPw.val("");
-				userPwCk.val("");
-				userPw.focus();
-				return false;
-			} else if ($('userIdBtn').val() == 'No') {
-				alert("아이디 중복체크를 해주세요.");
-				return false;
-			}
-		}
-
-		//▶ 아이디 중복 체크 아작스 
-		function userIdCkAjax() {
-			console.log($('#userId').val());
-
-			$.ajax({
-				url: 'userIdChk/' + $('#userId').val(),
-				type: 'get',
-				dataType: 'json', //==header (html, json, text 등)
-				contentType: 'application/json; charset = utf-8',
-				success: function (data) {
-					console.log("=====왔니=======" + data);
-					userIdCk(data);
-				},
-				error: function (error) {
-					console.log(error)
+				if (userPw.val() != userPwCk.val()) {
+					alert("비밀번호가 일치하지 않습니다.");
+					userPw.val("");
+					userPwCk.val("");
+					userPw.focus();
+					return false;
+				} else if ($('userIdBtn').val() == 'No') {
+					alert("아이디 중복체크를 해주세요.");
+					return false;
 				}
-			})
-		}
-
-		//▶ 아이디 중복 체크 결과 출력
-		function userIdCk(bool) {
-			if (bool == "1") {
-				alert("사용할 수 있는 아이디입니다. :)");
-				$('#userIdBtn').val("Yes");
-				$('#userIdBtn').attr("disabled", true);
-			} else {
-				alert("이미 사용 중인 아이디입니다.");
-				$('#userId').val("");
-				$('#userId').focus();
 			}
-		}
 
-		//▶ 닉네임 중복 체크 아작스
-		function nickNmCkAjax() {
-			$.ajax({
-				url: 'nickNmChk/' + $('#nickNm').val(),
-				dataType: 'json',
-				type: 'get',
-				contentType: 'application/json; charset = utf-8',
-				success: function (result) {
-					console.log("=====왔니..." + result);
-					nickNmCk(result);
-				},
-				error: function (err) {
-					console.log(err);
-				}
-			})
-		}
+			//▶ 아이디 중복 체크 아작스 
+			function userIdCkAjax() {
+				console.log($('#userId').val());
 
-		//▶ 닉네임 중복 체크 결과 출력
-		function nickNmCk(str) {
-			if (str == "1") {
-				alert("사용가능한 닉네임입니다.");
-				$('#nickNmBtn').val("Yes");
-				$('#nickNmBtn').attr("disabled", true);
-			} else {
-				alert("이미 사용 중인 닉네임입니다.");
-				$('#nickNm').val("");
-				$('#nickNm').focus();
+				$.ajax({
+					url : 'userIdChk/' + $('#userId').val(),
+					type : 'get',
+					dataType : 'json', //==header (html, json, text 등)
+					contentType : 'application/json; charset = utf-8',
+					success : function(data) {
+						console.log("=====왔니=======" + data);
+						userIdCk(data);
+					},
+					error : function(error) {
+						console.log(error)
+					}
+				})
 			}
-		}
 
-		//▶ 비밀번호 유효성 체크
-		let pwVal = "",
-			isPwValid = false;
-		const pwInputEl = $('#userPw');
-		const pwErrMsg = $('.errorMsg');
-		pwInputEl
-			.change(function () {
-
-				//비밀번호 정규식
-				const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{9,20}$/;
-				pwVal = pwInputEl.val();
-
-				if (pwRegExp.test(pwVal)) {
-					isPwValid = true;
-					pwErrMsg.text("");
+			//▶ 아이디 중복 체크 결과 출력
+			function userIdCk(bool) {
+				if (bool == "1") {
+					alert("사용할 수 있는 아이디입니다. :)");
+					$('#userIdBtn').val("Yes");
+					$('#userIdBtn').attr("disabled", true);
 				} else {
-					isPwValid = false;
-					pwErrMsg.text("9~20자의 영문, 숫자, 특수문자를 포함한 비밀번호를 입력해주세요");
-					// pwInputEl.val(""); //지우는 건 너무 야박한감....
-					pwInputEl.focus();
+					alert("이미 사용 중인 아이디입니다.");
+					$('#userId').val("");
+					$('#userId').focus();
 				}
-			})
-	</script>
+			}
+
+			//▶ 닉네임 중복 체크 아작스
+			function nickNmCkAjax() {
+				$.ajax({
+					url : 'nickNmChk/' + $('#nickNm').val(),
+					dataType : 'json',
+					type : 'get',
+					contentType : 'application/json; charset = utf-8',
+					success : function(result) {
+						console.log("=====왔니..." + result);
+						nickNmCk(result);
+					},
+					error : function(err) {
+						console.log(err);
+					}
+				})
+			}
+
+			//▶ 닉네임 중복 체크 결과 출력
+			function nickNmCk(str) {
+				if (str == "1") {
+					alert("사용가능한 닉네임입니다.");
+					$('#nickNmBtn').val("Yes");
+					$('#nickNmBtn').attr("disabled", true);
+				} else {
+					alert("이미 사용 중인 닉네임입니다.");
+					$('#nickNm').val("");
+					$('#nickNm').focus();
+				}
+			}
+
+			//▶ 비밀번호 유효성 체크
+			let pwVal = "", isPwValid = false;
+			const pwInputEl = $('#userPw');
+			const pwErrMsg = $('.errorMsg');
+			pwInputEl
+					.change(function() {
+
+						//비밀번호 정규식
+						const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{9,20}$/;
+						pwVal = pwInputEl.val();
+
+						if (pwRegExp.test(pwVal)) {
+							isPwValid = true;
+							pwErrMsg.text("");
+						} else {
+							isPwValid = false;
+							pwErrMsg
+									.text("9~20자의 영문, 숫자, 특수문자를 포함한 비밀번호를 입력해주세요");
+							// pwInputEl.val(""); //지우는 건 너무 야박한감....
+							pwInputEl.focus();
+						}
+					})
+		</script>
+	</div>
 </body>
 
 </html>
