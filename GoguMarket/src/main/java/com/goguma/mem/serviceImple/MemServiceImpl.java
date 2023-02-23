@@ -12,20 +12,35 @@ public class MemServiceImpl implements MemService {
 
 	@Autowired
 	private MemMapper mapper;
-	
+
 	@Override
 	public int memberJoin(MemVO vo) {
 		return mapper.memberJoin(vo);
 	}
 
 	@Override
-	public boolean isIdCheck(String userId) {
+	public int isIdCheck(String userId) {
 		return mapper.isIdCheck(userId);
 	}
 
 	@Override
-	public boolean isNickNmCheck(String nickNm) {
+	public int isNickNmCheck(String nickNm) {
 		return mapper.isNickNmCheck(nickNm);
+	}
+
+	@Override
+	public MemVO selectUser(MemVO mVo) {
+		return mapper.selectUser(mVo);
+	}
+
+	@Override
+	public int updateAct(MemVO mVO) {
+		return mapper.updateAct(mVO);
+	}
+
+	@Override
+	public int deleteAct(MemVO mVO) {
+		return mapper.deleteAct(mVO);
 	}
 
 }

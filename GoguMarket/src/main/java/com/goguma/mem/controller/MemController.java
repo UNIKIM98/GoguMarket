@@ -46,7 +46,7 @@ public class MemController {
 		mVO.setUserSe("1"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
 		mVO.setUserStts("1"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감
 
-		// 비밀번호 암호화하기
+		// ※ 비밀번호 암호화하기
 		String userPw = mVO.getUserPw();
 
 		int cnt = mService.memberJoin(mVO);

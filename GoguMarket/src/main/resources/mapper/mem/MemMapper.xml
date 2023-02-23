@@ -2,35 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.mem.mapper.MemMapper">
 
-	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO" >
+	<!-- ▶ 회원가입 -->
+	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
 		INSERT INTO MEM
 		(USER_ID,
-		USER_SE, USER_PW, USER_NM, NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
+		USER_SE, USER_PW, USER_NM, NICK_NM, ADDR,
+		DEAL_AREA, MBL_TELNO,
 		BANK_NM, ACT_NO, JOIN_YMD, USER_STTS)
 		VALUES(#{userId}, #{userSe},
 		#{userPw}, #{userNm},
-		#{nickNm}, #{addr}, #{dealArea}, #{mblTelno},
+		#{nickNm}, #{addr},
+		#{dealArea}, #{mblTelno},
 		#{bankNm}, #{actNo}, SYSDATE,
 		#{userStts})
 	</insert>
-	
+
 	<!-- ▶ 아이디 중복 확인 -->
-	<select id="isIdCheck" resultType="boolean" parameterType="String">
-		SELECT CASE WHEN
-		COUNT(USER_ID) = 1 THEN 0 ELSE 1 END
+	<select id="isIdCheck" resultType="int" parameterType="String">
+		SELECT
+		COUNT(USER_ID)
 		FROM MEM
-		WHERE USER_ID =
-		#{userId}
+		WHERE USER_ID = #{userId}
 	</select>
-	
+
 	<!-- ▶ 닉네임 중복 확인 -->
-	<select id="isNickNmCheck" resultType="boolean" parameterType="String">
-		SELECT CASE WHEN COUNT(NICK_NM) = 1
-					THEN 0
-					ELSE 1
-				END
+	<select id="isNickNmCheck" resultType="int"
+		parameterType="String">
+		SELECT COUNT(NICK_NM)
 		FROM MEM
 		WHERE NICK_NM = #{nickNm}
 	</select>
 
+	<!-- ▶ 유저 한 명 정보 전체 조회 -->
+	<select id="selectUser" parameterType="com.goguma.mem.vo.MemVO"
+		resultType="com.goguma.mem.vo.MemVO">
+		SELECT * FROM MEM
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<!-- ======== 대표계좌 관련 ========= -->
+	<!-- ▶ 대표계좌 등록(변경) -->
+	<update id="updateAct" parameterType="com.goguma.mem.vo.MemVO">
+		UPDATE MEM SET ACT_NO = #{actNo}, BANK_NM = #{bankNm}
+		WHERE USER_ID = #{userId};
+	</update>
+	
+	<!-- ▶ 대표계좌 삭제 -->
+	<delete id="deleteAct" parameterType="com.goguma.mem.vo.MemVO">
+		UPDATE MEM SET ACT_NO = NULL, BANK_NM = NULL
+		WHERE USER_ID = #{userId};
+	</delete>
 </mapper>

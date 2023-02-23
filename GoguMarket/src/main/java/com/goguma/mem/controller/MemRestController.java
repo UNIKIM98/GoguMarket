@@ -16,10 +16,11 @@ public class MemRestController {
 	@GetMapping("/userIdChk/{userId}")
 	public String userIdChk(@PathVariable String userId) {
 		System.out.println("=======================" + userId);
-		boolean bool = mService.isIdCheck(userId);
+		// 있으면 1 없으면 0
+		int chk = mService.isIdCheck(userId);
 		String result = "1";
-		System.out.println("=============" + bool);
-		if (!bool) {
+		System.out.println("=============" + chk);
+		if (chk == 0) {
 			result = "0";
 		}
 
@@ -29,13 +30,13 @@ public class MemRestController {
 	// 닉네임 체크
 	@GetMapping("/nickNmChk/{nickNm}")
 	public String nickNmChk(@PathVariable String nickNm) {
-		boolean bool = mService.isNickNmCheck(nickNm);
+		int chk = mService.isNickNmCheck(nickNm);
 		String result = "1";
-		
-		if (!bool) {
+
+		if (chk == 0) {
 			result = "0";
 		}
-		
+
 		return result;
 	}
 }
