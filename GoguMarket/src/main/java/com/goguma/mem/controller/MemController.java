@@ -1,5 +1,6 @@
 package com.goguma.mem.controller;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
+
 @Controller
 public class MemController {
 
 	@Autowired
 	MemService mService;
+
 
 	@GetMapping("/myPageTest")
 	public String myPageTest() {

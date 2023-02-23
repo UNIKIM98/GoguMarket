@@ -15,8 +15,10 @@ public class AuctController {
 	@Autowired AuctMapper auctMapper;
 	
 	@GetMapping("/auctList")
+
 	public String getauctList(Model model) {
 		model.addAttribute("lists",auctMapper.getAuctList());
+
 		return "auction/auctList";
 	}
 	

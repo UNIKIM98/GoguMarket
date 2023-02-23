@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.goguma.deal.service.DealService;
+
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
@@ -23,9 +25,10 @@ import com.goguma.deal.vo.Paging;
 public class DealController {
 	
 	@Autowired
+
 	private DealService dealService;
 	//private DealMapper dealMapper;
-	
+
 	@RequestMapping("/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
 		
@@ -34,9 +37,11 @@ public class DealController {
 		 
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
+
 		paging.setTotalRecord(dealService.getcountTotal(svo));
 		
 		model.addAttribute("lists", dealService.dealListSelect(svo));
+
 		
 		return"deal/dealList"; // 뷰페이지명
 	}
@@ -46,6 +51,7 @@ public class DealController {
 	public String dealform() {
 		return "deal/dealform";
 	}
+
 	
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo) {
@@ -54,13 +60,16 @@ public class DealController {
 		return "deal/dealList";
 	}
 	
+
 	// 판매상품 등록 : 계좌정보와 아이디값이 없으면 등록할 수 없다 => @PostMapping("/deal/{acntno}/{id}")
 	// 일단 폼데이타로 부메랑에서 들어가는지 확인해보자
 	@PostMapping("/deal")
 	@ResponseBody
 	public DealVO insertDeal(DealVO vo) {
+
 		dealService.insertDeal(vo);
 		return vo;
+
 	}
 
 	// 판매상품 수정
