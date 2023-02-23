@@ -15,9 +15,8 @@ public class DealVO {
 	private String ntslId; 	// 판매자
 	private String prchsId;	// 구매자
 	private String ctgry;	// 카테고리
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date empHireDate;
+	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date dlYmd;		// 등록일
 	private String dlTtl;	// 제목
 	private String dlCn;	// 내용
@@ -25,9 +24,12 @@ public class DealVO {
 	private String stts;	// 거래상태
 	private int inqCnt;		// 조회수
 	private Date prchsYmd;	// 구매일
-	private String atchId;	// 첨부파일아이디
 	private String area;	// 거래지역
 	private String negoYn;	// 네고여부
+	
+	private String atchId;	// 첨부파일아이디
+	//첨부파일
+	private String atchPath; // 첨부파일경로
 }
 
 /*CREATE TABLE `DEAL` (
