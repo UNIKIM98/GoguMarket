@@ -15,4 +15,19 @@ public class BizController {
 	public String shop05() {
 		return "biz/shop05";
 	}
+	
+	@GetMapping("/shop06")
+	public String shop06() {
+		return "biz/shop06";
+	}
+	
+	@GetMapping("/shop07")
+	public String shop07() {
+		return "biz/shop07";
+	}
+	
+	@GetMapping("/shop08")
+	public String shop08() {
+		return "biz/shop08";
+	}
 }
