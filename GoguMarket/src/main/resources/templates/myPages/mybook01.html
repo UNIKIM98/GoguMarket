@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="myPageContent">
+		<div class="col-lg-12">
+
+
+			<form action="#">
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title text-start mb-20">
+							<h2 class="uppercase">나의 예약 리스트</h2>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- 내용 윗쪽 -->
+				<div class="row">
+
+					<div class="col-lg-8">
+						<table class="table">
+							<tr>
+								<th class="td-title-1">가게명</th>
+								<th class="td-title-1">예약일</th>
+								<th class="td-title-1">예약상태</th>
+							</tr>
+
+							<!-- tr반복 -->
+							<tr>
+								<td class="td-title-1">커피맛을 조금 아는 남자..</td>
+								<td class="td-title-1">2023-02-14 15:00</td>
+								<td class="td-title-1">예약완료</td>
+							</tr>
+
+							<tr>
+								<td class="td-title-1">커피맛을 조금 아는 남자..</td>
+								<td class="td-title-1">2023-02-14 15:00</td>
+								<td class="td-title-1">예약변경중</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="col-lg-4">달력자리</div>
+				</div>
+				<hr>
+
+				<!--내용 아랫쪽-->
+				<div class="row">
+					<div class="col-lg-6 offset-lg-1">
+						<!--테이블1 : 주문메뉴-->
+						<div class="tab-pane active" id="order-complete">
+							<div class="order-complete-content box-shadow"
+								style="padding: 20px;">
+
+								<table>
+									<tr>
+										<th class="td-title-1">메뉴</th>
+										<th class="td-title-1">수량</th>
+										<th class="td-title-2">가격</th>
+									</tr>
+									<tr>
+										<td class="td-title-1">커피커피커피</td>
+										<td class="td-title-1">1</td>
+										<td class="td-title-2">4,000원</td>
+									</tr>
+									<tr>
+										<td class="td-title-1">쿠키쿠키쿠키</td>
+										<td class="td-title-1">1</td>
+										<td class="td-title-2">6,000원</td>
+									</tr>
+									<tr>
+										<th class="order-total">합계</th>
+										<td class="order-total"></td>
+										<td class="order-total-price">10,000원</td>
+									</tr>
+								</table>
+								<hr>
+								<!--테이블2 : 시간, 인원, 요청사항-->
+								<table>
+									<tr>
+										<th class="td-title-1">예약일자</th>
+										<td class="td-title-1">2023. 02. 12(일) 오후 4:30</td>
+									</tr>
+									<tr>
+										<th class="td-title-1">예약인원</th>
+										<td class="td-title-1">3명</td>
+									</tr>
+									<tr>
+										<th class="td-title-1">예약자정보</th>
+										<td class="td-title-1">도리눈아</td>
+										<td class="td-title-1">010-0123-0123</td>
+									</tr>
+									<tr>
+									</tr>
+									<tr>
+										<th class="td-title-1">요청사항</th>
+										<td class="td-title-1" colspan="2">요청사항이 없습니다.</td>
+									</tr>
+								</table>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="tab-pane active" id="order-complete">
+							<div class="order-complete-content box-shadow"
+								style="padding: 20px;">
+								<a class="button extra-small mb-20" href="#"><span>1/n
+										정산하기 </span> </a> <a class="button extra-small mb-20" href="#"><span>예약변경신청
+								</span> </a> <a class="button extra-small mb-20" href="#"><span>알림설정
+								</span> </a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</form>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

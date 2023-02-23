@@ -7,9 +7,18 @@ public interface MemMapper {
 	int memberJoin(MemVO vo);
 
 	// ▶ 아이디 중복확인
-	boolean isIdCheck(String userId);
+	int isIdCheck(String userId);
 
 	// ▶ 닉네임 중복확인
-	boolean isNickNmCheck(String nickNm);
+	int isNickNmCheck(String nickNm);
 
+	// ▶ 유저(일반유저) 한 명 조회
+	MemVO selectUser(MemVO mVO);
+
+	// 대표계좌 관련 ========================
+	// ▶ 유저(일반유저) 대표계좌 등록
+	int updateAct(MemVO mVO);
+
+	// ▶ 유저(일반유저) 대표계좌 삭제
+	int deleteAct(MemVO mVO);
 }
