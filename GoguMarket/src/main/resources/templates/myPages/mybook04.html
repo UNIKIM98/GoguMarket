@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="myPageContent">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-lg-12">
+					<!-- Tab panes -->
+					<div class="tab-content">
+
+						<!-- checkout start -->
+						<div class="tab-pane active" id="checkout">
+						
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="section-title text-start mb-20">
+										<h2 class="uppercase">1/N 정산하기</h2>
+									</div>
+								</div>
+							</div>
+
+							<!-- 내용 윗쪽 -->
+							<div class="row">
+
+								<div class="col-lg-8">
+									<table class="table">
+										<tr>
+											<th class="td-title-1">가게명</th>
+											<th class="td-title-1">예약일</th>
+											<th class="td-title-1">정산상태</th>
+										</tr>
+
+										<!-- tr반복 -->
+										<tr>
+											<td class="td-title-1">커피맛을 조금 아는 여자..</td>
+											<td class="td-title-1">2023-02-14 15:00</td>
+											<td class="td-title-1">정산완료</td>
+										</tr>
+
+										<tr>
+											<td class="td-title-1">커피맛을 조금 아는 남자..</td>
+											<td class="td-title-1">2023-02-14 15:00</td>
+											<td class="td-title-1">미완</td>
+										</tr>
+									</table>
+								</div>
+
+								<div class="col-lg-4">달력자리</div>
+							</div>
+							<hr>
+
+							<form action="#">
+								<div class="row">
+
+									<!-- our order 왼쪽부분-->
+									<div class="col-md-6">
+										<div class="tab-pane active" id="order-complete">
+											<div class="order-complete-content box-shadow"
+												style="padding: 20px;">
+												<div class="payment-details pl-10 mb-50">
+													<h6 class="widget-title border-left mb-20">예약내역</h6>
+													<!--주문메뉴-->
+													<table>
+														<tr>
+															<th class="td-title-1">내 메뉴</th>
+															<td class="td-title-1">수량</td>
+															<td class="td-title-2">가격</td>
+														</tr>
+														<tr>
+															<td class="td-title-1">커피커피커피</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">4,000원</td>
+														</tr>
+														<tr>
+															<td class="td-title-1">쿠키쿠키쿠키</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">6,000원</td>
+														</tr>
+														<tr>
+															<td></td>
+														</tr>
+														<tr>
+															<th class="td-title-1">머루언니 메뉴</th>
+														</tr>
+														<tr>
+															<td class="td-title-1">니가만든쿠키</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">6,000원</td>
+														</tr>
+
+														<tr>
+															<td></td>
+														</tr>
+														<tr>
+															<th class="td-title-1">폴누나 메뉴</th>
+														</tr>
+														<tr>
+															<td class="td-title-1">내가만든쿠키</td>
+															<td class="td-title-1">1</td>
+															<td class="td-title-2">5,000원</td>
+														</tr>
+
+														<tr>
+															<th class="order-total">합계</th>
+															<td class="order-total"></td>
+															<td class="order-total-price">20,000원</td>
+														</tr>
+													</table>
+												</div>
+												<div class="d-flex justify-content-center">
+													<button class="submit-btn-1 mt-30 btn-hover-1"
+														type="submit">정산하기</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- billing details 왼쪽부분 예약하기 -->
+									<div class="col-md-6">
+										<div class="tab-pane active" id="order-complete">
+											<div class="order-complete-content box-shadow"
+												style="padding: 20px;">
+
+
+												<div class="payment-details pl-10 mb-50">
+													<h6 class="widget-title border-left mb-20">정산현황</h6>
+													<!--정산 테이블-->
+													<table>
+														<tr>
+															<th class="td-title-1">맴버</th>
+															<td class="td-title-1">정산금액</td>
+															<td class="td-title-1">정산여부</td>
+															<td class="td-title-1"></td>
+														</tr>
+														<!-- tr -->
+														<tr>
+															<td class="td-title-1">머루언니</td>
+															<td class="td-title-1">6,000원</td>
+															<td class="td-title-1">완료</td>
+															<td class="td-title-1">
+																<button class="btn btn-danger btn-sm" type="submit">미완</button>
+															</td>
+														</tr>
+
+														<tr>
+															<td class="td-title-1">폴눈아</td>
+															<td class="td-title-1">5,000원</td>
+															<td class="td-title-1">미완</td>
+															<td class="td-title-1">
+																<button class="btn btn-success btn-sm" type="submit">완료</button>
+															</td>
+														</tr>
+
+														<tr>
+															<th class="order-total">남은정산금액</th>
+															<td class="order-total-price">4,000원</td>
+															<td class="order-total"></td>
+															<td class="order-total"></td>
+														</tr>
+													</table>
+												</div>
+												<div class="d-flex justify-content-center">
+													<button class="submit-btn-1 mt-30 btn-hover-1"
+														type="submit">수정</button>
+													&nbsp;&nbsp;
+													<button class="submit-btn-1 mt-30 btn-hover-1"
+														type="submit">저장</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<!-- checkout end -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

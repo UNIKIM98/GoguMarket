@@ -1,5 +1,7 @@
 package com.goguma.mem.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.goguma.mem.service.ActService;
 import com.goguma.mem.service.MemService;
+import com.goguma.mem.vo.ActVO;
 import com.goguma.mem.vo.MemVO;
+
+import groovyjarjarantlr.collections.List;
 
 @Controller
 public class ActController {
@@ -24,19 +29,16 @@ public class ActController {
 	// ▶ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
 	@GetMapping("/actInfo")
 	public String auctSelect(Model model, HttpServletRequest request) {
-		System.out.println("========왔나용 actInfo===");
+		System.out.println("=======actInfo왔쓔===");
 		MemVO mVO = new MemVO();
 		// 0. 임시로그인
 		HttpSession session = request.getSession();
-		session.setAttribute("id", "user1");
-		System.out.println("세션에 담겼니==============");
+		session.setAttribute("userId", "user1");
 
 		// 1. 대표계좌번호 조회
 		mVO.setUserId("user1");
-		System.out.println("mVO에 유저 아이디담았고==============");
 
 		mVO = mService.selectUser(mVO);
-		System.out.println("selectUser했음==============" + mVO);
 		String actOne = null;
 
 		if (mVO.getActNo() == null) {
@@ -54,14 +56,21 @@ public class ActController {
 		model.addAttribute("bankNmOne", mVO.getBankNm());
 
 		// 2. 계좌번호 리스트 조회
-		System.out.println("계좌조회 직전==============");
-		model.addAttribute("bankList",aServie.getActList("user1"));
+//		model.addAttribute("bankList", aServie.getActList("user1"));
+//		System.out.println(aServie.getActList("user1").getClass().getName());
 
-		System.out.println("계좌조회 직후==============" + aServie.getActList("user1"));
+		ArrayList<ActVO> bankList = (ArrayList<ActVO>) aServie.getActList("user1");
+		System.out.println(bankList + "=========" + bankList.size());
+		if (bankList.size() != 0) {
+			model.addAttribute("bankList", bankList);
+		} else {
+			model.addAttribute("bankList", "no");
+		}
+
 		return "myPages/actInfo";
 	}
 
-	// ▶ 대표 계좌번호 삭제
+	// ▶ 대표 계좌번호 삭제 : AuctRestController
 
 	// ==============================
 	// ▶ 계좌번호 리스트 조회(최대 3개)

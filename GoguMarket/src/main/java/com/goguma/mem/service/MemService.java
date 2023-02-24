@@ -3,6 +3,7 @@ package com.goguma.mem.service;
 import com.goguma.mem.vo.MemVO;
 
 public interface MemService {
+	// 회원가입 관련 ========================
 	// ▶ 일반 회원가입
 	int memberJoin(MemVO vo);
 
@@ -20,5 +21,5 @@ public interface MemService {
 	int updateAct(MemVO mVO);
 
 	// ▶ 유저(일반유저) 대표계좌 삭제
-	int deleteAct(MemVO mVO);
+	int deleteAct(String userId);
 }

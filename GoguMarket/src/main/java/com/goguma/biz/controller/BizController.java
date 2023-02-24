@@ -26,6 +26,11 @@ public class BizController {
 		return "biz/shop07";
 	}
 	
+	@GetMapping("/shop0702")
+	public String shop0702() {
+		return "biz/shop0702";
+	}
+	
 	@GetMapping("/shop08")
 	public String shop08() {
 		return "biz/shop08";
