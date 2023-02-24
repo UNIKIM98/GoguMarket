@@ -18,21 +18,22 @@ public class AuctController {
 	AuctMapper auctMapper;
 
 	@GetMapping("/auctList")
-
 	public String getauctList(Model model) {
 		model.addAttribute("lists", auctMapper.getAuctList());
 
 		return "auction/auctList";
 	}
 
-//	@GetMapping("/auctSelect")
-//	public String auctSelect(Model model) {
-//		// 단일품
-//		model.addAttribute("auct", auctMapper.getAuct("1"));
-//		System.out.println(model.getAttribute("auct"));
-//		return "auction/auctSelect111";
-//	}
+	@GetMapping("/auctSelect")
+	public String auctSelect(Model model , AuctVO vo) {
+		// 단일품
+//		model.addAttribute(vo.getAuctNo(""));
+		return "auction/auctSelect";
+	}
 
+//	model.addAttribute("auct", auctMapper.getAuct("1"));
+//	System.out.println(model.getAttribute("auct"));
+	
 //	@GetMapping("/auctSelect/{id}")
 //	@ResponseBody
 //	public AuctVO getAuct(@PathVariable String id) {

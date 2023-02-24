@@ -21,6 +21,12 @@ public class AuctServiceImpl implements AuctService{
 	@Override
 	public int insertAuct(AuctVO vo) {
 		// 등록
+		return auctMapper.insertAuct(vo);
+	}
+
+	@Override
+	public int getAuct(AuctVO vo) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 	
