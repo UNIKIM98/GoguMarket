@@ -1,25 +1,26 @@
 // Get the modal
-var modal = document.getElementById("myModal");
+var shopmodal = document.getElementById("shopModal");
 
-//////////// Get the button that opens the modal
-var tr = document.getElementById("myTr");
+//Get the button that opens the modal
+var modaltr = document.getElementById("modalTr");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-////////////// When the user clicks on the button, open the modal
-tr.onclick = function() {
-  modal.style.display = "block";
+// When the user clicks on the button, open the modal
+modaltr.onclick = function() {
+  shopmodal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-  modal.style.display = "none";
+  shopmodal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  if (event.target == shopmodal) {
+    shopmodal.style.display = "none";
   }
 }
+

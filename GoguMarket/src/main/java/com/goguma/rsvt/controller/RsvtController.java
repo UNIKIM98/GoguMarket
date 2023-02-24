@@ -48,6 +48,16 @@ public class RsvtController {
 		return "myPages/mybook01";
 	}
 	
+	@GetMapping("/mybook02")
+	public String mybook02() {
+		return "myPages/mybook02";
+	}
+	
+	@GetMapping("/mybook04")
+	public String mybook04() {
+		return "myPages/mybook04";
+	}
+	
 	
 	
 }
