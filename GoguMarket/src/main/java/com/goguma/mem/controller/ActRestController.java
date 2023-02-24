@@ -1,5 +1,9 @@
 package com.goguma.mem.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,30 +12,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.goguma.mem.service.ActService;
 import com.goguma.mem.service.MemService;
+import com.goguma.mem.vo.ActVO;
 
 @RestController
 public class ActRestController {
 
 	@Autowired
-	ActService aServie;
+	ActService aService;
 
 	@Autowired
 	MemService mService;
 
 	// ▶ 대표 계좌번호 삭제
 	@GetMapping("/delActNo")
-	public String delActNo(HttpServletRequest request) {
-		String result = null;
+	public Map delActNo(HttpServletRequest request) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		HttpSession session = request.getSession();
 		int cnt = mService.deleteAct((String) session.getAttribute("userId"));
 
 		if (cnt == 1) {
-			result = "success";
+			map.put("result", "success");
 		} else {
-			result = "fail";
+			map.put("result", "fail");
 		}
-		return result;
+		return map;
+	}
+	
+	
+	@GetMapping("/actInfoAjax")
+	public List<ActVO> actInfoAjax(){
+		List<ActVO> list = aService.getActList("user1"); 
+		return list;
 	}
 
 }
