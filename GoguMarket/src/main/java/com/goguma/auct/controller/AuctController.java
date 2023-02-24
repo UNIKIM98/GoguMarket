@@ -18,11 +18,11 @@ import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 public class AuctController {
 
 	@Autowired
-	AuctService aService;
+	AuctService aServie;
 
 	@GetMapping("/auctList")
 	public String getauctList(Model model) {
-		model.addAttribute("lists", aService.getAuctList());
+		model.addAttribute("lists", aServie.getAuctList());
 
 		return "auction/auctList";
 	}
@@ -36,8 +36,8 @@ public class AuctController {
 		AuctVO aVO = new AuctVO();
 		aVO.setAuctNo(auctNo);
 
-		model.addAttribute("auct", aService.getAuct(aVO));
-		System.out.println("==============" + aService.getAuct(aVO));
+		model.addAttribute("auct", aServie.getAuct(aVO));
+		System.out.println("==============" + aServie.getAuct(aVO));
 		return "auction/auctSelect";
 	}
 
@@ -55,7 +55,7 @@ public class AuctController {
 		vo.setAtchId("");
 
 		// ▼if문으로 인서트 됐는지 확인하는 작업 추가!
-		int n = aService.insertAuct(vo);
+		int n = aServie.insertAuct(vo);
 		if (n != 0) {
 			System.out.println("등록완료 나중에 이거 모달로 변경");
 		} else {

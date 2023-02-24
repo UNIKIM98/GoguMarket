@@ -3,8 +3,8 @@
 <mapper namespace="com.goguma.rsvt.mapper.RsvtMapper">
 
 	<!-- 전체조회 -->
-	<select id="getBizList" parameterType="String" resultType="BizMemVO">
-		<!-- 단골 수 -->
+	<!-- <select id="getBizList" parameterType="String" resultType="BizMemVO">
+		단골 수
 		<selectKey keyProperty="dangolCnt" resultType="Integer" order="BEFORE">
 			select count(*)
 			from biz_dangol
@@ -17,7 +17,7 @@
 		후기수,
 		ctgry
 		from biz_mem;
-	</select>
+	</select> -->
 	
 	
 </mapper>
