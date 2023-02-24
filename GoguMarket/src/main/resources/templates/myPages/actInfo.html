@@ -2,19 +2,166 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/layout}">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.dropbtn {
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	min-width: 100px;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown a:hover {
+	background-color: #f1f1f1
+}
+
+.show {
+	display: block;
+}
+</style>
+<script src="js/vendor/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 	<div layout:fragment="myPageContent">
-		<p>actInfo...</p>
-		[[${actOne}]]
-		[[${bankNmOne}]]
-		<hr>
-		[[${bankList[0].bankNm}]]
-		<button>안녕</button>
-	</div>
+		<div class="wrapper">
+			<section id="page-content" class="page-wrapper section">
+				<div class="about-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="section-title text-start ">
+									<h2 class="uppercase">나의 계좌</h2>
+									<hr>
+									<h4 style="font-weight: bold;">대표계좌</h4>
+								</div>
+							</div>
+						</div>
+						<div class="mt-20" th:if="${actOne}!='no'">
+							<img src="attech/222.jpg" alt=""
+								style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+							<span th:text="${bankNmOne}" class="ml-20"
+								style="width: 25%; font-size: large;"></span> <span
+								th:text="${actOne}" class="ml-20"
+								style="width: 25%; font-size: large;"></span>
+							<div class="dropdown">
+								<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+								<div id="myDropdown" class="dropdown-content">
+									<a onclick="delAct()">삭제</a>
+								</div>
+							</div>
+						</div>
+						<div th:if="${actOne}=='no'" class="section-title text-start ">
+							<p>대표계좌를 등록해주세요 :)</p>
+						</div>
+						<br> <br> <br>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="section-title text-start ">
+									<hr>
+									<h4 style="font-weight: bold;">계좌목록</h4>
+									<p>계좌는 최대 3개까지 등록할 수 있습니다.</p>
+								</div>
+							</div>
+						</div>
+						<div>
 
+							<table class="table" border="1" th:if="${bankList != 'no'}">
+								<thead>
+									<tr>
+										<th></th>
+										<th>은행명</th>
+										<th>계좌번호</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr  th:each="bank : ${bankList}"
+										onmouseover='this.style.background="#fcecae";'
+										onmouseleave='this.style.background="#FFFFFF";'>
+										<td th:text="${bank.bankNm}"></td>
+										<td th:text="${bank.actNo}"></td>
+										<td>
+											<button type="button" class="btnInfo">조회</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+		<script th:inline="javascript">
+			function myFunction() {
+				document.getElementById("myDropdown").classList.toggle("show");
+			}
+
+			window.onclick = function(event) {
+				if (!event.target.matches('.dropbtn')) {
+
+					var dropdowns = document
+							.getElementsByClassName("dropdown-content");
+					var i;
+					for (i = 0; i < dropdowns.length; i++) {
+						var openDropdown = dropdowns[i];
+						if (openDropdown.classList.contains('show')) {
+							openDropdown.classList.remove('show');
+						}
+					}
+				}
+			}
+
+			function delAct() {
+				$.ajax({
+					url : "/delActNo",
+					type : 'get',
+					dataType : 'json',
+					contentType : 'application/json; charset = utf-8',
+					success : function(result) {
+						delAfter(result);
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				})
+			}
+
+			function delAfter(result) {
+				console.log("왔슈")
+				if (result == "success") {
+					alert("[대표계좌 삭제 성공] 계좌가 정상적으로 삭제되었습니다.");
+
+				} else {
+					alert("[대표계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다.")
+				}
+			}
+		</script>
+	</div>
 </body>
+
 </html>

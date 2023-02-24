@@ -44,12 +44,12 @@
 	<!-- ▶ 대표계좌 등록(변경) -->
 	<update id="updateAct" parameterType="com.goguma.mem.vo.MemVO">
 		UPDATE MEM SET ACT_NO = #{actNo}, BANK_NM = #{bankNm}
-		WHERE USER_ID = #{userId};
+		WHERE USER_ID = #{userId}
 	</update>
 	
 	<!-- ▶ 대표계좌 삭제 -->
-	<delete id="deleteAct" parameterType="com.goguma.mem.vo.MemVO">
+	<delete id="deleteAct" parameterType="String">
 		UPDATE MEM SET ACT_NO = NULL, BANK_NM = NULL
-		WHERE USER_ID = #{userId};
+		WHERE USER_ID = #{userId}
 	</delete>
 </mapper>
