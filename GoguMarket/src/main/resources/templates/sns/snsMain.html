@@ -3,6 +3,9 @@
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{/layouts/layout}">
 <head>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -63,52 +66,7 @@ li {
 								</div>
 							</div>
 							<div class="by-brand-product">
-								<div class="active-by-brand slick-arrow-2">
-									<div class="brand-item">
-										<div class="single-brand-product" id="clickSns">
-											<a href="#"><img src="img/product/5.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/6.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/7.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/8.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/8.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-								</div>
+								<div class="active-by-brand slick-arrow-2" id="list"></div>
 							</div>
 						</div>
 					</div>
@@ -210,18 +168,25 @@ li {
 		</div>
 
 		<!--  -->
+		<script th:inline="javascript">
+		
+		     
 
+		        $.ajax({
+		            url: "/getSnsList",		// 데이터를 가져올 경로 설정
+		            type: "get",		// 데이터를 가져오는 방식
+		            success: function(data){	// 데이터를 가져왔을때 동작. 매개변수로 data 입력
+		                alert("연결성공");
+		              
+		           
+		            }
+		        }) 	
+		   
+		</script>
 
 
 	</article>
 
-	<script type="text/javascript">
-		function name() {
-			$("#file").on('change', function() {
-				var fileName = $("#file").val();
-				$(".upload-name").val(fileName);
-			});
-		}
-	</script>
+
 </body>
 </html>
