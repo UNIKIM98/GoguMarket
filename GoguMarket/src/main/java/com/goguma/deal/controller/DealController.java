@@ -71,12 +71,14 @@ public class DealController {
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo, MultipartFile file, BoardAttachVO bvo) {
 		System.out.println(vo + "넘어온 vo");
+
 		System.out.println(bvo + "넘어온 bvo");
 		String saveFolder = ("C:\\upload"); // 파일저장위치 : c 나 d 밑에다가
 		
 		Map<String,Object>map = new HashMap<String,Object>();		
 		List<MultipartFile> attachList = attachService.insert(bvo);
 		
+
 		if (!file.isEmpty()) {// 첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼
 			String fileName = UUID.randomUUID().toString();
 			fileName = fileName + file.getOriginalFilename();

@@ -1,14 +1,25 @@
-
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
+
 <body>
-	<div layout:fragment="content">[[ ${auct.auctTtl} ]]</div>
+	<article layout:fragment="content">
+		<div class="product-item">
+
+			<h1 th:text="${auct.auctNo}"></h1>
+			<h2 th:text="${auct.auctTtl}"></h2>
+			[[ ${auct.auctCn} ]]
+			<h5 align="center" th:text="${auct.userId}"></h5>
+			<h1>리스트로</h1>
+		</div>
+	</article>
 </body>
+
 </html>

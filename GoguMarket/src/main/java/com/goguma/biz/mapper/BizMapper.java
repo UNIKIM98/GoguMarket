@@ -1,5 +1,5 @@
 package com.goguma.biz.mapper;
 
-public interface BizMemMapper {
-
+public interface BizMapper {
+	
 }

@@ -1,24 +1,34 @@
 package com.goguma.rsvt.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goguma.rsvt.service.RsvtService;
 
 @Controller
 public class RsvtController {
-	//@Autowired
-	//private RsvtService rsvtService;
 	
-	@GetMapping("/book01")	//동네가게 예약 메인
-	public String book01() {
+	@Autowired
+	private RsvtService rsvtService;
+	
+	//동네가게 예약 메인
+//	@GetMapping("/book01")		
+//	public String book01() {	
+//		return "rsvt/book01";
+//	}
+	
+	@RequestMapping("/book01")
+	public String getBizList(Model model) {
+		model.addAttribute("lists", rsvtService.getBizList());
 		return "rsvt/book01";
 	}
 	
-	@GetMapping("/book0205")
+	
+	
+	@GetMapping("/book0205")	//동네가게 상세정보
 	public String book0205() {
 		return "rsvt/book0205";
 	}

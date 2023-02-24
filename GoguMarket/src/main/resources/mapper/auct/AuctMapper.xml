@@ -10,10 +10,10 @@
 		FROM AUCT
 	</select>
 
-	<select id="getAuct" parameterType="string"
+	<select id="getAuct"
+		parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
-		SELECT *
-		FROM AUCT
+		SELECT * FROM AUCT
 		WHERE AUCT_NO = #{auctNo}
 	</select>
 
@@ -30,17 +30,10 @@
 
 		INSERT INTO AUCT (
 		AUCT_NO, REG_YMD, DDLN_YMD, AUCT_TTL, CTGRY,
-		AUCT_CN,
-		LOW_PRC, QUICK_PRC, ATCH_ID, USER_ID
-		) VALUES (
-		#{auctNo},
-		SYSDATE,
-		#{ddlnYmd},
-		#{auctTtl},
-		#{ctgry},
-		#{auctCn},
-		#{lowPrc},
-		#{quickPrc},
+		AUCT_CN, LOW_PRC, QUICK_PRC, ATCH_ID, USER_ID
+		) VALUES 		(
+		#{auctNo}, SYSDATE,	#{ddlnYmd},	#{auctTtl},
+		#{ctgry}, #{auctCn}, #{lowPrc},	#{quickPrc},
 		#{atchId}, #{userId}
 		)
 	</insert>
