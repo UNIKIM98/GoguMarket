@@ -43,9 +43,7 @@
 		ctgry,
 		dl_prc,
 		area,
-		nego_yn,
-		atch_id,
-		atch_path
+		nego_yn
 	) values (
 		#{dlNo},
 		#{dlTtl},
@@ -53,9 +51,7 @@
 		#{ctgry},
 		#{dlPrc},
 		#{area},
-		#{negoYn},
-		#{atchId},
-		#{atchPath}
+		#{negoYn}
 	)	
 	</insert>
 	
