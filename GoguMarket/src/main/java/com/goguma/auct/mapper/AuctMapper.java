@@ -7,7 +7,7 @@ import com.goguma.auct.vo.AuctVO;
 
 public interface AuctMapper {
 	List<AuctVO> getAuctList();
-	int getAuct(AuctVO vo);
+	AuctVO getAuct(AuctVO vo);
 
 	int insertAuct(AuctVO vo);
 }
