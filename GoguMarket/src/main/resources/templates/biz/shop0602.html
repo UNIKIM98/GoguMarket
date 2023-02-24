@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{biz/slide/slide}">
+
+<body>
+
+	<div layout:fragment="bizContent">
+		<div class="container">
+
+			<!-- single-product-area start -->
+			<div class="single-product-area mb-80">
+				<div class="row">
+
+					<!-- single-product-info start -->
+
+					<div class="single-product-info">
+						<div class="row">
+							<div class="col-sm-2">
+								<img class="media-object" src="img/author/1.jpg" alt="#">
+							</div>
+							<div class="col-sm-7 mt-10">
+								<h3 class="text-black-1">김또치</h3>
+								<h6 class="brand-name-2">단골 20일째</h6>
+							</div>
+							<div class="col-sm-3 mt-10">
+								<a class="button small button mb-20" href="#"><span>1:1 채팅</span>
+								</a>
+							</div>
+						</div>
+						<br>
+						<textarea class="custom-textarea" placeholder="고객에 대한 메모를 입력해보세요"
+							rows="3"></textarea>
+						<!-- hr -->
+						<hr>
+						<!-- single-product-tab -->
+						<div class="single-product-tab reviews-tab">
+							<ul class="nav mb-20">
+								<li><a class="active" href="#reviews" data-bs-toggle="tab">후기/댓글</a></li>
+								<li><a href="#order" data-bs-toggle="tab">주문내역</a></li>
+								<li><a href="#coupon" data-bs-toggle="tab">쿠폰</a></li>
+								<li><a href="#rsvt" data-bs-toggle="tab">예약내역</a></li>
+							</ul>
+							<hr>
+							<div class="tab-content">
+
+								<!-- 후기/댓글 파트 시작 -->
+								<div role="tabpanel" class="tab-pane active show" id="reviews">
+									<div class="row">
+										<div class="col-2">
+											<h4>후기</h4>
+										</div>
+										<div
+											class="col-8 pro-rating sin-pro-rating d-flex justify-content-end">
+											<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> <a
+												href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> <a
+												href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> <a
+												href="#" tabindex="0"><i class="zmdi zmdi-star-half"></i></a>
+											<a href="#" tabindex="0"><i
+												class="zmdi zmdi-star-outline"></i></a> &nbsp; <span
+												class="text-black-5">( 3.9점 / 27 개 )</span>
+										</div>
+									</div>
+									<br>
+
+									<div class="tab-pane active" id="order-complete">
+										<div class="order-complete-content box-shadow"
+											style="padding: 20px;">
+											<div class="blog-desc">
+												<div class="row">
+													<div class="col-8">
+														<div class="mb-20">
+															<div class="pull-right">
+																<ul class="reply-delate">
+																	<li><a href="#">친절해요</a></li>
+																	<li>/</li>
+																	<li><a href="#">가격이싸요</a></li>
+																	<li>/</li>
+																	<li><a href="#">만족스</a></li>
+																</ul>
+															</div>
+														</div>
+														<p>생각보다 문어가 엄청 커요~ 싱싱하고 가리비도 주문했는데 실하네용ㅎㅎ 다음에도 주문하겠습니다</p>
+													</div>
+													<div class="col-2 d-flex justify-content-end">
+														<img class="media-object" src="img/author/1.jpg" alt="#">
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<!-- 후기/댓글 파트 끝-->
+
+								<!-- 주문내역 파트 시작 -->
+								<div role="tabpanel" class="tab-pane" id="order">
+									<!-- 아코디언 목록 div-->
+									<div class="payment-method">
+										<div id="accordion">
+
+											<!-- 주문1 -->
+											<div class="panel">
+												<h4 class="payment-title box-shadow">
+													<div class="f-left">
+														<a data-bs-toggle="collapse" href="#bank-transfer"> 커피
+															뭐시기 남자 </a>
+													</div>
+													<div class="f-right mr-20">2022/02/24</div>
+												</h4>
+												<div id="bank-transfer" class="panel-collapse collapse show"
+													data-bs-parent="#accordion">
+													<div class="payment-content">
+														<div class="payment-details pl-10 mb-50">
+															<table>
+																<tr>
+																	<th class="td-title-1">메뉴</th>
+																	<td class="td-title-1">수량</td>
+																	<td class="td-title-2">가격</td>
+																</tr>
+																<tr>
+																	<td class="td-title-1">커피커피커피</td>
+																	<td class="td-title-1">1</td>
+																	<td class="td-title-2">4,000원</td>
+																</tr>
+																<tr>
+																	<td class="td-title-1">쿠키쿠키쿠키</td>
+																	<td class="td-title-1">1</td>
+																	<td class="td-title-2">6,000원</td>
+																</tr>
+																<tr>
+																	<th class="order-total">합계</th>
+																	<td class="order-total"></td>
+																	<td class="order-total-price">20,000원</td>
+																</tr>
+															</table>
+
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<!-- 아코디언 목록 끝 -->
+								</div>
+								<!-- 주문내역 파트 끝-->
+
+								<!-- 쿠폰내역 파트 시작 -->
+								<div role="tabpanel" class="tab-pane" id="coupon">
+									<div class="row row-cols-1 d-flex justify-content-center">
+										<div class="col ml-30">
+											<a class="button medium button-white mb-20" href="#"><span>쿠폰쓰
+											</span> </a>
+										</div>
+										<div class="col ml-30">
+											<a class="button medium button-white mb-20" href="#"><span>쿠폰쓰
+											</span> </a>
+										</div>
+									</div>
+								</div>
+								<!-- 쿠폰내역 파트 끝 -->
+
+								<!-- 예약내역 파트 시작 -->
+								<div role="tabpanel" class="tab-pane" id="rsvt">
+									<!-- 아코디언 목록 div-->
+									<div class="payment-method">
+										<div id="accordion">
+
+											<!-- 주문1 -->
+											<div class="panel">
+												<h4 class="payment-title box-shadow">
+													<div class="f-left">
+														<a data-bs-toggle="collapse" href="#bank-transfer">
+															푸줏간에서 튀긴 닭다리 족발 </a>
+													</div>
+													<div class="f-right mr-20">2022/02/24</div>
+												</h4>
+												<div id="bank-transfer" class="panel-collapse collapse show"
+													data-bs-parent="#accordion">
+													<div class="payment-content">
+														<div class="payment-details pl-10 mb-50">
+															<table>
+																<tr>
+																	<th class="td-title-1">메뉴</th>
+																	<td class="td-title-1">수량</td>
+																	<td class="td-title-2">가격</td>
+																</tr>
+																<tr>
+																	<td class="td-title-1">커피커피커피</td>
+																	<td class="td-title-1">1</td>
+																	<td class="td-title-2">4,000원</td>
+																</tr>
+																<tr>
+																	<td class="td-title-1">쿠키쿠키쿠키</td>
+																	<td class="td-title-1">1</td>
+																	<td class="td-title-2">6,000원</td>
+																</tr>
+																<tr>
+																	<th class="order-total">합계</th>
+																	<td class="order-total"></td>
+																	<td class="order-total-price">20,000원</td>
+																</tr>
+															</table>
+															<table>
+																<tr>
+																	<th class="td-title-1">예약일자</th>
+																	<td class="td-title-1">2023. 02. 12(일) 오후 4:30</td>
+																</tr>
+																<tr>
+																	<th class="td-title-1">예약인원</th>
+																	<td class="td-title-1">3명</td>
+																</tr>
+																<tr>
+																	<th class="td-title-1">대표 예약자 정보</th>
+																	<td class="td-title-1">도리눈아</td>
+																	<td class="td-title-1">010-0123-0123</td>
+																</tr>
+																<tr>
+																</tr>
+																<tr>
+																	<th class="td-title-1">요청사항</th>
+																	<td class="td-title-1" colspan="2">없ㅅ븜</td>
+																</tr>
+															</table>
+
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<!-- 아코디언 목록 끝 -->
+								</div>
+								<!-- 예약내역 파트 끝-->
+
+							</div>
+						</div>
+						<!--  hr -->
+						<hr>
+
+					</div>
+
+					<!-- single-product-info end -->
+				</div>
+			</div>
+			<!-- single-product-area end -->
+		</div>
+
+	</div>
+
+</body>
+
+</html>
