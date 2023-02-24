@@ -134,49 +134,41 @@ li {
 				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
 					<button class="close1" onclick=""
 						style="color: black; padding: 10px;">x</button>
-					<form action="#">
+					<form action="insertSns">
 						<div class="login-account p-30 box-shadow mtb-15">
-							<div class="col-lg-4 col-md-6 pb-30">
+							<div class="col-lg-4 col-md-6 pb-10">
+
+
 								<div class="banner-item banner-3">
 									<div class="banner-img">
 										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
 									</div>
-									<div class="banner-info">
-										<h3 class="banner-title-2">
-											<a href="#">Product Name</a>
-										</h3>
-										<ul class="banner-featured-list">
-											<li><i class="zmdi zmdi-check"></i><span>Lorem
-													ipsum dolor</span></li>
-											<li><i class="zmdi zmdi-check"></i><span>amet,
-													consectetur</span></li>
-											<li><i class="zmdi zmdi-check"></i><span>adipisicing
-													elitest,</span></li>
-											<li><i class="zmdi zmdi-check"></i><span>eiusmod
-													tempor</span></li>
-											<li><i class="zmdi zmdi-check"></i><span>labore
-													et dolore.</span></li>
-										</ul>
-										<div class="banner-button">
-											<a href="#">Discover <i
-												class="zmdi zmdi-long-arrow-right"></i></a>
-										</div>
-									</div>
+
+									<input type="file" class="mt-10" id="atchId" name="atchId">
 								</div>
+
 							</div>
-							<input type="text" name="title" placeholder="title">
-							<textarea name="title" class="mb-15"
+
+							<input type="hidden" name="snsNo" id="snsNo"> <input
+								type="hidden" name="userId" id="userId">
+							<textarea name="snsCn" id="snsCn" class="mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
-							<input type="text" name="hashTag" placeholder="hashTag">
+							<input type="radio" name="hash" id="hash" value="별로애요">별로애요
+							<input type="radio" name="hash" id="hash" value="나쁘지 않을것 같아요">나쁘지
+							않을것 같아요 <input type="radio" name="hash" id="hash" value="좋아요">좋아요
+							<input type="radio" name="hash" id="hash" value="꼭 디시 올거에요">꼭
+							디시 올거에요 <input type="hidden" name="area" id="area" value="">
+							<input type="hidden" name="atch_Id" id="atchId" value="">
+							<input type="hidden" name="likeNocs" id="likeNocs" value=0>
 
 						</div>
+
+
 						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
 					</form>
 				</div>
 				<div class="modal-footer" style="background-color: #000000;">
-					<h3 class="text-white mb-0" style="opacity: 70%;">${id}
-						@gogu.ma</h3>
-				</div>
+					&nbsp;</div>
 			</div>
 
 		</div>
@@ -191,9 +183,8 @@ li {
 				<div class="Sns-body">
 					<form action="#">
 						<div>
-							<span class="ml-10">2023-02-23</span>
-							<img src="img/blog/10.jpg" alt="" class="ml-5" id=""
-								style="width: 100%;">
+							<span class="ml-10">2023-02-23</span> <img src="img/blog/10.jpg"
+								alt="" class="ml-5" id="" style="width: 100%;">
 
 							<h3 class="mt-10 ml-20">개미 같은 인생</h3>
 						</div>
@@ -202,7 +193,7 @@ li {
 				</div>
 				<div class="Sns-footer"></div>
 				<div class="Sns-Cn">
-					<div class="writeCn pb-10" style="width: 100%;" >
+					<div class="writeCn pb-10" style="width: 100%;">
 
 						<span class="mb-120">이 세상 많은 이들 살고는 있지만 개미같이 사는 사람 속은 베짱이
 							같이 사는 사람 어떤 이는 일만 하고 수 없이 반복하고 어떤 이는 놀고 먹고 수없이 돈을 벌고 어떤것이 옳은 일인지
@@ -224,6 +215,13 @@ li {
 
 	</article>
 
-
+	<script type="text/javascript">
+		function name() {
+			$("#file").on('change', function() {
+				var fileName = $("#file").val();
+				$(".upload-name").val(fileName);
+			});
+		}
+	</script>
 </body>
 </html>
