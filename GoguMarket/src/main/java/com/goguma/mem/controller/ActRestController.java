@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.goguma.mem.service.ActService;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.ActVO;
+import com.goguma.mem.vo.MemVO;
 
 @RestController
 public class ActRestController {
@@ -38,12 +39,24 @@ public class ActRestController {
 		}
 		return map;
 	}
-	
-	
+
 	@GetMapping("/actInfoAjax")
-	public List<ActVO> actInfoAjax(){
-		List<ActVO> list = aService.getActList("user1"); 
-		return list;
+	public Map actInfoAjax() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		MemVO mVO = new MemVO();
+		mVO.setUserId("user1");
+
+		mVO = mService.selectUser(mVO);
+		if (mVO.getBankNm() == null) {
+			System.out.println("null");
+			mVO.setBankNm("Nothing");
+		}
+		// ▶ 대표계좌
+		map.put("memAct", mVO);
+
+		// ▶ 계좌 전체
+		map.put("actList", aService.getActList("user1"));
+		return map;
 	}
 
 }
