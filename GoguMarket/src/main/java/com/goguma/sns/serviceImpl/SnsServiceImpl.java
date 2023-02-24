@@ -1,7 +1,6 @@
 package com.goguma.sns.serviceImpl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,8 @@ public class SnsServiceImpl implements SnsService {
 	
 	
 	@Override
-	public List<Map> getSnsList() {
-		// TODO Auto-generated method stub
+	public List<SnsVO> getSnsList() {
+		System.out.println("???/");
 		return map.getSnsList();
 	}
 

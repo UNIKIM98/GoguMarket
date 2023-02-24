@@ -6,7 +6,7 @@ import java.util.Map;
 import com.goguma.sns.vo.SnsVO;
 
 public interface SnsService {
-	List<Map> getSnsList();
+	List<SnsVO> getSnsList();
 
 	int getCountTotal(SnsVO vo);
 
