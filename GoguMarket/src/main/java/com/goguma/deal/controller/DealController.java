@@ -67,7 +67,7 @@ public class DealController {
 	public String dealform(DealVO vo, MultipartFile file) {
 		System.out.println(vo + "넘어온 vo");
 
-		String saveFolder = ("D:\\upload"); // 파일저장위치 : c 나 d 밑에다가
+		String saveFolder = ("C:\\upload"); // 파일저장위치 : c 나 d 밑에다가
 
 		if (!file.isEmpty()) {// 첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼
 			String fileName = UUID.randomUUID().toString();

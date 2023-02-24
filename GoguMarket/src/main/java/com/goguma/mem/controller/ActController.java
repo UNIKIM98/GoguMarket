@@ -1,6 +1,8 @@
 package com.goguma.mem.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,8 +16,6 @@ import com.goguma.mem.service.ActService;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.ActVO;
 import com.goguma.mem.vo.MemVO;
-
-import groovyjarjarantlr.collections.List;
 
 @Controller
 public class ActController {
@@ -59,7 +59,7 @@ public class ActController {
 //		model.addAttribute("bankList", aServie.getActList("user1"));
 //		System.out.println(aServie.getActList("user1").getClass().getName());
 
-		ArrayList<ActVO> bankList = (ArrayList<ActVO>) aServie.getActList("user1");
+		List<ActVO> bankList = aServie.getActList("user1");
 		System.out.println(bankList + "=========" + bankList.size());
 		if (bankList.size() != 0) {
 			model.addAttribute("bankList", bankList);
