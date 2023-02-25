@@ -65,9 +65,13 @@ li {
 									</div>
 								</div>
 							</div>
+							<form>
 							<div class="by-brand-product">
-								<div class="active-by-brand slick-arrow-2" id="list"></div>
+								<div class="active-by-brand slick-arrow-2" id="list">
+								
+								</div>
 							</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -145,6 +149,7 @@ li {
 								alt="" class="ml-5" id="" style="width: 100%;">
 
 							<h3 class="mt-10 ml-20">개미 같은 인생</h3>
+							
 						</div>
 					</form>
 
@@ -169,19 +174,31 @@ li {
 
 		<!--  -->
 		<script th:inline="javascript">
-		
-		     
+			$.ajax({
+				url : "/getSnsList", // 데이터를 가져올 경로 설정
+				type : "GET", // 데이터를 가져오는 방식
+				dataType : 'json',
+				contentType : 'application/json; charset = utf-8',
+				success : function(result) {
+						console.log(result)
+						for(sns of result){
+							$("#list").append(`<div class="brand-item" onclick="snsModal()">
+		                            <div class="single-brand-product" id="clickSns">
+		                            ${sns.userId} / ${sns.snsYmd}
+		                            <input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+		                            <input type="hidden" id="userId" name="userId" value="${sns.userId}">
+		                         	<img th: src="${sns.atchPath}" alt=""></a>
+		                        </div>
+		                    </div>`)
+		                   
+						}
+					
 
-		        $.ajax({
-		            url: "/getSnsList",		// 데이터를 가져올 경로 설정
-		            type: "get",		// 데이터를 가져오는 방식
-		            success: function(data){	// 데이터를 가져왔을때 동작. 매개변수로 data 입력
-		                alert("연결성공");
-		              
-		           
-		            }
-		        }) 	
-		   
+				},
+				error : function(err) {
+					console.log(err);
+				}
+			})
 		</script>
 
 

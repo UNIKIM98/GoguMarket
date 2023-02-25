@@ -5,6 +5,7 @@ import java.sql.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.goguma.common.vo.AtchVO;
 
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class SnsVO {
 	private Date snsYmd;
 	private String area;
 	private String atchId;
+	private String atchPath;
 	private int inqCnt;
 
 }

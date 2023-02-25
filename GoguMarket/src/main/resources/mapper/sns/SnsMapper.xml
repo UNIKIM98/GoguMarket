@@ -1,41 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.sns.mapper.SnsMapper">
-	<select id="getSnsList">
-		SELECT * FROM SNS
+	<select id="getSnsList" resultType="com.goguma.sns.vo.SnsVO">
+		SELECT s.*,a.*
+		FROM SNS s JOIN ATCH a
+		ON s.ATCH_ID = a.ATCH_ID
+
 	</select>
 
-	<insert id="insertSns">
-		<selectKey keyProperty="snsNo" resultType="int"
-			order="BEFORE">
-			SELECT
-			CASE WHEN MAX(sns_no) IS NULL THEN 1 ELSE
-			MAX(sns_no) + 1
-			END as snsNo
-			FROM sns
-		</selectKey>
-		insert into sns (
-		sns_No,
-		user_Id,
-		sns_Cn,
-		hash,
-		like_Nocs,
-		CMNT
-		sns_Ymd,
-		area,
-		atch_Id,
-		INQ_CNT
-		) values (
-		#{snsNo},
-		#{userId},
-		#{snsCn},
-		#{hash},
-		#{likeNocs},
-		2,
-		sysdate,
-		#{area},
-		#{atchId},
-		1
-		)
-	</insert>
 </mapper>
