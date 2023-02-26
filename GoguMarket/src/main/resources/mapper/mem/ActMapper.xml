@@ -22,10 +22,10 @@
 	</update>
 	
 	<!-- ▶ 4. 전체계좌 중 하나 삭제(2도 같이 진행) -->
-	<delete id="deleteActListOne" parameterType="com.goguma.mem.vo.ActVO">
+	<update id="deleteActListOne" parameterType="com.goguma.mem.vo.ActVO">
 	DELETE ACT 
 	WHERE ACT_NO = #{actNo}
-	</delete>
+	</update>
 	
 	<!-- ▶ 5. 전체 계좌 조회(최대 3개) -->
 	<select id="getActList" resultType="com.goguma.mem.vo.ActVO">

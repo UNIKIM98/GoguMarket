@@ -110,8 +110,8 @@ public class ActRestController {
 	}
 
 	// ▶ 전체계좌 중 하나 삭제
-	@GetMapping("/deleteActListOne/{actNo}")
-	public Map deleteActListOne(HttpServletRequest request, @PathVariable int actNo) {
+	@GetMapping("/deleteActListOne/{actNo}/{memActNoYn}")
+	public Map deleteActListOne(HttpServletRequest request, @PathVariable int actNo, @PathVariable String memActNoYn) {
 		// 리턴할 hashMap 생성
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -127,23 +127,13 @@ public class ActRestController {
 		System.out.println("메퍼에 보내는 aVO==========" + aVO);
 
 		// 대표계좌에서 삭제
-		int cnt = aService.deleteMemAct(aVO);
+		if (memActNoYn == "Y") {
+			aService.deleteMemAct(aVO);
+		}
 
 		// 전체 계좌에서 삭제
-		cnt += aService.deleteActListOne(aVO);
-		if(cnt>1) {			
-			map.put("result", "success");	
-			
-			aVO = aService.getMemAct(userId);
-			map.put("memAct", aVO);
-			
-			if (aVO == null) {
-				map.put("memAct", "Nothing");
-			}
-
-		}else {
-			map.put("reuslt", "fail");
-		}
+		int cnt = aService.deleteActListOne(aVO);
+		map.put("result", cnt);
 
 		return map;
 

@@ -46,6 +46,7 @@
 		//▶ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
 		$(function(){
 			actInfoAjax();
+			var memActNo = '';
 		})
 		function actInfoAjax(){
 			$.ajax({
@@ -54,7 +55,6 @@
 			dataType: 'json',
 			contentType: 'application/json; charset = utf-8',
 			success: function (result) {
-				console.log("첫번째아작스 왓다능")
 				memActMake(result.memAct); //→ 대표계좌
 				actListMake(result.actList); //→ 계좌 전체 목록 
 			},
@@ -110,14 +110,18 @@
 		//▷ 전체 계좌에서 한 개 삭제
 		function deleteActListOne(event){
 			let actNo = $(event.target).parent().parent().attr('id');
+			let memActNoYn = 'N';
+			if(actNo == memActNo){
+				memActNoYn = "Y"
+			}
+
 			$.ajax({
-				url: "/deleteActListOne/"+actNo,
+				url: "/deleteActListOne/"+actNo+"/"+memActNoYn,
 				type: 'get',
 				dataType: 'json',
 				contentType: 'application/json; charset = utf-8',
 				success: function (result) {
-					console.log(result.result);
-					deleteActListOneAfter(result, actNo);
+					deleteActListOneAfter(result, actNo, memActNoYn);
 				},
 				error: function (err) {
 					console.log(err);
@@ -125,8 +129,8 @@
 			})
 		}
 		//▷ 전체 계좌 중 한 개 DB 삭제 이후
-		function deleteActListOneAfter(result, actNo){
-			if(result.result =='fail'){
+		function deleteActListOneAfter(result, actNo, memActNoYn){
+			if(result.result != 1){
 				alert("[계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다. :()")
 			}else{
 				alert("[계좌 삭제 성공] 계좌를 성공적으로 삭제하였습니다. :D)")
@@ -140,7 +144,8 @@
 				</tr>
 
 				`)
-				if(result.memAct == "Nothing"){
+				if(memActNoYn == "Y"){
+					memActNo = '';
 					// # 대표계좌 화면에서 지우기
 					$("#memActSection").children().eq(1).children().remove();
 
@@ -155,7 +160,12 @@
 		//▷ 대표계좌로 설정하기
 		function updateMemActAjax(event){
 			let actNo = $(event.target).parent().parent().attr('id');
-			$.ajax({
+
+			if(actNo ==memActNo){
+				alert("이미 대표계좌로 등록되어있는 계좌번호입니다 :D");
+			}
+			else{
+				$.ajax({
 				url: "/updateMemActAjax/"+actNo,
 				type: 'get',
 				dataType: 'json',
@@ -167,6 +177,8 @@
 					console.log(err);
 				}
 			})
+			}
+			
 		}
 
 		//▷ 대표계좌 설정 변경 이후
@@ -175,6 +187,8 @@
 				alert("[대표계좌 변경 실패] 대표계좌 변경 중 오류가 발생하였습니다. :()")
 			}else{
 				alert("[대표계좌 변경 성공] 대표계좌를 성공적으로 변경하였습니다 :D");
+				memActNo = result.actNo;
+
 				$("#memActSection").children().eq(1).html(
 					`
 				<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
@@ -201,6 +215,7 @@
 
 				//# 대표계좌 있을 때 : 대표계좌 정보 출력
 			} else {
+				memActNo = result.actNo;
 				$("#memActSection").children().eq(1).html(
 					`
 				<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
@@ -220,7 +235,6 @@
 		//▷ 대표계좌 드롭다운 버튼 : http://www.w3bai.com/ko/howto/howto_js_dropdown.html 참고
 		function myFunction() {
 			document.getElementById("myDropdown").classList.toggle("show");
-
 		}
 		window.onclick = function (event) {
 			if (!event.target.matches('.dropbtn')) {
@@ -255,6 +269,8 @@
 		function delMemActAjaxAfter(data) {
 			if (data == "success") {
 				alert("[대표계좌 삭제 성공] 계좌가 정상적으로 삭제되었습니다.");
+				memActNo = '';
+
 				// # 대표계좌 화면에서 지우기
 				$("#memActSection").children().eq(1).children().remove();
 
