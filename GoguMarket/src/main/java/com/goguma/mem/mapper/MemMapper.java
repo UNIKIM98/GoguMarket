@@ -16,10 +16,4 @@ public interface MemMapper {
 	// ▶ 유저(일반유저) 한 명 조회
 	MemVO selectUser(MemVO mVO);
 
-	// 대표계좌 관련 ========================
-	// ▶ 유저(일반유저) 대표계좌 등록
-	int updateAct(MemVO mVO);
-
-	// ▶ 유저(일반유저) 대표계좌 삭제
-	int deleteAct(String userId);
 }
