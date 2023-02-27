@@ -17,14 +17,13 @@ btn.onclick = function() {
 }
 
 
-function snsModal(id) {
+function snsModal(id,atchId) {
 
 	//When the user clicks the button, open the modal
 	Sns.style.display = "block";
 
 	//전 이벤트 자식중 아이디값과 이미지 아이디 값을 가져옴
 	let sns = document.getElementById("clickSns")
-
 
 	//단건을 조회하는 ajax를 실행
 	console.log(id)
@@ -33,11 +32,11 @@ function snsModal(id) {
 	$.ajax({
 		url:"/selectSns",
 		type: "GET",
-		data: {id},
-		  dataType: 'json',
+		data: {id,atchId},
+		dataType: 'json',
       })
 		.then(obj => {
-			console.log(vo.userId)
+			console.log(obj.userId)
 		
 		});
 

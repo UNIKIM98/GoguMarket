@@ -48,6 +48,12 @@ li {
 															<button class="submit-btn-2 btn-hover-2" type="submit">subcribe</button>
 														</form>
 													</div>
+													<select class="mt-10 ml-30">
+														<option>아이디</option>
+														<option>이름</option>
+														<option>제목</option>
+													</select>
+														
 												</div>
 												<div class="newsletter-info text-center">
 													<ul class="pl-120">
@@ -103,23 +109,26 @@ li {
 									<div class="banner-img">
 										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
 									</div>
-
-									<input type="file" class="mt-10" id="atchId" name="atchId">
+									<input type="file" class="mt-10" id="atchPath" name="atchPath">
+									<input type="file" class="mt-10" id="atchPath" name="atchPath">
 								</div>
 
 							</div>
 
-							<input type="hidden" name="snsNo" id="snsNo"> <input
-								type="hidden" name="userId" id="userId">
+							<input type="hidden" name="userId" id="userId">
 							<textarea name="snsCn" id="snsCn" class="mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
-							<input type="radio" name="hash" id="hash" value="별로애요">별로애요
-							<input type="radio" name="hash" id="hash" value="나쁘지 않을것 같아요">나쁘지
-							않을것 같아요 <input type="radio" name="hash" id="hash" value="좋아요">좋아요
-							<input type="radio" name="hash" id="hash" value="꼭 디시 올거에요">꼭
-							디시 올거에요 <input type="hidden" name="area" id="area" value="">
-							<input type="hidden" name="atch_Id" id="atchId" value="">
-							<input type="hidden" name="likeNocs" id="likeNocs" value=0>
+							<input type="text" name="hash" id="hash" value="별로애요">별로애요
+							<input type="hidden" name="area" id="area" value="">
+							<!--snsNO : XML에서 입력-->
+							<!--likeNocs : xml초기값 0 입력 -->
+							<!--댓글번호 : xml초기값 0 입력 -->
+							<!-- 게시 날짜 : xml sysdate 입력 -->
+							<!-- 조회수 : xml 0 입력 -->
+							
+
+
+
 
 						</div>
 
@@ -143,8 +152,9 @@ li {
 				<div class="Sns-body">
 					<form action="#">
 						<div>
-							<span class="ml-10" id="snsYmd">2023-02-23</span> <img src="img/blog/10.jpg"
-								alt="" class="ml-5" id="atchPath" style="width: 100%;">
+							<span class="ml-10" id="snsYmd">2023-02-23</span> <img
+								src="img/blog/10.jpg" alt="" class="ml-5" id="atchPath"
+								style="width: 100%;">
 
 							<h3 class="mt-10 ml-20"></h3>
 
@@ -181,11 +191,11 @@ li {
 						console.log(result)
 						for(sns of result){
 							$("#list").append(`<div class="brand-item" >
-		                            <div class="single-brand-product" id="clickSns" onclick="snsModal(${sns.snsNo})">
+		                            <div class="single-brand-product" id="clickSns" onclick="snsModal(${sns.snsNo},${sns.atchId})">
 		                            ${sns.userId} / ${sns.snsYmd}
 		                            <input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
 		                            <input type="hidden" id="userId" name="userId" value="${sns.userId}">
-		                         	<img th: src="${sns.atchPath}" alt=""></a>
+		                         	<img src="${sns.atchPath}" alt=""></a>
 		                        </div>
 		                    </div>`)
 		                   

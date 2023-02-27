@@ -25,5 +25,6 @@ public class SnsVO {
 	private String atchId;
 	private String atchPath;
 	private int inqCnt;
+	
 
 }
