@@ -3,6 +3,9 @@
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{/layouts/layout}">
 <head>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -62,54 +65,11 @@ li {
 									</div>
 								</div>
 							</div>
-							<div class="by-brand-product">
-								<div class="active-by-brand slick-arrow-2">
-									<div class="brand-item">
-										<div class="single-brand-product" id="clickSns">
-											<a href="#"><img src="img/product/5.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/6.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/7.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/8.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
-									<div class="brand-item">
-										<div class="single-brand-product">
-											<a href="single-product.html"><img
-												src="img/product/8.jpg" alt=""></a>
-											<h3 class="brand-title text-gray">
-												<a href="#">Brand name</a>
-											</h3>
-										</div>
-									</div>
+							<form>
+								<div class="by-brand-product">
+									<div class="active-by-brand slick-arrow-2" id="list"></div>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -183,10 +143,11 @@ li {
 				<div class="Sns-body">
 					<form action="#">
 						<div>
-							<span class="ml-10">2023-02-23</span> <img src="img/blog/10.jpg"
-								alt="" class="ml-5" id="" style="width: 100%;">
+							<span class="ml-10" id="snsYmd">2023-02-23</span> <img src="img/blog/10.jpg"
+								alt="" class="ml-5" id="atchPath" style="width: 100%;">
 
-							<h3 class="mt-10 ml-20">개미 같은 인생</h3>
+							<h3 class="mt-10 ml-20"></h3>
+
 						</div>
 					</form>
 
@@ -210,18 +171,37 @@ li {
 		</div>
 
 		<!--  -->
+		<script th:inline="javascript">
+			$.ajax({
+				url : "/selectSnsList", // 데이터를 가져올 경로 설정
+				type : "GET", // 데이터를 가져오는 방식
+				dataType : 'json',
+				contentType : 'application/json; charset = utf-8',
+				success : function(result) {
+						console.log(result)
+						for(sns of result){
+							$("#list").append(`<div class="brand-item" >
+		                            <div class="single-brand-product" id="clickSns" onclick="snsModal(${sns.snsNo})">
+		                            ${sns.userId} / ${sns.snsYmd}
+		                            <input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+		                            <input type="hidden" id="userId" name="userId" value="${sns.userId}">
+		                         	<img th: src="${sns.atchPath}" alt=""></a>
+		                        </div>
+		                    </div>`)
+		                   
+						}
+					
 
+				},
+				error : function(err) {
+					console.log(err);
+				}
+			})
+		</script>
 
 
 	</article>
 
-	<script type="text/javascript">
-		function name() {
-			$("#file").on('change', function() {
-				var fileName = $("#file").val();
-				$(".upload-name").val(fileName);
-			});
-		}
-	</script>
+
 </body>
 </html>

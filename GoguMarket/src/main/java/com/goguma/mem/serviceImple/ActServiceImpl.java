@@ -20,4 +20,24 @@ public class ActServiceImpl implements ActService {
 		return actMapper.getActList(userId);
 	}
 
+	@Override
+	public ActVO getMemAct(String userId) {
+		return actMapper.getMemAct(userId);
+	}
+
+	@Override
+	public int deleteMemAct(ActVO aVO) {
+		return actMapper.deleteMemAct(aVO);
+	}
+
+	@Override
+	public int updateMemAct(ActVO aVO) {
+		return actMapper.updateMemAct(aVO);
+	}
+
+	@Override
+	public int deleteActListOne(ActVO aVO) {
+		return actMapper.deleteActListOne(aVO);
+	}
+
 }
