@@ -111,7 +111,7 @@
 
                                         <div class="col-lg-6" style="width: 550px">
                                             <h5>경매종료일</h5>
-                                            <input type="date" name="conEmail">
+                                            <input type="date" name="ddlnYmd">
                                         </div>
                                     
                                         <div class="col-lg-12">
@@ -120,18 +120,19 @@
                                         </div>
 
                                         <div class="col-lg-12">
-                                            <input type="file" name="atchId" placeholder="첨부파일"
-                                                onchange="previewImage(this,'View_area')">
+                                            <input type="file" name="files" placeholder="첨부파일"
+                                                onchange="previewImage(this,'View_area')"
+                                                multiple="multiple">
                                         </div>
 
                                         
                                         <button class="submit-btn-1 mt-30 btn-hover-1" type="reset"
-                                                style="left: 400px">취소</button>
+                                                >취소</button>
                                         <button class="submit-btn-1 mt-30 btn-hover-1"
                                                 onclick="goList()"
-                                                style="left: 400px">목록</button>
+                                                style="left: 100px">목록</button>
                                         <button class="submit-btn-1 mt-30 btn-hover-1" type="submit"
-                                                style="left: 400px">상품등록 완료</button>
+                                                style="left: 200px">상품등록 완료</button>
                                     
                                         <!-- </div> -->
                                         <p class="form-message"></p>

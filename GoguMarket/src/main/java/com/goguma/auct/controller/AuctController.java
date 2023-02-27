@@ -1,5 +1,7 @@
 package com.goguma.auct.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.auct.mapper.AuctMapper;
 import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctVO;
+import com.goguma.common.service.AtchService;
 
 import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 
@@ -18,8 +22,9 @@ import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 public class AuctController {
 
 	@Autowired
-
-	AuctService auctService;
+	private AuctService auctService; //경매 서비스영역
+	@Autowired
+	private AtchService atchService; //첨부파일 서비스 영역
 
 	@GetMapping("/auctList")
 	public String getauctList(Model model) {
@@ -52,15 +57,21 @@ public class AuctController {
 	}
 
 	@PostMapping("/auctInsert") // 등록 매핑
-	public String auctInsert(AuctVO vo) {
+	public String auctInsert(AuctVO vo, List<MultipartFile> files) {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
 		System.out.println(vo);
+		System.out.println(files + "file/////////");
+		
+		atchService.fileUpload(files);
+		int atchId = atchService.fileUpload(files);
+		
 		vo.setUserId("user1");
-		vo.setAtchId("");
 
-		// ▼if문으로 인서트 됐는지 확인하는 작업 추가!
-
-
+		if(atchId > 0) {
+			vo.setAtchId(atchId);
+		}
+		
+		auctService.insertAuct(vo);
 		return "auction/auctList";
 	}
 }

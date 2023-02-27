@@ -24,5 +24,5 @@ public class AuctVO {
 	 private int stts;
 	 private int inqCnt;
 	 private int srchCnt;
-	 private String atchId;
+	 private int atchId;
 } 

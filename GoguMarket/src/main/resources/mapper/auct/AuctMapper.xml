@@ -37,7 +37,7 @@
 		#{atchId}, #{userId}
 		)
 	</insert>
-
+<!-- 
 	<update id="noticeUpdate"
 		parameterType="co.king.prj.notice.service.NoticeVO">
 		UPDATE AUCT
@@ -57,5 +57,13 @@
 		parameterType="com.goguma.auct.vo.AuctVO">
 		DELETE FROM AUCT WHERE AUCT_NO = #{auctNo}
 	</delete>
-
+	
+	
+	<update id="auctHitUpdate">
+		UPDATE AUCT
+		SET INQ_CNT = INQ_CNT + 1
+		WHERE AUCT_NO = #{auctNo}
+	</update>
+	
+ -->
 </mapper>
