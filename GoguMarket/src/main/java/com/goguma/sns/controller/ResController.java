@@ -5,15 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.common.service.AtchService;
+import com.goguma.common.vo.AtchVO;
 import com.goguma.sns.service.SnsService;
 import com.goguma.sns.vo.SnsVO;
 
@@ -50,5 +47,17 @@ public class ResController {
 		return map;
 
 	}
+	
+	@GetMapping("/insertSns")
+	@ResponseBody
+	public void insertSns(SnsVO vo,AtchVO avo) {
+	
+		service.insertSns(vo);
+		aservice.fileUpload(null);
+		
+
+	}
+	
+	
 
 }
