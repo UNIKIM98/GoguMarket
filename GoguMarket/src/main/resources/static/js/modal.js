@@ -31,16 +31,20 @@ function snsModal(id) {
 
 	//단건조회
 	$.ajax({
-		url:"/selectSns",
+		url: "/selectSns",
 		type: "GET",
-		data: {id},
+		data: { id },
 		dataType: 'json',
-      })
+	})
 		.then(obj => {
-			console.log(obj.sns.snsCn)
-		$("#CN").text(obj.sns.snsCn)
+			console.log(obj)
+			$("#CN").text(obj.sns.snsCn)
+			$("#snsYmd").text(obj.sns.snsYmd)
+			$("#atchPath").attr("src",obj.atch[0].atchPath)
+			$("#miniId").text(obj.sns.userId+"@gogu.ma")
+			miniId
 			console.log('back')
-		
+
 		});
 
 	//리턴된 값을 태그를 찾아서 넣음

@@ -74,7 +74,7 @@ li {
 					</div>
 				</div>
 				<br> <a class="button medium button-black mb-30 f-right"
-					href="#" style="margin-right: 5%;" id="myBtn" onclick=""><span>글쓰기</span>
+					href="#" style="margin-right: 10%;" id="myBtn" onclick=""><span>글쓰기</span>
 				</a>
 
 			</div>
@@ -109,18 +109,10 @@ li {
 
 							</div>
 
-							<input type="hidden" name="snsNo" id="snsNo"> <input
-								type="hidden" name="userId" id="userId">
+							<input type="hidden" name="userId" id="userId">
 							<textarea name="snsCn" id="snsCn" class="mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
-							<input type="radio" name="hash" id="hash" value="별로애요">별로애요
-							<input type="radio" name="hash" id="hash" value="나쁘지 않을것 같아요">나쁘지
-							않을것 같아요 <input type="radio" name="hash" id="hash" value="좋아요">좋아요
-							<input type="radio" name="hash" id="hash" value="꼭 디시 올거에요">꼭
-							디시 올거에요 <input type="hidden" name="area" id="area" value="">
-							<input type="hidden" name="atch_Id" id="atchId" value="">
-							<input type="hidden" name="likeNocs" id="likeNocs" value=0>
-
+							<input type="hidden" name="area" id="area" value="">
 						</div>
 
 
@@ -143,8 +135,8 @@ li {
 				<div class="Sns-body">
 					<form action="#">
 						<div>
-							<span class="ml-10" id="snsYmd">2023-02-23</span> <img src="img/blog/10.jpg"
-								alt="" class="ml-5" id="atchPath" style="width: 100%;">
+							<span class="ml-10" id="snsYmd"></span> 
+							<img alt="" class="ml-5" id="atchPath" style="width: 100%;">
 
 							<h3 class="mt-10 ml-20"></h3>
 
@@ -160,7 +152,7 @@ li {
 					</div>
 				</div>
 				<div class="Sns-footer" style="background-color: #000000;">
-					<h3 class="text-white mb-0" style="opacity: 70%;">${id}
+					<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
 						@gogu.ma</h3>
 				</div>
 			</div>
