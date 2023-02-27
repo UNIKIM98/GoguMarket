@@ -6,11 +6,12 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.goguma.common.vo.AtchVO;
 
 import lombok.Data;
 
 @Data
-public class DealVO{
+public class DealVO extends AtchVO{
 
 	private int dlNo; 	// 글번호
 	private String ntslId; 	// 판매자
@@ -28,13 +29,13 @@ public class DealVO{
 	private String area;	// 거래지역
 	private String negoYn;	// 네고여부
 	
-	//  첨부파일vo 이용하여,  첨부파일을 담을 리스트.
-	private List<BoardAttachVO> attachList;
-	
-	// 이제 이거 못함 사요나라
-	private String atchId;	// 첨부파일아이디
-	//첨부파일
-	private String atchPath; // 첨부파일경로
+//	//  첨부파일vo 이용하여,  첨부파일을 담을 리스트.
+//	private List<BoardAttachVO> attachList;
+//	
+//	// 이제 이거 못함 사요나라
+//	private String atchId;	// 첨부파일아이디
+//	//첨부파일
+//	private String atchPath; // 첨부파일경로
 }
 
 /*CREATE TABLE `DEAL` (

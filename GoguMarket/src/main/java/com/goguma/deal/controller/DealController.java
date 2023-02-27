@@ -1,11 +1,8 @@
 package com.goguma.deal.controller;
 
-import java.io.File;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.goguma.common.vo.AtchVO;
-import com.goguma.deal.service.BoardAttachService;
+import com.goguma.common.service.AtchService;
 import com.goguma.deal.service.DealService;
-import com.goguma.deal.vo.BoardAttachVO;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
@@ -34,7 +29,8 @@ public class DealController {
 
 	private DealService dealService;
 	// private DealMapper dealMapper;
-	private BoardAttachService attachService;
+	@Autowired
+	private AtchService attachService;
 
 	@RequestMapping("/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
@@ -57,7 +53,7 @@ public class DealController {
 	public String getDeal(@PathVariable String dlNo, Model model) {
 		System.out.println("=================" + dlNo);
 
-		int cnt = dealService.dealHitUpdate(Integer.parseInt(dlNo));
+		int cnt = dealService.dealHitUpdate(dlNo);
 		System.out.println(cnt);
 
 		model.addAttribute("deal", dealService.getDeal(dlNo));
@@ -72,39 +68,14 @@ public class DealController {
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo, List<MultipartFile> files) {
 		System.out.println(vo + "넘어온 vo");
-//		System.out.println(bvo + "넘어온 bvo");
-
-		String saveFolder = ("C:\\upload/"); // 파일저장위치 
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		if (!files.isEmpty()) {// 첨부파일이 존재하면 이름 UUID해줘서 중복방지해쥼
-
-			for (MultipartFile file : files) {
-				AtchVO attach = new AtchVO();
-				
-				String fileName = UUID.randomUUID().toString();
-				fileName = fileName + file.getOriginalFilename();
-				File uploadFile = new File(saveFolder, fileName);
-			
-				try {
-					file.transferTo(uploadFile); // 실제파일저장
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				attach.setAtchSize(file.getSize());
-				attach.setAtchNm(fileName);
-				attach.setExtn("jpg"); //  파일타입 : jpg, jpeg, img, png, gif
-				attach.setAtchPath(saveFolder + fileName);
-				
-				vo.setAtchId(attach.getAtchId());
-			}
-
+		System.out.println(files + "file/////////");
+		attachService.fileUpload(files);
+		int atchId = attachService.fileUpload(files);
+		if(atchId > 0) {
+			vo.setAtchId(atchId);
 		}
 
 		dealService.insertDeal(vo);
-
 		return "redirect:dealList";
 	}
 
