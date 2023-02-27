@@ -74,16 +74,12 @@ public class DealController {
 		System.out.println(vo + "넘어온 vo");
 //		System.out.println(bvo + "넘어온 bvo");
 
-		String saveFolder = ("C:\\upload/"); // 파일저장위치 : c 나 d 밑에다가
+		String saveFolder = ("C:\\upload/"); // 파일저장위치 
 
 		Map<String, Object> map = new HashMap<String, Object>();
-//		List<MultipartFile> attachList = attachService.insert(bvo);
 
-		if (!files.isEmpty()) {// 첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼
+		if (!files.isEmpty()) {// 첨부파일이 존재하면 이름 UUID해줘서 중복방지해쥼
 
-			// vo.setAtchId(file.getOriginalFilename()); // 저장할때는 원본파일명
-			// vo.setAtchPath(saveFolder + fileName); // 물리적 위치 디렉토리포함원본파일명
-			// atchId 
 			for (MultipartFile file : files) {
 				AtchVO attach = new AtchVO();
 				
@@ -96,17 +92,13 @@ public class DealController {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
-//				attach.setDlNo(vo.getDlNo());
-//				attach.setUuid(fileName); // 얘도이거아닌데 일단임시
-				attach.setAtchSize(file.getSize()); // 잘못됏음이거지금 임시로
+
+				attach.setAtchSize(file.getSize());
 				attach.setAtchNm(fileName);
 				attach.setExtn("jpg"); //  파일타입 : jpg, jpeg, img, png, gif
 				attach.setAtchPath(saveFolder + fileName);
-//				attachService.insert(attach); //첨부파일 테이블에 넣기
 				
 				vo.setAtchId(attach.getAtchId());
-//				map.put("aList", attachList);
 			}
 
 		}

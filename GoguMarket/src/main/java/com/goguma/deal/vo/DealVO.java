@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class DealVO {
+public class DealVO{
 
 	private int dlNo; 	// 글번호
 	private String ntslId; 	// 판매자

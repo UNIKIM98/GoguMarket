@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		.dropbtn {
+			padding: 16px;
+			font-size: 16px;
+			border: none;
+			cursor: pointer;
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			min-width: 100px;
+			overflow: auto;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.dropdown a:hover {
+			background-color: #f1f1f1
+		}
+
+		.show {
+			display: block;
+		}
+	</style>
+
+	<script>
+		//▶ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
+		$(function(){
+			actInfoAjax();
+			var memActNo = '';
+		})
+		function actInfoAjax(){
+			$.ajax({
+			url: "/actInfoAjax",
+			type: 'get',
+			dataType: 'json',
+			contentType: 'application/json; charset = utf-8',
+			success: function (result) {
+				memActMake(result.memAct); //→ 대표계좌
+				actListMake(result.actList); //→ 계좌 전체 목록 
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		})
+		}
+
+		//▶ 계좌 전체 목록
+		function actListMake(actList){
+							//↑ actList 타입 == 객체(object) (* 타입 확인하는 방법 : console.log(typeof(확인하고자 하는 것));)
+			//↓ for문 돌면서 객체의 값을 하나씩 꺼내줌
+			let cnt = 0; 
+			for(let actListIdx in actList) {
+				    //↑ actListIdx == 인덱스(0,1,2, ... )
+				++cnt;
+			makeTbody(actList[actListIdx]); //→ actList[actListIdx] == auctList의 actListIdx번째 값
+		}
+
+		// # 등록된 계좌가 3개 미만이면 등록 버튼 출력
+		//📌 밑에 onclick 이벤트 수정해야~!
+		if(cnt < 3){
+			for(let i=1 ; i< (4-Number(cnt)) ; i++){
+				$("#actListTable").children().eq(1).append(
+				`
+				<tr>
+					<td colspan="3">
+						<button onclick="goMemAct()" type = "button">계좌 추가</button>
+					</td>
+				</tr>
+				`)
+			}
+		}
+		}
+
+		//▷ Tbody 만들기
+		function makeTbody(act){
+			$("#actListTable").children().eq(1).append(
+				`
+				<tr id=${act.actNo}>
+					<td>${act.bankNm}</td>
+					<td>${act.bankActNo}</td>
+					<td>
+						<button onclick="deleteActListOne(event)" type = "button">삭제</button>
+						<button onclick="updateMemActAjax(event)" type = "button">대표계좌로 설정</button>
+					</td>
+				</tr>
+				`
+			)
+		}
+
+		//▷ 전체 계좌에서 한 개 삭제
+		function deleteActListOne(event){
+			let actNo = $(event.target).parent().parent().attr('id');
+			let memActNoYn = 'N';
+			if(actNo == memActNo){
+				memActNoYn = "Y"
+			}
+
+			$.ajax({
+				url: "/deleteActListOne/"+actNo+"/"+memActNoYn,
+				type: 'get',
+				dataType: 'json',
+				contentType: 'application/json; charset = utf-8',
+				success: function (result) {
+					deleteActListOneAfter(result, actNo, memActNoYn);
+				},
+				error: function (err) {
+					console.log(err);
+				}
+			})
+		}
+		//▷ 전체 계좌 중 한 개 DB 삭제 이후
+		function deleteActListOneAfter(result, actNo, memActNoYn){
+			if(result.result != 1){
+				alert("[계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다. :()")
+			}else{
+				alert("[계좌 삭제 성공] 계좌를 성공적으로 삭제하였습니다. :D)")
+				$("#"+actNo).remove();
+				$("#actListTable").children().eq(1).append(
+				`
+				<tr>
+					<td colspan="3">
+						<button onclick="goMemAct()" type = "button">계좌 추가</button>
+					</td>
+				</tr>
+
+				`)
+				if(memActNoYn == "Y"){
+					memActNo = '';
+					// # 대표계좌 화면에서 지우기
+					$("#memActSection").children().eq(1).children().remove();
+
+					// # 대표계좌 등록하라는 문구 출력하기
+					$("#memActSection").children().eq(1).append(
+						$("<p>").text("대표계좌를 등록해주세요 :D").css('font-size', 'medium'));
+				}
+
+			}
+		}
+
+		//▷ 대표계좌로 설정하기
+		function updateMemActAjax(event){
+			let actNo = $(event.target).parent().parent().attr('id');
+
+			if(actNo ==memActNo){
+				alert("이미 대표계좌로 등록되어있는 계좌번호입니다 :D");
+			}
+			else{
+				$.ajax({
+				url: "/updateMemActAjax/"+actNo,
+				type: 'get',
+				dataType: 'json',
+				contentType: 'application/json; charset = utf-8',
+				success: function (result) {
+					updateMemActAjaxAfter(result.result);
+				},
+				error: function (err) {
+					console.log(err);
+				}
+			})
+			}
+			
+		}
+
+		//▷ 대표계좌 설정 변경 이후
+		function updateMemActAjaxAfter(result){
+			if(result=="fail"){
+				alert("[대표계좌 변경 실패] 대표계좌 변경 중 오류가 발생하였습니다. :()")
+			}else{
+				alert("[대표계좌 변경 성공] 대표계좌를 성공적으로 변경하였습니다 :D");
+				memActNo = result.actNo;
+
+				$("#memActSection").children().eq(1).html(
+					`
+				<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankNm}</span> 
+				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankActNo}</span>
+				<div class="dropdown">
+					<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+					<div id="myDropdown" class="dropdown-content">
+						<a onclick="delMemActAjax()">삭제</a>
+					</div>
+				</div>
+				`
+				)
+			}
+		}
+
+		//▶ 대표계좌 
+		//▷ 대표계좌 그리기
+		function memActMake(result) {
+			// # 대표계좌 없을 때(== BankNm이 Nothing일 때) : 대표계좌 등록하라는 문구 출력
+			if (result == "Nothing") {
+				$("#memActSection").children().eq(1).append(
+					$("<p>").text("대표계좌를 등록해주세요 :D").css('font-size', 'medium'))
+
+				//# 대표계좌 있을 때 : 대표계좌 정보 출력
+			} else {
+				memActNo = result.actNo;
+				$("#memActSection").children().eq(1).html(
+					`
+				<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankNm}</span> 
+				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankActNo}</span>
+				<div class="dropdown">
+					<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+					<div id="myDropdown" class="dropdown-content">
+						<a onclick="delMemActAjax()">삭제</a>
+					</div>
+				</div>
+				`
+				)
+			}
+		}
+
+		//▷ 대표계좌 드롭다운 버튼 : http://www.w3bai.com/ko/howto/howto_js_dropdown.html 참고
+		function myFunction() {
+			document.getElementById("myDropdown").classList.toggle("show");
+		}
+		window.onclick = function (event) {
+			if (!event.target.matches('.dropbtn')) {
+				var dropdowns = document.getElementsByClassName("dropdown-content");
+				var i;
+				for (i = 0; i < dropdowns.length; i++) {
+					var openDropdown = dropdowns[i];
+					if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					}
+				}
+			}
+		}
+
+		//▷ 대표계좌 삭제 아작스
+		function delMemActAjax() {
+			$.ajax({
+				url: "/delMemActAjax",
+				type: 'get',
+				dataType: 'json',
+				contentType: 'application/json; charset = utf-8',
+				success: function (result) {
+					delMemActAjaxAfter(result.result);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			})
+		}
+
+		//▷ 대표계좌 DB 삭제 후  
+		function delMemActAjaxAfter(data) {
+			if (data == "success") {
+				alert("[대표계좌 삭제 성공] 계좌가 정상적으로 삭제되었습니다.");
+				memActNo = '';
+
+				// # 대표계좌 화면에서 지우기
+				$("#memActSection").children().eq(1).children().remove();
+
+				// # 대표계좌 등록하라는 문구 출력하기
+				$("#memActSection").children().eq(1).append(
+					$("<p>").text("대표계좌를 등록해주세요 :D").css('font-size', 'medium'));
+			} else {
+				//# 대표계좌 삭제 실패시
+				alert("[대표계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다.")
+			}
+		}
+	</script>
+	<script src="myPages/js/actInfo.js"></script>
+</head>
+
+<body>
+	<div layout:fragment="myContent">
+		<div class="wrapper">
+			<section id="page-content" class="page-wrapper section">
+				<div class="about-section mb-80">
+					<div class="container">
+						<!--▶ 대표계좌 -->
+						<div class="row mb-100" id="memActSection">
+								<div class="section-title text-start ">
+									<h2 class="uppercase">나의 계좌</h2>
+									<hr>
+									<h3 style="font-weight: bold;">대표계좌</h3>
+								</div>
+							<div class="mt-20"></div>
+						</div>
+						
+						<!--▶ 전체 계좌 목록-->
+						<div class="row" >
+								<div class="section-title text-start mb-20">
+									<hr>
+									<h3 style="font-weight: bold;">계좌목록</h3>
+									<p>계좌는 최대 3개까지 등록할 수 있습니다.</p>
+								</div>
+								<div style="text-align: center">
+									<table class="table" id="actListTable">
+										<thead>
+											<tr>
+												<th>은행명</th>
+												<th>계좌번호</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+
+	</div>
+</body>
+
+</html>
