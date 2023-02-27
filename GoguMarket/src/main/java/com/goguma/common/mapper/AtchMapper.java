@@ -16,6 +16,5 @@ public interface AtchMapper {
 	// ▶ 파일 삭제
 
 	// ▶ 파일 셀렉트
-	
-	List<AtchVO> selectImg();
+	List<AtchVO> selectAtch(int atchId);
 }

@@ -81,9 +81,8 @@ public class AtchServiceImpl implements AtchService {
 
 
 	@Override
-	public List<AtchVO> selectImg(int id) {
-		// TODO Auto-generated method stub
-		return atchMapper.selectImg(id);
+	public List<AtchVO> selectAtch(int atchId) {
+		return atchMapper.selectAtch(atchId);
 	}
 
 }
