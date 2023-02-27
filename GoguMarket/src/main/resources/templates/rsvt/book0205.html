@@ -16,8 +16,8 @@
             <div class="shop-section mb-80">
                 <div class="container">
 
-                    <!-- 가게이름 -->
-                    <div class="row">
+                    <!-- 가게이름(제목부분) -->
+                    <div class="row" th:each="biz: ${biz}">
                         <div class="col-lg-1">
                             <div class="media-left">
                                 <a href="#"><img class="media-object" src="img/author/1.jpg" alt="#"></a>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="section-title text-start mt-15">
-                                <h2 class="uppercase">커피맛을 조금 아는 남자 본점</h2>
+                                <h2 class="uppercase" th:text="${biz.bizNm}">커피맛을 조금 아는 남자 본점</h2>
                                 <h6>
                                     <ul class="blog-meta">
                                         <li>
@@ -36,7 +36,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">카테고리이름</a>
+                                            <a href="#" th:text="${biz.ctgry}">카테고리이름</a>
                                         </li>
                                     </ul>
                                 </h6>
@@ -67,7 +67,8 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- 제목부분 끝 -->
+          
                     <!-- 내용 큰틀 -->
                     <div class="row">
                         <div class="col-lg-12">
@@ -82,9 +83,10 @@
                                         <div class="single-product-tab reviews-tab">
                                             <div class="row">
                                                 <div class="col-lg-6">
+                                                
+                                                <!-- ♠♠♠♠♠♠♠♠ 탭 메뉴 -->
                                                     <ul class="nav mb-20">
-                                                        <li><a class="active" href="#description"
-                                                                data-bs-toggle="tab">홈</a></li>
+                                                        <li><a class="active" href="#description" data-bs-toggle="tab">홈</a></li>
                                                         <li><a href="#information" data-bs-toggle="tab">소식</a></li>
                                                         <li><a href="#reviews" data-bs-toggle="tab">메뉴</a></li>
                                                         <li><a href="#page4" data-bs-toggle="tab">후기</a></li>
@@ -101,10 +103,11 @@
                                             <!--  hr -->
                                             <hr>
 
-                                            <!-- 상세내용 - 홈 -->
+                                            <!-- 상세내용 전체 틀 -->
                                             <div class="col-lg-12">
                                                 <div class="tab-content">
-                                                    <!-- 상세내용 - 홈 -->
+                                                
+                                                    <!-- ♠♠♠♠♠♠♠ 내용 - 1. 홈 -->
                                                     <div role="tabpanel" class="tab-pane active show" id="description">
                                                         <!-- imgs-zoom-area start 넘어가는 사진 : 나중에for문으로 돌리기-->
                                                         <div class="row">
@@ -113,6 +116,7 @@
                                                                     <div class="col-lg-12">
                                                                         <div id="gallery_01"
                                                                             class="carousel-btn slick-arrow-3 mt-10 mb-30">
+                                                                            <!-- 사진 반복 -->
                                                                             <div class="p-c">
                                                                                 <a href="#"
                                                                                     data-image="img/product/2.jpg"
@@ -167,24 +171,39 @@
                                                             </div>
                                                             <!-- imgs-zoom-area end -->
                                                         </div>
-                                                        <!--가게정보-->
+                                                        
+                                                        <!--가게정보 홈-->
                                                         <div>
-                                                            <p>주소 : 대구 수성구 범어천로 153 1층</p>
-                                                            <p>전화번호</p>
-                                                            <p>영업시간 : 매일 11:00 ~ 24:00</p>
-                                                            <p>가게소게 : 커피맛을 조금 아는 남자 범어 본점입니다.
-                                                                현재까지 최고의 스페셜티 커피만을 엄선하여 고객분들께 선보여 왔습니다.
-                                                                아는 남자는 드립 전문 카페로서 여러가지 추출법을 고객의 기호에 맞게 사용하며,
-                                                                아는 남자만의의 하우스 블렌드와 독창적인 시그니처 음료들을 선보이고 있습니다.
-                                                                프랑스 르꼬르동블루 출신 쉐프의 프랑스 빵, 디저트로 맛있는 풍미와 커피를 함께 즐겨주시면
-                                                                감사하겠습니다.
-                                                            </p>
+                                                        	<table>
+                                                        		<tr>
+                                                        			<th style="text-align: center; width: 150px;" class="td-title-1">주소 :</th>
+                                                        			<td colspan="3" class="td-title-1" th:text="${biz.bizAddr}"></td>
+                                                        		</tr>
+                                                        		<tr>
+                                                                    <th style="text-align: center;" class="td-title-1">전화번호 :</th>
+                                                                    <td colspan="3" class="td-title-1" th:text="${biz.bizTel}"></td>
+                                                        		</tr>
+                                                                <tr>
+                                                                    <th style="text-align: center;" class="td-title-1">영업시간 :</th>
+                                                                    <!-- <td class="td-title-1" th:text="${biz.bgngTm}"></td>
+                                                                    <td class="td-title-1">~</td>
+                                                                    <td class="td-title-1" th:text="${biz.endTm}"></td> -->
+                                                                    <td class="td-title-1" th:text="|${biz.bgngTm} ~ ${biz.endTm}|">
+
+                                                                    </td>
+                                                        		</tr>
+                                                                <tr>
+                                                                    <th style="text-align: center;" class="td-title-1">가게소개 :</th>
+                                                                    <td colspan="3" class="td-title-1" th:text="${biz.cn}"></td>
+                                                        		</tr>
+                                                        	</table>
                                                         </div>
                                                     </div>
-                                                    <!-- 상세내용 - 소식 -->
+                                                    
+                                                    <!-- ♠♠♠♠♠♠♠♠♠♠♠♠상세내용 - 2. 소식 -->
                                                     <div role="tabpanel" class="tab-pane" id="information">
                                                         <!-- single comments 소식 1건 : for문 -->
-                                                        <div class="row">
+                                                        <div class="row" th:each="news : ${news}">
                                                             <div class="col-lg-9">
                                                                 <div class="reviews-tab-desc">
                                                                 <div class="blog-desc">
@@ -194,7 +213,7 @@
                                                                                     src="img/author/1.jpg" alt="#"></a>
                                                                         </div>
                                                                         <div class="media-body mt-15">
-                                                                            <h4>커피맛을 조금 아는 남자 본점
+                                                                            <h4 th:text="${news.bizNm}">(가게이름)
                                                                             </h4>
                                                                             <p class="mb-10">1일전</p>
                                                                         </div>
@@ -203,7 +222,7 @@
                                                                 </div>
                                                                     <hr>
 
-                                                                    <p>가성비 바다장어 1kg 13,900원 초특가이벤트!!
+                                                                    <p th:text=${news.ntcCn}>가성비 바다장어 1kg 13,900원 초특가이벤트!!
                                                                         저희 바다장아 가격이 많이 올라서
                                                                         그동안 소개 못 해드렸는데 ㅜㅜ
                                                                         통영에 직접가셔서 구매해도 이가격 못봅니당~</p>
@@ -222,7 +241,7 @@
                                                         <hr>
                                                     </div>
 
-                                                    <!-- 상세내용 - 메뉴 -->
+                                                    <!-- ♠♠♠♠♠♠♠♠♠♠♠♠상세내용 - 3. 메뉴 -->
                                                     <div role="tabpanel" class="tab-pane" id="reviews">
                                                         <!-- reviews-tab-desc -->
                                                         <div class="reviews-tab-desc">
@@ -266,7 +285,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <!-- 상세내용 - 후기 -->
+                                                    
+                                                    <!-- ♠♠♠♠♠♠♠♠♠♠♠♠♠상세내용 - 4. 후기 -->
                                                     <div role="tabpanel" class="tab-pane" id="page4">
 
                                                         <!-- single comments 후기 1건 : for문 -->
@@ -361,6 +381,15 @@
 	</div>
 	<!-- Body main wrapper end -->
 
+
+<script>
+	$(#bizInfoHome).click(function(){
+		alert("뀨");
+	})
+	
+	
+	
+</script>
 
 </body>
 
