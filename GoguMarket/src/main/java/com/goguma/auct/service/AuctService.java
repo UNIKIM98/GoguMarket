@@ -8,6 +8,8 @@ import com.goguma.auct.vo.AuctVO;
 public interface AuctService {
 	List<AuctVO> getAuctList();
 	AuctVO getAuct(AuctVO vo);
-	
+
 	int insertAuct(AuctVO vo);
+//	int updateAuct(AuctVO vo);
+//	int deleteAuct(AuctVO vo);
 }
