@@ -21,15 +21,15 @@ public class ActController {
 	MemService mService;
 
 	// ▶ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
-	@GetMapping("/actInfo")
+	@GetMapping("/myAct")
 	public String auctSelect(HttpServletRequest request) {
-		System.out.println("=======/actInfo");
+		System.out.println("=======/myAct");
 		
 		// ※ 임시로그인
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", "user1");
 
-		return "myPages/actInfo";
+		return "myPages/myAct";
 	}
 
 	// ▶ 대표 계좌번호 삭제 : AuctRestController
