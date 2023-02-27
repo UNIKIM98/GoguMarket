@@ -7,11 +7,11 @@ import com.goguma.sns.vo.SnsVO;
 
 
 public interface SnsMapper {
-	List<SnsVO> getSnsList();
+	List<SnsVO> selectSnsList();
 
 	int getCountTotal(SnsVO vo);
 
-	SnsVO getSns(String id); // 사원검색
+	SnsVO selectSns(int id); // 사원검색
 
 	int insertSns(SnsVO vo); // 사원등록
 

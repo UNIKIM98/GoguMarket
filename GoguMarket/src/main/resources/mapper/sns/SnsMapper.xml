@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.sns.mapper.SnsMapper">
-	<select id="getSnsList" resultType="com.goguma.sns.vo.SnsVO">
+	<select id="selectSnsList" resultType="com.goguma.sns.vo.SnsVO">
 		SELECT s.*,a.*
-		FROM SNS s JOIN ATCH a
+		FROM SNS s JOIN
+		ATCH a
 		ON s.ATCH_ID = a.ATCH_ID
+
+	</select>
+
+	<select id="selectSns" resultType="com.goguma.sns.vo.SnsVO">
+		SELECT a.*
+		FROM ATCH a JOIN SNS s
+		ON a.atch_id = s.atch_id
+		WHERE s.sns_no = #{snsNo}
 
 	</select>
 

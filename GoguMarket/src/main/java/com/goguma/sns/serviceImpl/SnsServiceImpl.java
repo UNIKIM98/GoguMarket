@@ -15,9 +15,9 @@ public class SnsServiceImpl implements SnsService {
 	
 	
 	@Override
-	public List<SnsVO> getSnsList() {
+	public List<SnsVO> selectSnsList() {
 		System.out.println("???/");
-		return map.getSnsList();
+		return map.selectSnsList();
 	}
 
 	@Override
@@ -27,9 +27,9 @@ public class SnsServiceImpl implements SnsService {
 	}
 
 	@Override
-	public SnsVO getSns(String id) {
-		// TODO Auto-generated method stub
-		return map.getSns(id);
+	public SnsVO selectSns(int id) {
+		System.out.println("asd");
+		return map.selectSns(id);
 	}
 
 	@Override
