@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.mem.mapper.ActMapper">
+	<!-- ▶ 1. 대표계좌 조회(가져오기) -->
+	<select id="getMemAct" parameterType="String" resultType="com.goguma.mem.vo.ActVO">
+	SELECT a.*
+	FROM ACT a JOIN MEM m
+				ON a.act_no = m.act_no
+	WHERE m.user_id = #{userId}
+	</select>
 
-	<!-- ▶ 계좌 리스트 전체 조회 -->
+	<!-- ▶ 2. 대표계좌 삭제 -->
+	<update id="deleteMemAct" parameterType="com.goguma.mem.vo.ActVO">
+	 UPDATE MEM SET ACT_NO = '' 
+	 WHERE USER_ID = #{userId}
+	</update>
+	
+	<!-- ▶ 3. 대표계좌 변경 -->
+	<update id="updateMemAct" parameterType="com.goguma.mem.vo.ActVO">
+	UPDATE MEM SET ACT_NO = #{actNo} 
+	WHERE USER_ID = #{userId}
+	</update>
+	
+	<!-- ▶ 4. 전체계좌 중 하나 삭제(2도 같이 진행) -->
+	<update id="deleteActListOne" parameterType="com.goguma.mem.vo.ActVO">
+	DELETE ACT 
+	WHERE ACT_NO = #{actNo}
+	</update>
+	
+	<!-- ▶ 5. 전체 계좌 조회(최대 3개) -->
 	<select id="getActList" resultType="com.goguma.mem.vo.ActVO">
 		SELECT * FROM ACT
 		WHERE USER_ID = #{userId}

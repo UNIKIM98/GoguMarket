@@ -33,16 +33,4 @@ public class MemServiceImpl implements MemService {
 		return mapper.selectUser(mVo);
 	}
 
-	@Override
-	public int updateAct(MemVO mVO) {
-		return mapper.updateAct(mVO);
-	}
-
-	@Override
-	public int deleteAct(String userId) {
-		// TODO Auto-generated method stub
-		return mapper.deleteAct(userId);
-	}
-
-
 }
