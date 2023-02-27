@@ -28,7 +28,7 @@ public class ActRestController {
 	@GetMapping("/actInfoAjax")
 	public Map actInfoAjax(HttpServletRequest request) {
 		System.out.println("=======/actInfoAjax");
-
+		
 		// 리턴할 hashMap 생성
 		HashMap<String, Object> map = new HashMap<String, Object>();
 

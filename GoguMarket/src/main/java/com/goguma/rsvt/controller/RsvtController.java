@@ -4,34 +4,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.goguma.biz.vo.BizNewsVO;
+import com.goguma.rsvt.mapper.RsvtMapper;
 import com.goguma.rsvt.service.RsvtService;
 
 @Controller
 public class RsvtController {
 	
 	@Autowired
-	private RsvtService rsvtService;
+	private RsvtService rsvtservice;
+	private RsvtMapper mapper;
 	
-	//동네가게 예약 메인
-//	@GetMapping("/book01")		
-//	public String book01() {	
-//		return "rsvt/book01";
-//	}
-	
-	@RequestMapping("/book01")
+	//동네가게 예약 메인(book01)
+	@RequestMapping("/bookmain")
 	public String getBizList(Model model) {
-		model.addAttribute("lists", rsvtService.getBizList());
+		model.addAttribute("lists", rsvtservice.getBizList());
 		return "rsvt/book01";
 	}
 	
-	
-	
-	@GetMapping("/book0205")	//동네가게 상세정보
-	public String book0205() {
+	//동네가게 상세정보 - 홈(book0205)
+	@RequestMapping("/book0205/{bizNo}")
+	public String bizInfo(@PathVariable String bizNo, Model model) {
+		model.addAttribute("biz",rsvtservice.bizInfo(bizNo));
 		return "rsvt/book0205";
 	}
+	
+	//동네가게 상세정보 - 탭 소식(ajax사용..)
+//	@RequestMapping("/book0205/{bizNo}")
+//	@ResponseBody
+//	public BizNewsVO getBizNews(@PathVariable String bizNo) {
+//		return mapper.getBizNews(bizNo);
+//		
+//	}
 	
 	@GetMapping("/book0601")
 	public String book0601() {
