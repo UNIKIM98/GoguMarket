@@ -59,9 +59,9 @@ public class DealServiceImpl implements DealService {
 	}
 
 	@Override
-	public int dealHitUpdate(int id) {
+	public int dealHitUpdate(String dlNo) {
 		// TODO Auto-generated method stub
-		return map.dealHitUpdate(id);
+		return map.dealHitUpdate(dlNo);
 	}
 
 }
