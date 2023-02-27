@@ -12,6 +12,7 @@ import com.goguma.common.mapper.AtchMapper;
 import com.goguma.common.service.AtchService;
 import com.goguma.common.vo.AtchVO;
 
+
 @Service
 public class AtchServiceImpl implements AtchService {
 
@@ -76,6 +77,13 @@ public class AtchServiceImpl implements AtchService {
 	@Override
 	public int selectAtchId() {
 		return atchMapper.selectAtchId();
+	}
+
+
+	@Override
+	public List<AtchVO> selectImg(int id) {
+		// TODO Auto-generated method stub
+		return atchMapper.selectImg(id);
 	}
 
 }

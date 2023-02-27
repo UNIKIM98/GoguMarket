@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goguma.common.vo.AtchVO;
+
 public interface AtchService {
 	// ▶ atchId 구하는 쿼리문
 	int selectAtchId();
@@ -14,4 +16,7 @@ public interface AtchService {
 	// ▶ 파일 삭제
 
 	// ▶ 파일 셀렉트
+	
+	List<AtchVO> selectImg(int id);
+	
 }
