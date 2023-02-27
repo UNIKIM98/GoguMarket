@@ -3,6 +3,7 @@
 <mapper namespace="com.goguma.common.mapper.CommonMapper">
 	<select id="codeList">
 	select *
+
 	    from common_code
 	    where common_code = #{commonCode}
 	</select>

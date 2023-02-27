@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface CommonCodeMapper {
 	List<CommonCodeMapper> codeList(String commonCode);
+
 }

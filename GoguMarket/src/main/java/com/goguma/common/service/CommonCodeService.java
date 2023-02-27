@@ -9,4 +9,5 @@ import com.goguma.common.mapper.CommonCodeMapper;
 public interface CommonCodeService {
 
 	List<CommonCodeMapper> codeList(String commonCode);
+
 }

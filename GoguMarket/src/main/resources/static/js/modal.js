@@ -34,10 +34,12 @@ function snsModal(id) {
 		url:"/selectSns",
 		type: "GET",
 		data: {id},
-		  dataType: 'json',
+		dataType: 'json',
       })
 		.then(obj => {
-			console.log(vo.userId)
+			console.log(obj.sns.snsCn)
+		$("#CN").text(obj.sns.snsCn)
+			console.log('back')
 		
 		});
 
