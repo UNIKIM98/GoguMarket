@@ -2,22 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.common.mapper.AtchMapper">
 	<select id="selectAtchId" resultType="int">
-		SELECT CASE WHEN
-		MAX(ATCH_ID) IS NULL
-		THEN 1
-		ELSE MAX(ATCH_ID) + 1
-		END AS atchId
+		SELECT CASE WHEN MAX(ATCH_ID) IS NULL
+					THEN 1
+					ELSE MAX(ATCH_ID) + 1
+				END AS atchId
 		FROM ATCH
 	</select>
 
 	<insert id="fileUpload"
 		parameterType="com.goguma.common.vo.AtchVO">
 		INSERT INTO ATCH
-		VALUES(#{atchId}, ATCH_SEQ.NEXTVAL, SYSDATE,
+				VALUES(#{atchId}, ATCH_SEQ.NEXTVAL, SYSDATE,
 		#{atchNm}, #{orgnlNm}, #{extn}, #{atchSize}, #{atchPath})
 	</insert>
 
-	<select id="selectImg" resultType="com.goguma.common.vo.AtchVO">
+	<select id="selectAtch" resultType="com.goguma.common.vo.AtchVO">
 		SELECT *
 		FROM ATCH
 		WHERE ATCH_ID = #{atchId}

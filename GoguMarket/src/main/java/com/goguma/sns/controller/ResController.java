@@ -45,7 +45,7 @@ public class ResController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("sns",vo);
-		map.put("atch", aservice.selectImg(vo.getAtchId()));
+		map.put("atch", aservice.selectAtch(vo.getAtchId()));
 
 		return map;
 

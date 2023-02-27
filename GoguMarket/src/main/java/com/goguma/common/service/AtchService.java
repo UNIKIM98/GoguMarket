@@ -16,7 +16,5 @@ public interface AtchService {
 	// ▶ 파일 삭제
 
 	// ▶ 파일 셀렉트
-	
-	List<AtchVO> selectImg(int id);
-	
+	List<AtchVO> selectAtch(int atchId);
 }
