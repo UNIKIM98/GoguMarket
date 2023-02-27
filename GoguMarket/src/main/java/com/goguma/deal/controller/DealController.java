@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goguma.common.vo.AtchVO;
 import com.goguma.deal.service.BoardAttachService;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.BoardAttachVO;
@@ -69,47 +70,52 @@ public class DealController {
 	}
 
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
-	public String dealform(DealVO vo, MultipartFile file, BoardAttachVO bvo) {
+	public String dealform(DealVO vo, List<MultipartFile> files) {
 		System.out.println(vo + "넘어온 vo");
+//		System.out.println(bvo + "넘어온 bvo");
 
-		System.out.println(bvo + "넘어온 bvo");
-		String saveFolder = ("C:\\upload"); // 파일저장위치 : c 나 d 밑에다가
-		
-		Map<String,Object>map = new HashMap<String,Object>();		
-		List<MultipartFile> attachList = attachService.insert(bvo);
-		
+		String saveFolder = ("C:\\upload/"); // 파일저장위치 : c 나 d 밑에다가
 
-		if (!file.isEmpty()) {// 첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼
-			String fileName = UUID.randomUUID().toString();
-			fileName = fileName + file.getOriginalFilename();
-			File uploadFile = new File(saveFolder, fileName);
+		Map<String, Object> map = new HashMap<String, Object>();
+//		List<MultipartFile> attachList = attachService.insert(bvo);
 
-			try {
-				file.transferTo(uploadFile); // 실제파일저장
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (!files.isEmpty()) {// 첨부파일이 존재하면 이름UUID해줘서 중복방지해쥼
+
+			// vo.setAtchId(file.getOriginalFilename()); // 저장할때는 원본파일명
+			// vo.setAtchPath(saveFolder + fileName); // 물리적 위치 디렉토리포함원본파일명
+			// atchId 
+			for (MultipartFile file : files) {
+				AtchVO attach = new AtchVO();
+				
+				String fileName = UUID.randomUUID().toString();
+				fileName = fileName + file.getOriginalFilename();
+				File uploadFile = new File(saveFolder, fileName);
+			
+				try {
+					file.transferTo(uploadFile); // 실제파일저장
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+//				attach.setDlNo(vo.getDlNo());
+//				attach.setUuid(fileName); // 얘도이거아닌데 일단임시
+				attach.setAtchSize(file.getSize()); // 잘못됏음이거지금 임시로
+				attach.setAtchNm(fileName);
+				attach.setExtn("jpg"); //  파일타입 : jpg, jpeg, img, png, gif
+				attach.setAtchPath(saveFolder + fileName);
+//				attachService.insert(attach); //첨부파일 테이블에 넣기
+				
+				vo.setAtchId(attach.getAtchId());
+//				map.put("aList", attachList);
 			}
-			//vo.setAtchId(file.getOriginalFilename()); // 저장할때는 원본파일명
-			//vo.setAtchPath(saveFolder + fileName); // 물리적 위치 디렉토리포함원본파일명
-			
-			BoardAttachVO attach = new BoardAttachVO();
-			
-			attach.setDlNo(vo.getDlNo());
-			attach.setUuid(fileName);	// 얘도이거아닌데 일단임시
-			attach.setFileSize(0); // 잘못됏음이거지금 임시로
-			attach.setFileName(file.getOriginalFilename()); 
-			attach.setFileType(false);	
-			attach.setUploadPath(saveFolder + fileName);
-			
-			map.put("aList", attachList);
-			
+
 		}
 
 		dealService.insertDeal(vo);
 
 		return "redirect:dealList";
 	}
-	
+
 //	@RequestMapping("/dealformsubmit") // 딜폼창확인
 //	public String dealform(DealVO vo, MultipartFile file, BoardAttachVO bvo) {
 //

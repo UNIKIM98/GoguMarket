@@ -1,7 +1,9 @@
 package com.goguma.common.serviceImpl;
 
-import com.goguma.common.service.AlarmService;
+import org.springframework.stereotype.Service;
 
+import com.goguma.common.service.AlarmService;
+@Service
 public class AlarmServiceImpl implements AlarmService{
 
 }

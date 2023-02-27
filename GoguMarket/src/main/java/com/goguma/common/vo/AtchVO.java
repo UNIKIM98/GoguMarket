@@ -19,7 +19,7 @@ public class AtchVO {
 	private String atchNm;
 	private String orgnlNm;
 	private String extn;
-	private int atchSize;
+	private long atchSize;
 	private String atchPath;	
 	
 }
