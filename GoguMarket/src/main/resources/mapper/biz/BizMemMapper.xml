@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.biz.mapper.BizMemMapper">
+
+	<!-- 가게목록 전체조회 -->
+	<select id="getBizList" parameterType="String"
+		resultType="com.goguma.biz.vo.BizMemVO">
+		SELECT *
+		FROM biz_mem
+	</select>
+
+	<!-- 개별조회(가게상세페이지) -->
+	<select id="bizInfo" parameterType="String"
+		resultType="com.goguma.biz.vo.BizMemVO">
+		SELECT *
+		FROM biz_mem
+		WHERE biz_no = #{bizNo}
+	</select>	
+	
+	
+	
+</mapper>

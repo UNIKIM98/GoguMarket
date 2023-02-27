@@ -20,4 +20,5 @@ public class BizNewsVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ntcYmd;	//소식등록일자
 	private int inqCnt;		//조회수
+	
 }
