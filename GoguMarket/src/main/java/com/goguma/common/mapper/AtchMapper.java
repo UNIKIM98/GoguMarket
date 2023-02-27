@@ -1,5 +1,7 @@
 package com.goguma.common.mapper;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.common.vo.AtchVO;
@@ -14,4 +16,5 @@ public interface AtchMapper {
 	// ▶ 파일 삭제
 
 	// ▶ 파일 셀렉트
+	List<AtchVO> selectAtch(int atchId);
 }
