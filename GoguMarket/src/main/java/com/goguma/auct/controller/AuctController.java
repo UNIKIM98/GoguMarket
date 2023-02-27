@@ -19,11 +19,11 @@ public class AuctController {
 
 	@Autowired
 
-	AuctService aServic;
+	AuctService auctService;
 
 	@GetMapping("/auctList")
 	public String getauctList(Model model) {
-		model.addAttribute("lists", aServic.getAuctList());
+		model.addAttribute("lists", auctService.getAuctList());
 
 
 		return "auction/auctList";
@@ -39,8 +39,8 @@ public class AuctController {
 		aVO.setAuctNo(auctNo);
 
 
-		model.addAttribute("auct", aServic.getAuct(aVO));
-		System.out.println("==============" + aServic.getAuct(aVO));
+		model.addAttribute("auct", auctService.getAuct(aVO));
+		System.out.println("==============" + auctService.getAuct(aVO));
 
 		return "auction/auctSelect";
 	}
@@ -60,14 +60,7 @@ public class AuctController {
 
 		// ▼if문으로 인서트 됐는지 확인하는 작업 추가!
 
-		int n = aServic.insertAuct(vo);
 
-		if (n != 0) {
-			System.out.println("등록완료 나중에 이거 모달로 변경");
-		} else {
-			System.out.println("실패실패실패 나중에 이거 모달로 변경");
-		}
-		// ▼ 바꾸기!
 		return "auction/auctList";
 	}
 }

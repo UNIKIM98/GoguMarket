@@ -10,6 +10,6 @@ public interface AuctService {
 	AuctVO getAuct(AuctVO vo);
 
 	int insertAuct(AuctVO vo);
-	int updateAuct(AuctVO vo);
-	int deleteAuct(AuctVO vo);
+//	int updateAuct(AuctVO vo);
+//	int deleteAuct(AuctVO vo);
 }
