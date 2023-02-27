@@ -91,4 +91,9 @@ public class MemController {
 	public String test() {
 		return "test";
 	}
+	
+	@GetMapping("/myCouponNPoint")
+	public String myCouponNPoint() {
+		return "myPages/myCouponNPoint";
+	}
 }
