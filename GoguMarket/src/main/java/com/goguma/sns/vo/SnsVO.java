@@ -22,7 +22,7 @@ public class SnsVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date snsYmd;
 	private String area;
-	private String atchId;
+	private int atchId;
 	private String atchPath;
 	private int inqCnt;
 

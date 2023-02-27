@@ -12,6 +12,7 @@ import com.goguma.common.mapper.AtchMapper;
 import com.goguma.common.service.AtchService;
 import com.goguma.common.vo.AtchVO;
 
+
 @Service
 public class AtchServiceImpl implements AtchService {
 
@@ -20,6 +21,8 @@ public class AtchServiceImpl implements AtchService {
 
 	@Override
 	public int fileUpload(List<MultipartFile> files) {
+
+		System.out.println("impl  왔음==============");
 		// ▶ 파일 저장 위치 설정
 		String saveFolder = ("C:\\upload/");
 
@@ -27,8 +30,9 @@ public class AtchServiceImpl implements AtchService {
 		int atchId = 0;
 
 		// ▶ 파일이 존재하면 if문 실행
-		if (!files.isEmpty()) {
+		if (files != null && !files.isEmpty()) {
 			atchId = atchMapper.selectAtchId();
+			System.out.println("atchId===========" + atchId);
 
 			// ▶ 파일 개수만큼 for문
 			for (MultipartFile file : files) {
@@ -62,7 +66,7 @@ public class AtchServiceImpl implements AtchService {
 				attach.setAtchPath(saveFolder + fileName);
 
 				// ▶ 테이블에 파일 저장
-				atchMapper.fileUpload(file);
+				atchMapper.fileUpload(attach);
 			}
 
 		}
@@ -73,6 +77,13 @@ public class AtchServiceImpl implements AtchService {
 	@Override
 	public int selectAtchId() {
 		return atchMapper.selectAtchId();
+	}
+
+
+	@Override
+	public List<AtchVO> selectImg(int id) {
+		// TODO Auto-generated method stub
+		return atchMapper.selectImg(id);
 	}
 
 }
