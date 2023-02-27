@@ -38,7 +38,24 @@
 		)
 	</insert>
 
+	<update id="noticeUpdate"
+		parameterType="co.king.prj.notice.service.NoticeVO">
+		UPDATE AUCT
+		<set>
+			<if test="auctTtl != null">AUCT_TTL = #{auctTtl},</if>
+			<if test="ctgry != null">ctgry = #{ctgry},</if>
+			<if test="auctCn != null">AUCT_CN = #{auctCn},</if>
+			<if test="quickPrc != null">QUICK_PRC = #{quickPrc},</if>
+			<if test="stts != null">stts = #{stts},</if>
+			<if test="atchId != null">ATCH_ID = #{atchId},</if>
+			<if test="noticeSubject != null">NOTICE_SUBJECT = #{noticeSubject}</if>
+		</set>
+		WHERE AUCT_NO = #{auctNo}
+	</update>
 
-
+	<delete id="deleteAuct"
+		parameterType="com.goguma.auct.vo.AuctVO">
+		DELETE FROM AUCT WHERE AUCT_NO = #{auctNo}
+	</delete>
 
 </mapper>
