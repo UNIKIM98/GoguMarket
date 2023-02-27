@@ -80,8 +80,9 @@
 											<input type="text" name="negoYn" id="negoYn" placeholder="네고여부">
 										</div>
 										<div class="col-lg-10">
-											<input type="file" name="file" id="file" placeholder="첨부파일"
-												onchange="previewImage(this,'View_area')">
+											<input type="file" name="files" id="files" placeholder="첨부파일"
+												onchange="previewImage(this,'View_area')"
+												multiple="multiple">
 										</div>
 										<div class='uploadResult'>
 											<ul>
@@ -103,6 +104,7 @@
 		<!-- End page content -->
 		
 		<script th:inline="javascript">
+		
 			// 썸네일 미리보기 함수 previewImage()
 			// 	$(function(){
 			function previewImage(targetObj, View_area) {
