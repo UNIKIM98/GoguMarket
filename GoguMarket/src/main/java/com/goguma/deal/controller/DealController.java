@@ -67,10 +67,9 @@ public class DealController {
 
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo, List<MultipartFile> files) {
-		System.out.println(vo + "넘어온 vo");
-		System.out.println(files + "file/////////");
-		attachService.fileUpload(files);
+		
 		int atchId = attachService.fileUpload(files);
+		
 		if(atchId > 0) {
 			vo.setAtchId(atchId);
 		}
