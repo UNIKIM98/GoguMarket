@@ -1,0 +1,93 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.avCp,
+.unavCp {
+	display: inline-block;
+	margin: 5% 7% 5% 5%;
+}
+.avCp button,
+.unavCp button{
+	font-size: 16px;
+	font-weight: bold;	
+}
+
+.leftContainer {
+	width: 50%;
+	float: left;
+	box-sizing: border-box;
+}
+
+.rightContainer {
+	width: 50%;
+	float: right;
+	box-sizing: border-box;
+}
+
+.CouponContainer {
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.coupon {
+	width: 350px;
+	height: 111px;
+	border: solid 5px #ffe2ac;
+	border-radius: 10px;
+	background-color: #fff;
+	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+	padding: 10px 10px;
+	position: relative;
+	padding: 0px 0px 0px 0px;
+}
+
+.main {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.couponContent {
+	width: 70%;
+	height: 100%;
+	margin: inherit;
+}
+
+.cnDetail {
+	margin-top: 10px;
+	margin-left: 15%;
+	text-align: left;
+	font-weight: bold;
+	text-align: left;
+}
+
+.who {
+	width: 65px;
+	height: 15px;
+	background-color: #e8e8e8;
+	border-radius: 5px;
+	margin-left: 15%;
+	font-size: 12px;
+	text-align: center;
+}
+
+.ydt {
+	margin-left: 15%;
+	text-align: left;
+	margin-top: 10px;
+}
+
+.usedYn {
+	width: 20%;
+	height: 101.5px;
+	background-color: #ffedca;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.usedYn p {
+	margin-top: 30%
+}

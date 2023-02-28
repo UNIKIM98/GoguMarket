@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.biz.mapper.BizNewsMapper">
+
+	<!-- 가게 소식 -->
+	<select id="bizNews" parameterType="String" resultType="com.goguma.biz.vo.BizNewsVO">
+		SELECT biz.*, news.*
+		FROM biz_mem biz LEFT OUTER JOIN biz_news news
+			ON biz.biz_no = news.biz_no
+			AND news.biz_no = #{bizNo}
+	</select>
+	
+</mapper>
