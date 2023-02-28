@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.common.service.AtchService;
+import com.goguma.common.service.CommonCodeService;
+import com.goguma.deal.mapper.DealMapper;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
@@ -26,11 +29,16 @@ import com.goguma.deal.vo.Paging;
 public class DealController {
 
 	@Autowired
-
 	private DealService dealService;
-	// private DealMapper dealMapper;
+	
+	@Autowired
+	private DealMapper dealMapper;
+	
 	@Autowired
 	private AtchService attachService;
+	
+	@Autowired
+	private CommonCodeService codeService;
 
 	@RequestMapping("/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
@@ -41,13 +49,18 @@ public class DealController {
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
 
-		paging.setTotalRecord(dealService.getcountTotal(svo));
+		paging.setTotalRecord(dealMapper.getcountTotal(svo));
 
-		model.addAttribute("lists", dealService.dealListSelect(svo));
-
+		model.addAttribute("lists", dealMapper.dealListSelect(svo));
+		model.addAttribute("category",codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는 common_detail_code만 들고오면됨
 		return "deal/dealList"; // 뷰페이지명
 	}
-
+	
+	/*
+	 * @DeleteMapping("/deal/{dlNo}")
+	 * 
+	 * @ResponseBody public y
+	 */
 	// 판매상품 단건 조회 => detail에 쓸려고
 	@RequestMapping("/dealdetail/{dlNo}")
 	public String getDeal(@PathVariable String dlNo, Model model) {
@@ -61,13 +74,14 @@ public class DealController {
 	}
 
 	@RequestMapping("/dealform") // 딜폼창확인
-	public String dealform() {
+	public String dealform(Model model) {
+		model.addAttribute("category",codeService.codeList("002"));
 		return "deal/dealform";
 	}
 
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo, List<MultipartFile> files) {
-		
+		System.out.println(vo.getAtchId()+"메롱");
 		int atchId = attachService.fileUpload(files);
 		
 		if(atchId > 0) {
