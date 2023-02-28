@@ -52,4 +52,11 @@
 
 	</insert>
 
+	<update id="snsHitUpdate">
+		UPDATE SNS
+		SET INQ_CNT = INQ_CNT + 1
+		WHERE SNS_NO =
+		#{snsNo}
+	</update>
+
 </mapper>

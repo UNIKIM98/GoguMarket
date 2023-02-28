@@ -106,7 +106,7 @@ li {
 									</div>
 
 									<input type="file" name="files" id="files" placeholder="첨부파일"
-								 multiple="multiple">
+										multiple="multiple">
 								</div>
 								<!-- atch -->
 
@@ -150,13 +150,42 @@ li {
 					</form>
 
 				</div>
-				<div class="Sns-footer"></div>
 				<div class="Sns-Cn">
 					<div class="writeCn pb-10" style="width: 100%;">
 
 						<span class="mb-120" id="CN"></span>
 					</div>
 				</div>
+				<div class="Sns-commet mtb-20 ">
+
+					<hr style="margin: 0">
+					<h2 class="ml-10 mt-10">reply</h2>
+					<div class="media" style="margin:10px">
+						<div class="media-left">
+							<a href="#"><img class="media-object" src="img/author/1.jpg"
+								alt="#"></a>
+						</div>
+						<div class="media-body ml-10">
+							<div class="clearfix">
+								<div class="name-commenter pull-left">
+									<h6 class="media-heading">
+										<a href="#">Gerald Barnes</a>
+									</h6>
+									<p class="mb-10">27 Jun, 2022 at 2:30pm</p>
+								</div>
+								<div class="pull-right">
+									<ul class="reply-delate">
+										<textarea></textarea>
+										<li>/</li>
+										<li><a href="#">Delate</a></li>
+									</ul>
+								</div>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+
 				<div class="Sns-footer" style="background-color: #000000;">
 					<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
 						@gogu.ma</h3>
@@ -181,7 +210,7 @@ li {
 		                            <input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
 		                            <input type="hidden" id="userId" name="userId" value="${sns.userId}">
 		                         	<img src="${sns.atchPath}" alt=""></a>
-		                         	 ${sns.inqCnt}
+		                         	 조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
 		                        </div>
 		                    </div>`)
 		                   

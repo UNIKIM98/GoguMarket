@@ -11,11 +11,13 @@ public interface SnsMapper {
 
 	int getCountTotal(SnsVO vo);
 
-	SnsVO selectSns(int id); // 사원검색
+	SnsVO selectSns(int id); // sns검색
 
-	int insertSns(SnsVO vo); // 사원등록
+	int insertSns(SnsVO vo); // sns등록
 
-	int deleteSns(SnsVO vo); // 사원수정
+	int deleteSns(SnsVO vo); // sns수정
 
-	int updateSns(SnsVO vo); // 사원삭제
+	int updateSns(SnsVO vo); // sns삭제
+	
+	int snsHitUpdate(int snNo); // 조회수 증가
 }

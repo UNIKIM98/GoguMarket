@@ -35,10 +35,11 @@ public class ResController {
 	}
 
 	@GetMapping("/selectSns")
-	public Map<String, Object> getSns(@PathVariable int Id) {
-		System.out.println(Id);
+	public Map<String, Object> selectSns(int id) {
+		System.out.println(id);
 
-		SnsVO vo = service.selectSns(Id);
+		service.snsHitUpdate(id);
+		SnsVO vo = service.selectSns(id);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 

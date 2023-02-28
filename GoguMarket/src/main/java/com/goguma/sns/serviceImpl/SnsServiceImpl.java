@@ -11,6 +11,7 @@ import com.goguma.sns.vo.SnsVO;
 
 @Service
 public class SnsServiceImpl implements SnsService {
+
 	@Autowired SnsMapper map;
 	
 	
@@ -51,4 +52,9 @@ public class SnsServiceImpl implements SnsService {
 		return map.updateSns(vo);
 	}
 
+	@Override
+	public int snsHitUpdate(int snNo) {
+		// TODO Auto-generated method stub
+		return map.snsHitUpdate(snNo);
+	}
 }
