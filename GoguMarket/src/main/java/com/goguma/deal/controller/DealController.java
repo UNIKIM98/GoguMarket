@@ -30,9 +30,11 @@ public class DealController {
 
 	@Autowired
 	private DealService dealService;
+
 	
 	@Autowired
 	private DealMapper dealMapper;
+
 	
 	@Autowired
 	private AtchService attachService;

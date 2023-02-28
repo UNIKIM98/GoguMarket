@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/sideBar}">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<!-- 다음 우편번호 API -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="myPages/js/actInfo.js"></script>
+
 </head>
+
 <body>
 	<div layout:fragment="myContent">
-	
+		<div class="wrapper">
+			<section id="page-content" class="page-wrapper section">
+				<div class="about-section mb-80">
+					<div class="container">
+						<!--▶ 대표계좌 -->
+						<div class="row mb-100" id="myAreaNow">
+							<div class="section-title text-start ">
+								<h2 class="uppercase">우리 동네 설정</h2>
+								<h3>
+									지금 우리 동네는 <span style="font-weight: bold;">수성구 황금동</span> 입니다.
+								</h3>
+							</div>
+							<div class="mt-20"></div>
+						</div>
+						<div class="row mb-100" id="setMyArea">
+							<div class="section-title text-start ">
+								<h2 class="uppercase">우리동네 변경하기</h2>
+								<input id="member_post" type="text" placeholder="주소 검색" readonly onclick="findAddr()">
+								<input id="member_addr" type="text" placeholder="Address" readonly> <br> <input
+									type="text" id="member_dtAddr" placeholder="Detailed Address">
+							</div>
+							<div class="mt-20">
+								<button type="button" onClick="changeAddr()">변경</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<script>
+			function findAddr() {
+				new daum.Postcode({
+					oncomplete: function (data) {
+						console.log(data);
+
+						let roadAddr = data.roadAddress; // 도로명 주소 변수
+						let jibunAddr = data.jibunAddress; // 지번 주소 변수
+
+						$("#member_post").val(data.sigungu);
+
+						if (roadAddr !== '') {
+							$("#member_addr").val(roadAddr);
+
+						} else if (jibunAddr !== '') {
+							$("#member_addr").val(jibunAddr);
+
+						}
+
+					}
+				}).open();
+			}
+
+			function changeAddr() {
+				let isDeagu = $("#member_addr").val().substring(0, 2)
+				if(isDeagu != "대구"){
+					alert("대구 소재 주소를 입력해주세요!")
+				}
+				return false;
+			}
+		</script>
 	</div>
+
 </body>
+
 </html>
