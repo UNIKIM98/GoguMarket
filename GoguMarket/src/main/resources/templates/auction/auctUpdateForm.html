@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col-lg-12" style="width: 700px">
                                 <div class="message-box box-shadow white-bg">
-                                    <form id="contact-form" action="auctInsert" method="post" enctype="multipart/form-data">
+                                    <form id="contact-form" action="/auctInsert" method="post" enctype="multipart/form-data">
                                         <!-- <div class="row"> -->
                                     
                                         <div class="col-lg-12">
@@ -120,7 +120,7 @@
                                         </div>
 
                                         <div class="col-lg-12">
-                                            <input type="file" name="files" id="files" placeholder="첨부파일"
+                                            <input type="file" name="files" placeholder="첨부파일"
                                                 onchange="previewImage(this,'View_area')"
                                                 multiple="multiple">
                                         </div>
@@ -257,6 +257,21 @@
         <!-- Body main wrapper end -->
 
 
+        <!-- Placed JS at the end of the document so the pages load faster -->
+
+        <!-- jquery latest version -->
+        <script src="js/vendor/jquery-3.6.0.min.js"></script>
+        <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+        <!-- Bootstrap framework js -->
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <!-- jquery.nivo.slider js -->
+        <script src="lib/js/jquery.nivo.slider.js"></script>
+        <!-- All js plugins included in this file. -->
+        <script src="js/plugins.js"></script>
+        <!-- ajax-mail js -->
+        <script src="js/ajax-mail.js"></script>
+        <!-- Main js file that contents all jQuery plugins activation. -->
+        <script src="js/main.js"></script>
     </article>
 </body>
 

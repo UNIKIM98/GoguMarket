@@ -55,14 +55,13 @@ public class AuctController {
 	@PostMapping("/auctInsert") // 등록 매핑
 	public String auctInsert(AuctVO vo, List<MultipartFile> files) {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
-		System.out.println(vo);
 		System.out.println(files+"======넘어온 파일들");
 		
 		int atchId = atchService.fileUpload(files);
-		System.out.println("왔니......");
-		vo.setUserId("user1");
 
-		System.out.println(files + " : files/////////");
+		vo.setUserId("user2");
+
+		System.out.println(atchId + " : files/////////");
 		System.out.println(vo);
 		
 		if(atchId > 0) {
@@ -71,5 +70,11 @@ public class AuctController {
 		
 		auctService.insertAuct(vo);
 		return "redirect:auctList";
+	}
+	
+	@PostMapping("/auctDelete")
+	public String updateDelete(AuctVO vo) {
+		// 상품 삭제
+		return "auction/auctDelete";
 	}
 }
