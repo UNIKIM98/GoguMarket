@@ -26,9 +26,9 @@ import com.goguma.deal.vo.Paging;
 public class DealController {
 
 	@Autowired
-
 	private DealService dealService;
 	// private DealMapper dealMapper;
+	
 	@Autowired
 	private AtchService attachService;
 
