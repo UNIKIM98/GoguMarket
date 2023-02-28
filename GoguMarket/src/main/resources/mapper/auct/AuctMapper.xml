@@ -6,8 +6,7 @@
 	<select id="getAuctList"
 		parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
-		SELECT *
-		FROM AUCT
+		SELECT * FROM AUCT ORDER BY AUCT_NO DESC
 	</select>
 
 	<select id="getAuct"

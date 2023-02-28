@@ -1,10 +1,13 @@
 package com.goguma.biz.service;
 
+import java.util.List;
+
 import com.goguma.biz.vo.BizNewsVO;
 
 public interface BizNewsService {
 	//가게 소식
-	BizNewsVO bizNews(String bizNo);
+	List<BizNewsVO> bizNews(String bizNo);
+
 		
 	
 }

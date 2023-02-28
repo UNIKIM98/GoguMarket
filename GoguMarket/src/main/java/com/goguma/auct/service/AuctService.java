@@ -11,5 +11,5 @@ public interface AuctService {
 
 	int insertAuct(AuctVO vo);
 //	int updateAuct(AuctVO vo);
-//	int deleteAuct(AuctVO vo);
+	int deleteAuct(AuctVO vo);
 }

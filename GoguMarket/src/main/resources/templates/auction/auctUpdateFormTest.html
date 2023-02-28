@@ -1,86 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
-    layout:decorate="~{/layouts/layout}">
+	layout:decorate="~{layouts/layout}">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>경매 상품 등록</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/icon/favicon.png">
-
-    <!-- All CSS Files -->
-    <!-- Bootstrap fremwork main css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Nivo-slider css -->
-    <link rel="stylesheet" href="lib/css/nivo-slider.css">
-    <!-- This core.css file contents all plugings css file. -->
-    <link rel="stylesheet" href="css/core.css">
-    <!-- Theme shortcodes/elements style -->
-    <link rel="stylesheet" href="css/shortcode/shortcodes.css">
-    <!-- Theme main style -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- User style -->
-    <link rel="stylesheet" href="css/custom.css">
-
-    <!-- Style customizer (Remove these two lines please) -->
-    <link rel="stylesheet" href="css/style-customizer.css">
-    <link href="#" data-style="styles" rel="stylesheet">
-
-    <!-- Modernizr JS -->
-    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<meta charset="UTF-8">
+<title>전체조회 테스트</title>
 </head>
-
 <body>
-    <article layout:fragment="content">
+	<div layout:fragment="content">
 
-        <!-- Body main wrapper start -->
-        <div class="wrapper">
+		<!-- Body main wrapper start -->
+		<div class="wrapper">
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
 
-
-            <!-- BREADCRUMBS SETCTION START -->
-            <div class="breadcrumbs-section plr-200 mb-80 section">
-                <div class="breadcrumbs overlay-bg">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="breadcrumbs-inner">
-                                    <h1 class="breadcrumbs-title">경매품 등록하기</h1>
-                                    <ul class="breadcrumb-list">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li>Auction Insert Form</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- BREADCRUMBS SETCTION END -->
-
-            <!-- Start page content -->
-            <section id="page-content" class="page-wrapper section">
-
-
-                <!-- MESSAGE BOX SECTION START -->
-                <div class="message-box-section mb-80">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12" style="width: 700px">
-                                <div class="message-box box-shadow white-bg">
-                                    <form id="contact-form" action="auctInsert" method="post" enctype="multipart/form-data">
-                                        <!-- <div class="row"> -->
-                                    
-                                        <div class="col-lg-12">
-                                            <h4 class="blog-section-title border-left mb-30">get in auction</h4>
-                                        </div>
-
+				<!-- MESSAGE BOX SECTION START -->
+				<div class="message-box-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="message-box box-shadow white-bg">
+									<!-- <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php"> -->
+									<form id="frm" action="auctUpdate" method="post" enctype="multipart/form-data">
+										
                                         <div class="col-lg-6" style="width: 550px">
                                             <h6>카테고리</h6>
                                             <input type="radio" name="ctgry" value="HA">생활가전
@@ -119,42 +62,39 @@
                                                 placeholder="상품설명란"></textarea>
                                         </div>
 
-                                        <div class="col-lg-12">
-                                            <input type="file" name="files" id="files" placeholder="첨부파일"
-                                                onchange="previewImage(this,'View_area')"
-                                                multiple="multiple">
-                                        </div>
+										<div class="col-lg-10">
+											<input type="file" name="files" id="files" placeholder="첨부파일"
+												onchange="previewImage(this,'View_area')"
+												multiple="multiple">
+										</div>
+										<div class='uploadResult'>
+											<ul>
+											
+											</ul>
+										</div>
+										<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">등록하기</button>
+									</form>
+								</div>
+								<p class="form-message"></p>
+								<!-- </form> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- MESSAGE BOX SECTION END -->
+		<!-- End page content -->
+		
+		<script th:inline="javascript">
+		
+			// 썸네일 미리보기 함수 previewImage()
+			// 	$(function(){
+			function previewImage(targetObj, View_area) {
+				var fileArr;
+				var fileInfoArr = [];
 
-                                        
-                                        <button class="submit-btn-1 mt-30 btn-hover-1" type="reset"
-                                                >취소</button>
-                                        <button class="submit-btn-1 mt-30 btn-hover-1"
-                                                onclick="goList()"
-                                                style="left: 100px">목록</button>
-                                        <button class="submit-btn-1 mt-30 btn-hover-1" type="submit"
-                                                style="left: 200px">상품등록 완료</button>
-                                    
-                                        <!-- </div> -->
-                                        <p class="form-message"></p>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <!-- MESSAGE BOX SECTION END -->
-
-
-
-        <script th:inline="javascript">
-
-            function previewImage(targetObj, View_area) {
-                var fileArr;
-                var fileInfoArr = [];
-
-                var files = targetObj.files;
+				var files = targetObj.files;
 				fileArr = Array.prototype.slice.call(files);
 
 				var preview = document.getElementById(View_area); //div id
@@ -235,29 +175,17 @@
 								preview.insertBefore(info, null);
 							}
 						}
-                        // function fileRemove(idx) {
-                        //     return null;
-                        // }
 					}
 				}
-            }
+			}
 
-            function goList() {
-                location.href = "auctList";
-            }
-        </script>
+			// 		})
 
-
-
-
-
-
-
-        </div>
-        <!-- Body main wrapper end -->
-
-
-    </article>
+			// 서버로 데이터 전송할 ajax 코드
+			/* $(function(){
+				
+			}) */
+		</script>
+	</div>
 </body>
-
 </html>

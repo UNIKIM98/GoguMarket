@@ -3,11 +3,10 @@
 <mapper namespace="com.goguma.biz.mapper.BizNewsMapper">
 
 	<!-- 가게 소식 -->
-	<select id="bizNews" parameterType="String" resultType="com.goguma.biz.vo.BizNewsVO">
-		SELECT biz.*, news.*
-		FROM biz_mem biz LEFT OUTER JOIN biz_news news
-			ON biz.biz_no = news.biz_no
-			AND news.biz_no = #{bizNo}
+	<select id="bizNews" parameterType="string" resultType="com.goguma.biz.vo.BizNewsVO">
+		SELECT *
+		FROM biz_news
+		WHERE biz_no = #{bizNo}
 	</select>
 	
 </mapper>
