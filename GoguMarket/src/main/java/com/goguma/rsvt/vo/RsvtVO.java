@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class RsvtVO {	//예약내역 테이블
+public class RsvtVO extends RsvtRvVO{	//예약내역 테이블
 	String rsvtNo;			//예약번호
 	String bizNo;			//가게번호
 	String userId;			//예약자id(사용자id)

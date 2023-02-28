@@ -1,5 +1,7 @@
 package com.goguma.biz.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ public class BizNewsServiceImpl implements BizNewsService{
 	
 	//가게 소식
 	@Override
-	public BizNewsVO bizNews(String bizNo) {
+	public List<BizNewsVO> bizNews(String bizNo) {
 		return map.bizNews(bizNo);
 	}
 

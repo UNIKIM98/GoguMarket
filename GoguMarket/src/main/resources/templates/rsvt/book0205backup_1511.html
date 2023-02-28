@@ -198,6 +198,9 @@
 																<hr>
 
 																<p th:text="${news.ntcCn}">(소식내용)</p>
+																<div class="read-more">
+																	<a href="#">Read more</a>
+																</div>
 															</div>
 														</div>
 														<div class="col-lg-3">
@@ -208,6 +211,7 @@
 														</div>
 													</div>
 													<!-- 소식 1건 끝 -->
+													<hr>
 												</div>
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 메뉴 -->
@@ -242,7 +246,7 @@
 												<div role="tabpanel" class="tab-pane" id="page4">
 
 													<!-- 후기 1건 : for문 -->
-													<div class="row" th:each="rv: ${rv}">
+													<div class="row">
 														<div class="blog-desc">
 															<div class="row">
 																<div class="col-lg-10">
@@ -253,8 +257,8 @@
 																					src="img/author/1.jpg" alt="#"></a>
 																			</div>
 																			<div class="media-body mt-15">
-																				<h5 th:text="${rv.nickNm}">(유저닉네임)</h5>
-																				<p class="mb-10">(며칠전)</p>
+																				<h5>도리눈아</h5>
+																				<p class="mb-10">2일전</p>
 																			</div>
 																		</div>
 																	</div>
@@ -267,16 +271,16 @@
 															</div>
 															<hr>
 
-															<p th:text="${rv.rvCn}">생각보다 문어가 엄청 커요~ 싱싱하고 가리비도 주문했는데 실하네용ㅎㅎ 다음에도
+															<p>생각보다 문어가 엄청 커요~ 싱싱하고 가리비도 주문했는데 실하네용ㅎㅎ 다음에도
 																주문하겠습니다</p>
 															<div class="mb-20">
 																<div class="pull-right">
 																	<ul class="reply-delate">
-																		<li><a href="#">(해쉬태그)</a></li>
+																		<li><a href="#">친절해요</a></li>
 																		<li>/</li>
-																		<li><a href="#">(해쉬태그)</a></li>
+																		<li><a href="#">가격이싸요</a></li>
 																		<li>/</li>
-																		<li><a href="#">(해쉬태그)</a></li>
+																		<li><a href="#">만족스</a></li>
 																	</ul>
 																</div>
 															</div>
@@ -291,7 +295,9 @@
 													</div>
 													<!-- 후기1건 끝 -->
 
+													<hr>
 												</div>
+
 
 												<!-- ♣♣♣♣♣♣♣♣♣♣상세내용 - 예약하기 -->
 												<div role="tabpanel" class="tab-pane" id="page5">

@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
 import com.goguma.rsvt.service.BizMenuService;
+import com.goguma.rsvt.service.RsvtRvService;
+import com.goguma.rsvt.vo.RsvtRvVO;
 
 @Controller
 public class BizController {
 
-	@Autowired private BizMemService memService; // 가게정보
-	@Autowired private BizNewsService newsService; // 가게소식 들고오기 위함
-	@Autowired private BizMenuService menuService;		//메뉴 들고오기 위함
+	@Autowired private BizMemService memService; 	// 가게정보
+	@Autowired private BizNewsService newsService; 	// 가게소식 들고오기 위함
+	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
+	@Autowired private RsvtRvService rvService;		//리뷰 들고오기 위함
 
 	/* book01~05 분류는 예약으로 되어있는데 
 	 * 매퍼랑 서비스 같은게 biz에 있어서 여기에다가 만듬 */
@@ -33,10 +36,16 @@ public class BizController {
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
+		System.out.println("여깁니다" + memService.bizInfo(bizNo));
 		// 가게 소식
 		model.addAttribute("news", newsService.bizNews(bizNo));
+		System.out.println("여깁니다" + newsService.bizNews(bizNo));
 		// 가게 메뉴
 		model.addAttribute("menu", menuService.bizMenu(bizNo));
+		System.out.println("여깁니다" + menuService.bizMenu(bizNo));
+		// 가게 리뷰
+		model.addAttribute("rv", rvService.rsvtReview(bizNo));
+		System.out.println("여깁니다●●●●●●●●●●●●●●●●●●●●●" + rvService.rsvtReview(bizNo));
 		
 		return "rsvt/book0205";
 	}
