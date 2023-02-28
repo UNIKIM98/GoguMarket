@@ -28,6 +28,7 @@ function snsModal(id) {
 
 	//단건을 조회하는 ajax를 실행
 	console.log(id)
+	typeof(id)
 
 	//단건조회
 	$.ajax({

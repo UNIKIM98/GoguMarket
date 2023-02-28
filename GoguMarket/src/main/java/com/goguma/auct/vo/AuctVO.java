@@ -5,11 +5,12 @@ import java.sql.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.goguma.common.vo.AtchVO;
 
 import lombok.Data;
 
 @Data
-public class AuctVO {
+public class AuctVO extends AtchVO{
 	 private int auctNo;
 	 private String userId;
 	 @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
