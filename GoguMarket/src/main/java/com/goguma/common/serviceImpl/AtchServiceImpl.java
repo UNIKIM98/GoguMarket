@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,24 +18,29 @@ public class AtchServiceImpl implements AtchService {
 
 	@Autowired
 	AtchMapper atchMapper;
-
+	
+	@Value("${goguma.save}")
+	private String saveFolder;
+	
 	@Override
 	public int fileUpload(List<MultipartFile> files) {
-
+		System.out.println("왔니....... commonFileUpload");
 		// ▶ 파일 저장 위치 설정
-		String saveFolder = ("C:\\upload/");
+	
 
 		// ▶ atchId(첨부파일 없으면 0 리턴)
 		int atchId = 0;
 
 		// ▶ 파일이 존재하면 if문 실행
-		if (files.get(0).getSize() != 0) {
+		if (files != null && !files.isEmpty() ) {
 			atchId = atchMapper.selectAtchId();
-			System.out.println("atchId===========" + atchId);
+			System.out.println("atchId========" + atchId);
 
 			// ▶ 파일 개수만큼 for문
 			for (MultipartFile file : files) {
-
+				if(file.getSize()== 0) 
+					continue;
+				
 				// ▶ insert할 atchVO 생성
 				AtchVO attach = new AtchVO();
 
@@ -45,7 +51,7 @@ public class AtchServiceImpl implements AtchService {
 				fileName = fileName + "_" + file.getOriginalFilename();
 
 				// ▶ 파일 실제 저장
-				File uploadFile = new File(saveFolder, fileName);
+				File uploadFile = new File("/upload", fileName);
 
 				try {
 					file.transferTo(uploadFile); // 실제파일저장

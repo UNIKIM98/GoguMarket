@@ -8,15 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.goguma.auct.mapper.AuctMapper;
 import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctVO;
 import com.goguma.common.service.AtchService;
 
-import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 
 @Controller
 public class AuctController {
@@ -38,8 +35,7 @@ public class AuctController {
 	@GetMapping("/auctSelect/{auctNo}")
 	public String getAuct(@PathVariable int auctNo, Model model) {
 		// 단일품목 값
-		System.out.println("왔니?=============================" + auctNo);
-		System.out.println(auctNo);
+		System.out.println("auctNo=" + auctNo);
 		AuctVO aVO = new AuctVO();
 		aVO.setAuctNo(auctNo);
 
@@ -60,18 +56,20 @@ public class AuctController {
 	public String auctInsert(AuctVO vo, List<MultipartFile> files) {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
 		System.out.println(vo);
-		System.out.println(files + "file/////////");
+		System.out.println(files+"======넘어온 파일들");
 		
-		atchService.fileUpload(files);
 		int atchId = atchService.fileUpload(files);
-		
+		System.out.println("왔니......");
 		vo.setUserId("user1");
 
+		System.out.println(files + " : files/////////");
+		System.out.println(vo);
+		
 		if(atchId > 0) {
 			vo.setAtchId(atchId);
 		}
 		
 		auctService.insertAuct(vo);
-		return "auction/auctList";
+		return "redirect:auctList";
 	}
 }
