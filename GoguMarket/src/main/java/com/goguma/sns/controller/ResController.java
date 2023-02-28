@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.goguma.common.service.AtchService;
 import com.goguma.common.vo.AtchVO;
@@ -49,9 +50,10 @@ public class ResController {
 	}
 
 	@PostMapping("/insertSns")
-	public String insertSns(SnsVO vo, AtchVO avo, List<MultipartFile> files) {
+	public ModelAndView insertSns(SnsVO vo, AtchVO avo, List<MultipartFile> files) {
 
-
+		ModelAndView mv = new ModelAndView("redirect:snsMain");
+		
 		System.out.println(vo);
 		int atchId = aservice.fileUpload(files);
 
@@ -62,7 +64,7 @@ public class ResController {
 		service.insertSns(vo);
 //		aservice.fileUpload(null);
 
-		return "redirect:snsMain";
+		return mv;
 	}
 
 }

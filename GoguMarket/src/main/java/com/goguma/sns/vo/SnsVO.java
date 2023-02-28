@@ -10,7 +10,7 @@ import com.goguma.common.vo.AtchVO;
 import lombok.Data;
 
 @Data
-public class SnsVO {
+public class SnsVO{
 	private int snsNo;
 	private String userId;
 	private String snsCn; // sns 글 내용
@@ -24,5 +24,7 @@ public class SnsVO {
 	private String area;
 	private int atchId;
 	private int inqCnt;
+	
+	private String atchPath;
 
 }
