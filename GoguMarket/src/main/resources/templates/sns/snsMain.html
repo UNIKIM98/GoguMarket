@@ -94,7 +94,8 @@ li {
 				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
 					<button class="close1" onclick=""
 						style="color: black; padding: 10px;">x</button>
-					<form action="insertSns">
+					<form action="insertSns" method="post"
+						enctype="multipart/form-data">
 						<div class="login-account p-30 box-shadow mtb-15">
 							<div class="col-lg-4 col-md-6 pb-10">
 
@@ -104,15 +105,20 @@ li {
 										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
 									</div>
 
-									<input type="file" class="mt-10" id="atchId" name="atchId">
+									<input type="file" name="files" id="files" placeholder="첨부파일"
+								 multiple="multiple">
 								</div>
+								<!-- atch -->
 
 							</div>
 
-							<input type="hidden" name="userId" id="userId">
+							<input type="hidden" name="userId" id="userId" value="jyeop">
+							<!-- userId -->
 							<textarea name="snsCn" id="snsCn" class="mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
-							<input type="hidden" name="area" id="area" value="">
+							<!-- 게시물 -->
+							<input type="text" name="hash" id="hash"> <input
+								type="hidden" name="area" id="area" value="대구">
 						</div>
 
 
@@ -135,8 +141,8 @@ li {
 				<div class="Sns-body">
 					<form action="#">
 						<div>
-							<span class="ml-10" id="snsYmd"></span> 
-							<img alt="" class="ml-5" id="atchPath" style="width: 100%;">
+							<span class="ml-10" id="snsYmd"></span> <img alt="" class="ml-5"
+								id="atchPath" style="width: 100%;">
 
 							<h3 class="mt-10 ml-20"></h3>
 
@@ -175,6 +181,7 @@ li {
 		                            <input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
 		                            <input type="hidden" id="userId" name="userId" value="${sns.userId}">
 		                         	<img th: src="${sns.atchPath}" alt=""></a>
+		                         	 ${sns.inqCnt}
 		                        </div>
 		                    </div>`)
 		                   

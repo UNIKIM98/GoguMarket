@@ -10,12 +10,46 @@
 	</select>
 
 	<select id="selectSns" resultType="com.goguma.sns.vo.SnsVO">
-		
+
 		SELECT *
 		FROM SNS
-		WHERE sns_no = #{snsNo}
+		WHERE sns_no =
+		#{snsNo}
 
 
 	</select>
+
+	<insert id="insertSns" parameterType="com.goguma.sns.vo.SnsVO">
+		<selectKey keyProperty="snsNo" resultType="int"
+			order="BEFORE">
+			SELECT NVL(MAX(sns_No),0)+1
+			AS snsNO
+			FROM SNS
+		</selectKey>
+		INSERT INTO SNS (
+		sns_no,
+		user_id,
+		sns_cn,
+		hash,
+		like_nocs,
+		sns_ymd,
+		area,
+		atch_id,
+		inq_cnt
+		)
+		VALUES (
+		#{snsNo},
+		#{userId},
+		#{snsCn},
+		#{hash},
+		0,
+		sysdate,
+		#{area},
+		#{atchId},
+		0
+		)
+
+
+	</insert>
 
 </mapper>

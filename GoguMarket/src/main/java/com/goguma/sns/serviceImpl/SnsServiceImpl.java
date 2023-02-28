@@ -16,7 +16,6 @@ public class SnsServiceImpl implements SnsService {
 	
 	@Override
 	public List<SnsVO> selectSnsList() {
-		System.out.println("???/");
 		return map.selectSnsList();
 	}
 
@@ -28,13 +27,15 @@ public class SnsServiceImpl implements SnsService {
 
 	@Override
 	public SnsVO selectSns(int id) {
-		System.out.println("asd");
+		
 		return map.selectSns(id);
 	}
 
 	@Override
 	public int insertSns(SnsVO vo) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("넘어옴");
+		
 		return map.insertSns(vo);
 	}
 

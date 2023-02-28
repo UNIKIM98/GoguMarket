@@ -23,7 +23,6 @@ public class SnsVO {
 	private Date snsYmd;
 	private String area;
 	private int atchId;
-	private String atchPath;
 	private int inqCnt;
 
 }
