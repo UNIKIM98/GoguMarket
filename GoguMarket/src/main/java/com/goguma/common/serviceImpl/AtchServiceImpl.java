@@ -50,7 +50,7 @@ public class AtchServiceImpl implements AtchService {
 				fileName = fileName + "_" + file.getOriginalFilename();
 
 				// ▶ 파일 실제 저장
-				File uploadFile = new File("/upload", fileName);
+				File uploadFile = new File(saveFolder, fileName);
 
 				try {
 					file.transferTo(uploadFile); // 실제파일저장
@@ -66,7 +66,7 @@ public class AtchServiceImpl implements AtchService {
 				attach.setOrgnlNm(file.getOriginalFilename());
 				attach.setExtn("jpg"); // ※ 변경해야함! 파일타입 : jpg, jpeg, img, png, gif
 				attach.setAtchSize(file.getSize());
-				attach.setAtchPath(saveFolder + fileName);
+				attach.setAtchPath("/upload/" + fileName);
 
 				// ▶ 테이블에 파일 저장
 				atchMapper.fileUpload(attach);
