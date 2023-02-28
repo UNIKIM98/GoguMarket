@@ -1,5 +1,7 @@
 package com.goguma.rsvt.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ public class BizMenuServiceImpl implements BizMenuService{
 	
 	//가게메뉴
 	@Override
-	public BizMenuVO bizMenu(String bizNo) {
+	public List<BizMenuVO> bizMenu(String bizNo) {
 		return map.bizMenu(bizNo);
 	}
 

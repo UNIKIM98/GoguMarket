@@ -5,12 +5,13 @@ import java.sql.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.goguma.rsvt.vo.RsvtVO;
 
 import lombok.Data;
 
 
 @Data
-public class MemVO {
+public class MemVO extends RsvtVO{
 
 	private String userId;
 	private String userSe;

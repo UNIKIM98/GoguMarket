@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.rsvt.mapper.RsvtRvMapper">
+
+	<!-- 가게 후기 -->
+	<select id="rsvtReview" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtRvVO">
+		SELECT review.*, rsv.user_id, mem.nick_nm
+		FROM rsvt_rv review JOIN rsvt rsv
+							ON review.rsvt_no = rsv.rsvt_no
+							JOIN mem mem
+							ON rsv.user_id = mem.user_id
+		AND rsv.biz_no = #{bizNo}
+			
+	</select>
+
+</mapper>
