@@ -16,7 +16,6 @@ public class DealVO extends AtchVO{
 	private int dlNo; 	// 글번호
 	private String ntslId; 	// 판매자
 	private String prchsId;	// 구매자
-	private String ctgry;	// 카테고리
 	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
 	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date dlYmd;		// 등록일
@@ -28,6 +27,13 @@ public class DealVO extends AtchVO{
 	private Date prchsYmd;	// 구매일
 	private String area;	// 거래지역
 	private String negoYn;	// 네고여부
+	private String ctgry;	// 카테고리
+	
+	
+	private String commonCode;
+	private String commonDetailCode;
+	private String commonNm;
+	private String commonCn;
 	
 //	//  첨부파일vo 이용하여,  첨부파일을 담을 리스트.
 //	private List<BoardAttachVO> attachList;
