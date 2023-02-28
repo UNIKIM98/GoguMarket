@@ -26,7 +26,6 @@ public class AtchServiceImpl implements AtchService {
 	public int fileUpload(List<MultipartFile> files) {
 		System.out.println("왔니....... commonFileUpload");
 		// ▶ 파일 저장 위치 설정
-	
 
 		// ▶ atchId(첨부파일 없으면 0 리턴)
 		int atchId = 0;
