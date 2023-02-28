@@ -38,10 +38,10 @@ public class AuctServiceImpl implements AuctService{
 //		// 수정
 //		return 0;
 //	}
-//
-//	@Override
-//	public int deleteAuct(AuctVO vo) {
-//		// 삭제
-//		return 0;
-//	}
+
+	@Override
+	public int deleteAuct(AuctVO vo) {
+		// 삭제
+		return 0;
+	}
 }
