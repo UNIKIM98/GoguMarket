@@ -6,39 +6,35 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.goguma.biz.vo.BizNewsVO;
-import com.goguma.rsvt.mapper.RsvtMapper;
+import com.goguma.biz.service.BizMemService;
+import com.goguma.biz.service.BizNewsService;
+import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtService;
 
 @Controller
 public class RsvtController {
 	
 	@Autowired
-	private RsvtService rsvtservice;
-	private RsvtMapper mapper;
+	private BizMemService memService;		//가게정보
+	@Autowired
+	private BizNewsService newsService;		//가게소식 들고오기 위함
+	@Autowired
+	private BizMenuService menuService;		//메뉴 들고오기 위함
 	
-	//동네가게 예약 메인(book01)
-	@RequestMapping("/bookmain")
-	public String getBizList(Model model) {
-		model.addAttribute("lists", rsvtservice.getBizList());
-		return "rsvt/book01";
-	}
+//	//동네가게 예약 메인(book01)
+//	@RequestMapping("/bookmain")
+//	public String getBizList(Model model) {
+//		model.addAttribute("lists", memService.getBizList());
+//		return "rsvt/book01";
+//	}
 	
-	//동네가게 상세정보 - 홈(book0205)
-	@RequestMapping("/book0205/{bizNo}")
-	public String bizInfo(@PathVariable String bizNo, Model model) {
-		model.addAttribute("biz",rsvtservice.bizInfo(bizNo));
-		return "rsvt/book0205";
-	}
-	
-	//동네가게 상세정보 - 탭 소식(ajax사용..)
+//	//동네가게 상세정보(book0205)
 //	@RequestMapping("/book0205/{bizNo}")
-//	@ResponseBody
-//	public BizNewsVO getBizNews(@PathVariable String bizNo) {
-//		return mapper.getBizNews(bizNo);
-//		
+//	public String bizInfo(@PathVariable String bizNo, Model model) {
+//		//가게 정보(홈) 불러오기
+//		model.addAttribute("biz",rsvtservice.bizInfo(bizNo));
+//		return "rsvt/book0205";
 //	}
 	
 	@GetMapping("/book0601")

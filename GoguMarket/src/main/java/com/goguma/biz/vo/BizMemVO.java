@@ -1,11 +1,5 @@
 package com.goguma.biz.vo;
 
-import java.sql.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Data;
 
 @Data
@@ -19,11 +13,7 @@ public class BizMemVO {
 	private int bizSe;			//회원구분
 	private String brNo;		//사업자등록번호
 	private String eduFnshYn;	//교육수강현황
-//	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String bgngTm;		//영업시작시간
-//	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String endTm;			//영업종료시간
 	private String atchId;		//가게사진
 	private String ctgry;		//카테고리

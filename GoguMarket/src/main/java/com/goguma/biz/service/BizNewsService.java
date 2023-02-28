@@ -1,5 +1,10 @@
 package com.goguma.biz.service;
 
-public interface BizNewsService {
+import com.goguma.biz.vo.BizNewsVO;
 
+public interface BizNewsService {
+	//가게 소식
+	BizNewsVO bizNews(String bizNo);
+		
+	
 }

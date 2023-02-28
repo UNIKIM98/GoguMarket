@@ -2,28 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.rsvt.mapper.RsvtMapper">
 
-	<!-- 가게목록 전체조회 -->
-	<select id="getBizList" parameterType="String"
-		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT *
-		FROM biz_mem
+	<!-- 가게 메뉴 -->
+	<select id="bizMenu" parameterType="String" resultType="com.goguma.rsvt.vo.BizMenuVO">
+		select * 
+		from biz_menu
+		where biz_no = #{bizNo}
 	</select>
-
-	<!-- 개별조회(가게상세페이지) -->
-	<select id="bizInfo" parameterType="String"
-		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT *
-		FROM biz_mem
-		WHERE biz_no = #{bizNo}
-	</select>
-
-	<!-- 가게소식 -->
-	<select id="getBizNews" parameterType="String"
-		resultType="com.goguma.biz.vo.BizNewsVO">
-		SELECT biz.*, news.*
-		FROM biz_mem biz LEFT OUTER JOIN biz_news news
-		ON biz.biz_no = news.biz_no
-		AND news.biz_no = #{bizNo}
+	
+	<!-- 가게 후기 --> 
+	<select id="rsvtReview" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtRvVO">
+<!-- 		select * -->
+<!-- 		from rsvt_rv -->
+<!-- 		where biz_no = #{bizNo} -->
+	
 	</select>
 
 </mapper>
