@@ -205,14 +205,16 @@ li {
 						console.log(result)
 						for(sns of result){
 							$("#list").append(`<div class="brand-item" >
-		                            <div class="single-brand-product" id="clickSns" onclick="snsModal(${sns.snsNo})">
-		                            ${sns.userId} / ${sns.snsYmd}
-		                            <input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-		                            <input type="hidden" id="userId" name="userId" value="${sns.userId}">
-		                         	<img src="${sns.atchPath}" alt=""></a>
-		                         	 조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
-		                        </div>
-		                    </div>`)
+		                            				<div class="single-brand-product"
+														id="clickSns"
+														onclick="snsModal(${sns.snsNo})">
+		                            						${sns.userId} / ${sns.snsYmd}
+		                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+		                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+		                         							<img src="${sns.atchPath}" alt=""></a>
+		                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
+													</div>
+												</div>`)
 		                   
 						}
 					

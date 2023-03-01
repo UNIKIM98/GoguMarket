@@ -23,6 +23,7 @@ public class AuctController {
 	@Autowired
 	private AtchService atchService; //첨부파일 서비스 영역
 
+	
 	@GetMapping("/auctList")
 	public String getauctList(Model model) {
 		model.addAttribute("lists", auctService.getAuctList());
@@ -39,9 +40,10 @@ public class AuctController {
 		AuctVO aVO = new AuctVO();
 		aVO.setAuctNo(auctNo);
 
-
 		model.addAttribute("auct", auctService.getAuct(aVO));
+		model.addAttribute("atch", atchService.selectAtchId());
 		System.out.println("==============" + auctService.getAuct(aVO));
+		System.out.println("==============" + atchService.selectAtch(auctNo));
 
 		return "auction/auctSelect";
 	}
