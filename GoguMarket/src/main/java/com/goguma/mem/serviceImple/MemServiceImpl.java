@@ -33,4 +33,9 @@ public class MemServiceImpl implements MemService {
 		return mapper.selectUser(mVo);
 	}
 
+	@Override
+	public int updateDealArea(MemVO mVO) {
+		return	mapper.updateDealArea(mVO);
+	}
+
 }
