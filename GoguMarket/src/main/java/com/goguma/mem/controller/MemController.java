@@ -3,10 +3,13 @@ package com.goguma.mem.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -94,11 +97,22 @@ public class MemController {
 	public String myCouponNPoint() {
 		return "myPages/myCouponNPoint";
 	}
-	
-	
+
 	// ▶ 우리 동네 설정 ===========================================================
 	@GetMapping("/myArea")
-	public String myArea() {
+	public String myArea(HttpServletRequest request, MemVO mVO, Model model) {
+		HttpSession session = request.getSession();
+		mVO.setUserId((String) session.getAttribute("userId"));
+
+		model.addAttribute("userInfo", mService.selectUser(mVO));
+		System.out.println(mService.selectUser(mVO));
+
 		return "myPages/myArea";
 	}
+	
+	@GetMapping("/myAttend")
+	public String myAttend() {
+		return "myPages/myAttend";
+	}
+	
 }
