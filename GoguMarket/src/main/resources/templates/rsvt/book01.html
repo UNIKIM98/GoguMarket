@@ -3,7 +3,9 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 
+
 <body>
+
 	<div layout:fragment="content">
 
 		<!-- Start page content -->
@@ -12,7 +14,8 @@
 			<!-- SHOP SECTION START -->
 			<div class="shop-section mb-80">
 				<div class="container">
-					제목
+
+					<!-- 제목 부분 -->
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="section-title text-start ">
@@ -32,12 +35,19 @@
 								<div class="tab-content">
 									<!-- 검색창 -->
 									<aside class="widget-search mb-30">
-										<form action="#">
-											<input type="text" placeholder="Search here...">
+
+										<!-- 페이징을 위해 form태그에 name추가, hidden타입 input태그 추가 -->
+										<form name="frmSearch" action="#">
+											<!-- ▼ 추가된 input -->
+											<input type="hidden" name="page" value="1">
+
+											<!-- ▼ 기존 input태그(검색용) -->
+											<input type="text" placeholder="찾아볼 가게 이름을 입력하세요!">
 											<button type="submit" style="height: 55px;">
 												<i class="zmdi zmdi-search"></i>
 											</button>
 										</form>
+
 										<!-- 검색창 카테고리 목록 FOR문 -->
 										<div class="mt-20">
 											<ul class="blog-meta">
@@ -63,7 +73,9 @@
 													<div class="product-info">
 														<div class="clearfix">
 															<h6 class="product-title f-left">
-																<a th:href="@{/book0205/{bizNo}(bizNo=${list.bizNo})}" th:data-empid="${list.bizNo}" th:text="${list.bizNm}"> (가게이름) </a>
+																<a th:href="@{/book0205/{bizNo}(bizNo=${list.bizNo})}"
+																	th:data-empid="${list.bizNo}" th:text="${list.bizNm}">
+																	(가게이름) </a>
 															</h6>
 															<div class="pro-rating f-right">
 																<a href="#"><i class="zmdi zmdi-star"></i></a> <a
@@ -93,20 +105,25 @@
 									</div>
 								</div>
 								<!-- Tab Content end -->
-								<!-- shop-pagination start -->
-								<ul class="shop-pagination box-shadow text-center ptblr-10-30">
-									<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-									<li><a href="#">01</a></li>
-									<li><a href="#">02</a></li>
-									<li><a href="#">03</a></li>
-									<li><a href="#">...</a></li>
-									<li><a href="#">05</a></li>
-									<li class="active"><a href="#"><i
-											class="zmdi zmdi-chevron-right"></i></a></li>
-								</ul>
-								<!-- shop-pagination end -->
 							</div>
+
+							<!-- 가게 목록 페이징 -->
+							<ul class="shop-pagination box-shadow text-center ptblr-10-30">
+								<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+								<li><a
+									th:each="num: *{#numbers.sequence(pagingVO.startPage, pagingVO.endPage)}"
+									th:href="|javascript:gopage(${num})|"
+									th:class="${pagingVO.page}==${num} ? 'active'">[[${num}]]</a></li>
+
+								<!-- <li><a href="#">02</a></li> -->
+								<!-- <li><a href="#">03</a></li> -->
+								<!-- <li><a href="#">...</a></li> -->
+								<!-- <li><a href="#">05</a></li> -->
+								<li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
+							</ul>
+
 						</div>
+
 
 						<!-- 오른쪽에 지도를 넣으면 될까..? -->
 						<div class="col-lg-6 order-lg-2 order-1">
@@ -139,6 +156,14 @@
 
 		</div>
 		<!-- End page content -->
+
+		<!-- 페이징 자바스크립트 -->
+		<script type="text/javascript">
+			function gopage(page) {
+				frmSearch.page.value = page;
+				frmSearch.submit();
+			}
+		</script>
 	</div>
 </body>
 </html>

@@ -4,14 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
+import com.goguma.biz.vo.BizSearchVO;
+import com.goguma.biz.vo.PagingVO;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
-import com.goguma.rsvt.vo.RsvtRvVO;
 
 @Controller
 public class BizController {
@@ -20,16 +23,35 @@ public class BizController {
 	@Autowired private BizNewsService newsService; 	// 가게소식 들고오기 위함
 	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
 	@Autowired private RsvtRvService rvService;		//리뷰 들고오기 위함
+	@Autowired BizMemMapper bizMapper;				//페이징 검색 하기 위함
 
 	/* book01~05 분류는 예약으로 되어있는데 
 	 * 매퍼랑 서비스 같은게 biz에 있어서 여기에다가 만듬 */
 	
-	// 동네가게 예약 메인(book01).
-	@RequestMapping("/bookmain")
-	public String getBizList(Model model) {
-		model.addAttribute("lists", memService.getBizList());
+//	// 동네가게 예약 메인(book01).
+//	@RequestMapping("/bookmain")
+//	public String getBizList(Model model) {
+//		model.addAttribute("lists", memService.getBizList());
+//		return "rsvt/book01";
+//	}
+	
+	//동네가게 예약 메인 페이징
+	@GetMapping("/bookmain")
+	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
+		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
+		pvo.setPageSize(1);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
+		
+		bvo.setFirst(pvo.getFirst());
+		bvo.setLast(pvo.getLast());
+		
+		pvo.setTotalRecord(bizMapper.bizListCnt(bvo));
+		
+		model.addAttribute("lists", bizMapper.bizListPage(bvo));
+		System.out.println("페이징test●●●●●●●●●●●●●●●●●●●●●" + bizMapper.bizListPage(bvo));
+		
 		return "rsvt/book01";
 	}
+	
 
 	// 동네가게 상세정보(book0205)
 	@RequestMapping("/book0205/{bizNo}")
