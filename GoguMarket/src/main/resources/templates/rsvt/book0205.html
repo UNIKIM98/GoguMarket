@@ -28,7 +28,7 @@
 											123 </a></li>
 									<li><a href="#"><i class="zmdi zmdi-comments"></i>후기
 											59 </a></li>
-									<li><a href="#">카테고리이름</a></li>
+									<li><a href="#" th:text="${biz.ctgry}">(카테고리이름)</a></li>
 								</ul>
 							
 						</div>
@@ -109,42 +109,15 @@
 																<div class="col-lg-12">
 																	<div id="gallery_01"
 																		class="carousel-btn slick-arrow-3 mt-10 mb-30">
+																		
+																		<!-- 사진1건. 4개이상되면 옆으로 슬라이드됨-->
 																		<div class="p-c">
 																			<a href="#" data-image="img/product/2.jpg"
 																				data-zoom-image="img/product/2.jpg"> <img
 																				class="zoom_03" src="img/product/2.jpg" alt="">
 																			</a>
 																		</div>
-																		<div class="p-c">
-																			<a href="#" data-image="img/product/3.jpg"
-																				data-zoom-image="img/product/3.jpg"> <img
-																				class="zoom_03" src="img/product/3.jpg" alt="">
-																			</a>
-																		</div>
-																		<div class="p-c">
-																			<a href="#" data-image="img/product/4.jpg"
-																				data-zoom-image="img/product/4.jpg"> <img
-																				class="zoom_03" src="img/product/4.jpg" alt="">
-																			</a>
-																		</div>
-																		<div class="p-c">
-																			<a href="#" data-image="img/product/5.jpg"
-																				data-zoom-image="img/product/5.jpg"> <img
-																				class="zoom_03" src="img/product/5.jpg" alt="">
-																			</a>
-																		</div>
-																		<div class="p-c">
-																			<a href="#" data-image="img/product/6.jpg"
-																				data-zoom-image="img/product/6.jpg"> <img
-																				class="zoom_03" src="img/product/6.jpg" alt="">
-																			</a>
-																		</div>
-																		<div class="p-c">
-																			<a href="#" data-image="img/product/7.jpg"
-																				data-zoom-image="img/product/7.jpg"> <img
-																				class="zoom_03" src="img/product/7.jpg" alt="">
-																			</a>
-																		</div>
+																		
 																	</div>
 																</div>
 															</div>
@@ -159,24 +132,24 @@
 																<th style="text-align: center; width: 150px;"
 																	class="td-title-1">주소 :</th>
 																<td colspan="3" class="td-title-1"
-																	th:text="${biz.bizAddr}"></td>
+																	th:text="${biz.bizAddr}">(주소)</td>
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">전화번호
 																	:</th>
 																<td colspan="3" class="td-title-1"
-																	th:text="${biz.bizTel}"></td>
+																	th:text="${biz.bizTel}">(전화번호)</td>
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">영업시간
 																	:</th>
 																<td class="td-title-1"
-																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|"></td>
+																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|">(영업시간)</td>
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">가게소개
 																	:</th>
-																<td colspan="3" class="td-title-1" th:text="${biz.cn}"></td>
+																<td colspan="3" class="td-title-1" th:text="${biz.cn}">(가게소개)</td>
 															</tr>
 														</table>
 													</div>
@@ -192,7 +165,7 @@
 																<div class="blog-desc">
 																	<div class="media-body mt-15">
 																		<h4 th:text="${news.ntcTtl}">(게시글 제목)</h4>
-																		<p class="mb-10">(며칠전)</p>
+																		<p class="mb-10" th:text="${news.ntcYmd}">(며칠전)</p>
 																	</div>
 																</div>
 																<hr>
@@ -224,13 +197,12 @@
 																<div class="clearfix">
 																	<div class="name-commenter pull-left">
 																		<h6 class="media-heading">
-																			<a href="#" th:text="${menu.menuNm}">아메리카노</a>
+																			<a href="#" th:text="${menu.menuNm}">(메뉴명)</a>
 																		</h6>
-																		<p class="mb-10" th:text="${menu.menuPrc}">4,000원</p>
+																		<p class="mb-10" th:text="${menu.menuPrc}">(가격)</p>
 																	</div>
 																</div>
-																<p class="mb-0" th:text="${menu.menuCn}">농부 후안이 한올한올
-																	딴 원두로 로스팅한 존맛탱 아메</p>
+																<p class="mb-0" th:text="${menu.menuCn}">(메뉴설명)</p>
 															</div>
 														</div>
 														<!-- 메뉴1건 끝 -->
@@ -254,7 +226,7 @@
 																			</div>
 																			<div class="media-body mt-15">
 																				<h5 th:text="${rv.nickNm}">(유저닉네임)</h5>
-																				<p class="mb-10">(며칠전)</p>
+																				<p class="mb-10" th:text="${rv.rvYmd}">(며칠전)</p>
 																			</div>
 																		</div>
 																	</div>
@@ -267,8 +239,7 @@
 															</div>
 															<hr>
 
-															<p th:text="${rv.rvCn}">생각보다 문어가 엄청 커요~ 싱싱하고 가리비도 주문했는데 실하네용ㅎㅎ 다음에도
-																주문하겠습니다</p>
+															<p th:text="${rv.rvCn}">(리뷰내용)</p>
 															<div class="mb-20">
 																<div class="pull-right">
 																	<ul class="reply-delate">
@@ -290,16 +261,9 @@
 														</div>
 													</div>
 													<!-- 후기1건 끝 -->
-
 												</div>
-
-												<!-- ♣♣♣♣♣♣♣♣♣♣상세내용 - 예약하기 -->
-												<div role="tabpanel" class="tab-pane" id="page5">
-													<p>예약하기스매직팬티</p>
-													<p>rerum blanditiis dolore dignissimos expedita
-														consequatur deleniti consectetur non exercitationem.</p>
-												</div>
-
+												<!-- 후기파트 끝 -->
+												
 											</div>
 										</div>
 

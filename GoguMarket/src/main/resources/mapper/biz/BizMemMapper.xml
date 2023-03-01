@@ -17,6 +17,40 @@
 		WHERE biz_no = #{bizNo}
 	</select>	
 	
+	<!-- 반복 쿼리문 -->
+	<sql id="creiteria">
+		<where>
+			<if test="bizNm != null and bizNm != '' ">
+				bizNm = #{bizNm}
+			</if>
+<!-- 			<if test="jobId != null and jobId != '' "> -->
+<!-- 				AND job_id = #{jobId} -->
+<!-- 			</if> -->
+		</where>
+	</sql>
+	
+	
+	<!-- 가게목록 페이징 -->
+	<select id="bizListPage" parameterType="com.goguma.biz.vo.BizSearchVO" resultType="BizMemVO">
+		select * from(select rownum rn, a.* from(
+                    SELECT *
+                    FROM biz_mem
+<!--                     <include refid="creiteria"></include> -->
+                    order by biz_no
+		<![CDATA[
+		) a where rownum <= #{last} ) b where rn >= #{first}
+		]]>
+	</select>
+	
+	<!-- 가게리스트 갯수 카운팅 -->
+	<select id="bizListCnt" parameterType="BizSearchVO"
+		resultType="int">
+		select count(*)
+		from biz_mem
+<!-- 		<include refid="creiteria"></include> -->
+
+	</select>
+	
 	
 	
 </mapper>

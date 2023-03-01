@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.vo.BizMemVO;
-import com.goguma.rsvt.vo.BizMenuVO;
+import com.goguma.biz.vo.BizSearchVO;
 
 @Service
 public class BizMemServiceImpl implements BizMemService {
@@ -22,9 +22,21 @@ public class BizMemServiceImpl implements BizMemService {
 		return map.getBizList();
 	}
 
-	//가게 상세정보 - 홈
+	//가게 상세정보(book02~05전체)
 	@Override
 	public BizMemVO bizInfo(String bizNo) {
 		return map.bizInfo(bizNo);
+	}
+
+	//가게 목록 페이징
+	@Override
+	public List<BizMemVO> bizListPage(BizSearchVO bvo) {
+		return map.bizListPage(bvo);
+	}
+
+	//페이지 수
+	@Override
+	public int bizListCnt(BizSearchVO bvo) {
+		return map.bizListCnt(bvo);
 	}
 }
