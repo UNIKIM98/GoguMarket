@@ -41,17 +41,25 @@ public class BizMemServiceImpl implements BizMemService {
 		return map.bizListCnt(bvo);
 	}
 
-//	//단골 카운팅
-//	@Override
-//	public int dangolCnt(String bizNo) {
-//		return map.dangolCnt(bizNo);
-//	}
-	
+	//단골 카운팅
+	@Override
+	public List<BizMemVO> BizDangolCnt() {
+		return map.BizDangolCnt();
+	}
+
+	//리뷰 카운팅
+	@Override
+	public List<BizMemVO> BizReviewCnt() {
+		return map.BizReviewCnt();
+	}
+
 	//사진
 	@Override
-	public List<BizMemVO> bizMemImg() {
-		return map.bizMemImg();
+	public List<BizMemVO> bizImgList() {
+		return map.bizImgList();
 	}
+
+
 	
 	
 }
