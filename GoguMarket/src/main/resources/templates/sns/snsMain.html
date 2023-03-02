@@ -160,10 +160,13 @@ textarea {
 					</div>
 				</div>
 				<div class="Sns-commet">
-				
+
 					<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
-					<div class="Sns-reply">
-						
+
+					<div class="Sns-reply" id="Sns-reply">
+						<div th:each="reply : ${reply}">
+							<div th:insert="~{sns/replyView :: replyView('','','')}"></div>
+						</div>
 					</div>
 					<!--댓글 끝-->
 				</div>
@@ -203,7 +206,7 @@ textarea {
 		                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
 													</div>
 												</div>`)
-		                   
+		           
 						}
 					},
 				error : function(err) {
