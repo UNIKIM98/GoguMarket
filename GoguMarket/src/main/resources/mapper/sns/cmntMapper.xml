@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.sns.mapper.SnsCmntMapper">
+
+	<select id="SelectCmntlist" parameterType="int" resultType="com.goguma.sns.vo.SnsCmntVO">
+		SELECT cmnt_No,cmnt_Cn,cmnt_Ymd,cmnt_Mem
+		FROM sns_cmnt
+		WHERE sns_no=#{snsNo}
+	
+	</select>
+
+
+	<insert id="insertReply" parameterType="com.goguma.sns.vo.SnsCmntVO" >
+		<selectKey keyProperty="cmntNo" resultType="int"
+			order="BEFORE">
+			SELECT NVL(MAX(cmnt_no),0)+1
+			AS cmntNo
+			FROM SNS_CMNT
+		</selectKey>
+		
+		INSERT INTO SNS_CMNT (
+		cmnt_no,
+		sns_no,
+		cmnt_cn,
+		cmnt_mem,
+		cmnt_ymd
+		
+		)
+		VALUES (
+		#{cmntNo},
+		#{snsNo},
+		#{cmntCn},
+		#{cmntMem},
+		sysdate
+		
+		)
+
+
+	</insert>
+
+
+
+
+</mapper>
