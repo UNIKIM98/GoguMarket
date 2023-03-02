@@ -25,5 +25,5 @@ public class AuctVO extends AtchVO{
 	 private int stts;
 	 private int inqCnt;
 	 private int srchCnt;
-
+	 private int atchId;
 } 

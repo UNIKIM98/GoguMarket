@@ -47,12 +47,7 @@
 											<a th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 												<div class="product-item">
 													<div class="product-img">
-														<img src="img/product/1.jpg" alt="" />
-														<!-- 
-														<img th:src="@{${atch.atchPath}}" alt="" />
-														
-														<img src="@{/upload/{atchPath}(atchPath = ${atch.atchPath})}" alt="" />
-														 -->
+														<img th:src="${auct.atchNm}" alt="" style="width: 100%; height: 100%;"/>
 													</div>
 													<div class="product-info">
 
@@ -60,17 +55,13 @@
 															<a th:text="${auct.auctTtl}"></a>
 														</h6>
 														<h3 class="pro-price" th:text="현재가 + ${auct.quickPrc}"></h3>
+														<h5 class="sin-pro-action f-right">남은기간</h5>
 														<h5 align="left" th:text="${auct.userId}"></h5>
+
+
 														<ul class="action-button">
-															<li><a href="#" title="Wishlist"><i
-																		class="zmdi zmdi-favorite"></i></a></li>
-															<li><a href="#" data-bs-toggle="modal"
-																	data-bs-target="#productModal" title="Quickview"><i
-																		class="zmdi zmdi-zoom-in"></i></a></li>
-															<li><a href="#" title="Compare"><i
-																		class="zmdi zmdi-refresh"></i></a></li>
-															<li><a href="#" title="Add to cart"><i
-																		class="zmdi zmdi-shopping-cart-plus"></i></a>
+															<li>
+																<h6>현재 입찰자 : ㅇㅇ명</h6>
 															</li>
 														</ul>
 													</div>
