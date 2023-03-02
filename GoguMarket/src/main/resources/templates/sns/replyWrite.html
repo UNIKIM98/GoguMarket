@@ -20,7 +20,7 @@ textarea {
 </head>
 <body>
 	<div th:fragment="replyWrite">
-		<div class="Sns-commet mtb-20 ">
+		<div class="Sns-commet">
 			<!-- 댓글시작 -->
 			<form id="reply">
 				<div class="card mb-1">
@@ -46,28 +46,6 @@ textarea {
 			<!--댓글 끝-->
 		</div>
 	</div>
-	<script>
-	function SelectCmntlist(){
-
-		console.log('gdgd')
-		let snsNo = $("#replySnsNo").val();
-		console.log(snsNo)
-
-		$.ajax({
-			url: "/SelecetCmntlist",
-			type: "GET",
-			data: {snsNo},
-			contentType: "application/json",
-			success: function(data) {
-
-			
-				console.log(data)
-			}
-		})
-
-
-	}
-
-	</script>
+	
 </body>
 </html>

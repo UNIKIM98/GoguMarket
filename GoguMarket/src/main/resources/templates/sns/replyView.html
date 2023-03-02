@@ -15,13 +15,13 @@ textarea {
 </style>
 </head>
 <body>
-	
-		<div class="Sns-commet mtb-20 ">
+	<div th:fragment="replyView">
+		<div class="Sns-commet">
 			<!-- 댓글시작 -->
 
-			<form id="reply" action="insertReply">
+			<form id="reply" action="#">
 				<div class="card mb-1">
-					<div class="card-header bg-light">
+					<div class="card-body bg-light">
 
 						<div class="media" style="margin: 10px">
 							<div class="media-left">
@@ -34,28 +34,27 @@ textarea {
 
 										<h6 class="media-heading">
 											<input type="hidden" name="snsNo1" id="snsNo1"> <a
-												href="#">Gerald Barnes</a> <br> <a href="#"
-												style="opacity: 50%">2023-03-01</a> <input type="hidden"
+												href="#" id="cmntMem"></a> <br> <a href="#"
+												style="opacity: 50%" id="cmntYmd"></a> <input type="hidden"
 												name="userId" id="userId" value="jyeop">
 										</h6>
+
+
+										<div class="form-inline" id="cmntCn" style="word-break:break-all;">sakdaskdaksdkasdkaskdsakdaskdaksdkasdkaskdsakdaskdaksdkasdkaskdsakdaskdaksdkasdkaskdsakdaskdaksdkasdkaskdsakdaskdaksdkasdkaskd</div>
+										<button type="button" class="btn btn-dark mt-3 f-right"
+											onClick="javascript:addReply();">reply</button>
+
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
-					<div class="card-body">
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">
-								<div class="form-inline mb-2">sakdaskdaksdkasdkaskd</div>
-								<button type="button" class="btn btn-dark mt-3 f-right"
-									onClick="javascript:addReply();">reply</button>
-							</li>
-						</ul>
-					</div>
+
 				</div>
 			</form>
 			<!--댓글 끝-->
 		</div>
-
+	</div>
 </body>
 </html>
