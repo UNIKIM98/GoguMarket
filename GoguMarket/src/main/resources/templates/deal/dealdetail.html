@@ -29,8 +29,9 @@ layout:decorate="~{layouts/layout}">
 	<div layout:fragment="content">
 <script>
 //판매자정보페이지로가게하기
-		$(function() {
+		/* $(function() {
 			$(".btnInfo").on("click", function() {
+				
 				// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
 				let url = $(".single-product-info h3 a").text();
 				//location.href="dealdetail/"+url
@@ -38,7 +39,13 @@ layout:decorate="~{layouts/layout}">
 				console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
 			})
 		})
-
+ */
+		function seller(){
+		console.log("------------------------");
+			let url = $(".single-product-info a").first().text();
+			console.log(url);
+			location.href = `/dealSellerpage/${url}`
+		}
 
 </script>
 	<table class="table" border="1">
@@ -143,9 +150,10 @@ layout:decorate="~{layouts/layout}">
                                     <div class="col-md-7"> 
                                         <div class="single-product-info">     
 										<tr th:each="deal : ${deal}">
+											<a th:text="${deal.dlNo}"></a> <!-- 게시글번호  -->
 											<h3 class="text-black-1"><a th:text="${deal.ntslId}"></a></h3>
                                             <h6 class="brand-name-2"><a th:text="${deal.area}"></a></h6>
-                                            <button type="button" class="btnInfo">판매자정보더보기</button>
+                                          	 	<button type="button" class="btnInfo" onClick="seller()">판매자정보더보기</button>
                                             <div class="f-right"></div>
                                             <!-- hr -->
                                             <hr>
