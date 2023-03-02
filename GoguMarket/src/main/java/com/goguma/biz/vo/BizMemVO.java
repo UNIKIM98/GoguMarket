@@ -33,5 +33,12 @@ public class BizMemVO extends BizDangolVO {
 
 	// 사진 출력
 	private String atchPath;
+	
+	// # 단골 카운트
+	private int dCount;
+	
+	//후기 카운트
+	private int rwCount;
+	
 
 }

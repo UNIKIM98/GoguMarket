@@ -8,7 +8,7 @@ import com.goguma.biz.vo.BizSearchVO;
 
 public interface BizMemService {
 	
-	//전체 가게 조회
+//	//전체 가게 조회
 	List<BizMemVO> getBizList();
 	
 	//전체 가게 리스트 페이징, 갯수 카운팅
@@ -18,10 +18,13 @@ public interface BizMemService {
 	//가게 홈 단건조회
 	BizMemVO bizInfo(String bizNo);
 	
-//	//단골 카운팅
-//	int dangolCnt(String bizNo);
+	//단골 카운팅
+	List<BizMemVO> BizDangolCnt();
+	
+	//리뷰 카운팅
+	List<BizMemVO> BizReviewCnt();
 	
 	//사진
-	List<BizMemVO> bizMemImg();
+	List<BizMemVO> bizImgList();
 	
 }
