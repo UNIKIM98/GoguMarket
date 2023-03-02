@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.mem.mapper.AttendMapper">
+
+	<!-- 출석하기 insert -->
+	<insert id="insertAttend"
+		parameterType="com.goguma.mem.vo.AttendVO">
+		INSERT INTO ATTEND VALUES(SYSDATE, #{userId},#{point})
+	</insert>
+
+	<!-- 전체 출석 select -->
+	<select id="selectAttendList" parameterType="String"
+		resultType="com.goguma.mem.vo.AttendVO">
+		SELECT * FROM ATTEND
+		WHERE USER_ID = #{userId}
+	</select>
+</mapper>

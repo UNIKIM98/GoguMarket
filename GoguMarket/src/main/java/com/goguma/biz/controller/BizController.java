@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.biz.mapper.BizMemMapper;
+import com.goguma.biz.service.BizDangolService;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
 import com.goguma.biz.vo.BizDangolVO;
@@ -27,6 +28,7 @@ import com.goguma.rsvt.service.RsvtRvService;
 @Controller
 public class BizController {
 
+
 	@Autowired BizMemService memService; 	// 가게정보
 	@Autowired private BizNewsService newsService; 	// 가게소식 들고오기 위함
 	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
@@ -34,17 +36,15 @@ public class BizController {
 	@Autowired BizMemMapper bizMapper;				//페이징 검색 하기 위함
 	@Autowired CommonCodeService codeService;		//공통코드
 
-	/* book01~05 분류는 예약으로 되어있는데 
-	 * 매퍼랑 서비스 같은게 biz에 있어서 여기에다가 만듬 */
-	
+
 //	// 동네가게 예약 메인(book01).
 //	@RequestMapping("/bookmain")
 //	public String getBizList(Model model) {
 //		model.addAttribute("lists", memService.getBizList());
 //		return "rsvt/book01";
 //	}
-	
-	//동네가게 예약 메인 페이징
+
+	// 동네가게 예약 메인 페이징
 	@GetMapping("/bookmain")
 	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, BizMemVO vo) {
 		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
@@ -69,12 +69,13 @@ public class BizController {
 		//리뷰 카운팅
 		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
 		
-		
+		// # 전체 가게 단골수+bizNo 셀렉트
+		List<BizDangolVO> dgList = dgService.countDangol();
+		System.out.println("단골수"+dgList);
+		model.addAttribute("dgList", dgList);
+
 		return "rsvt/book01";
 	}
-	
-		
-	
 
 	// 동네가게 상세정보(book0205)
 	@RequestMapping("/book0205/{bizNo}")
@@ -87,16 +88,16 @@ public class BizController {
 		model.addAttribute("menu", menuService.bizMenu(bizNo));
 		// 가게 리뷰
 		model.addAttribute("rv", rvService.rsvtReview(bizNo));
-		
-		//공통코드 시간
+
+		// 공통코드 시간
 		model.addAttribute("code", codeService.codeList("007"));
-		System.out.println("공통코드●●●●●●●●●●●●●●●●●●●●●"+ codeService.codeList("007"));
-	
+		System.out.println("공통코드●●●●●●●●●●●●●●●●●●●●●" + codeService.codeList("007"));
+
 		return "rsvt/book0205";
 	}
 
-	//==============================
-	
+	// ==============================
+
 	@GetMapping("/shop04")
 	public String shop04() {
 		return "biz/shop04";

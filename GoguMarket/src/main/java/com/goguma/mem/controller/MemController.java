@@ -117,11 +117,6 @@ public class MemController {
 		return "myPages/myArea";
 	}
 	
-	@GetMapping("/myAttend")
-	public String myAttend() {
-		return "myPages/myAttend";
-	}
-	
 	@GetMapping("/delteFileTest")
 	public String delteFileTest() {
 		//파일삭제 테스트용 list
