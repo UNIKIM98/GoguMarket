@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.biz.mapper.BizMemMapper;
@@ -26,7 +27,7 @@ import com.goguma.rsvt.service.RsvtRvService;
 @Controller
 public class BizController {
 
-	@Autowired private BizMemService memService; 	// 가게정보
+	@Autowired BizMemService memService; 	// 가게정보
 	@Autowired private BizNewsService newsService; 	// 가게소식 들고오기 위함
 	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
 	@Autowired private RsvtRvService rvService;		//리뷰 들고오기 위함
@@ -45,7 +46,7 @@ public class BizController {
 	
 	//동네가게 예약 메인 페이징
 	@GetMapping("/bookmain")
-	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
+	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, BizMemVO vo) {
 		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
 		pvo.setPageSize(5);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
 		
@@ -55,45 +56,24 @@ public class BizController {
 		pvo.setTotalRecord(bizMapper.bizListCnt(bvo));
 		
 		model.addAttribute("lists", bizMapper.bizListPage(bvo));
-		System.out.println("페이징test●●●●●●●●●●●●●●●●●●●●●" + bizMapper.bizListPage(bvo));
 
 		//＃ 가게 전체 셀렉트
 		List<BizMemVO> lists = bizMapper.getBizList();
 		
 		//카테고리 리스트
 		model.addAttribute("ctgry", codeService.codeList("008"));
-		
 
 		//단골 카운팅
-		model.addAttribute("dangol", bizMapper.dangolCnt(bizNo));
+		model.addAttribute("dgCnt", bizMapper.BizDangolCnt());
 		
-		System.out.println("단골수" + bizMapper.dangolCnt(bizNo));
+		//리뷰 카운팅
+		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
 		
-		System.out.println(lists.get(5).getDgNo()+"ooooooooo");
-		int cnt = 0;
-		List<Integer> intList = null;
-		
-		for(int i =0 ; i<lists.size() ; i++) {
-			String bizNoo = lists.get(i).getBizNo();
-			if(lists.get(i).getDgNo()!=null) {
-				cnt++;
-			}
-			cnt += Integer.parseInt(lists.get(i).getDgNo().substring(2));
-			System.out.println(bizNoo);
-		}
-		System.out.println(cnt + "단골수============================");
 		
 		return "rsvt/book01";
 	}
 	
-	//사진(ajax..?)
-	@GetMapping("/bizListImg")
-	public List<BizMemVO> getBizListImg(Model model){
-		List<BizMemVO> result = memService.bizMemImg();
-		model.addAttribute("img", result.get(0).getAtchPath());
-		System.out.println("사진 결과 000000000" + result.get(0).getAtchPath());
-		return result;
-	}
+		
 	
 
 	// 동네가게 상세정보(book0205)
