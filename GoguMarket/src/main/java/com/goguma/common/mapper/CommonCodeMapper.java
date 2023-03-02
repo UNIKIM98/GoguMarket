@@ -6,4 +6,5 @@ import com.goguma.common.vo.CommonCodeVO;
 
 public interface CommonCodeMapper {
 	List<CommonCodeVO> codeList(String commonCode);
+	
 }

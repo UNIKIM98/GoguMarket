@@ -40,9 +40,13 @@
 										<form name="frmSearch" action="#">
 											<!-- ▼ 추가된 input -->
 											<input type="hidden" name="page" value="1">
+										</form>
 
-											<!-- ▼ 기존 input태그(검색용) -->
-											<input type="text" placeholder="찾아볼 가게 이름을 입력하세요!">
+											<!-- ▼ input태그(검색용) -->
+										<form name="searchForm" id="searchForm">
+											<input type="hidden" name="page" value="1">
+											<input type="text" id="keyword" name="keyword" 
+													placeholder="찾아볼 가게 이름을 입력하세요!">
 											<button type="submit" style="height: 55px;">
 												<i class="zmdi zmdi-search"></i>
 											</button>
@@ -51,9 +55,11 @@
 										<!-- 검색창 카테고리 목록 FOR문 -->
 										<div class="mt-20">
 											<ul class="blog-meta">
-												<li><a href="#">카테고리1 </a></li>
-												<li><a href="#">카테고리2</a></li>
-												<li><a href="#">카테고리3</a></li>
+												<li th:each="ctgry: ${ctgry}">
+													<a href="#" th:text="${ctgry.commonNm}">(카테고리) </a>
+												</li>
+													<!-- <li><a href="#">카테고리2</a></li> -->
+													<!-- <li><a href="#">카테고리3</a></li> -->
 											</ul>
 										</div>
 									</aside>
@@ -110,10 +116,9 @@
 							<!-- 가게 목록 페이징 -->
 							<ul class="shop-pagination box-shadow text-center ptblr-10-30">
 								<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-								<li><a
-									th:each="num: *{#numbers.sequence(pagingVO.startPage, pagingVO.endPage)}"
-									th:href="|javascript:gopage(${num})|"
-									th:class="${pagingVO.page}==${num} ? 'active'">[[${num}]]</a></li>
+								<li th:each="num: *{#numbers.sequence(pagingVO.startPage, pagingVO.endPage)}"
+									th:class="${pagingVO.page}==${num} ? 'active'">
+								<a th:href="|javascript:gopage(${num})|">[[${num}]]</a></li>
 
 								<!-- <li><a href="#">02</a></li> -->
 								<!-- <li><a href="#">03</a></li> -->
@@ -157,7 +162,7 @@
 		</div>
 		<!-- End page content -->
 
-		<!-- 페이징 자바스크립트 -->
+		<!-- 페이징, 검색 자바스크립트 -->
 		<script type="text/javascript">
 			function gopage(page) {
 				frmSearch.page.value = page;

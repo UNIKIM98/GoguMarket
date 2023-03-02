@@ -1,5 +1,7 @@
 package com.goguma.biz.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
+import com.goguma.biz.vo.BizDangolVO;
+import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.biz.vo.PagingVO;
+import com.goguma.common.service.CommonCodeService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
 
@@ -24,6 +29,7 @@ public class BizController {
 	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
 	@Autowired private RsvtRvService rvService;		//리뷰 들고오기 위함
 	@Autowired BizMemMapper bizMapper;				//페이징 검색 하기 위함
+	@Autowired CommonCodeService codeService;		//공통코드
 
 	/* book01~05 분류는 예약으로 되어있는데 
 	 * 매퍼랑 서비스 같은게 biz에 있어서 여기에다가 만듬 */
@@ -37,9 +43,9 @@ public class BizController {
 	
 	//동네가게 예약 메인 페이징
 	@GetMapping("/bookmain")
-	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
+	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, String bizNo, BizDangolVO dvo) {
 		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
-		pvo.setPageSize(1);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
+		pvo.setPageSize(5);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
 		
 		bvo.setFirst(pvo.getFirst());
 		bvo.setLast(pvo.getLast());
@@ -49,6 +55,27 @@ public class BizController {
 		model.addAttribute("lists", bizMapper.bizListPage(bvo));
 		System.out.println("페이징test●●●●●●●●●●●●●●●●●●●●●" + bizMapper.bizListPage(bvo));
 		
+		//카테고리 리스트
+		model.addAttribute("ctgry", codeService.codeList("008"));
+		
+		//단골 카운팅
+//		model.addAttribute("dangol", bizMapper.dangolCnt(bizNo));
+//		System.out.println("단골수" + bizMapper.dangolCnt(bizNo));
+//		List<BizMemVO> lists = bizMapper.getBizList();
+//		System.out.println(lists.get(5).getDgNo()+"ooooooooo");
+//		int cnt = 0;
+//		List<Integer> intList = null;
+//		
+//		for(int i =0 ; i<lists.size() ; i++) {
+//			String bizNoo = lists.get(i).getBizNo();
+//			if(lists.get(i).getDgNo()!=null) {
+//				cnt++;
+//			}
+////			cnt += Integer.parseInt(lists.get(i).getDgNo().substring(2));
+//			System.out.println(bizNoo);
+//		}
+//		System.out.println(cnt + "단골수============================");
+//		
 		return "rsvt/book01";
 	}
 	
@@ -58,17 +85,17 @@ public class BizController {
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
-		System.out.println("여깁니다" + memService.bizInfo(bizNo));
 		// 가게 소식
 		model.addAttribute("news", newsService.bizNews(bizNo));
-		System.out.println("여깁니다" + newsService.bizNews(bizNo));
 		// 가게 메뉴
 		model.addAttribute("menu", menuService.bizMenu(bizNo));
-		System.out.println("여깁니다" + menuService.bizMenu(bizNo));
 		// 가게 리뷰
 		model.addAttribute("rv", rvService.rsvtReview(bizNo));
-		System.out.println("여깁니다●●●●●●●●●●●●●●●●●●●●●" + rvService.rsvtReview(bizNo));
 		
+		//공통코드 시간
+		model.addAttribute("code", codeService.codeList("007"));
+		System.out.println("공통코드●●●●●●●●●●●●●●●●●●●●●"+ codeService.codeList("007"));
+	
 		return "rsvt/book0205";
 	}
 

@@ -3,10 +3,11 @@
 <mapper namespace="com.goguma.biz.mapper.BizMemMapper">
 
 	<!-- 가게목록 전체조회 -->
-	<select id="getBizList" parameterType="String"
-		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT *
-		FROM biz_mem
+	<select id="getBizList" resultType="com.goguma.biz.vo.BizMemVO">
+		SELECT m.*, d.*
+		FROM biz_mem m
+				left outer join biz_dangol d
+				on m.biz_no = d.biz_no
 	</select>
 
 	<!-- 개별조회(가게상세페이지) -->
@@ -15,42 +16,54 @@
 		SELECT *
 		FROM biz_mem
 		WHERE biz_no = #{bizNo}
-	</select>	
-	
-	<!-- 반복 쿼리문 -->
-	<sql id="creiteria">
-		<where>
-			<if test="bizNm != null and bizNm != '' ">
-				bizNm = #{bizNm}
-			</if>
-<!-- 			<if test="jobId != null and jobId != '' "> -->
-<!-- 				AND job_id = #{jobId} -->
-<!-- 			</if> -->
-		</where>
-	</sql>
-	
-	
+	</select>
+
+
 	<!-- 가게목록 페이징 -->
-	<select id="bizListPage" parameterType="com.goguma.biz.vo.BizSearchVO" resultType="BizMemVO">
+	<select id="bizListPage"
+		parameterType="com.goguma.biz.vo.BizSearchVO" resultType="BizMemVO">
 		select * from(select rownum rn, a.* from(
-                    SELECT *
-                    FROM biz_mem
-<!--                     <include refid="creiteria"></include> -->
-                    order by biz_no
+						SELECT *
+						FROM biz_mem
+						<include refid="criteria"></include>
+						order by biz_no
 		<![CDATA[
 		) a where rownum <= #{last} ) b where rn >= #{first}
 		]]>
 	</select>
-	
-	<!-- 가게리스트 갯수 카운팅 -->
+
+	<!-- 반복 쿼리문 -->
+	<sql id="criteria">
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<choose>
+					<when test="searchType != null and searchType != ''">
+						<choose>
+							<when test="'bizNm'.equals(searchType)">
+								AND biz_nm LIKE CONCAT('%', #{keyword}, '%')
+							</when>
+						</choose>
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 가게리스트 갯수 카운팅(페이징용) -->
 	<select id="bizListCnt" parameterType="BizSearchVO"
 		resultType="int">
 		select count(*)
 		from biz_mem
-<!-- 		<include refid="creiteria"></include> -->
+		<!-- <include refid="creiteria"></include> -->
 
 	</select>
-	
-	
-	
+
+	<!-- 단골 카운팅 -->
+	<select id="dangolCnt" parameterType="String" resultType="int">
+		select count(*)
+		from biz_dangol
+		where biz_no = #{bizNo}
+	</select>
+
+
 </mapper>

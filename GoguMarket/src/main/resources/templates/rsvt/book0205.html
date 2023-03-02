@@ -143,8 +143,20 @@
 															<tr>
 																<th style="text-align: center;" class="td-title-1">영업시간
 																	:</th>
-																<td class="td-title-1"
-																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|">(영업시간)</td>
+																<td class="td-title-1" 
+																	th:if="${biz.bgngTm}==${code.commonDetailCode}"
+																	th:each ="code: ${code}"
+																	th:text ="${code.commonNm}"
+																	></td>
+																<td class="td-title-1" 
+																	th:if="${biz.endTm}==${code.commonDetailCode}"
+																	th:each ="code: ${code}"
+																	th:text ="${code.commonNm}"></td>
+<!-- 																<td class="td-title-1" -->
+<!-- 																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|">(영업시간)</td> -->
+<!-- 															<td class="td-title-1" -->
+<!-- 																th:text="{biz.bgngTm}==${code.commonDetailCode} ? ${code.commonNm}">(영업시간)</td> -->
+																	
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">가게소개
