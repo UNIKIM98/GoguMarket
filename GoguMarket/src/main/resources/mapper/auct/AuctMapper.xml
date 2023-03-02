@@ -6,7 +6,12 @@
 	<select id="getAuctList"
 		parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
-		SELECT * FROM AUCT ORDER BY AUCT_NO DESC
+		SELECT a.* ,
+		       (SELECT ATCH_PATH
+	       		FROM ATCH
+	       		WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1) ATCH_NM
+		FROM AUCT a
+		ORDER BY AUCT_NO DESC
 	</select>
 
 	<select id="getAuct"

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.3.js"
 	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
 	crossorigin="anonymous"></script>
-	
+
 <script src="../js/sns/sns.js"></script>
 
 
@@ -18,6 +19,7 @@ textarea {
 </style>
 </head>
 <body>
+	<div th:fragment="replyWrite">
 		<div class="Sns-commet mtb-20 ">
 			<!-- 댓글시작 -->
 			<form id="reply">
@@ -34,8 +36,8 @@ textarea {
 										value="eop">
 								</div> <textarea class="form-control" id="replyCmntCn"
 									name="replyCmntCn"> </textarea>
-								<button type="button" class="btn btn-dark mt-3" onclick="insertReply()">post
-									reply</button>
+								<button type="button" class="btn btn-dark mt-3"
+									onclick="insertReply()">post reply</button>
 							</li>
 						</ul>
 					</div>
@@ -43,6 +45,29 @@ textarea {
 			</form>
 			<!--댓글 끝-->
 		</div>
-	
+	</div>
+	<script>
+	function SelectCmntlist(){
+
+		console.log('gdgd')
+		let snsNo = $("#replySnsNo").val();
+		console.log(snsNo)
+
+		$.ajax({
+			url: "/SelecetCmntlist",
+			type: "GET",
+			data: {snsNo},
+			contentType: "application/json",
+			success: function(data) {
+
+			
+				console.log(data)
+			}
+		})
+
+
+	}
+
+	</script>
 </body>
 </html>

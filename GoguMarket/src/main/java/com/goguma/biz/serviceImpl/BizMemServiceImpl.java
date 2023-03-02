@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
+import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 
@@ -39,4 +40,12 @@ public class BizMemServiceImpl implements BizMemService {
 	public int bizListCnt(BizSearchVO bvo) {
 		return map.bizListCnt(bvo);
 	}
+
+	//단골 카운팅
+	@Override
+	public int dangolCnt(String bizNo) {
+		return map.dangolCnt(bizNo);
+	}
+	
+	
 }

@@ -19,5 +19,5 @@ public class CommonCodeServiceImpl implements CommonCodeService{
 		// 
 		return cMapper.codeList(commonCode);
 	}
-	
+
 }

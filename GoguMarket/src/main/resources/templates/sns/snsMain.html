@@ -160,10 +160,11 @@ textarea {
 					</div>
 				</div>
 				<div class="Sns-commet">
-					<!-- 댓글시작 -->
-
-
-					<div></div>
+				
+					<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
+					<div class="Sns-reply">
+						
+					</div>
 					<!--댓글 끝-->
 				</div>
 				<!--Sns-footer-->
@@ -191,7 +192,7 @@ textarea {
 				success : function(result) {
 						console.log(result)
 						for(sns of result){
-							$("#list").append(`<div class="brand-item" >
+							$("#list").append(`<div class="brand-item">
 		                            				<div class="single-brand-product"
 														id="clickSns"
 														onclick="snsModal(${sns.snsNo})">

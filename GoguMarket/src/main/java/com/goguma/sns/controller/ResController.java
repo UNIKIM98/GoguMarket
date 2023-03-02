@@ -27,7 +27,8 @@ public class ResController {
 
 	@GetMapping("/selectSnsList")
 	public List<SnsVO> getSnsList() {
-
+		
+		
 		List<SnsVO> result = service.selectSnsList();
 
 		return result;
