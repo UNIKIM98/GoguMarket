@@ -60,8 +60,23 @@ public class DealServiceImpl implements DealService {
 
 	@Override
 	public int dealHitUpdate(String dlNo) {
-		// TODO Auto-generated method stub
+		// 조회수
 		return map.dealHitUpdate(dlNo);
 	}
+
+	@Override
+	public List<DealVO> getDealSeller(String dlNo) {
+		// 판매자의 다른상품 리스트조회
+		return map.getDealSeller(dlNo);
+	}
+
+	@Override
+	public List<DealVO> getDealCtgry(String dlNo) {
+		// 판매자의 상품과 유사상품(같은 카테고리)
+		return map.getDealCtgry(dlNo);
+	}
+
+
+
 
 }

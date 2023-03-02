@@ -8,4 +8,5 @@ public class DealSearchVO extends DealVO {
 	Integer first;
 	Integer last;
 	String keyword;
+	String searchType;
 }

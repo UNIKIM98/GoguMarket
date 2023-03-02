@@ -11,6 +11,28 @@
 		order by dl_no
 	</select>
 
+	<select id="getDealSeller"
+			parameterType="DealVO"
+			resultType="DealVO">			                
+		SELECT *
+		FROM deal
+		WHERE dl_no != ${dlNo}
+		  AND ntsl_id = (	SELECT ntsl_id
+		                    FROM deal
+		                    WHERE dl_no = ${dlNo})
+	</select>
+	
+		<select id="getDealCtgry"
+			parameterType="DealVO"
+			resultType="DealVO">			                
+		SELECT *
+		FROM deal
+		WHERE dl_no != ${dlNo}
+		  AND ctgry = (	SELECT ctgry
+		                    FROM deal
+		                    WHERE dl_no = ${dlNo})
+	</select>
+
 	<select id="dealListSelect" 
 			parameterType="com.goguma.deal.vo.DealVO"
 			resultType="com.goguma.deal.vo.DealVO">
@@ -18,18 +40,44 @@
 			SELECT *
 			FROM DEAL
 			<include refid="creiteria"></include>
-			<include refid="search" />
+		
 		order by dl_no
 	<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>	
 	</select>
-	
+	 
 	<sql id="creiteria">
 		<where>
 			<if test="ctgry != null and ctgry != ''" >
 				ctgry = #{ctgry}
 			</if>
+			 <if test="keyword != null and keyword != ''">
+            <choose>
+                <!-- 검색 유형이 있을 때 -->
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'dlTtl'.equals(searchType)">
+                            AND dl_ttl LIKE '%' || #{keyword}|| '%'
+                        </when>
+                        <when test="'dlCn'.equals(searchType)">
+                            AND dl_cn LIKE '%' || #{keyword}|| '%'
+                        </when>
+                        <when test="'ntslId'.equals(searchType)">
+                            AND ntsl_id LIKE '%' || #{keyword}|| '%'
+                        </when>
+                    </choose>
+                </when>
+                <!-- 전체 검색일 때 때 -->
+                <otherwise>
+                    AND (
+                           dl_Ttl LIKE '%' || #{keyword}|| '%'
+                        OR dl_Cn LIKE '%' || #{keyword}|| '%'
+                        OR ntsl_Id LIKE '%' || #{keyword}|| '%'
+                    )
+                </otherwise>
+            </choose>
+        </if>
 		</where>
 	</sql>
 	
@@ -38,7 +86,7 @@
 		SELECT COUNT(*)
 		FROM DEAL
 		<include refid="creiteria"></include>
-		<include refid="search" />
+
 	</select>
 	
 	<insert id="insertDeal"
@@ -72,35 +120,7 @@
 	</insert>
 	
 
-    <sql id="search">
-        <!-- 검색 키워드가 있을 때 -->
-        <if test="keyword != null and keyword != ''">
-            <choose>
-                <!-- 검색 유형이 있을 때 -->
-                <when test="searchType != null and searchType != ''">
-                    <choose>
-                        <when test="'dlTtl'.equals( searchType )">
-                            AND dlTtl LIKE CONCAT('%', #{keyword}, '%')
-                        </when>
-                        <when test="'dlCn'.equals( searchType )">
-                            AND dlCn LIKE CONCAT('%', #{keyword}, '%')
-                        </when>
-                        <when test="'ntslId'.equals( searchType )">
-                            AND ntslId LIKE CONCAT('%', #{keyword}, '%')
-                        </when>
-                    </choose>
-                </when>
-                <!-- 전체 검색일 때 때 -->
-                <otherwise>
-                    AND (
-                           dlTtl LIKE CONCAT('%', #{keyword}, '%')
-                        OR dlCn LIKE CONCAT('%', #{keyword}, '%')
-                        OR ntslId LIKE CONCAT('%', #{keyword}, '%')
-                    )
-                </otherwise>
-            </choose>
-        </if>
-    </sql>
+   
 	
 	
 	<insert id="deleteDeal"

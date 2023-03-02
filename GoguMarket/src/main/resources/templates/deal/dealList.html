@@ -34,6 +34,7 @@
 				//location.href="dealList?page="+page;
 				frmSearch.page.value = page;
 				frmSearch.submit();
+				
 			}
 			// 단건 조회로 갈때고이건
 			$(function() {
@@ -46,44 +47,41 @@
 				})
 			})
 			
-	/* 		$(function(){
-				$(".btnDel").on("click",function(){
-					
-				})
-			}) */
+			
+			
 		</script>
 
 		<h2>중고상품 리스트</h2>
 		<!-- 테스트용으로 카테고리는 판매자 별로 정리 -->
 		<div align="center">카테고리별검색</div>
 		<form name="frmSearch" align="center">
-			<input type="hidden" name="page" value="1"> <select
-				name="ctgry">
+			<input type="hidden" name="page" value="1"> 
+			<select name="ctgry">
 				<!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
 				<option value="">전체
 				<option th:each="ct : ${category}" th:text="${ct.commonNm}"
 					th:value="${ct.commonDetailCode}"
 					th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
 			</select>
-			<!-- 	<input name="dlTtl" th:value="dlTtl"> -->
 			<button>검색</button>
 			<button type="reset">초기화</button>
 		</form>
 		<hr>
 		<!--/* 키워드별 검색*/-->
-		<div class="search_box">
-			<form id="searchForm" align="center">
-				<input type="hidden" name="page" value="1"> <select
-					id="searchType" name="searchType" title="검색 유형 선택">
+	
+			<form name="searchForm" id="searchForm" align="center">
+				<input type="hidden" name="page" value="1"> 
+				<select id="searchType" name="searchType" title="검색 유형 선택">
 					<option value="">전체 검색</option>
 					<option value="dlTtl">글제목</option>
-					<option value="dlCn">글내용</option>
-					<option value="ntslId">판매자</option>
-				</select> <input type="text" id="keyword" name="keyword"
-					placeholder="키워드를 입력해 주세요." title="키워드 입력" />
-				<button type="button">검색</button>
+					<option value="dlCn" >글내용</option>
+					<option value="ntslId" >판매자</option>
+				</select> 
+					<input type="text" id="keyword" name="keyword"
+						placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+				<button>검색</button>
 			</form>
-		</div>
+		
 
 		<table class="table" border="1">
 			<thead>
