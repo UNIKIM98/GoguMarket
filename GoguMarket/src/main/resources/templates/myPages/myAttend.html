@@ -44,7 +44,9 @@
 					eventList.push(eventOne)
 				}
 				console.log(eventList)
-				
+				for ( let i in eventList){
+					calendar.addEvent(eventList[i])
+				}
 			}
 		})
 
@@ -53,11 +55,37 @@
 			height : '500px',
 			initialView : 'dayGridMonth',
 			//       locale : 'ko'
-			events : [
-				for ( let i in eventList){
-					calendar.addEvent(eventList[i])
+			events : [ $.ajax({
+				type : "get",
+				url : "/selectAttendList",
+				success : function(result) {
+					
+					let aList = result.aList
+
+					//날짜 확인
+					let date = new Date();
+
+					let year = date.getFullYear();
+					let month = ('0' + (date.getMonth() + 1)).slice(-2);
+					let day = ('0' + date.getDate()).slice(-2);
+
+					let today = year + '-' + month + '-' + day;
+
+					for ( let i in aList) {
+						if (aList[i].attendYmd == today) {
+							$("#attendBtn").attr("disabled", "disabled")
+						}
+						calendar.addEvent({
+							title : aList[i].point,
+							start : aList[i].attendYmd,
+							end : aList[i].attendYmd,
+							display : 'background',
+							backgroundColor : "#00b9ba",
+							textColor : "black"
+						})
+					}
 				}
-			]
+			}) ]
 		});
 		calendar.render();
 	});
