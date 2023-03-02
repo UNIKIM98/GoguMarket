@@ -8,4 +8,5 @@ public class BizSearchVO extends BizMemVO {
 	Integer first;
 	Integer last;
 	String keyword;
+	String searchType;
 }
