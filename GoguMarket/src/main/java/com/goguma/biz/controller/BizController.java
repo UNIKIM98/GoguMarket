@@ -54,28 +54,37 @@ public class BizController {
 		
 		model.addAttribute("lists", bizMapper.bizListPage(bvo));
 		System.out.println("페이징test●●●●●●●●●●●●●●●●●●●●●" + bizMapper.bizListPage(bvo));
+
+		//＃ 가게 전체 셀렉트
+		List<BizMemVO> lists = bizMapper.getBizList();
 		
 		//카테고리 리스트
 		model.addAttribute("ctgry", codeService.codeList("008"));
 		
+		int[] dangolCount = null;
+		for(BizMemVO bizmemVO : lists) {
+			bizNo = bizmemVO.getBizNo();
+			
+		}
 		//단골 카운팅
-//		model.addAttribute("dangol", bizMapper.dangolCnt(bizNo));
-//		System.out.println("단골수" + bizMapper.dangolCnt(bizNo));
-//		List<BizMemVO> lists = bizMapper.getBizList();
-//		System.out.println(lists.get(5).getDgNo()+"ooooooooo");
-//		int cnt = 0;
-//		List<Integer> intList = null;
-//		
-//		for(int i =0 ; i<lists.size() ; i++) {
-//			String bizNoo = lists.get(i).getBizNo();
-//			if(lists.get(i).getDgNo()!=null) {
-//				cnt++;
-//			}
-////			cnt += Integer.parseInt(lists.get(i).getDgNo().substring(2));
-//			System.out.println(bizNoo);
-//		}
-//		System.out.println(cnt + "단골수============================");
-//		
+		model.addAttribute("dangol", bizMapper.dangolCnt(bizNo));
+		
+		System.out.println("단골수" + bizMapper.dangolCnt(bizNo));
+		
+		System.out.println(lists.get(5).getDgNo()+"ooooooooo");
+		int cnt = 0;
+		List<Integer> intList = null;
+		
+		for(int i =0 ; i<lists.size() ; i++) {
+			String bizNoo = lists.get(i).getBizNo();
+			if(lists.get(i).getDgNo()!=null) {
+				cnt++;
+			}
+			cnt += Integer.parseInt(lists.get(i).getDgNo().substring(2));
+			System.out.println(bizNoo);
+		}
+		System.out.println(cnt + "단골수============================");
+		
 		return "rsvt/book01";
 	}
 	
