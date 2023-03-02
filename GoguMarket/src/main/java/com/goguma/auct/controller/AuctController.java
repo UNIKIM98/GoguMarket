@@ -65,9 +65,10 @@ public class AuctController {
 	@PostMapping("/auctInsert") // 등록 매핑
 	public String auctInsert(AuctVO vo, List<MultipartFile> files) {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
-		System.out.println(files + "======넘어온 파일들");
+		System.out.println(files+"======넘어온 파일들");
+		
+		int atchId = atchService.insertFile(files);
 
-		int atchId = atchService.fileUpload(files);
 
 		vo.setUserId("user2");
 
