@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
+
+<style>
+textarea {
+	width: 80%;
+	resize: none;
+	float: right;
+}
+</style>
+</head>
+<body>
+	
+		<div class="Sns-commet mtb-20 ">
+			<!-- 댓글시작 -->
+
+			<form id="reply" action="insertReply">
+				<div class="card mb-1">
+					<div class="card-header bg-light">
+
+						<div class="media" style="margin: 10px">
+							<div class="media-left">
+								<a href="#"><img class="media-object" src="img/author/1.jpg"
+									alt="#"></a>
+							</div>
+							<div class="media-body ml-10">
+								<div class="clearfix">
+									<div class="name-commenter pull-left">
+
+										<h6 class="media-heading">
+											<input type="hidden" name="snsNo1" id="snsNo1"> <a
+												href="#">Gerald Barnes</a> <br> <a href="#"
+												style="opacity: 50%">2023-03-01</a> <input type="hidden"
+												name="userId" id="userId" value="jyeop">
+										</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<div class="form-inline mb-2">sakdaskdaksdkasdkaskd</div>
+								<button type="button" class="btn btn-dark mt-3 f-right"
+									onClick="javascript:addReply();">reply</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</form>
+			<!--댓글 끝-->
+		</div>
+
+</body>
+</html>

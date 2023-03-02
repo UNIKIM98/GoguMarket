@@ -11,15 +11,16 @@ import lombok.Data;
 @Data
 public class SnsCmnt {
 	private String cmntNO;
-	private String snsNo;
-	private String pstSe;
+	private int snsNo;
 	private String cmntCn;
-	private String cmntClass;
-
+	private String cmntMem;
+	private Date cmntYmd;
+	
+		
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date cmntYmd;
-	private String cmntMem;
 	private String cmntOrder;
-	private String groupNo;
+	private String cmntClass;
+	
+	
 }
