@@ -32,5 +32,8 @@ public class BizMemVO extends BizDangolVO{
 	private String commonNm;
 	private String commonCn;
 	
+	//사진 출력
+	private String atchPath;
+	
 	
 }

@@ -58,11 +58,21 @@
 
 	</select>
 
-	<!-- 단골 카운팅 -->
-	<select id="dangolCnt" parameterType="String" resultType="int">
-		select count(*)
-		from biz_dangol
-		where biz_no = #{bizNo}
+		<!-- 단골 카운팅 -->
+<!-- 	<select id="dangolCnt" parameterType="String" resultType="int"> -->
+<!-- 		select count(*) -->
+<!-- 		from biz_dangol -->
+<!-- 		where biz_no = #{bizNo} -->
+<!-- 	</select> -->
+
+	<!-- 가게정보 첨부파일 -->
+	<select id="bizMemImg" resultType="com.goguma.biz.vo.BizMemVO">
+		SELECT b.*,
+		(SELECT atch_path
+        	FROM atch a 
+                WHERE b.atch_id = a.atch_id
+                AND ROWNUM = 1) atch_path
+		FROM biz_mem b
 	</select>
 
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
@@ -17,6 +18,7 @@ import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.biz.vo.PagingVO;
+import com.goguma.common.service.AtchService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
@@ -43,7 +45,7 @@ public class BizController {
 	
 	//동네가게 예약 메인 페이징
 	@GetMapping("/bookmain")
-	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, String bizNo, BizDangolVO dvo) {
+	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
 		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
 		pvo.setPageSize(5);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
 		
@@ -61,11 +63,7 @@ public class BizController {
 		//카테고리 리스트
 		model.addAttribute("ctgry", codeService.codeList("008"));
 		
-		int[] dangolCount = null;
-		for(BizMemVO bizmemVO : lists) {
-			bizNo = bizmemVO.getBizNo();
-			
-		}
+
 		//단골 카운팅
 		model.addAttribute("dangol", bizMapper.dangolCnt(bizNo));
 		
@@ -86,6 +84,15 @@ public class BizController {
 		System.out.println(cnt + "단골수============================");
 		
 		return "rsvt/book01";
+	}
+	
+	//사진(ajax..?)
+	@GetMapping("/bizListImg")
+	public List<BizMemVO> getBizListImg(Model model){
+		List<BizMemVO> result = memService.bizMemImg();
+		model.addAttribute("img", result.get(0).getAtchPath());
+		System.out.println("사진 결과 000000000" + result.get(0).getAtchPath());
+		return result;
 	}
 	
 
