@@ -32,7 +32,7 @@ layout:decorate="~{layouts/layout}">
 		$(function() {
 			$(".btnInfo").on("click", function() {
 				// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
-				let url = $(this).closest("tr").children().first().text();
+				let url = $(".single-product-info h3 a").text();
 				//location.href="dealdetail/"+url
 				location.href = `dealSellerpage/${url}`
 				console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
@@ -143,8 +143,8 @@ layout:decorate="~{layouts/layout}">
                                     <div class="col-md-7"> 
                                         <div class="single-product-info">     
 										<tr th:each="deal : ${deal}">
-											<h3 class="text-black-1"><a th:text="${deal.ntslId}"></h3>
-                                            <h6 th:text="${deal.area}" class="brand-name-2">달서구 두류3동</h6>
+											<h3 class="text-black-1"><a th:text="${deal.ntslId}"></a></h3>
+                                            <h6 class="brand-name-2"><a th:text="${deal.area}"></a></h6>
                                             <button type="button" class="btnInfo">판매자정보더보기</button>
                                             <div class="f-right"></div>
                                             <!-- hr -->

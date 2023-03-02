@@ -79,7 +79,8 @@ public class DealController {
 	}
 
 	@RequestMapping("/dealSellerpage")
-	public String getDealSeller(Model model) {
+	public String getDealSeller( Model model) {
+		
 		return "deal/dealSellerPage";
 	}
 	
