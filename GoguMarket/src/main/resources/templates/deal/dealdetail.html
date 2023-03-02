@@ -28,32 +28,55 @@ layout:decorate="~{layouts/layout}">
 <body class="wide-layout">
 	<div layout:fragment="content">
 <script>
-/* let dlNo = location.href.split("/")[4];
-console.log(dlNo); */
+//판매자정보페이지로가게하기
+		$(function() {
+			$(".btnInfo").on("click", function() {
+				// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
+				let url = $(this).closest("tr").children().first().text();
+				//location.href="dealdetail/"+url
+				location.href = `dealSellerpage/${url}`
+				console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
+			})
+		})
+
 
 </script>
 	<table class="table" border="1">
-	<thead>
-		<tr>
-			<th>글번호</th>
-			<th>판매자</th>
-			<th>구매자</th>
-			<th>등록일</th>
-			<th>가격</th>	
+		<thead>
+			<tr>
+				<th>글번호</th>
+				<th>판매자</th>
+				<th>구매자</th>
+				<th>등록일</th>
+				<th>가격</th>	
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="deal : ${deal}" 
+				onmouseover='this.style.background="#fcecae";' 
+				onmouseleave='this.style.background="#FFFFFF";'>
+				<td th:text="${deal.dlNo}"></td>
+				<td th:text="${deal.ntslId}"></td> 
+				<td th:text="${deal.prchsId}"></td>
+				<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
+				<td th:text="${deal.dlPrc}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="table" border="1">
+		<thead>
+			<tr>
+				<th>상품</th>
 		</tr>
-	</thead>
-	<tbody>
-		<tr th:each="deal : ${deal}" 
-			onmouseover='this.style.background="#fcecae";' 
-			onmouseleave='this.style.background="#FFFFFF";'>
-			<td th:text="${deal.dlNo}"></td>
-			<td th:text="${deal.ntslId}"></td> 
-			<td th:text="${deal.prchsId}"></td>
-			<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
-			<td th:text="${deal.dlPrc}"></td>
-		</tr>
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			<tr th:each="l : ${list}">
+				<td th:text="${l.dlTtl}"></td>
+			</tr>
+		</tbody>
+	</table>
+
 <hr>
     <!-- Body main wrapper start -->
     <div class="wrapper">
@@ -71,7 +94,12 @@ console.log(dlNo); */
                                     <!-- imgs-zoom-area start -->
                                     <div class="col-md-5">
                                         <div class="imgs-zoom-area">
-                                            <img id="zoom_03" src="/img/product/6.jpg" data-zoom-image="/img/product/6.jpg" alt="">
+	                                        		<tr th:each="deal : ${deal}" 
+														onmouseover='this.style.background="#fcecae";' 
+														onmouseleave='this.style.background="#FFFFFF";'>
+														<td th:text="${deal.atchPath}"></td>
+													</tr>
+	                                            <img id="zoom_03" src="/img/product/6.jpg" data-zoom-image="/img/product/6.jpg" alt="">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
@@ -115,9 +143,10 @@ console.log(dlNo); */
                                     <div class="col-md-7"> 
                                         <div class="single-product-info">     
 										<tr th:each="deal : ${deal}">
-											<h3 th:text="${deal.ntslId}" class="text-black-1">김펭귄 </h3>
+											<h3 class="text-black-1"><a th:text="${deal.ntslId}"></h3>
                                             <h6 th:text="${deal.area}" class="brand-name-2">달서구 두류3동</h6>
-                                            <div class="f-right"><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">끌어올리기</button></div>
+                                            <button type="button" class="btnInfo">판매자정보더보기</button>
+                                            <div class="f-right"></div>
                                             <!-- hr -->
                                             <hr>
                                             <h3 th:text="${deal.dlTtl}" class="text-black-1">뽀로로 인형 팝니다 </h3>
@@ -133,7 +162,7 @@ console.log(dlNo); */
                                                     <li><a class="active" href="#description" data-bs-toggle="tab">상품설명</a></li>
                                                     <li ><a href="#information" data-bs-toggle="tab">시세</a></li>
                                                     <li ><a href="#reviews" data-bs-toggle="tab">판매자의 다른 판매상품</a></li>
-                                                    <li ><a href="#reviews" data-bs-toggle="tab">유사한 상품</a></li>
+                                                    <li ><a href="#relation" data-bs-toggle="tab">유사한 상품</a></li>
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div role="tabpanel" class="tab-pane active show" id="description">
@@ -147,36 +176,17 @@ console.log(dlNo); */
                                                         <!-- reviews-tab-desc -->
                                                         <div class="reviews-tab-desc">
                                                             <!-- 원래는댓글란인데 관련판매상품1으로 바꿈  -->
-                                                            <div class="media mt-30">
-                                                                <div class="media-left">
-                                                                    <a href="#"><img class="media-object" src="img/author/1.jpg" alt="#"></a>
-                                                                </div>
-                                                                <div class="media-body">
-                                                                    <div class="clearfix">
-                                                                        <div class="name-commenter f-left">
-                                                                            <h6 class="media-heading"><a href="#">군침이싹도는루피인형</a></h6>
-                                                                            <p class="mb-10">27 Jun, 2022 at 2:30pm</p>
-                                                                        </div>
-                                                                        <div class="f-right">
-                                                                            <ul class="reply-delate">
-                                                                                <li><a href="#">수정</a></li>
-                                                                                <li>/</li>
-                                                                                <li><a href="#">삭제</a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p class="mb-0">상품 상세 설명 넣기 + 말줄임표 이용</p>
-                                                                </div>
-                                                            </div>
-                                                            <!-- 관련판매상품2 -->
-                                                            <div class="media mt-30">
+                                                            <!-- 관련상품 포문돌려서 뽑아버림. tlqkf 얘도 페이징해야됨..?-->
+                                                            <div class="media mt-30" th:each="l : ${list}">
                                                                 <div class="media-left">
                                                                     <a href="#"><img class="media-object" src="/img/author/2.jpg" alt="#"></a>
                                                                 </div>
                                                                 <div class="media-body">
                                                                     <div class="clearfix">
                                                                         <div class="name-commenter f-left">
-                                                                            <h6 class="media-heading"><a href="#">피카피카피카쮸인형</a></h6>
+                                                                            <h6 class="media-heading">
+                                                                            	<a th:text="${l.dlTtl}" href="#">타이틀자리</a>
+                                                                            </h6>
                                                                             <p class="mb-10">27 Jun, 2022 at 2:30pm</p>
                                                                         </div>
                                                                         <div class="f-right">
@@ -187,7 +197,36 @@ console.log(dlNo); */
                                                                             </ul>
                                                                         </div>
                                                                     </div>
-                                                                    <p class="mb-0">상품 상세 설명 넣기 + 말줄임표 이용</p>
+                                                                    <p class="mb-0" th:text="${l.dlCn}">상품 상세 설명 넣기 + 말줄임표 이용</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane" id="relation">
+                                                        <!-- reviews-tab-desc -->
+                                                        <div class="reviews-tab-desc">
+                                                            <!-- 연관상품 model: ct -->
+                                                            <div class="media mt-30" th:each="c : ${ct}">
+                                                                <div class="media-left">
+                                                                    <a href="#"><img class="media-object" src="/img/author/3.jpg" alt="#"></a>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <div class="clearfix">
+                                                                        <div class="name-commenter f-left">
+                                                                            <h6 class="media-heading">
+                                                                            	<a th:text="${c.dlTtl}"  href="#">타이틀자리</a>
+                                                                            </h6>
+                                                                            <p class="mb-10">27 Jun, 2022 at 2:30pm</p>
+                                                                        </div>
+                                                                        <div class="f-right">
+                                                                            <ul class="reply-delate">
+                                                                                <li><a href="#">수정</a></li>
+                                                                                <li>/</li>
+                                                                                <li><a href="#">삭제</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="mb-0" >상품 상세 설명 넣기 + 말줄임표 이용</p>
                                                                 </div>
                                                             </div>
                                                         </div>

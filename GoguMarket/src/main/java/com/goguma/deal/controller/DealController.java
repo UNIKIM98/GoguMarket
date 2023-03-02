@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +41,7 @@ public class DealController {
 	@Autowired
 	private CommonCodeService codeService;
 
+	
 	@RequestMapping("/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
 
@@ -53,6 +53,7 @@ public class DealController {
 
 		paging.setTotalRecord(dealMapper.getcountTotal(svo));
 
+		
 		model.addAttribute("lists", dealMapper.dealListSelect(svo));
 		model.addAttribute("category",codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는 common_detail_code만 들고오면됨
 		return "deal/dealList"; // 뷰페이지명
@@ -72,9 +73,16 @@ public class DealController {
 		System.out.println(cnt);
 
 		model.addAttribute("deal", dealService.getDeal(dlNo));
+		model.addAttribute("list", dealService.getDealSeller(dlNo));
+		model.addAttribute("ct", dealService.getDealCtgry(dlNo));
 		return "deal/dealdetail";
 	}
 
+	@RequestMapping("/dealSellerpage")
+	public String getDealSeller(Model model) {
+		return "deal/dealSellerPage";
+	}
+	
 	@RequestMapping("/dealform") // 딜폼창확인
 	public String dealform(Model model) {
 		model.addAttribute("category",codeService.codeList("002"));
