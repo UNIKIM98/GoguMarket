@@ -16,6 +16,11 @@ ul {
 li {
 	float: left;
 }
+
+textarea {
+	width: 100%;
+	resize: none;
+}
 </style>
 </head>
 <body>
@@ -79,18 +84,14 @@ li {
 
 			</div>
 
-			<!-- BY BRAND SECTION END -->
+
 		</section>
-		<!-- End page content -->
 
-		<!-- writeForm -->
+
+		<!-- writeFormModal -->
 		<div id="myModal" class="modal">
-
 			<!-- Modal content -->
 			<div class="modal-content">
-
-
-
 				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
 					<button class="close1" onclick=""
 						style="color: black; padding: 10px;">x</button>
@@ -98,42 +99,44 @@ li {
 						enctype="multipart/form-data">
 						<div class="login-account p-30 box-shadow mtb-15">
 							<div class="col-lg-4 col-md-6 pb-10">
-
-
 								<div class="banner-item banner-3">
 									<div class="banner-img">
 										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
 									</div>
 
+									<!-- atch -->
 									<input type="file" name="files" id="files" placeholder="첨부파일"
 										multiple="multiple">
 								</div>
-								<!-- atch -->
-
 							</div>
 
-							<input type="hidden" name="userId" id="userId" value="jyeop">
 							<!-- userId -->
+							<input type="hidden" name="userId" id="userId" value="jyeop">
+							<!-- 게시물 -->
 							<textarea name="snsCn" id="snsCn" class="mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
-							<!-- 게시물 -->
-							<input type="text" name="hash" id="hash"> <input
-								type="hidden" name="area" id="area" value="대구">
+							<input type="text" name="hash" id="hash">
+							<!--  -->
+							<input type="hidden" name="area" id="area" value="대구">
 						</div>
 
 
 						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
 					</form>
+					<!-- writeForm -->
+
+					<!-- writefooter -->
 				</div>
 				<div class="modal-footer" style="background-color: #000000;">
 					&nbsp;</div>
+				<!-- writefooter -->
 			</div>
 
 		</div>
 		<!-- writeForm -->
 
 
-		<!-- Communotie Page -->
+		<!-- 개인 Sns -->
 
 		<div id="mySns" class="Sns">
 			<!-- Modal content -->
@@ -156,36 +159,14 @@ li {
 						<span class="mb-120" id="CN"></span>
 					</div>
 				</div>
-				<div class="Sns-commet mtb-20 ">
+				<div class="Sns-commet">
+					<!-- 댓글시작 -->
 
-					<hr style="margin: 0">
-					<h2 class="ml-10 mt-10">reply</h2>
-					<div class="media" style="margin:10px">
-						<div class="media-left">
-							<a href="#"><img class="media-object" src="img/author/1.jpg"
-								alt="#"></a>
-						</div>
-						<div class="media-body ml-10">
-							<div class="clearfix">
-								<div class="name-commenter pull-left">
-									<h6 class="media-heading">
-										<a href="#">Gerald Barnes</a>
-									</h6>
-									<p class="mb-10">27 Jun, 2022 at 2:30pm</p>
-								</div>
-								<div class="pull-right">
-									<ul class="reply-delate">
-										<textarea></textarea>
-										<li>/</li>
-										<li><a href="#">Delate</a></li>
-									</ul>
-								</div>
-							</div>
-						
-						</div>
-					</div>
+
+					<div></div>
+					<!--댓글 끝-->
 				</div>
-
+				<!--Sns-footer-->
 				<div class="Sns-footer" style="background-color: #000000;">
 					<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
 						@gogu.ma</h3>
@@ -193,9 +174,15 @@ li {
 			</div>
 
 		</div>
+		<!-- 개인 Sns -->
+
+
 
 		<!--  -->
 		<script th:inline="javascript">
+		
+		
+		
 			$.ajax({
 				url : "/selectSnsList", // 데이터를 가져올 경로 설정
 				type : "GET", // 데이터를 가져오는 방식
@@ -215,13 +202,18 @@ li {
 		                    </div>`)
 		                   
 						}
-					
-
-				},
+					},
 				error : function(err) {
 					console.log(err);
 				}
 			})
+			
+			
+			
+
+
+
+			
 		</script>
 
 

@@ -19,12 +19,12 @@ btn.onclick = function() {
 
 function snsModal(id) {
 
-	//When the user clicks the button, open the modal
+	//활상화
 	Sns.style.display = "block";
 
 	//전 이벤트 자식중 아이디값과 이미지 아이디 값을 가져옴
 	let sns = document.getElementById("clickSns")
-
+	$("#snsNo1").val(id)
 
 	//단건을 조회하는 ajax를 실행
 	console.log(id)
@@ -38,12 +38,11 @@ function snsModal(id) {
 		dataType: 'json',
 	})
 		.then(obj => {
-			console.log(obj)
+
 			$("#CN").text(obj.sns.snsCn)
 			$("#snsYmd").text(obj.sns.snsYmd)
-			$("#atchPath").attr("src",obj.atch[0].atchPath)
-			$("#miniId").text(obj.sns.userId+"@gogu.ma")
-			miniId
+			$("#atchPath").attr("src", obj.atch[0].atchPath)
+			$("#miniId").text(obj.sns.userId + "@gogu.ma")
 			console.log('back')
 
 		});
@@ -52,6 +51,46 @@ function snsModal(id) {
 
 
 }
+
+
+function insertReply() {
+
+	let snsNo = $("#replySnsNo").val();
+	let cmntMem = $("#replyUserId").val();
+	let cmntCn = $("#replyCmntCn").val();
+
+	console.log(typeof Number(snsNo));
+	
+
+	console.log(snsNo)
+	console.log(cmntMem)
+	console.log(cmntCn)
+
+
+	$.ajax({
+		url:"/insertReply",
+		type:"POST",
+		data: JSON.stringify(
+			{
+				'snsNo': snsNo,
+				'cmntMem': cmntMem,
+				'cmntCn': cmntCn
+			}
+		),
+		contentType: 'application/json',
+		success: function(data) {
+			console.log(data)
+
+		}
+
+	})
+
+
+
+
+
+}
+
 
 // 모달 나가기 - 모달 외에 화면을 누르면 모달창 상태를 none 으로 바꿈
 
@@ -65,7 +104,7 @@ window.onclick = function(event) {
 	}
 }
 
-// 글쓰기 창 나가기 함수
+// 글쓰기 창 나가기
 span.onclick = function() {
 	modal.style.display = "none";
 }

@@ -57,6 +57,7 @@ public class ResController {
 		
 		System.out.println(vo);
 		int atchId = aservice.fileUpload(files);
+		System.out.println(vo);
 
 		if (atchId > 0) {
 			vo.setAtchId(atchId);
@@ -67,5 +68,8 @@ public class ResController {
 
 		return mv;
 	}
+	
+	
+	
 
 }

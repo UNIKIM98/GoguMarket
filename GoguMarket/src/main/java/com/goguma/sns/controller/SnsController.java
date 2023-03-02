@@ -19,5 +19,14 @@ public class SnsController {
 		return "sns/snsMain";
 	}
 
+	@GetMapping("/replyView")
+	public String replyView() {
+		return "sns/replyView";
+	}
+	
+	@GetMapping("/replyWrite")
+	public String replyWrite() {
+		return "sns/replyWrite";
+	}
 	
 }
