@@ -95,17 +95,21 @@ public class AtchServiceImpl implements AtchService {
 			System.out.println("if문 통과 =====");
 
 			for (AtchVO atchVO : atchVOs) {
+				
 				System.out.println("for문 통과 =====");
 				atchVO = atchMapper.selectFile(atchVO);
+				
 				File file = new File(saveFolder + atchVO.getAtchNm());
 				System.out.println("atchPath로 파일 가지고 왔고 ==== (" + file);
 
 				boolean result = file.delete();
 				System.out.println("삭제했으면 true ==== " + result);
+				
 				if (result) {
 					System.out.println("파일 삭제했고 db에서 삭제할 예정===");
 					cnt += atchMapper.deleteFile(atchVO);
-					System.out.println("db삭제 완료 했으면 1=====" + cnt);
+					
+					System.out.println("db삭제 완료 했으면 1 이상=====" + cnt);
 				}
 			}
 		}
