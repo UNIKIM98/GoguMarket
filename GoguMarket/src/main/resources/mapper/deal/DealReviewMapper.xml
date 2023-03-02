@@ -13,6 +13,6 @@
                      where ntsl_id = 
                                     (select ntsl_id
                                      from deal
-                                     where dl_no= #{dlNo}));
+                                     where dl_no= #{dlNo}))
 	</select>
 </mapper>
