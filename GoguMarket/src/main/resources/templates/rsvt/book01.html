@@ -2,10 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
-
-
 <body>
-
 	<div layout:fragment="content">
 
 		<!-- Start page content -->
@@ -73,9 +70,12 @@
 											<div class="col-lg-12">
 												<div class="shop-list product-item" th:each="list: ${lists}">
 													<div class="product-img">
-														<a href="single-product.html"> <img
-															src="img/product/7.jpg" alt="" />
-														</a>
+														 <a href="single-product.html"> <img
+														 src="img/product/7.jpg" alt="" />
+														 </a>
+<!-- 														<a th:href="@{/book0205/{bizNo}(bizNo=${list.bizNo})}"> -->
+<!-- 															<img th:src="${biz.atchPath}" alt="" /> -->
+<!-- 														</a> -->
 													</div>
 													<div class="product-info">
 														<div class="clearfix">
@@ -169,6 +169,24 @@
 				frmSearch.page.value = page;
 				frmSearch.submit();
 			}
+		</script>
+		
+		<!-- 사진로딩 -->
+		<script th:inline="javascript">
+		$.ajax({
+			url: "/bizListImg",
+			type: "GET",
+			dataType: "json",
+			contentType: 'application/json; charset= utf-8',
+			success: function(result){
+				console.log(result)
+// 				for(bm of result){
+					
+// 				}
+			}
+		})
+			
+		
 		</script>
 	</div>
 </body>

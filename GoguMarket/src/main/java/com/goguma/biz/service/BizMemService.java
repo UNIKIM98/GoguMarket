@@ -18,7 +18,10 @@ public interface BizMemService {
 	//가게 홈 단건조회
 	BizMemVO bizInfo(String bizNo);
 	
-	//단골 카운팅
-	int dangolCnt(String bizNo);
+//	//단골 카운팅
+//	int dangolCnt(String bizNo);
+	
+	//사진
+	List<BizMemVO> bizMemImg();
 	
 }
