@@ -4,21 +4,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.goguma.sns.vo.SnsCmnt;
+import com.goguma.sns.vo.SnsCmntVO;
 
 
 
 public interface CmntService {
-	public List<SnsCmnt> SelectCmntlist(int snsNo);
+	public List<SnsCmntVO> SelectCmntlist(int snsNo);
 
 	// 댓글 조회
-	public List<SnsCmnt> SelectCmnt(SnsCmnt vo);
+	public List<SnsCmntVO> SelectCmnt(SnsCmntVO vo);
 
 	//댓긓 입력
-	public String inserReply(SnsCmnt vo);
+	public int insertReply(SnsCmntVO vo);
 	
 	// 댓글 수정
-	public String UpdateCmnt(SnsCmnt vo);
+	public String UpdateCmnt(SnsCmntVO vo);
 
 	// 댓글 삭제
 	public String deleteCmnt(int CmntNo);
