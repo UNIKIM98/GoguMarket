@@ -59,7 +59,7 @@ public class AuctController {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
 		System.out.println(files+"======넘어온 파일들");
 		
-		int atchId = atchService.fileUpload(files);
+		int atchId = atchService.insertFile(files);
 
 		vo.setUserId("user2");
 

@@ -56,7 +56,7 @@ public class ResController {
 		ModelAndView mv = new ModelAndView("redirect:snsMain");
 		
 		System.out.println(vo);
-		int atchId = aservice.fileUpload(files);
+		int atchId = aservice.insertFile(files);
 		System.out.println(vo);
 
 		if (atchId > 0) {

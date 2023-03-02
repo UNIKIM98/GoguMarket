@@ -84,7 +84,7 @@ public class DealController {
 	@RequestMapping("/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo, List<MultipartFile> files) {
 		System.out.println(vo.getAtchId()+"메롱");
-		int atchId = attachService.fileUpload(files);
+		int atchId = attachService.insertFile(files);
 		
 		if(atchId > 0) {
 			vo.setAtchId(atchId);

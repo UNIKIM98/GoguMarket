@@ -9,11 +9,11 @@
 		FROM ATCH
 	</select>
 
-	<insert id="fileUpload"
+	<insert id="insertFile"
 		parameterType="com.goguma.common.vo.AtchVO">
-		INSERT INTO ATCH
-				VALUES(#{atchId}, ATCH_SEQ.NEXTVAL, SYSDATE,
-		#{atchNm}, #{orgnlNm}, #{extn}, #{atchSize}, #{atchPath})
+		INSERT INTO ATCH VALUES(#{atchId}, ATCH_SEQ.NEXTVAL,
+						SYSDATE, #{atchNm}, #{orgnlNm}, #{extn},
+						#{atchSize}, #{atchPath})
 	</insert>
 
 	<select id="selectAtch" resultType="com.goguma.common.vo.AtchVO">
@@ -22,5 +22,17 @@
 		WHERE ATCH_ID = #{atchId}
 	</select>
 
+	<select id="selectFile"
+		parameterType="com.goguma.common.vo.AtchVO"
+		resultType="com.goguma.common.vo.AtchVO">
+		SELECT * FROM ATCH
+		WHERE ATCH_ID = #{atchId} AND ATCH_NO = #{atchNo}
+	</select>
+
+	<delete id="deleteFile"
+		parameterType="com.goguma.common.vo.AtchVO">
+		DELETE FROM ATCH
+		WHERE ATCH_ID = #{atchId} AND ATCH_NO = #{atchNo}
+	</delete>
 
 </mapper>

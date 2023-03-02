@@ -18,12 +18,12 @@ public class AtchServiceImpl implements AtchService {
 
 	@Autowired
 	AtchMapper atchMapper;
-	
+
 	@Value("${goguma.save}")
 	private String saveFolder;
-	
+
 	@Override
-	public int fileUpload(List<MultipartFile> files) {
+	public int insertFile(List<MultipartFile> files) {
 		System.out.println("왔니....... commonFileUpload");
 		// ▶ 파일 저장 위치 설정
 
@@ -31,15 +31,15 @@ public class AtchServiceImpl implements AtchService {
 		int atchId = 0;
 
 		// ▶ 파일이 존재하면 if문 실행
-		if (files != null && !files.isEmpty() ) {
+		if (files != null && !files.isEmpty()) {
 			atchId = atchMapper.selectAtchId();
 			System.out.println("atchId========" + atchId);
 
 			// ▶ 파일 개수만큼 for문
 			for (MultipartFile file : files) {
-				if(file.getSize()== 0) 
+				if (file.getSize() == 0)
 					continue;
-				
+
 				// ▶ insert할 atchVO 생성
 				AtchVO attach = new AtchVO();
 
@@ -69,7 +69,7 @@ public class AtchServiceImpl implements AtchService {
 				attach.setAtchPath("/upload/" + fileName);
 
 				// ▶ 테이블에 파일 저장
-				atchMapper.fileUpload(attach);
+				atchMapper.insertFile(attach);
 			}
 
 		}
@@ -85,6 +85,36 @@ public class AtchServiceImpl implements AtchService {
 	@Override
 	public List<AtchVO> selectAtch(int atchId) {
 		return atchMapper.selectAtch(atchId);
+	}
+
+	@Override
+	public int deleteFile(List<AtchVO> atchVOs) {
+		System.out.println("삭제하러 impl 왔듬====");
+		int cnt = 0;
+		if (atchVOs != null && !atchVOs.isEmpty()) {
+			System.out.println("if문 통과 =====");
+
+			for (AtchVO atchVO : atchVOs) {
+				System.out.println("for문 통과 =====");
+				atchVO = atchMapper.selectFile(atchVO);
+				File file = new File(saveFolder + atchVO.getAtchNm());
+				System.out.println("atchPath로 파일 가지고 왔고 ==== (" + file);
+
+				boolean result = file.delete();
+				System.out.println("삭제했으면 true ==== " + result);
+				if (result) {
+					System.out.println("파일 삭제했고 db에서 삭제할 예정===");
+					cnt += atchMapper.deleteFile(atchVO);
+					System.out.println("db삭제 완료 했으면 1=====" + cnt);
+				}
+			}
+		}
+		return cnt;
+	}
+
+	@Override
+	public AtchVO selectFile(AtchVO atchVO) {
+		return atchMapper.selectFile(atchVO);
 	}
 
 }

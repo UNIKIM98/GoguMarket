@@ -2,6 +2,8 @@ package com.goguma.mem.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.goguma.common.service.AtchService;
+import com.goguma.common.vo.AtchVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
@@ -22,6 +26,9 @@ public class MemController {
 	@Autowired
 	MemService mService;
 
+	@Autowired
+	AtchService aService;
+	
 	@GetMapping("/myPageTest")
 	public String myPageTest() {
 		return "myPages/test";
@@ -115,4 +122,17 @@ public class MemController {
 		return "myPages/myAttend";
 	}
 	
+	@GetMapping("/delteFileTest")
+	public String delteFileTest() {
+		List<AtchVO> files = new ArrayList<AtchVO>();
+		
+		AtchVO atchVO = new AtchVO();
+		atchVO.setAtchId(13);
+		atchVO.setAtchNo(98);
+		files.add(atchVO);
+	
+		aService.deleteFile(files);
+		
+		return "myPages/myAttend";
+	}
 }
