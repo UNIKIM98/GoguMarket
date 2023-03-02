@@ -5,9 +5,8 @@
 	<!-- 가게목록 전체조회 -->
 	<select id="getBizList" resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT m.*, d.*
-		FROM biz_mem m
-				left outer join biz_dangol d
-				on m.biz_no = d.biz_no
+		FROM biz_mem m LEFT OUTER JOIN biz_dangol d
+						ON m.biz_no = d.biz_no
 	</select>
 
 	<!-- 개별조회(가게상세페이지) -->
@@ -22,13 +21,13 @@
 	<!-- 가게목록 페이징 -->
 	<select id="bizListPage"
 		parameterType="com.goguma.biz.vo.BizSearchVO" resultType="BizMemVO">
-		select * from(select rownum rn, a.* from(
+		SELECT * FROM(SELECT rownum rn, a.* FROM(
 						SELECT *
 						FROM biz_mem
 						<include refid="criteria"></include>
-						order by biz_no
+						ORDER BY biz_no
 		<![CDATA[
-		) a where rownum <= #{last} ) b where rn >= #{first}
+		) a WHERE rownum <= #{last} ) b WHERE rn >= #{first}
 		]]>
 	</select>
 

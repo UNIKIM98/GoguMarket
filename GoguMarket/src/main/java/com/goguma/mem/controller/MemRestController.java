@@ -1,7 +1,5 @@
 package com.goguma.mem.controller;
 
-import java.sql.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,16 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goguma.mem.service.AttendService;
 import com.goguma.mem.service.MemService;
-import com.goguma.mem.vo.AttendVO;
 import com.goguma.mem.vo.MemVO;
 
 @RestController
 public class MemRestController {
 	@Autowired
 	MemService mService;
-	
+
 	/*
 	 * @Autowired AttendService aService;
 	 */
@@ -69,17 +65,4 @@ public class MemRestController {
 		return result;
 	}
 
-	// 출석이벤트
-	@GetMapping("/ajaxAttend/{attendYmd}")
-	public String ajaxAttend(@PathVariable Date attendYmd, HttpServletRequest request) {
-		System.out.println(attendYmd);
-		
-		HttpSession session = request.getSession();
-		
-		AttendVO aVO = new AttendVO();
-		aVO.setUserId((String)session.getAttribute("userId"));
-		aVO.setAttendYmd(attendYmd);
-		
-		return "hihi";
-	}
 }

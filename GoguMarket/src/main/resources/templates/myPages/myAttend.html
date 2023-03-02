@@ -12,11 +12,52 @@
 <script>
 	//fullcalendar 불러오기
 	document.addEventListener('DOMContentLoaded', function() {
+		let eventList = [];
+		$.ajax({
+			type : "get",
+			url : "/selectAttendList",
+			success : function(result) {
+				console.log(result.aList[0].attendYmd);
+				let aList = result.aList
+
+				//날짜 확인
+				let date = new Date();
+
+				let year = date.getFullYear();
+				let month = ('0' + (date.getMonth() + 1)).slice(-2);
+				let day = ('0' + date.getDate()).slice(-2);
+
+				let today = year + '-' + month + '-' + day;
+				for ( let i in aList) {
+					if (aList[i].attendYmd == today) {
+						$("#attendBtn").attr("disabled", "disabled")
+					}
+					let eventOne = {
+						title : aList[i].point,
+						start : aList[i].attendYmd,
+						end : aList[i].attendYmd,
+						display : 'background',
+						backgroundColor : "#00b9ba",
+						textColor : "black"
+
+					};
+					eventList.push(eventOne)
+				}
+				console.log(eventList)
+				
+			}
+		})
+
 		var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			height : '500px',
-			initialView : 'dayGridMonth'
-		//       locale : 'ko'
+			initialView : 'dayGridMonth',
+			//       locale : 'ko'
+			events : [
+				for ( let i in eventList){
+					calendar.addEvent(eventList[i])
+				}
+			]
 		});
 		calendar.render();
 	});
@@ -24,29 +65,42 @@
 	function makeAttend() {
 		let confirmPlz = confirm("출석하시겠습니까?")
 		if (confirmPlz) {
-			let today = new Date();
+			// let date = new Date();
 
-			let year = today.getFullYear();
-			let month = ('0' + (today.getMonth() + 1)).slice(-2);
-			let day = ('0' + today.getDate()).slice(-2);
+			// let year = date.getFullYear();
+			// let month = ('0' + (date.getMonth() + 1)).slice(-2);
+			// let day = ('0' + date.getDate()).slice(-2);
 
-			let attendYmd = year + '-' + month + '-' + day;
-			ajaxAttend(attendYmd);
+			// let today = year + '-' + month + '-' + day;
+			insertAttend();
 		}
 	}
-	function ajaxAttend(attendYmd) {
-		console.log(attendYmd)
+	function insertAttend() {
 		$.ajax({
-			url: '/ajaxAttend/' + attendYmd,
-			type:'get',
-			dataType: 'text',
-			contentType: 'application/json; charset = utf-8',
-			success: function(result) {
-				console.log(result);
+			url : '/insertAttend/',
+			type : 'get',
+			dataType : 'text',
+			contentType : 'application/json; charset = utf-8',
+			success : function(aVO) {
+				console.log(aVO);
+				afterInsert(aVO);
 			},
-			error: function(err) {
+			error : function(err) {
 				console.log(err);
 			}
+		})
+	}
+
+	function afterInsert(aVO) {
+		console.log(aVO[3])
+		alert("[출석완료] " + aVO.point + " 포인트가 적립되었습니다! 🎉");
+		successCallback({
+			title : aVO.point,
+			start : aVO.attendYmd,
+			end : aVO.attendYmd,
+			display : 'background',
+			backgroundColor : "#00b9ba",
+			textColor : "black"
 		})
 	}
 </script>
@@ -55,7 +109,7 @@
 	<div layout:fragment="myContent">
 		<div id='calendar' style="width: 550px"></div>
 		<div>
-			<button onclick="makeAttend()">출석하기</button>
+			<button onclick="makeAttend()" id="attendBtn">출석하기</button>
 		</div>
 	</div>
 </body>
