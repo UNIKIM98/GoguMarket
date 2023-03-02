@@ -40,7 +40,7 @@
 					<when test="searchType != null and searchType != ''">
 						<choose>
 							<when test="'bizNm'.equals(searchType)">
-								AND biz_nm LIKE CONCAT('%', #{keyword}, '%')
+								AND biz_nm LIKE '%' || #{keyword}|| '%'
 							</when>
 						</choose>
 					</when>
