@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.deal.mapper.DealMapper">
 
+	<select id="getId"
+			resultType="int">
+	select atch_id
+			from deal
+			where dl_no = #{dlNo}
+	</select>
 	<select id="getDeal"
 			parameterType="string"
 			resultType="DealVO">
@@ -14,8 +20,11 @@
 	<select id="getDealSeller"
 			parameterType="DealVO"
 			resultType="DealVO">			                
-		SELECT *
-		FROM deal
+		SELECT d.* ,
+		       (SELECT ATCH_PATH
+	       		FROM ATCH
+	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
+		FROM deal d
 		WHERE dl_no != ${dlNo}
 		  AND ntsl_id = (	SELECT ntsl_id
 		                    FROM deal
@@ -25,8 +34,11 @@
 		<select id="getDealCtgry"
 			parameterType="DealVO"
 			resultType="DealVO">			                
-		SELECT *
-		FROM deal
+		SELECT  d.* ,
+		       (SELECT ATCH_PATH
+	       		FROM ATCH
+	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
+		FROM deal d
 		WHERE dl_no != ${dlNo}
 		  AND ctgry = (	SELECT ctgry
 		                    FROM deal
@@ -36,12 +48,16 @@
 	<select id="dealListSelect" 
 			parameterType="com.goguma.deal.vo.DealVO"
 			resultType="com.goguma.deal.vo.DealVO">
-	select * from (select rownum rn,a.* from(
-			SELECT *
-			FROM DEAL
+	select * 
+			from (select rownum rn,a.* from(
+			SELECT d.* ,
+		       (SELECT ATCH_PATH
+	       		FROM ATCH
+	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
+			FROM DEAL d
 			<include refid="creiteria"></include>
 		
-		order by dl_no
+			order by dl_no
 	<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>	
@@ -52,28 +68,28 @@
 			<if test="ctgry != null and ctgry != ''" >
 				ctgry = #{ctgry}
 			</if>
-			 <if test="keyword != null and keyword != ''">
+			 <if test="searchTtl != null and searchTtl != ''">
             <choose>
                 <!-- 검색 유형이 있을 때 -->
                 <when test="searchType != null and searchType != ''">
                     <choose>
                         <when test="'dlTtl'.equals(searchType)">
-                            AND dl_ttl LIKE '%' || #{keyword}|| '%'
+                            AND dl_ttl LIKE '%' || #{searchTtl}|| '%'
                         </when>
                         <when test="'dlCn'.equals(searchType)">
-                            AND dl_cn LIKE '%' || #{keyword}|| '%'
+                            AND dl_cn LIKE '%' || #{searchTtl}|| '%'
                         </when>
                         <when test="'ntslId'.equals(searchType)">
-                            AND ntsl_id LIKE '%' || #{keyword}|| '%'
+                            AND ntsl_id LIKE '%' || #{searchTtl}|| '%'
                         </when>
                     </choose>
                 </when>
                 <!-- 전체 검색일 때 때 -->
                 <otherwise>
                     AND (
-                           dl_Ttl LIKE '%' || #{keyword}|| '%'
-                        OR dl_Cn LIKE '%' || #{keyword}|| '%'
-                        OR ntsl_Id LIKE '%' || #{keyword}|| '%'
+                           dl_Ttl LIKE '%' || #{searchTtl}|| '%'
+                        OR dl_Cn LIKE '%' || #{searchTtl}|| '%'
+                        OR ntsl_Id LIKE '%' || #{searchTtl}|| '%'
                     )
                 </otherwise>
             </choose>
@@ -103,6 +119,7 @@
 		dl_ttl,
 		dl_cn,
 		ctgry,
+		dl_ymd,
 		dl_prc,
 		area,
 		nego_yn,
@@ -112,6 +129,7 @@
 		#{dlTtl},
 		#{dlCn},
 		#{ctgry},
+		current_date,
 		#{dlPrc},
 		#{area},
 		#{negoYn},

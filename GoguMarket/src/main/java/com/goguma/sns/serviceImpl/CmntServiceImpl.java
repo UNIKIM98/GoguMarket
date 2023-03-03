@@ -30,6 +30,7 @@ public class CmntServiceImpl implements CmntService {
 	@Override
 	public int insertReply(SnsCmntVO vo) {
 		
+		System.out.println("sadasdasd"+vo);
 		return map.insertReply(vo);
 	}
 

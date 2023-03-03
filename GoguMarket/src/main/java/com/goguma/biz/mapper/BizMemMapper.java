@@ -7,7 +7,7 @@ import com.goguma.biz.vo.BizSearchVO;
 
 public interface BizMemMapper {
 	
-	//전체 가게 조회
+	//전체 가게 조회 - 페이징으로 대체
 	List<BizMemVO> getBizList();
 	
 	//전체 가게 리스트 페이징, 갯수 카운팅
@@ -18,7 +18,16 @@ public interface BizMemMapper {
 	BizMemVO bizInfo(String bizNo);
 	
 	//단골 카운팅
-	int dangolCnt(String bizNo);
+	List<BizMemVO> BizDangolCnt();
+	
+	//리뷰 카운팅
+	List<BizMemVO> BizReviewCnt();
+	
+	//사진
+	List<BizMemVO> bizImgList();
+	
+	//상세사진
+	List<BizMemVO> bizDetailImg(String bizNo);
 
 
 	

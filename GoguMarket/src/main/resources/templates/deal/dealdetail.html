@@ -29,8 +29,9 @@ layout:decorate="~{layouts/layout}">
 	<div layout:fragment="content">
 <script>
 //판매자정보페이지로가게하기
-		$(function() {
+		/* $(function() {
 			$(".btnInfo").on("click", function() {
+				
 				// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
 				let url = $(".single-product-info h3 a").text();
 				//location.href="dealdetail/"+url
@@ -38,7 +39,13 @@ layout:decorate="~{layouts/layout}">
 				console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
 			})
 		})
-
+ */
+		function seller(){
+		console.log("------------------------");
+			let url = $(".single-product-info a").first().text();
+			console.log(url);
+			location.href = `/dealSellerpage/${url}`
+		}
 
 </script>
 	<table class="table" border="1">
@@ -94,43 +101,13 @@ layout:decorate="~{layouts/layout}">
                                     <!-- imgs-zoom-area start -->
                                     <div class="col-md-5">
                                         <div class="imgs-zoom-area">
-	                                        		<tr th:each="deal : ${deal}" 
-														onmouseover='this.style.background="#fcecae";' 
-														onmouseleave='this.style.background="#FFFFFF";'>
-														<td th:text="${deal.atchPath}"></td>
-													</tr>
-	                                            <img id="zoom_03" src="/img/product/6.jpg" data-zoom-image="/img/product/6.jpg" alt="">
+	                                            <img id="zoom_03"  data-zoom-image="/img/product/6.jpg" alt="">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
-                                                        <div class="p-c">
+                                                        <div th:each="f : ${file}" class="p-c">
                                                             <a href="#" data-image="/img/product/2.jpg" data-zoom-image="/img/product/2.jpg">
-                                                                <img class="zoom_03" src="/img/product/2.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-c">
-                                                            <a href="#" data-image="/img/product/3.jpg" data-zoom-image="/img/product/3.jpg">
-                                                                <img class="zoom_03" src="/img/product/3.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-c">
-                                                            <a href="#" data-image="/img/product/4.jpg" data-zoom-image="/img/product/4.jpg">
-                                                                <img class="zoom_03" src="/img/product/4.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-c">
-                                                            <a href="#" data-image="/img/product/5.jpg" data-zoom-image="/img/product/5.jpg">
-                                                                <img class="zoom_03" src="/img/product/5.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-c">
-                                                            <a href="#" data-image="/img/product/6.jpg" data-zoom-image="/img/product/6.jpg">
-                                                                <img class="zoom_03" src="/img/product/6.jpg" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-c">
-                                                            <a href="#" data-image="/img/product/7.jpg" data-zoom-image="/img/product/7.jpg">
-                                                                <img class="zoom_03" src="/img/product/7.jpg" alt="">
+                                                                <img class="zoom_03" th:src="${f.atchPath}" alt="">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -143,9 +120,10 @@ layout:decorate="~{layouts/layout}">
                                     <div class="col-md-7"> 
                                         <div class="single-product-info">     
 										<tr th:each="deal : ${deal}">
+											<a th:text="${deal.dlNo}"></a> <!-- 게시글번호  -->
 											<h3 class="text-black-1"><a th:text="${deal.ntslId}"></a></h3>
                                             <h6 class="brand-name-2"><a th:text="${deal.area}"></a></h6>
-                                            <button type="button" class="btnInfo">판매자정보더보기</button>
+                                          	 	<button type="button" class="btnInfo" onClick="seller()">판매자정보더보기</button>
                                             <div class="f-right"></div>
                                             <!-- hr -->
                                             <hr>
@@ -179,7 +157,7 @@ layout:decorate="~{layouts/layout}">
                                                             <!-- 관련상품 포문돌려서 뽑아버림. tlqkf 얘도 페이징해야됨..?-->
                                                             <div class="media mt-30" th:each="l : ${list}">
                                                                 <div class="media-left">
-                                                                    <a href="#"><img class="media-object" src="/img/author/2.jpg" alt="#"></a>
+                                                                    <a href="#"><img class="media-object" th:src="${l.atchNm}" style="width:75px; height:75px;"></a>
                                                                 </div>
                                                                 <div class="media-body">
                                                                     <div class="clearfix">
@@ -208,7 +186,7 @@ layout:decorate="~{layouts/layout}">
                                                             <!-- 연관상품 model: ct -->
                                                             <div class="media mt-30" th:each="c : ${ct}">
                                                                 <div class="media-left">
-                                                                    <a href="#"><img class="media-object" src="/img/author/3.jpg" alt="#"></a>
+                                                                    <a href="#"><img class="media-object" th:src="${c.atchNm}" style="width:75px; height:75px;"></a>
                                                                 </div>
                                                                 <div class="media-body">
                                                                     <div class="clearfix">
@@ -226,7 +204,7 @@ layout:decorate="~{layouts/layout}">
                                                                             </ul>
                                                                         </div>
                                                                     </div>
-                                                                    <p class="mb-0" >상품 상세 설명 넣기 + 말줄임표 이용</p>
+                                                                    <p class="mb-0" th:text=${c.dlCn}>상품 상세 설명 넣기 + 말줄임표 이용</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -288,8 +266,8 @@ layout:decorate="~{layouts/layout}">
                         <div class="modal-body">
                             <div class="modal-product clearfix">
                                 <div class="product-images">
-                                    <div class="main-image images">
-                                        <img alt="" src="/img/product/quickview.jpg">
+                                    <div class="main-image images" >
+                                        <img alt="" src="">
                                     </div>
                                 </div><!-- .product-images -->
                                 

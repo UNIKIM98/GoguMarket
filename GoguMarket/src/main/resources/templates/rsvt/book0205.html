@@ -7,6 +7,23 @@
 	<!-- 타임리프 포함 시작 div -->
 	<div layout:fragment="content">
 
+		<div>
+			<a th:text="${biz.bizNo}"></a>
+			<a th:each="cnt: ${dgCnt}" th:text="${cnt.bizNo}"></a>
+<!-- 			<ul class="blog-meta"> -->
+<!-- 				<li><a href="#" th:each="cnt: ${dgCnt}" -->
+<!-- 					th:if="${cnt.bizNo == list.bizNo}" -->
+<!-- 					th:utext="|<i class='zmdi zmdi-favorite'></i>단골  ${cnt.dCount}|">(단골 -->
+<!-- 						수)</a></li> -->
+<!-- 				<li><a href="#" th:each="rcnt: ${rwCnt}" -->
+<!-- 					th:if="${rcnt.bizNo == list.bizNo}" -->
+<!-- 					th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|">(후기 -->
+<!-- 						수)</a></li> -->
+<!-- 				<li><a href="#" th:text="${list.ctgry}">카테고리이름</a></li> -->
+<!-- 			</ul> -->
+
+		</div>
+
 		<!-- 큰덩어리 시작 -->
 		<div class="shop-section mb-80">
 			<div class="container">
@@ -22,15 +39,15 @@
 					<div class="col-lg-8">
 						<div class="section-title text-start mt-15">
 							<h2 class="uppercase" th:text="${biz.bizNm}">(가게이름)</h2>
-							
-								<ul class="blog-meta">
-									<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
-											123 </a></li>
-									<li><a href="#"><i class="zmdi zmdi-comments"></i>후기
-											59 </a></li>
-									<li><a href="#" th:text="${biz.ctgry}">(카테고리이름)</a></li>
-								</ul>
-							
+
+							<ul class="blog-meta">
+								<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
+										123 </a></li>
+								<li><a href="#"><i class="zmdi zmdi-comments"></i>후기 59
+								</a></li>
+								<li><a href="#" th:text="${biz.ctgry}">(카테고리이름)</a></li>
+							</ul>
+
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -84,8 +101,8 @@
 											</div>
 											<div class="col-lg-3"></div>
 											<div class="col-lg-3">
-												<a class="button extra-small" href="#" data-bs-toggle="tab">
-													<span>예약하기 </span>
+												<a class="button extra-small" data-bs-toggle="tab"
+													onclick="aaa()"> <span>예약하기 </span>
 												</a> <a class="button extra-small" href="#" data-bs-toggle="tab">
 													<span>함께예약 </span>
 												</a>
@@ -109,15 +126,17 @@
 																<div class="col-lg-12">
 																	<div id="gallery_01"
 																		class="carousel-btn slick-arrow-3 mt-10 mb-30">
-																		
+
 																		<!-- 사진1건. 4개이상되면 옆으로 슬라이드됨-->
-																		<div class="p-c">
-																			<a href="#" data-image="img/product/2.jpg"
-																				data-zoom-image="img/product/2.jpg"> <img
-																				class="zoom_03" src="img/product/2.jpg" alt="">
+																		<div class="p-c" th:each="imgDetail: ${imgDetail}">
+																			<a th:if="${biz.bizNo} == ${imgDetail.bizNo}"
+																				th:data-image="${imgDetail.atchPath}"
+																				th:data-zoom-image="${imgDetail.atchPath}"> <img
+																				class="zoom_03" th:src="${imgDetail.atchPath}"
+																				alt="">
 																			</a>
 																		</div>
-																		
+
 																	</div>
 																</div>
 															</div>
@@ -143,20 +162,17 @@
 															<tr>
 																<th style="text-align: center;" class="td-title-1">영업시간
 																	:</th>
-																<td class="td-title-1" 
+																<td class="td-title-1"
 																	th:if="${biz.bgngTm}==${code.commonDetailCode}"
-																	th:each ="code: ${code}"
-																	th:text ="${code.commonNm}"
-																	></td>
-																<td class="td-title-1" 
+																	th:each="code: ${code}" th:text="${code.commonNm}"></td>
+																<td class="td-title-1"
 																	th:if="${biz.endTm}==${code.commonDetailCode}"
-																	th:each ="code: ${code}"
-																	th:text ="${code.commonNm}"></td>
-<!-- 																<td class="td-title-1" -->
-<!-- 																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|">(영업시간)</td> -->
-<!-- 															<td class="td-title-1" -->
-<!-- 																th:text="{biz.bgngTm}==${code.commonDetailCode} ? ${code.commonNm}">(영업시간)</td> -->
-																	
+																	th:each="code: ${code}" th:text="${code.commonNm}"></td>
+																<!-- 																<td class="td-title-1" -->
+																<!-- 																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|">(영업시간)</td> -->
+																<!-- 															<td class="td-title-1" -->
+																<!-- 																th:text="{biz.bgngTm}==${code.commonDetailCode} ? ${code.commonNm}">(영업시간)</td> -->
+
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">가게소개
@@ -275,7 +291,7 @@
 													<!-- 후기1건 끝 -->
 												</div>
 												<!-- 후기파트 끝 -->
-												
+
 											</div>
 										</div>
 
@@ -294,7 +310,14 @@
 			</div>
 		</div>
 		<!-- 큰 덩어리 끝 -->
-
+		<script type="text/javascript">
+			function aaa() {
+				var url = window.location.href;
+				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+				console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
+				window.location.href = "../book0601/" + urlBizNo;
+			}
+		</script>
 	</div>
 	<!-- 타임리프 div끝 -->
 </body>

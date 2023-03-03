@@ -15,5 +15,6 @@ public class AttendVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date attendYmd;
 	private String userId;
+	private int point;
 	
 }

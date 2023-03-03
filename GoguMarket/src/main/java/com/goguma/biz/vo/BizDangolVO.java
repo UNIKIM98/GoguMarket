@@ -11,11 +11,14 @@ import lombok.Data;
 @Data
 public class BizDangolVO {
 
-	private String dgNo;		//단골번호
-	private String bizNo;		//가게ID
-	private String userId;		//아이디
-	private String dangolMemo;	//단골메모
+	private String dgNo; // 단골번호
+	private String bizNo; // 가게ID
+	private String userId; // 아이디
+	private String dangolMemo; // 단골메모
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dangolYmd;		//단골된 날짜
+	private Date dangolYmd; // 단골된 날짜
+
+	// # 단골 카운트
+	private int dCount;
 }

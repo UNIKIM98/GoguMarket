@@ -117,22 +117,21 @@ public class MemController {
 		return "myPages/myArea";
 	}
 	
-	@GetMapping("/myAttend")
-	public String myAttend() {
-		return "myPages/myAttend";
-	}
-	
 	@GetMapping("/delteFileTest")
 	public String delteFileTest() {
+		//파일삭제 테스트용 list
 		List<AtchVO> files = new ArrayList<AtchVO>();
 		
+		//list에 임시로 하나 세팅
 		AtchVO atchVO = new AtchVO();
 		atchVO.setAtchId(13);
 		atchVO.setAtchNo(98);
 		files.add(atchVO);
-	
-		aService.deleteFile(files);
 		
+		int delCnt = aService.deleteFile(files);
+		if(delCnt > 0) {
+			System.out.println(delCnt + "건 삭제완료");
+		}
 		return "myPages/myAttend";
 	}
 }

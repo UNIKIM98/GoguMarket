@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.biz.mapper.BizMemMapper;
+import com.goguma.biz.service.BizDangolService;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
 import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.biz.vo.PagingVO;
+import com.goguma.common.service.AtchService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
@@ -24,26 +28,25 @@ import com.goguma.rsvt.service.RsvtRvService;
 @Controller
 public class BizController {
 
-	@Autowired private BizMemService memService; 	// 가게정보
+
+	@Autowired BizMemService memService; 	// 가게정보
 	@Autowired private BizNewsService newsService; 	// 가게소식 들고오기 위함
 	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
 	@Autowired private RsvtRvService rvService;		//리뷰 들고오기 위함
 	@Autowired BizMemMapper bizMapper;				//페이징 검색 하기 위함
 	@Autowired CommonCodeService codeService;		//공통코드
 
-	/* book01~05 분류는 예약으로 되어있는데 
-	 * 매퍼랑 서비스 같은게 biz에 있어서 여기에다가 만듬 */
-	
+
 //	// 동네가게 예약 메인(book01).
 //	@RequestMapping("/bookmain")
 //	public String getBizList(Model model) {
 //		model.addAttribute("lists", memService.getBizList());
 //		return "rsvt/book01";
 //	}
-	
-	//동네가게 예약 메인 페이징
+
+	// 동네가게 예약 메인 페이징
 	@GetMapping("/bookmain")
-	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, String bizNo, BizDangolVO dvo) {
+	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, BizMemVO vo) {
 		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
 		pvo.setPageSize(5);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
 		
@@ -53,54 +56,62 @@ public class BizController {
 		pvo.setTotalRecord(bizMapper.bizListCnt(bvo));
 		
 		model.addAttribute("lists", bizMapper.bizListPage(bvo));
-		System.out.println("페이징test●●●●●●●●●●●●●●●●●●●●●" + bizMapper.bizListPage(bvo));
+
+		//＃ 가게 전체 셀렉트
+		List<BizMemVO> lists = bizMapper.getBizList();
 		
 		//카테고리 리스트
 		model.addAttribute("ctgry", codeService.codeList("008"));
-		
+
 		//단골 카운팅
-//		model.addAttribute("dangol", bizMapper.dangolCnt(bizNo));
-//		System.out.println("단골수" + bizMapper.dangolCnt(bizNo));
-//		List<BizMemVO> lists = bizMapper.getBizList();
-//		System.out.println(lists.get(5).getDgNo()+"ooooooooo");
-//		int cnt = 0;
-//		List<Integer> intList = null;
-//		
-//		for(int i =0 ; i<lists.size() ; i++) {
-//			String bizNoo = lists.get(i).getBizNo();
-//			if(lists.get(i).getDgNo()!=null) {
-//				cnt++;
-//			}
-////			cnt += Integer.parseInt(lists.get(i).getDgNo().substring(2));
-//			System.out.println(bizNoo);
-//		}
-//		System.out.println(cnt + "단골수============================");
-//		
+		model.addAttribute("dgCnt", bizMapper.BizDangolCnt());
+		
+		//리뷰 카운팅
+		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
+		
+
+		//이미지 테스트
+		model.addAttribute("img", bizMapper.bizImgList());
+		System.out.println("이미지=============="+bizMapper.bizImgList());
+
 		return "rsvt/book01";
 	}
-	
 
 	// 동네가게 상세정보(book0205)
 	@RequestMapping("/book0205/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
+		System.out.println("가게정보 biztlqk ==========="+memService.bizInfo(bizNo));
 		// 가게 소식
 		model.addAttribute("news", newsService.bizNews(bizNo));
 		// 가게 메뉴
 		model.addAttribute("menu", menuService.bizMenu(bizNo));
 		// 가게 리뷰
 		model.addAttribute("rv", rvService.rsvtReview(bizNo));
-		
-		//공통코드 시간
+
+		// 공통코드 시간
 		model.addAttribute("code", codeService.codeList("007"));
-		System.out.println("공통코드●●●●●●●●●●●●●●●●●●●●●"+ codeService.codeList("007"));
-	
+		
+		//단골 카운팅
+		model.addAttribute("dgCnt", bizMapper.BizDangolCnt());
+			
+		//리뷰 카운팅
+		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
+		
+		//이미지 테스트
+		model.addAttribute("img", bizMapper.bizImgList());
+		
+		//상세이미지
+		model.addAttribute("imgDetail", memService.bizDetailImg(bizNo));
+		System.out.println("이미지 상세정보============"+memService.bizDetailImg(bizNo));
+
+
 		return "rsvt/book0205";
 	}
 
-	//==============================
-	
+	// ==============================
+
 	@GetMapping("/shop04")
 	public String shop04() {
 		return "biz/shop04";

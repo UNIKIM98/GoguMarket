@@ -37,7 +37,8 @@ layout:decorate="~{layouts/layout}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section-title text-start mb-40">
-                                <h2 class="uppercase">김펭귄</h2>
+                            <tr th:each="d : ${deal}">
+                                <h2 class="uppercase"><a th:text="${d.ntslId}"></a></h2>
                                 <h6>달서구 두류3동</h6>
                             </div>
 
@@ -51,20 +52,18 @@ layout:decorate="~{layouts/layout}">
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active show" id="description">
                                         <p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>    
-
+							<!-- 판매목록포문돌리면될듯? -->
+						
                             <div class="featured-product">
                                 <div class="active-featured-product slick-arrow-2">
-                                    
-                                    <div class="product-item">
+                                    <div class="product-item" th:each="l: ${list}">
                                         <div class="product-img">
                                             <a href="single-product.html">
-                                                <img src="img/product/2.jpg" alt="" />
+                                                <img th:src="${l.atchNm}" style="width:267px; height:200px;" />
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <h6 class="product-title">
-                                                <a href="single-product.html">Product Name</a>
-                                            </h6>
+                                            <h6 th:text="${l.dlTtl}" class="product-title" href="single-product.html"></h6>
                                             <div class="pro-rating">
                                                 <a href="#"><i class="zmdi zmdi-star"></i></a>
                                                 <a href="#"><i class="zmdi zmdi-star"></i></a>
@@ -72,112 +71,7 @@ layout:decorate="~{layouts/layout}">
                                                 <a href="#"><i class="zmdi zmdi-star-half"></i></a>
                                                 <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
                                             </div>
-                                            <h3 class="pro-price">$ 869.00</h3>
-                                            <ul class="action-button">
-                                                <li>
-                                                    <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
-                                                            class="zmdi zmdi-zoom-in"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="single-product.html">
-                                                <img src="img/product/3.jpg" alt="" />
-                                            </a>
-                                        </div>
-                                        <div class="product-info">
-                                            <h6 class="product-title">
-                                                <a href="single-product.html">Product Name</a>
-                                            </h6>
-                                            <div class="pro-rating">
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-half"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
-                                            </div>
-                                            <h3 class="pro-price">$ 869.00</h3>
-                                            <ul class="action-button">
-                                                <li>
-                                                    <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
-                                                            class="zmdi zmdi-zoom-in"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="single-product.html">
-                                                <img src="img/product/4.jpg" alt="" />
-                                            </a>
-                                        </div>
-                                        <div class="product-info">
-                                            <h6 class="product-title">
-                                                <a href="single-product.html">Product Name</a>
-                                            </h6>
-                                            <div class="pro-rating">
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-half"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
-                                            </div>
-                                            <h3 class="pro-price">$ 869.00</h3>
-                                            <ul class="action-button">
-                                                <li>
-                                                    <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
-                                                            class="zmdi zmdi-zoom-in"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="single-product.html">
-                                                <img src="img/product/4.jpg" alt="" />
-                                            </a>
-                                        </div>
-                                        <div class="product-info">
-                                            <h6 class="product-title">
-                                                <a href="single-product.html">Product Name</a>
-                                            </h6>
-                                            <div class="pro-rating">
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-half"></i></a>
-                                                <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
-                                            </div>
-                                            <h3 class="pro-price">$ 869.00</h3>
+                                            <h3 class="pro-price" th:text="${l.dlPrc}"></h3>
                                             <ul class="action-button">
                                                 <li>
                                                     <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
@@ -204,14 +98,14 @@ layout:decorate="~{layouts/layout}">
                                 <!-- reviews-tab-desc -->
                                 <div class="reviews-tab-desc">
                                     <!-- 리뷰1 -->
-                                    <div class="media mt-30">
+                                    <div class="media mt-30" th:each="r: ${review}">
                                         <div class="media-left">
                                             <a href="#"><img class="media-object" src="img/author/1.jpg" alt="#"></a>
                                         </div>
                                         <div class="media-body">
                                             <div class="clearfix">
                                                 <div class="name-commenter f-left">
-                                                    <h6 class="media-heading"><a href="#">김유저</a></h6>
+                                                    <h6 class="media-heading" th:text="${r.userId}">구매자아이디자리</h6>
                                                     <p class="mb-10">2일전</p>
                                                 </div>&nbsp;&nbsp;&nbsp;
                                                 <div class="f-right">
@@ -222,32 +116,11 @@ layout:decorate="~{layouts/layout}">
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <p class="mb-0">쿨거래 감사합니다~^^</p>
+                                            <p class="mb-0" th:text="${r.rvCn}">구매후기내용</p>
                                         </div>
                                     </div>
                                     <hr>
-                                    <!-- 리뷰1 -->
-                                    <div class="media mt-30">
-                                        <div class="media-left">
-                                            <a href="#"><img class="media-object" src="img/author/1.jpg" alt="#"></a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="clearfix">
-                                                <div class="name-commenter f-left">
-                                                    <h6 class="media-heading"><a href="#">박유저</a></h6>
-                                                    <p class="mb-10">3일전</p>
-                                                </div>&nbsp;&nbsp;&nbsp;
-                                                <div class="f-right">
-                                                    <ul class="reply-delate">
-                                                        <li><a href="#">수정</a></li>
-                                                        <li>/</li>
-                                                        <li><a href="#">삭제</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <p class="mb-0">제가 있는 곳까지 와서 거래해주셨어용</p>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <hr>
                             </div>

@@ -8,7 +8,6 @@ var Sns = document.getElementById("mySns");
 // Get the button that opens the modal
 var Snsbtn = document.getElementById("clickSns");
 
-
 btn.onclick = function() {
 	console.log("gd");
 	modal.style.display = "block";
@@ -22,7 +21,7 @@ function snsModal(id) {
 
 	//전 이벤트 자식중 아이디값과 이미지 아이디 값을 가져옴
 	$("#snsNo1").val(id);
-	$("#replySnsNo")
+	$("#replySnsNo");
 	//단건을 조회하는 ajax를 실행
 	console.log(id);
 	Number(id);
@@ -39,16 +38,14 @@ function snsModal(id) {
 		$("#atchPath").attr("src", obj.atch[0].atchPath);
 		$("#miniId").text(obj.sns.userId + "@gogu.ma");
 		$("#replySnsNo").val(obj.sns.snsNo);
-		console.log(obj.sns.snsNo);
 
-		SelectCmntlist(obj.sns.snsNo); //댓글 전체 조회
+		SelectCmntlist(obj.sns.snsNo);
 	});
 	//리턴된 값을 태그를 찾아서 넣음
 }
 
 function SelectCmntlist(snsNo) {
-
-	console.log(snsNo)
+	console.log(snsNo);
 
 	$.ajax({
 		url: "/SelectCmntlist",
@@ -56,17 +53,50 @@ function SelectCmntlist(snsNo) {
 		data: { snsNo },
 		dataType: "json",
 		success: function(data) {
-	
-			$("#Sns-reply").append(``)
+			console.log(data);
+			$(data).each(function(index, item) {
+				console.log(item.cmntCn);
 
-			
-		}
-	})
+				$("#Sns-reply").append(`
+						<form id="reply" action="#">
+						<input type="hidden" name="groupNo" id="groupNo" th:value="${item.groupNo}">
+						<input type="hidden" name="step" id="step" th:value="${item.step}">
+						<input type="hidden" name="recomntOrder" id="recomntOrder" th:value="${item.recmntOrder}">
+				<div class="card mb-1">
+					<div class="card-body bg-light">
 
+						<div class="media" style="margin: 10px">
+							<div class="media-left">
+								<a href="#"><img class="media-object" src="img/author/1.jpg"
+									alt="#"></a>
+							</div>
+							<div class="media-body ml-10">
+								<div class="clearfix">
+									<div class="name-commenter pull-left">
 
+										<h6 class="media-heading">
+											<input type="hidden" name="snsNo1" id="snsNo1"> <a
+												href="#" id="cmntMem">${item.cmntMem}</a> <br> <a href="#"
+												style="opacity: 50%" id="cmntYmd">${item.cmntYmd}</a>
+										</h6>
+										<div class="form-inline" id="cmntCn" style="word-break:break-all;">${item.cmntCn}</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+							<button type="button" class="btn btn-dark f-right"
+											onClick="rereplyInput()">reply</button>
+					</div>
+
+				</div>
+			</form>
+				`);
+			});
+
+		},
+	});
 }
-
-
 
 //---------------------------------reply(insert)-----------------------------------
 function insertReply() {
@@ -74,17 +104,14 @@ function insertReply() {
 	let cmntMem = $("#replyUserId").val();
 	let cmntCn = $("#replyCmntCn").val();
 
-	console.log(typeof Number(snsNo)); //인트형으로 타입변환
-	snsNo = Number(snsNo);
 	console.log(snsNo);
 	console.log(cmntMem);
 	console.log(cmntCn);
 
-	if (cmntCn == '') {
-		alert('답글을 입력해주세요')
+	if (cmntCn == "") {
+		console.log("댓글을 입력하세요");
 		return;
 	}
-
 
 	$.ajax({
 		url: "/insertReply",
@@ -97,16 +124,20 @@ function insertReply() {
 		contentType: "application/json",
 
 		success: function(data) {
-			if (data == '') {
-				alert('게시물 등록에 실패했습니다.')
+			if (data == "") {
+				alert("게시물 등록에 실패했습니다.");
 			} else {
-				alert('게시물 등록에 성공했습니다.')
+				alert("게시물 등록에 성공했습니다.");
 			}
-		}
+			SelectCmntlist(snsNo);
+		},
 	});
-	SelectCmntlist();
+	console.log("test");
 }
 
+
+
+	
 
 
 

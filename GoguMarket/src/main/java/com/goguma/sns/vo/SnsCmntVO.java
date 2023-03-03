@@ -18,8 +18,9 @@ public class SnsCmntVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date cmntYmd;
 			
-	private String recmntOrder;
-	private String groupNo;
+	private int recmntOrder;
+	private int groupNo;
+	private int step;
 	
 	
 }
