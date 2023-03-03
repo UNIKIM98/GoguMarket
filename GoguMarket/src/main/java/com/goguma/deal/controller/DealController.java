@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.common.service.AtchService;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.common.service.SearchService;
+import com.goguma.common.vo.AtchVO;
+import com.goguma.common.vo.SearchVO;
 import com.goguma.deal.mapper.DealMapper;
 import com.goguma.deal.service.DealReviewService;
 import com.goguma.deal.service.DealService;
@@ -28,20 +31,37 @@ import com.goguma.deal.vo.Paging;
 public class DealController {
 
 	@Autowired
+	private DealMapper dealMapper;
+	@Autowired
 	private DealService dealService;
-
 	@Autowired
 	private DealReviewService RvService;
-	
-	@Autowired
-	private DealMapper dealMapper;
-
-	
 	@Autowired
 	private AtchService attachService;
-	
 	@Autowired
 	private CommonCodeService codeService;
+	@Autowired
+	private SearchService sService;
+
+	
+	@RequestMapping("/dealMain") // 중고거래 메인 페이지
+	public String dealMain(Paging paging, Model model, SearchVO scvo, @ModelAttribute("dsvo") DealSearchVO svo) {
+		paging.setPageUnit(8); // 한 페이지에 출력할 레코드 건수
+		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수	
+		svo.setFirst(paging.getFirst());
+		svo.setLast(paging.getLast());
+		paging.setTotalRecord(dealMapper.getcountTotal(svo));
+		
+		model.addAttribute("lists", dealMapper.dealListSelect(svo));
+		model.addAttribute("category",codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는 common_detail_code만 들고오면됨
+		
+		model.addAttribute("word", sService.getPopularWord());
+		
+		sService.insertSearch(scvo); // 검색어저장ㅅㅂ
+		System.out.println(sService.getPopularWord()+"wkfs나오낫");
+		return "deal/dealMain";
+	}
+	
 
 	
 	@RequestMapping("/dealList") // 판매상품 전체 조회
@@ -61,30 +81,36 @@ public class DealController {
 		return "deal/dealList"; // 뷰페이지명
 	}
 	
-	/*
-	 * @DeleteMapping("/deal/{dlNo}")
-	 * 
-	 * @ResponseBody public y
-	 */
+	
 	// 판매상품 단건 조회 => detail에 쓸려고
 	@RequestMapping("/dealdetail/{dlNo}")
 	public String getDeal(@PathVariable String dlNo, Model model) {
 		System.out.println("=================" + dlNo);
 
 		int cnt = dealService.dealHitUpdate(dlNo);
-		System.out.println(cnt);
+		int id = dealService.getId(dlNo);
 
 		model.addAttribute("deal", dealService.getDeal(dlNo));	// 단건
 		model.addAttribute("list", dealService.getDealSeller(dlNo));//여러건
 		model.addAttribute("ct", dealService.getDealCtgry(dlNo));
+		
+		model.addAttribute("file",attachService.selectAtch(id));
+		System.out.println(attachService.selectAtch(id)+"파일의정보");
+		//	List<AtchVO> selectAtch(int atchId);
+		
 		return "deal/dealdetail";
 	}
+	
 
 	@RequestMapping("/dealSellerpage/{dlNo}")
 	public String getDealSeller(@PathVariable String dlNo, Model model) {
+		int id = dealService.getId(dlNo);
+		
 		model.addAttribute("deal", dealService.getDeal(dlNo)); // 단건
 		model.addAttribute("list", dealService.getDealSeller(dlNo));//여러건
 		model.addAttribute("review", RvService.getDealRv(dlNo));//여러건
+		
+		model.addAttribute("file",attachService.selectAtch(id));
 		
 		return "deal/dealSellerPage";
 	}
@@ -103,12 +129,9 @@ public class DealController {
 		if(atchId > 0) {
 			vo.setAtchId(atchId);
 		}
-
 		dealService.insertDeal(vo);
 		return "redirect:dealList";
 	}
-
-
 	// 판매상품 등록 : 계좌정보와 아이디값이 없으면 등록할 수 없다 => @PostMapping("/deal/{acntno}/{id}")
 	// 일단 폼데이타로 부메랑에서 들어가는지 확인해보자
 	@PostMapping("/deal")
@@ -139,9 +162,6 @@ public class DealController {
 	 * "deal/dealdetail"; }
 	 */
 
-	@RequestMapping("/dealMain") //
-	public String dealMain() {
-		return "deal/dealMain";
-	}
+	
 
 }

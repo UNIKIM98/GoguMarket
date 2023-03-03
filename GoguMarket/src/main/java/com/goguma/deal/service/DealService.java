@@ -12,6 +12,7 @@ public interface DealService {
 	List<DealVO> dealListSelect(DealSearchVO svo); 	 // 페이징
 	int getcountTotal (DealSearchVO svo);
 	
+	int getId(String dlNo); 
 	DealVO getDeal(String dlNo); // 판매상품 단건조회 (상세정보에 조회하려고 사용)
 	List<DealVO> getDealSeller(String dlNo); // 판매상품 판매자로 조회 -> 판매자의 다른상품
 	List<DealVO> getDealCtgry(String dlNo);  // 판매상품 판매자로 조회 -> 유사 카테고리 상품

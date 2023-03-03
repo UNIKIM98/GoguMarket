@@ -16,11 +16,7 @@ public class DealServiceImpl implements DealService {
 	@Autowired
 	private DealMapper map;
 
-//	@Override
-//	public List<DealVO> dealListSelect() {
-//		// 판매 리스트 전체 조회 : 페이징전 단순 확인용
-//		return map.dealListSelect();
-//	}
+	
 
 	@Override
 	public List<DealVO> dealListSelect(DealSearchVO svo) {
@@ -74,6 +70,12 @@ public class DealServiceImpl implements DealService {
 	public List<DealVO> getDealCtgry(String dlNo) {
 		// 판매자의 상품과 유사상품(같은 카테고리)
 		return map.getDealCtgry(dlNo);
+	}
+
+	@Override
+	public int getId(String dlNo) {
+		// TODO Auto-generated method stub
+		return map.getId(dlNo);
 	}
 
 
