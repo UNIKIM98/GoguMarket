@@ -1,0 +1,250 @@
+<!-- 올라가라 -->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>중고거래상품등록</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<style>
+		@font-face {
+			font-family: 'S-CoreDream-3Light';
+			src:
+				url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		* {
+			font-family: 'S-CoreDream-3Light';
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.3.js"
+		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+		<!-- Body main wrapper start -->
+		<div class="wrapper">
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
+
+				<!-- MESSAGE BOX SECTION START -->
+				<div class="message-box-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="message-box box-shadow white-bg">
+									<!-- <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php"> -->
+									<form id="dFrm" method="post" enctype="multipart/form-data" onsubmit="return false">
+										<div class="row">
+											<div class="col-lg-12">
+												<h4 class="blog-section-title border-left mb-30">중고거래상품등록</h4>
+											</div>
+										</div>
+										<span id='View_area'>
+											<div class="mega-menu-photo f-left">
+												<a href="#"> <img src="img/mega-menu/1.jpg" alt="mega menu image">
+												</a>
+											</div>
+										</span>
+										<!-- ▶▶▶▶▶▶▶▶▶▶ -->
+										<div class="col-lg-10" id="inputFile">
+											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
+											<div id="fileList" style="margin: 40px;">
+												<strong>첨부파일 : </strong> <br>
+												<div id=uploadFileList></div>
+											</div>
+										</div>
+										<!-- ▶▶▶▶▶▶▶▶▶▶ -->
+
+										<div class="col-lg-10">
+											<input type="text" name="dlTtl" id="dlTtl" placeholder="상품제목">
+										</div>
+										<div class="col-lg-10">
+											<textarea class="custom-textarea" name="dlCn" id="dlCn"
+												placeholder="상품설명"></textarea>
+										</div>
+										<div class="col-lg-10">
+											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> <a>카테고리 :
+											</a> <select name="cate" id="cate">
+												<option value="">선택
+												<option th:each="ct : ${category}" th:text="${ct.commonNm}"
+													th:value="${ct.commonDetailCode}"
+													th:selected="${ct.commonDetailCode}"></option>
+											</select>
+										</div>
+										<div class="col-lg-10">
+											<input type="text" name="dlPrc" id="dlPrc" placeholder="가격">
+										</div>
+										<div class="col-lg-10">
+											<input type="text" name="area" id="area" placeholder="직거래장소">
+										</div>
+										<div class="col-lg-10">
+											<input type="text" name="negoYn" id="negoYn" placeholder="네고여부">
+										</div>
+										<div class='uploadResult'>
+											<ul>
+
+											</ul>
+										</div>
+										<button class="submit-btn-1 mt-30 btn-hover-1" type="button"
+											onClick="formSubmit()">등록하기</button>
+										<input type="submit" id="btnSave" role="button" value="글쓰기">
+									</form>
+								</div>
+								<p class="form-message"></p>
+								<!-- </form> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- MESSAGE BOX SECTION END -->
+		<!-- End page content -->
+
+		<script th:inline="javascript">
+			$(function () {
+				$("#files").on("change", function (e) { //#files == 멀티파트 인풋 박스
+					inputFile(e);
+				});
+				//▶▶▶▶▶▶▶▶#btnSave : 글 작성(등록)버튼에 함수 걸어줄 자리
+				$("#btnSave").on("click", function () {
+					saveGallery();
+				});
+			});
+
+			var fileCount = 0; //현재 첨부파일 개수
+			var totalCount = 10; // 첨부 가능한 파일 개수
+			var fileNum = 0; //첨부파일 인덱스
+			var inputFileList = new Array(); // insert 파일 배열
+			var deleteFileList = new Array(); // delte 파일 배열
+
+			function inputFile(e) {
+
+				var files = e.target.files;
+
+				var filesArr = Array.prototype.slice.call(files);
+
+				if (fileCount + filesArr.length > totalCount) {
+					alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+					return;
+				} else {
+					fileCount = fileCount + filesArr.length;
+				}
+
+				filesArr.forEach(function (f) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						inputFileList.push(f);
+						$('#uploadFileList').append(
+							'<div id="file' + fileNum +
+							'" onclick="fileDelete(\'file' +
+							fileNum + '\')">' +
+							'<font style="font-size:15px">' +
+							f.name + '</font><div/>');
+						fileNum++;
+					};
+					reader.readAsDataURL(f);
+				});
+				$("#files").val("");
+			}
+
+			function deleteFile(elem) {
+
+				console.log(elem.value);
+				$(elem).parent().remove();
+
+				if (!deleteFileList.includes(elem.value)) {
+					deleteFileList.push(elem.value);
+				}
+			}
+
+			function fileDelete(fileNum) {
+
+				var no = fileNum.replace(/[^0-9]/g, "");
+				inputFileList[no].is_delete = true;
+				$('#' + fileNum).remove();
+				fileCount--;
+			}
+
+			function saveGallery() {
+				let a = $("#cate option:selected").val(); // 셀렉트한값의 밸류
+				$("#ctgry").val(a); // 를 히든인풋 카테고리에 넣엇삼
+
+				var formData = new FormData($("#dFrm")[0]);
+
+				formData.append("deleteFiles", deleteFileList);
+
+				for (var i = 0; i < inputFileList.length; i++) {
+					if (!inputFileList[i].is_delete) {
+						formData.append("files", inputFileList[i]);
+					}
+				}
+				console.log(formData)
+
+				$
+					.ajax({
+						type: "POST",
+						// 							enctype : "multipart/form-data",
+						url: "/gallery",
+						data: formData,
+						// 							dataType : "json",
+						processData: false,
+						contentType: false,
+						success: function (result) {
+							console.log(result);
+							if (result.response == "OK") {
+								if ($("#id").val() == undefined) {
+									alert("저장되었습니다.");
+								} else {
+									alert("수정되었습니다.");
+								}
+
+								location.href = "/gallery/edit/" +
+									result.galleryId;
+							} else {
+								alert(result.errorMsg);
+							}
+						},
+					});
+			}
+
+			//====================================================================
+			// deal.vo의 카테고리 컬럼에 . 셀렉트한 값(밸류가 디테일공통코드)를 넣고싶음
+			function formSubmit() {
+				console.log($("#files").val())
+
+				dFrm.submit();
+			}
+		</script>
+	</div>
+	<!-- Placed JS at the end of the document so the pages load faster -->
+
+	<!-- jquery latest version -->
+	<script src="js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+	<!-- Bootstrap framework js -->
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<!-- jquery.nivo.slider js -->
+	<script src="lib/js/jquery.nivo.slider.js"></script>
+	<!-- All js plugins included in this file. -->
+	<script src="js/plugins.js"></script>
+	<!-- ajax-mail js -->
+	<script src="js/ajax-mail.js"></script>
+	<!-- Main js file that contents all jQuery plugins activation. -->
+	<script src="js/main.js"></script>
+
+
+</body>
+
+</html>
