@@ -27,4 +27,7 @@ public interface BizMemService {
 	//사진
 	List<BizMemVO> bizImgList();
 	
+	//상세사진
+	List<BizMemVO> bizDetailImg(String bizNo);
+	
 }

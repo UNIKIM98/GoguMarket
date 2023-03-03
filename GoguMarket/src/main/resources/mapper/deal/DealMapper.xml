@@ -57,7 +57,7 @@
 			FROM DEAL d
 			<include refid="creiteria"></include>
 		
-		order by dl_no
+			order by dl_no
 	<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>	

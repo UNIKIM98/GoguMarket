@@ -58,6 +58,12 @@ public class BizMemServiceImpl implements BizMemService {
 	public List<BizMemVO> bizImgList() {
 		return map.bizImgList();
 	}
+	
+	//상세사진
+	@Override
+	public List<BizMemVO> bizDetailImg(String bizNo) {
+		return map.bizDetailImg(bizNo);
+	}
 
 
 	

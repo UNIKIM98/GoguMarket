@@ -4,7 +4,8 @@
 
 	<!-- 가게목록 전체조회 -->
 	<select id="getBizList" resultType="com.goguma.biz.vo.BizMemVO">
-		select * from biz_mem
+		SELECT * FROM biz_mem
+		ORDER BY biz_no
 	</select>
 	
 	<!-- 개별조회(가게상세페이지) -->
@@ -51,7 +52,7 @@
 		resultType="int">
 		select count(*)
 		from biz_mem
-		<!-- <include refid="creiteria"></include> -->
+		<include refid="criteria"></include>
 
 	</select>
 
@@ -76,14 +77,21 @@
 
 	<!-- 가게정보 첨부파일 -->
 	<select id="bizImgList" resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT b.*,
-		(SELECT atch_path
-        	FROM atch a 
-                WHERE b.atch_id = a.atch_id
-                AND ROWNUM = 1) atch_path
-		FROM biz_mem b
-		ORDER BY b.biz_no
+				SELECT b.*,
+					(SELECT atch_path
+			        	FROM atch 
+			                WHERE b.atch_id = atch_id
+			                AND ROWNUM = 1) atch_nm
+				FROM biz_mem b
+				ORDER BY b.biz_no
 	</select>
 
+	<!-- 가게 상세 파일 -->
+	<select id="bizDetailImg" resultType="com.goguma.biz.vo.BizMemVO">
+		SELECT b.biz_no, b.atch_id, a.*
+			FROM biz_mem b RIGHT JOIN atch a
+	                		ON b.atch_id = a.atch_id
+	        WHERE b.biz_no = #{bizNo}
+	</select>
 
 </mapper>
