@@ -59,7 +59,7 @@ layout:decorate="~{layouts/layout}">
                                     <div class="product-item" th:each="l: ${list}">
                                         <div class="product-img">
                                             <a href="single-product.html">
-                                                <img src="img/product/2.jpg" alt="" />
+                                                <img th:src="${l.atchNm}" style="width:267px; height:200px;" />
                                             </a>
                                         </div>
                                         <div class="product-info">

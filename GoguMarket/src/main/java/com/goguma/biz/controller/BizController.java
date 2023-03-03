@@ -69,11 +69,10 @@ public class BizController {
 		//리뷰 카운팅
 		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
 		
-		// # 전체 가게 단골수+bizNo 셀렉트
-		List<BizDangolVO> dgList = dgService.countDangol();
-		System.out.println("단골수"+dgList);
-		model.addAttribute("dgList", dgList);
-
+		/*
+		 * // # 전체 가게 단골수+bizNo 셀렉트 List<BizDangolVO> dgList = dgService.countDangol();
+		 * System.out.println("단골수"+dgList); model.addAttribute("dgList", dgList);
+		 */
 		return "rsvt/book01";
 	}
 
