@@ -24,16 +24,13 @@ textarea {
 			<!-- 댓글시작 -->
 			<form id="reply">
 				<div class="card mb-1">
-					<div class="card-header bg-light">
-						<i class="fa fa-comment fa"></i> REPLY
-					</div>
 					<div class="card-body">
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item">
 								<div class="form-inline mb-2">
-									<input type="hidden" id="replySnsNo" name="replySnsNo" value=1>
-									<input type="hidden" id="replyUserId" name="replyUserId"
-										value="eop">
+									<input type="hidden" id="replySnsNo" name="replySnsNo">
+									<input type="hidden" id="replyUserId" th:value="${session.userId}" name="replyUserId"
+										value="${session.userId }">
 								</div> <textarea class="form-control" id="replyCmntCn"
 									name="replyCmntCn"> </textarea>
 								<button type="button" class="btn btn-dark mt-3"

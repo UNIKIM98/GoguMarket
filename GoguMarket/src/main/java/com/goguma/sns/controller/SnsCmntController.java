@@ -24,10 +24,11 @@ public class SnsCmntController {
 	public Map<String,Object> insertReply(@RequestBody SnsCmntVO vo) {
 				
 		Map<String,Object>map = new HashMap<String, Object>();
+		System.out.println(vo+"댓글 입력");
+		System.out.println(vo.getSnsNo());
+		System.out.println(vo.getCmntNo()+"?");
 		int success =  service.insertReply(vo);
 		
-		System.out.println(success);
- 
 		map.put("result",success);
 	
 		
@@ -36,14 +37,15 @@ public class SnsCmntController {
 	
 	
 	@GetMapping("/SelectCmntlist")
-	public Map<String,Object> SelectCmntlist(int snsNo) {
-		Map<String,Object>map = new HashMap<String, Object>();		
+	public List<SnsCmntVO> SelectCmntlist(int snsNo) {
+		Map<String,Object>map = new HashMap<String, Object>();
+		
+		System.out.println(snsNo+"전체");
 		
 		List<SnsCmntVO> reply = service.SelectCmntlist(snsNo);
 		
-		map.put("reply",reply);
-		
-		return map;
+
+		return reply;
 	}
 
 }
