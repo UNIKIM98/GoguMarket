@@ -17,7 +17,7 @@ import com.goguma.mem.service.AttendService;
 import com.goguma.mem.vo.AttendVO;
 
 @Controller
-public class AttendRestController {
+public class AttendController {
 
 	@Autowired
 	AttendService aService;
