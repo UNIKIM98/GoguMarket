@@ -1,138 +1,147 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/sideBar}">
+
 <head>
-<meta charset='utf-8' />
-<script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<meta charset='utf-8' />
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script>
-	//fullcalendar 불러오기
-	document.addEventListener('DOMContentLoaded', function() {
-		let eventList = [];
-		$.ajax({
-			type : "get",
-			url : "/selectAttendList",
-			success : function(result) {
-				console.log(result.aList[0].attendYmd);
-				let aList = result.aList
+	<script>
+		//fullcalendar 불러오기
+		document.addEventListener('DOMContentLoaded', function () {
+			let eventList = [];
+			// $.ajax({
+			// 	type: "get",
+			// 	url: "/selectAttendList",
+			// 	success: function (result) {
 
-				//날짜 확인
-				let date = new Date();
+			// 		let aList = result.aList
 
-				let year = date.getFullYear();
-				let month = ('0' + (date.getMonth() + 1)).slice(-2);
-				let day = ('0' + date.getDate()).slice(-2);
+			// 		//날짜 확인
+			// 		let date = new Date();
 
-				let today = year + '-' + month + '-' + day;
-				for ( let i in aList) {
-					if (aList[i].attendYmd == today) {
-						$("#attendBtn").attr("disabled", "disabled")
-					}
-					let eventOne = {
-						title : aList[i].point,
-						start : aList[i].attendYmd,
-						end : aList[i].attendYmd,
-						display : 'background',
-						backgroundColor : "#00b9ba",
-						textColor : "black"
+			// 		let year = date.getFullYear();
+			// 		let month = ('0' + (date.getMonth() + 1)).slice(-2);
+			// 		let day = ('0' + date.getDate()).slice(-2);
 
-					};
-					eventList.push(eventOne)
-				}
-				console.log(eventList)
-				for ( let i in eventList){
-					calendar.addEvent(eventList[i])
-				}
-			}
-		})
+			// 		let today = year + '-' + month + '-' + day;
+			// 		for (let i in aList) {
+			// 			console.log(i + "번째 도는 중")
+			// 			if (aList[i].attendYmd == today) {
+			// 				$("#attendBtn").attr("disabled", "disabled")
+			// 			}
+			// 			let eventOne = {
+			// 				title: aList[i].point,
+			// 				start: aList[i].attendYmd,
+			// 				end: aList[i].attendYmd,
+			// 				display: 'background',
+			// 				backgroundColor: "#00b9ba",
+			// 				textColor: "black"
 
-		var calendarEl = document.getElementById('calendar');
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			height : '500px',
-			initialView : 'dayGridMonth',
-			//       locale : 'ko'
-			events : [ $.ajax({
-				type : "get",
-				url : "/selectAttendList",
-				success : function(result) {
-					
-					let aList = result.aList
+			// 			};
+			// 			console.log(evento)
+			// 			eventList.push(eventOne)
+			// 		}
+			// 		for (let i in eventList) {
+			// 			calendar.addEvent(eventList[i])
+			// 		}
+			// 		console.log(eventList)
 
-					//날짜 확인
-					let date = new Date();
-
-					let year = date.getFullYear();
-					let month = ('0' + (date.getMonth() + 1)).slice(-2);
-					let day = ('0' + date.getDate()).slice(-2);
-
-					let today = year + '-' + month + '-' + day;
-
-					for ( let i in aList) {
-						if (aList[i].attendYmd == today) {
-							$("#attendBtn").attr("disabled", "disabled")
-						}
-						calendar.addEvent({
-							title : aList[i].point,
-							start : aList[i].attendYmd,
-							end : aList[i].attendYmd,
-							display : 'background',
-							backgroundColor : "#00b9ba",
-							textColor : "black"
-						})
-					}
-				}
-			}) ]
+			// 	}
+			// })
+			makeCal();
+			
 		});
-		calendar.render();
-	});
+ 		function makeCal(){
+ 			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				height: '500px',
+				initialView: 'dayGridMonth',
+				//       locale : 'ko'
+				events: [
 
-	function makeAttend() {
-		let confirmPlz = confirm("출석하시겠습니까?")
-		if (confirmPlz) {
-			// let date = new Date();
+						$.ajax({
+						type : "get",
+						url : "/selectAttendList",
+						success : function(result) {
 
-			// let year = date.getFullYear();
-			// let month = ('0' + (date.getMonth() + 1)).slice(-2);
-			// let day = ('0' + date.getDate()).slice(-2);
+							let aList = result.aList
 
-			// let today = year + '-' + month + '-' + day;
-			insertAttend();
-		}
-	}
-	function insertAttend() {
-		$.ajax({
-			url : '/insertAttend/',
-			type : 'get',
-			dataType : 'text',
-			contentType : 'application/json; charset = utf-8',
-			success : function(aVO) {
-				console.log(aVO);
-				afterInsert(aVO);
-			},
-			error : function(err) {
-				console.log(err);
+							//날짜 확인
+							let date = new Date();
+
+							let year = date.getFullYear();
+							let month = ('0' + (date.getMonth() + 1)).slice(-2);
+							let day = ('0' + date.getDate()).slice(-2);
+
+							let today = year + '-' + month + '-' + day;
+
+							for ( let i in aList) {
+								if (aList[i].attendYmd == today) {
+									$("#attendBtn").attr("disabled", "disabled")
+								}
+								calendar.addEvent({
+									title : aList[i].point,
+									start : aList[i].attendYmd,
+									end : aList[i].attendYmd,
+									display : 'background',
+									backgroundColor : "#00b9ba",
+									textColor : "black"
+								})
+							}
+						}
+					}) 
+				]
+			});
+			calendar.render();
+ 		}
+		function makeAttend() {
+			let confirmPlz = confirm("출석하시겠습니까?")
+			if (confirmPlz) {
+				// let date = new Date();
+
+				// let year = date.getFullYear();
+				// let month = ('0' + (date.getMonth() + 1)).slice(-2);
+				// let day = ('0' + date.getDate()).slice(-2);
+
+				// let today = year + '-' + month + '-' + day;
+				insertAttend();
 			}
-		})
-	}
+		}
 
-	function afterInsert(aVO) {
-		console.log(aVO[3])
-		alert("[출석완료] " + aVO.point + " 포인트가 적립되었습니다! 🎉");
-		successCallback({
-			title : aVO.point,
-			start : aVO.attendYmd,
-			end : aVO.attendYmd,
-			display : 'background',
-			backgroundColor : "#00b9ba",
-			textColor : "black"
-		})
-	}
-</script>
+		function insertAttend() {
+			$.ajax({
+				url: '/insertAttend/',
+				type: 'get',
+				dataType: 'json',
+				contentType: 'application/json; charset = utf-8',
+				success: function (aVO) {
+					console.log(aVO);
+					afterInsert(aVO);
+				},
+				error: function (err) {
+					console.log(err);
+				}
+			})
+		}
+
+		function afterInsert(aVO) {
+			console.log(aVO)
+			alert("[출석완료] " + aVO.point + " 포인트가 적립되었습니다! 🎉");
+			// $("#calendar").addEvent({
+			// 	title: aVO.point,
+			// 	start: aVO.attendYmd,
+			// 	end: aVO.attendYmd,
+			// 	display: 'background',
+			// 	backgroundColor: "#00b9ba",
+			// 	textColor: "black"
+			// })
+			makeCal();
+		}
+	</script>
 </head>
+
 <body>
 	<div layout:fragment="myContent">
 		<div id='calendar' style="width: 550px"></div>
@@ -141,4 +150,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

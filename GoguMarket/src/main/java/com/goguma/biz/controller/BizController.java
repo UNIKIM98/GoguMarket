@@ -68,7 +68,7 @@ public class BizController {
 		
 		//리뷰 카운팅
 		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
-		
+
 
 		//이미지 테스트
 		model.addAttribute("img", bizMapper.bizImgList());

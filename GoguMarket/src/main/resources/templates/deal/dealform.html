@@ -118,13 +118,14 @@
 		<!-- End page content -->
 
 		<script th:inline="javascript">
-		// deal.vo의 카테고리 컬럼에 . 셀렉트한 값(밸류가 디테일공통코드)를 넣고싶음
-		function formSubmit(){
-		let a = $("#cate option:selected").val();	// 셀렉트한값의 밸류
-		$("#ctgry").val(a);							// 를 히든인풋 카테고리에 넣엇삼
-		dFrm.submit();
-		}
-		
+			// deal.vo의 카테고리 컬럼에 . 셀렉트한 값(밸류가 디테일공통코드)를 넣고싶음
+			function formSubmit() {
+				console.log($("#files").val())
+				let a = $("#cate option:selected").val(); // 셀렉트한값의 밸류
+				$("#ctgry").val(a); // 를 히든인풋 카테고리에 넣엇삼
+				dFrm.submit();
+			}
+
 			// 썸네일 미리보기 함수 previewImage()
 			// 	$(function(){
 			function previewImage(targetObj, View_area) {
@@ -136,6 +137,17 @@
 
 				var preview = document.getElementById(View_area); //div id
 				var ua = window.navigator.userAgent;
+
+				//썸네일 클릭시 삭제.
+				function fileRemove(index) {
+					console.log("index: " + index);
+					fileInfoArr.splice(index, 1);
+
+					var imgId = "#img_id_" + index;
+					$(imgId).remove();
+					console.log(fileInfoArr);
+					fileInfoArr.pop
+				}
 
 				//ie일때(IE8 이하에서만 작동)
 				if (ua.indexOf("MSIE") > -1) {
@@ -216,7 +228,7 @@
 				}
 			}
 
-			// 		})
+			// 					})
 
 			// 서버로 데이터 전송할 ajax 코드
 			/* $(function(){

@@ -10,13 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.goguma.common.service.AtchService;
+import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.AtchVO;
+import com.goguma.deal.service.DealService;
+import com.goguma.deal.vo.DealVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
@@ -28,7 +37,7 @@ public class MemController {
 
 	@Autowired
 	AtchService aService;
-	
+
 	@GetMapping("/myPageTest")
 	public String myPageTest() {
 		return "myPages/test";
@@ -116,22 +125,51 @@ public class MemController {
 
 		return "myPages/myArea";
 	}
-	
+
+	// test ========================================
 	@GetMapping("/delteFileTest")
 	public String delteFileTest() {
-		//파일삭제 테스트용 list
+		// 파일삭제 테스트용 list
 		List<AtchVO> files = new ArrayList<AtchVO>();
-		
-		//list에 임시로 하나 세팅
+
+		// list에 임시로 하나 세팅
 		AtchVO atchVO = new AtchVO();
 		atchVO.setAtchId(13);
 		atchVO.setAtchNo(98);
 		files.add(atchVO);
-		
+
 		int delCnt = aService.deleteFile(files);
-		if(delCnt > 0) {
+		if (delCnt > 0) {
 			System.out.println(delCnt + "건 삭제완료");
 		}
 		return "myPages/myAttend";
+	}
+
+	@Autowired
+	CommonCodeService codeService;
+
+	@Autowired
+	AtchService atchService;
+
+	@Autowired
+	DealService dealService;
+
+	@GetMapping("/testForm")
+	public String testForm(Model model) {
+		model.addAttribute("category", codeService.codeList("002"));
+		return "myPages/testForm";
+	}
+
+	@RequestMapping("/gallery") // 딜폼창확인
+	@ResponseBody
+	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
+		int atchId = atchService.insertFile(files);
+
+		if (atchId > 0) {
+			vo.setAtchId(atchId);
+		}
+
+		dealService.insertDeal(vo);
+		return vo;
 	}
 }
