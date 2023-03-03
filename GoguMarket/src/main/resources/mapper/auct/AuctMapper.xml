@@ -17,7 +17,10 @@
 	<select id="getAuct"
 		parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
-		SELECT * FROM AUCT
+		SELECT AUCT_NO, USER_ID, REG_YMD, DDLN_YMD, AUCT_TTL,
+				CTGRY, AUCT_CN, LOW_PRC, QUICK_PRC, STTS,
+				INQ_CNT, SRCH_CNT, ATCH_ID
+		FROM AUCT
 		WHERE AUCT_NO = #{auctNo}
 	</select>
 
@@ -34,7 +37,7 @@
 		AUCT_NO, REG_YMD, DDLN_YMD, AUCT_TTL, CTGRY,
 		AUCT_CN, LOW_PRC, QUICK_PRC, ATCH_ID, USER_ID
 		) VALUES 		(
-		#{auctNo}, SYSDATE,	#{ddlnYmd},	#{auctTtl}, #{ctgry},
+		#{auctNo}, CURRENT_DATE, #{ddlnYmd}, #{auctTtl}, #{ctgry},
 		#{auctCn}, #{lowPrc}, #{quickPrc}, #{atchId}, #{userId}
 		)
 	</insert>
@@ -53,12 +56,13 @@
 		</set>
 		WHERE AUCT_NO = #{auctNo}
 	</update>
-
+ -->
+ 
 	<delete id="deleteAuct"
 		parameterType="com.goguma.auct.vo.AuctVO">
 		DELETE FROM AUCT WHERE AUCT_NO = #{auctNo}
 	</delete>
-	
+
 	
 	<update id="auctHitUpdate">
 		UPDATE AUCT
@@ -66,5 +70,14 @@
 		WHERE AUCT_NO = #{auctNo}
 	</update>
 	
- -->
+	<update id="ddlnAuct">
+		UPDATE AUCT
+		<![CDATA[
+		SET STTS = 2
+		age <= 20
+		WHERE TO_DATE(DDLN_YMD,'YYYY/MM/DD/HH24:MI') < TO_DATE(CURRENT_DATE,'YYYY/MM/DD/HH24:MI')
+		]]>
+	</update>
+	
+
 </mapper>

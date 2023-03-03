@@ -6,10 +6,12 @@ import com.goguma.auct.vo.AuctVO;
 
 
 public interface AuctMapper {
-	List<AuctVO> getAuctList();
-	AuctVO getAuct(AuctVO vo);
+	List<AuctVO> getAuctList(); //경매 메인
+	AuctVO getAuct(AuctVO vo); //단건조회
 
-	int insertAuct(AuctVO vo);
-//	int updateAuct(AuctVO vo);
-	int deleteAuct(AuctVO vo);
+	int insertAuct(AuctVO vo); //등록
+//	int updateAuct(AuctVO vo); //수정
+	int deleteAuct(String id); //삭제
+	
+	int auctHitUpdate(int auctNo); //조회수 증가
 }
