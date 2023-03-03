@@ -43,7 +43,7 @@
 		#{snsCn},
 		#{hash},
 		0,
-		sysdate,
+		CURRENT_Date,
 		#{area},
 		#{atchId},
 		0

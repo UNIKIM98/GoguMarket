@@ -32,6 +32,7 @@ public class BizMemVO extends BizDangolVO {
 	private String commonCn;
 
 	// 사진 출력
+	private String atchNm;
 	private String atchPath;
 	
 	// # 단골 카운트

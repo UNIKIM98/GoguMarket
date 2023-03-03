@@ -68,7 +68,11 @@ public class BizController {
 		
 		//리뷰 카운팅
 		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
-		
+
+
+		//이미지 테스트
+		model.addAttribute("img", bizMapper.bizImgList());
+		System.out.println("이미지=============="+bizMapper.bizImgList());
 
 		return "rsvt/book01";
 	}
@@ -78,6 +82,7 @@ public class BizController {
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
+		System.out.println("가게정보 biztlqk ==========="+memService.bizInfo(bizNo));
 		// 가게 소식
 		model.addAttribute("news", newsService.bizNews(bizNo));
 		// 가게 메뉴
@@ -87,7 +92,20 @@ public class BizController {
 
 		// 공통코드 시간
 		model.addAttribute("code", codeService.codeList("007"));
-		System.out.println("공통코드●●●●●●●●●●●●●●●●●●●●●" + codeService.codeList("007"));
+		
+		//단골 카운팅
+		model.addAttribute("dgCnt", bizMapper.BizDangolCnt());
+			
+		//리뷰 카운팅
+		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
+		
+		//이미지 테스트
+		model.addAttribute("img", bizMapper.bizImgList());
+		
+		//상세이미지
+		model.addAttribute("imgDetail", memService.bizDetailImg(bizNo));
+		System.out.println("이미지 상세정보============"+memService.bizDetailImg(bizNo));
+
 
 		return "rsvt/book0205";
 	}

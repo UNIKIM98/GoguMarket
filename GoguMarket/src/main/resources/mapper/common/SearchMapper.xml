@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.common.mapper.SearchMapper">
+	<insert	id="insertSearch"
+			parameterType="com.goguma.common.vo.SearchVO">
+	<selectKey keyProperty="searchNo" resultType="int"
+				order="BEFORE">
+			SELECT
+			CASE WHEN MAX(search_no) IS NULL THEN 1 ELSE
+			MAX(search_no) + 1 END as searchNo
+			FROM search
+	</selectKey>
+	insert into search(
+		    search_no,
+		    search_ttl,
+		    search_ymd,
+		    pst_se
+			) values (
+   			#{searchNo},
+   			#{searchTtl},
+   			sysdate,
+   			#{pstSe}
+   			)
+	</insert>
+	
+	<select id="getPopularWord"
+			resultType="com.goguma.common.vo.SearchVO">
+	select *
+	from(
+	select nvl(search_ttl,0) as searchTtl, count(search_ttl) as ttlCnt
+	    from search
+	    group by search_ttl
+	    order by ttlcnt desc
+	    )
+	    <![CDATA[
+        where rownum <= 10
+        					]]>	
+	</select>
+</mapper>

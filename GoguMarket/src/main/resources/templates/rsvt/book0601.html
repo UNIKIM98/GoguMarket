@@ -9,28 +9,33 @@
 
 		<div class="container">
 
-			<!-- 가게이름 -->
+			<!-- 가게이름 부분 -->
 			<div class="row">
+				<!-- 가게프사 -->
 				<div class="col-lg-1">
 					<div class="media-left">
 						<a href="#"><img class="media-object" src="img/author/1.jpg"
 							alt="#"></a>
 					</div>
 				</div>
+
+				<!-- 가게이름 -->
 				<div class="col-lg-8">
 					<div class="section-title text-start mt-15">
-						<h2 class="uppercase">커피맛을 조금 아는 남자 본점</h2>
+						<h2 class="uppercase" th:text="${biz.bizNm}">(가게이름)</h2>
 						<h6>
 							<ul class="blog-meta">
 								<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
 										123 </a></li>
 								<li><a href="#"><i class="zmdi zmdi-comments"></i>후기 59
 								</a></li>
-								<li><a href="#">카테고리이름</a></li>
+								<li><a href="#">(카테고리)</a></li>
 							</ul>
 						</h6>
 					</div>
 				</div>
+
+				<!-- 우측상단 전화문의 등등 -->
 				<div class="col-lg-3">
 					<div class="product-tab pro-tab-menu">
 						<!-- Nav tabs -->
@@ -65,7 +70,6 @@
 
 				<!-- Start page content -->
 				<section id="page-content" class="page-wrapper section">
-					<!-- SHOP SECTION START -->
 					<div class="shop-section mb-80">
 						<div class="container">
 							<div class="row">
@@ -77,10 +81,12 @@
 										<!-- checkout start -->
 										<div class="tab-pane active" id="checkout">
 											<div class="checkout-content box-shadow p-30">
+
+												<!-- 폼태그 오픈 -->
 												<form action="#">
 													<div class="row">
 
-														<!-- billing details 왼쪽부분 예약하기 -->
+														<!-- 왼쪽부분 예약하기 -->
 														<div class="col-md-6">
 															<div class="billing-details pr-10">
 																<h6 class="widget-title border-left mb-20">예약하기</h6>
@@ -99,35 +105,25 @@
 																			data-bs-parent="#accordion">
 																			<div class="payment-content">
 
-																				<table>
-																					<tr>
-																						<td class="td-title-1">커피커피커피커피</td>
+																				<table id="menuInfo">
+																					<!-- 메뉴 1건 -->
+																					<tr th:each="menu: ${menu}">
+																						<td class="td-title-1" th:value="${menu.menuNo}" th:text="${menu.menuNm}">(메뉴이름)</td>
 																						<td>
 																							<div class="cart-plus-minus f-left">
-																								<input type="text" value="02" name="qtybutton"
+																								<input type="text" value="0" name="menuCnt"
 																									class="cart-plus-minus-box">
 																							</div>
 																						</td>
-																						<td class="td-title-2">4,000원</td>
+																						<!-- ${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'} -->
+																						<td class="td-title-2"
+																							th:text="${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'}">(가격)</td>
 																						<td class="td-title-2">
 																							<button class="btn btn-warning btn-sm"
-																								type="submit">담기</button>
+																								type="button" onclick="menuPick()">담기</button>
 																						</td>
 																					</tr>
-																					<tr>
-																						<td class="td-title-1">쿠키쿠키쿠키쿠키</td>
-																						<td>
-																							<div class="cart-plus-minus f-left">
-																								<input type="text" value="02" name="qtybutton"
-																									class="cart-plus-minus-box">
-																							</div>
-																						</td>
-																						<td class="td-title-2">6,000원</td>
-																						<td class="td-title-2">
-																							<button class="btn btn-warning btn-sm"
-																								type="submit">담기</button>
-																						</td>
-																					</tr>
+
 																				</table>
 
 																			</div>
@@ -144,17 +140,20 @@
 																			data-bs-parent="#accordion">
 																			<div class="payment-content">
 																				<div class="row">
-																					<div class="col-sm-3">날짜/시간 선택</div>
+																					<div class="col-sm-3">
+																						<p>날짜/시간 선택</p>
+																					</div>
 																					<div class="col-sm-5">
 																						<input type="date" id="" name="">
 																					</div>
 																					<div class="col-sm-4">
 																						<select class="custom-select">
-																							<option value="defalt">1시</option>
-																							<option value="c-1">2시</option>
-																							<option value="c-2">3시</option>
-																							<option value="c-3">4시</option>
-																							<option value="c-4">5시</option>
+																							<option th:each="code: ${code}"
+																								th:if="${code.commonDetailCode} >= ${biz.bgngTm} 
+																											and ${code.commonDetailCode} <= ${biz.endTm}"
+																								th:value="|defalt ${code.commonDetailCode}|"
+																								th:text="${code.commonNm}">(시간)</option>
+
 																						</select>
 																					</div>
 																				</div>
@@ -178,7 +177,7 @@
 																					<div class="col-sm-6">방문인원을 선택하세요</div>
 																					<div class="col-sm-6">
 																						<div class="cart-plus-minus f-left">
-																							<input type="text" value="02" name="qtybutton"
+																							<input type="text" value="0" name="qtybutton"
 																								class="cart-plus-minus-box">
 																						</div>
 																					</div>
@@ -192,13 +191,16 @@
 																<button class="btn btn-success btn-sm" type="submit">쿠폰사용</button>
 															</div>
 														</div>
+														<!-- 왼쪽부분 끝 -->
 
+														<!-- 오른쪽부분-->
 														<div class="col-md-6">
-															<!-- our order 오른쪽부분-->
 															<div class="payment-details pl-10 mb-50">
 																<h6 class="widget-title border-left mb-20">예약확인</h6>
 																<!--테이블1 : 주문메뉴-->
-																<table>
+																<table id="orderMenu">
+
+																	<!-- 메뉴 1건 -->
 																	<tr>
 																		<td class="td-title-1">메뉴</td>
 																		<td class="td-title-1">수량</td>
@@ -214,6 +216,8 @@
 																		<td class="td-title-1">1</td>
 																		<td class="td-title-2">6,000원</td>
 																	</tr>
+
+																	<!-- 합계 -->
 																	<tr>
 																		<th class="order-total">합계</th>
 																		<td class="order-total"></td>
@@ -221,6 +225,7 @@
 																	</tr>
 																</table>
 																<hr>
+
 																<!--테이블2 : 시간, 인원, 요청사항-->
 																<table>
 																	<tr>
@@ -252,8 +257,12 @@
 																	type="submit">결제하기</button>
 															</div>
 														</div>
+														<!-- 오른쪽부분 끝 -->
+
 													</div>
 												</form>
+												<!-- 폼태그 클로즈 -->
+
 											</div>
 										</div>
 										<!-- checkout end -->
@@ -263,8 +272,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- SHOP SECTION END -->
-
 				</section>
 				<!-- End page content -->
 
@@ -273,8 +280,19 @@
 			<!-- Body main wrapper end -->
 
 		</div>
+		<script type="text/javascript">
+			console.log(window.location.href);
+			var url = window.location.href;
+			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+			console.log("가게번호받아오기222-=-----"+ urlBizNo)
+			
+			function menuPick(){
+				console.log("메뉴쓰")
+			}
+		
+		</script>
 	</div>
-	<!-- SHOP SECTION END -->
+	<!-- 타임리프 div 끝 -->
 
 
 </body>

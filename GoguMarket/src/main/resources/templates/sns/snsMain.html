@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{/layouts/layout}">
 
 <head>
-	<script src="https://code.jquery.com/jquery-3.6.3.js"
-		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 
-	<title>Insert title here</title>
-	
-	<style>
-		ul {
-			list-style: none;
-		}
+<title>Insert title here</title>
 
-		li {
-			float: left;
-		}
+<style>
+ul {
+	list-style: none;
+}
 
-		textarea {
-			width: 100%;
-			resize: none;
-		}
-	</style>
+li {
+	float: left;
+}
+
+textarea {
+	width: 100%;
+	resize: none;
+}
+</style>
 </head>
 
 <body>
@@ -37,7 +39,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="section-title text-start mb-40">
-								<h2 class="uppercase mt-15">MY TOWN LIFE</h2>
+								<h2 class="uppercase mt-15">MY TOWN
+									LIFE[[${session.userId}]]</h2>
 								<h6>너의 동네를 나에게 소개 시켜줘 !</h6>
 								<hr>
 								<div class="newsletter-section gray-bg pt-60 pb-80 mt-80">
@@ -52,7 +55,7 @@
 													<div class="subcribe clearfix">
 														<form action="#">
 															<input type="text" name="email"
-																placeholder="Enter your town here..." />
+																placeholder="Enter your town here...${session.userId}" />
 															<button class="submit-btn-2 btn-hover-2" type="submit">subcribe</button>
 														</form>
 													</div>
@@ -81,6 +84,7 @@
 						</div>
 					</div>
 				</div>
+				<div th:if="${userId != null}"></div>
 				<br> <a class="button medium button-black mb-30 f-right"
 					href="#" style="margin-right: 10%;" id="myBtn" onclick=""><span>글쓰기</span>
 				</a>
@@ -114,13 +118,15 @@
 							</div>
 
 							<!-- userId -->
-							<input type="hidden" name="userId" id="userId" value="jyeop">
+							<input th:value="${session.userId}" type="hidden" name="userId"
+								id="userId">
 							<!-- 게시물 -->
 							<textarea name="snsCn" id="snsCn" class="mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
 							<input type="text" name="hash" id="hash">
 							<!--  -->
-							<input type="hidden" name="area" id="area" value="대구">
+							<input type="hidden" name="area" id="area"
+								th:value="${session.area}">
 						</div>
 
 
@@ -163,15 +169,24 @@
 					</div>
 				</div>
 				<div class="Sns-commet">
-
-					<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
-
-					<div class="Sns-reply" id="Sns-reply">
-						<div th:each="reply : ${reply}">
-							<div th:insert="~{sns/replyView :: replyView('','','')}"></div>
+					<div class="card">
+						<div class="card-header bg-light">
+							<i class="fa fa-comment fa"></i> REPLY
 						</div>
+
+						<th:block th:if="${session.userId != null}">
+							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
+
+							<div class="Sns-reply" id="Sns-reply">
+							
+							</div>
+							<!--댓글 끝-->
+						</th:block>
+						<th:block th:unless="${session.userId != null}">
+
+							<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
+						</th:block>
 					</div>
-					<!--댓글 끝-->
 				</div>
 				<!--Sns-footer-->
 				<div class="Sns-footer" style="background-color: #000000;">
@@ -187,7 +202,6 @@
 
 		<!--  -->
 		<script th:inline="javascript">
-		
 		
 		
 			$.ajax({
@@ -224,8 +238,6 @@
 
 			
 		</script>
-
-
 	</article>
 
 
