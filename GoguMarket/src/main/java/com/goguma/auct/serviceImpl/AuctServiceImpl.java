@@ -33,15 +33,15 @@ public class AuctServiceImpl implements AuctService{
 		return auctMapper.insertAuct(vo);
 	}
 
-//	@Override
-//	public int updateAuct(AuctVO vo) {
-//		// 수정
-//		return 0;
-//	}
+	@Override
+	public int deleteAuct(String id) {
+		// 삭제
+		return auctMapper.deleteAuct(id);
+	}
 
 	@Override
-	public int deleteAuct(AuctVO vo) {
-		// 삭제
-		return 0;
+	public int auctHitUpdate(int auctNo) {
+		// 조회수 증가
+		return auctMapper.auctHitUpdate(auctNo);
 	}
 }
