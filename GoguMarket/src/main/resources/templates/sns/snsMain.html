@@ -28,6 +28,7 @@ textarea {
 </style>
 </head>
 
+
 <body>
 	<article layout:fragment="content">
 		<!-- Start page content -->
@@ -132,14 +133,10 @@ textarea {
 
 						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
 					</form>
-					<!-- writeForm -->
 
-					<!-- writefooter -->
 				</div>
 				<div class="modal-footer" style="background-color: #000000;">
-					&nbsp;</div>
-				<!-- writefooter -->
-			</div>
+					&nbsp;</div></div>
 
 		</div>
 		<!-- writeForm -->
@@ -175,17 +172,19 @@ textarea {
 						</div>
 
 						<th:block th:if="${session.userId != null}">
+							<!-- 아이디 check-->
 							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
 
 							<div class="Sns-reply" id="Sns-reply">
 							
 							</div>
-							<!--댓글 끝-->
 						</th:block>
 						<th:block th:unless="${session.userId != null}">
 
 							<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
+						
 						</th:block>
+						<!--댓글 끝-->
 					</div>
 				</div>
 				<!--Sns-footer-->
@@ -196,49 +195,85 @@ textarea {
 			</div>
 
 		</div>
-		<!-- 개인 Sns -->
-
-
-
-		<!--  -->
 		<script th:inline="javascript">
 		
-		
-			$.ajax({
-				url : "/selectSnsList", // 데이터를 가져올 경로 설정
-				type : "GET", // 데이터를 가져오는 방식
-				dataType : 'json',
-				contentType : 'application/json; charset = utf-8',
-				success : function(result) {
-						console.log(result)
-						for(sns of result){
-							$("#list").append(`<div class="brand-item">
-		                            				<div class="single-brand-product"
-														id="clickSns"
-														onclick="snsModal(${sns.snsNo})">
-		                            						${sns.userId} / ${sns.snsYmd}
-		                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-		                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-		                         							<img src="${sns.atchPath}" alt=""></a>
-		                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
-													</div>
-												</div>`)
-		           
-						}
-					},
-				error : function(err) {
-					console.log(err);
-				}
-			})
+		$.ajax({
+			url : "/selectSnsList", // 데이터를 가져올 경로 설정
+			type : "GET", // 데이터를 가져오는 방식
+			dataType : 'json',
+			contentType : 'application/json; charset = utf-8',
+			success : function(result) {
+					  console.log(result)
+					  for(sns of result){
+						$("#list").append(`<div class="brand-item">
+	                            				<div class="single-brand-product"
+													id="clickSns"
+													onclick="snsModal(${sns.snsNo})">
+	                            						${sns.userId} / ${sns.snsYmd}
+	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+	                         							<img src="${sns.atchPath}" alt=""></a>
+	                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
+												</div>
+											</div>`)
+	           							 }
+										},
+					error : function(err) {
+						console.log(err);
+					}
+				})
+			</script>
+	<!-- 대댓글 외부 파일 겸용 테스트 -->
+	<div style="display:none;">
+		<div class="rrpBoxSample">
+		<div id="groupLeft">-></div>
+		<div id="groupRight">
+			<input type="hidden" name="groupNo" id="groupNo" >	
+		    <input type="hidden" name="step" id="step">
+		    <input type="hidden" name="recomntOrder" id="recomntOrder">   
+		    <div class="card mb-1">
+		        <div class="card-body bg-dark">
+		            <div class="media" style="margin: 10px">
+		                <div class="media-left">
+		                    <a href="#"><img class="media-object" src="img/author/1.jpg"alt="#"></a>
+		                        </div>
+		                            <div class="media-body ml-10">
+		                                <div class="clearfix">
+		                                    <div class="name-commenter pull-left">
+		                                        
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                <div class="btn btn-dark mt-3 f-right" id="reInput">input</div>
+		            </div>
+		        </div>
+		        <div id="replyInput" class="replyInput">
+		            <ul class="list-group list-group-flush mt-10">
+		                <li class="list-group-item">
+		                <textarea class="form-control" id="replyCmntCn"
+		                    name="replyCmntCn"> </textarea>
+		                <button type="button" class="btn btn-dark mt-3 f-right"
+		                    onclick="insertReply()">post reply</button>
+		                </li>
+		            </ul>
+		        </div>			
+			
+		</div>
+	</div>
 			
 			
 			
-
-
-
-			
-		</script>
 	</article>
+
+	
+	
+
+	
+	</div>
+	
+	
+
 
 
 </body>

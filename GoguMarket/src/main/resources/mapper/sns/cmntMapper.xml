@@ -5,7 +5,7 @@
 	<select id="SelectCmntlist" parameterType="int"
 		resultType="com.goguma.sns.vo.SnsCmntVO">
 		SELECT * FROM sns_cmnt
-		WHERE sns_no= #{snsNo}
+		WHERE sns_no = #{snsNo}
 		ORDER BY sns_no,recmnt_order
 	</select>
 
