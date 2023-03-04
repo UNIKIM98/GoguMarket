@@ -126,50 +126,5 @@ public class MemController {
 		return "myPages/myArea";
 	}
 
-	// test ========================================
-	@GetMapping("/delteFileTest")
-	public String delteFileTest() {
-		// 파일삭제 테스트용 list
-		List<AtchVO> files = new ArrayList<AtchVO>();
-
-		// list에 임시로 하나 세팅
-		AtchVO atchVO = new AtchVO();
-		atchVO.setAtchId(13);
-		atchVO.setAtchNo(98);
-		files.add(atchVO);
-
-		int delCnt = aService.deleteFile(files);
-		if (delCnt > 0) {
-			System.out.println(delCnt + "건 삭제완료");
-		}
-		return "myPages/myAttend";
-	}
-
-	@Autowired
-	CommonCodeService codeService;
-
-	@Autowired
-	AtchService atchService;
-
-	@Autowired
-	DealService dealService;
-
-	@GetMapping("/testForm")
-	public String testForm(Model model) {
-		model.addAttribute("category", codeService.codeList("002"));
-		return "myPages/testForm";
-	}
-
-	@RequestMapping("/gallery") // 딜폼창확인
-	@ResponseBody
-	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
-		int atchId = atchService.insertFile(files);
-
-		if (atchId > 0) {
-			vo.setAtchId(atchId);
-		}
-
-		dealService.insertDeal(vo);
-		return vo;
-	}
+	
 }

@@ -4,17 +4,16 @@
 
 	<select id="getId"
 			resultType="int">
-	select atch_id
-			from deal
-			where dl_no = #{dlNo}
+	SELECT ATCH_ID
+			FROM DEAL
+			WHERE DL_NO = #{dlNo}
 	</select>
 	<select id="getDeal"
 			parameterType="string"
 			resultType="DealVO">
-	select *
-		from deal
-		where dl_no = #{dlNo}
-		order by dl_no
+	SELECT *
+		FROM DEAL
+		WHERE DL_NO = #{dlNo}
 	</select>
 
 	<select id="getDealSeller"
@@ -114,32 +113,13 @@
 			MAX(dl_no) + 1 END as dlNo
 			FROM deal
 		</selectKey>		
-	insert into deal (
-		dl_no,
-		dl_ttl,
-		dl_cn,
-		ctgry,
-		dl_ymd,
-		dl_prc,
-		area,
-		nego_yn,
-		atch_id
-	) values (
-		#{dlNo},
-		#{dlTtl},
-		#{dlCn},
-		#{ctgry},
-		current_date,
-		#{dlPrc},
-		#{area},
-		#{negoYn},
-		#{atchId}
-	)	
+	INSERT INTO DEAL (DL_NO, DL_TTL, DL_CN, CTGRY,
+					  DL_YMD, DL_PRC, AREA, ATCH_ID
+						<if test="negoYn != null and ctgry != ''" >,NEGO_YN</if>) 
+						VALUES (#{dlNo}, #{dlTtl}, #{dlCn}, #{ctgry},
+								CURRENT_DATE, #{dlPrc}, #{area}, #{atchId}
+								<if test="negoYn != null and negoYn != ''">,#{negoYn}</if>)	
 	</insert>
-	
-
-   
-	
 	
 	<insert id="deleteDeal"
 			parameterType="string">

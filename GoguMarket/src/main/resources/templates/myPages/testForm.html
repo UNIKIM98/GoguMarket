@@ -1,31 +1,34 @@
 <!-- 올라가라 -->
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>중고거래상품등록</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>중고거래상품등록</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-	<style>
-		@font-face {
-			font-family: 'S-CoreDream-3Light';
-			src:
-				url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-			font-weight: normal;
-			font-style: normal;
-		}
+<style>
+@font-face {
+	font-family: 'S-CoreDream-3Light';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-		* {
-			font-family: 'S-CoreDream-3Light';
-		}
-	</style>
-	<script src="https://code.jquery.com/jquery-3.6.3.js"
-		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+* {
+	font-family: 'S-CoreDream-3Light';
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 
 </head>
 
@@ -44,24 +47,22 @@
 							<div class="col-lg-12">
 								<div class="message-box box-shadow white-bg">
 									<!-- <form id="contact-form" action="https://whizthemes.com/mail-php/other/mail.php"> -->
-									<form id="dFrm" method="post" enctype="multipart/form-data" onsubmit="return false">
+									<form id="dFrm" method="post" enctype="multipart/form-data"
+										onsubmit="return false">
 										<div class="row">
 											<div class="col-lg-12">
 												<h4 class="blog-section-title border-left mb-30">중고거래상품등록</h4>
 											</div>
 										</div>
-										<span id='View_area'>
-											<div class="mega-menu-photo f-left">
-												<a href="#"> <img src="img/mega-menu/1.jpg" alt="mega menu image">
-												</a>
-											</div>
-										</span>
+										<div id='att_zone'
+											data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
 										<!-- ▶▶▶▶▶▶▶▶▶▶ -->
 										<div class="col-lg-10" id="inputFile">
-											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
+											<input type="file" id="files" placeholder="첨부파일"
+												multiple="multiple">
 											<div id="fileList" style="margin: 40px;">
 												<strong>첨부파일 : </strong> <br>
-												<div id=uploadFileList></div>
+												<div id="uploadFileList"></div>
 											</div>
 										</div>
 										<!-- ▶▶▶▶▶▶▶▶▶▶ -->
@@ -74,8 +75,9 @@
 												placeholder="상품설명"></textarea>
 										</div>
 										<div class="col-lg-10">
-											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> <a>카테고리 :
-											</a> <select name="cate" id="cate">
+											<input type="hidden" name="ctgry" id="ctgry"
+												placeholder="카테고리"> <a>카테고리 : </a> <select
+												name="cate" id="cate">
 												<option value="">선택
 												<option th:each="ct : ${category}" th:text="${ct.commonNm}"
 													th:value="${ct.commonDetailCode}"
@@ -89,7 +91,8 @@
 											<input type="text" name="area" id="area" placeholder="직거래장소">
 										</div>
 										<div class="col-lg-10">
-											<input type="text" name="negoYn" id="negoYn" placeholder="네고여부">
+											<input type="text" name="negoYn" id="negoYn"
+												placeholder="네고여부">
 										</div>
 										<div class='uploadResult'>
 											<ul>
@@ -113,12 +116,12 @@
 		<!-- End page content -->
 
 		<script th:inline="javascript">
-			$(function () {
-				$("#files").on("change", function (e) { //#files == 멀티파트 인풋 박스
+			$(function() {
+				$("#files").on("change", function(e) { //#files == 멀티파트 인풋 박스
 					inputFile(e);
 				});
 				//▶▶▶▶▶▶▶▶#btnSave : 글 작성(등록)버튼에 함수 걸어줄 자리
-				$("#btnSave").on("click", function () {
+				$("#btnSave").on("click", function() {
 					saveGallery();
 				});
 			});
@@ -142,16 +145,16 @@
 					fileCount = fileCount + filesArr.length;
 				}
 
-				filesArr.forEach(function (f) {
+				filesArr.forEach(function(f) {
 					var reader = new FileReader();
-					reader.onload = function (e) {
+					reader.onload = function(e) {
 						inputFileList.push(f);
 						$('#uploadFileList').append(
-							'<div id="file' + fileNum +
-							'" onclick="fileDelete(\'file' +
-							fileNum + '\')">' +
-							'<font style="font-size:15px">' +
-							f.name + '</font><div/>');
+								'<div id="file' + fileNum
+										+ '" onclick="fileDelete(\'file'
+										+ fileNum + '\')">'
+										+ '<font style="font-size:15px">'
+										+ f.name + '</font><div/>');
 						fileNum++;
 					};
 					reader.readAsDataURL(f);
@@ -164,9 +167,9 @@
 				console.log(elem.value);
 				$(elem).parent().remove();
 
-				if (!deleteFileList.includes(elem.value)) {
-					deleteFileList.push(elem.value);
-				}
+				// 				if (!deleteFileList.includes(elem.value)) {
+				// 					deleteFileList.push(elem.value);
+				// 				}
 			}
 
 			function fileDelete(fileNum) {
@@ -193,30 +196,30 @@
 				console.log(formData)
 
 				$
-					.ajax({
-						type: "POST",
-						// 							enctype : "multipart/form-data",
-						url: "/gallery",
-						data: formData,
-						// 							dataType : "json",
-						processData: false,
-						contentType: false,
-						success: function (result) {
-							console.log(result);
-							if (result.response == "OK") {
-								if ($("#id").val() == undefined) {
-									alert("저장되었습니다.");
-								} else {
-									alert("수정되었습니다.");
-								}
+						.ajax({
+							type : "POST",
+							// 							enctype : "multipart/form-data",
+							url : "/gallery",
+							data : formData,
+							// 							dataType : "json",
+							processData : false,
+							contentType : false,
+							success : function(result) {
+								console.log(result);
+								if (result.response == "OK") {
+									if ($("#id").val() == undefined) {
+										alert("저장되었습니다.");
+									} else {
+										alert("수정되었습니다.");
+									}
 
-								location.href = "/gallery/edit/" +
-									result.galleryId;
-							} else {
-								alert(result.errorMsg);
-							}
-						},
-					});
+									location.href = "/gallery/edit/"
+											+ result.galleryId;
+								} else {
+									alert(result.errorMsg);
+								}
+							},
+						});
 			}
 
 			//====================================================================
