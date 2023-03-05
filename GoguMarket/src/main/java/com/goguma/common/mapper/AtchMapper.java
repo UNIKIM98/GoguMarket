@@ -20,4 +20,5 @@ public interface AtchMapper {
 	// ▶ 파일 삭제
 	int deleteFile(AtchVO atchVO);
 
+
 }

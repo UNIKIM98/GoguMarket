@@ -43,11 +43,13 @@
 	</style>
 
 	<script>
-		//▶ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
+	// ==============================================================
+	// ▷ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
 		$(function(){
 			actInfoAjax();
-			var memActNo = '';
+			var memActNo = "";
 		})
+		
 		function actInfoAjax(){
 			$.ajax({
 			url: "/actInfoAjax",
@@ -55,6 +57,7 @@
 			dataType: 'json',
 			contentType: 'application/json; charset = utf-8',
 			success: function (result) {
+				console.log(result)
 				memActMake(result.memAct); //→ 대표계좌
 				actListMake(result.actList); //→ 계좌 전체 목록 
 			},
@@ -63,8 +66,8 @@
 			}
 		})
 		}
-
-		//▶ 계좌 전체 목록
+		// ==============================================================
+		// ▷ 계좌 전체 목록
 		function actListMake(actList){
 							//↑ actList 타입 == 객체(object) (* 타입 확인하는 방법 : console.log(typeof(확인하고자 하는 것));)
 			//↓ for문 돌면서 객체의 값을 하나씩 꺼내줌
@@ -328,7 +331,47 @@
 			</section>
 
 		</div>
+		
+		<!-- writeFormModal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
+					<button class="close1" onclick=""
+						style="color: black; padding: 10px;">x</button>
+					<form action="insertSns" method="post"
+						enctype="multipart/form-data">
+						<div class="login-account p-30 box-shadow mtb-15">
+							<div class="col-lg-4 col-md-6 pb-10">
+								<div class="banner-item banner-3">
+									<div class="banner-img">
+										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
+									</div>
 
+									<!-- atch -->
+									<input type="file" name="files" id="files" placeholder="첨부파일"
+										>
+								</div>
+							</div>
+
+
+							<!-- 게시물 -->
+							<textarea name="snsCn" id="snsCn" class="mb-15"
+								placeholder="게시글 내용 300자 이하."></textarea>
+							<input type="text" name="hash" id="hash">
+						</div>
+						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
+					</form>
+					<!-- writeForm -->
+
+					<!-- writefooter -->
+				</div>
+				<div class="modal-footer" style="background-color: #000000;">
+					&nbsp;</div>
+				<!-- writefooter -->
+			</div>
+
+		</div>
 
 	</div>
 </body>

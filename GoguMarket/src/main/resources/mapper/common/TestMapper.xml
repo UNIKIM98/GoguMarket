@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.common.mapper.TestMapper">
+	<select id="selectDealAtchTest" 
+			parameterType="int" 
+			resultType="com.goguma.common.vo.AtchVO">
+	SELECT * FROM ATCH
+	WHERE ATCH_ID = (SELECT atch_id FROM DEAL
+	                WHERE dl_no = #{dlNo})
+	</select>
+
+	<select id="selectDealTest" parameterType="int" resultType="com.goguma.deal.vo.DealVO">
+		SELECT * FROM DEAL
+		WHERE dl_no = #{dlNo}
+	</select>
+	
+	<update id="updateDealTest" parameterType="com.goguma.deal.vo.DealVO">
+		UPDATE DEAL
+		SET 
+			 DL_TTL= #{dlTtl},
+			 DL_CN = #{dlCn},
+			 CTGRY = #{ctgry},
+			 DL_YMD = CURRENT_DATE,
+			 DL_PRC = #{dlPrc},
+			 AREA = #{area}
+			<if test="negoYn != null">,NEGO_YN = #{negoYn}</if>
+		WHERE DL_NO = #{dlNo}
+	</update>
+	
+	<delete id="deleteDealTest" parameterType="com.goguma.deal.vo.DealVO">
+		DELETE DEAL WHERE DL_NO = #{dlNo}
+	</delete>
+</mapper>

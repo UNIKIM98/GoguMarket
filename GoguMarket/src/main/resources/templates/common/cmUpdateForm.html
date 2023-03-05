@@ -1,0 +1,397 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>중고거래상품수정</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<style>
+@font-face {
+	font-family: 'S-CoreDream-3Light';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: 'S-CoreDream-3Light';
+}
+
+#uploadFileList {
+	width: 100%;
+	height: 20%;
+	padding: 10px;
+	/* 		border: 1px solid lightgrey; */
+	/* 		border-radius: 5px; */
+	margin-bottom: 30px;
+}
+
+#uploadFileList:empty:before {
+	content: attr(data-placeholder);
+	color: #999;
+	font-size: .9em;
+}
+
+.message-box input[type=text], textarea {
+	width: 70%;
+}
+
+.message-box label {
+	width: 25%;
+}
+
+#dFrm span{
+	color : red;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		[[${session.userId}]]
+		[[${session.dealArea}]]
+		[[${dealInfo}]]
+		[[${atchList}]]
+		<!-- Body main wrapper start -->
+		<div class="wrapper" >
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
+
+				<!-- MESSAGE BOX SECTION START -->
+				<div class="message-box-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12" style="width: 70%">
+								<div class="message-box box-shadow white-bg">
+									<form id="dFrm" method="post" enctype="multipart/form-data" onsubmit="return false">
+										<div class="row">
+											<div class="col-lg-12">
+												<h4 class="blog-section-title border-left mb-30">중고거래상품수정</h4>
+											</div>
+										</div>
+										<div class="col-lg-10" id="inputFile">
+											<label for="files">상품사진<span> *</span></label> 
+											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
+											<br>
+											<span id="fileErrMsg"></span>
+											<div id="fileList">
+												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
+													 class="message-box box-shadow white-bg"></div>
+											</div>
+										</div>
+										<div class="col-lg-10 mb-10">
+											<label for="cate">카테고리<span> *</span></label> 
+											<select name="cate" id="cate">
+												<option value="" disabled selected>선택</option>
+												<option th:each="ct : ${category}" 
+														th:text="${ct.commonNm}"
+														th:value="${ct.commonDetailCode}"
+														></option>
+												</select>
+											<span id="ctgryErrMsg"></span>
+											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> 
+										</div>
+										<div class="col-lg-10 ">
+											<label for="dlTtl">글제목<span> *</span></label>
+											<input type="text" name="dlTtl" id="dlTtl" placeholder="글 제목을 입력하세요." th:value = ${dealInfo.dlTtl}>
+										</div>
+										<div class="col-lg-10">
+											<label for="dlCn">상품설명<span> *</span></label>
+											<textarea class="custom-textarea" name="dlCn" id="dlCn" 
+													  placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)" th:text=${dealInfo.dlCn}></textarea>
+										</div>
+										
+										<div class="col-lg-10">
+											<label for="dlPrc">상품가격<span> *</span></label>
+											<input type="text" name="dlPrc" id="dlPrc" 
+												   placeholder="상품가격" 
+												   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
+												   th:value=${dealInfo.dlPrc}>
+										</div>
+										<div class="col-lg-10">
+											<label for="area">직거래장소</label>
+											<input type="text" name="area" id="area" placeholder="직거래장소" th:value=${dealInfo.area}>
+										</div>
+										<div class="col-lg-10">
+											<label for="negoYn">가격 제안받기</label>
+											<input type="checkbox" name="negoYn" id="negoYn" style="margin:0px">
+										</div>
+										<input type="hidden" name="dlNo" id="dlNo" th:value=${dealInfo.dlNo}>
+										<input type="hidden" name="atchId" id="atchId" th:value=${atchList[0].atchId}>
+										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="수정하기">
+									</form>
+								</div>
+								<!-- </form> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	
+	<script th:inline="javascript">
+		//==============================================================================
+		//📌	 공통변수 선언부
+			var fileCount = 0; //현재 첨부파일 개수
+			var totalCount = 10; // 첨부 가능한 파일 개수
+			var fileNum = 0; //첨부파일 인덱스
+			var inputFileList = new Array(); // insert 파일 배열
+			var deleteList = new Array(); // delete 파일 배열
+			var isSubmitOk = true; //submit 유효성 체크 boolean
+
+			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
+			var exCnt = 0;
+			
+		//==============================================================================
+		//📌	 함수 선언부
+		//✅ DOM 함수
+			$(function() {
+				// 첨부파일 change
+				$("#files").on("change", function(e) {
+					$("#fileErrMsg").text("")
+					inputFile(e);
+				});
+				
+				// 카테고리 change
+				$("#cate").on("change", function(){
+					$("#ctgryErrMsg").text("")
+				})
+				
+				// form submit
+				$("#btnSave").on("click", function() {
+					formSubmit();
+				});
+				
+				// 기존 파일들 화면에 뿌려주기
+				existingFiles();
+			});
+		
+
+		//==============================================================================
+		//✅ 기존 정보들 화면에 뿌리기(카테고리, 사진, 네고여부)
+			function existingFiles(){
+			if(exCnt==0){
+			/*<![CDATA[*/
+				//1. 카테고리
+					let ctgry = /*[[ ${dealInfo.ctgry} ]]*/
+					$("#cate option").val(ctgry).attr("selected",true);
+			
+				//2. 사진
+					var atchList = /*[[ ${atchList} ]]*/
+					console.log(atchList.length>0);
+				
+					if(atchList.length>0){
+						for(let idx in atchList){
+							let atchId = atchList[idx].atchId;
+							let atchNo = atchList[idx].atchNo;
+							$('#uploadFileList').append(
+														`<img style=${img_style} src=${atchList[idx].atchPath}
+															   id=exFile${idx} onclick=deleteFile('exFile${idx}',${atchId},${atchNo})
+															   class=m-1>`
+														)
+							fileCount++;
+						}
+					}
+			
+				//3. 네고여부(체크박스)
+				let exNegoYn = /*[[ ${dealInfo.negoYn} ]]*/
+				console.log(exNegoYn);
+				
+				if(exNegoYn=="Y"){
+					$("#negoYn").attr("checked",true);
+				}
+				exCnt++;
+				console.log(exCnt)
+			/*]]*/
+			}
+			}
+		
+		//==============================================================================
+		//✅ 미리보기 div / inputFileList 배열에 insert
+			function inputFile(e) {
+				var files = e.target.files;
+				var filesArr = Array.prototype.slice.call(files);
+				
+				if (fileCount + filesArr.length > totalCount) {
+					alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+					return;
+				} else {
+					fileCount = fileCount + filesArr.length;
+				}
+
+				filesArr.forEach(function(f) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+									inputFileList.push(f);
+									$('#uploadFileList').append(
+																`<img style=${img_style} src=${e.target.result}
+																	   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+																)
+									fileNum++;
+								};
+					reader.readAsDataURL(f);
+				});
+				$("#files").val("");
+			}
+
+		//==============================================================================
+		//✅ 미리보기 div / inputFileList 배열에서 delete	
+			function fileDelete(fileNum) {
+				var no = fileNum.replace(/[^0-9]/g, "");
+				
+				inputFileList[no].is_delete = true;
+				$('#' + fileNum).remove();
+				
+				fileCount--;
+				
+				if(fileCount==0){
+					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+					isSubmitOk = false;
+				}
+			}
+		//==============================================================================
+		//✅ exFile 중에서 삭제할 파일 정보 
+			function deleteFile(id, atchId, atchNo) {
+				$("#"+id).remove();
+				deleteList.push({
+						"atchId": Number(atchId),
+						"atchNo": Number(atchNo)  
+					})
+		}
+		//==============================================================================
+		//✅ form submit
+			function formSubmit() {
+				// 카테고리 val
+				var ctgry = $("#cate option:selected").val(); 
+				$("#ctgry").val(ctgry); 
+				
+				// 네고여부
+				if ($('#negoYn').is(":checked")) {
+		            $('#negoYn').val("Y");
+		        }else{
+		        	$('#negoYn').val("");
+		        }
+				
+				// form submit 전 유효성 체크
+				if(submitCheck()){
+					var formData = new FormData($("#dFrm")[0]);
+					// formData.append("deleteList", JSON.stringify(deleteList));
+
+					for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
+					}
+					console.log(formData);
+					// 기존 파일 삭제 ajax
+					console.log(deleteList.length!=0)
+					if(deleteList.length!=0){
+						exFileDeleteAjax();
+					}
+					
+					// 삭제할 파일 없으면 수정 ajax만 실행
+					$.ajax({	
+						url : "/updateTestSubmit",
+						type : "POST",
+						data : formData,
+						processData : false,
+						contentType : false,
+						success : function(result) {
+							console.log(result)
+							alert("[수정완료] 게시글 수정이 완료되었습니다 :D");
+							location.href = "/dealMain";
+						},
+						error : function(err){
+							alert("[수정실패] 게시글 수정 중 오류가 발생하였습니다. :(");
+						}
+					});
+				
+				}
+			}
+
+			//==============================================================================
+			//✅ 파일 삭제 ajax
+			function exFileDeleteAjax(){
+				$.ajax({	
+					url : "/deleteTest",
+					type : "post",
+					data :  JSON.stringify(deleteList),
+					contentType: "application/json; charset=utf-8",
+					success : function(delCnt) {
+							console.log(delCnt)
+					},
+					error : function(err){
+						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
+					}
+				});	
+			}
+
+		//==============================================================================
+		//✅ submit 전 유효성 체크
+			function submitCheck(){
+			//1. 파일 업로드 여부
+			if($("#uploadFileList").children().length==0){
+				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+				isSubmitOk = false;
+			}
+
+			//2. 카테고리 선택 여부
+			else if($("#ctgry").val()==""){
+				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
+				isSubmitOk = false;
+			}
+
+			//3. 글제목 작성 여부
+			else if($("#dlTtl").val()==""){
+				$("#dlTtl").focus();
+				isSubmitOk = false;
+			}
+
+			//4. 글내용 작성 여부
+			else if($("#dlCn").val()==""){
+				$("#dlCn").focus();
+				isSubmitOk = false;
+			}
+
+			//5. 상품가격 작성 여부
+			else if($("#dlPrc").val()==""){
+			   $("#dlPrc").focus();
+				isSubmitOk = false;
+			}
+			
+			else{
+				isSubmitOk = true;
+			}
+			
+			return isSubmitOk;			
+		}			
+	</script>
+</div>
+	<!-- jquery latest version -->
+	<script src="js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+	<!-- Bootstrap framework js -->
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<!-- jquery.nivo.slider js -->
+	<script src="lib/js/jquery.nivo.slider.js"></script>
+	<!-- All js plugins included in this file. -->
+	<script src="js/plugins.js"></script>
+	<!-- ajax-mail js -->
+	<script src="js/ajax-mail.js"></script>
+	<!-- Main js file that contents all jQuery plugins activation. -->
+	<script src="js/main.js"></script>
+
+</body>
+
+</html>

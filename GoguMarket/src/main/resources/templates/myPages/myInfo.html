@@ -5,10 +5,299 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="js/vendor/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style type="text/css">
+
+.userTable span {
+	color: red;
+	font-size: large;
+}
+.errPlaceHolder::placeholder {color:red;}
+
+</style>
 </head>
 <body>
 	<div layout:fragment="myContent">
-	
+	[[${userInfo}]]
+		<div class="message-box-section mb-80">
+			<div class="container">
+				<div class="message-box box-shadow white-bg">
+					<form id="memUpdateForm" class="memUpdateForm" action="/memUpdateFormSubmit" method="post"
+						onsubmit="return frmChk()">
+						<div class="row">
+							<div class="col-lg-12">
+								<h4 class="blog-section-title border-left mb-30">회원정보수정</h4>
+							</div>
+							<div class="userTable">
+								<table style="border-spacing: 10px;   border-collapse: separate;">
+									<tbody>
+										<tr >
+											<th><label for="profile">프로필사진</label></th>
+											<td>
+												<div id="pfTrgt">
+													<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+												</div>
+											</td>
+											<td>
+												<input type="file" id="profile" name="profile">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="userId">아이디</label></th>
+											<td colspan="2"><input type="text" id="userId" name="userId"
+														readonly="readonly"
+														style="width: 70%;"
+														th:value="${userInfo.userId}"
+														>
+											</td>
+										</tr>
+										<tr>
+											<th><label for="userPw">비밀번호<span> *</span></label></th>
+											<td colspan="2"><input type="password" id="userPw" name="userPw"
+														placeholder="영문/숫자/특수문자 포함 9~20자리 입력해주세요."
+														required="required"
+														style="width: 70%;" > <br> 
+											</td>
+										</tr>
+										<tr>
+											<th><label for="userPwCk">비밀번호 확인<span> *</span></label></th>
+											<td colspan="2"><input type="password" id="userPwCk" name="userPwCk"
+														required="required" 
+														placeholder="비밀번호를 한 번 더 입력해주세요."
+														style="width: 70%;">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="userNm">이름</label></th>
+											<td colspan="2"><input type="text" id="userNm" name="userNm"
+														readonly="readonly"
+														style="width: 70%;"
+														th:value="${userInfo.userNm}">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="nickNm">닉네임<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="nickNm" name="nickNm"
+														required="required"
+														style="width: 40%; margin-right: 50px;"
+														th:value="${userInfo.NickNm}">
+												<button class="submit-btn-1 btn-hover-1"
+														onclick="nickNmCkAjax()" 
+														id="nickNmBtn" value="0"
+														type="button">중복확인</button>
+												</td>
+										</tr>
+										<tr>
+											<th><label for="addr">주소<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="addr" name="addr"
+														placeholder="주소 입력을 위해 클릭해주세요."
+														readonly="readonly"
+														onclick="findAddr()"
+														style="width: 70%;"
+														th:value="${userInfo.addr}">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="dealArea">거래지역</label></th>
+											<td colspan="2"><input type="text" id="dealArea" name="dealArea"
+														placeholder="입력한 주소의 구로 자동 설정"
+														style="width: 70%;"
+														readonly="readonly"
+														th:value="${userInfo.dealArea}">
+											</td>
+										</tr>
+										<tr>
+											<th class="mblTelno"><label for="mblTelno">휴대폰 번호 <span>*</span></label></th>
+											<td colspan="2"><input type="text" id="mblTelno" name="mblTelno"
+														placeholder="-/공백 없이 입력"
+														style="width: 40%; margin-right: 50px;"
+														oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														th:value="${userInfo.mblTelno}">
+												<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
+											</td>
+										</tr>
+										<tr>
+											<th><label for="eml">이메일주소</label></th>
+											<td colspan="2"><input type="text" id="eml" name="eml"
+														placeholder="EX) email@naver.com"
+														style="width: 70%;"
+														th:value="${userInfo.eml}">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="brthYmd">생년월일</label></th>
+											<td colspan="2"><input type="date" id="brthYmd" name="brthYmd"
+														style="width: 40%; margin-right: 50px; border: white solid 1px">
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+								</div>
+								<div class="col-lg-12">
+									<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">수정하기</button>
+									&nbsp;&nbsp;
+									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+								</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+		// ==============================================================
+		// ▷ DOM 실행 함수
+			$(function(){
+				//# 닉네임 중복 체크 초기화
+				$("#nickNm").on("change", function() {
+					$("#nickNmBtn").val("1");
+				});
+
+				// # 비밀번호 유효성 체크
+				$("#userPw").on("change",function(){
+					pwRegExpCk();
+				})
+					
+				// # 비밀번호 일치 확인
+				$('#userPwCk').on("change", function(){
+					isSamePw();
+				})
+				
+				// # 휴대번호 유효성 체크
+				$("#mblTelno").on("change",function(){
+					ismblTelnoOk();
+				})
+				
+				// # 이메일주소 유효성 체크
+				$("#eml").on("change",function(){
+					isEmlOk();
+				})
+
+			})
+		
+		// ==============================================================
+		// ▷ 이메일주소 유효성 체크
+			function isEmlOk(){
+			let isEmlOk = false;
+			const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if(emlRegExp.test($("#eml").val())){
+				isEmlOk = true;
+			}else{
+				isEmlOk = false;
+				$("#eml").val("").addClass("errPlaceHolder").focus();
+			}
+		}
+		
+		// ==============================================================
+		// ▷ 비밀번호 유효성 체크
+			function pwRegExpCk(){
+				$('#userPwCk').attr("placeholder","비밀번호를 한 번 더 입력해주세요.").val("");
+				if($('#userPwCk').hasClass('errPlaceHolder') == true){
+					$('#userPwCk').removeClass("errPlaceHolder");
+				}
+				
+				let isPwOk = false;
+				
+				// 비밀번호 정규식
+				const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{9,20}$/;
+				
+				if(pwRegExp.test($("#userPw").val())){
+					isPwOk = true;
+				}else{
+					isPwOk = false;
+					$('#userPw').val("").addClass("errPlaceHolder").focus();
+				}
+		}
+		
+		// ==============================================================
+		// ▷ 비밀번호 일치 확인
+			function isSamePw(){
+				if($('#userPw').val()!= $('#userPwCk').val()){
+					$('#userPwCk').attr("placeholder","비밀번호가 일치하지 않습니다.")
+								  .addClass("errPlaceHolder").val("")
+								  .focus();
+				}
+		}
+
+		// ==============================================================
+		// ▷ 휴대번호 유효성 체크 
+			function ismblTelnoOk(){
+			if($("#mblTelno").val().length > 11){
+				$("#mblTelno").attr("placeholder","휴대번호는 11자리 까지만 입력 가능합니다.")
+							  .val("").addClass("errPlaceHolder")
+							  .focus();
+			}
+		}
+
+		// ==============================================================
+		// ▷ 닉네임 중복 체크 아작스
+			function nickNmCkAjax() {
+				$.ajax({
+					url : 'nickNmChk/' + $('#nickNm').val(),
+					dataType : 'json',
+					type : 'get',
+					contentType : 'application/json; charset = utf-8',
+					success : function(result) {
+						nickNmCk(result);
+					},
+					error : function(err) {
+						console.log(err);
+					}
+				})
+			}
+
+		// ▷ 닉네임 중복 체크 결과 출력
+			function nickNmCk(str) {
+				if (str == "0") {
+					alert("사용가능한 닉네임입니다.");
+					$('#nickNmBtn').val("0");
+				} else {
+					alert("이미 사용 중인 닉네임입니다.");
+					$('#nickNm').val("").focus();
+				}
+			}	
+
+		// ==============================================================
+		// ▷ 주소/거래지역 설정
+			function findAddr() {
+				new daum.Postcode(
+						{
+							oncomplete : function(data) {
+								let road = data.roadAddress; // 도로명 주소
+								let jibun = data.jibunAddress; // 지번 주소
+
+								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
+									$('#addr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
+											  .addClass("errPlaceHolder")
+											  .val("").focus();
+								} else {
+									if ((road !== '') || (jibun !== '')) {
+										$("#addr").val(
+												data.sido + " " + data.sigungu + " " + data.bname);
+										$("#dealArea").val(data.sigungu);
+									}
+								}
+							}
+						}).open();
+			}
+
+		// ==============================================================
+		// ▷ submit 전 정보 유효성 체크
+			function frmChk() {
+				if ($('#userIdBtn').val() == '1') {
+					alert("아이디 중복체크를 해주세요.");
+					return false;
+				} else if ($('#nickNmBtn').val() == '1') {
+					alert("닉네임 중복체크를 해주세요.");
+					return false;
+				} else if ($('#addr').val() == "") {
+					alert("주소를 입력해주세요.");
+					return false;
+				}
+			}
+		
+		</script>
 	</div>
 </body>
 </html>

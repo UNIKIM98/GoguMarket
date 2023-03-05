@@ -6,10 +6,10 @@
 	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
 		INSERT INTO MEM (USER_ID, USER_SE, USER_PW, USER_NM,
 						 NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
-						 BANK_NM, ACT_NO, JOIN_YMD, USER_STTS)
+						 JOIN_YMD, USER_STTS)
 		VALUES(#{userId}, #{userSe},#{userPw}, #{userNm},
 			   #{nickNm}, #{addr}, #{dealArea}, #{mblTelno},
-			   #{bankNm}, #{actNo}, SYSDATE, #{userStts})
+			    SYSDATE, #{userStts})
 	</insert>
 
 	<!-- ▶ 아이디 중복 확인 -->
@@ -33,6 +33,7 @@
 		SELECT * FROM MEM
 		WHERE USER_ID = #{userId}
 	</select>
+	
 	<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->
 	<update id="updateDealArea"
 		parameterType="com.goguma.mem.vo.MemVO">
