@@ -11,10 +11,6 @@
 				frmSearch.page.value = page;
 				frmSearch.submit();
 			}
-			
-			function ctgryId(name){
-				console.log(name)	//치킨 <- 이런식으로 나옴
-			}
 		</script>
 
 		<!-- Start page content -->
@@ -63,16 +59,13 @@
 											</button>
 										</form>
 
-										<!-- 검색창 카테고리 목록 -->
+										<!-- 검색창 카테고리 목록 FOR문 -->
 										<div class="mt-20">
-											
-												<ul class="blog-meta">
-													<li th:each="ctgry: ${ctgry}">
-													<a th:href="|javascript:ctgryId('${ctgry.commonNm}')|"
-														th:text="${ctgry.commonNm}"
-														th:name="${ctgry.commonNm}|">(카테고리) </a></li>
-												</ul>
-											
+											<ul class="blog-meta">
+												<li th:each="ctgry: ${ctgry}">
+												<a href="#"
+													th:text="${ctgry.commonNm}">(카테고리) </a></li>
+											</ul>
 										</div>
 									</aside>
 
@@ -116,9 +109,7 @@
 																th:if="${rcnt.bizNo == list.bizNo}"
 																th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|">(후기
 																	수)</a></li>
-															<li><a href="#" 
-																	th:id="${list.ctgry}"
-																	th:text="${list.ctgry}">카테고리이름</a></li>
+															<li><a href="#" th:text="${list.ctgry}">카테고리이름</a></li>
 														</ul>
 
 													</div>

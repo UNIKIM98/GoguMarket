@@ -82,104 +82,101 @@
 										<div class="tab-pane active" id="checkout">
 											<div class="checkout-content box-shadow p-30">
 
-												<!-- 폼태그 오픈 -->
-												<form action="#">
-													<div class="row">
+												<div class="row">
 
-														<!-- 왼쪽부분 예약하기 -->
-														<div class="col-md-6">
-															<div class="billing-details pr-10">
-																<h6 class="widget-title border-left mb-20">예약하기</h6>
-															</div>
-															<div class="payment-method">
-																<div id="accordion">
+													<!-- 왼쪽부분 예약하기 -->
+													<div class="col-md-6">
+														<div class="billing-details pr-10">
+															<h6 class="widget-title border-left mb-20">예약하기</h6>
+														</div>
+														<div class="payment-method">
+															<div id="accordion">
 
-																	<!--1.메뉴 선택-->
-																	<div class="panel">
-																		<h4 class="payment-title box-shadow">
-																			<a data-bs-toggle="collapse" href="#bank-transfer">
-																				1.메뉴선택 </a>
-																		</h4>
-																		<div id="bank-transfer"
-																			class="panel-collapse collapse show"
-																			data-bs-parent="#accordion">
-																			<div class="payment-content">
+																<!--1.메뉴 선택-->
+																<div class="panel">
+																	<h4 class="payment-title box-shadow">
+																		<a data-bs-toggle="collapse" href="#bank-transfer">
+																			1.메뉴선택 </a>
+																	</h4>
+																	<div id="bank-transfer"
+																		class="panel-collapse collapse show"
+																		data-bs-parent="#accordion">
+																		<div class="payment-content">
 
-																				<table id="menuInfo">
-																					<!-- 메뉴 1건 -->
-																					<tr th:each="menu: ${menu}">
-																						<td class="td-title-1" th:value="${menu.menuNo}" th:text="${menu.menuNm}">(메뉴이름)</td>
-																						<td>
-																							<div class="cart-plus-minus f-left">
-																								<input type="text" value="0" name="menuCnt"
-																									class="cart-plus-minus-box">
-																							</div>
-																						</td>
-																						<!-- ${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'} -->
-																						<td class="td-title-2"
-																							th:text="${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'}">(가격)</td>
-																						<td class="td-title-2">
-																							<button class="btn btn-warning btn-sm"
-																								type="button" onclick="menuPick()">담기</button>
-																						</td>
-																					</tr>
-
-																				</table>
-
-																			</div>
-																		</div>
-																	</div>
-
-																	<!--2. 예약일 선택-->
-																	<div class="panel">
-																		<h4 class="payment-title box-shadow">
-																			<a class="collapsed" data-bs-toggle="collapse"
-																				href="#collapseTwo"> 2. 예약일 선택 </a>
-																		</h4>
-																		<div id="collapseTwo" class="panel-collapse collapse"
-																			data-bs-parent="#accordion">
-																			<div class="payment-content">
-																				<div class="row">
-																					<div class="col-sm-3">
-																						<p>날짜/시간 선택</p>
-																					</div>
-																					<div class="col-sm-5">
-																						<input type="date" id="" name="">
-																					</div>
-																					<div class="col-sm-4">
-																						<select class="custom-select">
-																							<option th:each="code: ${code}"
-																								th:if="${code.commonDetailCode} >= ${biz.bgngTm} 
-																											and ${code.commonDetailCode} <= ${biz.endTm}"
-																								th:value="|defalt ${code.commonDetailCode}|"
-																								th:text="${code.commonNm}">(시간)</option>
-
-																						</select>
-																					</div>
-																				</div>
-
-																			</div>
-																		</div>
-																	</div>
-
-																	<!--3. 예약인원 선택-->
-																	<div class="panel">
-																		<h4 class="payment-title box-shadow">
-																			<a data-bs-toggle="collapse" href="#collapseThree">
-																				3. 예약인원 선택 </a>
-																		</h4>
-																		<div id="collapseThree"
-																			class="panel-collapse collapse"
-																			data-bs-parent="#accordion">
-																			<div class="payment-content">
-																				<p>※1~10명까지 예약 가능합니다.</p>
-																				<div class="row">
-																					<div class="col-sm-6">방문인원을 선택하세요</div>
-																					<div class="col-sm-6">
+																			<table id="menuInfo">
+																				<!-- 메뉴 1건 -->
+																				<tr th:each="menu: ${menu}"
+																					th:value="${menu.menuNo}">
+																					<td class="td-title-1" th:text="${menu.menuNm}">(메뉴이름)</td>
+																					<td>
 																						<div class="cart-plus-minus f-left">
-																							<input type="text" value="0" name="qtybutton"
+																							<input type="text" value="0" name="menuCnt"
 																								class="cart-plus-minus-box">
 																						</div>
+																					</td>
+																					<!-- ${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'} -->
+																					<td class="td-title-2" th:text="${menu.menuPrc}">(가격)</td>
+																					<td class="td-title-2">
+																						<button class="btn btn-warning btn-sm"
+																							type="button" onclick="menuPick(this.id)"
+																							th:id="${menu.menuNo}">담기</button>
+																					</td>
+																				</tr>
+
+																			</table>
+
+																		</div>
+																	</div>
+																</div>
+
+																<!--2. 예약일 선택-->
+																<div class="panel">
+																	<h4 class="payment-title box-shadow">
+																		<a class="collapsed" data-bs-toggle="collapse"
+																			href="#collapseTwo"> 2. 예약일 선택 </a>
+																	</h4>
+																	<div id="collapseTwo" class="panel-collapse collapse"
+																		data-bs-parent="#accordion">
+																		<div class="payment-content">
+																			<div class="row">
+																				<div class="col-sm-3">
+																					<p>날짜/시간 선택</p>
+																				</div>
+																				<div class="col-sm-5">
+																					<input type="date" id="" name="">
+																				</div>
+																				<div class="col-sm-4">
+																					<select class="custom-select">
+																						<option th:each="code: ${code}"
+																							th:if="${code.commonDetailCode} >= ${biz.bgngTm} 
+																											and ${code.commonDetailCode} <= ${biz.endTm}"
+																							th:value="|${code.commonNm}|"
+																							th:text="${code.commonNm}">(시간)</option>
+
+																					</select>
+																				</div>
+																			</div>
+
+																		</div>
+																	</div>
+																</div>
+
+																<!--3. 예약인원 선택-->
+																<div class="panel">
+																	<h4 class="payment-title box-shadow">
+																		<a data-bs-toggle="collapse" href="#collapseThree">
+																			3. 예약인원 선택 </a>
+																	</h4>
+																	<div id="collapseThree" class="panel-collapse collapse"
+																		data-bs-parent="#accordion">
+																		<div class="payment-content">
+																			<p>※1~10명까지 예약 가능합니다.</p>
+																			<div class="row">
+																				<div class="col-sm-6">방문인원을 선택하세요</div>
+																				<div class="col-sm-6">
+																					<div class="cart-plus-minus f-left">
+																						<input type="text" value="0" name="peopleCnt"
+																							class="cart-plus-minus-box">
 																					</div>
 																				</div>
 																			</div>
@@ -187,81 +184,86 @@
 																	</div>
 																</div>
 															</div>
-															<div class="mt-30">
-																<button class="btn btn-success btn-sm" type="submit">쿠폰사용</button>
-															</div>
 														</div>
-														<!-- 왼쪽부분 끝 -->
+														<div class="mt-30">
+															<button class="btn btn-success btn-sm" type="submit">쿠폰사용</button>
+														</div>
+													</div>
+													<!-- 왼쪽부분 끝 -->
 
-														<!-- 오른쪽부분-->
-														<div class="col-md-6">
+													<!-- 오른쪽부분-->
+													<div class="col-md-6">
+														<form id="orderForm" action="#"
+															method="post">
 															<div class="payment-details pl-10 mb-50">
 																<h6 class="widget-title border-left mb-20">예약확인</h6>
+
 																<!--테이블1 : 주문메뉴-->
 																<table id="orderMenu">
 
-																	<!-- 메뉴 1건 -->
 																	<tr>
 																		<td class="td-title-1">메뉴</td>
 																		<td class="td-title-1">수량</td>
 																		<td class="td-title-2">가격</td>
 																	</tr>
+
+																	<!-- 메뉴 1건 -->
+																	<!--
 																	<tr>
-																		<td class="td-title-1">커피커피커피</td>
-																		<td class="td-title-1">1</td>
-																		<td class="td-title-2">4,000원</td>
-																	</tr>
-																	<tr>
-																		<td class="td-title-1">쿠키쿠키쿠키</td>
-																		<td class="td-title-1">1</td>
-																		<td class="td-title-2">6,000원</td>
-																	</tr>
+																		<td class="td-title-1">(메뉴이름)</td>
+																		<td class="td-title-1">(수량)</td>
+																		<td class="td-title-2">(가격)</td>
+																	</tr>  
+																	-->
 
 																	<!-- 합계 -->
 																	<tr>
 																		<th class="order-total">합계</th>
 																		<td class="order-total"></td>
-																		<td class="order-total-price">10,000원</td>
+																		<td class="order-total-price">(합계가격)</td>
 																	</tr>
 																</table>
 																<hr>
 
 																<!--테이블2 : 시간, 인원, 요청사항-->
-																<table>
+																<table id="orderDateTimePeople">
 																	<tr>
 																		<th class="td-title-1">예약일자</th>
-																		<td class="td-title-1">2023. 02. 12(일) 오후 4:30</td>
+																		<!-- 예약일 -->
+																		<td class="td-title-1" id="rsvtDate"></td>
+																		<!-- 예약시간 -->
+																		<td class="td-title-1" id="rsvtTime"></td>
 																	</tr>
 																	<tr>
 																		<th class="td-title-1">예약인원</th>
-																		<td class="td-title-1">3명</td>
+																		<!-- 예약인원 -->
+																		<td class="td-title-1" id="rsvtCnt"></td>
 																	</tr>
 																	<tr>
 																		<th class="td-title-1">예약자정보</th>
-																		<td class="td-title-1">도리눈아</td>
-																		<td class="td-title-1">010-0123-0123</td>
+																		<td class="td-title-1">(닉네임)</td>
+																		<td class="td-title-1">(전화번호)</td>
 																	</tr>
 																	<tr>
 																	</tr>
 																	<tr>
 																		<td class="td-title-1">요청사항</td>
 																		<td class="td-title-1" colspan="2"><textarea
-																				class="custom-textarea" placeholder="요청사항을 입력하세요."></textarea>
-																		</td>
+																				id="rsvtWant" class="custom-textarea"
+																				placeholder="요청사항을 입력하세요."></textarea></td>
 																	</tr>
 																</table>
 																<hr>
 															</div>
 															<div class="f-right">
 																<button class="submit-btn-1 mt-30 btn-hover-1"
-																	type="submit">결제하기</button>
+																	type="button" onclick="frmSubmit()">결제하기</button>
 															</div>
-														</div>
-														<!-- 오른쪽부분 끝 -->
-
+														</form>
 													</div>
-												</form>
-												<!-- 폼태그 클로즈 -->
+													<!-- 오른쪽부분 끝 -->
+
+												</div>
 
 											</div>
 										</div>
@@ -284,12 +286,126 @@
 			console.log(window.location.href);
 			var url = window.location.href;
 			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-			console.log("가게번호받아오기222-=-----"+ urlBizNo)
-			
-			function menuPick(){
-				console.log("메뉴쓰")
+			console.log("가게번호받아오기222-=-----" + urlBizNo)
+
+			// 모든 메뉴의 토탈가격을 담는 변수
+			var totalSum = 0;
+
+			//메뉴 담기 클릭이벤트
+			function menuPick(id) {
+
+				//빈 배열 생성
+				var menuInfo = [];
+
+				// 정보 불러오기
+				var tr = $('#' + id).closest('tr');
+				var trValue = tr.attr('value');
+
+				//버튼과 같은 tr에 있는 메뉴 하나만 배열에 담기
+				if (id == trValue) {
+					var menuName = tr.find('td').eq(0).text();
+					var menuCnt = tr.find('input[name="menuCnt"]').val();
+					var menuPrice = tr.find('td').eq(2).text();
+					var totalPrice = menuCnt * menuPrice;
+
+					menuInfo.push({
+						name : menuName,
+						cnt : menuCnt,
+						price : totalPrice
+					});
+				}
+				// console.log(menuInfo);
+				// console.log(menuName)
+
+				//우측 테이블에 정보 출력
+				var orderMenu = $('#orderMenu');
+				var lastRow = orderMenu.find('tr:last');
+				var newRow = $('<tr>');
+
+				//메뉴들 가격을 합하기 위한 변수 선언
+				var sum = 0;
+
+				for (var i = 0; i < menuInfo.length; i++) {
+					var menuName = $('<td>').addClass('td-title-1').text(
+							menuInfo[i].name);
+					var menuCnt = $('<td>').addClass('td-title-1').text(
+							menuInfo[i].cnt);
+					var menuPrice = $('<td>').addClass('td-title-2').text(
+							menuInfo[i].price);
+					console.log(menuCnt.text());
+					//수량이 0일경우 빠꾸, 1이상일때만 추가
+					if (menuCnt.text() == 0) {
+						alert('수량을 선택해 주세요')
+						return;
+					} else {
+						newRow.append(menuName, menuCnt, menuPrice);
+					}
+
+					sum += parseInt(menuInfo[i].price);
+				}
+				lastRow.before(newRow);
+				console.log(sum);
+
+				// 합계 출력
+				var totalRow = orderMenu.find("tr:last");
+				var totalPrice = totalRow.find(".order-total-price");
+				// 	totalPrice.text(sum);
+
+				//각 메뉴의 합을 더해줌
+				totalSum += sum;
+				console.log(totalSum);
+				totalPrice.text(totalSum);
 			}
-		
+
+			//날짜, 시간, 인원test
+			$(function() {
+				// 선택한 날짜와 시간, 방문인원을 저장할 변수 초기화
+				var selectedDateTimePeople = [];
+
+				// 날짜 선택이 변경되었을 때 실행될 함수
+				$('input[type="date"]').on('change', function() {
+					var selectedDate = $(this).val();
+					console.log(selectedDate);
+					$('#rsvtDate').text(selectedDate);
+					selectedDateTimePeople.push(selectedDate);
+				});
+
+				// 시간 선택이 변경되었을 때 실행될 함수
+				$('select.custom-select').on('change', function() {
+					var selectedTime = $(this).val();
+					console.log(selectedTime);
+					$('#rsvtTime').text(selectedTime);
+					selectedDateTimePeople.push(selectedTime);
+				});
+
+				// 방문인원 입력이 변경되었을 때 실행될 함수
+				// +될때
+				$($('input[name="peopleCnt"]')[0].nextSibling.nextSibling).on(
+						'click', function() {
+							var peopleCnt = $('input[name="peopleCnt"]').val();
+							console.log(peopleCnt);
+							$('#rsvtCnt').text(peopleCnt);
+							selectedDateTimePeople.push(peopleCnt);
+						});
+				//-될때
+				$(
+						$('input[name="peopleCnt"]')[0].previousSibling.previousSibling)
+						.on('click', function() {
+							var peopleCnt = $('input[name="peopleCnt"]').val();
+							console.log(peopleCnt);
+							$('#rsvtCnt').text(peopleCnt);
+							selectedDateTimePeople.push(peopleCnt);
+						});
+
+			});
+			
+			function frmSubmit(){
+				console.log("뀨")
+				var rsvtInfo =[];
+				
+				var orderMenu = $('#orderMenu');
+				
+			}
 		</script>
 	</div>
 	<!-- 타임리프 div 끝 -->

@@ -7,23 +7,6 @@
 	<!-- 타임리프 포함 시작 div -->
 	<div layout:fragment="content">
 
-		<div>
-			<a th:text="${biz.bizNo}"></a>
-			<a th:each="cnt: ${dgCnt}" th:text="${cnt.bizNo}"></a>
-<!-- 			<ul class="blog-meta"> -->
-<!-- 				<li><a href="#" th:each="cnt: ${dgCnt}" -->
-<!-- 					th:if="${cnt.bizNo == list.bizNo}" -->
-<!-- 					th:utext="|<i class='zmdi zmdi-favorite'></i>단골  ${cnt.dCount}|">(단골 -->
-<!-- 						수)</a></li> -->
-<!-- 				<li><a href="#" th:each="rcnt: ${rwCnt}" -->
-<!-- 					th:if="${rcnt.bizNo == list.bizNo}" -->
-<!-- 					th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|">(후기 -->
-<!-- 						수)</a></li> -->
-<!-- 				<li><a href="#" th:text="${list.ctgry}">카테고리이름</a></li> -->
-<!-- 			</ul> -->
-
-		</div>
-
 		<!-- 큰덩어리 시작 -->
 		<div class="shop-section mb-80">
 			<div class="container">
@@ -41,10 +24,16 @@
 							<h2 class="uppercase" th:text="${biz.bizNm}">(가게이름)</h2>
 
 							<ul class="blog-meta">
-								<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
-										123 </a></li>
-								<li><a href="#"><i class="zmdi zmdi-comments"></i>후기 59
-								</a></li>
+								<li><a href="#" th:each="cnt: ${dgCnt}"
+										th:if="${cnt.bizNo}==${biz.bizNo}"
+										th:utext="|<i class='zmdi zmdi-favorite'></i>단골  ${cnt.dCount}|"
+									>(단골 수)</a>
+								</li>
+								<li><a href="#" th:each="rcnt: ${rwCnt}"
+										th:if="${rcnt.bizNo} == ${biz.bizNo}"
+										th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|"
+									>(후기 수)</a>
+								</li>
 								<li><a href="#" th:text="${biz.ctgry}">(카테고리이름)</a></li>
 							</ul>
 
