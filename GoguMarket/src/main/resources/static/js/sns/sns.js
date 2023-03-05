@@ -8,20 +8,41 @@ var Sns = document.getElementById("mySns");
 // Get the button that opens the modal
 var Snsbtn = document.getElementById("clickSns");
 
-btn.onclick = function() {
-	console.log("gd");
-	modal.style.display = "block";
+var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
+
+
+var reInput = document.getElementById("reInput");
+/*const rrpWriteHtml;
+*/
+
+//외부 파일 로드
+/*$(document).ready(function()
+{
+  $.get("../templates/sns/rrpWrite.html", function(html_string)
+   {
+		console.log("테스트 입니다 html 파일 : " + html_string);
+      alert(html_string); 
+      rrpWriteHtml = html_string;
+   },'html');
+});
+*/
+
+
+reInput.onclick = function() {
+	reInput.style.display = "block";
+	
 };
 
-//----------------개인 게시글-------------------------
+//---------------- 게시글 list-------------------------
+
+
+//------------------ 개인 게시글-------------------------
 
 function snsModal(id) {
 	//활상화
 	Sns.style.display = "block"; //개인 게시글 창 활성화
 
 	//전 이벤트 자식중 아이디값과 이미지 아이디 값을 가져옴
-	$("#snsNo1").val(id);
-	$("#replySnsNo");
 	//단건을 조회하는 ajax를 실행
 	console.log(id);
 	Number(id);
@@ -39,13 +60,13 @@ function snsModal(id) {
 		$("#miniId").text(obj.sns.userId + "@gogu.ma");
 		$("#replySnsNo").val(obj.sns.snsNo);
 
-		SelectCmntlist(obj.sns.snsNo);
 	});
+	SelectCmntlist(id);
 	//리턴된 값을 태그를 찾아서 넣음
 }
 
 function SelectCmntlist(snsNo) {
-	console.log(snsNo);
+	console.log("내가 띄운 게시물의 번호 : " + snsNo);
 
 	$.ajax({
 		url: "/SelectCmntlist",
@@ -56,47 +77,74 @@ function SelectCmntlist(snsNo) {
 			console.log(data);
 			$(data).each(function(index, item) {
 				console.log(item.cmntCn);
-
+				//아래의 코드는 html이다
+				console.log("내가 띄운 댓글의 번호 :");
 				$("#Sns-reply").append(`
-						<form id="reply" action="#">
-						<input type="hidden" name="groupNo" id="groupNo" th:value="${item.groupNo}">
-						<input type="hidden" name="step" id="step" th:value="${item.step}">
-						<input type="hidden" name="recomntOrder" id="recomntOrder" th:value="${item.recmntOrder}">
-				<div class="card mb-1">
-					<div class="card-body bg-light">
-
-						<div class="media" style="margin: 10px">
-							<div class="media-left">
-								<a href="#"><img class="media-object" src="img/author/1.jpg"
-									alt="#"></a>
-							</div>
-							<div class="media-body ml-10">
-								<div class="clearfix">
-									<div class="name-commenter pull-left">
-
-										<h6 class="media-heading">
-											<input type="hidden" name="snsNo1" id="snsNo1"> <a
-												href="#" id="cmntMem">${item.cmntMem}</a> <br> <a href="#"
-												style="opacity: 50%" id="cmntYmd">${item.cmntYmd}</a>
-										</h6>
-										<div class="form-inline" id="cmntCn" style="word-break:break-all;">${item.cmntCn}</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-							<button type="button" class="btn btn-dark f-right"
-											onClick="rereplyInput()">reply</button>
-					</div>
-
-				</div>
-			</form>
-				`);
+						<div class="replyGroup" id="${item.cmntNo}">
+						    <input type="hidden" name="groupNo" id="groupNo" th:value="${item.groupNo}">	
+						    <input type="hidden" name="step" id="step" th:value="${item.step}">
+						    <input type="hidden" name="recomntOrder" id="recomntOrder" th:value="${item.recmntOrder}">   
+						    
+						    <div class="card mb-1">
+						        <div class="card-body bg-light">
+						            <div class="media" style="margin: 10px">
+						                <div class="media-left">
+						                    <a href="#"><img class="media-object" src="img/author/1.jpg"alt="#"></a>
+						                        </div>
+						                            <div class="media-body ml-10">
+						                                <div class="clearfix">
+						                                    <div class="name-commenter pull-left">
+						                                        <h6 class="media-heading"> 
+						                                            <a href="#" id="cmntMem">${item.cmntMem}</a> 
+						                                            <br> <a href="#" style="opacity: 50%" id="cmntYmd">${item.cmntYmd}</a>
+						                                        </h6>
+						                                    <div class="form-inline" id="cmntCn" style="word-break:break-all;">${item.cmntCn}</div>
+						                                </div>
+						                            </div>
+						                        </div>
+						                    </div>
+						                <input type="button" text="답글" class="btn btn-dark mt-3 f-right" id="reInput" onClick="ShowRrpInput(${item.cmntNo})" />
+						            </div>
+						        </div>
+						        <!--Insert form-->
+						        <div id="replyInput" class="replyInput">
+						        <ul class="list-group list-group-flush mt-10">
+						            <li class="list-group-item">
+						                <textarea class="form-control" id="replyCmntCn"
+						                    name="replyCmntCn"> </textarea>
+						                <button type="button" class="btn btn-dark mt-3 f-right"
+						                    onclick="insertReply()">post reply</button>
+						            </li>
+						        </ul>
+						        </div>
+						        <div class="rrplyGroup" id="rrplyGroup_${item.cmntNo}">
+						
+						        </div>
+						
+						</div>`);
 			});
 
 		},
+		error: function() {
+			cosole.log(error)
+		}
 	});
 }
+
+
+
+function ShowRrpInput(cmntNo) {
+	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
+	console.log("현재 파일의 위치 : " + window.location);
+
+	/*$("#rrplyGroup_"+cmntNo).append("<div id='rrpBox'> " +
+	$(".rrpBoxSample").html()
+	+ "</div>");*/
+	$("#rrplyGroup_"+cmntNo > "#rrpBox").load("sns/rrpWrite.html");
+
+}
+
+
 
 //---------------------------------reply(insert)-----------------------------------
 function insertReply() {
@@ -104,12 +152,8 @@ function insertReply() {
 	let cmntMem = $("#replyUserId").val();
 	let cmntCn = $("#replyCmntCn").val();
 
-	console.log(snsNo);
-	console.log(cmntMem);
-	console.log(cmntCn);
-
-	if (cmntCn == "") {
-		console.log("댓글을 입력하세요");
+	if (cmntCn == " ") {
+		alert("댓글을 입력하세요");
 		return;
 	}
 
@@ -129,15 +173,14 @@ function insertReply() {
 			} else {
 				alert("게시물 등록에 성공했습니다.");
 			}
-			SelectCmntlist(snsNo);
 		},
+		error: function() {
+			cosole.log(error)
+		}
 	});
-	console.log("test");
+	SelectCmntlist(snsNo);
+
 }
-
-
-
-	
 
 
 
@@ -157,3 +200,11 @@ window.onclick = function(event) {
 span.onclick = function() {
 	modal.style.display = "none";
 };
+
+
+
+
+
+
+
+

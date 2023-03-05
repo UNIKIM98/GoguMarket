@@ -158,3 +158,19 @@ color: black;
 padding: 2px 16px;
 color: white;
 }
+
+.replyInput {
+	display:none; 
+}
+
+#rrpBox > div{
+	display: inline-block;
+}
+#groupLeft{
+	width: 9%;
+	text-align: center;
+	font-size: 1.5em;
+}
+#groupRight{
+	width: 90%;
+}
