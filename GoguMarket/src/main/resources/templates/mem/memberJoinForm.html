@@ -7,7 +7,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="js/vendor/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style type="text/css">
 
+.userTable span {
+	color: red;
+	font-size: large;
+}
+.errPlaceHolder::placeholder {color:red;}
+
+</style>
 </head>
 
 <body>
@@ -15,113 +24,270 @@
 		<div class="message-box-section mb-80">
 			<div class="container">
 				<div class="message-box box-shadow white-bg">
-					<form id="contact-form" action="/memberJoin.do" method="post"
+					<form id="joinForm" class="joinForm" action="/memberJoin" method="post"
 						onsubmit="return frmChk()">
 						<div class="row">
 							<div class="col-lg-12">
 								<h4 class="blog-section-title border-left mb-30">회원가입</h4>
 							</div>
-							<div class="join_form" id="join_form">
+							<div class="userTable">
 								<table>
 									<tbody>
 										<tr>
-											<th><span>아이디</span></th>
-											<td>
-												<input type="text" id="userId" name="userId" placeholder="아이디를 입력하세요." 
-														required="required" style="width: 40%; margin-right: 50px;">
-												<button class="submit-btn-1 btn-hover-1" 
-														onclick="userIdCkAjax()" id="userIdBtn" value="No" type="button">중복확인
-												</button>
+											<th><label for="userId">아이디<span> *</span></label></th>
+											<td><input type="text" id="userId" name="userId"
+														placeholder="아이디를 입력하세요." required="required"
+														style="width: 40%; margin-right: 50px;">
+												<button class="submit-btn-1 btn-hover-1"
+														onclick="userIdCkAjax()" id="userIdBtn" value="1"
+														type="button">중복확인</button>
 											</td>
 										</tr>
 										<tr>
-											<th><span style="margin-bottom: 30px;">비밀번호</span></th>
+											<th><label for="userPw">비밀번호<span> *</span></label></th>
 											<td><input type="password" id="userPw" name="userPw"
-														placeholder="영문,숫자,특수문자 포함 9자리 이상 입력해주세요."
-														required="required" style="width: 60%;"> <br> 
-												<span class="errorMsg"></span>
+														placeholder="영문/숫자/특수문자 포함 9~20자리 입력해주세요."
+														required="required" 
+														style="width: 60%;"> <br> 
 											</td>
 										</tr>
 										<tr>
-											<th><span>비밀번호 확인</span></th>
+											<th><label for="userPwCk">비밀번호 확인<span> *</span></label></th>
 											<td><input type="password" id="userPwCk" name="userPwCk"
-														required="required" placeholder="비밀번호를 한 번 더 입력해주세요."
+														required="required" 
+														placeholder="비밀번호를 한 번 더 입력해주세요."
 														style="width: 60%;">
 											</td>
 										</tr>
 										<tr>
-											<th><span>이름</span></th>
+											<th><label for="userNm">이름<span> *</span></label></th>
 											<td><input type="text" id="userNm" name="userNm"
-														placeholder="이름을 입력하세요." required="required"
-														style="width: 40%; margin-right: 50px;">
+														placeholder="이름을 입력하세요." 
+														required="required"
+														style="width: 60%;">
 											</td>
 										</tr>
 										<tr>
-											<th><span>닉네임</span></th>
+											<th><label for="nickNm">닉네임<span> *</span></label></th>
 											<td><input type="text" id="nickNm" name="nickNm"
-														placeholder="닉네임을 입력하세요." required="required"
+														placeholder="닉네임을 입력하세요." 
+														required="required"
 														style="width: 40%; margin-right: 50px;">
 												<button class="submit-btn-1 btn-hover-1"
-														onclick="nickNmCkAjax()" id="nickNmBtn" value="No" type="button">중복확인
-												</button>
+														onclick="nickNmCkAjax()" 
+														id="nickNmBtn" value="1"
+														type="button">중복확인</button>
+												</td>
+										</tr>
+										<tr>
+											<th><label for="addr">주소<span> *</span></label></th>
+											<td><input type="text" id="addr" name="addr"
+														placeholder="주소 입력을 위해 클릭해주세요."
+														onclick="findAddr()"
+														style="width: 60%;"
+														readonly="readonly">
 											</td>
 										</tr>
 										<tr>
-											<th><span>주소</span></th>
-											<td><input type="text" id="addr" name="addr" placeholder="주소를 입력해주세요." 
-														style="width: 40%; margin-right: 50px;">
+											<th><label for="dealArea">거래지역</label></th>
+											<td><input type="text" id="dealArea" name="dealArea"
+														placeholder="입력하신 주소의 구로 자동 설정됩니다."
+														style="width: 60%;"
+														readonly="readonly">
 											</td>
 										</tr>
 										<tr>
-											<th class="noAfter"><span>전화번호</span></th>
+											<th class="mblTelno"><label for="mblTelno">휴대폰 번호 <span>*</span></label></th>
 											<td><input type="text" id="mblTelno" name="mblTelno"
-														placeholder="휴대폰 번호를 입력해주세요." style="width: 40%; margin-right: 50px;">
-												<button class="submit-btn-1 btn-hover-1" type="button">인증하기
-
-												</button>
+														placeholder="-/공백 없이 전화번호를 입력해주세요."
+														style="width: 40%; margin-right: 50px;"
+														oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+												<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
 											</td>
 										</tr>
+										<tr>
+											<th><label for="eml">이메일주소</label></th>
+											<td><input type="text" id="eml" name="eml"
+														placeholder="email@naver.com의 형태로 입력해주세요."
+														style="width: 60%;">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="brthYmd">생년월일</label></th>
+											<td><input type="date" id="brthYmd" name="brthYmd"
+														style="width: 40%; margin-right: 50px; border: white solid 1px">
+											</td>
+										</tr>
+										
 									</tbody>
 								</table>
+								</div>
+								<div class="agrees" style="text-align: left">
+									<table>
+										<tbody>
+											<tr>
+												<td>
+													<label for="allAgree"> 
+														<input type="checkbox" id="allAgree" style="margin: 0px ; padding-right: 5px">
+														<span>모두 동의합니다</span>
+													</label>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label for="agree"> 
+														<input type="checkbox" id="agree" value="1" style="margin: 0px ; padding-right: 5px">
+														<span>이용약관 동의<strong>(필수)</strong></span>
+													</label> 
+													
+												</td>
+											</tr>
+											<tr>
+												<td>
+													 
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label for="agree"> 
+														<input type="checkbox" id="agree" value="3" style="margin: 0px ; padding-right: 5px">
+														<span>개인정보 이용 동의<strong>(필수)</strong></span>
+													</label>
+												</td>
+											</tr> 
+											<tr>
+												<td> 
+													<label for="agree"> 
+														<input type="checkbox" id="agree" value="4" style="margin: 0px ; padding-right: 5px">
+														<span>위치정보 이용 동의<strong class="select_disable">(선택)</strong></span>
+													</label>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 								<div class="col-lg-12">
 									<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">회원가입</button>
 									&nbsp;&nbsp;
 									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
-
 								</div>
-							</div>
 						</div>
 					</form>
 				</div>
+				
 			</div>
 		</div>
 		<script type="text/javascript">
-			//▶ submit하기 전 마지막 체크 함수
-			function frmChk() {
-				let userPw = $('#userPw');
-				let userPwCk = $('#userPwCk');
+		// ==============================================================
+		// ▷ DOM 실행 함수
+			$(function(){
+				// # 아이디 중복체크 초기화
+				$("#userId").on("change", function() {
+					$("#userIdBtn").val("1");
+				});
 
-				if (userPw.val() != userPwCk.val()) {
-					alert("비밀번호가 일치하지 않습니다.");
-					userPw.val("");
-					userPwCk.val("");
-					userPw.focus();
-					return false;
-				} else if ($('#userIdBtn').val() == 'No') {
-					alert("아이디 중복체크를 해주세요.");
-					return false;
-				} else if ($('#nickNmBtn').val() == 'No') {
-					alert("닉네임 중복체크를 해주세요.");
-					return false;
-				}
+				//# 닉네임 중복 체크 초기화
+				$("#nickNm").on("change", function() {
+					$("#nickNmBtn").val("1");
+				});
+
+				// # 비밀번호 유효성 체크
+				$("#userPw").on("change",function(){
+					pwRegExpCk();
+				})
+					
+				// # 비밀번호 일치 확인
+				$('#userPwCk').on("change", function(){
+					isSamePw();
+				})
+				
+				// # 휴대번호 유효성 체크
+				$("#mblTelno").on("change",function(){
+					ismblTelnoOk();
+				})
+				
+				// # 이메일주소 유효성 체크
+				$("#eml").on("change",function(){
+					isEmlOk();
+				})
+				
+				// # 약관 동의 전체 체크
+				$("#allAgree").on("change",function(e){
+					allAgreeChk(e);
+				})
+				
+			})
+		
+		// ==============================================================
+		// ▷ 약관 동의 전체 체크
+			function allAgreeChk(e){
+				let agreeChk = $('input[id="agree"]');
+				 for(let i = 0; i < agreeChk.length; i++){
+				      agreeChk[i].checked = e.target.checked;
+				    }
 			}
+		
+		// ==============================================================
+		// ▷ 이메일주소 유효성 체크
+			function isEmlOk(){
+			let isEmlOk = false;
+			const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if(emlRegExp.test($("#eml").val())){
+				isEmlOk = true;
+			}else{
+				isEmlOk = false;
+				$("#eml").val("").addClass("errPlaceHolder").focus();
+			}
+		}
+		
+		// ==============================================================
+		// ▷ 비밀번호 유효성 체크
+			function pwRegExpCk(){
+				$('#userPwCk').attr("placeholder","비밀번호를 한 번 더 입력해주세요.").val("");
+				if($('#userPwCk').hasClass('errPlaceHolder') == true){
+					$('#userPwCk').removeClass("errPlaceHolder");
+				}
+				
+				let isPwOk = false;
+				
+				// 비밀번호 정규식
+				const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{9,20}$/;
+				
+				if(pwRegExp.test($("#userPw").val())){
+					isPwOk = true;
+				}else{
+					isPwOk = false;
+					$('#userPw').val("").addClass("errPlaceHolder").focus();
+				}
+		}
+		
+		// ==============================================================
+		// ▷ 비밀번호 일치 확인
+			function isSamePw(){
+				if($('#userPw').val()!= $('#userPwCk').val()){
+					$('#userPwCk').attr("placeholder","비밀번호가 일치하지 않습니다.")
+								  .addClass("errPlaceHolder").val("")
+								  .focus();
+				}
+		}
 
-			//▶ 아이디 중복 체크 아작스 
+		// ==============================================================
+		// ▷ 휴대번호 유효성 체크 
+			function ismblTelnoOk(){
+			if($("#mblTelno").val().length > 11){
+				$("#mblTelno").attr("placeholder","휴대번호는 11자리 까지만 입력 가능합니다.")
+							  .val("").addClass("errPlaceHolder")
+							  .focus();
+			}
+		}
+		
+		// ==============================================================
+		// ▷ 아이디 중복 체크 아작스 
 			function userIdCkAjax() {
 				$.ajax({
 					url : 'userIdChk/' + $('#userId').val(),
 					type : 'get',
-					dataType : 'json', //==header (html, json, text 등)
+					dataType : 'json',
 					contentType : 'application/json; charset = utf-8',
 					success : function(data) {
 						userIdCk(data);
@@ -132,20 +298,19 @@
 				})
 			}
 
-			//▶ 아이디 중복 체크 결과 출력
+		// ▷ 아이디 중복 체크 결과 출력
 			function userIdCk(bool) {
 				if (bool == "0") {
 					alert("사용할 수 있는 아이디입니다. :)");
-					$('#userIdBtn').val("Yes");
-					$('#userIdBtn').attr("disabled", true);
+					$('#userIdBtn').val("0");
 				} else {
 					alert("이미 사용 중인 아이디입니다.");
-					$('#userId').val("");
-					$('#userId').focus();
+					$('#userId').val("").focus();
 				}
 			}
 
-			//▶ 닉네임 중복 체크 아작스
+		// ==============================================================
+		// ▷ 닉네임 중복 체크 아작스
 			function nickNmCkAjax() {
 				$.ajax({
 					url : 'nickNmChk/' + $('#nickNm').val(),
@@ -153,7 +318,6 @@
 					type : 'get',
 					contentType : 'application/json; charset = utf-8',
 					success : function(result) {
-						console.log("===== 왔니..." + result);
 						nickNmCk(result);
 					},
 					error : function(err) {
@@ -162,41 +326,59 @@
 				})
 			}
 
-			//▶ 닉네임 중복 체크 결과 출력
+		// ▷ 닉네임 중복 체크 결과 출력
 			function nickNmCk(str) {
 				if (str == "0") {
 					alert("사용가능한 닉네임입니다.");
-					$('#nickNmBtn').val("Yes");
-					$('#nickNmBtn').attr("disabled", true);
+					$('#nickNmBtn').val("0");
 				} else {
 					alert("이미 사용 중인 닉네임입니다.");
-					$('#nickNm').val("");
-					$('#nickNm').focus();
+					$('#nickNm').val("").focus();
 				}
+			}	
+
+		// ==============================================================
+		// ▷ 주소/거래지역 설정
+			function findAddr() {
+				new daum.Postcode(
+						{
+							oncomplete : function(data) {
+								let road = data.roadAddress; // 도로명 주소
+								let jibun = data.jibunAddress; // 지번 주소
+
+								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
+									$('#addr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
+											  .addClass("errPlaceHolder")
+											  .val("").focus();
+								} else {
+									if ((road !== '') || (jibun !== '')) {
+										$("#addr").val(
+												data.sido + " " + data.sigungu + " " + data.bname);
+										$("#dealArea").val(data.sigungu);
+									}
+								}
+							}
+						}).open();
 			}
 
-			//▶ 비밀번호 유효성 체크
-			let pwVal = "", isPwValid = false;
-			const pwInputEl = $('#userPw');
-			const pwErrMsg = $('.errorMsg');
-			pwInputEl
-					.change(function() {
-
-						//비밀번호 정규식
-						const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{9,20}$/;
-						pwVal = pwInputEl.val();
-
-						if (pwRegExp.test(pwVal)) {
-							isPwValid = true;
-							pwErrMsg.text("");
-						} else {
-							isPwValid = false;
-							pwErrMsg
-									.text("9~20자의 영문, 숫자, 특수문자를 포함한 비밀번호를 입력해주세요");
-							pwInputEl.val(""); //지우는 건 너무 야박한감....
-							pwInputEl.focus();
-						}
-					})
+		// ==============================================================
+		// ▷ submit 전 정보 유효성 체크
+			function frmChk() {
+				if ($('#userIdBtn').val() == '1') {
+					alert("아이디 중복체크를 해주세요.");
+					return false;
+				} else if ($('#nickNmBtn').val() == '1') {
+					alert("닉네임 중복체크를 해주세요.");
+					return false;
+				} else if ($('#addr').val() == "") {
+					alert("주소를 입력해주세요.");
+					return false;
+				} else if((!$('input[id="agree"]').eq(0).is(':checked'))||(!$('input[id="agree"]').eq(1).is(':checked'))){
+					alert("필수 약관에 동의해주세요.");
+					return false;
+				}
+			}
+		
 		</script>
 	</div>
 </body>

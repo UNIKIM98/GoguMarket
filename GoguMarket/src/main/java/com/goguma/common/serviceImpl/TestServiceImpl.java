@@ -16,14 +16,26 @@ public class TestServiceImpl implements TestService {
 	TestMapper testMapper;
 
 	@Override
-	public DealVO selectDeal(int dlNo) {
-		return testMapper.selectDeal(dlNo);
+	public DealVO selectDealTest(int dlNo) {
+		return testMapper.selectDealTest(dlNo);
 	}
 
 	@Override
-	public List<AtchVO> selectDealAtch(int dlNo) {
+	public List<AtchVO> selectDealAtchTest(int dlNo) {
 		// TODO Auto-generated method stub
-		return testMapper.selectDealAtch(dlNo);
+		return testMapper.selectDealAtchTest(dlNo);
+	}
+
+	@Override
+	public int updateDealTest(DealVO dVO) {
+		// TODO Auto-generated method stub
+		return testMapper.updateDealTest(dVO);
+	}
+
+	@Override
+	public int deleteDealTest(DealVO dVO) {
+		// TODO Auto-generated method stub
+		return testMapper.deleteDealTest(dVO);
 	} 
 	
 

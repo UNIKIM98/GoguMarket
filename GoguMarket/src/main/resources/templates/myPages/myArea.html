@@ -11,10 +11,7 @@
 <!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=235765131723c6d6cee12c6f95e9a46a&libraries=services"></script> -->
 <!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=235765131723c6d6cee12c6f95e9a46"></script> -->
 <style>
-.text-start input {
-	width: 400px;
-	display: inline-block;
-}
+.errPlaceHolder::placeholder {color:red;}
 </style>
 </head>
 
@@ -29,7 +26,7 @@
 							<div class="section-title text-start ">
 								<h2 class="uppercase">우리 동네</h2>
 								<h3 th:if="${userInfo!=null}">
-									지금 우리 동네는 <span style="font-weight: bold;" class="dealArea"
+									지금 우리 동네는 <span style="font-weight: bold;" class="myArea"
 										th:text="${userInfo.dealArea}"></span> 입니다.
 								</h3>
 								<h3 th:if="${userInfo == null}">우리동네를 설정해주세요 :D</h3>
@@ -39,71 +36,84 @@
 						<div class="row mb-100" id="setMyArea">
 							<div class="section-title text-start ">
 								<h2 class="uppercase">우리동네 설정하기</h2>
-								<p>우리동네(거래지역)는 구 별로 지정할 수 있습니다. <br> 주소를 입력하면 자동으로 해당 구가 우리동네로 설정됩니다.</p>
-								<span class="daeguPlz"></span> <br> 
-								<input id="member_post" type="text" placeholder="주소 검색" readonly onclick="findAddr()"> <br> 
-								<input id="member_addr" type="text" placeholder="Address" readonly> <br> 
-								<input type="text" id="member_dtAddr" placeholder="Detailed Address">
+								<p>주소를 입력하면 자동으로 해당 구가 우리동네로 설정됩니다.</p>
+								<br>
+								<table>
+									<tbody>
+									<tr>
+											<th><label for="addr">주소</label></th>
+											<td><input type="text" id="addr" name="addr"
+														placeholder="주소 입력을 위해 클릭해주세요."
+														readonly="readonly"
+														onclick="findAddr()">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="dealArea">거래지역</label></th>
+											<td><input type="text" id="dealArea" name="dealArea"
+														placeholder="입력하신 주소의 구로 자동 설정됩니다."
+														readonly="readonly">
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 							<div class="mt-20">
-								<button type="button" onclick="checkInfo()">설정하기</button>
+								<button class="submit-btn-1 btn-hover-1" type="button" onclick="checkInfo()">설정하기</button>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</section>
 		</div>
 		<script>
+		// ==============================================================
+		// ▷ 주소/거래지역 설정
 			function findAddr() {
-				new daum.Postcode({
+				new daum.Postcode(
+						{
 							oncomplete : function(data) {
-								console.log(data);
-								let road = data.roadAddress; // 도로명 주소 변수
-								let jibun = data.jibunAddress; // 지번 주소 변수
+								let road = data.roadAddress; // 도로명 주소
+								let jibun = data.jibunAddress; // 지번 주소
 
-								if ((road.substring(0, 2) || jibun.substring(0,
-										2)) != '대구') {
-									$(".daeguPlz").text(
-											"대구광역시 소재의 주소지를 입력해주세요 :D");
-									$("#member_addr").val("");
-									$("#member_post").focus();
+								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
+									$('#addr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
+											  .addClass("errPlaceHolder")
+											  .val("").focus();
 								} else {
-									$(".daeguPlz").text("");
-									$("#member_post").val(data.sigungu);
-									if ((road !== '') || (jibun !== '') ) {
-										$("#member_addr").val(jibun + " ("+ road.substring(3)+ ")");
+									if ((road !== '') || (jibun !== '')) {
+										$("#addr").val(
+												data.sido + " " + data.sigungu + " " + data.bname);
+										$("#dealArea").val(data.sigungu);
 									}
-									$("#member_dtAddr").focus();
-// 									var geocoder = new kakao.maps.services.Geocoder();
-// 									var callback = function(result, status){
-// 										if(status ===kakao.maps.services.Status.OK){
-// 											conole.log(result)
-// 										}
-// 									}
-// 									geocoder.addressSearch(data.raod,callback);
 								}
-								
 							}
 						}).open();
 			}
 
 			function checkInfo() {
-				let fullAddr = $("#member_addr").val().split('(')[0]
-						+ $("#member_dtAddr").val();
-				let Gu = $("#member_addr").val();
-				Gu = Gu.split(' ')[1];
-				let confirmMsg = confirm("우리 동네를 " + Gu + "로 설정하시겠습니까?");
-				if (confirmMsg) {
-					myAreaSetAjax(fullAddr, Gu);
+				let addr = $("#addr").val()
+				let Gu = $("#dealArea").val();
+				
+				if(addr!=""){
+				let confirmMsg = confirm("우리 동네를 " + Gu + "(으)로 설정하시겠습니까?");
+					if (confirmMsg) {
+						myAreaSetAjax(addr, Gu);
+					}
+				}else{
+					alert("설정할 주소를 입력해주세요 :D");
+					$("#addr").focus();
+					return false;
 				}
+
 			}
 
-			function myAreaSetAjax(fullAddr, Gu) {
+			function myAreaSetAjax(addr, Gu) {
 				let memVO = {
-					addr : fullAddr,
+					addr : addr,
 					dealArea : Gu
 				};
+				
 				$.ajax({
 					url : "/myAreaSetAjax",
 					type : 'post',
@@ -112,7 +122,6 @@
 					contentType : 'application/json; charset = utf-8',
 					success : function(result) {
 						afterAjax(result, memVO)
-
 					},
 					error : function(err) {
 						console.log(err);
@@ -123,12 +132,11 @@
 			function afterAjax(result, memVO) {
 				console.log(memVO.dealArea)
 				if (result == "success") {
-					alert("[우리동네 설정 완료] 우리동네를 " + memVO.dealArea + "로 변경하였습니다 :D");
-					$("#member_addr").val("");
-					$("#member_post").val("");
-					$("#member_dtAddr").val("");;
+					alert("[우리동네 설정 완료] 우리동네를 " + memVO.dealArea + "(으)로 변경하였습니다 :D");
+					$("#addr").val("");
+					$("#dealArea").val("");
 					
-					$(".dealArea").text(memVO.dealArea);
+					$(".myArea").text(memVO.dealArea);
 				} else {
 					alert("[우리동네 설정 실패] 설정 중 오류가 발생하였습니다.")
 				}

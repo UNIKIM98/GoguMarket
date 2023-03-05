@@ -17,9 +17,12 @@ public interface AtchService {
 	AtchVO selectFile(AtchVO atchVO);
 
 	// ▶ 파일 다중 업로드 > atchId 리턴
-	int insertFile(List<MultipartFile> file);
+	int insertFile(List<MultipartFile> files);
+	int insertFile(int atchId, List<MultipartFile> files); //파일 수정
 
 	// ▶ 파일 삭제
 	int deleteFile(List<AtchVO> atchVOs);
+	
+	
 
 }

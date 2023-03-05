@@ -128,6 +128,7 @@
 											<input type="checkbox" name="negoYn" id="negoYn" style="margin:0px">
 										</div>
 										<input type="hidden" name="dlNo" id="dlNo" th:value=${dealInfo.dlNo}>
+										<input type="hidden" name="atchId" id="atchId" th:value=${atchList[0].atchId}>
 										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="수정하기">
 									</form>
 								</div>
@@ -141,47 +142,55 @@
 	
 	<script th:inline="javascript">
 		//==============================================================================
-		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
-			$(function() {
-				$("#files").on("change", function(e) {
-					$("#fileErrMsg").text("")
-					inputFile(e);
-				});
-				
-				$("#cate").on("change", function(){
-					$("#ctgryErrMsg").text("")
-				})
-				
-				$("#btnSave").on("click", function() {
-					submitForm();
-				});
-				
-				//기존 파일들 화면에 뿌려주기
-				existingFiles();
-				
-			});
-		
-		//==============================================================================
-		//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+		//📌	 공통변수 선언부
 			var fileCount = 0; //현재 첨부파일 개수
 			var totalCount = 10; // 첨부 가능한 파일 개수
 			var fileNum = 0; //첨부파일 인덱스
 			var inputFileList = new Array(); // insert 파일 배열
 			var deleteList = new Array(); // delete 파일 배열
-			var isSubmitOk = true;
+			var isSubmitOk = true; //submit 유효성 체크 boolean
 
 			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
+			var exCnt = 0;
+			
+		//==============================================================================
+		//📌	 함수 선언부
+		//✅ DOM 함수
+			$(function() {
+				// 첨부파일 change
+				$("#files").on("change", function(e) {
+					$("#fileErrMsg").text("")
+					inputFile(e);
+				});
+				
+				// 카테고리 change
+				$("#cate").on("change", function(){
+					$("#ctgryErrMsg").text("")
+				})
+				
+				// form submit
+				$("#btnSave").on("click", function() {
+					formSubmit();
+				});
+				
+				// 기존 파일들 화면에 뿌려주기
+				existingFiles();
+			});
+		
 
 		//==============================================================================
 		//✅ 기존 정보들 화면에 뿌리기(카테고리, 사진, 네고여부)
 			function existingFiles(){
+			if(exCnt==0){
 			/*<![CDATA[*/
 				//1. 카테고리
 					let ctgry = /*[[ ${dealInfo.ctgry} ]]*/
-					$("#cate option").val(ctgry).attr("selected",true)
+					$("#cate option").val(ctgry).attr("selected",true);
+			
 				//2. 사진
 					var atchList = /*[[ ${atchList} ]]*/
-					console.log(atchList.length>0)
+					console.log(atchList.length>0);
+				
 					if(atchList.length>0){
 						for(let idx in atchList){
 							let atchId = atchList[idx].atchId;
@@ -194,15 +203,22 @@
 							fileCount++;
 						}
 					}
+			
 				//3. 네고여부(체크박스)
 				let exNegoYn = /*[[ ${dealInfo.negoYn} ]]*/
+				console.log(exNegoYn);
+				
 				if(exNegoYn=="Y"){
 					$("#negoYn").attr("checked",true);
 				}
-				/*]]*/
+				exCnt++;
+				console.log(exCnt)
+			/*]]*/
 			}
+			}
+		
 		//==============================================================================
-		//✅ input 실행하는 함수
+		//✅ 미리보기 div / inputFileList 배열에 insert
 			function inputFile(e) {
 				var files = e.target.files;
 				var filesArr = Array.prototype.slice.call(files);
@@ -230,96 +246,118 @@
 			}
 
 		//==============================================================================
-		//✅ 화면/배열에서 delete 실행하는 함수			
+		//✅ 미리보기 div / inputFileList 배열에서 delete	
 			function fileDelete(fileNum) {
 				var no = fileNum.replace(/[^0-9]/g, "");
+				
 				inputFileList[no].is_delete = true;
 				$('#' + fileNum).remove();
+				
 				fileCount--;
+				
 				if(fileCount==0){
 					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
 					isSubmitOk = false;
 				}
 			}
-		
 		//==============================================================================
-		//✅ submit함수
-			function submitForm() {
-				// 선택한 카테고리 > hidden input value로 넣기
+		//✅ exFile 중에서 삭제할 파일 정보 
+			function deleteFile(id, atchId, atchNo) {
+				$("#"+id).remove();
+				deleteList.push({
+						"atchId": Number(atchId),
+						"atchNo": Number(atchNo)  
+					})
+		}
+		//==============================================================================
+		//✅ form submit
+			function formSubmit() {
+				// 카테고리 val
 				var ctgry = $("#cate option:selected").val(); 
 				$("#ctgry").val(ctgry); 
 				
-				// 네고여부 > 체크시 value로 Y 주기  //디폴트 N(java에서 처리할 예정~!)
-				console.log($('#negoYn'))
+				// 네고여부
 				if ($('#negoYn').is(":checked")) {
-					console.log("checked!")
 		            $('#negoYn').val("Y");
+		        }else{
+		        	$('#negoYn').val("");
 		        }
 				
-				//submit 전 체크하기
+				// form submit 전 유효성 체크
 				if(submitCheck()){
-				var formData = new FormData($("#dFrm")[0]);
-				
-// 				formData.append("deleteList", JSON.stringify(deleteList));
+					var formData = new FormData($("#dFrm")[0]);
+					// formData.append("deleteList", JSON.stringify(deleteList));
 
-				for (var i = 0; i < inputFileList.length; i++) {
-					if (!inputFileList[i].is_delete) {
-						formData.append("files", inputFileList[i]);
+					for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
 					}
-				}				
-				// 파일 삭제 ajax
-				$.ajax({	url : "/chaeunTest",
-							type : "post",
-							data :  JSON.stringify(deleteList),
-							success : function(result) {
-								console.log(result)
-									alert(result);
-							},
-							error : function(err){
-								alert("ㅠㅠㅠㅠㅠㅠ");
-							}
-						});
+					console.log(formData);
+					// 기존 파일 삭제 ajax
+					console.log(deleteList.length!=0)
+					if(deleteList.length!=0){
+						exFileDeleteAjax();
+					}
+					
+					// 삭제할 파일 없으면 수정 ajax만 실행
+					$.ajax({	
+						url : "/updateTestSubmit",
+						type : "POST",
+						data : formData,
+						processData : false,
+						contentType : false,
+						success : function(result) {
+							console.log(result)
+							alert("[수정완료] 게시글 수정이 완료되었습니다 :D");
+							location.href = "/dealMain";
+						},
+						error : function(err){
+							alert("[수정실패] 게시글 수정 중 오류가 발생하였습니다. :(");
+						}
+					});
 				
-				
-				//form 업데이트.. 하
-// 				$.ajax({	url : "/updateTestSubmit",
-// 							type : "POST",
-// 							data : formData,
-// 							processData : false,
-// 							contentType : false,
-// 							success : function(result) {
-// 								console.log(result)
-// 									alert("[작성 완료] \""+ result.dlTtl+"\"게시글 작성이 완료되었습니다 :D");
-// 									location.href = "/dealMain";
-								
-// 							},
-// 							error : function(err){
-// 								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
-// 							}
-// 						});
 				}
 			}
+
+			//==============================================================================
+			//✅ 파일 삭제 ajax
+			function exFileDeleteAjax(){
+				$.ajax({	
+					url : "/deleteTest",
+					type : "post",
+					data :  JSON.stringify(deleteList),
+					contentType: "application/json; charset=utf-8",
+					success : function(delCnt) {
+							console.log(delCnt)
+					},
+					error : function(err){
+						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
+					}
+				});	
+			}
+
 		//==============================================================================
-		//✅ submit 전 체크
+		//✅ submit 전 유효성 체크
 			function submitCheck(){
 			//1. 파일 업로드 여부
-			if(inputFileList.length==0){
+			if($("#uploadFileList").children().length==0){
 				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
 				isSubmitOk = false;
 			}
-			
+
 			//2. 카테고리 선택 여부
 			else if($("#ctgry").val()==""){
 				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
 				isSubmitOk = false;
 			}
-			
+
 			//3. 글제목 작성 여부
 			else if($("#dlTtl").val()==""){
 				$("#dlTtl").focus();
 				isSubmitOk = false;
 			}
-			
+
 			//4. 글내용 작성 여부
 			else if($("#dlCn").val()==""){
 				$("#dlCn").focus();
@@ -330,30 +368,14 @@
 			else if($("#dlPrc").val()==""){
 			   $("#dlPrc").focus();
 				isSubmitOk = false;
-			}else{
-				isSubmitOk = true;
-			}		
-			return isSubmitOk;			
-		}
-		//==============================================================================
-		//✅ (수정/삭제에서 사용) 기존 db에서 삭제할 파일들을 배열에 담아서 보내는 함수
-			function deleteFile(id, atchId, atchNo) {
-// 			console.log(id)
-// 			console.log(atchId)
-// 			console.log(atchNo)
-				$("#"+id).remove();
-				deleteList.push({
-				atchId: Number(atchId),
-				atchNo: Number(atchNo)
-			})
-
-// 			console.log(deleteList)
-			console.log("▼ stringify")
-			console.log(JSON.stringify(deleteList))
-			console.log("▼ 걍 출력")
-			console.log(deleteList)
 			}
 			
+			else{
+				isSubmitOk = true;
+			}
+			
+			return isSubmitOk;			
+		}			
 	</script>
 </div>
 	<!-- jquery latest version -->
@@ -369,7 +391,6 @@
 	<script src="js/ajax-mail.js"></script>
 	<!-- Main js file that contents all jQuery plugins activation. -->
 	<script src="js/main.js"></script>
-
 
 </body>
 

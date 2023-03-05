@@ -115,10 +115,10 @@
 		</selectKey>		
 	INSERT INTO DEAL (DL_NO, DL_TTL, DL_CN, CTGRY,
 					  DL_YMD, DL_PRC, AREA, ATCH_ID
-						<if test="negoYn != null and ctgry != ''" >,NEGO_YN</if>) 
+						<if test="negoYn != null">,NEGO_YN</if>) 
 						VALUES (#{dlNo}, #{dlTtl}, #{dlCn}, #{ctgry},
 								CURRENT_DATE, #{dlPrc}, #{area}, #{atchId}
-								<if test="negoYn != null and negoYn != ''">,#{negoYn}</if>)	
+								<if test="negoYn != null">,#{negoYn}</if>)	
 	</insert>
 	
 	<insert id="deleteDeal"

@@ -28,6 +28,7 @@ public class DealVO extends AtchVO{
 	private String negoYn;	// 네고여부
 	private String ctgry;	// 카테고리
 	private String atchNm;  // 파일명
+	private int atchId;
 	
 	// 공통코드
 	private String commonCode;

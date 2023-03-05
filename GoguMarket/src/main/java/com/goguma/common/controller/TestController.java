@@ -2,7 +2,6 @@ package com.goguma.common.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,40 +99,56 @@ public class TestController {
 		session.setAttribute("dealArea", mVO.getDealArea()); // 유저 거래지역 설정
 
 		// 게시글 정보 담기
-		model.addAttribute("dealInfo", testService.selectDeal(11)); // 1번 게시글 정보
+		model.addAttribute("dealInfo", testService.selectDealTest(7)); // 12번 게시글 정보
 
-		model.addAttribute("atchList", testService.selectDealAtch(11)); // 1번 게시글 첨부파일 목록
+		model.addAttribute("atchList", testService.selectDealAtchTest(7)); // 12번 게시글 첨부파일 목록
 
 		model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
 
 		return "common/cmUpdateForm";
 	}
 
-	@RequestMapping("/chaeunTest")
+	@RequestMapping("/deleteTest")
 	@ResponseBody
-	public String deleteFileTest(List<Map<String, Object>> deleteList) {
-		System.out.println("삭제할 파일 리스트(AtchVO) ===========" + deleteList);
-		return "하";
+	public int deleteFileTest(@RequestBody List<AtchVO> deleteList) {
+		int cnt = atchService.deleteFile(deleteList);
+		return cnt;
 	}
 	
 	
 	@RequestMapping("/updateTestSubmit")
 	@ResponseBody
-	public DealVO updateTestSubmit(DealVO vo, List<MultipartFile> files, List<Map<String, Object>> deleteList) {
+	public DealVO updateTestSubmit(DealVO vo, List<MultipartFile> files) {
 	
 		System.out.println("updateTestSubmit왔음 =======");
-		System.out.println("삭제할 파일 리스트(AtchVO) ===========" + deleteList);
 
-//		int atchId = atchService.insertFile(files);
+		int atchId = atchService.insertFile(vo.getAtchId(), files);
 		System.out.println("넣을 파일 리스트(atchvo)" + files);
 		System.out.println("수정할 dealVO ==============================" + vo);
 
-//		if (atchId > 0) {
-//			vo.setAtchId(atchId);
-//		}
-//		dealService.insertDeal(vo);
+		testService.updateDealTest(vo);
 
 		return vo;
+	}
+	
+	// ▷ delete 테스트 -----------------------------------
+	@RequestMapping("/deleteAllTest/{dlNo}")
+	public String deleteAllTest(@PathVariable int dlNo) {
+			System.out.println(dlNo+" => 삭제할 글 번호");
+			
+			DealVO dVO = testService.selectDealTest(dlNo);
+			System.out.println(dVO+" => 삭제할 글 정보");
+			
+			List<AtchVO> atchList =testService.selectDealAtchTest(dlNo);
+			System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+
+			int delDeal = testService.deleteDealTest(dVO);
+			System.out.println("게시글 삭제했으면 1 => "+delDeal);
+			
+			int delAtch = atchService.deleteFile(atchList);
+			System.out.println("첨부파일 삭제했으면 1 이상 => "+ delAtch);
+			
+			return "deal/dealMain";
 	}
 
 }

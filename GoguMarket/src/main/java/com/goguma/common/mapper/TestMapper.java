@@ -7,8 +7,14 @@ import com.goguma.deal.vo.DealVO;
 
 public interface TestMapper {
 	// Deal 게시글 정보 가져오기
-	DealVO selectDeal(int dlNo);
+	DealVO selectDealTest(int dlNo);
 	
-	// Deal 게시글 한 개의 첨부파일들 가져오기
-	List<AtchVO> selectDealAtch(int dlNo);
+	// Deal 게시글 한 개의 첨부파일들 다 가져오기
+	List<AtchVO> selectDealAtchTest(int dlNo);
+	
+	// Deal 게시글 update
+	int updateDealTest(DealVO dVO);
+	
+	// Deal 게시글 삭제(DB에서 영구삭제)
+	int deleteDealTest(DealVO dVO);
 }
