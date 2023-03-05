@@ -122,7 +122,7 @@ public class TestController {
 	
 		System.out.println("updateTestSubmit왔음 =======");
 
-		int atchId = atchService.insertFile(vo.getAtchId(), files);
+		int fileUpdateCnt = atchService.insertFile(vo.getAtchId(), files);
 		System.out.println("넣을 파일 리스트(atchvo)" + files);
 		System.out.println("수정할 dealVO ==============================" + vo);
 

@@ -38,4 +38,10 @@ public class MemServiceImpl implements MemService {
 		return	mapper.updateDealArea(mVO);
 	}
 
+	@Override
+	public int updateUser(MemVO mVO) {
+		// TODO Auto-generated method stub
+		return mapper.updateUser(mVO);
+	}
+
 }

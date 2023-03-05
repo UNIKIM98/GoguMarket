@@ -118,19 +118,15 @@ public class MemController {
 	@GetMapping("/myInfo")
 	public String myInfo(HttpServletRequest request, MemVO mVO, Model model) {
 		HttpSession session = request.getSession();
+		
 		mVO.setUserId((String) session.getAttribute("userId"));
-
-		model.addAttribute("userInfo", memService.selectUser(mVO));
-		System.out.println(memService.selectUser(mVO));
+		mVO = memService.selectUser(mVO);
+		model.addAttribute("userInfo", mVO);
+		
+		System.out.println(mVO);
 
 		return "myPages/myInfo";
 	}
 
-	@PostMapping("/memUpdateFormSubmit")
-	public String memUpdateFormSubmit(MemVO memVO) {
-		System.out.println("수정할 VO => " + memVO);
 
-//		memService.updateUser(memVO);
-		return "deal/dealMain";
-	}
 }

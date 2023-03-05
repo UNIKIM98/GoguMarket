@@ -24,7 +24,7 @@
 			<div class="container">
 				<div class="message-box box-shadow white-bg">
 					<form id="memUpdateForm" class="memUpdateForm" action="/memUpdateFormSubmit" method="post"
-						onsubmit="return frmChk()">
+						onsubmit="return false">
 						<div class="row">
 							<div class="col-lg-12">
 								<h4 class="blog-section-title border-left mb-30">회원정보수정</h4>
@@ -36,11 +36,11 @@
 											<th><label for="profile">프로필사진</label></th>
 											<td>
 												<div id="pfTrgt">
-													<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+													<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%;">
 												</div>
 											</td>
 											<td>
-												<input type="file" id="profile" name="profile">
+												<input type="file" id="profile">
 											</td>
 										</tr>
 										<tr>
@@ -136,7 +136,8 @@
 								</table>
 								</div>
 								<div class="col-lg-12">
-									<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">수정하기</button>
+									
+									<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="수정하기">
 									&nbsp;&nbsp;
 									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
 								</div>
@@ -146,8 +147,18 @@
 			</div>
 		</div>
 		<script th:inline="javascript">
+		/*<![CDATA[*/
+		var inputFileList = new Array();
+		var deleteList = new Array();
+		var img_style = 'width:60px;height:60px;border-radius:70%';
+		
+		var userId = /*[[ ${userInfo.userId} ]]*/
+		console.log(userId);
+		/*]]*/
 		// ==============================================================
 		// ▷ DOM 실행 함수
+			var fileNum = 0;
+
 			$(function(){
 				//# 닉네임 중복 체크 초기화
 				$("#nickNm").on("change", function() {
@@ -173,8 +184,92 @@
 				$("#eml").on("change",function(){
 					isEmlOk();
 				})
+				
+				// # 기존 프로필 사진
+				extistingProfile();
+				
+				// # 프로필사진 변경/삭제
+				$("#profile").on("change",function(e){
+					inputProfile(e);
+				})
+				
+				// # form submit
+				$("#btnSave").on("click", function() {
+					frmChk();
+				});
+				
 
 			})
+		// ==============================================================
+		// ▷ 프로필사진 변경/삭제
+			function inputProfile(e){
+				var inputFile = e.target.files;
+				var filesArr = Array.prototype.slice.call(inputFile);
+
+
+				filesArr.forEach(function(f) {
+					console.log("filesArr foreach문")
+					console.log(f)
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					inputFileList.push(f);
+					$("#pfTrgt").children().remove();
+					$("#pfTrgt").append(
+								`
+								<img style=${img_style} src=${e.target.result}
+																	   id=file${fileNum} onclick=fileDelete('file${fileNum}')>
+								`		
+					)
+					fileNum++;
+				}
+				reader.readAsDataURL(f);
+			});
+			$("#profile").val("");
+		}
+		
+		// ==============================================================
+		// ▷ 프로필 삭제
+			function fileDelete(fileNum){
+				var no = fileNum.replace(/[^0-9]/g, "");
+
+				inputFileList[no].is_delete = true;
+				$("#"+fileNum).remove();
+				$("#pfTrgt").append(
+						`
+						<img src=attech/222.jpg style=${img_style}>	
+						`		
+				)
+				
+		}
+		
+		// ==================================================
+		// ▷ 기존 프로필 사진
+			function extistingProfile(){
+				/*<![CDATA[*/
+					var atchList = /*[[ ${userInfo} ]]*/
+						console.log(atchList);
+						
+					if(atchList.atchPath!=null){
+							$("#pfTrgt").children().remove();
+							$('#pfTrgt').append(
+														`<img style=${img_style} src=${atchList.atchPath}
+															   id=exFile onclick=deleteFile('exFile')>`
+														)
+
+					}
+				/*]]*/	
+		}
+		
+		//==============================================================================
+		//✅ exFile 중에서 삭제할 파일 정보 
+			function deleteFile(id, atchId, atchNo) {
+				$("#"+id).remove();
+				$("#pfTrgt").append(
+						`
+						<img src=attech/222.jpg style=${img_style}>	
+						`		
+				)
+		}
 		
 		// ==============================================================
 		// ▷ 이메일주소 유효성 체크
@@ -285,18 +380,66 @@
 		// ==============================================================
 		// ▷ submit 전 정보 유효성 체크
 			function frmChk() {
-				if ($('#userIdBtn').val() == '1') {
-					alert("아이디 중복체크를 해주세요.");
-					return false;
-				} else if ($('#nickNmBtn').val() == '1') {
+				if ($('#nickNmBtn').val() == '1') {
 					alert("닉네임 중복체크를 해주세요.");
 					return false;
 				} else if ($('#addr').val() == "") {
 					alert("주소를 입력해주세요.");
 					return false;
+				}else{					
+					formSubmit();
 				}
 			}
 		
+		// ==============================================================
+		// ▷ 프로필 아작스
+			function formSubmit(){
+				var formData = new FormData($("#memUpdateForm")[0]);
+				console.log("왔니..")
+				console.log(inputFileList)
+				for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
+					}
+				
+				if(deleteList.length!=0){
+					exFileDeleteAjax();
+				}
+				
+				$.ajax({	
+					url : "/memUpdateFormSubmit",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						alert("[수정완료] 회원정보 수정이 완료되었습니다 :D");
+						location.href = "/dealMain";
+					},
+					error : function(err){
+						alert("[수정실패] 수정 중 오류가 발생하였습니다. :(");
+					}
+				});
+				
+			}
+		
+		//==============================================================================
+		//✅ 파일 삭제 ajax
+			function exFileDeleteAjax(){
+				$.ajax({	
+					url : "/deleteProfile",
+					type : "post",
+					data :  userId,
+					success : function(delCnt) {
+							console.log(delCnt)
+					},
+					error : function(err){
+						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
+					}
+				});	
+			}
 		</script>
 	</div>
 </body>
