@@ -1,32 +1,44 @@
 package com.goguma.mem.controller;
 
+import java.io.File;
+import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.goguma.common.service.AtchService;
+import com.goguma.common.vo.AtchVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
 @RestController
 public class MemRestController {
 	@Autowired
-	MemService mService;
+	MemService memService;
 
-	/*
-	 * @Autowired AttendService aService;
-	 */
+	@Autowired
+	AtchService atchService;
+
+	@Value("${goguma.save}")
+	private String saveFolder;
 
 	// 아이디체크
 	@GetMapping("/userIdChk/{userId}")
 	public String userIdChk(@PathVariable String userId) {
 		// 있으면 1 없으면 0
-		int chk = mService.isIdCheck(userId);
+		int chk = memService.isIdCheck(userId);
 		String result = "1";
 		if (chk == 0) {
 			result = "0";
@@ -38,7 +50,7 @@ public class MemRestController {
 	// 닉네임 체크
 	@GetMapping("/nickNmChk/{nickNm}")
 	public String nickNmChk(@PathVariable String nickNm) {
-		int chk = mService.isNickNmCheck(nickNm);
+		int chk = memService.isNickNmCheck(nickNm);
 		String result = "1";
 
 		if (chk == 0) {
@@ -57,12 +69,69 @@ public class MemRestController {
 		vo.setUserId(userId);
 		String result = "fail";
 
-		int cnt = mService.updateDealArea(vo);
+		int cnt = memService.updateDealArea(vo);
 
 		if (cnt > 0) {
 			result = "success";
 		}
 		return result;
+	}
+
+	// 회원 정보 수정
+	@PostMapping("/memUpdateFormSubmit")
+	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files) {
+		System.out.println("수정할 VO => " + memVO);
+
+		//프로필사진 있으면 실행
+		if (files != null && !files.isEmpty()) {
+			for (MultipartFile file : files) {
+				if (file.getSize() == 0)
+					continue;
+
+				String fileName = UUID.randomUUID().toString();
+				fileName = fileName + "_" + file.getOriginalFilename();
+
+				File uploadFile = new File(saveFolder, fileName);
+				try {
+					file.transferTo(uploadFile);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				memVO.setAtchNm(fileName);
+				memVO.setAtchPath("/upload/" + fileName);
+			}
+			
+		//없으면
+		}else {
+			memVO.setAtchNm(null);
+			memVO.setAtchPath(null);
+		}
+		System.out.println("바꾼 VO => " + memVO);
+
+		int memUpdateCnt = memService.updateUser(memVO);
+
+		return memUpdateCnt;
+	}
+
+	@RequestMapping("/deleteProfile")
+	@ResponseBody
+	public int deleteProfile(@RequestBody String userId) {
+		int cnt = 0;
+
+		MemVO mVO = new MemVO();
+		mVO.setUserId(userId);
+		mVO = memService.selectUser(mVO);
+
+		File file = new File(saveFolder + mVO.getAtchNm());
+		boolean result = file.delete();
+		// 파일 삭제시 1 삭제 실패시 0
+		if (result) {
+			cnt = 1;
+		}
+		System.out.println(cnt + "삭제했으면1");
+		return cnt;
 	}
 
 }

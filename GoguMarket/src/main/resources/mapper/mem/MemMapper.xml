@@ -41,4 +41,26 @@
 		SET DEAL_AREA = #{dealArea}, ADDR = #{addr}
 		WHERE USER_ID = #{userId}
 	</update>
+	
+	<update id="updateUser" parameterType="com.goguma.mem.vo.MemVO">
+		UPDATE MEM 
+		SET user_pw = #{userPw},
+			nick_Nm = #{nickNm},
+			addr = #{addr},
+			deal_area = #{dealArea},
+			<if test="eml != null and eml != ''">eml = #{eml},</if>
+			<if test="birthYmd != null and birthYmd != ''">birth_ymd =#{birthYmd},</if>
+			mbl_telNo = #{mblTelno},
+			 
+			<choose>
+				<when test="atchNm == null">atch_nm = null,</when>
+				<otherwise>atch_nm = #{atchNm},</otherwise>
+			</choose>
+			
+			<choose>
+				<when test="atchPath == null">atch_path = null</when>
+				<otherwise>atch_path =  #{atchPath}</otherwise>
+			</choose>
+	</update>
+
 </mapper>

@@ -11,7 +11,7 @@ import lombok.Data;
 
 
 @Data
-public class MemVO extends RsvtVO{
+public class MemVO{
 
 	private String userId;
 	private String userSe;
@@ -38,7 +38,8 @@ public class MemVO extends RsvtVO{
 	private String socialToken;
 	private String rfshToken;
 	private String socialSe;
-	private String atechId;
+	private String atchNm;
+	private String atchPath;
 	
 	
 }
