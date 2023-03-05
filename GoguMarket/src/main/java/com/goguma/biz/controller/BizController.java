@@ -9,18 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.goguma.biz.mapper.BizMemMapper;
-import com.goguma.biz.service.BizDangolService;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
-import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.biz.vo.PagingVO;
-import com.goguma.common.service.AtchService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
@@ -69,8 +63,7 @@ public class BizController {
 		//리뷰 카운팅
 		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
 
-
-		//이미지 테스트
+		//가게 리스트 이미지
 		model.addAttribute("img", bizMapper.bizImgList());
 		System.out.println("이미지=============="+bizMapper.bizImgList());
 
@@ -99,7 +92,7 @@ public class BizController {
 		//리뷰 카운팅
 		model.addAttribute("rwCnt", bizMapper.BizReviewCnt());
 		
-		//이미지 테스트
+		//가게 리스트
 		model.addAttribute("img", bizMapper.bizImgList());
 		
 		//상세이미지
