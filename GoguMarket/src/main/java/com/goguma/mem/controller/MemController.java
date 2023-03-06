@@ -115,6 +115,15 @@ public class MemController {
 
 	// ===========================================================
 	// ▷ 회원정보 수정
+	@GetMapping("/myInfoCheck")
+	public String myInfoCheck(HttpServletRequest request, MemVO mVO, Model model) {
+		HttpSession session = request.getSession();
+		mVO.setUserId((String) session.getAttribute("userId"));
+		
+		return "myPages/myInfoCheck";
+	}
+	
+	
 	@GetMapping("/myInfo")
 	public String myInfo(HttpServletRequest request, MemVO mVO, Model model) {
 		HttpSession session = request.getSession();

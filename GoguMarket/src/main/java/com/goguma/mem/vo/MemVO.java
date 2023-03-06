@@ -11,7 +11,7 @@ import lombok.Data;
 
 
 @Data
-public class MemVO{
+public class MemVO {
 
 	private String userId;
 	private String userSe;
