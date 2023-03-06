@@ -7,7 +7,8 @@
 		INSERT INTO rsvt(
 			rsvt_no, biz_no, user_id, rsvt_ymd, rsvt_tm, rsvt_nope,
 			rsvt_want, rsvt_pay, rsvt_tm, rsvt_stts, com_order_yn,
-			pay_mthhd, alarm_yn)
+			pay_mthhd, alarm_yn
+			)
 		VALUES(
 			#{rsvtNo},
 			#{bizNo},
@@ -23,5 +24,24 @@
 			#{payMthhd},
 			#{alarmYn}
 			)
+	</insert>
+	
+	<!-- 예약 메뉴 -->
+	<insert id="insertRsvtMenu" parameterType="com.goguma.rsvt.vo.RsvtMenuVO">
+		insert into rsvt_menu(
+			rsvt_menu_no,
+			rsvt_no,
+			menu_no,
+			amount,
+			user_id
+			)
+		values(
+			#{rsvtMenuNo},
+			#{rsvtNo},
+			#{menuNo},
+			#{amount},
+			#{userId}
+		)
+	
 	</insert>
 </mapper>
