@@ -6,7 +6,8 @@
 		resultType="com.goguma.sns.vo.SnsCmntVO">
 		SELECT * FROM sns_cmnt
 		WHERE sns_no = #{snsNo}
-		ORDER BY sns_no,recmnt_order
+		ORDER BY
+		sns_no,recmnt_order
 	</select>
 
 
@@ -24,7 +25,9 @@
 		cmnt_cn,
 		cmnt_mem,
 		cmnt_ymd,
-		group_no
+		group_no,
+		recmnt_order,
+		step
 
 		)
 		VALUES (
@@ -33,12 +36,22 @@
 		#{cmntCn},
 		#{cmntMem},
 		CURRENT_Date,
-		#{cmntNo}
-
-		)
-
-
-	</insert>
+		<choose>
+			<when test="groupNo != null">#{groupNo}+1</when>
+			<otherwise>#{groupNo}</otherwise>
+		</choose>
+		,
+		<choose>
+			<when test="recmntOrder != null">#{recmntOrder}+1</when>
+			<otherwise>#{recmntOrder}</otherwise>
+		</choose>
+		,
+		<choose>
+			<when test="step != null">#{step}+1</when>
+			<otherwise>#{step}</otherwise>
+		</choose>
+)
+</insert>
 
 
 

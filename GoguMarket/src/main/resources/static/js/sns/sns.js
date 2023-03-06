@@ -21,8 +21,8 @@ var reInput = document.getElementById("reInput");
   $.get("../templates/sns/rrpWrite.html", function(html_string)
    {
 		console.log("테스트 입니다 html 파일 : " + html_string);
-      alert(html_string); 
-      rrpWriteHtml = html_string;
+	  alert(html_string); 
+	  rrpWriteHtml = html_string;
    },'html');
 });
 */
@@ -30,7 +30,7 @@ var reInput = document.getElementById("reInput");
 
 reInput.onclick = function() {
 	reInput.style.display = "block";
-	
+
 };
 
 //---------------- 게시글 list-------------------------
@@ -81,10 +81,7 @@ function SelectCmntlist(snsNo) {
 				console.log("내가 띄운 댓글의 번호 :");
 				$("#Sns-reply").append(`
 						<div class="replyGroup" id="${item.cmntNo}">
-						    <input type="hidden" name="groupNo" id="groupNo" th:value="${item.groupNo}">	
-						    <input type="hidden" name="step" id="step" th:value="${item.step}">
-						    <input type="hidden" name="recomntOrder" id="recomntOrder" th:value="${item.recmntOrder}">   
-						    
+						
 						    <div class="card mb-1">
 						        <div class="card-body bg-light">
 						            <div class="media" style="margin: 10px">
@@ -107,23 +104,15 @@ function SelectCmntlist(snsNo) {
 						            </div>
 						        </div>
 						        <!--Insert form-->
-						        <div id="replyInput" class="replyInput">
-						        <ul class="list-group list-group-flush mt-10">
-						            <li class="list-group-item">
-						                <textarea class="form-control" id="replyCmntCn"
-						                    name="replyCmntCn"> </textarea>
-						                <button type="button" class="btn btn-dark mt-3 f-right"
-						                    onclick="insertReply()">post reply</button>
-						            </li>
-						        </ul>
-						        </div>
-						        <div class="rrplyGroup" id="rrplyGroup_${item.cmntNo}">
 						
+						        <div class="rrplyGroup" id="rrplyGroup_${item.cmntNo}">
+									
 						        </div>
+						
+						  
 						
 						</div>`);
 			});
-
 		},
 		error: function() {
 			cosole.log(error)
@@ -137,10 +126,9 @@ function ShowRrpInput(cmntNo) {
 	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
 	console.log("현재 파일의 위치 : " + window.location);
 
-	/*$("#rrplyGroup_"+cmntNo).append("<div id='rrpBox'> " +
-	$(".rrpBoxSample").html()
-	+ "</div>");*/
-	$("#rrplyGroup_"+cmntNo > "#rrpBox").load("sns/rrpWrite.html");
+
+	$("#rrplyGroup_" + cmntNo).load("sns/rrpWrite.html?    ",);
+	
 
 }
 
@@ -148,9 +136,23 @@ function ShowRrpInput(cmntNo) {
 
 //---------------------------------reply(insert)-----------------------------------
 function insertReply() {
+
 	let snsNo = $("#replySnsNo").val();
 	let cmntMem = $("#replyUserId").val();
 	let cmntCn = $("#replyCmntCn").val();
+
+	console.log(event.currentTarget.parentNode.parentNode.parentNode.sibling)
+
+
+	let recmntOrder = $("#recmntOrder").val();
+	let groupNo = $("#groupNo").val();
+	let step = $("#step").val();
+
+	console.log(recmntOrder)
+	console.log(groupNo)
+	console.log(step)
+
+
 
 	if (cmntCn == " ") {
 		alert("댓글을 입력하세요");
@@ -178,6 +180,7 @@ function insertReply() {
 			cosole.log(error)
 		}
 	});
+
 	SelectCmntlist(snsNo);
 
 }
