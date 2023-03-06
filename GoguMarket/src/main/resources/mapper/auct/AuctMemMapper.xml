@@ -6,7 +6,8 @@
 	
 	
 	</select>
-	
+
+<!-- 입찰 등록 -->
 	<insert id="insertAuctMem"
 			parameterType="com.goguma.auct.vo.AuctMemVO">
 		<selectKey keyProperty="auctMemNo" resultType="int" order="BEFORE">
@@ -14,7 +15,7 @@
 			FROM AUCT_MEM
 		</selectKey>
 	INSERT INTO AUCT_MEM (AUCT_MEM_NO, AUCT_MEM, AUCT_NO, AUCT_YMD, NOW_PRC, PNT_CNT)
-	VALUES			(#{auctMemNo}, #{auctMem}, #{auctNo}, #{auctYmd}, #{nowPrc}, #{pntCnt})
+	VALUES			(#{auctMemNo}, #{auctMem}, #{auctNo}, CURRENT_DATE, #{nowPrc}, #{pntCnt})
 	</insert>
 	
 	

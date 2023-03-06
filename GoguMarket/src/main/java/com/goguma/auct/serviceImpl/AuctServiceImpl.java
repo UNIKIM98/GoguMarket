@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.goguma.auct.mapper.AuctMapper;
 import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctVO;
+import com.goguma.common.vo.AtchVO;
 
 @Service
 public class AuctServiceImpl implements AuctService{
@@ -34,14 +35,26 @@ public class AuctServiceImpl implements AuctService{
 	}
 
 	@Override
-	public int deleteAuct(String id) {
+	public int deleteAuct(AuctVO vo) {
 		// 삭제
-		return auctMapper.deleteAuct(id);
+		return auctMapper.deleteAuct(vo);
 	}
 
 	@Override
 	public int auctHitUpdate(int auctNo) {
 		// 조회수 증가
 		return auctMapper.auctHitUpdate(auctNo);
+	}
+
+	@Override
+	public AuctVO selectAuct(int auctNo) {
+		// 삭제에 쓰는 int auctNo
+		return auctMapper.selectAuct(auctNo);
+	}
+
+	@Override
+	public List<AtchVO> selectAuctAtch(int auctNo) {
+		// 단건조회 모든 이미지
+		return auctMapper.selectAuctAtch(auctNo);
 	}
 }

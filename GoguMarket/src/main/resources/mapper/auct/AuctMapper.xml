@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.auct.mapper.AuctMapper">
 
-
+<!-- 전체 리스트 -->
 	<select id="getAuctList"
-		parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
 		SELECT a.* ,
 		       (SELECT ATCH_PATH
@@ -13,7 +12,8 @@
 		FROM AUCT a
 		ORDER BY AUCT_NO DESC
 	</select>
-
+	
+<!-- 단건조회 -->
 	<select id="getAuct"
 		parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
@@ -24,6 +24,16 @@
 		WHERE AUCT_NO = #{auctNo}
 	</select>
 
+<!-- 단건조회 첨부파일 -->
+	<select id="selectAuctAtch" 
+			parameterType="int" 
+			resultType="com.goguma.common.vo.AtchVO">
+	SELECT * FROM ATCH
+	WHERE ATCH_ID = (SELECT atch_id FROM AUCT
+	                WHERE auct_no = #{auctNo})
+	</select>
+
+<!-- 등록 -->
 	<insert id="insertAuct"
 			parameterType="com.goguma.auct.vo.AuctVO">
 		
@@ -41,35 +51,20 @@
 		#{auctCn}, #{lowPrc}, #{quickPrc}, #{atchId}, #{userId}
 		)
 	</insert>
-<!-- 
-	<update id="noticeUpdate"
-		parameterType="co.king.prj.notice.service.NoticeVO">
-		UPDATE AUCT
-		<set>
-			<if test="auctTtl != null">AUCT_TTL = #{auctTtl},</if>
-			<if test="ctgry != null">ctgry = #{ctgry},</if>
-			<if test="auctCn != null">AUCT_CN = #{auctCn},</if>
-			<if test="quickPrc != null">QUICK_PRC = #{quickPrc},</if>
-			<if test="stts != null">stts = #{stts},</if>
-			<if test="atchId != null">ATCH_ID = #{atchId},</if>
-			<if test="noticeSubject != null">NOTICE_SUBJECT = #{noticeSubject}</if>
-		</set>
-		WHERE AUCT_NO = #{auctNo}
-	</update>
- -->
- 
+<!-- 삭제 -->
 	<delete id="deleteAuct"
 		parameterType="com.goguma.auct.vo.AuctVO">
 		DELETE FROM AUCT WHERE AUCT_NO = #{auctNo}
 	</delete>
 
-	
+<!-- 조회수 증가 -->
 	<update id="auctHitUpdate">
 		UPDATE AUCT
 		SET INQ_CNT = INQ_CNT + 1
 		WHERE AUCT_NO = #{auctNo}
 	</update>
-	
+
+
 	<update id="ddlnAuct">
 		UPDATE AUCT
 		<![CDATA[
@@ -78,6 +73,9 @@
 		WHERE TO_DATE(DDLN_YMD,'YYYY/MM/DD/HH24:MI') < TO_DATE(CURRENT_DATE,'YYYY/MM/DD/HH24:MI')
 		]]>
 	</update>
-	
-
+<!-- 삭제할때 쓰는 int auctNo -->
+	<select id="selectAuct" parameterType="int" resultType="com.goguma.auct.vo.AuctVO">
+		SELECT * FROM AUCT
+		WHERE auct_no = #{auctNo}
+	</select>
 </mapper>

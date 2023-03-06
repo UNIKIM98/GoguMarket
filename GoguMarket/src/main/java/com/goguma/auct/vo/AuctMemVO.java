@@ -10,9 +10,9 @@ import lombok.Data;
 
 @Data
 public class AuctMemVO {
-	private String auctMemNo;	// 경매참여자 번호
+	private int auctMemNo;	// 경매참여자 번호
 	private String auctMem;		// 참여자
-	private String auctNo;		// 경매번호
+	private int auctNo;		// 경매번호
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date auctYmd;		// 입찰일자
