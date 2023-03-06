@@ -25,6 +25,11 @@ textarea {
 	width: 80%;
 	resize: none;
 }
+/* .brand-item{
+width: 20%;
+height:30%
+
+} */
 </style>
 </head>
 
@@ -79,7 +84,9 @@ textarea {
 							</div>
 							<form>
 								<div class="by-brand-product">
-									<div class="active-by-brand slick-arrow-2" id="list"></div>
+									<div class="active-by-brand slick-arrow-2" id="list">
+									
+									</div>
 								</div>
 							</form>
 						</div>
@@ -173,7 +180,7 @@ textarea {
 
 						<th:block th:if="${session.userId != null}">
 							<!-- 아이디 check-->
-							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
+							<div th:insert="~{sns/rrpWrite :: rrpWrite}"></div>
 
 							<div class="Sns-reply" id="Sns-reply">
 							
@@ -212,7 +219,8 @@ textarea {
 	                            						${sns.userId} / ${sns.snsYmd}
 	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
 	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-	                         							<img src="${sns.atchPath}" alt=""></a>
+	                         							<div>
+	                            						<img src="${sns.atchPath}" alt=""></a>
 	                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
 												</div>
 											</div>`)

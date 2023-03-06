@@ -38,9 +38,12 @@ public class SnsController {
 		return "sns/replyView";
 	}
 
-	@GetMapping("/replyWrite")
+	@GetMapping("/rrpWrite")
 	public String replyWrite() {
-		return "sns/replyWrite";
+		
+		
+		
+		return "sns/rrpWrite";
 	}
 
 }

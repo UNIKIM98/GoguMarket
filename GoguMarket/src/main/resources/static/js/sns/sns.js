@@ -11,11 +11,11 @@ var Snsbtn = document.getElementById("clickSns");
 var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
 
 
-var reInput = document.getElementById("reInput");
-/*const rrpWriteHtml;
+/*
+const rrpWriteHtml;
 */
 
-//외부 파일 로드
+/*외부 파일 로드*/
 /*$(document).ready(function()
 {
   $.get("../templates/sns/rrpWrite.html", function(html_string)
@@ -25,13 +25,13 @@ var reInput = document.getElementById("reInput");
 	  rrpWriteHtml = html_string;
    },'html');
 });
-*/
+
 
 
 reInput.onclick = function() {
-	reInput.style.display = "block";
-
-};
+	reInput.style.display = "block";*/
+/*
+};*/
 
 //---------------- 게시글 list-------------------------
 
@@ -76,13 +76,12 @@ function SelectCmntlist(snsNo) {
 		success: function(data) {
 			console.log(data);
 			$(data).each(function(index, item) {
-				console.log(item.cmntCn);
+
 				//아래의 코드는 html이다
 				console.log("내가 띄운 댓글의 번호 :");
-				$("#Sns-reply").append(`
+			$("#Sns-reply").append(`
 						<div class="replyGroup" id="${item.cmntNo}">
-						
-						    <div class="card mb-1">
+							<div class="card mb-1">
 						        <div class="card-body bg-light">
 						            <div class="media" style="margin: 10px">
 						                <div class="media-left">
@@ -99,19 +98,19 @@ function SelectCmntlist(snsNo) {
 						                                </div>
 						                            </div>
 						                        </div>
+												<input type="hidden" id="groupNo" value="${item.groupNo}"/>
 						                    </div>
-						                <input type="button" text="답글" class="btn btn-dark mt-3 f-right" id="reInput" onClick="ShowRrpInput(${item.cmntNo})" />
+						                <input type="button" id="input1" class="btn btn-dark mt-3 f-right" id="reInput" onClick="ShowRrpInput(${item.cmntNo},${item.groupNo},${item.recmntOrder},${item.step})" />
 						            </div>
 						        </div>
 						        <!--Insert form-->
 						
 						        <div class="rrplyGroup" id="rrplyGroup_${item.cmntNo}">
-									
-						        </div>
-						
-						  
+							</div>
 						
 						</div>`);
+						
+						
 			});
 		},
 		error: function() {
@@ -122,13 +121,17 @@ function SelectCmntlist(snsNo) {
 
 
 
-function ShowRrpInput(cmntNo) {
-	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
-	console.log("현재 파일의 위치 : " + window.location);
+function ShowRrpInput(cmntNo,groupNo,recmntOrder,step) {
+
+	$("#rrplyGroup_" + cmntNo).load("/rrpWrite?cmntNo=" + cmntNo + "&groupNo=" + groupNo + "&recmntOrder=" + recmntOrder + "&step=" + step)
+
+	console.log("내가 띄운 답답답글의 번호 : " + cmntNo)
 
 
-	$("#rrplyGroup_" + cmntNo).load("sns/rrpWrite.html?    ",);
-	
+
+
+
+
 
 }
 
@@ -139,26 +142,23 @@ function insertReply() {
 
 	let snsNo = $("#replySnsNo").val();
 	let cmntMem = $("#replyUserId").val();
-	let cmntCn = $("#replyCmntCn").val();
-
-	console.log(event.currentTarget.parentNode.parentNode.parentNode.sibling)
-
-
-	let recmntOrder = $("#recmntOrder").val();
-	let groupNo = $("#groupNo").val();
+	//문자열
+	let cmntCn= $("#replyCmntCn").val();   //댓글 문자열
 	let step = $("#step").val();
+	let cmntNo = $("#cmntNo").val();
+	let groupNo = $("#groupNo").val();
+	let recmntOrder = $("#recmntOrder").val();
+	
+	
 
-	console.log(recmntOrder)
-	console.log(groupNo)
-	console.log(step)
-
-
-
+	
 	if (cmntCn == " ") {
 		alert("댓글을 입력하세요");
 		return;
 	}
-
+	
+	console.log(snsNo,"/",cmntMem,"/",cmntCn,"/",step,"/",cmntNo,"/",groupNo,"/",recmntOrder)
+	
 	$.ajax({
 		url: "/insertReply",
 		type: "POST",
@@ -166,6 +166,11 @@ function insertReply() {
 			snsNo: snsNo,
 			cmntMem: cmntMem,
 			cmntCn: cmntCn,
+			cmntNo: cmntNo,
+			groupNo: groupNo,
+			recmntOrder: recmntOrder,
+			step : step
+
 		}),
 		contentType: "application/json",
 

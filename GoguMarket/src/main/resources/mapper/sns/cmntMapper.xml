@@ -7,7 +7,7 @@
 		SELECT * FROM sns_cmnt
 		WHERE sns_no = #{snsNo}
 		ORDER BY
-		sns_no,recmnt_order
+		group_no,recmnt_order
 	</select>
 
 
@@ -37,21 +37,26 @@
 		#{cmntMem},
 		CURRENT_Date,
 		<choose>
-			<when test="groupNo != null">#{groupNo}+1</when>
-			<otherwise>#{groupNo}</otherwise>
+			<when test="groupNo == 0">#{groupNo} = null</when>
+			<otherwise>#{groupNo}+1</otherwise>
 		</choose>
 		,
 		<choose>
-			<when test="recmntOrder != null">#{recmntOrder}+1</when>
-			<otherwise>#{recmntOrder}</otherwise>
+			<when test="recmntOrder == 0">#{recmntOrder} = null</when>
+			<otherwise>#{recmntOrder}+1</otherwise>
 		</choose>
 		,
 		<choose>
-			<when test="step != null">#{step}+1</when>
-			<otherwise>#{step}</otherwise>
+			<when test="step == 0">#{step} = null</when>
+			<otherwise>#{step}+1</otherwise>
 		</choose>
-)
-</insert>
+		)
+	</insert>
+
+	<update id="UpdaterecmntOrder" parameterType="com.goguma.sns.vo.SnsCmntVO">
+		UPDATE sns_cmnt SET recmnt_order = recmnt_order +1 WHERE recmnt_order > #{recmntOrder}
+
+	</update>
 
 
 
