@@ -150,7 +150,7 @@
 																						<option th:each="code: ${code}"
 																							th:if="${code.commonDetailCode} >= ${biz.bgngTm} 
 																											and ${code.commonDetailCode} <= ${biz.endTm}"
-																							th:value="|${code.commonDetailCode}|"
+																							th:value="${code.commonDetailCode}"
 																							th:text="${code.commonNm}">(시간)</option>
 
 																					</select>
@@ -422,7 +422,7 @@
 				});
 
 				// 시간 선택이 변경되었을 때 실행될 함수
-				$('select.custom-select').on('change', function() {
+				$('select .custom-select').on('change', function() {
 					var selectedTime = $(this).children(':selected').text();
 					var selectedTimeVal = $(this).val();
 					console.log(selectedTime);
