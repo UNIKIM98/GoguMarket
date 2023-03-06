@@ -40,49 +40,23 @@ layout:decorate="~{layouts/layout}">
 			})
 		})
  */
+ 		// 판매자정보더보기 누르면 가는곳
 		function seller(){
 		console.log("------------------------");
 			let url = $(".single-product-info a").first().text();
 			console.log(url);
 			location.href = `/dealSellerpage/${url}`
 		}
+		
+		// 수정하기 버튼 클릭스 수정폼으로 이동
+		function updateform(){
+			let dlno = $(".single-product-info a").first().text();
+			location.href=`/dealupdate/${dlno}`
+		}
 
 </script>
-	<table class="table" border="1">
-		<thead>
-			<tr>
-				<th>글번호</th>
-				<th>판매자</th>
-				<th>구매자</th>
-				<th>등록일</th>
-				<th>가격</th>	
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="deal : ${deal}" 
-				onmouseover='this.style.background="#fcecae";' 
-				onmouseleave='this.style.background="#FFFFFF";'>
-				<td th:text="${deal.dlNo}"></td>
-				<td th:text="${deal.ntslId}"></td> 
-				<td th:text="${deal.prchsId}"></td>
-				<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
-				<td th:text="${deal.dlPrc}"></td>
-			</tr>
-		</tbody>
-	</table>
+
 	
-	<table class="table" border="1">
-		<thead>
-			<tr>
-				<th>상품</th>
-		</tr>
-		</thead>
-		<tbody>
-			<tr th:each="l : ${list}">
-				<td th:text="${l.dlTtl}"></td>
-			</tr>
-		</tbody>
-	</table>
 
 <hr>
     <!-- Body main wrapper start -->
@@ -132,7 +106,8 @@ layout:decorate="~{layouts/layout}">
                                             <h6 th:text="${deal.dlYmd}" class="brand-name-2">2일전</h6>
                                             <h6 class="brand-name-2 f-right">#생활잡화 #인형 #아기용품</h6>
                                             <h6 th:text="${deal.ctgry}" class="brand-name-2">생활용품잡화</h6>
-                                          
+                                         	<h6 th:text="${deal.stts}" class="brand-name-2">판매상태</h6>
+                                         </tr>
                                          </div>   
                                             <!-- single-product-tab -->
                                             <div class="single-product-tab reviews-tab">
@@ -142,7 +117,7 @@ layout:decorate="~{layouts/layout}">
                                                     <li ><a href="#reviews" data-bs-toggle="tab">판매자의 다른 판매상품</a></li>
                                                     <li ><a href="#relation" data-bs-toggle="tab">유사한 상품</a></li>
                                                 </ul>
-                                                <div class="tab-content">
+                                                <div class="tab-content" th:each="deal : ${deal}">
                                                     <div role="tabpanel" class="tab-pane active show" id="description">
                                                         <p th:text="${deal.dlCn}"></p>    
                                                     </div>
@@ -153,7 +128,7 @@ layout:decorate="~{layouts/layout}">
                                                     <div role="tabpanel" class="tab-pane" id="reviews">
                                                         <!-- reviews-tab-desc -->
                                                         <div class="reviews-tab-desc">
-                                                            <!-- 원래는댓글란인데 관련판매상품1으로 바꿈  -->
+                                                            <!-- 판매자의다른상ㅍ  -->
                                                             <!-- 관련상품 포문돌려서 뽑아버림. tlqkf 얘도 페이징해야됨..?-->
                                                             <div class="media mt-30" th:each="l : ${list}">
                                                                 <div class="media-left">
@@ -163,15 +138,14 @@ layout:decorate="~{layouts/layout}">
                                                                     <div class="clearfix">
                                                                         <div class="name-commenter f-left">
                                                                             <h6 class="media-heading">
-                                                                            	<a th:text="${l.dlTtl}" href="#">타이틀자리</a>
+                                                                            	<a th:text="${l.dlTtl}" a th:href="@{/dealdetail/{dlNo}(dlNo=${l.dlNo})}">타이틀자리</a>
                                                                             </h6>
                                                                             <p class="mb-10">27 Jun, 2022 at 2:30pm</p>
                                                                         </div>
                                                                         <div class="f-right">
                                                                             <ul class="reply-delate">
-                                                                                <li><a href="#">수정</a></li>
-                                                                                <li>/</li>
-                                                                                <li><a href="#">삭제</a></li>
+                                                                                <li><a th:text="${l.stts}">판매상태</a></li>
+                                                                               
                                                                             </ul>
                                                                         </div>
                                                                     </div>
@@ -181,7 +155,7 @@ layout:decorate="~{layouts/layout}">
                                                         </div>
                                                     </div>
                                                     <div role="tabpanel" class="tab-pane" id="relation">
-                                                        <!-- reviews-tab-desc -->
+                                                        <!-- 유사상품 -->
                                                         <div class="reviews-tab-desc">
                                                             <!-- 연관상품 model: ct -->
                                                             <div class="media mt-30" th:each="c : ${ct}">
@@ -192,7 +166,7 @@ layout:decorate="~{layouts/layout}">
                                                                     <div class="clearfix">
                                                                         <div class="name-commenter f-left">
                                                                             <h6 class="media-heading">
-                                                                            	<a th:text="${c.dlTtl}"  href="#">타이틀자리</a>
+                                                                            	<a th:text="${c.dlTtl}" a th:href="@{/dealdetail/{dlNo}(dlNo=${c.dlNo})}">타이틀자리</a>
                                                                             </h6>
                                                                             <p class="mb-10">27 Jun, 2022 at 2:30pm</p>
                                                                         </div>
@@ -219,7 +193,7 @@ layout:decorate="~{layouts/layout}">
                                                 <ul class="nav mb-20">
                                                     <li><h6 class="brand-name-2">찜 3 </h6></li>&nbsp;&nbsp;
                                                     <li><h6 class="brand-name-2">채팅 4 </h6></li>&nbsp;&nbsp;
-                                                    <li><h6 class="brand-name-2">조회수 47</h6></li>
+                                                    <li><h6 class="brand-name-2">조회수</h6></li>
                                                 </ul>
                                                 </div>
                                                 </tr>  
@@ -233,9 +207,9 @@ layout:decorate="~{layouts/layout}">
                                                     <ul class="action-button">
                                                         <li><a href="#" title="Wishlist" tabindex="0"><i class="zmdi zmdi-favorite"></i>찜</a></li>
                                                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview" tabindex="0"><i class="zmdi zmdi-zoom-in"></i>챗</a> </li>
-                                                        <li><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">찜</button></li>
-                                                        <li><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">채팅</button></li>
-                                                        <li><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">사기조회</button></li>
+                                                        <li><button class="submit-btn-1 mt-30 btn-hover-1" type="button" onclick="updateform()">수정하기</button></li>
+                                                        <li><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">삭제하기</button></li>
+                                                        <li><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">구매문의</button></li>
                                                         <li><button class="submit-btn-1 mt-30 btn-hover-1" type="submit">신고하기</button></li>
                                                     </ul>
                                                 </div>

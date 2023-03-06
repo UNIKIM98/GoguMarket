@@ -3,13 +3,13 @@
 <mapper namespace="com.goguma.deal.mapper.DealMapper">
 
 	<select id="getId"
-			resultType="int">
+			resultType="String">
 	SELECT ATCH_ID
 			FROM DEAL
 			WHERE DL_NO = #{dlNo}
 	</select>
 	<select id="getDeal"
-			parameterType="string"
+			parameterType="int"
 			resultType="DealVO">
 	SELECT *
 		FROM DEAL
@@ -113,34 +113,52 @@
 			MAX(dl_no) + 1 END as dlNo
 			FROM deal
 		</selectKey>		
-	INSERT INTO DEAL (DL_NO, DL_TTL, DL_CN, CTGRY,
-					  DL_YMD, DL_PRC, AREA, ATCH_ID
+		INSERT INTO DEAL (DL_NO, 
+		           DL_TTL, 
+		           DL_CN, 
+		           CTGRY,
+				   DL_YMD, 
+				   DL_PRC, 
+				   AREA, 
+				   ATCH_ID
 						<if test="negoYn != null">,NEGO_YN</if>) 
-						VALUES (#{dlNo}, #{dlTtl}, #{dlCn}, #{ctgry},
-								CURRENT_DATE, #{dlPrc}, #{area}, #{atchId}
-								<if test="negoYn != null">,#{negoYn}</if>)	
+			VALUES (#{dlNo}, 
+			        #{dlTtl}, 
+			        #{dlCn}, 
+			        #{ctgry},
+					CURRENT_DATE, 
+					#{dlPrc}, 
+					#{area}, 
+					#{atchId}
+						<if test="negoYn != null">,#{negoYn}</if>)	
 	</insert>
 	
 	<insert id="deleteDeal"
 			parameterType="string">
 		DELETE FROM DEAL
-		WHERE ntsl_id = #{ntslId}
+		WHERE DL_NO = #{dlNo}
 	</insert>
 	
 	<update id="updateDeal"
 			parameterType="com.goguma.deal.vo.DealVO">
-		update deal
-		   set dl_no = #{dlNo},
-			   ntsl_id = #{ntslId},
-			   prchs_id = #{prchsId},
-			   dl_ymd = #{dlYmd},
-			   dl_prc = #{dlPrc}  
-		WHERE ntsl_id = #{ntslId}	
+		UPDATE DEAL
+		SET 
+			 DL_TTL= #{dlTtl},
+			 DL_CN = #{dlCn},
+			 CTGRY = #{ctgry},
+			 DL_YMD = CURRENT_DATE,
+			 DL_PRC = #{dlPrc},
+			 AREA = #{area}
+			<if test="negoYn != null">,NEGO_YN = #{negoYn}</if>
+		WHERE DL_NO = #{dlNo}
 	</update>
 	
-	<update id="dealHitUpdate">
+	<update id="dealHitUpdate"
+			parameterType="int">
 		UPDATE DEAL
 		SET INQ_CNT = INQ_CNT + 1
 		WHERE DL_NO = #{dlNo}
 	</update>
+	
+	
 </mapper>

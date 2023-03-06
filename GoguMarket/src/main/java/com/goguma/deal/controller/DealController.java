@@ -1,12 +1,14 @@
 package com.goguma.deal.controller;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.goguma.common.service.AtchService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.service.SearchService;
+import com.goguma.common.service.TestService;
 import com.goguma.common.vo.AtchVO;
 import com.goguma.common.vo.SearchVO;
 import com.goguma.deal.mapper.DealMapper;
@@ -25,6 +28,8 @@ import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
+import com.goguma.mem.service.MemService;
+import com.goguma.mem.vo.MemVO;
 
 @Controller
 
@@ -42,7 +47,10 @@ public class DealController {
 	private CommonCodeService codeService;
 	@Autowired
 	private SearchService sService;
-
+	@Autowired
+	TestService testService;
+	@Autowired
+	MemService memService;
 	
 	@RequestMapping("/dealMain") // 중고거래 메인 페이지
 	public String dealMain(Paging paging, Model model, SearchVO scvo, @ModelAttribute("dsvo") DealSearchVO svo) {
@@ -84,32 +92,33 @@ public class DealController {
 	
 	// 판매상품 단건 조회 => detail에 쓸려고
 	@RequestMapping("/dealdetail/{dlNo}")
-	public String getDeal(@PathVariable String dlNo, Model model) {
+	public String getDeal(@PathVariable int dlNo, Model model) {
 		System.out.println("=================" + dlNo);
 
-		int cnt = dealService.dealHitUpdate(dlNo);
-		int id = dealService.getId(dlNo);
-
-		model.addAttribute("deal", dealService.getDeal(dlNo));	// 단건
+		int id =  Integer.parseInt(dealService.getId(dlNo));
+		System.out.println(dlNo);
+		System.out.println("++++++++++++");
 		model.addAttribute("list", dealService.getDealSeller(dlNo));//여러건
 		model.addAttribute("ct", dealService.getDealCtgry(dlNo));
 		
 		model.addAttribute("file",attachService.selectAtch(id));
-		System.out.println(attachService.selectAtch(id)+"파일의정보");
+		System.out.println(attachService.selectAtch((id))+"파일의정보");
 		//	List<AtchVO> selectAtch(int atchId);
+		model.addAttribute("cnt",dealService.dealHitUpdate(dlNo));// 조회수
 		
 		return "deal/dealdetail";
 	}
 	
 
 	@RequestMapping("/dealSellerpage/{dlNo}")
-	public String getDealSeller(@PathVariable String dlNo, Model model) {
-		int id = dealService.getId(dlNo);
+	public String getDealSeller(@PathVariable int dlNo, Model model) {
+		
 		
 		model.addAttribute("deal", dealService.getDeal(dlNo)); // 단건
 		model.addAttribute("list", dealService.getDealSeller(dlNo));//여러건
 		model.addAttribute("review", RvService.getDealRv(dlNo));//여러건
 		
+		int id =  Integer.parseInt(dealService.getId(dlNo));
 		model.addAttribute("file",attachService.selectAtch(id));
 		
 		return "deal/dealSellerPage";
@@ -118,6 +127,7 @@ public class DealController {
 	@RequestMapping("/dealform") // 딜폼창확인
 	public String dealform(Model model) {
 		model.addAttribute("category",codeService.codeList("002"));
+	
 		return "deal/dealform";
 	}
 
@@ -128,7 +138,9 @@ public class DealController {
 		
 		if(atchId > 0) {
 			vo.setAtchId(atchId);
+			
 		}
+		vo.setStts("판매중");
 		dealService.insertDeal(vo);
 		return "redirect:dealList";
 	}
@@ -140,27 +152,52 @@ public class DealController {
 		return vo;
 
 	}
+	
+	@GetMapping("/dealupdate/{dlNo}")
+	public String updateTest(Model model, HttpServletRequest request, @PathVariable int dlNo) {
+		// 임시로그인 : 세션에 아이디, 거래지역 담기
+		HttpSession session = request.getSession();
+		MemVO mVO = new MemVO();
 
-	/*
-	 * // 판매상품 수정
-	 * 
-	 * @PutMapping("/deal")
-	 * 
-	 * @ResponseBody public DealVO updateDeal(DealVO vo) {
-	 * dealService.updateDeal(vo); return vo; }
-	 */
-	// 판매상품 삭제
-	public Map<String, Object> deleteDeal(@PathVariable String id) {
-		dealService.deleteDeal(id);
-		return Collections.singletonMap("result", "success delete");
+		mVO.setUserId("user1");
+		mVO = memService.selectUser(mVO);
+
+		session.setAttribute("userId", mVO.getUserId()); // 유저id 설정
+		session.setAttribute("dealArea", mVO.getDealArea()); // 유저 거래지역 설정
+
+		// 게시글 정보 담기
+		model.addAttribute("dealInfo", testService.selectDealTest(dlNo)); // 7번 게시글 정보
+
+		model.addAttribute("atchList", testService.selectDealAtchTest(dlNo)); // 7번 게시글 첨부파일 목록
+
+		model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
+
+		return "deal/dealUpdateForm";
 	}
 
-	/*
-	 * // 걍 상세정보 볼려고 띄우는거 d이거왜 dealDetail 대문자는 인식이안되냐?;
-	 * 
-	 * @RequestMapping("/dealdetail") // public String dealdetail() { return
-	 * "deal/dealdetail"; }
-	 */
+
+	// 판매상품 삭제
+	@RequestMapping("deleteAll/{dlNo}")
+	public String deletedeal(@PathVariable int dlNo) {
+		System.out.println(dlNo+" => 삭제할 글 번호");
+		
+		DealVO dVO = testService.selectDealTest(dlNo);
+		System.out.println(dVO+" => 삭제할 글 정보");
+		
+		List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
+		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+
+		int delDeal = testService.deleteDealTest(dVO);
+		System.out.println("게시글 삭제했으면 1 => "+delDeal);
+		
+		int delAtch = attachService.deleteFile(atchList);
+		System.out.println("첨부파일 삭제했으면 1 이상 => "+ delAtch);
+		
+		return "deal/dealMain";
+		
+		/* return Collections.singletonMap("result", "success delete"); */
+	}
+
 
 	
 
