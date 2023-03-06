@@ -40,4 +40,10 @@ public class ActServiceImpl implements ActService {
 		return actMapper.deleteActListOne(aVO);
 	}
 
+	@Override
+	public int insertAct(ActVO aVO) {
+		// TODO Auto-generated method stub
+		return actMapper.insertAct(aVO);
+	}
+
 }

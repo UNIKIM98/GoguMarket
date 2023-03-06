@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goguma.common.service.AtchService;
 import com.goguma.mem.service.MemService;
@@ -19,7 +21,9 @@ import com.goguma.mem.vo.MemVO;
 
 @Controller
 public class MemController {
-
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@Autowired
 	MemService memService;
 
@@ -30,7 +34,12 @@ public class MemController {
 	public String myPageTest() {
 		return "myPages/test";
 	}
-
+	// ===========================================================
+	// ▷ 회원 로그인
+//	@RequestMapping("/login")
+	public String userLogin() {
+		return "";
+	}
 	// ===========================================================
 	// ▷ 일반 회원가입
 	@GetMapping("/memberJoinForm")
@@ -38,21 +47,18 @@ public class MemController {
 		return "mem/memberJoinForm";
 	}
 
-	// 계좌번호 인증
-	// 전화번호 인증
-	public String mblTelNoChk() {
-
-		return "";
-	}
-
 	@PostMapping("/memberJoin")
 	public String memberJoin(MemVO mVO, HttpServletResponse response) {
-		mVO.setUserSe("1"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
+		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
 		mVO.setUserStts("0"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감
 		System.out.println(mVO);
-		// ※ 비밀번호 암호화하기
-		// String userPw = mVO.getUserPw();
 
+		// ※ 비밀번호 암호화하기
+		 String userPw = mVO.getUserPw();
+		userPw = bCryptPasswordEncoder.encode(userPw);
+		
+		mVO.setUserPw(userPw);
+		
 		int cnt = memService.memberJoin(mVO);
 
 		try {
@@ -85,6 +91,7 @@ public class MemController {
 
 		return "mem/memberJoinForm"; // ※ 메인페이지로 가게 고쳐야함!!
 	}
+	
 	// ===========================================================
 	// ▷ 소셜회원가입
 
@@ -137,5 +144,10 @@ public class MemController {
 		return "myPages/myInfo";
 	}
 
-
+	// ===========================================================
+	// ▷ 회원정보 수정
+	@RequestMapping("/makeNewAct")
+	public String makeNewAct(){
+		return "myPages/makeNewAct";
+	}
 }

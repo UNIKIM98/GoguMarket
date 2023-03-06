@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 	@Bean
-	private BCryptPasswordEncoder passwordEncoder(){
+	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 }
 	
@@ -19,9 +19,8 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(
-				(requests) -> requests.antMatchers("/", "/home").permitAll().anyRequest().authenticated())
-				.formLogin((form) -> form.successHandler(new LoginSuccessHandler())
-						).logout((logout) -> logout.permitAll())
+				(requests) -> requests.antMatchers("/", "/home","/memberJoinForm").permitAll().anyRequest().authenticated())
+				.formLogin((form) -> form.successHandler(new LoginSuccessHandler())).logout((logout) -> logout.permitAll())
 				.csrf().disable();
 
 		return http.build();
