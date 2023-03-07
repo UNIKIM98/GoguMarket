@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goguma.biz.service.BizMemService;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.mem.service.MemService;
 import com.goguma.rsvt.service.BizMenuService;
+import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.BizMenuVO;
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtVO;
@@ -33,16 +35,16 @@ public class RsvtController {
 //		return "rsvt/book0601";
 //	}
 	
-	@Autowired BizMemService memService; 			// 가게정보
-	@Autowired private BizMenuService menuService;	//메뉴 들고오기 위함
+	@Autowired BizMemService bizMemService; 			//가게정보
+	@Autowired BizMenuService menuService;			//메뉴 들고오기 위함
 	@Autowired CommonCodeService codeService;		//공통코드
+	@Autowired RsvtService rsvtService;				//예약
+	@Autowired MemService memService;				//맴바정보
 	
 	@RequestMapping("/book0601/{bizNo}")
-	public String bizInfo(@PathVariable String bizNo, Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.setAttribute("userId", "user1");
+	public String bizInfo(@PathVariable String bizNo, Model model) {
 		
-		model.addAttribute("biz", memService.bizInfo(bizNo));		//가게정보
+		model.addAttribute("biz", bizMemService.bizInfo(bizNo));		//가게정보
 		model.addAttribute("menu", menuService.bizMenu(bizNo));		//메뉴
 		model.addAttribute("code", codeService.codeList("007"));	//공통코드(시간)
 		
@@ -83,17 +85,34 @@ public class RsvtController {
 	
 	//예약페이지 submit
 	@PostMapping("/orderFormSubmit")
-	public String orderFormSubmit(RsvtVO rsvtInfo, RsvtMenuVO menuInfo) {
-		System.out.println(rsvtInfo);
-		System.out.println(menuInfo);
-		List<RsvtMenuVO> lists = menuInfo.getMenuInfo();
+	public String orderFormSubmit(RsvtVO rsvtInfo, RsvtMenuVO menuInfo, HttpServletRequest request) {
+		//세션에서 로그인한 아이디 불러오기
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
 		
+		//예약테이블 insert
+		rsvtInfo.setUserId(userId);		//아이디 
+		rsvtInfo.setRsvtStts("예약완료");	//예약상태
+		rsvtInfo.setComOrderYn("N");	//함께주문여부
+		rsvtInfo.setAlarmYn("Y");		//알림여부
+		
+		System.out.println("===="+rsvtInfo);
+		rsvtService.insertRsvtInfo(rsvtInfo);
+		
+		List<RsvtMenuVO> lists = menuInfo.getMenuInfo();
 		for(int i = 0; i < lists.size() ; i++) {
 			System.out.println(i+"번째 도는 중.");
 			System.out.println(lists.get(i).getMenuNm());
 			System.out.println(lists.get(i).getAmount());
+			System.out.println(lists.get(i).getMenuNo());
+			lists.get(i).setUserId(userId);
+			lists.get(i).setRsvtNo(rsvtInfo.getRsvtNo());
+			System.out.println("======="+lists.get(i));
+			//예약메뉴테이블 insert
+			rsvtService.insertRsvtMenu(lists.get(i));
+			
 		}
-		return null;
+		return "rsvt/test";
 	}
 	
 	

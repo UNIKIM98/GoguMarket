@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+	<!-- 아임포트 사용법  https://darrengwon.tistory.com/1385
+					https://velog.io/@poseassome/%EA%B0%9C%EC%9D%B8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-
+					%EC%95%84%EC%9E%84%ED%8F%AC%ED%8A%B8import-%EA%B2%B0%EC%A0%9C-%EA%B8%B0%EB%8A%A5-%E
+					A%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
+					
+					https://velog.io/@betweenhj702/iamport-%EA%B2%B0%EC%A0%9C-%EC%8B%9C%EC%8A%A4%ED%85%9C
+					-%EC%97%B0%EB%8F%99%ED%95%98%EA%B8%B0
+
+		1. 아임포트 가입 및 가맹점 번호 확인하기
+
+		2. 클라이언트단에 jquery와 import을 cdn 방식으로 추가하기
+
+		3. 결제 이벤트가 발생하면 결제 프로세스 진행하기
+
+			3-1. 가맹점 식별을 위해 IMP 객체 init 하기
+
+			3-2. request_pay 메서드를 통해 결제 진행하기 + 콜백 함수를 통해 적절한 처리하기
+
+			3-3. 거래 결과 검증
+			
+			원본쓰~~
+	-->
+
+<body>
+	<div layout:fragment="content">
+		<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" type="text/javascript"></script>
+
+		<script>
+			const {IMP} = window;
+			
+			IMP.init('imp21555503');	//가맹점 식별코드(토큰같은거)
+
+			IMP.request_pay({
+				pg: 'html5_inicis',
+				pay_method: 'card',
+				merchant_uid: 'merchant_' + new Date().getTime(),
+				name: '주문명:결제테스트',
+				amount: 100,
+				buyer_email: 'iamport@siot.do',
+				buyer_name: '구매자이름',
+				buyer_tel: '010-1234-5678',
+				buyer_addr: '서울특별시 강남구 삼성동',
+				buyer_postcode: '123-456'
+			}, function (rsp) {		//콜백함수
+				if (rsp.success) {	//결제성공시 로직
+					var msg = '결제가 완료되었습니다.';
+					msg += '고유ID : ' + rsp.imp_uid;
+					msg += '상점 거래ID : ' + rsp.merchant_uid;
+					msg += '결제 금액 : ' + rsp.paid_amount;
+					msg += '카드 승인번호 : ' + rsp.apply_num;
+				} else {			//결제실패시 로직
+					var msg = '결제에 실패하였습니다.';
+					msg += '에러내용 : ' + rsp.error_msg;
+				}
+
+				alert(msg);
+			});
+		</script>
+
+	</div>
+</body>
+
+</html>
