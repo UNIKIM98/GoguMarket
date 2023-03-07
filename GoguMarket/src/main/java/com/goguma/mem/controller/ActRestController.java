@@ -32,10 +32,8 @@ public class ActRestController {
 		// 리턴할 hashMap 생성
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		// ※ 임시로그인
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
-		System.out.println("session에서 가져온 userId===" + userId);
 
 		// 대표계좌 가져오기
 		ActVO aVO = aService.getMemAct(userId);

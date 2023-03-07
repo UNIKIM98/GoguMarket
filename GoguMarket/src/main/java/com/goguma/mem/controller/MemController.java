@@ -42,12 +42,12 @@ public class MemController {
 	}
 	// ===========================================================
 	// ▷ 일반 회원가입
-	@GetMapping("/memberJoinForm")
+	@GetMapping("/newMem/memberJoinForm")
 	public String memberJoinForm() {
 		return "mem/memberJoinForm";
 	}
 
-	@PostMapping("/memberJoin")
+	@PostMapping("/newMem/memberJoin")
 	public String memberJoin(MemVO mVO, HttpServletResponse response) {
 		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
 		mVO.setUserStts("0"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감

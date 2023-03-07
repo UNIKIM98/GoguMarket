@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +31,14 @@ public class MemRestController {
 	@Autowired
 	AtchService atchService;
 
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+
 	@Value("${goguma.save}")
 	private String saveFolder;
 
 	// 아이디체크
-	@GetMapping("/userIdChk/{userId}")
+	@GetMapping("/newMem/userIdChk/{userId}")
 	public String userIdChk(@PathVariable String userId) {
 		// 있으면 1 없으면 0
 		int chk = memService.isIdCheck(userId);
@@ -47,7 +51,7 @@ public class MemRestController {
 	}
 
 	// 닉네임 체크
-	@GetMapping("/nickNmChk/{nickNm}")
+	@GetMapping("/newMem/nickNmChk/{nickNm}")
 	public String nickNmChk(@PathVariable String nickNm) {
 		int chk = memService.isNickNmCheck(nickNm);
 		String result = "1";
@@ -60,7 +64,7 @@ public class MemRestController {
 	}
 
 	// 거래지역 체크
-	@PostMapping("/myAreaSetAjax")
+	@PostMapping("/newMem/myAreaSetAjax")
 	public String myAreaSetAjax(@RequestBody MemVO vo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -81,7 +85,7 @@ public class MemRestController {
 	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files) {
 		System.out.println("수정할 VO => " + memVO);
 
-		//프로필사진 있으면 실행
+		// 프로필사진 있으면 실행
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
 				if (file.getSize() == 0)
@@ -101,13 +105,18 @@ public class MemRestController {
 				memVO.setAtchNm(fileName);
 				memVO.setAtchPath("/upload/" + fileName);
 			}
-			
-		//없으면
-		}else {
+
+			// 없으면
+		} else {
 			memVO.setAtchNm(null);
 			memVO.setAtchPath(null);
 		}
 		System.out.println("바꾼 VO => " + memVO);
+
+		String userPw = memVO.getUserPw();
+		userPw = bCryptPasswordEncoder.encode(userPw);
+
+		memVO.setUserPw(userPw);
 
 		int memUpdateCnt = memService.updateUser(memVO);
 
