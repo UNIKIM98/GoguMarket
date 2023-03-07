@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class RsvtVO extends RsvtRvVO{	//예약내역 테이블
-	String rsvtNo;			//예약번호
+	int rsvtNo;			//예약번호
 	String bizNo;			//가게번호
 	String userId;			//예약자id(사용자id)
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")

@@ -6,7 +6,8 @@
 <body>
 
 	<div layout:fragment="content">
-
+		<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"
+			type="text/javascript"></script>
 		<div class="container">
 
 			<!-- 가게이름 부분 -->
@@ -107,7 +108,8 @@
 																				<!-- 메뉴 1건 -->
 																				<tr th:each="menu: ${menu}"
 																					th:value="${menu.menuNo}">
-																					<td class="td-title-1" th:text="${menu.menuNm}">(메뉴이름)</td>
+																					<td class="td-title-1" th:value="${menu.menuNo}"
+																						th:text="${menu.menuNm}">(메뉴이름)</td>
 																					<td>
 																						<div class="cart-plus-minus f-left">
 																							<input type="text" value="0" name="amount"
@@ -149,7 +151,7 @@
 																					<select class="custom-select">
 																						<option th:each="code: ${code}"
 																							th:if="${code.commonDetailCode} >= ${biz.bgngTm} 
-																											and ${code.commonDetailCode} <= ${biz.endTm}"
+																							and ${code.commonDetailCode} <= ${biz.endTm}"
 																							th:value="${code.commonDetailCode}"
 																							th:text="${code.commonNm}">(시간)</option>
 
@@ -186,7 +188,8 @@
 															</div>
 														</div>
 														<div class="mt-30">
-															<button class="btn btn-success btn-sm" type="submit">쿠폰사용</button>
+															<button class="btn btn-success btn-sm" type="button"
+																onclick="test()">쿠폰사용</button>
 														</div>
 													</div>
 													<!-- 왼쪽부분 끝 -->
@@ -195,7 +198,7 @@
 													<div class="col-md-6">
 														<!-- action="/orderFormSubmit" -->
 														<form id="orderForm" action="/orderFormSubmit"
-															method="post">
+															method="post" onsubmit="return false">
 															<div class="payment-details pl-10 mb-50">
 																<h6 class="widget-title border-left mb-20">예약확인</h6>
 
@@ -221,8 +224,7 @@
 																	<tr>
 																		<th class="order-total">합계</th>
 																		<td class="order-total"></td>
-																		<td class="order-total-price">(합계가격)
-																			<!-- <input type="hidden" id="totalSum" name="totalSum" value=""> -->
+																		<td class="order-total-price">(합계가격) <!-- <input type="hidden" id="totalSum" name="totalSum" value=""> -->
 																		</td>
 																	</tr>
 																</table>
@@ -250,11 +252,11 @@
 																	</tr>
 																	<tr>
 																		<th class="td-title-1">예약자정보</th>
-																		<td class="td-title-1">(닉네임)
-																			<input type="hidden" id="userNickname" name="userNickname" value="">
+																		<td class="td-title-1" id="tdNick">(닉네임) <input
+																			type="hidden" id="nickNm" name="nickNm" value="">
 																		</td>
-																		<td class="td-title-1">(전화번호)
-																			<input type="hidden" id="userTel" name="userTel" value="">
+																		<td class="td-title-1" id="tdTel">(전화번호) <input
+																			type="hidden" id="mblTelno" name="mblTelno" value="">
 																		</td>
 																	</tr>
 																	<tr>
@@ -262,14 +264,14 @@
 																	<tr>
 																		<td class="td-title-1">요청사항</td>
 																		<td class="td-title-1" colspan="2"><textarea
-																				id="rsvtWant" name="rsvtWant" class="custom-textarea"
-																				placeholder="요청사항을 입력하세요."></textarea></td>
+																				id="rsvtWant" name="rsvtWant"
+																				class="custom-textarea" placeholder="요청사항을 입력하세요."></textarea></td>
 																	</tr>
 																</table>
 																<hr>
 															</div>
 															<div class="f-right">
-															
+
 																<button class="submit-btn-1 mt-30 btn-hover-1"
 																	type="button" onclick="frmSubmit()">결제하기</button>
 															</div>
@@ -298,26 +300,37 @@
 		</div>
 		<script th:inline="javascript">
 			console.log(window.location.href);
+
+			//가게번호 받아오기
 			var url = window.location.href;
 			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
 			console.log("가게번호받아오기222-=-----" + urlBizNo)
+
+			//세션에 담긴 정보 변수에 담아주기
 			/*<![CDATA[*/
 				let userId = /*[[ ${session.userId} ]]*/
-				/*]]*/
+				let nickNm = /*[[ ${session.nickNm} ]]*/
+				let mblTelno = /*[[ ${session.mblTelno} ]]*/
+			/*]]*/
 			
+			//버튼에 가게번호 히든으로 넘기기
 			$(".f-right").append(`
 					<input type="hidden" name="bizNo" value="${urlBizNo}">
-					<input type="hidden" name="bizNo" value="${userId}">
 					`)
+					
+			//세션으로 받아온거 화면에 출력, value에 값넣기
+			$("#tdNick").text(nickNm);
+			$("#tdTel").text(mblTelno);
+			$("#nickNm").val(nickNm);
+			$("#mblTelno").val(mblTelno);
+			console.log("유저아이디="+userId, "전화번호="+mblTelno, "닉넴="+nickNm);
 			
+//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼우측 메뉴, 예약정보 출력 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			// 모든 메뉴의 토탈가격을 담는 변수
 			var totalSum = 0;
-
-				var cnt = 0;
-			//메뉴 담기 클릭이벤트
+			var cnt = 0;
+			//메뉴 담기 클릭함수
 			function menuPick(id) {
-				
-
 				//빈 배열 생성
 				var menuInfo = [];
 
@@ -328,18 +341,18 @@
 				//버튼과 같은 tr에 있는 메뉴 하나만 배열에 담기
 				if (id == trValue) {
 					var menuNm = tr.find('td').eq(0).text();
+					var menuNo = tr.attr('value');
 					var amount = tr.find('input[name="amount"]').val();
 					var menuPrc = tr.find('td').eq(2).text();
 					var totalPrice = amount * menuPrc;
 
 					menuInfo.push({
 						name : menuNm,
+						no : menuNo,
 						cnt : amount,
 						price : totalPrice
 					});
 				}
-				// console.log(menuInfo);
-				// console.log(menuNm)
 
 				//우측 테이블에 정보 출력
 				var orderMenu = $('#orderMenu');
@@ -350,13 +363,13 @@
 				var sum = 0;
 				for (let i = 0; i < menuInfo.length; i++) {
 					
-// 					console.log(menuInfo.length);
 					console.log(cnt);
 					console.log(`${cnt}`)
 					var menuNm = $('<td>').addClass('td-title-1').text(
 							menuInfo[i].name).append(
 								`
 								<input type='hidden' id='menuNm'  name='menuInfo[${cnt}].menuNm' value='${menuInfo[i].name}'>
+								<input type='hidden' id='menuNo'  name='menuInfo[${cnt}].menuNo' value='${menuInfo[i].no}'>
 								`		
 							);
 					var amount = $('<td>').addClass('td-title-1').text(
@@ -372,6 +385,7 @@
 								`			
 							);
 					console.log(amount.text());
+
 					//수량이 0일경우 빠꾸, 1이상일때만 추가
 					if (amount.text() == 0) {
 						alert('수량을 선택해 주세요')
@@ -403,7 +417,7 @@
 				cnt++;
 			}
 
-			//날짜, 시간, 인원
+			//날짜, 시간, 인원 온클릭 함수
 			$(function() {
 				// 선택한 날짜와 시간, 방문인원을 저장할 변수 초기화
 				var selectedDateTimePeople = [];
@@ -443,26 +457,26 @@
 							console.log(peopleCnt);
 							$('#tdCnt').text(peopleCnt).append(
 								`
-								<input type='hidden' id='rsvtCnt' name='rsvtCnt' value='${peopleCnt}'>
+								<input type='hidden' id='rsvtNope' name='rsvtNope' value='${peopleCnt}'>
 								`
 							)
 							//$('#tdCnt').text(peopleCnt);
 							selectedDateTimePeople.push(peopleCnt);
 						});
 				//-될때
-				$(
-						$('input[name="peopleCnt"]')[0].previousSibling.previousSibling)
+				$($('input[name="peopleCnt"]')[0].previousSibling.previousSibling)
 						.on('click', function() {
 							var peopleCnt = $('input[name="peopleCnt"]').val();
 							console.log(peopleCnt);
 							$('#tdCnt').text(peopleCnt).append(
 								`
-								<input type='hidden' id='rsvtCnt' name='rsvtCnt' value='${peopleCnt}'>
+								<input type='hidden' id='rsvtNope' name='rsvtNope' value='${peopleCnt}'>
 								`
 							)
 							//$('#tdCnt').text(peopleCnt);
 							selectedDateTimePeople.push(peopleCnt);
 						});
+				
 
 			});
 			
@@ -472,7 +486,6 @@
 				//빈 배열 생성
 				var menuInfo =[];	//예약메뉴
 // 				var rsvtInfo =[];	//예약정보
-				var orderList = []; // 폼으로 넘겨줄 최종 메뉴정보
 				
 				//테이블에서 제목 합계 제외, 메뉴만 뽑기위해 length이용
 				var tableSize = $('#orderMenu tr').length - 1
@@ -541,8 +554,71 @@
 // 						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
 // 					}
 // 				});	
-	$("#orderForm").submit();
+				
+				//결제 api
+				const {IMP} = window;
+				
+				IMP.init('imp21555503');	//가맹점 식별코드(토큰같은거)
+
+				IMP.request_pay({
+					pg: 'html5_inicis',
+					pay_method: 'card',
+					merchant_uid: 'merchant_' + new Date().getTime(),
+					name: '주문명:결제테스트',
+					amount: $('#rsvtPay').val(),
+					buyer_email: 'iamport@siot.do',
+					buyer_name: '구매자이름',
+					buyer_tel: '010-1234-5678',
+					buyer_addr: '서울특별시 강남구 삼성동',
+					buyer_postcode: '123-456'
+				}, function (rsp) {		//콜백함수
+					if (rsp.success) {	//결제성공시 로직
+						var msg = '결제가 완료되었습니다.';
+						msg += '고유ID : ' + rsp.imp_uid;
+						msg += '상점 거래ID : ' + rsp.merchant_uid;
+						msg += '결제 금액 : ' + rsp.paid_amount;
+						msg += '카드 승인번호 : ' + rsp.apply_num;
+						gotoOrder();
+					} else {			//결제실패시 로직
+						var msg = '결제에 실패하였습니다.';
+						msg += '에러내용 : ' + rsp.error_msg;
+					}
+
+					alert(msg);
+				});
+				
+				
 			}
+			
+			function gotoOrder(){
+				var formData = new FormData($("#orderForm")[0]);	
+				$.ajax({   url : "/orderFormSubmit",
+                    type : "POST",
+                    data : formData,
+                    processData : false,
+                    contentType : false,
+                    success : function(result) {
+                       console.log(result)
+                       //수정
+                          alert("[작성 완료] \""+ result.dlTtl+"\"게시글 작성이 완료되었습니다 :D");
+                          location.href = "/dealMain";
+                       
+                    },
+                    error : function(err){
+                    	//수정
+                       alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
+                    }
+                 });
+				
+				$("#orderForm").submit();
+			}
+			
+			function test(){
+				console.log("메뉴이름, 가격, 수량" +$('#menuNm').val(),$('#menuPrc').val(),$('#amount').val());
+				
+			}
+			
+			
 		</script>
 	</div>
 	<!-- 타임리프 div 끝 -->

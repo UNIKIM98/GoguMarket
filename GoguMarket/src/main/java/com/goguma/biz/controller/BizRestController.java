@@ -16,12 +16,12 @@ public class BizRestController {
 	@Autowired BizMemService memService; 	// 가게정보
 	@Autowired BizMemMapper bizMapper;
 	
-	//사진(ajax..?)
-		@GetMapping("/bizImgList")
-		public List<BizMemVO> getBizImgList(){
-			List<BizMemVO> result = memService.bizImgList();
-			System.out.println("result========"+ result);
-			return result;
-		}
+//	//사진(ajax..?)
+//		@GetMapping("/bizImgList")
+//		public List<BizMemVO> getBizImgList(){
+//			List<BizMemVO> result = memService.bizImgList();
+//			System.out.println("result========"+ result);
+//			return result;
+//		}
 		
 }

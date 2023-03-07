@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class RsvtRvVO {		//예약후기(가게이용후기)테이블
 	String resRvNo;		//후기번호
-	String rsvtNo;		//예약번호
+	int rsvtNo;		//예약번호
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date rvYmd;			//작성일자
