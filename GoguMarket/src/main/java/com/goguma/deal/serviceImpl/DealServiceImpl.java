@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goguma.common.vo.AtchVO;
 import com.goguma.deal.mapper.DealMapper;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
@@ -16,8 +17,6 @@ public class DealServiceImpl implements DealService {
 
 	@Autowired
 	private DealMapper map;
-
-	
 
 	@Override
 	public List<DealVO> dealListSelect(DealSearchVO svo) {
@@ -49,7 +48,6 @@ public class DealServiceImpl implements DealService {
 		return map.deleteDeal(deal);
 	}
 
-
 	@Override
 	public List<DealVO> getDealSeller(int dlNo) {
 		// 판매자의 다른상품 리스트조회
@@ -80,10 +78,16 @@ public class DealServiceImpl implements DealService {
 		return map.dealHitUpdate(dlNo);
 	}
 
+	@Override
+	public DealVO selectDeal(int dlNo) {
+		// TODO Auto-generated method stub
+		return map.selectDeal(dlNo);
+	}
 
-
-
-
-
+	@Override
+	public List<AtchVO> selectDealAtch(int dlNo) {
+		// TODO Auto-generated method stub
+		return map.selectDealAtch(dlNo);
+	}
 
 }

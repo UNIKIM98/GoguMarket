@@ -116,8 +116,8 @@
 											<input type="text" name="dlPrc" id="dlPrc" placeholder="상품가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 										</div>
 										<div class="col-lg-10">
-											<label for="area">직거래장소</label>
-											<input type="text" name="area" id="area" placeholder="직거래장소">
+											<label for="area">거래지역</label>
+											<input type="text" name="area" id="area" placeholder="거래지역"/>
 										</div>
 										<div class="col-lg-10">
 											<label for="negoYn">가격 제안받기</label>
@@ -151,6 +151,9 @@
 				$("#btnSave").on("click", function() {
 					submitForm();
 				});
+				
+				console.log(sessionStorage.getItem('dealArea')+"거래지역")
+				$("#area").val()
 			});
 		
 		//==============================================================================

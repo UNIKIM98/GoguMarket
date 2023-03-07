@@ -1,4 +1,4 @@
-package com.goguma;
+ package com.goguma;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
