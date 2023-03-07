@@ -1,14 +1,12 @@
 package com.goguma.auct.controller;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +21,6 @@ import com.goguma.auct.vo.AuctMemVO;
 import com.goguma.auct.vo.AuctVO;
 import com.goguma.common.service.AtchService;
 import com.goguma.common.vo.AtchVO;
-import com.goguma.deal.vo.DealVO;
 
 @Controller
 public class AuctController {
@@ -35,12 +32,27 @@ public class AuctController {
 	@Autowired
 	private AuctMemService auctMemService; //경매 입찰자 영역
 
+	
 	@GetMapping("/auctList")
-	public String getauctList(Model model) {
+	public String getauctList(Model model,AuctVO vo) {
 		// 전체품목 리스트
-		model.addAttribute("lists", auctService.getAuctList());
+		
+		model.addAttribute("lists", auctService.getAuctList()); // auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
+		
+		model.addAttribute("AuctNo", auctService.getAuct(vo));
+		vo.getAuctNo();
+//		vo = auctService.getAuct(vo);
+		
+		
+//		int value = vo.getAuctNo();
+		
+//		int auctNo = auctService.getAuct(vo);
+		
+//		vo.setAuctNo(0);
+//		List<AuctMemVO> avoList = auctMemService.selectAuctMem(0);
+		
 //		model.addAttribute("auctMem", auctMemService.selectAuctMem(auctNo));
- 
+		System.out.println(vo);
 		System.out.println(model);
 
 		return "auction/auctList";
@@ -80,7 +92,7 @@ public class AuctController {
 	@GetMapping("/auctInsertForm")
 	public String auctInsertForm() {
 		// 상품등록폼 이동
-		return "auction/auctInsertFormNew";
+		return "auction/auctInsertForm";
 	}
 
 	@PostMapping("/auctInsert") // 등록 매핑
