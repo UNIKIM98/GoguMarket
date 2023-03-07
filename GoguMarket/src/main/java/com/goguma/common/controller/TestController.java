@@ -88,15 +88,11 @@ public class TestController {
 	// ▷ updateForm 테스트 -----------------------------------
 	@GetMapping("/updateTest")
 	public String updateTest(Model model, HttpServletRequest request) {
-		// 임시로그인 : 세션에 아이디, 거래지역 담기
 		HttpSession session = request.getSession();
 		MemVO mVO = new MemVO();
 
-		mVO.setUserId("user1");
+		mVO.setUserId((String)session.getAttribute("userId"));
 		mVO = memService.selectUser(mVO);
-
-		session.setAttribute("userId", mVO.getUserId()); // 유저id 설정
-		session.setAttribute("dealArea", mVO.getDealArea()); // 유저 거래지역 설정
 
 		// 게시글 정보 담기
 		model.addAttribute("dealInfo", testService.selectDealTest(7)); // 12번 게시글 정보

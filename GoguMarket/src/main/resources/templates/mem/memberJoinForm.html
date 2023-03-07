@@ -24,7 +24,7 @@
       <div class="message-box-section mb-80">
          <div class="container">
             <div class="message-box box-shadow white-bg">
-               <form id="joinForm" class="joinForm" action="/memberJoin" method="post"
+               <form id="joinForm" class="joinForm" action="/newMem/memberJoin" method="post"
                   onsubmit="return frmChk()">
                   <div class="row">
                      <div class="col-lg-12">
@@ -285,7 +285,7 @@
       // ▷ 아이디 중복 체크 아작스 
          function userIdCkAjax() {
             $.ajax({
-               url : 'userIdChk/' + $('#userId').val(),
+               url : '/newMem/userIdChk/' + $('#userId').val(),
                type : 'get',
                dataType : 'json',
                contentType : 'application/json; charset = utf-8',
@@ -313,7 +313,7 @@
       // ▷ 닉네임 중복 체크 아작스
          function nickNmCkAjax() {
             $.ajax({
-               url : 'nickNmChk/' + $('#nickNm').val(),
+               url : '/newMem/nickNmChk/' + $('#nickNm').val(),
                dataType : 'json',
                type : 'get',
                contentType : 'application/json; charset = utf-8',
