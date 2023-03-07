@@ -385,6 +385,14 @@
 				} else if ($('#addr').val() == "") {
 					alert("주소를 입력해주세요.");
 					return false;
+				} else if ($('#userPw').val() == "") {
+					alert("새로운 비밀번호를 입력해주세요.");
+					$('#userPw').focus();
+					return false;
+				} else if ($('#userPwCk').val() == "") {
+					alert("비밀번호확인을 해주세요");
+					$('#userPwCk').focus();
+					return false;
 				}else{					
 					formSubmit();
 				}

@@ -212,22 +212,19 @@ public class DealController {
 		System.out.println("판매자 상품 정보 >> " + deals);
 
 		// 판매자 상품의 첨부파일 리스트
-		Map<String, List<AtchVO>> atchs = new HashMap<String, List<AtchVO>>();
+		Map<String, AtchVO> atchs = new HashMap<String, AtchVO>();
 
 		for (int i = 0; i < deals.size(); i++) {
 			int atchId = deals.get(i).getAtchId();
-			atchs.put("deal" + deals.get(i).getDlNo(), atchService.selectAtch(atchId));
+			atchs.put(deals.get(i).getDlNo()+"", atchService.selectAtch(atchId).get(0));
 		}
 
 		System.out.println("상품 atch" + atchs);
-		
-		
 		
 		//판매자 정보(사진출력.. 하나때문에 하는ㄱ ㅓ....)
 		MemVO memVO = new MemVO();
 		memVO.setUserId(ntslId);
 		model.addAttribute("ntslInfo", memService.selectUser(memVO));
-		System.out.println("판매자정보"+memService.selectUser(memVO));
 		
 		// 판매자 상품 정보
 		model.addAttribute("dealList", deals);

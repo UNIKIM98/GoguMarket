@@ -65,7 +65,7 @@
 				<when test="atchPath == null">atch_path = null</when>
 				<otherwise>atch_path =  #{atchPath}</otherwise>
 			</choose>
-			WHERE USER_ID=#{userId}
+		WHERE user_id = #{userId}
 	</update>
 
 </mapper>

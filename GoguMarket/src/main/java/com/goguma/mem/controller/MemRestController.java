@@ -38,7 +38,7 @@ public class MemRestController {
 	private String saveFolder;
 
 	// 아이디체크
-	@GetMapping("/userIdChk/{userId}")
+	@GetMapping("/newMem/userIdChk/{userId}")
 	public String userIdChk(@PathVariable String userId) {
 		// 있으면 1 없으면 0
 		int chk = memService.isIdCheck(userId);
@@ -51,7 +51,7 @@ public class MemRestController {
 	}
 
 	// 닉네임 체크
-	@GetMapping("/nickNmChk/{nickNm}")
+	@GetMapping("/newMem/nickNmChk/{nickNm}")
 	public String nickNmChk(@PathVariable String nickNm) {
 		int chk = memService.isNickNmCheck(nickNm);
 		String result = "1";
@@ -64,7 +64,7 @@ public class MemRestController {
 	}
 
 	// 거래지역 체크
-	@PostMapping("/myAreaSetAjax")
+	@PostMapping("/newMem/myAreaSetAjax")
 	public String myAreaSetAjax(@RequestBody MemVO vo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");

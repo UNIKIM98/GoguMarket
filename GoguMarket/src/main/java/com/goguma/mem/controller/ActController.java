@@ -4,9 +4,7 @@ package com.goguma.mem.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +26,7 @@ public class ActController {
 
 	// ▶ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
 	@GetMapping("/myAct")
-	public String auctSelect(HttpServletRequest request) {
-		System.out.println("=======/myAct");
-		
-		// ※ 임시로그인
-		HttpSession session = request.getSession();
-		session.setAttribute("userId", "user1");
-
+	public String auctSelect() {
 		return "myPages/myAct";
 	}
 
