@@ -4,9 +4,6 @@
 	layout:decorate="~{/layouts/layout}">
 
 <head>
-<script src="https://code.jquery.com/jquery-3.6.3.js"
-	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-	crossorigin="anonymous"></script>
 
 <meta charset="UTF-8">
 
@@ -25,11 +22,6 @@ textarea {
 	width: 80%;
 	resize: none;
 }
-/* .brand-item{
-width: 20%;
-height:30%
-
-} */
 </style>
 </head>
 
@@ -84,9 +76,7 @@ height:30%
 							</div>
 							<form>
 								<div class="by-brand-product">
-									<div class="active-by-brand slick-arrow-2" id="list">
-									
-									</div>
+									<div class="active-by-brand slick-arrow-2" id="list"></div>
 								</div>
 							</form>
 						</div>
@@ -180,7 +170,7 @@ height:30%
 
 						<th:block th:if="${session.userId != null}">
 							<!-- 아이디 check-->
-							<div th:insert="~{sns/rrpWrite :: rrpWrite}"></div>
+							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
 
 							<div class="Sns-reply" id="Sns-reply">
 							
@@ -202,8 +192,8 @@ height:30%
 			</div>
 
 		</div>
+		<div id="loadDiv" style="display:none"></div>
 		<script th:inline="javascript">
-		
 		$.ajax({
 			url : "/selectSnsList", // 데이터를 가져올 경로 설정
 			type : "GET", // 데이터를 가져오는 방식
@@ -219,8 +209,7 @@ height:30%
 	                            						${sns.userId} / ${sns.snsYmd}
 	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
 	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-	                         							<div>
-	                            						<img src="${sns.atchPath}" alt=""></a>
+	                         							<img src="${sns.atchPath}" alt=""></a>
 	                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
 												</div>
 											</div>`)

@@ -1,31 +1,24 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout">
-<div th:fragment="rrpWrite">
-	<div class="rrpBox">
-		<div id="groupLeft">-></div>
-		<div id="groupRight">
-			<form id="reply">
-				<div class="card mb-1">
-					<div class="card-body">
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">
-								<div class="form-inline mb-2" id="rrplist">
-									<input type="hidden" id="replySnsNo" name="replySnsNo">
-									<input type="hidden" id="replyUserId" th:value="${session.userId}" name="replyUserId" value="${session.userId }">
-									<input type="hidden" id="cmntNo" name="cmntNo" th:value="${param.cmntNo}"> 
-									<input type="hidden" id="groupNo" name="groupNo" th:value="${param.groupNo}">
-									<input type="hidden" id="recmntOrder" name="recmntOrder" th:value="${param.recmntOrder}"> 
-									<input type="hidden" id="replyUserId" value="${session.userId}" name="replyUserId">
-									<input type="hidden" id="step" name="step" th:value="${param.step}">
-									<textarea class="form-control" id="replyCmntCn" name="replyCmntCn"> </textarea>
-								</div>
-								<button type="button" class="btn btn-dark mt-3 f-right"
-									onclick="insertReply()">post reply</button>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</form>
+<div class="rrpBox">
+	<div id="groupLeft">-></div>
+	<div id="groupRight">
+		<div class="card mb-1">
+			<div class="card-body">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<div class="form-inline mb-2">
+							<input type="hidden" id="groupNo" name="groupNo">
+							<input type="hidden" id="replySnsNo" name="replySnsNo">
+							<input type="hidden" id="replyUserId" value="${session.userId}" name="replyUserId">
+						</div> <textarea class="form-control" id="replyCmntCn"
+							name="replyCmntCn"> </textarea>
+						<button type="button" class="btn btn-dark mt-3 f-right"
+							onclick="insertRrp()">post rereply</button>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
+
 </div>
+
+
