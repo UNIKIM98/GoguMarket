@@ -45,7 +45,7 @@ public class TestController {
 
 	@GetMapping("/admin/test")
 	public String adminTest() {
-		return "admin/adminMain";
+		return "admin/adminLayout";
 	}
 	
 	@GetMapping("/biz/test")
