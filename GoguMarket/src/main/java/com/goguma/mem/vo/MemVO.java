@@ -16,7 +16,6 @@ import lombok.Data;
 
 @Data
 public class MemVO implements UserDetails{
-	//■■■■■■■■■■■■■■■■■■■■■■■■■■ 돈 타 치 !!!!!!!!!!!!!!!!!!!!!!!!! ■■■■■■■■■■■■■■■■■■■■■■■■■
 
 	private String userId;
 	private String userSe;

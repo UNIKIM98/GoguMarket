@@ -55,12 +55,12 @@
 								<div class="section-title text-start mb-40">
 									<div class="profile">
 										<div class="leftProfile">
-											<img th:src="${ntslInfo.atchPath}" alt=""
+											<img th:src="${dealList[0].PROFILE}" alt=""
 												style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;">
 										</div>
 										<div class="rightProfile">
-											<h2 class="uppercase" th:text="${ntslInfo.nickNm}">닉네임</h2>
-											<h6 th:text="${ntslInfo.addr}">주소</h6>
+											<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2>
+											<h6 th:text="${dealList[0].ADDR}">주소</h6>
 										</div>
 									</div>
 								</div>
@@ -75,25 +75,18 @@
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active show" id="description">
 											<p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
-											<!-- 판매목록포문돌리면될듯? -->
-											<div class="featured-product">
-												<div class="active-featured-product slick-arrow-2">
+											<!-- 판매목록포문돌리면될듯? >> ❤️yes~! 판매자 for문 돌렸구 아래에 값 나오는 거 보고(화면보시면 찍혀욧) 나머지 부분 채워주세욧 -->
+											[[${dealList[0]}]]
+											<div class="featured-product" th:each="deal : ${dealList}">
+												<div class="active-featured-product slick-arrow-2" >
 													<div class="product-item">
-														<div class="product-img">
-															<a href="single-product.html"> 
-																<img th:src="${atchList.16.atchPath}"
-																	style="width: 267px; height: 200px;" /></a>
+														<div class="product-img" style="height:150px">
+															<a th:href="@{/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
 														</div>
 														<div class="product-info">
 															<h6 class="product-title"
 																href="single-product.html">상품명</h6>
-															<div class="pro-rating">
-																<a href="#"><i class="zmdi zmdi-star"></i></a> <a
-																	href="#"><i class="zmdi zmdi-star"></i></a> <a
-																	href="#"><i class="zmdi zmdi-star"></i></a> <a
-																	href="#"><i class="zmdi zmdi-star-half"></i></a> <a
-																	href="#"><i class="zmdi zmdi-star-outline"></i></a>
-															</div>
 															<h3 class="pro-price">가격</h3>
 															<ul class="action-button">
 																<li><a href="#" title="Wishlist"><i
@@ -104,9 +97,6 @@
 																			class="zmdi zmdi-zoom-in"></i></a></li>
 																<li><a href="#" title="Compare"><i
 																			class="zmdi zmdi-refresh"></i></a></li>
-																<li><a href="#" title="Add to cart"><i
-																			class="zmdi zmdi-shopping-cart-plus"></i></a>
-																</li>
 															</ul>
 														</div>
 													</div>

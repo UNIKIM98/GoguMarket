@@ -1,6 +1,7 @@
 package com.goguma.deal.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.goguma.common.vo.AtchVO;
 import com.goguma.deal.vo.DealSearchVO;
@@ -28,7 +29,7 @@ public interface DealService {
 	// ===========================
 	// 채은 추가! 확인 후 주석 지워주세욧
 	// 특정 판매자 게시글 전부 가져오기
-	List<DealVO> selectNtslDeal(String ntslId);
+	List<Map> selectNtslDeal(String ntslId);
 	
 	// test 에서 가져온 거
 	// Deal 게시글 정보 가져오기

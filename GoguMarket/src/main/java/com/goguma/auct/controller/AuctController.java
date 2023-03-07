@@ -1,9 +1,6 @@
 package com.goguma.auct.controller;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,8 +19,9 @@ import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctMemVO;
 import com.goguma.auct.vo.AuctVO;
 import com.goguma.common.service.AtchService;
+import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.AtchVO;
-import com.goguma.deal.vo.DealVO;
+import com.goguma.common.vo.CommonCodeVO;
 
 @Controller
 public class AuctController {
@@ -33,14 +31,15 @@ public class AuctController {
 	@Autowired
 	private AtchService atchService; // 첨부파일 서비스 영역
 	@Autowired
-	private AuctMemService auctMemService; //경매 입찰자 영역
+	private AuctMemService auctMemService; // 경매 입찰자 영역
+	@Autowired
+	private CommonCodeService codeService;
 
 	@GetMapping("/auctList")
 	public String getauctList(Model model) {
 		// 전체품목 리스트
 		model.addAttribute("lists", auctService.getAuctList());
 //		model.addAttribute("auctMem", auctMemService.selectAuctMem(auctNo));
- 
 		System.out.println(model);
 
 		return "auction/auctList";
@@ -53,33 +52,31 @@ public class AuctController {
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
-		
-		
+
 		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
-		
+
 		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 
-
-		
-		
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
 		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
-		
-		
-		
-		System.out.println("조회수"+cnt); // 조회수 증가 확인
-		System.out.println("첨부파일"+atchList); // 첨부파일 확인
-		System.out.println("입찰자"+avoList); // 입찰자 확인
-		System.out.println("단건조회VO"+vo); // vo값 확인
-		
+
+		System.out.println("조회수" + cnt); // 조회수 증가 확인
+		System.out.println("첨부파일" + atchList); // 첨부파일 확인
+		System.out.println("입찰자" + avoList); // 입찰자 확인
+		System.out.println("단건조회VO" + vo); // vo값 확인
+
 		return "auction/auctSelect";
 	}
 
 	@GetMapping("/auctInsertForm")
-	public String auctInsertForm() {
+	public String auctInsertForm(Model model) {
 		// 상품등록폼 이동
+		List<CommonCodeVO> codeList = codeService.codeList("002");
+		codeList.remove(0);
+
+		model.addAttribute("category", codeList);
 		return "auction/auctInsertFormNew";
 	}
 
@@ -90,11 +87,10 @@ public class AuctController {
 
 		int atchId = atchService.insertFile(files);
 		int atchList = atchService.insertFile(atchId, files);
-		
 
-		HttpSession session = request.getSession(); //세션값 받아옴
-		String myId = (String) session.getAttribute("userId"); //세션값 중 아이디만 받아옴
-		vo.setUserId(myId); //세션값으로 아이디 설정
+		HttpSession session = request.getSession(); // 세션값 받아옴
+		String myId = (String) session.getAttribute("userId"); // 세션값 중 아이디만 받아옴
+		vo.setUserId(myId); // 세션값으로 아이디 설정
 
 		System.out.println(atchId + " : files/////////");
 		System.out.println(vo);
@@ -103,7 +99,7 @@ public class AuctController {
 			vo.setAtchId(atchId);
 		}
 
-		auctService.insertAuct(vo); //vo값으로 auctService의 insertAuct를 실행
+		auctService.insertAuct(vo); // vo값으로 auctService의 insertAuct를 실행
 		return "redirect:auctList";
 	}
 
