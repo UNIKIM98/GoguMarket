@@ -41,9 +41,11 @@ public class CmntServiceImpl implements CmntService {
 	}
 
 	@Override
-	public String deleteCmnt(int CmntNo) {
-		// TODO Auto-generated method stub
-		return map.deleteCmnt(CmntNo);
+	public int deleteRreply(int cmntNo) {
+		
+		
+		return map.deleteRreply(cmntNo);
 	}
 
+	 
 }

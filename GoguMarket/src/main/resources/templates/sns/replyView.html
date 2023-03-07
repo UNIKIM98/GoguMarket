@@ -1,27 +1,32 @@
-<!DOCTYPE html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.3.js"
-	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-	crossorigin="anonymous"></script>
-
-<style>
-textarea {
-	width: 80%;
-	resize: none;
-	float: right;
-}
-</style>
-</head>
-<body>
-	<div th:fragment="replyView">
-		<div class="Sns-commet">
-			<!-- 댓글시작 -->
-
-	
-			<!--댓글 끝-->
+<div class="replyGroup" id="">
+	<div class="card mb-1">
+		<div class="card-body bg-light">
+			<div class="media" style="margin: 10px">
+				<div class="media-left">
+					<a href="#"><img class="media-object" src="img/author/1.jpg"
+						alt="#"></a>
+				</div>
+				<div class="media-body ml-10">
+					<div class="clearfix">
+						<div class="name-commenter pull-left">
+							<h6 class="media-heading">
+								<a href="#" id="cmntMem">작성자</a> <br> <a
+									href="#" style="opacity: 50%" id="cmntYmd">게시날짜</a>
+							</h6>
+							<div class="form-inline" id="cmntCn"
+								style="word-break: break-all;">댓글내용</div>
+						</div>
+					</div>
+				</div> 
+			</div>
+			<input type="button" text="답글" class="btn btn-dark mt-3 f-right"
+				id="reInput" onClick=""  value="reply"/>
 		</div>
 	</div>
-</body>
-</html>
+	<!--Insert form-->
+
+	<div class="rrplyGroup" id="rrplyGroup_${댓글번호}"></div>
+
+
+
+</div>

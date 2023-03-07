@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{/layouts/layout}">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+
+<style>
+ul {
+	list-style: none;
+}
+
+li {
+	float: left;
+}
+
+textarea {
+	width: 80%;
+	resize: none;
+}
+</style>
+</head>
+
+
+<body>
+	<article layout:fragment="content">
+		<!-- Start page content -->
+		<section id="page-content" class="page-wrapper section">
+
+			<!-- BY BRAND SECTION START-->
+			<div class="by-brand-section mb-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-title text-start mb-40">
+								<h2 class="uppercase mt-15">MY TOWN
+									LIFE[[${session.userId}]]</h2>
+								<h6>너의 동네를 나에게 소개 시켜줘 !</h6>
+								<hr>
+								<div class="newsletter-section gray-bg pt-60 pb-80 mt-80">
+									<div class="container">
+										<div class="row">
+											<div class="col-lg-8 offset-lg-2">
+												<div class="newsletter">
+													<div class="newsletter-info text-center">
+														<h2 class="newsletter-title">My TOWN</h2>
+														<p>Introduce me to your town.</p>
+													</div>
+													<div class="subcribe clearfix">
+														<form action="#">
+															<input type="text" name="email"
+																placeholder="Enter your town here...${session.userId}" />
+															<button class="submit-btn-2 btn-hover-2" type="submit">subcribe</button>
+														</form>
+													</div>
+												</div>
+												<div class="newsletter-info text-center">
+													<ul class="pl-120">
+														<a href="#"><li class="pl-30">#채은</li></a>
+														<a href="#"><li class="pl-30">#지영</li></a>
+														<a href="#"><li class="pl-30">#예슬</li></a>
+														<a href="#"><li class="pl-30">#효근</li></a>
+														<a href="#"><li class="pl-30">#재엽</li></a>
+
+													</ul>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<form>
+								<div class="by-brand-product">
+									<div class="active-by-brand slick-arrow-2" id="list"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div th:if="${userId != null}"></div>
+				<br> <a class="button medium button-black mb-30 f-right"
+					href="#" style="margin-right: 10%;" id="myBtn" onclick=""><span>글쓰기</span>
+				</a>
+
+			</div>
+
+
+		</section>
+
+
+		<!-- writeFormModal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
+					<button class="close1" onclick=""
+						style="color: black; padding: 10px;">x</button>
+					<form action="insertSns" method="post"
+						enctype="multipart/form-data">
+						<div class="login-account p-30 box-shadow mtb-15">
+							<div class="col-lg-4 col-md-6 pb-10">
+								<div class="banner-item banner-3">
+									<div class="banner-img">
+										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
+									</div>
+
+									<!-- atch -->
+									<input type="file" name="files" id="files" placeholder="첨부파일"
+										multiple="multiple">
+								</div>
+							</div>
+
+							<!-- userId -->
+							<input th:value="${session.userId}" type="hidden" name="userId"
+								id="userId">
+							<!-- 게시물 -->
+							<textarea name="snsCn" id="snsCn" class="mb-15"
+								placeholder="게시글 내용 300자 이하."></textarea>
+							<input type="text" name="hash" id="hash">
+							<!--  -->
+							<input type="hidden" name="area" id="area"
+								th:value="${session.area}">
+						</div>
+
+
+						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
+					</form>
+
+				</div>
+				<div class="modal-footer" style="background-color: #000000;">
+					&nbsp;</div></div>
+
+		</div>
+		<!-- writeForm -->
+
+
+		<!-- 개인 Sns -->
+
+		<div id="mySns" class="Sns">
+			<!-- Modal content -->
+			<div class="Sns-content">
+				<div class="Sns-body">
+					<form action="#">
+						<div>
+							<span class="ml-10" id="snsYmd"></span> <img alt="" class="ml-5"
+								id="atchPath" style="width: 100%;">
+
+							<h3 class="mt-10 ml-20"></h3>
+
+						</div>
+					</form>
+
+				</div>
+				<div class="Sns-Cn">
+					<div class="writeCn pb-10" style="width: 100%;">
+
+						<span class="mb-120" id="CN"></span>
+					</div>
+				</div>
+				<div class="Sns-commet">
+					<div class="card">
+						<div class="card-header bg-light">
+							<i class="fa fa-comment fa"></i> REPLY
+						</div>
+
+						<th:block th:if="${session.userId != null}">
+							<!-- 아이디 check-->
+							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
+
+							<div class="Sns-reply" id="Sns-reply">
+							
+							</div>
+						</th:block>
+						<th:block th:unless="${session.userId != null}">
+
+							<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
+						
+						</th:block>
+						<!--댓글 끝-->
+					</div>
+				</div>
+				<!--Sns-footer-->
+				<div class="Sns-footer" style="background-color: #000000;">
+					<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
+						@gogu.ma</h3>
+				</div>
+			</div>
+
+		</div>
+		<div id="loadDiv" style="display:none"></div>
+		<script th:inline="javascript">
+		$.ajax({
+			url : "/selectSnsList", // 데이터를 가져올 경로 설정
+			type : "GET", // 데이터를 가져오는 방식
+			dataType : 'json',
+			contentType : 'application/json; charset = utf-8',
+			success : function(result) {
+					  console.log(result)
+					  for(sns of result){
+						$("#list").append(`<div class="brand-item">
+	                            				<div class="single-brand-product"
+													id="clickSns"
+													onclick="snsModal(${sns.snsNo})">
+	                            						${sns.userId} / ${sns.snsYmd}
+	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+	                         							<img src="${sns.atchPath}" alt=""></a>
+	                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
+												</div>
+											</div>`)
+	           							 }
+										},
+					error : function(err) {
+						console.log(err);
+					}
+				})
+			</script>
+
+			
+	</article>
+
+	
+	
+
+	
+
+	
+	
+
+
+
+</body>
+</html>

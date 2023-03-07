@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.common.service.AtchService;
-import com.goguma.common.vo.AtchVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 

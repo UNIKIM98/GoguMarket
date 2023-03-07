@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.bankTbl{
+		margin : 0;
+		width : 50%;
+		text-align: center;
+		margin-left: 30px;
+	}
+	.bankTbl img{
+	width:25px;height:25px;border-radius:70%
+	}
+</style>
+</head>
+<body>
+	<div layout:fragment="myContent">
+						<div class="row" id="memActSection">
+							<div class="section-title text-start ">
+								<h2 class="uppercase">나의 계좌</h2>
+								<hr>
+								<h3 style="font-weight: bold;">계좌 등록</h3>
+							</div>
+						</div>
+						<div class="row" id="newAct">
+								<div class="col-lg-12">
+									<p>로고를 클릭해주세요 :)</p>
+								</div>
+								<div>
+									<table class="table bankTbl">
+										<tbody>
+											<tr>
+												<td><img src="img/act/01 국민.png" class="bankLogo"><p>국민</p></td>
+												<td><img src="img/act/02 기업.png" class="bankLogo"><p>기업</p></td>
+												<td><img src="img/act/03 농협.jpg" class="bankLogo"><p>농협</p></td>
+												<td><img src="img/act/04 신한.png" class="bankLogo"><p>신한</p></td>
+											</tr>
+											<tr>
+												<td><img src="img/act/05 대구.png" class="bankLogo"><p>대구</p></td>
+												<td><img src="img/act/06 우리.png" class="bankLogo"><p>우리</p></td>
+												<td><img src="img/act/07 하나.png" class="bankLogo"><p>하나</p></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<br>
+							<div class="col-lg-12" id="actZone">
+							</div>
+						</div>
+						
+		<script th:inline="javascript">
+			$(function() {
+				$(".bankLogo").on("click",function(e){
+					if($("#actZone").children().length==0){
+						$("#actZone").append(
+						`
+						<br><br>
+						<form id="newActForm" method="post" action="/makeNewActSubmit">
+						<div class="col-lg-10 ">
+							<label for="bankNm">은행명</label>
+							<input type="text" name="bankNm" id="bankNm" readonly="readonly">
+						</div>
+						<div class="col-lg-10 ">
+							<label for="bankActNo">계좌번호</label>
+							<input type="text" name="bankActNo" id="bankActNo" placeholder="숫자만 입력 가능합니다 :)"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
+							<input type="hidden" name="userId" id="userId">
+						</div>
+						<input class="submit-btn-1 mt-30 btn-hover-1" type="button" id="submitBtn" onclick="makeNewAct()" value="계좌등록">
+					</form>
+						`		
+						)
+					}
+					/*<![CDATA[*/
+						let userId = /*[[ ${session.userId} ]]*/
+						console.log(userId);
+					/*]]*/	
+					$("#userId").val(userId)
+					$("#bankNm").val($(e.target).parent().children().eq(1).text())
+				})
+			})
+			
+			function makeNewAct(){
+				let bankNm = $("#bankNm").val();
+				let bankActNo = $("#bankActNo").val();
+				
+				
+				if($("#bankActNo").val()==""){
+					alert("계좌번호를 입력해주세요 :D");
+					$("#bankActNo").focus();
+					return false;
+				}else{
+					var confirmMsg = confirm(bankNm+"은행 "+bankActNo+"으로 계좌를 등록하시겠습니까?");
+					if(confirmMsg){
+						$("#newActForm").submit();
+					}
+				}			
+			}
+		</script>
+	</div>
+</body>
+</html>

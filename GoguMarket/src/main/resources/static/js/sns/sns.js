@@ -100,7 +100,7 @@ function SelectCmntlist(snsNo) {
 						                        </div>
 												<input type="hidden" id="groupNo" value="${item.groupNo}"/>
 						                    </div>
-						                <input type="button" id="input1" class="btn btn-dark mt-3 f-right" id="reInput" onClick="ShowRrpInput(${item.cmntNo},${item.groupNo},${item.recmntOrder},${item.step})" />
+						                <input type="button" class="btn btn-dark mt-3 f-right" id="reInput" onClick="ShowRrpInput(${item.cmntNo})" />
 						            </div>
 						        </div>
 						        <!--Insert form-->
@@ -127,11 +127,7 @@ function ShowRrpInput(cmntNo,groupNo,recmntOrder,step) {
 
 	console.log("내가 띄운 답답답글의 번호 : " + cmntNo)
 
-
-
-
-
-
+	$("#rrplyGroup_" + cmntNo).load("sns/rrpWrite.html");
 
 }
 

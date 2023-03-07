@@ -1,27 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.rsvt.mapper.RsvtMapper">
-	<!-- 예약 정보 저장 -->
+
+	<!-- 예약테이블(rsvt)에 정보 저장 -->
 	<insert id="insertRsvtInfo"
 		parameterType="com.goguma.rsvt.vo.RsvtVO">
 		INSERT INTO rsvt(
-			rsvt_no, biz_no, user_id, rsvt_ymd, rsvt_tm, rsvt_nope,
-			rsvt_want, rsvt_pay, rsvt_tm, rsvt_stts, com_order_yn,
-			pay_mthhd, alarm_yn)
+		rsvt_no,
+		biz_no,
+		user_id,
+		rsvt_ymd,
+		rsvt_tm,
+		rsvt_nope,
+		rsvt_want,
+		rsvt_stts,
+		com_order_yn,
+		alarm_yn
+		)
 		VALUES(
-			#{rsvtNo},
-			#{bizNo},
-			#{userId},
-			#{rsvtYmd},
-			#{rsvtTm},
-			#{rsvtNope},
-			#{rsvtWant},
-			#{rsvtPay},
-			#{payTm},
-			#{rsvtStts},
-			#{comOrderYn},
-			#{payMthhd},
-			#{alarmYn}
-			)
+		#{rsvtNo},
+		#{bizNo},
+		#{userId},
+		#{rsvtYmd},
+		#{rsvtTm},
+		#{rsvtNope},
+		#{rsvtWant},
+		#{rsvtStts},
+		#{comOrderYn},
+		#{alarmYn}
+		)
 	</insert>
+
+	<!-- 예약 메뉴 -->
+	<insert id="insertRsvtMenu"
+		parameterType="com.goguma.rsvt.vo.RsvtMenuVO">
+		insert into rsvt_menu(
+		rsvt_menu_no,
+		rsvt_no,
+		menu_no,
+		amount,
+		user_id
+		)
+		values(
+		#{rsvtMenuNo},
+		#{rsvtNo},
+		#{menuNo},
+		#{amount},
+		#{userId}
+		)
+
+	</insert>
+
+	<!-- 결제 총 금액(고른메뉴 * 수량 을 각 메뉴만큼)을 결제정보 테이블에 넣기 -->
+	<insert id="insertRsvtPayment"
+		parameterType="com.goguma.rsvt.vo.RsvtPaymentVO">
+		INSERT INTO rsvt_payment
+		VALUES(
+			#{payNo}, 
+			#{rsvtNo}, 
+			sysdate, 
+			(SELECT SUM (subquery."prc*menu") AS totalSum
+			FROM (
+					SELECT( SELECT amount * menu_prc
+							FROM biz_menu
+							WHERE menu_no = rsvt_menu.menu_no
+							) AS "prc*menu"
+					FROM rsvt_menu
+					WHERE rsvt_no = #{rsvtNo}
+					) subquery), '카드결제')
+
+	</insert>
+
+
 </mapper>
