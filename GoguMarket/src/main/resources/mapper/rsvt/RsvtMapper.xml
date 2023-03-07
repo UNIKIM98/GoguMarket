@@ -12,26 +12,26 @@
 			FROM rsvt
 		</selectKey>
 		INSERT INTO rsvt(
-		rsvt_no,
-		biz_no,
-		user_id,
-		rsvt_ymd,
-		rsvt_tm,
-		rsvt_nope,
-		rsvt_want,
-		rsvt_stts,
-		alarm_yn
+			rsvt_no,
+			biz_no,
+			user_id,
+			rsvt_ymd,
+			rsvt_tm,
+			rsvt_nope,
+			rsvt_want,
+			rsvt_stts,
+			alarm_yn
 		)
 		VALUES(
-		#{rsvtNo},
-		#{bizNo},
-		#{userId},
-		#{rsvtYmd},
-		#{rsvtTm},
-		#{rsvtNope},
-		#{rsvtWant},
-		#{rsvtStts},
-		#{alarmYn}
+			#{rsvtNo},
+			#{bizNo},
+			#{userId},
+			#{rsvtYmd},
+			#{rsvtTm},
+			#{rsvtNope},
+			#{rsvtWant},
+			#{rsvtStts},
+			#{alarmYn}
 		)
 	</insert>
 
@@ -46,18 +46,18 @@
 		</selectKey>
 		
 		INSERT into rsvt_menu(
-		rsvt_menu_no,
-		rsvt_no,
-		menu_no,
-		amount,
-		user_id
+			rsvt_menu_no,
+			rsvt_no,
+			menu_no,
+			amount,
+			user_id
 		)
 		VALUES(
-		#{rsvtMenuNo},
-		#{rsvtNo},
-		#{menuNo},
-		#{amount},
-		#{userId}
+			#{rsvtMenuNo},
+			#{rsvtNo},
+			#{menuNo},
+			#{amount},
+			#{userId}
 		)
 
 	</insert>
@@ -65,20 +65,26 @@
 	<!-- 결제 총 금액(고른메뉴 * 수량 을 각 메뉴만큼)을 결제정보 테이블에 넣기 -->
 	<insert id="insertRsvtPayment"
 		parameterType="com.goguma.rsvt.vo.RsvtPaymentVO">
+		<selectKey keyProperty="payNo" resultType="int" order="BEFORE">
+			SELECT
+			CASE WHEN MAX(pay_no) IS NULL THEN 1 ELSE
+			MAX(pay_no) + 1 END as pay_no
+			FROM rsvt_payment
+		</selectKey>
 		INSERT INTO rsvt_payment
 		VALUES(
-		#{payNo},
-		#{rsvtNo},
-		sysdate,
-		(SELECT SUM (subquery."prc*menu") AS totalSum
-		FROM (
-		SELECT( SELECT amount * menu_prc
-		FROM biz_menu
-		WHERE menu_no = rsvt_menu.menu_no
-		) AS "prc*menu"
-		FROM rsvt_menu
-		WHERE rsvt_no = #{rsvtNo}
-		) subquery), '카드결제')
+			#{payNo},
+			#{rsvtNo},
+			sysdate,
+			(SELECT SUM (subquery."prc*menu") AS totalSum
+			FROM (
+					SELECT( SELECT amount * menu_prc
+					FROM biz_menu
+					WHERE menu_no = rsvt_menu.menu_no
+					) AS "prc*menu"
+					FROM rsvt_menu
+					WHERE rsvt_no = #{rsvtNo}
+					) subquery), '카드결제')
 
 	</insert>
 

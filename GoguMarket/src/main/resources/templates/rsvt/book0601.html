@@ -23,7 +23,7 @@
 				<!-- 가게이름 -->
 				<div class="col-lg-8">
 					<div class="section-title text-start mt-15">
-						<h2 class="uppercase" th:text="${biz.bizNm}">(가게이름)</h2>
+						<h2 class="uppercase" id="bizNm" th:text="${biz.bizNm}">(가게이름)</h2>
 						<h6>
 							<ul class="blog-meta">
 								<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
@@ -117,11 +117,16 @@
 																						</div>
 																					</td>
 																					<!-- ${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'} -->
-																					<td class="td-title-2" th:text="${menu.menuPrc}">(가격)</td>
+																					<td class="td-title-2" th:value="${menu.menuPrc}" th:text="${menu.menuPrc}">(가격)</td>
 																					<td class="td-title-2">
-																						<button class="btn btn-warning btn-sm"
+																						<!-- <button class="btn btn-warning btn-sm"
 																							type="button" onclick="menuPick(this.id)"
-																							th:id="${menu.menuNo}">담기</button>
+																							th:id="${menu.menuNo}">담기</button> -->
+																						<a onclick="menuPick(this.id)" title="메뉴 담기" 
+																							style="cursor: pointer;" th:id="${menu.menuNo}">
+																							<i class="zmdi zmdi-shopping-cart-plus"></i>
+																						</a>
+																						<span title="메뉴 삭제" class="close" id="menuDel" onclick="xxx()">&nbsp;&times;</span>
 																					</td>
 																				</tr>
 
@@ -309,8 +314,10 @@
 			//세션에 담긴 정보 변수에 담아주기
 			/*<![CDATA[*/
 				let userId = /*[[ ${session.userId} ]]*/
+				let userNm = /*[[ ${session.userNm} ]]*/
 				let nickNm = /*[[ ${session.nickNm} ]]*/
 				let mblTelno = /*[[ ${session.mblTelno} ]]*/
+				let email = /*[[ ${session.eml} ]]*/
 			/*]]*/
 			
 			//버튼에 가게번호 히든으로 넘기기
@@ -324,6 +331,8 @@
 			$("#nickNm").val(nickNm);
 			$("#mblTelno").val(mblTelno);
 			console.log("유저아이디="+userId, "전화번호="+mblTelno, "닉넴="+nickNm);
+
+			//금액 콤마처리
 			
 //▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼우측 메뉴, 예약정보 출력 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			// 모든 메뉴의 토탈가격을 담는 변수
@@ -357,7 +366,7 @@
 				//우측 테이블에 정보 출력
 				var orderMenu = $('#orderMenu');
 				var lastRow = orderMenu.find('tr:last');
-				var newRow = $('<tr>');
+				var newRow = $('<tr>').attr('value', menuNo);
 
 				//메뉴들 가격을 합하기 위한 변수 선언
 				var sum = 0;
@@ -378,12 +387,13 @@
 								<input type='hidden' id='amount'  name='menuInfo[${cnt}].amount' value='${menuInfo[i].cnt}'>
 								`			
 							);
-					var menuPrc = $('<td>').addClass('td-title-2').text(
+					var menuPrc = $('<td>').addClass('td-title-2').attr('value', menuInfo[i].price).text(
 							menuInfo[i].price).append(
 								`
 								<input type='hidden' id='menuPrc'  name='menuInfo[${cnt}].rsvtPay' value='${menuInfo[i].price}'>
 								`			
 							);
+
 					console.log(amount.text());
 
 					//수량이 0일경우 빠꾸, 1이상일때만 추가
@@ -405,16 +415,59 @@
 				var totalPrice = totalRow.find(".order-total-price");
 				// 	totalPrice.text(sum);
 
-				//각 메뉴의 합을 더해줌
+				//각 메뉴의 합을 더해
 				totalSum += sum;
-				console.log(totalSum);
-				totalPrice.text(totalSum).append(
+			
+				console.log("토탈합계 " + totalSum);
+				totalPrice.text(totalSum).attr("value",totalSum).append(
 					`
 					<input type=hidden id=rsvtPay name=rsvtPay value="${totalSum}">
 					`
 				);
 				
 				cnt++;
+			}
+
+			function xxx(){
+				console.log("까꿍")
+				var clickedTrValue = $(event.target).closest("tr").attr("value");
+				//var menuPriceleft = $(event.target).closest("tr").find("td:eq(2)").attr('value');
+				var menuPriceRight = $('#orderMenu tr[value="' + clickedTrValue + '"] td:eq(2)').text();
+				console.log("클릭발류 " + clickedTrValue);
+				//console.log("메뉴가격 왼 " + menuPriceleft);
+				console.log("메뉴가격 오 " + menuPriceRight);
+				$("#orderMenu tr").each(function() {
+					var orderMenuTrValue = $(this).attr("value");
+					if (clickedTrValue === orderMenuTrValue) {
+					$(this).remove();
+					console.log("출력" + orderMenuTrValue)		//VALUE값  301나옴
+					
+					
+					//합계에서 빼기..
+					// 합계 출력
+					var totalRow = $('#orderMenu').find("tr:last");
+					var totalPrice = totalRow.find(".order-total-price");
+					var totalPriceValue = totalRow.find(".order-total-price").attr('value');
+					console.log("총액"+totalPrice)
+					var afterPrice = totalPriceValue - menuPriceRight;
+					console.log("계산 후 총액 " + afterPrice)
+					//totalPrice.nextSibling.remove()
+					totalPrice.text(afterPrice).attr("value",afterPrice).append(
+						`
+						<input type=hidden id=rsvtPay name=rsvtPay value="${afterPrice}">
+						`
+					);
+
+
+
+					return false; // each 반복문 종료
+					}
+				});
+				var tableSize = $('#orderMenu tr').length - 1
+				// for(i = 1; i < tableSize; i++){
+				// 	$(this).
+				// }
+				// $('#orderMenu tr:eq(i)').text()
 			}
 
 			//날짜, 시간, 인원 온클릭 함수
@@ -436,7 +489,7 @@
 				});
 
 				// 시간 선택이 변경되었을 때 실행될 함수
-				$('select .custom-select').on('change', function() {
+				$('select.custom-select').on('change', function() {
 					var selectedTime = $(this).children(':selected').text();
 					var selectedTimeVal = $(this).val();
 					console.log(selectedTime);
@@ -559,27 +612,57 @@
 				const {IMP} = window;
 				
 				IMP.init('imp21555503');	//가맹점 식별코드(토큰같은거)
-
+				
+				//결제요청
 				IMP.request_pay({
 					pg: 'html5_inicis',
-					pay_method: 'card',
-					merchant_uid: 'merchant_' + new Date().getTime(),
-					name: '주문명:결제테스트',
-					amount: $('#rsvtPay').val(),
-					buyer_email: 'iamport@siot.do',
-					buyer_name: '구매자이름',
-					buyer_tel: '010-1234-5678',
-					buyer_addr: '서울특별시 강남구 삼성동',
-					buyer_postcode: '123-456'
+					pay_method: 'card',		//결제수단 : card (신용카드), trans(실시간계좌이체), naverpay(네이버페이), kakaopay(카카오페이)
+					merchant_uid: 'merchant_' + new Date().getTime(),		//주문번호
+					name: $('#bizNm').text(),				//제품명(가게명)
+					amount: 100,		//결제 총 가격 $('#rsvtPay').val(),
+					buyer_email: email,		//주문자 이메일
+					buyer_name: userNm,				//주문자명
+					buyer_tel: mblTelno,			//연락처
+					//buyer_addr: '서울특별시 강남구 삼성동',		//주소
+					//buyer_postcode: '123-456'			//우편번호
 				}, function (rsp) {		//콜백함수
-					if (rsp.success) {	//결제성공시 로직
+					//결제성공시 로직
+					if (rsp.success) {	
 						var msg = '결제가 완료되었습니다.';
 						msg += '고유ID : ' + rsp.imp_uid;
 						msg += '상점 거래ID : ' + rsp.merchant_uid;
 						msg += '결제 금액 : ' + rsp.paid_amount;
 						msg += '카드 승인번호 : ' + rsp.apply_num;
+						//결제 성공시 submit(DB추가)하기 위해 함수로 따로 뺌
 						gotoOrder();
-					} else {			//결제실패시 로직
+						
+						//db연결을 위함
+						let PaymentVo = {	//일단 결제일, 결제금액만
+							chkDate: sysdate,
+							chkAmt: $('#rsvtPay').val()
+						}
+						$.ajax({
+							url: "/insertRsvtPayment", 
+							type: "get",
+							data: PaymentVo,
+							dataType: "text",
+							success: function(result){
+								if(result == "y"){
+									alert("성공쓰_ " + msg);
+									location.href="/book0604";									
+								}else{
+									alert("db입력실패");
+									return false;
+								}
+							}
+							,error : function(err){
+								alert("db저장안됨")
+							}
+							
+						})
+						
+					//결제실패시 로직
+					} else {			
 						var msg = '결제에 실패하였습니다.';
 						msg += '에러내용 : ' + rsp.error_msg;
 					}
@@ -589,7 +672,7 @@
 				
 				
 			}
-			
+			//예악정보 submit하는 함수
 			function gotoOrder(){
 				var formData = new FormData($("#orderForm")[0]);	
 				$.ajax({   url : "/orderFormSubmit",
@@ -600,13 +683,13 @@
                     success : function(result) {
                        console.log(result)
                        //수정
-                          alert("[작성 완료] \""+ result.dlTtl+"\"게시글 작성이 완료되었습니다 :D");
-                          location.href = "/dealMain";
+                          alert("db에 저장완료");
+                          location.href = "/mybook01";
                        
                     },
                     error : function(err){
                     	//수정
-                       alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
+                       alert("db에 저장안됨");
                     }
                  });
 				
@@ -614,10 +697,13 @@
 			}
 			
 			function test(){
-				console.log("메뉴이름, 가격, 수량" +$('#menuNm').val(),$('#menuPrc').val(),$('#amount').val());
-				
+				$("#menuInfo tr").each(function() {
+					var textValue = $(this).find("td:eq(2)").text();
+					parseInt(textValue).toLocaleString("ko-KR")
+					});
+				console.log("메뉴이름, 가격, 수량 " +$('#menuNm').val(),$('#menuPrc').val(),$('#amount').val());
+				console.log(urlBizNo + "_" + $('#bizNm').text())
 			}
-			
 			
 		</script>
 	</div>
