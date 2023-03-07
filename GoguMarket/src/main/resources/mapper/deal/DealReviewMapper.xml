@@ -3,7 +3,7 @@
 <mapper namespace="com.goguma.deal.mapper.DealReviewMapper">
 
 	<select id="getDealRv"
-			parameterType="DealReviewVO"
+			parameterType="int"
 			resultType="com.goguma.deal.vo.DealReviewVO">
 	   select *
 		from rv
