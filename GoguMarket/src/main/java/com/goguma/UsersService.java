@@ -11,8 +11,6 @@ import com.goguma.mem.vo.MemVO;
 
 @Service
 public class UsersService implements UserDetailsService{
-	//■■■■■■■■■■■■■■■■■■■■■■■■■■ 돈 타 치 !!!!!!!!!!!!!!!!!!!!!!!!! ■■■■■■■■■■■■■■■■■■■■■■■■■
-
 	
 	@Autowired 
 	MemMapper mapper;

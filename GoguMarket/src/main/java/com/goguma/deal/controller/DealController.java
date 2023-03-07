@@ -207,31 +207,32 @@ public class DealController {
 
 		System.out.println("왔슈...." + ntslId);
 		// 판매자 상품 리스트
-		List<DealVO> deals = new ArrayList<DealVO>();
-		deals = dealService.selectNtslDeal(ntslId);
-		System.out.println("판매자 상품 정보 >> " + deals);
-
-		// 판매자 상품의 첨부파일 리스트
-		Map<String, AtchVO> atchs = new HashMap<String, AtchVO>();
-
-		for (int i = 0; i < deals.size(); i++) {
-			int atchId = deals.get(i).getAtchId();
-			atchs.put(deals.get(i).getDlNo()+"", atchService.selectAtch(atchId).get(0));
-		}
-
-		System.out.println("상품 atch" + atchs);
-		
-		//판매자 정보(사진출력.. 하나때문에 하는ㄱ ㅓ....)
-		MemVO memVO = new MemVO();
-		memVO.setUserId(ntslId);
-		model.addAttribute("ntslInfo", memService.selectUser(memVO));
-		
-		// 판매자 상품 정보
-		model.addAttribute("dealList", deals);
-
-		// 판매자 상품 첨부파일 정보
-		model.addAttribute("atchList", atchs);
-
+//		List<DealVO> deals = new ArrayList<DealVO>();
+//		deals = dealService.selectNtslDeal(ntslId);
+//		System.out.println("판매자 상품 정보 >> " + deals);
+//
+//		// 판매자 상품의 첨부파일 리스트
+//		Map<String, AtchVO> atchs = new HashMap<String, AtchVO>();
+//
+//		for (int i = 0; i < deals.size(); i++) {
+//			int atchId = deals.get(i).getAtchId();
+//			atchs.put(deals.get(i).getDlNo()+"", atchService.selectAtch(atchId).get(0));
+//		}
+//
+//		System.out.println("상품 atch" + atchs);
+//		
+//		//판매자 정보(사진출력.. 하나때문에 하는ㄱ ㅓ....)
+//		MemVO memVO = new MemVO();
+//		memVO.setUserId(ntslId);
+//		model.addAttribute("ntslInfo", memService.selectUser(memVO));
+//		
+//		// 판매자 상품 정보
+//		model.addAttribute("dealList", deals);
+//
+//		// 판매자 상품 첨부파일 정보
+//		model.addAttribute("atchList", atchs);
+		model.addAttribute("dealList",dealService.selectNtslDeal(ntslId));
+		System.out.println(dealService.selectNtslDeal(ntslId));
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
 		

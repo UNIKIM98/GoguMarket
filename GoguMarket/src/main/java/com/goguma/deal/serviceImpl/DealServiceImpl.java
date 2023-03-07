@@ -2,6 +2,7 @@ package com.goguma.deal.serviceImpl;
 
 import java.io.Console;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,7 +93,7 @@ public class DealServiceImpl implements DealService {
 
 	//채은추가
 	@Override
-	public List<DealVO> selectNtslDeal(String ntslId) {
+	public List<Map> selectNtslDeal(String ntslId) {
 		return map.selectNtslDeal(ntslId);
 	}
 

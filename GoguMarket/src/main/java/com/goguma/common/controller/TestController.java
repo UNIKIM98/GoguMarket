@@ -43,6 +43,21 @@ public class TestController {
 	@Autowired
 	TestService testService;
 
+	@GetMapping("/admin/test")
+	public String adminTest() {
+		return "admin/adminMain";
+	}
+	
+	@GetMapping("/biz/test")
+	public String buzTest() {
+		return "biz/test";
+	}
+	
+	@GetMapping("/my/test")
+	public String myTest() {
+		return "myPages/myAct";
+	}
+	
 	// ■ Controllers =======================================
 	// ▷ 첨부파일 삭제 ajax 테스트 -------------------------------
 	@GetMapping("/delteFileTest")

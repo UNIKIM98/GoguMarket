@@ -5,8 +5,15 @@
 	<!-- 채은추가!! 확인후 주석은 지워주세욧 -->
 	<select id="selectNtslDeal" 
 			parameterType="String"
-			resultType="com.goguma.deal.vo.DealVO">
-	SELECT * FROM DEAL WHERE NTSL_ID = #{ntsl_id}
+			resultType="map">
+	SELECT d.* ,
+		       (SELECT ATCH_PATH
+	       		FROM ATCH
+	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
+                , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
+	FROM deal d JOIN MEM m 
+    ON d.ntsl_Id = m.user_id
+	WHERE ntsl_id = #{ntslId}
 	</select>
 	<!-- ====== ❤ new(getId+getAtch >> selectDealAtch ====== -->
 	<select id="selectDealAtch" 
