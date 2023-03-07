@@ -44,6 +44,15 @@
 
 	<script>
 	// ==============================================================
+	var imgSrc = "";
+
+	// ==============================================================
+	// ▷ 계좌 등록 함수
+	function goMemAct(){
+		location.href="/makeNewAct"
+	}
+	
+	// ==============================================================
 	// ▷ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
 		$(function(){
 			actInfoAjax();
@@ -86,7 +95,7 @@
 				`
 				<tr>
 					<td colspan="3">
-						<button onclick="goMemAct()" type = "button">계좌 추가</button>
+						<button onclick="goMemAct()" type = "button">계좌 등록</button>
 					</td>
 				</tr>
 				`)
@@ -131,6 +140,7 @@
 				}
 			})
 		}
+		
 		//▷ 전체 계좌 중 한 개 DB 삭제 이후
 		function deleteActListOneAfter(result, actNo, memActNoYn){
 			if(result.result != 1){
@@ -191,18 +201,47 @@
 			}else{
 				alert("[대표계좌 변경 성공] 대표계좌를 성공적으로 변경하였습니다 :D");
 				memActNo = result.actNo;
+				switch (result.bankNm) {
+				  case '국민':
+					  	console.log("국민")
+				   		imgSrc = 'img/act/01 국민.png';
+				    	break;
+				  case '기업':
+					  	console.log("겹")
 
+					   	imgSrc = 'img/act/02 기업.png';
+					    break;
+				  case '농협':
+					  	console.log("농협")
+
+					   	imgSrc = 'img/act/03 농협.jpg';
+					    break;
+				  case '신한':
+					  	console.log("샨")
+					   	imgSrc = 'img/act/04 신한.png';
+					    break;
+				  case '대구':
+					  	console.log("머구")
+					   	imgSrc = 'img/act/05 대구.png';
+					    break;
+				  case '우리':
+					  	console.log("위")
+					   	imgSrc = 'img/act/06 우리.png';
+					    break;
+				  case '하나':
+					  	 imgSrc = 'img/act/07 하나.png';
+					     break;
+				}
 				$("#memActSection").children().eq(1).html(
 					`
-				<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+				<img src="${imgSrc}" alt="" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
 				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankNm}</span> 
 				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankActNo}</span>
 				<div class="dropdown">
-					<button onclick="myFunction()" class="dropbtn">Dropdown</button>
-					<div id="myDropdown" class="dropdown-content">
-						<a onclick="delMemActAjax()">삭제</a>
-					</div>
+				<div>
+					<button onclick="delMemActAjax()">삭제</button>
 				</div>
+			
 				`
 				)
 			}
@@ -219,15 +258,48 @@
 				//# 대표계좌 있을 때 : 대표계좌 정보 출력
 			} else {
 				memActNo = result.actNo;
+				let memBankNmImg = result.bankNm;
+				
+				switch (memBankNmImg) {
+				  case '국민':
+					  	console.log("국민")
+				   		imgSrc = 'img/act/01 국민.png';
+				    	break;
+				  case '기업':
+					  	console.log("겹")
+
+					   	imgSrc = 'img/act/02 기업.png';
+					    break;
+				  case '농협':
+					  	console.log("농협")
+
+					   	imgSrc = 'img/act/03 농협.jpg';
+					    break;
+				  case '신한':
+					  	console.log("샨")
+					   	imgSrc = 'img/act/04 신한.png';
+					    break;
+				  case '대구':
+					  	console.log("머구")
+					   	imgSrc = 'img/act/05 대구.png';
+					    break;
+				  case '우리':
+					  	console.log("위")
+					   	imgSrc = 'img/act/06 우리.png';
+					    break;
+				  case '하나':
+					  	 imgSrc = 'img/act/07 하나.png';
+					     break;
+				}
+				
 				$("#memActSection").children().eq(1).html(
 					`
-				<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%; overflow: hidden;">
+				<img src="${imgSrc}" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
 				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankNm}</span> 
 				<span class="ml-20" style="width: 25%; font-size: large;">${result.bankActNo}</span>
 				<div class="dropdown">
-					<button onclick="myFunction()" class="dropbtn">Dropdown</button>
-					<div id="myDropdown" class="dropdown-content">
-						<a onclick="delMemActAjax()">삭제</a>
+					<div>
+						<button onclick="delMemActAjax()">삭제</button>
 					</div>
 				</div>
 				`
@@ -235,22 +307,22 @@
 			}
 		}
 
-		//▷ 대표계좌 드롭다운 버튼 : http://www.w3bai.com/ko/howto/howto_js_dropdown.html 참고
-		function myFunction() {
-			document.getElementById("myDropdown").classList.toggle("show");
-		}
-		window.onclick = function (event) {
-			if (!event.target.matches('.dropbtn')) {
-				var dropdowns = document.getElementsByClassName("dropdown-content");
-				var i;
-				for (i = 0; i < dropdowns.length; i++) {
-					var openDropdown = dropdowns[i];
-					if (openDropdown.classList.contains('show')) {
-						openDropdown.classList.remove('show');
-					}
-				}
-			}
-		}
+// 		//▷ 대표계좌 드롭다운 버튼 : http://www.w3bai.com/ko/howto/howto_js_dropdown.html 참고
+// 		function myFunction() {
+// 			document.getElementById("myDropdown").classList.toggle("show");
+// 		}
+// 		window.onclick = function (event) {
+// 			if (!event.target.matches('.dropbtn')) {
+// 				var dropdowns = document.getElementsByClassName("dropdown-content");
+// 				var i;
+// 				for (i = 0; i < dropdowns.length; i++) {
+// 					var openDropdown = dropdowns[i];
+// 					if (openDropdown.classList.contains('show')) {
+// 						openDropdown.classList.remove('show');
+// 					}
+// 				}
+// 			}
+// 		}
 
 		//▷ 대표계좌 삭제 아작스
 		function delMemActAjax() {
@@ -329,50 +401,7 @@
 					</div>
 				</div>
 			</section>
-
 		</div>
-		
-		<!-- writeFormModal -->
-		<div id="myModal" class="modal">
-			<!-- Modal content -->
-			<div class="modal-content">
-				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
-					<button class="close1" onclick=""
-						style="color: black; padding: 10px;">x</button>
-					<form action="insertSns" method="post"
-						enctype="multipart/form-data">
-						<div class="login-account p-30 box-shadow mtb-15">
-							<div class="col-lg-4 col-md-6 pb-10">
-								<div class="banner-item banner-3">
-									<div class="banner-img">
-										<a href="#"><img src="img/banner/3.jpg" alt=""></a>
-									</div>
-
-									<!-- atch -->
-									<input type="file" name="files" id="files" placeholder="첨부파일"
-										>
-								</div>
-							</div>
-
-
-							<!-- 게시물 -->
-							<textarea name="snsCn" id="snsCn" class="mb-15"
-								placeholder="게시글 내용 300자 이하."></textarea>
-							<input type="text" name="hash" id="hash">
-						</div>
-						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
-					</form>
-					<!-- writeForm -->
-
-					<!-- writefooter -->
-				</div>
-				<div class="modal-footer" style="background-color: #000000;">
-					&nbsp;</div>
-				<!-- writefooter -->
-			</div>
-
-		</div>
-
 	</div>
 </body>
 

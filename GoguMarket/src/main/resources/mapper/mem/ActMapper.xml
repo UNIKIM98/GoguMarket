@@ -32,5 +32,16 @@
 		SELECT * FROM ACT
 		WHERE USER_ID = #{userId}
 	</select>
-
+	
+	<insert id="insertAct" parameterType="com.goguma.mem.vo.ActVO">
+		<selectKey keyProperty="actNo" resultType="int"
+			order="BEFORE">
+			SELECT
+			CASE WHEN MAX(act_no) IS NULL THEN 1 ELSE
+			MAX(act_no) + 1 END as actNo
+			FROM act
+		</selectKey>
+		
+		INSERT INTO ACT VALUES(#{actNo}, #{bankNm}, #{bankActNo}, #{userId})
+	</insert>
 </mapper>

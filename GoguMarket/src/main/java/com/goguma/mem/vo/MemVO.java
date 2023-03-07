@@ -1,17 +1,21 @@
 package com.goguma.mem.vo;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.goguma.rsvt.vo.RsvtVO;
 
 import lombok.Data;
 
 
 @Data
-public class MemVO{
+public class MemVO implements UserDetails{
 
 	private String userId;
 	private String userSe;
@@ -40,6 +44,42 @@ public class MemVO{
 	private String socialSe;
 	private String atchNm;
 	private String atchPath;
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return Collections.singletonList(new SimpleGrantedAuthority(this.userSe));
+	}
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.userPw;
+	}
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.userId;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 	
 }

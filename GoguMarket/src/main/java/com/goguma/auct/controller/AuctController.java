@@ -1,6 +1,5 @@
 package com.goguma.auct.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +54,11 @@ public class AuctController {
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌
 		model.addAttribute("atch", atchList); // 모델에 경매관련 첨부파일 담아줌.
 
+
 /*		타이머 DB연결해서 하는거 일단 뒤로하기 스케쥴러?
 https://do-develop-diary.tistory.com/15
 		마감일 적용 sql결과값 따라 출력해주면 될듯
+
 		Date ddln = vo.getDdlnYmd();
 		Date now = new Date();
 		int result = ddln.compareTo(now);
@@ -72,14 +73,16 @@ https://do-develop-diary.tistory.com/15
 			System.out.println("이미 마감된 경매품입니다.");
 			vo.setStts(2);
 		}
+
 */
+
 		return "auction/auctSelect";
 	}
 
 	@GetMapping("/auctInsertForm")
 	public String auctInsertForm() {
 		// 상품등록폼 이동
-		return "auction/auctInsertForm";
+		return "auction/auctInsertFormNew";
 	}
 
 	@PostMapping("/auctInsert") // 등록 매핑

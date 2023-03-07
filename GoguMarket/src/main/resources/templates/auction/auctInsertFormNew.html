@@ -1,0 +1,316 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+    layout:decorate="~{/layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+@font-face {
+	font-family: 'S-CoreDream-3Light';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: 'S-CoreDream-3Light';
+}
+
+#uploadFileList {
+	width: 100%;
+	height: 20%;
+	padding: 10px;
+	/* 		border: 1px solid lightgrey; */
+	/* 		border-radius: 5px; */
+	margin-bottom: 30px;
+}
+
+#uploadFileList:empty:before {
+	content: attr(data-placeholder);
+	color: #999;
+	font-size: .9em;
+}
+
+.message-box input[type=text], textarea {
+	width: 70%;
+}
+
+.message-box label {
+	width: 25%;
+}
+
+#aFrm span{
+	color : red;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+		crossorigin="anonymous"></script>
+</head>
+<body>
+<div layout:fragment="content">
+		<!-- Body main wrapper start -->
+		<div class="wrapper" >
+		<div class="breadcrumbs-section plr-200 mb-80 section">
+                <div class="breadcrumbs overlay-bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="breadcrumbs-inner">
+                                    <h1 class="breadcrumbs-title">경매품 등록하기</h1>
+                                    <ul class="breadcrumb-list">
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="#">Auction Insert Form</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
+
+				<!-- MESSAGE BOX SECTION START -->
+				<div class="message-box-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12" style="width: 70%">
+								<div class="message-box box-shadow white-bg">
+									<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의1 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+									<form id="aFrm" method="post" enctype="multipart/form-data" onsubmit="return false">
+										<!-- ■■↑ form id 새로 지정해주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										<div class="row">
+											<div class="col-lg-12">
+												<h4 class="blog-section-title border-left mb-30">get in auction</h4>
+											</div>
+										</div>
+										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										<div class="col-lg-10" id="inputFile">
+											<label for="files">상품사진<span> *</span></label> 
+											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
+											<br>
+											<span id="fileErrMsg"></span>
+											<div id="fileList">
+												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
+													 class="message-box box-shadow white-bg"></div>
+											</div>
+										</div>
+										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										 <div class="col-lg-10">
+                                            <label for="ctgry">카테고리<span> *</span></label>
+                                            <input type="radio" name="ctgry" id="ctgry" value="HA" class="ctgry">생활가전
+                                            <input type="radio" name="ctgry" id="ctgry" value="HO" class="ctgry">취미/게임/음반
+                                            <input type="radio" name="ctgry" id="ctgry" value="FU" class="ctgry">가구/인테리어
+                                            <input type="radio" name="ctgry" id="ctgry" value="FO" class="ctgry">가공식품
+                                            <input type="radio" name="ctgry" id="ctgry" value="ETC" class="ctgry">기타
+                                        	<span id="ctgryErrMsg"></span>
+                                        </div>
+										<div class="col-lg-10 ">
+											<label for="auctTtl">글제목<span> *</span></label>
+											<input type="text" name="auctTtl" id="auctTtl" placeholder="글 제목을 입력하세요.">
+										</div>
+										<div class="col-lg-10">
+											<label for="auctCn">상품설명<span> *</span></label>
+											<textarea class="custom-textarea" name="auctCn" id="auctCn" 
+													  placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)"></textarea>
+										</div>
+										<div class="col-lg-10">
+											<label for="lowPrc">경매시작가<span> *</span></label>
+                                            <input type="text" name="lowPrc" id="lowPrc" placeholder="경매시작가">
+                                        </div>
+                                        <div class="col-lg-10">
+                                        	<label for="quickPrc">즉시구매가(선택)</label>     
+                                            <input type="text" name="quickPrc" id="quickPrc" placeholder="즉시구매가">
+                                        </div>
+                                        <div class="col-lg-10">
+                                        	<label for="ddlnYmd">경매종료일<span> *</span></label>     
+                                            <input type="date" name="ddlnYmd" id="ddlnYmd">
+                                        </div>
+                                        <button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+										<button class="submit-btn-1 mt-30 btn-hover-1"
+                                                onclick="goList()" >목록</button>
+										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="등록하기">
+									</form>
+								</div>
+								<!-- </form> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	
+	<script th:inline="javascript">
+		//==============================================================================
+		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+			$(function() {
+				$("#files").on("change", function(e) {
+					$("#fileErrMsg").text("")
+					inputFile(e);
+				});
+				console.log(typeof($(".ctgry")))
+				
+				$(".ctgry").on("change", function(){
+						$("#ctgryErrMsg").text("")
+					})
+				
+				$("#btnSave").on("click", function() {
+					submitForm();
+				});
+			});
+		
+		//==============================================================================
+		//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+			var fileCount = 0; //현재 첨부파일 개수
+			var totalCount = 10; // 첨부 가능한 파일 개수
+			var fileNum = 0; //첨부파일 인덱스
+			var inputFileList = new Array(); // insert 파일 배열
+			var deleteFileList = new Array(); // delete 파일 배열
+			var isSubmitOk = true;
+
+			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
+
+		//==============================================================================
+		//✅ input 실행하는 함수
+			function inputFile(e) {
+				var files = e.target.files;
+				var filesArr = Array.prototype.slice.call(files);
+
+				if (fileCount + filesArr.length > totalCount) {
+					alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+					return;
+				} else {
+					fileCount = fileCount + filesArr.length;
+				}
+
+				filesArr.forEach(function(f) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+									inputFileList.push(f);
+									$('#uploadFileList').append(
+																`<img style=${img_style} src=${e.target.result}
+																	   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+																)
+									fileNum++;
+								};
+					reader.readAsDataURL(f);
+				});
+				$("#files").val("");
+			}
+
+		//==============================================================================
+		//✅ 화면/배열에서 delete 실행하는 함수			
+			function fileDelete(fileNum) {
+				var no = fileNum.replace(/[^0-9]/g, "");
+				inputFileList[no].is_delete = true;
+				$('#' + fileNum).remove();
+				fileCount--;
+				if(fileCount==0){
+					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+					isSubmitOk = false;
+				}
+			}
+
+		//==============================================================================
+		//✅ 화면/배열에서 delete 실행하는 함수
+			function submitForm() {
+				// 선택한 카테고리 > hidden input value로 넣기
+				var ctgry = $('input[name=ctgry]:checked')
+				console.log(ctgry.val())
+				
+				$("#ctgry").val(ctgry); 
+	
+				
+				//submit 전 체크하기
+				if(submitCheck()){
+// 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+// 				var formData = new FormData($("#aFrm")[0]);
+// 				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				
+// 				formData.append("deleteFiles", deleteFileList);
+
+// 				for (var i = 0; i < inputFileList.length; i++) {
+// 					if (!inputFileList[i].is_delete) {
+// 						formData.append("files", inputFileList[i]);
+// 					}
+// 				}
+// 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+// 				$.ajax({	url : "/auctInsert",
+// 							type : "POST",
+// 							data : formData,
+// 							processData : false,
+// 							contentType : false,
+// 							success : function(result) {
+// 								console.log(result)
+// 									alert("[작성 완료] 게시글 작성이 완료되었습니다 :D");
+// 									location.href = "/auctMain";
+								
+// 							},
+// 							error : function(err){
+// 								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
+// 							}
+// 						});
+// 				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
+				}
+			}
+		//==============================================================================
+		//✅ 화면/배열에서 delete 실행하는 함수
+			function submitCheck(){
+			console.log(!$("#ctgry").is(':checked'));
+			console.log($("#ctgry").is(':checked'));
+			//1. 파일 업로드 여부
+			if(inputFileList.length==0){
+				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+				isSubmitOk = false;
+			}
+			
+			//2. 카테고리 선택 여부
+			else if(!$("#ctgry").is(':checked')){
+				console.log("hi")
+				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
+				isSubmitOk = false;
+			}
+			
+			//3. 글제목 작성 여부
+			else if($("#auctTtl").val()==""){
+				$("#auctTtl").focus();
+				isSubmitOk = false;
+			}
+			
+			//4. 글내용 작성 여부
+			else if($("#auctCn").val()==""){
+				$("#auctCn").focus();
+				isSubmitOk = false;
+			}
+
+			//5. 상품가격 작성 여부
+			else if($("#dlPrc").val()==""){
+			   $("#dlPrc").focus();
+				isSubmitOk = false;
+			}else{
+				isSubmitOk = true;
+			}		
+			
+			return isSubmitOk;			
+		}
+		
+		//==============================================================================
+		//✅ (수정/삭제에서 사용) 기존 db에서 삭제할 파일들을 배열에 담아서 보내는 함수
+			function deleteFile(elem) {
+// 				console.log(elem.value);
+// 				$(elem).parent().remove();
+// 				if (!deleteFileList.includes(elem.value)) {
+// 					deleteFileList.push(elem.value);
+// 					}
+			}
+			
+			function goList() {
+                location.href = "auctList";
+            }
+	</script>
+</body>
+</html>

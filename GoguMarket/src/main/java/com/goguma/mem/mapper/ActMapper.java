@@ -21,4 +21,7 @@ public interface ActMapper {
 	
 	// ▶ 전체계좌 중 하나 삭제
 	int deleteActListOne(ActVO aVO);
+	
+	// ▶ 전체계좌 입력
+	int insertAct(ActVO aVO);
 }
