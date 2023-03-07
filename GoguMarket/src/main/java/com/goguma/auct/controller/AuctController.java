@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.AtchVO;
 import com.goguma.common.vo.CommonCodeVO;
 
+
 @Controller
 public class AuctController {
 
@@ -35,10 +37,25 @@ public class AuctController {
 	@Autowired
 	private CommonCodeService codeService;
 
+	
 	@GetMapping("/auctList")
-	public String getauctList(Model model) {
+	public String getauctList(Model model,AuctVO vo) {
 		// 전체품목 리스트
-		model.addAttribute("lists", auctService.getAuctList());
+		
+		model.addAttribute("lists", auctService.getAuctList()); // auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
+		
+		model.addAttribute("AuctNo", auctService.getAuct(vo));
+		vo.getAuctNo();
+//		vo = auctService.getAuct(vo);
+		
+		
+//		int value = vo.getAuctNo();
+		
+//		int auctNo = auctService.getAuct(vo);
+		
+//		vo.setAuctNo(0);
+//		List<AuctMemVO> avoList = auctMemService.selectAuctMem(0);
+		
 //		model.addAttribute("auctMem", auctMemService.selectAuctMem(auctNo));
 		System.out.println(model);
 
@@ -73,11 +90,13 @@ public class AuctController {
 	@GetMapping("/auctInsertForm")
 	public String auctInsertForm(Model model) {
 		// 상품등록폼 이동
+
 		List<CommonCodeVO> codeList = codeService.codeList("002");
 		codeList.remove(0);
 
 		model.addAttribute("category", codeList);
 		return "auction/auctInsertFormNew";
+
 	}
 
 	@PostMapping("/auctInsert") // 등록 매핑
