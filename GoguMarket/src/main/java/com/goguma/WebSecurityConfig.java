@@ -10,6 +10,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+	//■■■■■■■■■■■■■■■■■■■■■■■■■■ 돈 타 치 !!!!!!!!!!!!!!!!!!!!!!!!! ■■■■■■■■■■■■■■■■■■■■■■■■■
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
@@ -19,8 +21,12 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(
-				(requests) -> requests.antMatchers("/", "/home","/memberJoinForm").permitAll().anyRequest().authenticated())
-				.formLogin((form) -> form.successHandler(new LoginSuccessHandler())).logout((logout) -> logout.permitAll())
+				(requests) -> requests.antMatchers("/", "/home","/memberJoinForm", "/css/**", "/js/**", "/img/**", "/attech/**", "/fonts/**","/img/**","/lib/**","/vender/**","/style.css").permitAll()
+								.anyRequest().authenticated())
+		
+				.formLogin((form) -> form.successHandler(new LoginSuccessHandler()))
+				.logout((logout) -> logout.permitAll().logoutSuccessUrl("/")
+									.invalidateHttpSession(true))
 				.csrf().disable();
 
 		return http.build();
