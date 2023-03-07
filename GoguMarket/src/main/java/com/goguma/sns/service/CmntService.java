@@ -18,7 +18,7 @@ public interface CmntService {
 	public int insertReply(SnsCmntVO vo);
 	
 	// 댓글 수정
-	public String UpdateCmnt(SnsCmntVO vo);
+	public int updateCmnt(SnsCmntVO vo);
 
 	//  답글 삭제
 	public int deleteRreply(int cmntNo);

@@ -1,7 +1,8 @@
 <div class="rrpBox">
 	<div id="groupLeft">-></div>
 	<div id="groupRight">
-		<form id="rrpView" action="">
+		<form id="rrpView" action="/rreplyEdit" method="post"
+			onsubmit="return false">
 			<div class="card mb-1">
 				<div class="card-body bg-light">
 					<div class="media" style="margin: 10px">
@@ -10,26 +11,32 @@
 								alt="#"></a>
 						</div>
 						<div class="media-body ml-10">
+
 							<div class="clearfix">
-								<div class="name-commenter pull-left">
+								<div class="name-commenter pull-right" id='rrpContent'
+									style="width: 100%">
+
 									<h6 class="media-heading">
-										<input type="hidden" id="rrpCmntNo">
-										<input type="hidden" id="rrpGroupNo">
-										 <a href="#" id="rrpCmntMem"></a> <a href="#" id="rrpCmntYmd"></a>
+										<input type="hidden" id="rrpCmntNo" name="cmntNo"> <input
+											type="hidden" id="rrpGroupNo" name="groupNo"> <input
+											type="hidden" id="rrpSnsNo" name="snsNo"> <a href="#"
+											id="rrpCmntMem"></a><br> <a href="#" id="rrpCmntYmd"></a>
+										<br>
+
 									</h6>
 
-									<div class="form-inline" id="rrpCmntCn"
+									<div class="form-inline" id="cmntCn" name="cmntCn"
 										style="word-break: break-all;">댓글내용</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div>
+					<div id="buttonForm" class="bg-light">
 						<button type="button" class="btn btn-dark mt-3 f-right"
-							onclick="rreplyEdit()" style="margin:10px" id="editbutton">수정</button>
+							onclick="rreplyEditForm()" style="margin: 10px" id="editbutton">수정</button>
 						&nbsp;&nbsp;
 						<button type="button" class="btn btn-dark mt-3 f-right "
-							onclick="rreplyDel()" id="delbutton" >삭제</button>
+							onclick="rreplyDel()" id="delbutton">삭제</button>
 						&nbsp;&nbsp;
 					</div>
 				</div>

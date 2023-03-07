@@ -59,6 +59,16 @@
 
 	</delete>
 
+	<update id="updateCmnt"
+		parameterType="com.goguma.sns.vo.SnsCmntVO">
+		UPDATE sns_cmnt SET cmnt_cn = #{cmntCn} , 
+		cmnt_ymd = sysdate
+		WHERE cmnt_no = #{cmntNo}
+	</update>
+
+
+
+
 
 
 

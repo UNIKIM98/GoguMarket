@@ -16,6 +16,12 @@ public class CmntServiceImpl implements CmntService {
 	SnsCmntMapper map;
 
 	@Override
+	public int updateCmnt(SnsCmntVO vo) {
+		// TODO Auto-generated method stub
+		return map.updateCmnt(vo);
+	}
+
+	@Override
 	public List<SnsCmntVO> SelectCmntlist(int snsNo) {
 		// TODO Auto-generated method stub
 		return map.SelectCmntlist(snsNo);
@@ -34,11 +40,7 @@ public class CmntServiceImpl implements CmntService {
 		return map.insertReply(vo);
 	}
 
-	@Override
-	public String UpdateCmnt(SnsCmntVO vo) {
-		// TODO Auto-generated method stub
-		return map.UpdateCmnt(vo);
-	}
+	
 
 	@Override
 	public int deleteRreply(int cmntNo) {
