@@ -14,6 +14,8 @@ import com.goguma.common.vo.AtchVO;
 public class AuctServiceImpl implements AuctService{
 	@Autowired
 	AuctMapper auctMapper;
+	
+	
 
 	@Override
 	public List<AuctVO> getAuctList() {

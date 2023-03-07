@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goguma.auct.service.AuctMemService;
 import com.goguma.auct.service.AuctService;
+import com.goguma.auct.vo.AuctMemVO;
 import com.goguma.auct.vo.AuctVO;
 import com.goguma.common.service.AtchService;
 import com.goguma.common.vo.AtchVO;
@@ -27,11 +32,15 @@ public class AuctController {
 	private AuctService auctService; // 경매 서비스영역
 	@Autowired
 	private AtchService atchService; // 첨부파일 서비스 영역
+	@Autowired
+	private AuctMemService auctMemService; //경매 입찰자 영역
 
 	@GetMapping("/auctList")
 	public String getauctList(Model model) {
+		// 전체품목 리스트
 		model.addAttribute("lists", auctService.getAuctList());
-
+//		model.addAttribute("auctMem", auctMemService.selectAuctMem(auctNo));
+ 
 		System.out.println(model);
 
 		return "auction/auctList";
@@ -44,38 +53,27 @@ public class AuctController {
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
+		
+		
+		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
+		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
+		
 		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
-		System.out.println(cnt); // 조회수 증가 확인
-		System.out.println(vo);
-
-		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일 리스트로 조회
-		System.out.println(atchList); // 첨부파일 확인
-
-		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌
-		model.addAttribute("atch", atchList); // 모델에 경매관련 첨부파일 담아줌.
 
 
-/*		타이머 DB연결해서 하는거 일단 뒤로하기 스케쥴러?
-https://do-develop-diary.tistory.com/15
-		마감일 적용 sql결과값 따라 출력해주면 될듯
-
-		Date ddln = vo.getDdlnYmd();
-		Date now = new Date();
-		int result = ddln.compareTo(now);
-		if (result >= 0) {
-			vo.setStts(1);
-			System.out.println("경매가 진행중입니다.");
-		} else if (result == 0) {
-			vo.setStts(1);
-			System.out.println("오늘이 마지막 경매일입니다.");
-
-		} else {
-			System.out.println("이미 마감된 경매품입니다.");
-			vo.setStts(2);
-		}
-
-*/
-
+		
+		
+		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
+		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
+		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
+		
+		
+		
+		System.out.println("조회수"+cnt); // 조회수 증가 확인
+		System.out.println("첨부파일"+atchList); // 첨부파일 확인
+		System.out.println("입찰자"+avoList); // 입찰자 확인
+		System.out.println("단건조회VO"+vo); // vo값 확인
+		
 		return "auction/auctSelect";
 	}
 
@@ -86,14 +84,17 @@ https://do-develop-diary.tistory.com/15
 	}
 
 	@PostMapping("/auctInsert") // 등록 매핑
-	public String auctInsert(AuctVO vo, List<MultipartFile> files) {
+	public String auctInsert(AuctVO vo, List<MultipartFile> files, HttpServletRequest request) {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
 		System.out.println(files + "======넘어온 파일들");
 
 		int atchId = atchService.insertFile(files);
 		int atchList = atchService.insertFile(atchId, files);
 		
-		vo.setUserId("user2");
+
+		HttpSession session = request.getSession(); //세션값 받아옴
+		String myId = (String) session.getAttribute("userId"); //세션값 중 아이디만 받아옴
+		vo.setUserId(myId); //세션값으로 아이디 설정
 
 		System.out.println(atchId + " : files/////////");
 		System.out.println(vo);
@@ -102,7 +103,7 @@ https://do-develop-diary.tistory.com/15
 			vo.setAtchId(atchId);
 		}
 
-		auctService.insertAuct(vo);
+		auctService.insertAuct(vo); //vo값으로 auctService의 insertAuct를 실행
 		return "redirect:auctList";
 	}
 
