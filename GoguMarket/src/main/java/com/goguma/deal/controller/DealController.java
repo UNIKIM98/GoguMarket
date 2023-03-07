@@ -1,6 +1,9 @@
 package com.goguma.deal.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -56,7 +59,7 @@ public class DealController {
 	@Autowired
 	MemService memService;
 
-	// ❤ 온니 안 쓰는 거 같아서 일단 막아뒀어요
+// ❤ 온니 안 쓰는 거 같아서 일단 막아뒀어요
 //	// 판매상품 등록 : 계좌정보와 아이디값이 없으면 등록할 수 없다 => @PostMapping("/deal/{acntno}/{id}")
 //	// 일단 폼데이타로 부메랑에서 들어가는지 확인해보자
 //	@PostMapping("/deal")
@@ -64,6 +67,14 @@ public class DealController {
 //	public DealVO insertDeal(DealVO vo, MultipartFile file) {
 //		return vo;
 //	}
+
+//판매자 페이지에 있던 것
+//❤❤ 언니 요거 안 써서 일단 주석해뒀어욤
+//	model.addAttribute("deal", dealService.selectDeal(dlNo)); // 단건
+//	model.addAttribute("list", dealService.getDealSeller(dlNo));// 여러건
+//	model.addAttribute("review", RvService.getDealRv(dlNo));// 여러건
+//	int id = Integer.parseInt(dealService.getId(dlNo));
+//	model.addAttribute("file", atchService.selectAtch(id));
 
 	// ===========================
 	// ▷ 중고거래 메인
@@ -121,21 +132,6 @@ public class DealController {
 	}
 
 	// ===========================
-	// ▷ 판매자 페이지(로 추정)
-	@RequestMapping("/dealSellerpage/{dlNo}")
-	public String getDealSeller(@PathVariable int dlNo, Model model) {
-
-		model.addAttribute("deal", dealService.selectDeal(dlNo)); // 단건
-		model.addAttribute("list", dealService.getDealSeller(dlNo));// 여러건
-		model.addAttribute("review", RvService.getDealRv(dlNo));// 여러건
-
-		int id = Integer.parseInt(dealService.getId(dlNo));
-		model.addAttribute("file", atchService.selectAtch(id));
-
-		return "deal/dealSellerPage";
-	}
-
-	// ===========================
 	// ▷ 중고거래 게시글 작성
 	@RequestMapping("/dealform") // 딜폼창확인
 	public String dealform(Model model) {
@@ -161,19 +157,15 @@ public class DealController {
 	}
 
 	// ===========================
-	// ▷ 상품 수정
+	// ▷ 중고거래 게시글 수정
 	@GetMapping("/dealupdate/{dlNo}")
 	public String updateTest(Model model, HttpServletRequest request, @PathVariable int dlNo) {
 		// 임시로그인 : 세션에 아이디, 거래지역 담기
 		HttpSession session = request.getSession();
-		session.setAttribute("dealArea", "도리네집");
 		MemVO mVO = new MemVO();
-		
-		mVO.setUserId("user1");
-		mVO = memService.selectUser(mVO);
 
-		session.setAttribute("userId", mVO.getUserId()); // 유저id 설정
-		session.setAttribute("dealArea", mVO.getDealArea()); // 유저 거래지역 설정
+		mVO.setUserId((String)session.getAttribute("userId"));
+		mVO = memService.selectUser(mVO);
 
 		// 게시글 정보 담기
 		model.addAttribute("dealInfo", testService.selectDealTest(dlNo)); // 7번 게시글 정보
@@ -186,7 +178,7 @@ public class DealController {
 	}
 
 	// ===========================
-	// ▷ 판매중인 상품 삭제
+	// ▷ 중고거래 게시글 삭제
 	@RequestMapping("deleteAll/{dlNo}")
 	public String deletedeal(@PathVariable int dlNo) {
 		System.out.println(dlNo + " => 삭제할 글 번호");
@@ -206,6 +198,44 @@ public class DealController {
 		return "deal/dealMain";
 
 		/* return Collections.singletonMap("result", "success delete"); */
+	}
+
+	// ===========================
+	// ❤❤ 판매자 페이지(로 추정)
+	@RequestMapping("/dealSellerpage/{ntslId}")
+	public String getDealSeller(@PathVariable String ntslId, Model model) {
+
+		System.out.println("왔슈...." + ntslId);
+		// 판매자 상품 리스트
+		List<DealVO> deals = new ArrayList<DealVO>();
+		deals = dealService.selectNtslDeal(ntslId);
+		System.out.println("판매자 상품 정보 >> " + deals);
+
+		// 판매자 상품의 첨부파일 리스트
+		Map<String, AtchVO> atchs = new HashMap<String, AtchVO>();
+
+		for (int i = 0; i < deals.size(); i++) {
+			int atchId = deals.get(i).getAtchId();
+			atchs.put(deals.get(i).getDlNo()+"", atchService.selectAtch(atchId).get(0));
+		}
+
+		System.out.println("상품 atch" + atchs);
+		
+		//판매자 정보(사진출력.. 하나때문에 하는ㄱ ㅓ....)
+		MemVO memVO = new MemVO();
+		memVO.setUserId(ntslId);
+		model.addAttribute("ntslInfo", memService.selectUser(memVO));
+		
+		// 판매자 상품 정보
+		model.addAttribute("dealList", deals);
+
+		// 판매자 상품 첨부파일 정보
+		model.addAttribute("atchList", atchs);
+
+		// 판매자 후기 정보
+		// ❤❤ 넣어야함!!!
+		
+		return "deal/dealSellerPage";
 	}
 
 }

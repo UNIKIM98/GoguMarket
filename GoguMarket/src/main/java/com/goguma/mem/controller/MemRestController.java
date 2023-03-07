@@ -112,10 +112,8 @@ public class MemRestController {
 			memVO.setAtchPath(null);
 		}
 		System.out.println("바꾼 VO => " + memVO);
-
 		String userPw = memVO.getUserPw();
 		userPw = bCryptPasswordEncoder.encode(userPw);
-
 		memVO.setUserPw(userPw);
 
 		int memUpdateCnt = memService.updateUser(memVO);

@@ -90,4 +90,10 @@ public class DealServiceImpl implements DealService {
 		return map.selectDealAtch(dlNo);
 	}
 
+	//채은추가
+	@Override
+	public List<DealVO> selectNtslDeal(String ntslId) {
+		return map.selectNtslDeal(ntslId);
+	}
+
 }

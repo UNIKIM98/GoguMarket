@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.deal.mapper.DealMapper">
+	
+	<!-- 채은추가!! 확인후 주석은 지워주세욧 -->
+	<select id="selectNtslDeal" 
+			parameterType="String"
+			resultType="com.goguma.deal.vo.DealVO">
+	SELECT * FROM DEAL WHERE NTSL_ID = #{ntsl_id}
+	</select>
 	<!-- ====== ❤ new(getId+getAtch >> selectDealAtch ====== -->
 	<select id="selectDealAtch" 
 			parameterType="int" 
