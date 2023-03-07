@@ -17,7 +17,7 @@ public interface SnsCmntMapper {
 	// 댓글 수정
 	public String UpdateCmnt(SnsCmntVO vo);
 
-	// 댓글 삭제
-	public String deleteCmnt(int CmntNo);
+	//  답글 삭제
+	public int deleteRreply(int cmntNo);
 
 }

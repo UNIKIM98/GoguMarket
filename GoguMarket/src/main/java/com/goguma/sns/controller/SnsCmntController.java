@@ -47,5 +47,25 @@ public class SnsCmntController {
 
 		return reply;
 	}
+	
+	@PostMapping("/deleteRreply")
+	public Map<String,Object> deleteRreply(@RequestBody SnsCmntVO vo) {
+				
+		
+		Map<String,Object>map = new HashMap<String, Object>();
+		System.out.println(vo+"ㅎㅇ");
+		
+		
+		System.out.println(vo.getCmntNo()+"=========");
+		int success =  service.deleteRreply(vo.getCmntNo());
+		
+		map.put("result",success);
+	
+		
+		return map;
+	}
+	
+	
+	
 
 }

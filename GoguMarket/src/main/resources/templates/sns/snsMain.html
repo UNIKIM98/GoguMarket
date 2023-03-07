@@ -4,9 +4,6 @@
 	layout:decorate="~{/layouts/layout}">
 
 <head>
-<script src="https://code.jquery.com/jquery-3.6.3.js"
-	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-	crossorigin="anonymous"></script>
 
 <meta charset="UTF-8">
 
@@ -195,8 +192,8 @@ textarea {
 			</div>
 
 		</div>
+		<div id="loadDiv" style="display:none"></div>
 		<script th:inline="javascript">
-		
 		$.ajax({
 			url : "/selectSnsList", // 데이터를 가져올 경로 설정
 			type : "GET", // 데이터를 가져오는 방식

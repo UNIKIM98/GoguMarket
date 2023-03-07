@@ -1,24 +1,22 @@
 <div class="rrpBox">
 	<div id="groupLeft">-></div>
 	<div id="groupRight">
-		<form id="reply">
-			<div class="card mb-1">
-				<div class="card-body">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">
-							<div class="form-inline mb-2">
-								<input type="hidden" id="cmntNo" name="cmntNo" value=No>
-								<input type="hidden" id="replySnsNo" name="replySnsNo">
-								<input type="hidden" id="replyUserId" value="${session.userId}" name="replyUserId">
-							</div> <textarea class="form-control" id="replyCmntCn"
-								name="replyCmntCn"> </textarea>
-							<button type="button" class="btn btn-dark mt-3 f-right"
-								onclick="insertReply()">post reply</button>
-						</li>
-					</ul>
-				</div>
+		<div class="card mb-1">
+			<div class="card-body">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<div class="form-inline mb-2">
+							<input type="hidden" id="groupNo" name="groupNo">
+							<input type="hidden" id="replySnsNo" name="replySnsNo">
+							<input type="hidden" id="replyUserId" value="${session.userId}" name="replyUserId">
+						</div> <textarea class="form-control" id="replyCmntCn"
+							name="replyCmntCn"> </textarea>
+						<button type="button" class="btn btn-dark mt-3 f-right"
+							onclick="insertRrp()">post rereply</button>
+					</li>
+				</ul>
 			</div>
-		</form>
+		</div>
 	</div>
 
 </div>

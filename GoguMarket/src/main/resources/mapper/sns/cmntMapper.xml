@@ -7,7 +7,7 @@
 		SELECT * FROM sns_cmnt
 		WHERE sns_no = #{snsNo}
 		ORDER BY
-		sns_no,recmnt_order
+		cmnt_no
 	</select>
 
 
@@ -37,8 +37,8 @@
 		#{cmntMem},
 		CURRENT_Date,
 		<choose>
-			<when test="groupNo != null">#{groupNo}+1</when>
-			<otherwise>#{groupNo}</otherwise>
+			<when test="groupNo != null">#{groupNo}</when>
+			<otherwise>0</otherwise>
 		</choose>
 		,
 		<choose>
@@ -50,8 +50,14 @@
 			<when test="step != null">#{step}+1</when>
 			<otherwise>#{step}</otherwise>
 		</choose>
-)
-</insert>
+		)
+	</insert>
+
+	<delete id="deleteRreply" parameterType="int">
+		delete from sns_cmnt
+		where cmnt_no = #{cmntNo}
+
+	</delete>
 
 
 

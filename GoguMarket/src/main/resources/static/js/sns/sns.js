@@ -33,6 +33,10 @@ reInput.onclick = function() {
 
 };
 
+
+
+
+
 //---------------- 게시글 list-------------------------
 
 
@@ -65,9 +69,16 @@ function snsModal(id) {
 	//리턴된 값을 태그를 찾아서 넣음
 }
 
-function SelectCmntlist(snsNo) {
-	console.log("내가 띄운 게시물의 번호 : " + snsNo);
 
+function checkParReply(item, groupNo) {
+	// 아이템 오브젝트 포리치 돌려서 같은 item.cmntNo가 groupNo인 사람이 있는지 찾아야함
+	//아니면 댓글 삭제할때 db에서 같은 groupNo인거 그냥 다 날리자!
+
+}
+
+
+function SelectCmntlist(snsNo) {
+	var forCnt = 0;
 	$.ajax({
 		url: "/SelectCmntlist",
 		type: "GET",
@@ -76,65 +87,80 @@ function SelectCmntlist(snsNo) {
 		success: function(data) {
 			console.log(data);
 			$(data).each(function(index, item) {
-				console.log(item.cmntCn);
-				//아래의 코드는 html이다
-				console.log("내가 띄운 댓글의 번호 :");
-				$("#Sns-reply").append(`
-						<div class="replyGroup" id="${item.cmntNo}">
-						
-						    <div class="card mb-1">
-						        <div class="card-body bg-light">
-						            <div class="media" style="margin: 10px">
-						                <div class="media-left">
-						                    <a href="#"><img class="media-object" src="img/author/1.jpg"alt="#"></a>
-						                        </div>
-						                            <div class="media-body ml-10">
-						                                <div class="clearfix">
-						                                    <div class="name-commenter pull-left">
-						                                        <h6 class="media-heading"> 
-						                                            <a href="#" id="cmntMem">${item.cmntMem}</a> 
-						                                            <br> <a href="#" style="opacity: 50%" id="cmntYmd">${item.cmntYmd}</a>
-						                                        </h6>
-						                                    <div class="form-inline" id="cmntCn" style="word-break:break-all;">${item.cmntCn}</div>
-						                                </div>
-						                            </div>
-						                        </div>
-						                    </div>
-						                <input type="button" class="btn btn-dark mt-3 f-right" id="reInput" onClick="ShowRrpInput(${item.cmntNo})" />
-						            </div>
-						        </div>
-						        <!--Insert form-->
-						
-						        <div class="rrplyGroup" id="rrplyGroup_${item.cmntNo}">
-									
-						        </div>
-						
-						  
-						
-						</div>`);
+				if (item.groupNo > 0) {
+					$("#loadDiv").load("sns/rrpView.html", function(result) {
+						var addedDiv = $("#rrplyGroup_" + item.groupNo).append(result);
+						$(addedDiv).find(".rrpBox").each(function(index, obj) {
+							console.log("넘어옴 : " + index);
+							if ($(obj).hasClass("set") == false) {
+								$(obj).addClass("set");
+								$(obj).find("#rrpGroupNo").val(item.groupNo);
+								$(obj).find("#rrpCmntNo").val(item.cmntNo);
+								$(obj).find("#rrpCmntMem").text(item.cmntMnm);
+								$(obj).find("#rrpCmntYmd").text(item.cmntYmd);
+								$(obj).find("#rrpCmntCn").text(item.cmntCn);
+								$(obj).find("#delbutton").attr("onclick", "rreplyDel(" + item.cmntNo + ", " + item.groupNo + ")")
+
+
+								return true;
+							}
+						});
+					});
+				} else {
+					console.log("cmntCn : " + item.cmntCn);
+					forCnt++;
+					$("#loadDiv").load("sns/replyView.html", function(result) {
+						var addedDiv = $("#Sns-reply").append(result);
+						$(addedDiv).find(".replyGroup").each(function(index, obj) {
+							if ($(obj).hasClass("set") == false) {
+								$(obj).addClass("set");
+								$(obj).addClass("numbering_" + forCnt);
+								$(obj).find("#cmntMem").text(item.cmntMem);
+								$(obj).find("#cmntYmd").text(item.cmntYmd);
+								$(obj).find("#cmntCn").text(item.cmntCn);
+								$(obj).find("#reInput").attr('onclick', 'ShowRrpInput(' + item.cmntNo + ',' + item.snsNo + ')');
+								$(obj).find(".rrplyGroup").attr('id', 'rrplyGroup_' + item.cmntNo);
+								return true;
+							}
+
+						})
+
+					});
+				}
+
+
+
+
+				return true;
 			});
 		},
 		error: function() {
 			cosole.log(error)
-		}
+		},
+		async: false
 	});
 }
 
 
 
-function ShowRrpInput(cmntNo) {
+function ShowRrpInput(cmntNo, replySnsNo) {
 	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
-	console.log("현재 파일의 위치 : " + window.location);
-
-	$("#rrplyGroup_" + cmntNo).load("sns/rrpWrite.html");
+	var sessionID = "user1"; //아작스로 받아 올것
+	$("#loadDiv").load("sns/rrpWrite.html", function(result) {
+		var addedDiv = $("#rrplyGroup_" + cmntNo).append(result);
+		$(addedDiv).find("#replyUserId").val(sessionID);
+		$(addedDiv).find("#groupNo").val(cmntNo);
+		$(addedDiv).find("#replySnsNo").val(replySnsNo);
+		console.log("생성된 div ID : " + sessionID);
+	});
 
 }
 
 
 
+
 //---------------------------------reply(insert)-----------------------------------
 function insertReply() {
-
 	let snsNo = $("#replySnsNo").val();
 	let cmntMem = $("#replyUserId").val();
 	let cmntCn = $("#replyCmntCn").val();
@@ -172,6 +198,8 @@ function insertReply() {
 				alert("게시물 등록에 실패했습니다.");
 			} else {
 				alert("게시물 등록에 성공했습니다.");
+				$("#Sns-reply").empty();
+				SelectCmntlist(snsNo);
 			}
 		},
 		error: function() {
@@ -179,9 +207,100 @@ function insertReply() {
 		}
 	});
 
-	SelectCmntlist(snsNo);
 
 }
+
+
+
+function insertRrp() {
+	let snsNo = $(".rrpBox #replySnsNo").val();
+	let cmntMem = $(".rrpBox #replyUserId").val();
+	let cmntCn = $(".rrpBox #replyCmntCn").val();
+
+	let groupNo = $(".rrpBox #groupNo").val();
+
+	console.log("groupNo : " + groupNo);
+	console.log("snsNo : " + snsNo);
+	console.log("cmntMem : " + cmntMem);
+	console.log("cmntCn : " + cmntCn);
+
+
+	if (cmntCn == " ") {
+		alert("답글을 입력하세요");
+		return;
+	}
+
+
+	$.ajax({
+		url: "/insertReply",
+		type: "POST",
+		data: JSON.stringify({
+			snsNo: snsNo,
+			cmntMem: cmntMem,
+			cmntCn: cmntCn,
+			groupNo: groupNo,
+		}),
+		contentType: "application/json",
+
+		success: function(data) {
+			if (data == "") {
+				alert("답글 등록에 실패했습니다.");
+			} else {
+				alert("답글 등록에 성공했습니다.");
+				$("#Sns-reply").empty();
+				SelectCmntlist(snsNo);
+			}
+		},
+		error: function() {
+			cosole.log(error)
+		}
+	});
+
+
+}
+
+function replyDel(rrpCmntNo, rrpGroupNo) {
+
+	$.ajax({
+		url: "/deleteReply",
+		type: "POST",
+		data: JSON.stringify({
+			cmntNo: rrpCmntNo,
+			groupNo: rrpGroupNo,
+
+		}),
+
+		contentType: "application/json",
+		success: function(data) {
+			console.loc("sec");
+		}, error: function() {
+			console.log(error)
+		}
+	});
+
+}
+
+
+function rreplyDel(rrpCmntNo, rrpGroupNo) {
+	$.ajax({
+		url: "/deleteRreply",
+		type: "POST",
+		data: JSON.stringify({
+			cmntNo: rrpCmntNo,
+			groupNo: rrpGroupNo,
+		}),
+		contentType: "application/json",
+
+		success: function(data) {
+
+		},
+		error: function() {
+			cosole.log(error)
+		}
+	});
+}
+
+
 
 
 

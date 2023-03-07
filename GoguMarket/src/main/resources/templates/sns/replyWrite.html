@@ -29,13 +29,13 @@ textarea {
 						<li class="list-group-item">
 							<div class="form-inline mb-2">
 								<input type="hidden" id="replySnsNo" name="replySnsNo">
-								<input type="hidden" id="replyUserId"
-									th:value="${session.userId}" name="replyUserId"
-									value="${session.userId }">
+								<input type="hidden" id="replyUserId" th:value="${session.userId}" name="replyUserId" value="${session.userId }">
+								<input type="hidden" id="replyCmntNo" name="replyCmntNo">
+								
 							</div> <textarea class="form-control" id="replyCmntCn"
 								name="replyCmntCn"> </textarea>
 							<button type="button" class="btn btn-dark mt-3 f-right"
-								onclick="insertReply()">post reply</button>
+								onclick="insertReply('')">post reply</button>
 						</li>
 					</ul>
 				</div>
