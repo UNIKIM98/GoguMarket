@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,9 @@ public class MemRestController {
 
 	@Autowired
 	AtchService atchService;
+
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Value("${goguma.save}")
 	private String saveFolder;
@@ -81,7 +85,7 @@ public class MemRestController {
 	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files) {
 		System.out.println("수정할 VO => " + memVO);
 
-		//프로필사진 있으면 실행
+		// 프로필사진 있으면 실행
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
 				if (file.getSize() == 0)
@@ -101,13 +105,16 @@ public class MemRestController {
 				memVO.setAtchNm(fileName);
 				memVO.setAtchPath("/upload/" + fileName);
 			}
-			
-		//없으면
-		}else {
+
+			// 없으면
+		} else {
 			memVO.setAtchNm(null);
 			memVO.setAtchPath(null);
 		}
 		System.out.println("바꾼 VO => " + memVO);
+		String userPw = memVO.getUserPw();
+		userPw = bCryptPasswordEncoder.encode(userPw);
+		memVO.setUserPw(userPw);
 
 		int memUpdateCnt = memService.updateUser(memVO);
 

@@ -28,6 +28,10 @@ public interface DealMapper {
 	int insertDeal(DealVO deal); // 판매상품 등록
 
 	// ===========================
+	// 채은 추가! 확인 후 주석 지워주세욧
+	// 특정 판매자 게시글 전부 가져오기
+	List<DealVO> selectNtslDeal(String ntslId);
+	
 	// test 에서 가져온 거
 	// Deal 게시글 정보 가져오기
 	DealVO selectDeal(int dlNo);
