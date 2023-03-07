@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<div layout:fragment="ManageContent">
@@ -39,15 +40,15 @@
 							</div>
 
 						</div>
-				
-							<select>
-								<option>아이디</option>
-								<option>이름</option>
-								<option>닉네임</option>
-								<option>이메일</option>
-								<option>이메일</option>
-							</select>
-			
+
+						<select name="search" id="search" value="id">
+							<option value="id">아이디</option>
+							<option value="nm">이름</option>
+							<option value="nk">닉네임</option>
+							<option value="ph">전화번호</option>
+							<option value="em">이메일</option>
+						</select>
+
 					</div>
 				</div>
 				<!--search-->
@@ -56,11 +57,11 @@
 
 					<div class="card-header py-3">
 						<h6 class="m-0 font-weight-bold text-primary">
-							일반유저<select class="f-right">
-								<option>정상</option>
-								<option>정지</option>
-								<option>채금</option>
-								<option>회원가입순</option>
+					  일반유저<select class="f-right" name="sort" id="sort" value="0">
+								<option value="0">정상</option>
+								<option value="1">정지</option>
+								<option value="3">휴먼</option>
+								<option value="4">채금</option>
 							</select>
 						</h6>
 
