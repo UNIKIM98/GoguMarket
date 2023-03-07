@@ -3,6 +3,7 @@ package com.goguma.auct.service;
 import java.util.List;
 
 import com.goguma.auct.vo.AuctVO;
+import com.goguma.common.vo.AtchVO;
 
 
 public interface AuctService {
@@ -10,8 +11,15 @@ public interface AuctService {
 	AuctVO getAuct(AuctVO vo); //단건조회
 
 	int insertAuct(AuctVO vo); //등록
-//	int updateAuct(AuctVO vo); //수정
-	int deleteAuct(String id); //삭제
+	int deleteAuct(AuctVO vo); //삭제
 	
 	int auctHitUpdate(int auctNo); //조회수 증가
+	
+	
+	// Auct 게시글 정보 가져오기
+	AuctVO selectAuct(int auctNo);
+	
+	// Auct 게시글 한 개의 첨부파일들 다 가져오기
+	List<AtchVO> selectAuctAtch(int auctNo);
+	
 }

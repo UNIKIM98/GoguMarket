@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctVO;
 import com.goguma.common.service.AtchService;
 import com.goguma.common.vo.AtchVO;
+import com.goguma.deal.vo.DealVO;
 
 @Controller
 public class AuctController {
@@ -52,9 +54,11 @@ public class AuctController {
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌
 		model.addAttribute("atch", atchList); // 모델에 경매관련 첨부파일 담아줌.
 
-		// 타이머 DB연결해서 하는거 일단 뒤로하기
 
-		// 마감일 적용
+/*		타이머 DB연결해서 하는거 일단 뒤로하기 스케쥴러?
+https://do-develop-diary.tistory.com/15
+		마감일 적용 sql결과값 따라 출력해주면 될듯
+
 		Date ddln = vo.getDdlnYmd();
 		Date now = new Date();
 		int result = ddln.compareTo(now);
@@ -69,6 +73,8 @@ public class AuctController {
 			System.out.println("이미 마감된 경매품입니다.");
 			vo.setStts(2);
 		}
+
+*/
 
 		return "auction/auctSelect";
 	}
@@ -85,12 +91,13 @@ public class AuctController {
 		System.out.println(files + "======넘어온 파일들");
 
 		int atchId = atchService.insertFile(files);
-
+		int atchList = atchService.insertFile(atchId, files);
+		
 		vo.setUserId("user2");
 
 		System.out.println(atchId + " : files/////////");
 		System.out.println(vo);
-
+		System.out.println(atchList);
 		if (atchId > 0) {
 			vo.setAtchId(atchId);
 		}
@@ -99,10 +106,23 @@ public class AuctController {
 		return "redirect:auctList";
 	}
 
-	public Map<String, Object> auctDelete(@PathVariable String id) {
-		// 상품 삭제
-		auctService.deleteAuct(id);
-		return Collections.singletonMap("result", "success delete");
+	@RequestMapping("/auctDelete/{auctNo}")
+	public String auctDelete(@PathVariable int auctNo) {
+		System.out.println(auctNo + " => 삭제할 글 번호");
+
+		AuctVO vo = auctService.selectAuct(auctNo);
+		System.out.println(vo + " => 삭제할 글 정보");
+
+		List<AtchVO> atchList = auctService.selectAuctAtch(auctNo);
+		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+
+		int delAuct = auctService.deleteAuct(vo);
+		System.out.println("게시글 삭제했으면 1 => " + delAuct);
+
+		int delAtch = atchService.deleteFile(atchList);
+		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
+
+		return "redirect:/auctList";
 	}
 
 }

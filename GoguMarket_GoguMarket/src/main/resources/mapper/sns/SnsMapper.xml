@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.sns.mapper.SnsMapper">
+	<select id="selectSnsList" resultType="com.goguma.sns.vo.SnsVO">
+		SELECT s.*
+		,(SELECT
+		ATCH_PATH FROM ATCH a WHERE s.ATCH_ID = a.ATCH_ID AND ROWNUM
+		=1)atch_path
+		FROM SNS s
+	</select>
+
+	<select id="selectSns" resultType="com.goguma.sns.vo.SnsVO">
+
+		SELECT *
+		FROM SNS
+		WHERE sns_no =
+		#{snsNo}
+
+
+	</select>
+
+	<insert id="insertSns" parameterType="com.goguma.sns.vo.SnsVO">
+		<selectKey keyProperty="snsNo" resultType="int"
+			order="BEFORE">
+			SELECT NVL(MAX(sns_No),0)+1
+			AS snsNO
+			FROM SNS
+		</selectKey>
+		INSERT INTO SNS (
+		sns_no,
+		user_id,
+		sns_cn,
+		hash,
+		like_nocs,
+		sns_ymd,
+		area,
+		atch_id,
+		inq_cnt
+		)
+		VALUES (
+		#{snsNo},
+		#{userId},
+		#{snsCn},
+		#{hash},
+		0,
+		CURRENT_Date,
+		#{area},
+		#{atchId},
+		0
+		)
+
+
+	</insert>
+
+	<update id="snsHitUpdate">
+		UPDATE SNS
+		SET INQ_CNT = INQ_CNT + 1
+		WHERE SNS_NO =
+		#{snsNo}
+	</update>
+
+</mapper>

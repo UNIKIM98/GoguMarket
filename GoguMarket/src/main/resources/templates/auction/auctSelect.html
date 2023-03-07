@@ -114,7 +114,7 @@
 											</div>
 								                                            
 -->
-                                                <a href="auctInsertForm" id="addAuct"
+                                                <a href="/auctInsertForm" id="addAuct"
                                                     style="position: fixed; bottom: 100px; right: 100px; border: none; border-radius: 16px; background: royalblue; color: white; padding: 12px; font-weight: bold; box-shadow: 0px 5px 15px gray; cursor: pointer;">
                                                     상품 등록
                                                 </a>
@@ -126,9 +126,10 @@
                                                     <a href="/auctList" class="button extra-small button-black">
                                                         <span>목록으로</span> <!--혹시 이거 오류나게되면 앞에 / 떼 보셈 레이아웃 변경된것때매 그럴거임-->
                                                     </a>
-                                                    <a class="button extra-small button-black">
+                                                    <input type="button" value="삭제하기" onclick="auctDelete()">
+                                                    <!-- <a href="/deleteAllTest/{auctNo}"class="button extra-small button-black">
                                                         <span class="text-uppercase" onclick="auctDelete()">삭제하기</span>
-                                                    </a>
+                                                    </a> -->
                                                     <!-- 											<a href="#" class="button extra-small button-black" tabindex="-1">
 													<span class="text-uppercase">수정하기</span>
 												</a>
@@ -154,6 +155,12 @@
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div role="tabpanel" class="tab-pane active show" id="description">
+                                                        
+                                                        <div th:each="atch : ${atch}">
+                                                            <img class="zoom_03" th:src="${atch.atchPath}"
+                                                                alt="" style="width: 100%; height: 100%;">
+														</div>
+                                                        
                                                         <p>There are many variations of passages of Lorem Ipsum
                                                             available, but the majo Rity have be suffered alteration in
                                                             some form, by injected humou or randomis Rity have be
@@ -313,22 +320,6 @@
                                     </div>
                                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
 
                         </div>
@@ -340,28 +331,18 @@
             <!-- End page content -->
 
         </div>
-
-        <script>
-            /*
-            $.ajax({
-                url : "/auctSelect/{auctNo}",
-                type : "Post",
-                dataType : 'json',
-                contentType : 'application/json; charset = utf-8',
-                success : function(result) {
-                    console.log(result)
-                    
+	<script th:inline="javascript">
 
 
+	function auctDelete() {
+		/*<![CDATA[*/
+			let auctNo =  /*[[ ${auct.auctNo} ]]*/
+	  		location.href="/auctDelete/"+auctNo
+		/*]]*/
 
-                },
-                error : function(err) {
-                    console.log(err);
-                }
-            })
-*/
-        </script>
-
+	}
+	
+	</script>
 
 
 
