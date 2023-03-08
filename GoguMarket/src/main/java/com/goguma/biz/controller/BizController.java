@@ -75,7 +75,7 @@ public class BizController {
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
-		System.out.println("가게정보 biztlqk ==========="+memService.bizInfo(bizNo));
+		System.out.println("가게정보 ==========="+memService.bizInfo(bizNo));
 		// 가게 소식
 		model.addAttribute("news", newsService.bizNews(bizNo));
 		// 가게 메뉴
