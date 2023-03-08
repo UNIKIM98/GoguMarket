@@ -45,23 +45,17 @@ public class AuctController {
 	public String getauctList(Model model, AuctVO vo) {
 		// 전체품목 리스트
 
-		model.addAttribute("lists", auctService.getAuctList()); // auctService의 getAuctList실행값을 model에 담고 이름은 lists라고
-																// 명명합니다.
+		// 아래는 auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
+		model.addAttribute("lists", auctService.getAuctList()); 
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
-//		model.addAttribute("AuctNo", auctService.getAuct(vo));
-//		vo.getAuctNo();
-
-//		vo = auctService.getAuct(vo);
-
-//		int value = vo.getAuctNo();
-
-//		int auctNo = auctService.getAuct(vo);
-
-//		vo.setAuctNo(0);
-//		List<AuctMemVO> avoList = auctMemService.selectAuctMem(0);
-
-//		model.addAttribute("auctMem", auctMemService.selectAuctMem(auctNo));
-		System.out.println(model);
+		
+		
+//		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
+//		model.addAttribute(cnt); 리스트에서 뭐 클릭시 증가시켜주면? 근데 셀렉트 안에서 새로고침한다면?
+														// 클릭수가 새로고침 조회수 조작은 의미없는 듯 그냥 리스트에서 클릭 고고
+		
+		
+		System.out.println(model); // 모델 확인
 
 		return "auction/auctList";
 	}

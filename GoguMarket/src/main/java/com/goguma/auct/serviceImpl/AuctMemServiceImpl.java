@@ -31,7 +31,7 @@ public class AuctMemServiceImpl implements AuctMemService{
 
 	@Override
 	public List<AuctMemVO> selectNowPrc() {
-		// TODO Auto-generated method stub
+		// 현재 입찰가
 		return auctMemMapper.selectNowPrc();
 	}
 

@@ -33,8 +33,4 @@
 		VALUES (#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc},
 		#{pntCnt})
 	</insert>
-
-
-
-
 </mapper>
