@@ -17,7 +17,6 @@ var isSubmitOk = true; //submit 유효성 체크 boolean
 
 var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
 var exCnt = 0;
-        
 
 
 

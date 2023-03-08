@@ -29,4 +29,10 @@ public class AuctMemServiceImpl implements AuctMemService{
 		return auctMemMapper.insertAuctMem(vo);
 	}
 
+	@Override
+	public List<AuctMemVO> selectNowPrc() {
+		// TODO Auto-generated method stub
+		return auctMemMapper.selectNowPrc();
+	}
+
 }

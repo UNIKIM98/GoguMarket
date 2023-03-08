@@ -2,30 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.auct.mapper.AuctMemMapper">
 
-<!-- 입찰자 조회 -->
-	<select id="selectAuctMem"
-			parameterType="int"
-			resultType="com.goguma.auct.vo.AuctMemVO">
-	SELECT AUCT_MEM_NO , USER_ID , AUCT_NO , AUCT_YMD , NOW_PRC , PNT_CNT
-	FROM AUCT_MEM
-	WHERE AUCT_NO =(SELECT AUCT_NO
-	                FROM AUCT
-	                WHERE AUCT_NO = #{auctNo})
-	ORDER BY NOW_PRC DESC
+	<!-- 입찰자 조회 -->
+	<select id="selectAuctMem" parameterType="int"
+		resultType="com.goguma.auct.vo.AuctMemVO">
+		SELECT AUCT_MEM_NO , USER_ID , AUCT_NO , AUCT_YMD , NOW_PRC , PNT_CNT
+		FROM AUCT_MEM
+		WHERE AUCT_NO =(SELECT AUCT_NO
+		FROM AUCT
+		WHERE AUCT_NO = #{auctNo})
+		ORDER BY NOW_PRC DESC
 	</select>
-
-<!-- 입찰 등록 -->
+	<!-- 입찰 현재가 -->
+	<select id="selectNowPrc"
+		resultType="com.goguma.auct.vo.AuctMemVO">
+		SELECT A.AUCT_NO AS AUCT_NO, NVL(MAX(B.NOW_PRC),0) AS NOW_PRC
+		FROM AUCT A LEFT JOIN AUCT_MEM B
+		ON A.AUCT_NO = B.AUCT_NO
+		GROUP BY A.AUCT_NO
+	</select>
+	<!-- 입찰 등록 -->
 	<insert id="insertAuctMem"
-			parameterType="com.goguma.auct.vo.AuctMemVO">
-		<selectKey keyProperty="auctMemNo" resultType="int" order="BEFORE">
+		parameterType="com.goguma.auct.vo.AuctMemVO">
+		<selectKey keyProperty="auctMemNo" resultType="int"
+			order="BEFORE">
 			SELECT NVL(MAX(AUCT_MEM_NO),0)+1 AS AUCT_MEM_NO
 			FROM AUCT_MEM
 		</selectKey>
-	INSERT INTO AUCT_MEM (AUCT_MEM_NO, USER_ID, AUCT_NO, AUCT_YMD, NOW_PRC, PNT_CNT)
-	VALUES			(#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc}, #{pntCnt})
+		INSERT INTO AUCT_MEM (AUCT_MEM_NO, USER_ID, AUCT_NO, AUCT_YMD,
+		NOW_PRC, PNT_CNT)
+		VALUES (#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc},
+		#{pntCnt})
 	</insert>
-	
-	
-	
-	
+
+
+
+
 </mapper>
