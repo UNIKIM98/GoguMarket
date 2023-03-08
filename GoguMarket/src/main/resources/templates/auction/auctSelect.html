@@ -1,109 +1,96 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
-    layout:decorate="~{/layouts/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{/layouts/layout}">
 
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
 <body>
 
 
-    <article layout:fragment="content">
+	<article layout:fragment="content">
 
-        <!-- Body main wrapper start -->
-        <div class="wrapper">
+		<!-- Body main wrapper start -->
+		<div class="wrapper">
 
-            <!-- 배너부분 START -->
-            <div class="breadcrumbs-section plr-200 mb-80 section">
-                <div class="breadcrumbs overlay-bg">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="breadcrumbs-inner">
-                                    <h1 class="breadcrumbs-title">경매상품 상세보기</h1>
-                                    <ul class="breadcrumb-list">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li>Product Detail</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 배너부분 END -->
+			<!-- 배너부분 START -->
+			<div class="breadcrumbs-section plr-200 mb-80 section">
+				<div class="breadcrumbs overlay-bg">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="breadcrumbs-inner">
+									<h1 class="breadcrumbs-title">경매상품 상세보기</h1>
+									<ul class="breadcrumb-list">
+										<li><a href="index.html">Home</a></li>
+										<li>Product Detail</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 배너부분 END -->
 
-            <!-- Start page content -->
-            <section id="page-content" class="page-wrapper section">
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
 
-                <!-- SHOP SECTION START -->
-                <div class="shop-section mb-80">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-9" >
-                                <!-- single-product-area start -->
-                                <div class="single-product-area mb-80">
-                                    <div class="row">
-                                        <!-- imgs-zoom-area start -->
-                                        <div class="col-lg-5">
-                                            <a href="#"> <img class="zoom_03" th:src="${atch[0].atchPath}" alt=""
-                                                    style="width: 100%; height: 100%;">
-                                            </a>
-                                        </div>
-                                        <!-- imgs-zoom-area end -->
-                                        <!-- single-product-info start -->
-                                        <div class="col-lg-7">
-                                            <div class="single-product-info">
-                                                <h3 class="text-black-1">[[ ${auct.auctTtl} ]]</h3>
-                                                <h5 class="pro-rating sin-pro-rating f-right">조회수
-                                                    [[${auct.inqCnt}]]</h5>
-                                                <h6 class="brand-name-2">[[ ${auct.userId} ]]</h6>
-                                                <!--  hr -->
-                                                <hr>
-                                                <!-- single-pro-color-rating -->
-                                                <div class="single-pro-color-rating clearfix">
-                                                    <h3 class="pro-rating sin-pro-rating f-right">경매 종료까지
-                                                        : [[${auct.ddlnYmd}]]</h3>
-                                                    <h3>즉시구매가 : [[${auct.quickPrc}]]</h3>
-                                                </div>
-                                                <!-- hr -->
-                                                <hr>
-                                                <!-- plus-minus-pro-action -->
-                                                <div class="plus-minus-pro-action clearfix">
-                                                    <div class="sin-plus-minus f-left clearfix">
-                                                        <p class="color-title f-left">등록일</p>
-                                                        <h5>[[${auct.regYmd}]]</h5>
-                                                    </div>
-                                                    <span
-                                                        th:if="${auct.stts.equals(1)}">----------경매중입니다----------</span>
-                                                    <span
-                                                        th:if="${auct.stts.equals(2)}">----------마감되었습니다----------</span>
-                                                    <div class="pro-rating sin-pro-rating f-right">
-                                                        <p class="color-title f-left">마감일</p>
-                                                        <h5>[[${auct.ddlnYmd}]]</h5>
-                                                        <h1>타이머연습</h1>
-                                                        <h2 id="remain-time"></h2>
-                                                    </div>
-                                                </div>
-                                                <!-- plus-minus-pro-action end -->
-                                                <!-- hr -->
-                                                <hr>
-                                                <!-- single-product-price -->
-                                                <h2 class="pro-price" th:if="${auctMem[0].nowPrc!=null}"  th:text="${auctMem[0].nowPrc}"></h2>
-                                                <h2 class="pro-price" th:unless="${auctMem[0].nowPrc!=null}"> 입찰자가 없습니다. </h2>
-												<!-- <h2 class="pro-price" th:if="${auctMem[0].nowPrc==null}" th:text="${auctMem[0].nowPrc}">입찰자가 없습니다.</h2> -->
-                                                <hr>
-                                                <a href="/auctInsertForm" id="addAuct"
-                                                    style="position: fixed; bottom: 100px; right: 100px; border: none; border-radius: 16px; background: royalblue; color: white; padding: 12px; font-weight: bold; box-shadow: 0px 5px 15px gray; cursor: pointer;">
-                                                    상품 등록 </a>
-                                                <div>
-                                                    <a class="button extra-small button-black" tabindex="-1" id="myBtn">
-                                                        <span>Bid now</span>
-                                                    </a> <a href="/auctList" class="button extra-small button-black">
-                                                        <span>목록으로</span>
-                                                    </a> <input type="button" value="삭제하기" onclick="auctDelete()">
-                                                </div>
+				<!-- SHOP SECTION START -->
+				<div class="shop-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-9">
+								<!-- single-product-area start -->
+								<div class="single-product-area mb-80">
+									<div class="row">
+										<!-- imgs-zoom-area start -->
+										<div class="col-lg-5">
+											<a href="#"> <img class="zoom_03"
+												th:src="${atch[0].atchPath}" alt=""
+												style="width: 100%; height: 100%;">
+											</a>
+										</div>
+										<!-- imgs-zoom-area end -->
+										<!-- single-product-info start -->
+										<div class="col-lg-7">
+											<div class="single-product-info">
+												<h3 class="text-black-1">[[ ${auct.auctTtl} ]]</h3>
+												<h5 class="pro-rating sin-pro-rating f-right">조회수
+													[[${auct.inqCnt}]]</h5>
+												<h6 class="brand-name-2">[[ ${auct.userId} ]]</h6>
+												<!--  hr -->
+												<hr>
+												<!-- single-pro-color-rating -->
+												<div class="single-pro-color-rating clearfix">
+													<h3 class="pro-rating sin-pro-rating f-right">경매 종료까지
+														: [[${auct.ddlnYmd}]]</h3>
+													<h3>즉시구매가 : [[${auct.quickPrc}]]</h3>
+												</div>
+												<!-- hr -->
+												<hr>
+												<!-- plus-minus-pro-action -->
+												<div class="plus-minus-pro-action clearfix">
+													<div class="sin-plus-minus f-left clearfix">
+														<p class="color-title f-left">등록일</p>
+														<h5>[[${auct.regYmd}]]</h5>
+													</div>
+													<span th:if="${auct.stts.equals(1)}">----------경매중입니다----------</span>
+													<span th:if="${auct.stts.equals(2)}">----------마감되었습니다----------</span>
+													<div class="pro-rating sin-pro-rating f-right">
+														<p class="color-title f-left">마감일</p>
+														<h5>[[${auct.ddlnYmd}]]</h5>
+														<h1>타이머연습</h1>
+														<h2 id="remain-time"></h2>
+													</div>
+												</div>
+												<!-- plus-minus-pro-action end -->
+												<!-- hr -->
+												<hr>
+												<!-- single-product-price -->
+												<h2 class="pro-price">현재 입찰 가격 : 원</h2>
 
 												<!--  hr -->
 												<hr>
@@ -179,65 +166,27 @@
 								</div>
 								<!-- single-product-area end -->
 
-                                <div id="myModal" class="modal">
-                                    <!-- Modal content -->
-                                    <div class="modal-content">
-                                        <div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
-                                            <button class="close1" onclick=""
-                                                style="color: black; padding: 10px;">x</button>
-                                            <form action="/insertAuctMem" method="post">
-                                                <div class="login-account p-30 box-shadow mtb-15">
-                                                    <div class="col-lg-4 col-md-6 pb-10">
-                                                        <div class="banner-item banner-3" style="width: 1000px;">
+								<!-- AJAX 경매 등록 -->
 
-                                                            <div class="banner-img">
-                                                                <!-- 이미지 부분 -->
-                                                                <a href="#">
-                                                                    <div>
-                                                                        <!-- <div style="float: left;">이거하면 이미지가 너무 작아짐...ㅠㅠ -->
-                                                                        <img th:src="${atch[0].atchPath}" alt="">
-                                                                    </div>
+								<div id="myModal" class="modal">
+									<!-- Modal content -->
+									<div class="modal-content">
+										<div class="modal-body"
+											style="padding: 20px; margin-bottom: 5px;">
+											<button class="close1" onclick=""
+												style="color: black; padding: 10px;">x</button>
+											<form action="/insertAuctMem" method="post">
+												<div class="login-account p-30 box-shadow mtb-15">
+													<div class="col-lg-4 col-md-6 pb-10">
+														<div class="banner-item banner-3" style="width: 1000px;">
 
-                                                                    <div>
-                                                                        <!-- <div style="float: right;"> -->
-                                                                        <table border="1">
-                                                                            <tr>
-                                                                                <th>상품명</th>
-                                                                                <td>[[ ${auct.auctTtl} ]]</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>등록자</th>
-                                                                                <td>[[ ${auct.userId} ]]</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>경매 마감일</th>
-                                                                                <td>[[ ${auct.ddlnYmd} ]]</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>경매 참여인원</th>
-                                                                                <td>[[ ${auct.auctTtl} ]]</td>
-                                                                            </tr>
-                                                                        </table>
-                                                                        <table border="1">
-                                                                            <tr>
-                                                                                <th>현재가</th>
-                                                                                <td th:if="${auctMem[0].nowPrc!=null}" th:text="${auctMem[0].nowPrc}"></td>
-                                                                                <td th:if="${auctMem[0].nowPrc == null}">현재입찰자가 없습니다.</td>
-                                                                                <th>즉구가</th>
-                                                                                <td th:text="${auct.quickPrc}"></td>
-                                                                                <!-- <td th:if="${auctMem!=null}" th:text="${auct.quickPrc}"></td> 이게 원본
-                                                                                 <td th:if="${auctMem == null}">설정된 즉구가가 없습니다.</td> -->
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>입찰금액</th>
-                                                                                <td>[[ ${auct.auctTtl} ]]</td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
-                                                                    <h1 class="pro-rating sin-pro-rating f-right"></h1>
-                                                                </a>
-                                                            </div>
-                                                            <!-- 입력내용 -->
+															<div class="banner-img">
+																<!-- 이미지 부분 -->
+																<a href="#">
+																	<div>
+																		<!-- <div style="float: left;">이거하면 이미지가 너무 작아짐...ㅠㅠ -->
+																		<img th:src="${atch[0].atchPath}" alt="">
+																	</div>
 
 																	<div>
 																		<!-- <div style="float: right;"> -->
@@ -276,18 +225,8 @@
 															</div>
 															<!-- 입력내용 -->
 
-
-                                                    <!-- userId -->
-                                                    <!-- 게시물 -->
-                                                    <div>
-                                                        <h6 th:if="${auctMem[0].nowPrc!=null}" th:text="${auctMem[0].nowPrc}">현재 원 부터 입찰 가능합니다.</h6>
-                                                        <h6 th:if="${auctMem[0].nowPrc == null}">현재입찰자가 없습니다.</h6>
-                                                        <input name="nowPrc" id="nowPrc" class="mb-15" type="number"
-                                                            placeholder="입찰금액을 기입하세요"> <input name="auctNo"
-                                                            type="hidden" th:value="${auct.auctNo}">
-                                                    </div>
-                                                </div>
-
+														</div>
+													</div>
 
 													
 													<h6 th:if="${auctMem!='nothing'}"
@@ -334,16 +273,12 @@
 				}
 				/*]]*/
 
+			}
+		</script>
 
-                if (confirmMsg) {
-                    location.href = "/auctDelete/" + auctNo
-                }
-                /*]]*/
 
-            }
-        </script>
 
-    </article>
+	</article>
 </body>
 
 </html>

@@ -47,17 +47,17 @@ public class TestController {
 	public String adminTest() {
 		return "admin/adminMain";
 	}
-	
+
 	@GetMapping("/biz/test")
 	public String buzTest() {
 		return "biz/test";
 	}
-	
+
 	@GetMapping("/my/test")
 	public String myTest() {
 		return "myPages/myAct";
 	}
-	
+
 	// ■ Controllers =======================================
 	// ▷ 첨부파일 삭제 ajax 테스트 -------------------------------
 	@GetMapping("/delteFileTest")
@@ -106,7 +106,7 @@ public class TestController {
 		HttpSession session = request.getSession();
 		MemVO mVO = new MemVO();
 
-		mVO.setUserId((String)session.getAttribute("userId"));
+		mVO.setUserId((String) session.getAttribute("userId"));
 		mVO = memService.selectUser(mVO);
 
 		// 게시글 정보 담기
@@ -159,6 +159,11 @@ public class TestController {
 		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
 
 		return "deal/dealMain";
+	}
+
+	@GetMapping("/chatTest")
+	public String chatTest() {
+		return "common/chatTest";
 	}
 
 }
