@@ -62,7 +62,7 @@
 			<hr>
 
 			<div class="f-right mb-30">
-				<button class="btn btn-warning btn-sm" type="submit">함께
+				<button class="btn btn-warning btn-sm" type="button" onclick="moveComRsvt()">함께
 					주문하기</button>
 			</div>
 
@@ -428,6 +428,7 @@
 				cnt++;
 			}
 
+			//메뉴에서 삭제하긔
 			function xxx(){
 				console.log("까꿍")
 				var clickedTrValue = $(event.target).closest("tr").attr("value");
@@ -533,81 +534,10 @@
 
 			});
 			
+//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼결제하기 버튼 클릭시 실행되는 함수▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			//1️⃣번째 : 버튼 온클릭
 			function frmSubmit(){
-				console.log("뀨")
 
-				//빈 배열 생성
-				var menuInfo =[];	//예약메뉴
-// 				var rsvtInfo =[];	//예약정보
-				
-				//테이블에서 제목 합계 제외, 메뉴만 뽑기위해 length이용
-				var tableSize = $('#orderMenu tr').length - 1
-				console.log(tableSize)
-
-				//반복문 이용 메뉴 배열에 담기
-				for(var i = 1; i<tableSize; i++){
-					var menuNm = $('#orderMenu tr:eq('+i+') td:eq(0)').clone().children().remove().end().text().trim();
-					var amount = $('#orderMenu tr:eq('+i+') td:eq(1)').clone().children().remove().end().text().trim();
-					var rsvtPay = $('#orderMenu tr:eq('+i+') td:eq(2)').clone().children().remove().end().text().trim();
-
-					console.log(menuNm);
-					
-					menuInfo.push({menuNm : menuNm, 
-								   amount : amount,
-								   rsvtPay : rsvtPay})
-				}
-				
-				
-				console.log(menuInfo);
-
-				//예악정보 뽑아내기
-// 				var rsvtPay = $('.order-total-price').clone().children().remove().end().text().trim();
-				//날짜 파싱=====
-// 				var date = $('#rsvtYmd').val();
-// 				var date2 = new Date(date);
-// 				var year = date2.getFullYear();
-// 				var month = String(date2.getMonth() + 1).padStart(2, '0');
-// 				var day = String(date2.getDate()).padStart(2, '0');
-// 				//=====
-
-// 				var rsvtYmd = `${year}-${month}-${day}`;
-// 				console.log(rsvtYmd)
-				
-// 				var rsvtTm = $('#rsvtTm').val();
-// 				var rsvtCnt = $('#rsvtCnt').val();
-// 				var userNickname = $('#userNickname').val();	//나중에 수정
-// 				var userTel = $('#userTel').val();				//나중에 수정
-// 				var rsvtWant = $('#rsvtWant').val();
-
-// 				//객체
-// 				var rsvtInfo = {rsvtYmd:rsvtYmd, 
-// 								rsvtTm:rsvtTm, 
-// 								rsvtPay:rsvtPay, 
-// 								rsvtcnt:rsvtCnt, 
-// 								nickNm:userNickname, 
-// 								mblTelno:userTel, 
-// 								rsvtWant:rsvtWant}
-
-// 				console.log(rsvtInfo)
-				
-				//폼 서브밋
-// 				var formData = new FormData($("#orderForm")[0]);
-// 				formData.append("menuInfo",orderList)
-// 				$("#orderForm").submit();	
-				
-// 				$.ajax({	
-// 					url : "/orderFormSubmit",
-// 					type : "POST",
-// 					data :  JSON.stringify(rsvtInfo, menuInfo),
-// 					contentType: "application/json; charset=utf-8",
-// 					success : function(delCnt) {
-// 							console.log(delCnt)
-// 					},
-// 					error : function(err){
-// 						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
-// 					}
-// 				});	
-				
 				//결제 api
 				const {IMP} = window;
 				var payTotal = $('#rsvtPay').val();
@@ -621,41 +551,68 @@
 					merchant_uid: 'merchant_' + new Date().getTime(),		//주문번호
 					name: $('#bizNm').text(),				//제품명(가게명)
 					amount: 100,		//결제 총 가격 $('#rsvtPay').val(),
-					buyer_email: email,		//주문자 이메일
-					buyer_name: userNm,				//주문자명
-					buyer_tel: mblTelno,			//연락처
-					//buyer_addr: '서울특별시 강남구 삼성동',		//주소
-					//buyer_postcode: '123-456'			//우편번호
-				}, function (rsp) {		//콜백함수
+					buyer_email: email,			//주문자 이메일
+					buyer_name: userNm,			//주문자명
+					buyer_tel: mblTelno,		//연락처
+					
+					//콜백함수
+				}, function (rsp) {		
 					//결제성공시 로직
 					if (rsp.success) {
 						console.log(rsp)
 						var payMthd = rsp.pay_method
-// 			
-						gotoOrder(payMthd);
 						
+						//2️⃣번째 : 예약정보 DB에 담기 위한 함수(form데이터 submit) - 결제방법(payMthd)을 가지고 넘어감
+						gotoOrder(payMthd);
 						
 					//결제실패시 로직
 					} else {			
 						var msg = '결제에 실패하였습니다.';
 						msg += '에러내용 : ' + rsp.error_msg;
 					}
-
 					alert(msg);
 				});
-				
-				
 			}
 			
+			//2️⃣번째 : 예약정보 DB에 담기 위한 함수(form데이터 submit) - 결제방법(payMthd)을 가지고옴
+			function gotoOrder(payMthd){
+				var formData = new FormData($("#orderForm")[0]);	
+				$.ajax({   
+					url : "/orderFormSubmit",
+                    type : "POST",
+                    data : formData,
+                    processData : false,
+                    contentType : false,
+                    success : function(result) {
+                       console.log(result+"예약번호======")
+
+					   //3️⃣번째 : 결제정보를 DB에 담기위한 함수(예약번호, 결제방법 가지고 넘어감)
+                       saveRsvtPay(result, payMthd);
+
+                       //alert("db에 저장완료");
+                    },
+                    error : function(err){
+                    	//수정
+                       alert("db에 저장안됨");
+                    }
+                 });
+				//form데이터 submit
+				$("#orderForm").submit();
+			}
+
+			//3️⃣번째 : 결제정보를 DB에 담기위한 함수(예약번호, 결제방법 가지고 넘어옴)
 			function saveRsvtPay(result, payMthd){
-				let payment = {	//일단 결제일, 결제금액만
+
+				//결제금액, 결제방법, 예약번호를 변수에 담음
+				let payment = {	
 						payAmt: $('#rsvtPay').val(),
 						payMthd: payMthd,
 						rsvtNo: result 
 				}
 				console.log(payment)
 				console.log(JSON.stringify(payment))
-				
+
+				//ajax로 예약번호를 컨트롤러에 전달
 				$.ajax({
 					url: "/insertRsvtPayment", 
 					type: "post",
@@ -663,38 +620,22 @@
 					contentType: "application/json; charset=utf-8",
 					success: function(rsvtNo){
 							alert("ajax성공쓰_예약번호 " + rsvtNo);
+							
+							//예약완료 페이지로 이동(예약번호 파라미터)
 							location.href="/book0604/"+rsvtNo;
 						}
-					
 					,error : function(err){
 						alert("ajax error db저장안됨")
 					}
 					
 				})
 			}
-			
-			//예악정보 submit하는 함수
-			function gotoOrder(payMthd){
-				var formData = new FormData($("#orderForm")[0]);	
-				$.ajax({   url : "/orderFormSubmit",
-                    type : "POST",
-                    data : formData,
-                    processData : false,
-                    contentType : false,
-                    success : function(result) {
-                       console.log(result+"예약번호======")
-                       saveRsvtPay(result, payMthd);
-                       //
-                          //alert("db에 저장완료");
-                       
-                    },
-                    error : function(err){
-                    	//수정
-                       alert("db에 저장안됨");
-                    }
-                 });
-				
-				$("#orderForm").submit();
+
+			//함께 주문하기 버튼 이벤트
+			function moveComRsvt(){
+				var url = window.location.href;
+				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+				window.location.href = "../book0602/" + urlBizNo;
 			}
 			
 			function test(){
