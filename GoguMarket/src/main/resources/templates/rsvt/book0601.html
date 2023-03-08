@@ -610,7 +610,8 @@
 				
 				//결제 api
 				const {IMP} = window;
-				
+				var payTotal = $('#rsvtPay').val();
+				console.log(payTotal)
 				IMP.init('imp21555503');	//가맹점 식별코드(토큰같은거)
 				
 				//결제요청
@@ -627,39 +628,12 @@
 					//buyer_postcode: '123-456'			//우편번호
 				}, function (rsp) {		//콜백함수
 					//결제성공시 로직
-					if (rsp.success) {	
-						var msg = '결제가 완료되었습니다.';
-						msg += '고유ID : ' + rsp.imp_uid;
-						msg += '상점 거래ID : ' + rsp.merchant_uid;
-						msg += '결제 금액 : ' + rsp.paid_amount;
-						msg += '카드 승인번호 : ' + rsp.apply_num;
-						//결제 성공시 submit(DB추가)하기 위해 함수로 따로 뺌
-						gotoOrder();
+					if (rsp.success) {
+						console.log(rsp)
+						var payMthd = rsp.pay_method
+// 			
+						gotoOrder(payMthd);
 						
-						//db연결을 위함
-						let PaymentVo = {	//일단 결제일, 결제금액만
-							chkDate: sysdate,
-							chkAmt: $('#rsvtPay').val()
-						}
-						$.ajax({
-							url: "/insertRsvtPayment", 
-							type: "get",
-							data: PaymentVo,
-							dataType: "text",
-							success: function(result){
-								if(result == "y"){
-									alert("성공쓰_ " + msg);
-									location.href="/book0604";									
-								}else{
-									alert("db입력실패");
-									return false;
-								}
-							}
-							,error : function(err){
-								alert("db저장안됨")
-							}
-							
-						})
 						
 					//결제실패시 로직
 					} else {			
@@ -672,8 +646,35 @@
 				
 				
 			}
+			
+			function saveRsvtPay(result, payMthd){
+				let payment = {	//일단 결제일, 결제금액만
+						payAmt: $('#rsvtPay').val(),
+						payMthd: payMthd,
+						rsvtNo: result 
+				}
+				console.log(payment)
+				console.log(JSON.stringify(payment))
+				
+				$.ajax({
+					url: "/insertRsvtPayment", 
+					type: "post",
+					data: JSON.stringify(payment),
+					contentType: "application/json; charset=utf-8",
+					success: function(rsvtNo){
+							alert("ajax성공쓰_예약번호 " + rsvtNo);
+							location.href="/book0604/"+rsvtNo;
+						}
+					
+					,error : function(err){
+						alert("ajax error db저장안됨")
+					}
+					
+				})
+			}
+			
 			//예악정보 submit하는 함수
-			function gotoOrder(){
+			function gotoOrder(payMthd){
 				var formData = new FormData($("#orderForm")[0]);	
 				$.ajax({   url : "/orderFormSubmit",
                     type : "POST",
@@ -681,10 +682,10 @@
                     processData : false,
                     contentType : false,
                     success : function(result) {
-                       console.log(result)
-                       //수정
-                          alert("db에 저장완료");
-                          location.href = "/mybook01";
+                       console.log(result+"예약번호======")
+                       saveRsvtPay(result, payMthd);
+                       //
+                          //alert("db에 저장완료");
                        
                     },
                     error : function(err){
