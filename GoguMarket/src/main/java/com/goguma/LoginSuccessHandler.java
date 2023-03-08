@@ -37,7 +37,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("userNm", memVO.getUserNm()); //전화번호
 		session.setAttribute("eml", memVO.getEml()); //전화번호
 
-		response.sendRedirect("/myInfoCheck");
+		response.sendRedirect("/dealMain");
 	}
 
 }

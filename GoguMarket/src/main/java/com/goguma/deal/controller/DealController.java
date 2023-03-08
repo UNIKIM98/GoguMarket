@@ -1,11 +1,14 @@
 package com.goguma.deal.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +136,7 @@ public class DealController {
 
 	// ===========================
 	// ▷ 중고거래 게시글 작성
-	@RequestMapping("/dealform") // 딜폼창확인
+	@RequestMapping("/my/dealform") // 딜폼창확인
 	public String dealform(Model model) {
 		model.addAttribute("category", codeService.codeList("002"));
 
@@ -142,7 +145,7 @@ public class DealController {
 
 	// ===========================
 	// ▷ 중고거래 게시글 작성 submit
-	@RequestMapping("/dealformsubmit") // 딜폼창확인
+	@RequestMapping("/my/dealformsubmit") // 딜폼창확인
 	public String dealform(DealVO vo, List<MultipartFile> files) {
 		System.out.println(vo.getAtchId() + "메롱");
 		int atchId = atchService.insertFile(files);
@@ -158,13 +161,13 @@ public class DealController {
 
 	// ===========================
 	// ▷ 중고거래 게시글 수정
-	@GetMapping("/dealupdate/{dlNo}")
+	@GetMapping("/my/dealupdate/{dlNo}")
 	public String updateTest(Model model, HttpServletRequest request, @PathVariable int dlNo) {
 		// 임시로그인 : 세션에 아이디, 거래지역 담기
 		HttpSession session = request.getSession();
 		MemVO mVO = new MemVO();
 
-		mVO.setUserId((String)session.getAttribute("userId"));
+		mVO.setUserId((String) session.getAttribute("userId"));
 		mVO = memService.selectUser(mVO);
 
 		// 게시글 정보 담기
@@ -179,8 +182,8 @@ public class DealController {
 
 	// ===========================
 	// ▷ 중고거래 게시글 삭제
-	@RequestMapping("deleteAll/{dlNo}")
-	public String deletedeal(@PathVariable int dlNo) {
+	@RequestMapping("/my/deleteDeal/{dlNo}")
+	public void deleteDeal(@PathVariable int dlNo, HttpServletResponse response) {
 		System.out.println(dlNo + " => 삭제할 글 번호");
 
 		DealVO dVO = testService.selectDealTest(dlNo);
@@ -195,7 +198,32 @@ public class DealController {
 		int delAtch = atchService.deleteFile(atchList);
 		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
 
-		return "deal/dealMain";
+		try {
+			if (delDeal > 0) {
+				System.out.println("왔니..delAcut 안쪽임");
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+
+				out.println("<script language='javascript'>");
+				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/dealMain';");
+
+				out.println("</script>");
+
+				out.flush();
+
+			} else {
+				response.setContentType("text/html; charset=UTF-8");
+
+				PrintWriter out = response.getWriter();
+				out.println("<script language='javascript'>");
+				out.println("alert('[삭제실패] 게시글 삭제 중 오류가 발생하였습니다 :( '); location.href='/dealMain';");
+				out.println("</script>");
+
+				out.flush();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		/* return Collections.singletonMap("result", "success delete"); */
 	}
@@ -206,36 +234,12 @@ public class DealController {
 	public String getDealSeller(@PathVariable String ntslId, Model model) {
 
 		System.out.println("왔슈...." + ntslId);
-		// 판매자 상품 리스트
-//		List<DealVO> deals = new ArrayList<DealVO>();
-//		deals = dealService.selectNtslDeal(ntslId);
-//		System.out.println("판매자 상품 정보 >> " + deals);
-//
-//		// 판매자 상품의 첨부파일 리스트
-//		Map<String, AtchVO> atchs = new HashMap<String, AtchVO>();
-//
-//		for (int i = 0; i < deals.size(); i++) {
-//			int atchId = deals.get(i).getAtchId();
-//			atchs.put(deals.get(i).getDlNo()+"", atchService.selectAtch(atchId).get(0));
-//		}
-//
-//		System.out.println("상품 atch" + atchs);
-//		
-//		//판매자 정보(사진출력.. 하나때문에 하는ㄱ ㅓ....)
-//		MemVO memVO = new MemVO();
-//		memVO.setUserId(ntslId);
-//		model.addAttribute("ntslInfo", memService.selectUser(memVO));
-//		
-//		// 판매자 상품 정보
-//		model.addAttribute("dealList", deals);
-//
-//		// 판매자 상품 첨부파일 정보
-//		model.addAttribute("atchList", atchs);
-		model.addAttribute("dealList",dealService.selectNtslDeal(ntslId));
+		model.addAttribute("dealList", dealService.selectNtslDeal(ntslId));
 		System.out.println(dealService.selectNtslDeal(ntslId));
+
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
-		
+
 		return "deal/dealSellerPage";
 	}
 

@@ -57,7 +57,16 @@
 			// 수정하기 버튼 클릭스 수정폼으로 이동
 			function updateform() {
 				let dlno = $(".single-product-info a").first().text();
-				location.href = `/dealupdate/${dlno}`
+				let confirmMsg = confirm('정말로 중고거래 게시글을 삭제하시겠습니까?')
+				if (confirmMsg) {
+					location.href = `/my/dealupdate/${dlno}`
+				}
+			}
+
+			function deleteDeal() {
+				let dlno = $(".single-product-info a").first().text();
+				location.href = `/my/deleteDeal/${dlno}`
+
 			}
 		</script>
 
@@ -241,9 +250,11 @@
 														data-bs-target="#productModal" title="Quickview"
 														tabindex="0"><i class="zmdi zmdi-zoom-in"></i>챗</a></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="button" onclick="updateform()">수정하기</button></li>
+															type="button" onclick="updateform()"
+															th:if="${session.userId == deal.ntslId}">수정하기</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit">삭제하기</button></li>
+															type="submit" th:if="${session.userId == deal.ntslId}"
+															onclick="deleteDeal()">삭제하기</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit">구매문의</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"

@@ -1,10 +1,11 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{/layouts/layout}">
 <head>
 <style type="text/css">
-.product-img{
-width : 100px
+.product-img {
+	width: 100px
 }
 </style>
 
@@ -38,8 +39,7 @@ width : 100px
 				<div class="featured-product-section mb-50">
 					<a href="auctInsertForm" id="addAuct"
 						style="position: fixed; bottom: 100px; right: 100px; border: none; border-radius: 16px; background: royalblue; color: white; padding: 12px; font-weight: bold; box-shadow: 0px 5px 15px gray; cursor: pointer;">
-						상품 등록
-					</a>
+						상품 등록 </a>
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-12">
@@ -49,32 +49,34 @@ width : 100px
 								</div>
 								<div class="featured-product">
 									<div class="active-featured-product slick-arrow-2">
-
+										[[${lists[0].stts}]]
 										<!-- product-item start -->
-										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}">
-											<a th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
-												<div class="product-item">
-													<div class="product-img">
-														<img th:src="${auct.atchNm}" alt="" style="width: 100%; height: 100%;"/>
+										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts!=2}">
+												<a
+													th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
+													<div class="product-item">
+														<div class="product-img">
+															<img th:src="${auct.atchNm}" alt=""
+																style="width: 100%; height: 100%;" />
+														</div>
+														<div class="product-info">
+
+															<h6 class="product-title">
+																<a th:text="${auct.auctTtl}"></a>
+															</h6>
+															<h3 class="pro-price" th:text="현재가 + ${auct.quickPrc}"></h3>
+															<h5 class="sin-pro-action f-right">남은기간</h5>
+															<h5 align="left" th:text="${auct.userId}"></h5>
+
+
+															<ul class="action-button">
+																<li>
+																	<h6>현재 입찰자 : ㅇㅇ명</h6>
+																</li>
+															</ul>
+														</div>
 													</div>
-													<div class="product-info">
-
-														<h6 class="product-title">
-															<a th:text="${auct.auctTtl}"></a>
-														</h6>
-														<h3 class="pro-price" th:text="현재가 + ${auct.quickPrc}"></h3>
-														<h5 class="sin-pro-action f-right">남은기간</h5>
-														<h5 align="left" th:text="${auct.userId}"></h5>
-
-
-														<ul class="action-button">
-															<li>
-																<h6>현재 입찰자 : ㅇㅇ명</h6>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</a>
+												</a>
 										</div>
 									</div>
 								</div>
@@ -94,7 +96,8 @@ width : 100px
 								<div class="product-tab pro-tab-menu pro-tab-menu-2 text-center">
 									<!-- Nav tabs -->
 									<ul class="nav">
-										<li><a class="active" href="#popular-product" data-bs-toggle="tab">인기순</a></li>
+										<li><a class="active" href="#popular-product"
+											data-bs-toggle="tab">인기순</a></li>
 										<li><a href="#new-arrival" data-bs-toggle="tab">최근순</a></li>
 										<li><a href="#best-seller" data-bs-toggle="tab">조회량순</a></li>
 										<li><a href="#special-offer" data-bs-toggle="tab">관심순</a></li>
@@ -104,16 +107,19 @@ width : 100px
 								<div class="tab-content">
 
 									<!-- popular-product start -->
-									<div id="popular-product" class="tab-pane active show" role="tabpanel">
+									<div id="popular-product" class="tab-pane active show"
+										role="tabpanel">
 										<div class="row">
 
 											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}">
-												<a th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
+											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}"
+												th:if="${auct.stts!=2}">
+
+												<a
+													th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 													<div class="product-item">
 														<div class="product-img">
 															<img src="img/product/7.jpg" alt="" />
-
 														</div>
 														<div class="product-info">
 															<h6 class="product-title">
@@ -124,20 +130,19 @@ width : 100px
 															<h5 align="left" th:text="${auct.userId}"></h5>
 															<ul class="action-button">
 																<li><a href="#" title="Wishlist"><i
-																			class="zmdi zmdi-favorite"></i></a></li>
+																		class="zmdi zmdi-favorite"></i></a></li>
 																<li><a href="#" data-bs-toggle="modal"
-																		data-bs-target="#productModal"
-																		title="Quickview"><i
-																			class="zmdi zmdi-zoom-in"></i></a></li>
+																	data-bs-target="#productModal" title="Quickview"><i
+																		class="zmdi zmdi-zoom-in"></i></a></li>
 																<li><a href="#" title="Compare"><i
-																			class="zmdi zmdi-refresh"></i></a></li>
+																		class="zmdi zmdi-refresh"></i></a></li>
 																<li><a href="#" title="Add to cart"><i
-																			class="zmdi zmdi-shopping-cart-plus"></i></a>
-																</li>
+																		class="zmdi zmdi-shopping-cart-plus"></i></a></li>
 															</ul>
 														</div>
 													</div>
 												</a>
+
 											</div>
 											<!-- product-item end -->
 

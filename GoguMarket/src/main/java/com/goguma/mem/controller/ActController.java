@@ -25,13 +25,13 @@ public class ActController {
 	MemService memService;
 
 	// ▶ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
-	@GetMapping("/myAct")
+	@GetMapping("/my/myAct")
 	public String auctSelect() {
 		return "myPages/myAct";
 	}
 
-	@PostMapping("/makeNewActSubmit")
-	public String makeNewActSubmit(ActVO actVO, HttpServletResponse response) {
+	@PostMapping("/my/makeNewActSubmit")
+	public void makeNewActSubmit(ActVO actVO, HttpServletResponse response) {
 		System.out.println("actVO ==> "+ actVO);
 		int cnt = actServie.insertAct(actVO);
 		
@@ -42,7 +42,7 @@ public class ActController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[계좌등록완료]"+actVO.getBankNm()+"은행 계좌 등록이 완료되었습니다.');location.href='/myAct';");
+				out.println("alert('[계좌등록완료]"+actVO.getBankNm()+"은행 계좌 등록이 완료되었습니다.');location.href='/my/myAct';");
 				// ※ 메인페이지로 가게 고쳐야함!!
 
 				out.println("</script>");
@@ -54,7 +54,7 @@ public class ActController {
 
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
-				out.println("alert('[계좌등록실패] 나의 계좌 목록으로 이동합니다.');location.href='/myAct';");
+				out.println("alert('[계좌등록실패] 나의 계좌 목록으로 이동합니다.');location.href='/my/myAct';");
 																									
 				out.println("</script>");
 
@@ -63,8 +63,6 @@ public class ActController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return "";
 	}
 
 }
