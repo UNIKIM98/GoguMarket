@@ -142,13 +142,18 @@
 																	<th>입찰금액</th>
 																</tr>
 															</thead>
-															<!--                                                             <tbody> -->
-															<!--                                                                 <tr th:each="auctMem : ${auctMem}"> -->
-															<!--                                                                     <td th:text="${auctMem.userId}"></td> -->
-															<!--                                                                     <td th:text="${auctMem.auctYmd}"></td> -->
-															<!--                                                                     <td th:text="${auctMem.nowPrc}"></td> -->
-															<!--                                                                 </tr> -->
-															<!--                                                             </tbody> -->
+															<tbody>
+																<tr th:if="${auctMem!='nothing'}"
+																	th:each="auctMem : ${auctMem}">
+																	<td th:text="${auctMem.userId}"></td>
+																	<td th:text="${auctMem.auctYmd}"></td>
+																	<td th:text="${auctMem.nowPrc}"></td>
+																</tr>
+																<tr th:if="${auctMem=='nothing'}">
+																	<td>입찰자ㄴ</td>
+																	<td>입찰자ㄴ</td>
+																	<td>입찰자ㄴ</td>
+																</tr>
 														</table>
 														<!-- 테이블 부분 -->
 													</div>
@@ -205,13 +210,13 @@
 																		</table>
 																		<table border="1">
 																			<tr>
-																				<!--                                                                                 <th>현재가</th><td>[[ ${auctMem[0].nowPrc} ]]</td> -->
+																				<th>현재가</th>
+																				<td th:if="${auctMem!='nothing'}"
+																					th:text="${auctMem[0].nowPrc}"></td>
+																				<td th:if="${auctMem=='nothing'}">입찰자가 없습니다.</td>
+
 																				<th>즉구가</th>
 																				<td>[[ ${auct.quickPrc} ]]</td>
-																			</tr>
-																			<tr>
-																				<th>입찰금액</th>
-																				<td>[[ ${auct.auctTtl} ]]</td>
 																			</tr>
 																		</table>
 																	</div>
@@ -223,37 +228,36 @@
 														</div>
 													</div>
 
-													<!-- userId -->
-													<!-- 게시물 -->
-													<div>
-<!-- 														<h6>현재 [[${auctMem[0].nowPrc}]]원 부터 입찰 가능합니다.</h6> -->
-														<input name="nowPrc" id="nowPrc" class="mb-15"
-															type="number" placeholder="입찰금액을 기입하세요"> <input
-															name="auctNo" type="hidden" th:value="${auct.auctNo}">
-													</div>
+													
+													<h6 th:if="${auctMem!='nothing'}"
+														th:text="${auctMem[0].nowPrc}"></h6>
+													<h6 th:if="${auctMem=='nothing'}">입찰자가 없습니다.</h6>
+													<input name="nowPrc" id="nowPrc" class="mb-15"
+														type="number" placeholder="입찰금액을 기입하세요"> <input
+														name="auctNo" type="hidden" th:value="${auct.auctNo}">
 												</div>
-
-												<button class="submit-btn-1 btn-hover-1 f-left" type="reset">취소</button>
-												<button class="submit-btn-1 btn-hover-1 f-right"
-													type="submit">입찰완료</button>
-											</form>
-											<!-- writeForm -->
-
-											<!-- writefooter -->
 										</div>
+
+										<button class="submit-btn-1 btn-hover-1 f-left" type="reset">취소</button>
+										<button class="submit-btn-1 btn-hover-1 f-right" type="submit">입찰완료</button>
+										</form>
+										<!-- writeForm -->
+
 										<!-- writefooter -->
 									</div>
+									<!-- writefooter -->
 								</div>
-
 							</div>
 
 						</div>
+
 					</div>
 				</div>
-				<!-- SHOP SECTION END -->
+		</div>
+		<!-- SHOP SECTION END -->
 
-			</section>
-			<!-- End page content -->
+		</section>
+		<!-- End page content -->
 
 		</div>
 		<script th:inline="javascript">
@@ -261,11 +265,11 @@
 				/*<![CDATA[*/
 				let auctNo = /*[[ ${auct.auctNo} ]]*/
 				console.log(auctNo);
-				
+
 				let confirmMsg = confirm("진행중인 경매 게시글을 삭제하면 페널티가 부과됩니다. 그래도 계속하시겠습니까?")
-				
-				if(confirmMsg){					
-				location.href = "/auctDelete/" + auctNo
+
+				if (confirmMsg) {
+					location.href = "/auctDelete/" + auctNo
 				}
 				/*]]*/
 

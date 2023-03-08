@@ -296,6 +296,8 @@
 			}else if($("#ddlnYmd").val()==""){
 				   $("#ddlnYmd").focus();
 					isSubmitOk = false;
+			}else if($("#quickPrc").val()==""){
+				   $("#quickPrc").val(Number(0))
 			}else{
 				isSubmitOk = true;
 			}		

@@ -77,7 +77,15 @@ public class AuctController {
 
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
-		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
+		
+		if(avoList.size() == 0) {
+			model.addAttribute("auctMem", "nothing");
+		}else {
+			model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기			
+		}
+		System.out.println(avoList.equals(null) + "equals");
+		System.out.println((avoList.size() == 0) +"size");
+		
 
 		System.out.println("조회수" + cnt); // 조회수 증가 확인
 		System.out.println("첨부파일" + atchList); // 첨부파일 확인
@@ -110,7 +118,9 @@ public class AuctController {
 		HttpSession session = request.getSession(); // 세션값 받아옴
 		String myId = (String) session.getAttribute("userId"); // 세션값 중 아이디만 받아옴
 		vo.setUserId(myId); // 세션값으로 아이디 설정
-
+		if(vo.getQuickPrc()==0) {
+			System.out.println("즉구가 없음");
+		}
 		System.out.println(atchId + " : files/////////");
 		System.out.println(vo);
 		System.out.println(atchList);
