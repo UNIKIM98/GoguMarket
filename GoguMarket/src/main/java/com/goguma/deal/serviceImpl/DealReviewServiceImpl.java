@@ -17,7 +17,7 @@ public class DealReviewServiceImpl implements DealReviewService{
 	private DealReviewMapper map;
 	
 	@Override
-	public List<DealReviewVO> getDealRv(String dlNo) {
+	public List<DealReviewVO> getDealRv(int dlNo) {
 		// TODO Auto-generated method stub
 		return map.getDealRv(dlNo);
 	}

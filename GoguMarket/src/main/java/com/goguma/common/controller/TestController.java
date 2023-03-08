@@ -43,6 +43,21 @@ public class TestController {
 	@Autowired
 	TestService testService;
 
+	@GetMapping("/admin/test")
+	public String adminTest() {
+		return "admin/adminMain";
+	}
+	
+	@GetMapping("/biz/test")
+	public String buzTest() {
+		return "biz/test";
+	}
+	
+	@GetMapping("/my/test")
+	public String myTest() {
+		return "myPages/myAct";
+	}
+	
 	// ■ Controllers =======================================
 	// ▷ 첨부파일 삭제 ajax 테스트 -------------------------------
 	@GetMapping("/delteFileTest")
@@ -88,15 +103,11 @@ public class TestController {
 	// ▷ updateForm 테스트 -----------------------------------
 	@GetMapping("/updateTest")
 	public String updateTest(Model model, HttpServletRequest request) {
-		// 임시로그인 : 세션에 아이디, 거래지역 담기
 		HttpSession session = request.getSession();
 		MemVO mVO = new MemVO();
 
-		mVO.setUserId("user1");
+		mVO.setUserId((String)session.getAttribute("userId"));
 		mVO = memService.selectUser(mVO);
-
-		session.setAttribute("userId", mVO.getUserId()); // 유저id 설정
-		session.setAttribute("dealArea", mVO.getDealArea()); // 유저 거래지역 설정
 
 		// 게시글 정보 담기
 		model.addAttribute("dealInfo", testService.selectDealTest(7)); // 12번 게시글 정보
@@ -114,12 +125,11 @@ public class TestController {
 		int cnt = atchService.deleteFile(deleteList);
 		return cnt;
 	}
-	
-	
+
 	@RequestMapping("/updateTestSubmit")
 	@ResponseBody
 	public DealVO updateTestSubmit(DealVO vo, List<MultipartFile> files) {
-	
+
 		System.out.println("updateTestSubmit왔음 =======");
 
 		int fileUpdateCnt = atchService.insertFile(vo.getAtchId(), files);
@@ -130,25 +140,25 @@ public class TestController {
 
 		return vo;
 	}
-	
+
 	// ▷ delete 테스트 -----------------------------------
 	@RequestMapping("/deleteAllTest/{dlNo}")
 	public String deleteAllTest(@PathVariable int dlNo) {
-			System.out.println(dlNo+" => 삭제할 글 번호");
-			
-			DealVO dVO = testService.selectDealTest(dlNo);
-			System.out.println(dVO+" => 삭제할 글 정보");
-			
-			List<AtchVO> atchList =testService.selectDealAtchTest(dlNo);
-			System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+		System.out.println(dlNo + " => 삭제할 글 번호");
 
-			int delDeal = testService.deleteDealTest(dVO);
-			System.out.println("게시글 삭제했으면 1 => "+delDeal);
-			
-			int delAtch = atchService.deleteFile(atchList);
-			System.out.println("첨부파일 삭제했으면 1 이상 => "+ delAtch);
-			
-			return "deal/dealMain";
+		DealVO dVO = testService.selectDealTest(dlNo);
+		System.out.println(dVO + " => 삭제할 글 정보");
+
+		List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
+		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+
+		int delDeal = testService.deleteDealTest(dVO);
+		System.out.println("게시글 삭제했으면 1 => " + delDeal);
+
+		int delAtch = atchService.deleteFile(atchList);
+		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
+
+		return "deal/dealMain";
 	}
 
 }

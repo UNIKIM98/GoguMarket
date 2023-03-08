@@ -1,10 +1,13 @@
 package com.goguma.deal.serviceImpl;
 
+import java.io.Console;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goguma.common.vo.AtchVO;
 import com.goguma.deal.mapper.DealMapper;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
@@ -15,8 +18,6 @@ public class DealServiceImpl implements DealService {
 
 	@Autowired
 	private DealMapper map;
-
-	
 
 	@Override
 	public List<DealVO> dealListSelect(DealSearchVO svo) {
@@ -43,42 +44,57 @@ public class DealServiceImpl implements DealService {
 	}
 
 	@Override
-	public int deleteDeal(String id) {
+	public int deleteDeal(DealVO deal) {
 		// 판매 상품 삭제
-		return map.deleteDeal(id);
+		return map.deleteDeal(deal);
 	}
 
 	@Override
-	public DealVO getDeal(String dlNo) {
-		// 판매 상품 단건 조회
-		return map.getDeal(dlNo);
-	}
-
-	@Override
-	public int dealHitUpdate(String dlNo) {
-		// 조회수
-		return map.dealHitUpdate(dlNo);
-	}
-
-	@Override
-	public List<DealVO> getDealSeller(String dlNo) {
+	public List<DealVO> getDealSeller(int dlNo) {
 		// 판매자의 다른상품 리스트조회
 		return map.getDealSeller(dlNo);
 	}
 
 	@Override
-	public List<DealVO> getDealCtgry(String dlNo) {
+	public List<DealVO> getDealCtgry(int dlNo) {
 		// 판매자의 상품과 유사상품(같은 카테고리)
 		return map.getDealCtgry(dlNo);
 	}
 
 	@Override
-	public int getId(String dlNo) {
+	public String getId(int dlNo) {
 		// TODO Auto-generated method stub
 		return map.getId(dlNo);
 	}
 
+	@Override
+	public DealVO getDeal(int dlNo) {
+		// TODO Auto-generated method stub
+		return map.getDeal(dlNo);
+	}
 
+	@Override
+	public int dealHitUpdate(int dlNo) {
+		// TODO Auto-generated method stub
+		return map.dealHitUpdate(dlNo);
+	}
 
+	@Override
+	public DealVO selectDeal(int dlNo) {
+		// TODO Auto-generated method stub
+		return map.selectDeal(dlNo);
+	}
+
+	@Override
+	public List<AtchVO> selectDealAtch(int dlNo) {
+		// TODO Auto-generated method stub
+		return map.selectDealAtch(dlNo);
+	}
+
+	//채은추가
+	@Override
+	public List<Map> selectNtslDeal(String ntslId) {
+		return map.selectNtslDeal(ntslId);
+	}
 
 }

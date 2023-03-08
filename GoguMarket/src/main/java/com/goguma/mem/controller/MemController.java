@@ -42,12 +42,12 @@ public class MemController {
 	}
 	// ===========================================================
 	// ▷ 일반 회원가입
-	@GetMapping("/memberJoinForm")
+	@GetMapping("/newMem/memberJoinForm")
 	public String memberJoinForm() {
 		return "mem/memberJoinForm";
 	}
 
-	@PostMapping("/memberJoin")
+	@PostMapping("/newMem/memberJoin")
 	public String memberJoin(MemVO mVO, HttpServletResponse response) {
 		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
 		mVO.setUserStts("0"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감
@@ -102,14 +102,14 @@ public class MemController {
 
 	// ===========================================================
 	// ▷ 내 쿠폰/포인트
-	@GetMapping("/myCouponNPoint")
+	@GetMapping("/my/myCouponNPoint")
 	public String myCouponNPoint() {
 		return "myPages/myCouponNPoint";
 	}
 
 	// ===========================================================
 	// ▷ 우리동네 설정
-	@GetMapping("/myArea")
+	@GetMapping("/my/myArea")
 	public String myArea(HttpServletRequest request, MemVO mVO, Model model) {
 		HttpSession session = request.getSession();
 		mVO.setUserId((String) session.getAttribute("userId"));
@@ -122,7 +122,7 @@ public class MemController {
 
 	// ===========================================================
 	// ▷ 회원정보 수정
-	@GetMapping("/myInfoCheck")
+	@GetMapping("/my/myInfoCheck")
 	public String myInfoCheck(HttpServletRequest request, MemVO mVO, Model model) {
 		HttpSession session = request.getSession();
 		mVO.setUserId((String) session.getAttribute("userId"));
@@ -131,7 +131,7 @@ public class MemController {
 	}
 	
 	
-	@GetMapping("/myInfo")
+	@GetMapping("/my/myInfo")
 	public String myInfo(HttpServletRequest request, MemVO mVO, Model model) {
 		HttpSession session = request.getSession();
 		
@@ -146,7 +146,7 @@ public class MemController {
 
 	// ===========================================================
 	// ▷ 회원정보 수정
-	@RequestMapping("/makeNewAct")
+	@RequestMapping("/my/makeNewAct")
 	public String makeNewAct(){
 		return "myPages/makeNewAct";
 	}

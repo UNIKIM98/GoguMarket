@@ -100,15 +100,18 @@
 											</div>
 										</div>
 										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-										 <div class="col-lg-10">
-                                            <label for="ctgry">카테고리<span> *</span></label>
-                                            <input type="radio" name="ctgry" id="ctgry" value="HA" class="ctgry">생활가전
-                                            <input type="radio" name="ctgry" id="ctgry" value="HO" class="ctgry">취미/게임/음반
-                                            <input type="radio" name="ctgry" id="ctgry" value="FU" class="ctgry">가구/인테리어
-                                            <input type="radio" name="ctgry" id="ctgry" value="FO" class="ctgry">가공식품
-                                            <input type="radio" name="ctgry" id="ctgry" value="ETC" class="ctgry">기타
-                                        	<span id="ctgryErrMsg"></span>
-                                        </div>
+										 
+										 <div class="col-lg-10 mb-10">
+											<label for="cate">카테고리<span> *</span></label> 
+											<select name="cate" id="cate">
+												<option value="" disabled selected>선택</option>
+												<option th:each="ct : ${category}" 
+														th:text="${ct.commonNm}"
+														th:value="${ct.commonDetailCode}"></option>
+												</select>
+											<span id="ctgryErrMsg"></span>
+											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> 
+										</div>
 										<div class="col-lg-10 ">
 											<label for="auctTtl">글제목<span> *</span></label>
 											<input type="text" name="auctTtl" id="auctTtl" placeholder="글 제목을 입력하세요.">
@@ -120,11 +123,11 @@
 										</div>
 										<div class="col-lg-10">
 											<label for="lowPrc">경매시작가<span> *</span></label>
-                                            <input type="text" name="lowPrc" id="lowPrc" placeholder="경매시작가">
+                                            <input type="text" name="lowPrc" id="lowPrc" placeholder="경매시작가" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                         </div>
                                         <div class="col-lg-10">
                                         	<label for="quickPrc">즉시구매가(선택)</label>     
-                                            <input type="text" name="quickPrc" id="quickPrc" placeholder="즉시구매가">
+                                            <input type="text" name="quickPrc" id="quickPrc" placeholder="즉시구매가" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                         </div>
                                         <div class="col-lg-10">
                                         	<label for="ddlnYmd">경매종료일<span> *</span></label>     
@@ -154,9 +157,9 @@
 				});
 				console.log(typeof($(".ctgry")))
 				
-				$(".ctgry").on("change", function(){
-						$("#ctgryErrMsg").text("")
-					})
+				$("#cate").on("change", function(){
+					$("#ctgryErrMsg").text("")
+				})
 				
 				$("#btnSave").on("click", function() {
 					submitForm();
@@ -219,49 +222,47 @@
 		//✅ 화면/배열에서 delete 실행하는 함수
 			function submitForm() {
 				// 선택한 카테고리 > hidden input value로 넣기
-				var ctgry = $('input[name=ctgry]:checked')
-				console.log(ctgry.val())
-				
+				var ctgry = $("#cate option:selected").val(); 
 				$("#ctgry").val(ctgry); 
+				
+				console.log("담은 ctgry =>"+ctgry)
 	
 				
 				//submit 전 체크하기
 				if(submitCheck()){
-// 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-// 				var formData = new FormData($("#aFrm")[0]);
-// 				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				var formData = new FormData($("#aFrm")[0]);
+				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				
-// 				formData.append("deleteFiles", deleteFileList);
+				formData.append("deleteFiles", deleteFileList);
 
-// 				for (var i = 0; i < inputFileList.length; i++) {
-// 					if (!inputFileList[i].is_delete) {
-// 						formData.append("files", inputFileList[i]);
-// 					}
-// 				}
-// 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-// 				$.ajax({	url : "/auctInsert",
-// 							type : "POST",
-// 							data : formData,
-// 							processData : false,
-// 							contentType : false,
-// 							success : function(result) {
-// 								console.log(result)
-// 									alert("[작성 완료] 게시글 작성이 완료되었습니다 :D");
-// 									location.href = "/auctMain";
+				for (var i = 0; i < inputFileList.length; i++) {
+					if (!inputFileList[i].is_delete) {
+						formData.append("files", inputFileList[i]);
+					}
+				}
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				$.ajax({	url : "/auctInsert",
+							type : "POST",
+							data : formData,
+							processData : false,
+							contentType : false,
+							success : function(result) {
+								console.log(result)
+									alert("[작성 완료] 게시글 작성이 완료되었습니다 :D");
+									location.href = "/auctList";
 								
-// 							},
-// 							error : function(err){
-// 								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
-// 							}
-// 						});
-// 				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
+							},
+							error : function(err){
+								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
+							}
+						});
+				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
 				}
 			}
 		//==============================================================================
 		//✅ 화면/배열에서 delete 실행하는 함수
 			function submitCheck(){
-			console.log(!$("#ctgry").is(':checked'));
-			console.log($("#ctgry").is(':checked'));
 			//1. 파일 업로드 여부
 			if(inputFileList.length==0){
 				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
@@ -269,8 +270,7 @@
 			}
 			
 			//2. 카테고리 선택 여부
-			else if(!$("#ctgry").is(':checked')){
-				console.log("hi")
+			else if($("#ctgry").val()==""){
 				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
 				isSubmitOk = false;
 			}
@@ -287,10 +287,15 @@
 				isSubmitOk = false;
 			}
 
-			//5. 상품가격 작성 여부
-			else if($("#dlPrc").val()==""){
-			   $("#dlPrc").focus();
+			//5. 최소가격 작성 여부
+			else if($("#lowPrc").val()==""){
+			   $("#lowPrc").focus();
 				isSubmitOk = false;
+			
+			//6. 데드라인 설정 여부
+			}else if($("#ddlnYmd").val()==""){
+				   $("#ddlnYmd").focus();
+					isSubmitOk = false;
 			}else{
 				isSubmitOk = true;
 			}		

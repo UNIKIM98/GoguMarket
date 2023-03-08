@@ -94,12 +94,16 @@ function SelectCmntlist(snsNo) {
 							console.log("넘어옴 : " + index);
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
+								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem + ')');
+								$(obj).find("#rrpContent").attr("id", "rrpContent" + item.cmntNo);
 								$(obj).find("#rrpGroupNo").val(item.groupNo);
 								$(obj).find("#rrpCmntNo").val(item.cmntNo);
-								$(obj).find("#rrpCmntMem").text(item.cmntMnm);
+								$(obj).find("#rrpSnsNo").val(item.snsNo);
+								$(obj).find("#rrpCmntMem").text(item.cmntMem);
 								$(obj).find("#rrpCmntYmd").text(item.cmntYmd);
-								$(obj).find("#rrpCmntCn").text(item.cmntCn);
+								$(obj).find("#cmntCn").text(item.cmntCn);
 								$(obj).find("#delbutton").attr("onclick", "rreplyDel(" + item.cmntNo + ", " + item.groupNo + ")")
+								$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + ")")
 
 
 								return true;
@@ -300,6 +304,76 @@ function rreplyDel(rrpCmntNo, rrpGroupNo) {
 	});
 }
 
+
+
+function rreplyEditForm(rrpCmntNo) {
+	/*console.log('넘어옴');
+	$("#rrpContent #rrpCmntCn").remove();
+	$("#editForm").remove();
+	
+	$("#rrpContent #rrpCmntCn").remove();
+	
+	$("#rrpContent").append(
+		'<textarea id="innerdiv" class="form-inline" id="rrpCmntCn" style="word-break: break-all; ""width:200px">Hi there!</textarea>'	
+	)*/
+
+	$('#rrpContent' + rrpCmntNo + ' #cmntCn').remove();
+
+	$("#rrpContent" + rrpCmntNo).append(`<textarea class="form-control" id="cmntCn1" name="cmntCn" required></textarea>`);
+
+	let button = event.currentTarget.parentNode;
+
+	event.currentTarget.remove();
+
+	$(button).append(`<input type="submit" class="btn btn-dark mt-3 f-right"
+								 style="margin: 10px" id="editButton" onclick="rreplyEdit()" value="수정" rows="300" cols="8">`)
+
+
+}
+
+function rreplyEdit() {
+
+	console.log($("#cmntNo").val())
+	console.log($("#groupNo").val())
+	console.log($("#snsNo").val())
+
+
+	let cmntCn = $("#cmntCn1").val()
+	console.log($("#cmntCn").val())
+	console.log($("#cmntCn").text())
+	
+	
+	var formData = new FormData($("#rrpView")[0]);
+	
+	
+	
+	console.log
+	
+	$.ajax({
+		url: "/rreplyEdit",
+		type: "POST",
+		data: formData,
+		processData: false,
+		contentType: false,
+
+		success: function(data) {
+			if(data == null) {
+				console.log('수정에 실패했습니다.')
+				$("#Sns-reply").empty();
+				SelectCmntlist(snsNo);
+			}else{
+				console.log('수정성공했습니다.')
+				$("#Sns-reply").empty();
+				SelectCmntlist(snsNo);
+			}
+		},
+		error: function() {
+			console.log(error)
+		}
+	});
+
+
+}
 
 
 

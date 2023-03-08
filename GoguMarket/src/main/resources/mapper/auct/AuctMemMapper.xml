@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.goguma.auct.mapper.AuctMapper">
+<mapper namespace="com.goguma.auct.mapper.AuctMemMapper">
 
-	<select id="selectAuctMem">
-	
-	
+<!-- 입찰자 조회 -->
+	<select id="selectAuctMem"
+			parameterType="int"
+			resultType="com.goguma.auct.vo.AuctMemVO">
+	SELECT AUCT_MEM_NO , USER_ID , AUCT_NO , AUCT_YMD , NOW_PRC , PNT_CNT
+	FROM AUCT_MEM
+	WHERE AUCT_NO =(SELECT AUCT_NO
+	                FROM AUCT
+	                WHERE AUCT_NO = #{auctNo})
+	ORDER BY NOW_PRC DESC
 	</select>
 
 <!-- 입찰 등록 -->
@@ -14,8 +21,8 @@
 			SELECT NVL(MAX(AUCT_MEM_NO),0)+1 AS AUCT_MEM_NO
 			FROM AUCT_MEM
 		</selectKey>
-	INSERT INTO AUCT_MEM (AUCT_MEM_NO, AUCT_MEM, AUCT_NO, AUCT_YMD, NOW_PRC, PNT_CNT)
-	VALUES			(#{auctMemNo}, #{auctMem}, #{auctNo}, CURRENT_DATE, #{nowPrc}, #{pntCnt})
+	INSERT INTO AUCT_MEM (AUCT_MEM_NO, USER_ID, AUCT_NO, AUCT_YMD, NOW_PRC, PNT_CNT)
+	VALUES			(#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc}, #{pntCnt})
 	</insert>
 	
 	

@@ -16,7 +16,7 @@ public class DealVO extends AtchVO{
 	private String ntslId; 	// 판매자
 	private String prchsId;	// 구매자
 	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd") // sql쓸거면 안써도되는데 왜되는것..?지영언니꺼참고 
 	private Date dlYmd;		// 등록일
 	private String dlTtl;	// 제목
 	private String dlCn;	// 내용
