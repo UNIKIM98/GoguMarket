@@ -4,6 +4,11 @@
 	layout:decorate="~{/layouts/layout}">
 <head>
 
+<style type="text/css">
+.product-img {
+	width: 100px
+}
+
 </style>
 
 </head>
@@ -47,9 +52,9 @@
 								</div>
 								<div class="featured-product">
 									<div class="active-featured-product slick-arrow-2">
-
+										[[${lists[0].stts}]]
 										<!-- product-item start -->
-										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}">
+										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts!=2}">
 											<a th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 												<div class="product-item" th:each="nowPrc : ${nowPrcs}"
 													th:if="${auct.auctNo == nowPrc.auctNo}">
@@ -71,15 +76,16 @@
 														<h5 class="sin-pro-action f-right">남은기간</h5>
 														<h5 align="left" th:text="${auct.userId}"></h5>
 
-
-														<ul class="action-button">
-															<li>
-																<h6>현재 입찰자 : ㅇㅇ명</h6>
-															</li>
-														</ul>
+															<ul class="action-button">
+																<li>
+																	<h6>현재 입찰자 : ㅇㅇ명</h6>
+																</li>
+															</ul>
+														</div>
 													</div>
 												</div>
 											</a>
+
 
 										</div>
 									</div>
@@ -116,14 +122,15 @@
 										<div class="row">
 
 											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}">
+
+											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}"
+                      th:if="${auct.stts!=2}">
 												<a
 													th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 													<div class="product-item" th:each="nowPrc : ${nowPrcs}"
 														th:if="${auct.auctNo == nowPrc.auctNo}">
 														<div class="product-img">
 															<img src="img/product/7.jpg" alt="" />
-
 														</div>
 														<div class="product-info">
 															<h6 class="product-title">
@@ -149,6 +156,7 @@
 														</div>
 													</div>
 												</a>
+
 											</div>
 											<!-- product-item end -->
 

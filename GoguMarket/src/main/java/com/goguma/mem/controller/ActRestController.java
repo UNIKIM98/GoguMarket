@@ -25,7 +25,7 @@ public class ActRestController {
 	ActService aService;
 
 	// ▶ 대표계좌 + 전체계좌 정보 들고가기
-	@GetMapping("/actInfoAjax")
+	@GetMapping("/my/actInfoAjax")
 	public Map actInfoAjax(HttpServletRequest request) {
 		System.out.println("=======/actInfoAjax");
 		
@@ -50,7 +50,7 @@ public class ActRestController {
 	}
 
 	// ▶ 대표 계좌번호 삭제
-	@GetMapping("/delMemActAjax")
+	@GetMapping("/my/delMemActAjax")
 	public Map delMemActAjax(HttpServletRequest request) {
 		System.out.println("delMemActAjax왔음=====");
 		// 리턴할 hashMap 생성
@@ -77,7 +77,7 @@ public class ActRestController {
 	}
 
 	// ▶ 대표계좌 변경
-	@GetMapping("/updateMemActAjax/{actNo}")
+	@GetMapping("/my/updateMemActAjax/{actNo}")
 	public Map updateMemActAjax(HttpServletRequest request, @PathVariable int actNo) {
 		System.out.println("updateMemActAjax왔음=====");
 
@@ -108,7 +108,7 @@ public class ActRestController {
 	}
 
 	// ▶ 전체계좌 중 하나 삭제
-	@GetMapping("/deleteActListOne/{actNo}/{memActNoYn}")
+	@GetMapping("/my/deleteActListOne/{actNo}/{memActNoYn}")
 	public Map deleteActListOne(HttpServletRequest request, @PathVariable int actNo, @PathVariable String memActNoYn) {
 		// 리턴할 hashMap 생성
 		HashMap<String, Object> map = new HashMap<String, Object>();

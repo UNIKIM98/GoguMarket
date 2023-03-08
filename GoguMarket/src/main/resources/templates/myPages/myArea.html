@@ -24,18 +24,19 @@
 						<!--▶ 우리동네 select -->
 						<div class="row mb-100" id="myAreaNow">
 							<div class="section-title text-start ">
-								<h2 class="uppercase">우리 동네</h2>
-								<h3 th:if="${userInfo!=null}">
+							<br>
+								<h4 class="blog-section-title border-left mb-30">우리동네</h4>
+								<h4 th:if="${userInfo!=null}">
 									지금 우리 동네는 <span style="font-weight: bold;" class="myArea"
 										th:text="${userInfo.dealArea}"></span> 입니다.
-								</h3>
-								<h3 th:if="${userInfo == null}">우리동네를 설정해주세요 :D</h3>
+								</h4>
+								<h4 th:if="${userInfo == null}">우리동네를 설정해주세요 :D</h4>
 							</div>
 							<div class="mt-20"></div>
 						</div>
 						<div class="row mb-100" id="setMyArea">
 							<div class="section-title text-start ">
-								<h2 class="uppercase">우리동네 설정하기</h2>
+								<h4 class="blog-section-title border-left mb-30">우리동네 설정하기</h4>
 								<p>주소를 입력하면 자동으로 해당 구가 우리동네로 설정됩니다.</p>
 								<br>
 								<table>

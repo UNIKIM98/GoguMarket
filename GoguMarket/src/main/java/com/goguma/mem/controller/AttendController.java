@@ -22,12 +22,12 @@ public class AttendController {
 	@Autowired
 	AttendService aService;
 
-	@GetMapping("/myAttend")
+	@GetMapping("/my/myAttend")
 	public String attend(HttpServletRequest request) {
 		return "myPages/myAttend";
 	}
 
-	@GetMapping("/selectAttendList")
+	@GetMapping("/my/selectAttendList")
 	@ResponseBody
 	public Map selectAttendList(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -41,7 +41,7 @@ public class AttendController {
 	}
 
 	// 출석이벤트
-	@GetMapping("/insertAttend")
+	@GetMapping("/my/insertAttend")
 	@ResponseBody
 	public AttendVO insertAttend(HttpServletRequest request, AttendVO aVO) {
 

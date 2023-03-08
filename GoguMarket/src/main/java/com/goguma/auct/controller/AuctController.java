@@ -1,8 +1,11 @@
 package com.goguma.auct.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goguma.auct.service.AuctMemService;
@@ -45,6 +50,7 @@ public class AuctController {
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
 //		model.addAttribute("AuctNo", auctService.getAuct(vo));
 //		vo.getAuctNo();
+
 //		vo = auctService.getAuct(vo);
 
 //		int value = vo.getAuctNo();
@@ -83,6 +89,15 @@ public class AuctController {
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
 
+		if (avoList.size() == 0) {
+			model.addAttribute("auctMem", "nothing");
+		} else {
+			model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
+		}
+		System.out.println(avoList.equals(null) + "equals");
+		System.out.println((avoList.size() == 0) + "size");
+
+
 		System.out.println("조회수" + cnt); // 조회수 증가 확인
 		System.out.println("첨부파일" + atchList); // 첨부파일 확인
 		System.out.println("입찰자" + avoList); // 입찰자 확인
@@ -91,7 +106,7 @@ public class AuctController {
 		return "auction/auctSelect";
 	}
 
-	@GetMapping("/auctInsertForm")
+	@GetMapping("/my/auctInsertForm")
 	public String auctInsertForm(Model model) {
 		// 상품등록폼 이동
 
@@ -103,18 +118,21 @@ public class AuctController {
 
 	}
 
-	@PostMapping("/auctInsert") // 등록 매핑
+	@PostMapping("/my/auctInsert") // 등록 매핑
+	@ResponseBody
 	public String auctInsert(AuctVO vo, List<MultipartFile> files, HttpServletRequest request) {
 		// ▲ 리턴타입 스트링으로 바꿔주기! :
 		System.out.println(files + "======넘어온 파일들");
-
+		String result = "fail";
 		int atchId = atchService.insertFile(files);
 		int atchList = atchService.insertFile(atchId, files);
 
 		HttpSession session = request.getSession(); // 세션값 받아옴
 		String myId = (String) session.getAttribute("userId"); // 세션값 중 아이디만 받아옴
 		vo.setUserId(myId); // 세션값으로 아이디 설정
-
+		if (vo.getQuickPrc() == 0) {
+			System.out.println("즉구가 없음");
+		}
 		System.out.println(atchId + " : files/////////");
 		System.out.println(vo);
 		System.out.println(atchList);
@@ -122,12 +140,15 @@ public class AuctController {
 			vo.setAtchId(atchId);
 		}
 
-		auctService.insertAuct(vo); // vo값으로 auctService의 insertAuct를 실행
-		return "redirect:auctList";
+		int cnt = auctService.insertAuct(vo); // vo값으로 auctService의 insertAuct를 실행
+		if (cnt > 0) {
+			result = "success";
+		}
+		return result;
 	}
 
-	@RequestMapping("/auctDelete/{auctNo}")
-	public String auctDelete(@PathVariable int auctNo) {
+	@RequestMapping("/my/auctDelete/{auctNo}")
+	public void auctDelete(@PathVariable int auctNo, HttpServletResponse response) {
 		System.out.println(auctNo + " => 삭제할 글 번호");
 
 		AuctVO vo = auctService.selectAuct(auctNo);
@@ -141,8 +162,33 @@ public class AuctController {
 
 		int delAtch = atchService.deleteFile(atchList);
 		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
+		
+		try {
+			if (delAuct > 0) {
+				System.out.println("왔니..delAcut 안쪽임");
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
 
-		return "redirect:/auctList";
+				out.println("<script language='javascript'>");
+				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/auctList';");
+
+				out.println("</script>");
+
+				out.flush();
+
+			} else {
+				response.setContentType("text/html; charset=UTF-8");
+
+				PrintWriter out = response.getWriter();
+				out.println("<script language='javascript'>");
+				out.println("alert('[삭제실패] 게시글 삭제 중 오류가 발생하였습니다 :( '); location.href='/auctList';");
+				out.println("</script>");
+
+				out.flush();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -45,12 +45,13 @@
 		</selectKey>
 		INSERT INTO AUCT (
 		AUCT_NO, REG_YMD, DDLN_YMD, AUCT_TTL, CTGRY,
-		AUCT_CN, LOW_PRC, QUICK_PRC, ATCH_ID, USER_ID
-		) VALUES (
-		#{auctNo},
-		CURRENT_DATE, #{ddlnYmd}, #{auctTtl}, #{ctgry},
-		#{auctCn}, #{lowPrc},
-		#{quickPrc}, #{atchId}, #{userId}
+		AUCT_CN, LOW_PRC, ATCH_ID, USER_ID
+		<if test="quickPrc != 0">,QUICK_PRC</if>
+		) VALUES 		(
+		#{auctNo}, CURRENT_DATE, #{ddlnYmd}, #{auctTtl}, #{ctgry},
+		#{auctCn}, #{lowPrc}, #{atchId}, #{userId}
+		<if test="quickPrc != 0">,#{quickPrc}</if>
+
 		)
 	</insert>
 	<!-- 삭제 -->

@@ -1,55 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/sideBar}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<style>
-		.dropbtn {
-			padding: 16px;
-			font-size: 16px;
-			border: none;
-			cursor: pointer;
-		}
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.dropbtn {
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+}
 
-		.dropdown {
-			position: relative;
-			display: inline-block;
-		}
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
 
-		.dropdown-content {
-			display: none;
-			position: absolute;
-			min-width: 100px;
-			overflow: auto;
-			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-		}
+.dropdown-content {
+	display: none;
+	position: absolute;
+	min-width: 100px;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
 
-		.dropdown-content a {
-			color: black;
-			padding: 12px 16px;
-			text-decoration: none;
-			display: block;
-		}
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
 
-		.dropdown a:hover {
-			background-color: #f1f1f1
-		}
+.dropdown a:hover {
+	background-color: #f1f1f1
+}
 
-		.show {
-			display: block;
-		}
-	</style>
+.show {
+	display: block;
+}
+</style>
 
-	<script>
+<script>
 	// ==============================================================
 	var imgSrc = "";
 
 	// ==============================================================
 	// ▷ 계좌 등록 함수
 	function goMemAct(){
-		location.href="/makeNewAct"
+		location.href="/my/makeNewAct"
 	}
 	
 	// ==============================================================
@@ -61,7 +62,7 @@
 		
 		function actInfoAjax(){
 			$.ajax({
-			url: "/actInfoAjax",
+			url: "/my/actInfoAjax",
 			type: 'get',
 			dataType: 'json',
 			contentType: 'application/json; charset = utf-8',
@@ -88,7 +89,6 @@
 		}
 
 		// # 등록된 계좌가 3개 미만이면 등록 버튼 출력
-		//📌 밑에 onclick 이벤트 수정해야~!
 		if(cnt < 3){
 			for(let i=1 ; i< (4-Number(cnt)) ; i++){
 				$("#actListTable").children().eq(1).append(
@@ -123,12 +123,13 @@
 		function deleteActListOne(event){
 			let actNo = $(event.target).parent().parent().attr('id');
 			let memActNoYn = 'N';
+			console.log(memActNo+"memActNo ")
 			if(actNo == memActNo){
 				memActNoYn = "Y"
 			}
 
 			$.ajax({
-				url: "/deleteActListOne/"+actNo+"/"+memActNoYn,
+				url: "/my/deleteActListOne/"+actNo+"/"+memActNoYn,
 				type: 'get',
 				dataType: 'json',
 				contentType: 'application/json; charset = utf-8',
@@ -152,7 +153,7 @@
 				`
 				<tr>
 					<td colspan="3">
-						<button onclick="goMemAct()" type = "button">계좌 추가</button>
+						<button onclick="goMemAct()" type = "button">계좌 등록</button>
 					</td>
 				</tr>
 
@@ -171,15 +172,15 @@
 		}
 
 		//▷ 대표계좌로 설정하기
-		function updateMemActAjax(event){
+		function updateMemActAjax(event){0
 			let actNo = $(event.target).parent().parent().attr('id');
 
-			if(actNo ==memActNo){
+			if(actNo == memActNo){
 				alert("이미 대표계좌로 등록되어있는 계좌번호입니다 :D");
 			}
 			else{
 				$.ajax({
-				url: "/updateMemActAjax/"+actNo,
+				url: "/my/updateMemActAjax/"+actNo,
 				type: 'get',
 				dataType: 'json',
 				contentType: 'application/json; charset = utf-8',
@@ -327,7 +328,7 @@
 		//▷ 대표계좌 삭제 아작스
 		function delMemActAjax() {
 			$.ajax({
-				url: "/delMemActAjax",
+				url: "/my/delMemActAjax",
 				type: 'get',
 				dataType: 'json',
 				contentType: 'application/json; charset = utf-8',
@@ -358,7 +359,7 @@
 			}
 		}
 	</script>
-	<script src="myPages/js/actInfo.js"></script>
+<script src="myPages/js/actInfo.js"></script>
 </head>
 
 <body>
@@ -369,34 +370,34 @@
 					<div class="container">
 						<!--▶ 대표계좌 -->
 						<div class="row mb-100" id="memActSection">
-								<div class="section-title text-start ">
-									<h2 class="uppercase">나의 계좌</h2>
-									<hr>
-									<h3 style="font-weight: bold;">대표계좌</h3>
-								</div>
+							<div class="section-title text-start ">
+								<h2 class="blog-section-title border-left mb-30">나의계좌</h2>
+								<hr>
+								<h4 style="font-weight: bold;">대표계좌</h4>
+							</div>
 							<div class="mt-20"></div>
 						</div>
-						
+
 						<!--▶ 전체 계좌 목록-->
-						<div class="row" >
-								<div class="section-title text-start mb-20">
-									<hr>
-									<h3 style="font-weight: bold;">계좌목록</h3>
-									<p>계좌는 최대 3개까지 등록할 수 있습니다.</p>
-								</div>
-								<div style="text-align: center">
-									<table class="table" id="actListTable">
-										<thead>
-											<tr>
-												<th>은행명</th>
-												<th>계좌번호</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
-								</div>
+						<div class="row">
+							<div class="section-title text-start mb-20">
+								<hr>
+								<h3 style="font-weight: bold;">계좌목록</h3>
+								<p>계좌는 최대 3개까지 등록할 수 있습니다.</p>
+							</div>
+							<div style="text-align: center">
+								<table class="table" id="actListTable">
+									<thead>
+										<tr>
+											<th>은행명</th>
+											<th>계좌번호</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

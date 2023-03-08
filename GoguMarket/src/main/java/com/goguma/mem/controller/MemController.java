@@ -40,6 +40,7 @@ public class MemController {
 	public String userLogin() {
 		return "";
 	}
+	
 	// ===========================================================
 	// ▷ 일반 회원가입
 	@GetMapping("/newMem/memberJoinForm")
@@ -67,7 +68,7 @@ public class MemController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[회원가입성공] " + mVO.getUserNm() + "님 환영합니다 :D ');location.href='/memberJoinForm';");
+				out.println("alert('[회원가입성공] " + mVO.getUserNm() + "님 환영합니다 :D '); location.href='/auctList';");
 				// ※ 메인페이지로 가게 고쳐야함!!
 
 				out.println("</script>");
