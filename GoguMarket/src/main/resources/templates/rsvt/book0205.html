@@ -91,9 +91,9 @@
 											<div class="col-lg-3"></div>
 											<div class="col-lg-3">
 												<a class="button extra-small" data-bs-toggle="tab"
-													onclick="aaa()"> <span>예약하기 </span>
-												</a> <a class="button extra-small" href="#" data-bs-toggle="tab">
-													<span>함께예약 </span>
+													onclick="moveRsvt()"> <span>예약하기 </span>
+												</a> <a class="button extra-small" href="#" data-bs-toggle="tab"
+													onclick="moveComRsvt()"><span>함께예약 </span>
 												</a>
 											</div>
 										</div>
@@ -300,11 +300,16 @@
 		</div>
 		<!-- 큰 덩어리 끝 -->
 		<script type="text/javascript">
-			function aaa() {
+			function moveRsvt() {
 				var url = window.location.href;
 				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
 				console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
 				window.location.href = "../book0601/" + urlBizNo;
+			}
+			function moveComRsvt(){
+				var url = window.location.href;
+				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+				window.location.href = "../book0602/" + urlBizNo;
 			}
 		</script>
 	</div>
