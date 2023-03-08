@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="../js/manager/manage.js"></script>
 </head>
 <body>
 	<div layout:fragment="ManageContent">
@@ -41,27 +41,20 @@
 
 						</div>
 
-						<select name="search" id="search" value="id">
-							<option value="id">아이디</option>
-							<option value="nm">이름</option>
-							<option value="nk">닉네임</option>
-							<option value="ph">전화번호</option>
-							<option value="em">이메일</option>
-						</select>
+
 
 					</div>
 				</div>
 				<!--search-->
 				<!-- nurmal -->
-				<div class="card shadow mb-4">
+				<div class="card shadow mb-4 tableGroup">
 
 					<div class="card-header py-3">
+
 						<h6 class="m-0 font-weight-bold text-primary">
-					  일반유저<select class="f-right" name="sort" id="sort" value="0">
-								<option value="0">정상</option>
-								<option value="1">정지</option>
-								<option value="3">휴먼</option>
-								<option value="4">채금</option>
+							일반유저<select class="f-right mr-10" name="key" id="key">
+
+
 							</select>
 						</h6>
 
@@ -107,15 +100,14 @@
 					</div>
 				</div>
 				<!--biz-->
-				<div class="card shadow mb-4">
+			<div class="card shadow mb-4 tableGroup">
 
 					<div class="card-header py-3">
+
 						<h6 class="m-0 font-weight-bold text-primary">
-							비지니스 유저<select class="f-right">
-								<option>정상</option>
-								<option>정지</option>
-								<option>채금</option>
-								<option>회원가입순</option>
+							일반유저<select class="f-right mr-10" name="key" id="key">
+
+
 							</select>
 						</h6>
 
@@ -159,26 +151,23 @@
 							</table>
 						</div>
 					</div>
-				</div>
-				<!--biz-->
+				</div>				<!--biz-->
 
 
 			</div>
 			<!-- /.container-fluid -->
 
+
 		</div>
+		<footer class="sticky-footer bg-white">
+			<div class="container my-auto">
+				<div class="copyright text-center my-auto">
+					<span>Copyright &copy; Your Website 2020</span>
+				</div>
+			</div>
+		</footer>
+		<!-- End of Footer -->
 
 	</div>
-	<!-- End of Main Content -->
-
-	<!-- Footer -->
-	<footer class="sticky-footer bg-white">
-		<div class="container my-auto">
-			<div class="copyright text-center my-auto">
-				<span>Copyright &copy; Your Website 2020</span>
-			</div>
-		</div>
-	</footer>
-	<!-- End of Footer -->
 </body>
 </html>
