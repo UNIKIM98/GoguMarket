@@ -57,10 +57,7 @@
 			// 수정하기 버튼 클릭스 수정폼으로 이동
 			function updateform() {
 				let dlno = $(".single-product-info a").first().text();
-				let confirmMsg = confirm('정말로 중고거래 게시글을 삭제하시겠습니까?')
-				if (confirmMsg) {
-					location.href = `/my/dealupdate/${dlno}`
-				}
+				location.href = `/my/dealupdate/${dlno}`
 			}
 
 			function deleteDeal() {
