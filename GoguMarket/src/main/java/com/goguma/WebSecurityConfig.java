@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 
 		http.authorizeHttpRequests(
 				(requests) -> requests
-						.antMatchers("/", "/home", "/newMem/**")
+						.antMatchers("/", "/home", "/newMem/**", "/css/**")
 						.permitAll()
 						.antMatchers("/admin/**").hasRole("ADMIN")
 					    .antMatchers("/biz/**").hasRole("BIZ")

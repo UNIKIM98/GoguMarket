@@ -145,6 +145,7 @@
 				   DL_YMD, 
 				   DL_PRC, 
 				   AREA, 
+				   NTSL_ID,
 				   ATCH_ID
 						<if test="negoYn != null">,NEGO_YN</if>) 
 			VALUES (#{dlNo}, 
@@ -154,6 +155,7 @@
 					CURRENT_DATE, 
 					#{dlPrc}, 
 					#{area}, 
+					#{ntslId},
 					#{atchId}
 						<if test="negoYn != null">,#{negoYn}</if>)	
 	</insert>

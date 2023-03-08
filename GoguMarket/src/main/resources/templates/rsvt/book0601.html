@@ -304,8 +304,7 @@
 
 		</div>
 		<script th:inline="javascript">
-			console.log(window.location.href);
-
+			
 			//가게번호 받아오기
 			var url = window.location.href;
 			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
@@ -334,10 +333,11 @@
 
 			//금액 콤마처리
 			
-//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼우측 메뉴, 예약정보 출력 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+			//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼우측 메뉴, 예약정보 출력 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			// 모든 메뉴의 토탈가격을 담는 변수
 			var totalSum = 0;
 			var cnt = 0;
+			
 			//메뉴 담기 클릭함수
 			function menuPick(id) {
 				//빈 배열 생성

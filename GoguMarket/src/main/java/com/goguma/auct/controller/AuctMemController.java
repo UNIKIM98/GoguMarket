@@ -15,7 +15,7 @@ public class AuctMemController {
 	@Autowired
 	AuctMemService auctMemService;
 	
-	@PostMapping("/insertAuctMem")
+	@PostMapping("/my/insertAuctMem")
 	private String insertAuctMem(AuctMemVO vo,HttpServletRequest request) {
 		// 입찰 등록
 		

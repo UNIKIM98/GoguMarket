@@ -63,7 +63,7 @@
 
 						$.ajax({
 						type : "get",
-						url : "/selectAttendList",
+						url : "/my/selectAttendList",
 						success : function(result) {
 
 							let aList = result.aList
@@ -112,7 +112,7 @@
 
 		function insertAttend() {
 			$.ajax({
-				url: '/insertAttend/',
+				url: '/my/insertAttend/',
 				type: 'get',
 				dataType: 'json',
 				contentType: 'application/json; charset = utf-8',
@@ -144,6 +144,8 @@
 
 <body>
 	<div layout:fragment="myContent">
+	<br>
+	<div><h4 class="blog-section-title border-left mb-30">출석하기</h4></div>
 		<div id='calendar' style="width: 550px"></div>
 		<div>
 			<button onclick="makeAttend()" id="attendBtn">출석하기</button>
