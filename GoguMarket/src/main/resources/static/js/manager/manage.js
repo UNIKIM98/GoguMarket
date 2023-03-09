@@ -5,7 +5,7 @@ btn = $("<button>").attr({
 	"onclick": "updataStts(check)"
 });
 
-$(document).ready(function() {
+$(document).ready(function() { //화면 넘어왔을때 출력하는 load함수
 	keyValue();
 	selectMemberList();
 });
@@ -105,4 +105,10 @@ function selectMemberList() {
 			console.log(error);
 		},
 	});
+}
+
+function(){
+	
+	
+	
 }
