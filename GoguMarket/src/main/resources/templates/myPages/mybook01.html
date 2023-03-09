@@ -32,10 +32,10 @@
 							</tr>
 
 							<!-- 예약1건 -->
-							<tr>
-								<td class="td-title-1">커피맛을 조금 아는 남자..</td>
-								<td class="td-title-1">2023-02-14 15:00</td>
-								<td class="td-title-1">예약완료</td>
+							<tr th:each="sim: ${simple}">
+								<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
+								<td class="td-title-1" th:text="|${sim.RSVT_YMD}">(예약일)</td>
+								<td class="td-title-1">(예약상태)</td>
 							</tr>
 
 						</table>
@@ -60,7 +60,7 @@
 										<th class="td-title-2">가격</th>
 									</tr>
 									<!-- 메뉴 1건 -->
-									<tr>
+									<tr th:each="list: ${lists}">
 										<td class="td-title-1">커피커피커피</td>
 										<td class="td-title-1">1</td>
 										<td class="td-title-2">4,000원</td>
