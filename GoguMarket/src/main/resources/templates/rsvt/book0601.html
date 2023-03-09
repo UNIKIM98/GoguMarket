@@ -622,7 +622,7 @@
 							alert("ajax성공쓰_예약번호 " + rsvtNo);
 							
 							//예약완료 페이지로 이동(예약번호 파라미터)
-							location.href="/book0604/"+rsvtNo;
+							location.href="/my/book0604/"+rsvtNo;
 						}
 					,error : function(err){
 						alert("ajax error db저장안됨")
@@ -635,7 +635,7 @@
 			function moveComRsvt(){
 				var url = window.location.href;
 				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-				window.location.href = "../book0602/" + urlBizNo;
+				window.location.href = "/my/book0602/" + urlBizNo;
 			}
 			
 			function test(){

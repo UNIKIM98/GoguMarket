@@ -1,5 +1,7 @@
 package com.goguma.mem.mapper;
 
+import java.util.List;
+
 import com.goguma.mem.vo.MemVO;
 
 public interface MemMapper {
@@ -15,6 +17,9 @@ public interface MemMapper {
 
 	// 유저(일반유저) 한 명 조회
 	MemVO selectUser(MemVO mVO);
+	
+	// 유저(일반유저) 전체 조회
+	List<MemVO> selectMemberList(MemVO vo);
 
 	// ▷ 마이페이지 ========================
 	// 회원 정보 수정

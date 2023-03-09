@@ -87,6 +87,19 @@
 					) subquery), '카드결제')
 
 	</insert>
+	
+	<!-- 예약가져오기 -->
+	<select id="selectMyRsvtList" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
+		SELECT r.*, m.*, p.*, b.*
+		FROM rsvt r JOIN rsvt_menu m
+					ON r.rsvt_no = m.rsvt_no
+					JOIN rsvt_payment p
+					ON p.rsvt_no = r.rsvt_no 
+					JOIN biz_menu b
+					ON b.menu_no = m.menu_no
+		WHERE r.user_id = #{userId}
+		ORDER BY r.rsvt_no
+	</select>
 
 
 </mapper>

@@ -31,18 +31,13 @@
 								<th class="td-title-1">예약상태</th>
 							</tr>
 
-							<!-- tr반복 -->
+							<!-- 예약1건 -->
 							<tr>
 								<td class="td-title-1">커피맛을 조금 아는 남자..</td>
 								<td class="td-title-1">2023-02-14 15:00</td>
 								<td class="td-title-1">예약완료</td>
 							</tr>
 
-							<tr>
-								<td class="td-title-1">커피맛을 조금 아는 남자..</td>
-								<td class="td-title-1">2023-02-14 15:00</td>
-								<td class="td-title-1">예약변경중</td>
-							</tr>
 						</table>
 					</div>
 
@@ -64,16 +59,13 @@
 										<th class="td-title-1">수량</th>
 										<th class="td-title-2">가격</th>
 									</tr>
+									<!-- 메뉴 1건 -->
 									<tr>
 										<td class="td-title-1">커피커피커피</td>
 										<td class="td-title-1">1</td>
 										<td class="td-title-2">4,000원</td>
 									</tr>
-									<tr>
-										<td class="td-title-1">쿠키쿠키쿠키</td>
-										<td class="td-title-1">1</td>
-										<td class="td-title-2">6,000원</td>
-									</tr>
+									
 									<tr>
 										<th class="order-total">합계</th>
 										<td class="order-total"></td>
@@ -81,6 +73,7 @@
 									</tr>
 								</table>
 								<hr>
+								
 								<!--테이블2 : 시간, 인원, 요청사항-->
 								<table>
 									<tr>
@@ -110,7 +103,7 @@
 					<div class="col-lg-4">
 						<div class="tab-pane active pt-30" id="order-complete">
 							<a class="button extra-small mb-20" href="#"><span>1/n정산하기
-							</span></a> <a class="button extra-small mb-20" href="#"><span>예약변경신청</span></a>
+							</span></a> <a class="button extra-small mb-20" onclick="aaa()" style="cursor:pointer;"><span>예약변경신청</span></a>
 							<a class="button extra-small mb-20" href="#"><span>예약취소하기</span>
 							</a> <a class="button extra-small mb-20" href="#" id="modalBtn"><span>알림설정</span>
 							</a>
@@ -150,9 +143,15 @@
 			</div>
 		</div>
 		<!-- 모달창 끝-->
-
+	
+	<script>
+		function aaa(){
+			window.location.href = "/my/mybook02"
+		}
+	</script>
 
 	</div>
+	<!-- 타임리프 div끝 -->
 
 </body>
 </html>

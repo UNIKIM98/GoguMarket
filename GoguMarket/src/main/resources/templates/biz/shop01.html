@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{biz/slide/slide}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<style type="text/css">
+		.userTable span {
+			color: red;
+			font-size: large;
+		}
+
+		.errPlaceHolder::placeholder {
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<div layout:fragment="myContent">
+		<div class="message-box-section mb-80">
+			<div class="container">
+				<div class="message-box box-shadow white-bg">
+					<form id="bizInsert" class="bizInsert" action="/bizInsert" method="post"
+						onsubmit="return false">
+						<div class="row">
+							<div class="col-lg-12">
+								<h4 class="blog-section-title border-left mb-30">가게 등록 하기</h4>
+							</div>
+							<div class="userTable">
+								<table style="border-spacing: 10px;   border-collapse: separate;">
+									<tbody>
+										<tr >
+											<th><label for="profile">가게 프로필사진<span> *</span></label></th>
+											<td>
+												<div id="pfTrgt">
+													<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%;">
+												</div>
+											</td>
+											<td>
+												<input type="file" id="profile">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="BizNm">가게명<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
+														readonly="readonly"
+														style="width: 70%;"
+														th:value="${userInfo.userId}"
+														>
+											</td>
+										</tr>
+										<tr>
+											<th><label for="userId">아이디</label></th>
+											<td colspan="2"><input type="text" id="userId" name="userId"
+														readonly="readonly"
+														style="width: 70%;"
+														th:value="${userInfo.userNm}">
+											</td>
+										</tr>
+										<tr>
+											<th class="mblTelno"><label for="bizTel">연락처<span>*</span></label></th>
+											<td colspan="2"><input type="text" id="bizTel" name="bizTel"
+														placeholder="-/공백 없이 입력"
+														style="width: 40%; margin-right: 50px;"
+														oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														th:value="${userInfo.mblTelno}">
+														<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
+											</td>
+										</tr>
+										<tr>
+											<th class="mblTelno"><label for="brNo">사업자 번호<span>*</span></label></th>
+											<td colspan="2"><input type="text" id="brNo" name="brNo"
+														placeholder="-/공백 없이 입력"
+														style="width: 40%; margin-right: 50px;">
+														<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
+											</td>
+										</tr>
+										<tr>
+											<th><label for="addr">주소<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="addr" name="addr"
+														placeholder="주소 입력을 위해 클릭해주세요."
+														readonly="readonly"
+														onclick="findAddr()"
+														style="width: 70%;"
+														th:value="${userInfo.addr}">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="cn">가게 설명</label></th>
+											<td colspan="2"><input type="text" id="cn" name="cn"
+												placeholder="EX) email@naver.com"
+														style="width: 70%;"
+														th:value="${userInfo.eml}">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="ctgry">카테고리</label></th>
+											<select name="ctgry" id="ctgry">
+												<option value="" disabled selected>선택</option>
+												<option th:each="ct : ${category}" 
+														th:text="${ct.commonNm}"
+														th:value="${ct.commonDetailCode}"></option>
+												</select>
+											<span id="ctgryErrMsg"></span>
+											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> 
+										</tr>
+
+
+
+
+
+
+
+										<tr>
+											<th><label for="nickNm">닉네임<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="nickNm" name="nickNm"
+														required="required"
+														style="width: 40%; margin-right: 50px;"
+														th:value="${userInfo.NickNm}">
+												<button class="submit-btn-1 btn-hover-1"
+														onclick="nickNmCkAjax()" 
+														id="nickNmBtn" value="0"
+														type="button">중복확인</button>
+												</td>
+										</tr>
+										<tr>
+											
+											
+										</tr>
+										<tr>
+											<th><label for="dealArea">거래지역</label></th>
+											<td colspan="2"><input type="text" id="dealArea" name="dealArea"
+														placeholder="입력한 주소의 구로 자동 설정"
+														style="width: 70%;"
+														readonly="readonly"
+														th:value="${userInfo.dealArea}">
+											</td>
+										</tr>
+												
+									</tbody>
+								</table>
+								</div>
+								<div class="col-lg-12">
+									
+									<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="수정하기">
+									&nbsp;&nbsp;
+									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+								</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+		var inputFileList = new Array();
+		var deleteList = new Array();
+		var img_style = 'width:60px;height:60px;border-radius:70%';
+		
+		var userId = /*[[ ${userInfo.userId} ]]*/
+		console.log(userId);
+		/*]]*/
+		// ==============================================================
+		// ▷ DOM 실행 함수
+			var fileNum = 0;
+
+			$(function(){
+				
+				// # 휴대번호 유효성 체크
+				$("#mblTelno").on("change",function(){
+					ismblTelnoOk();
+				})
+				
+				// # 이메일주소 유효성 체크
+				$("#eml").on("change",function(){
+					isEmlOk();
+				})
+				
+				// # 기존 프로필 사진
+				extistingProfile();
+				
+				// # 프로필사진 변경/삭제
+				$("#profile").on("change",function(e){
+					inputProfile(e);
+				})
+				
+				// # form submit
+				$("#btnSave").on("click", function() {
+					frmChk();
+				});
+				
+
+			})
+		// ==============================================================
+		// ▷ 프로필사진 변경/삭제
+			function inputProfile(e){
+				var inputFile = e.target.files;
+				var filesArr = Array.prototype.slice.call(inputFile);
+
+
+				filesArr.forEach(function(f) {
+					console.log("filesArr foreach문")
+					console.log(f)
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					inputFileList.push(f);
+					$("#pfTrgt").children().remove();
+					$("#pfTrgt").append(
+								`
+								<img style=${img_style} src=${e.target.result}
+								id=file${fileNum} onclick=fileDelete('file${fileNum}')>
+								`		
+					)
+					fileNum++;
+				}
+				reader.readAsDataURL(f);
+			});
+			$("#profile").val("");
+		}
+		
+		// ==============================================================
+		// ▷ 프로필 삭제
+			function fileDelete(fileNum){
+				var no = fileNum.replace(/[^0-9]/g, "");
+
+				inputFileList[no].is_delete = true;
+				$("#"+fileNum).remove();
+				$("#pfTrgt").append(
+						`
+						<img src=attech/222.jpg style=${img_style}>	
+						`		
+				)
+				
+		}
+		
+		// ==================================================
+		// ▷ 기존 프로필 사진
+			function extistingProfile(){
+				/*<![CDATA[*/
+					var atchList = /*[[ ${userInfo} ]]*/
+						console.log(atchList);
+						
+					if(atchList.atchPath!=null){
+							$("#pfTrgt").children().remove();
+							$('#pfTrgt').append(
+														`<img style=${img_style} src=${atchList.atchPath}
+															   id=exFile onclick=deleteFile('exFile')>`
+														)
+
+					}
+				/*]]*/	
+		}
+		
+		//==============================================================================
+		//✅ exFile 중에서 삭제할 파일 정보 
+			function deleteFile(id, atchId, atchNo) {
+				$("#"+id).remove();
+				$("#pfTrgt").append(
+						`
+						<img src=attech/222.jpg style=${img_style}>	
+						`		
+				)
+		}
+		
+		// ==============================================================
+		// ▷ 이메일주소 유효성 체크
+			function isEmlOk(){
+			let isEmlOk = false;
+			const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if(emlRegExp.test($("#eml").val())){
+				isEmlOk = true;
+			}else{
+				isEmlOk = false;
+				$("#eml").val("").addClass("errPlaceHolder").focus();
+			}
+		}
+		
+		
+		// ==============================================================
+		// ▷ 비밀번호 일치 확인
+			function isSamePw(){
+				if($('#userPw').val()!= $('#userPwCk').val()){
+					$('#userPwCk').attr("placeholder","비밀번호가 일치하지 않습니다.")
+								  .addClass("errPlaceHolder").val("")
+								  .focus();
+				}
+		}
+
+		// ==============================================================
+		// ▷ 휴대번호 유효성 체크 
+			function ismblTelnoOk(){
+			if($("#mblTelno").val().length > 11){
+				$("#mblTelno").attr("placeholder","휴대번호는 11자리 까지만 입력 가능합니다.")
+							  .val("").addClass("errPlaceHolder")
+							  .focus();
+			}
+		}
+
+		// ==============================================================
+		// ▷ 닉네임 중복 체크 아작스
+			function nickNmCkAjax() {
+				$.ajax({
+					url : 'nickNmChk/' + $('#nickNm').val(),
+					dataType : 'json',
+					type : 'get',
+					contentType : 'application/json; charset = utf-8',
+					success : function(result) {
+						nickNmCk(result);
+					},
+					error : function(err) {
+						console.log(err);
+					}
+				})
+			}
+
+		// ▷ 닉네임 중복 체크 결과 출력
+			function nickNmCk(str) {
+				if (str == "0") {
+					alert("사용가능한 닉네임입니다.");
+					$('#nickNmBtn').val("0");
+				} else {
+					alert("이미 사용 중인 닉네임입니다.");
+					$('#nickNm').val("").focus();
+				}
+			}	
+
+		// ==============================================================
+		// ▷ 주소/거래지역 설정
+			function findAddr() {
+				new daum.Postcode(
+						{
+							oncomplete : function(data) {
+								let road = data.roadAddress; // 도로명 주소
+								let jibun = data.jibunAddress; // 지번 주소
+
+								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
+									$('#addr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
+											  .addClass("errPlaceHolder")
+											  .val("").focus();
+								} else {
+									if ((road !== '') || (jibun !== '')) {
+										$("#addr").val(
+												data.sido + " " + data.sigungu + " " + data.bname);
+										$("#dealArea").val(data.sigungu);
+									}
+								}
+							}
+						}).open();
+			}
+
+		// ==============================================================
+		// ▷ submit 전 정보 유효성 체크
+			function frmChk() {
+				if ($('#nickNmBtn').val() == '1') {
+					alert("닉네임 중복체크를 해주세요.");
+					return false;
+				} else if ($('#addr').val() == "") {
+					alert("주소를 입력해주세요.");
+					return false;
+				} else if ($('#userPw').val() == "") {
+					alert("새로운 비밀번호를 입력해주세요.");
+					$('#userPw').focus();
+					return false;
+				} else if ($('#userPwCk').val() == "") {
+					alert("비밀번호확인을 해주세요");
+					$('#userPwCk').focus();
+					return false;
+				}else{					
+					formSubmit();
+				}
+			}
+		
+		// ==============================================================
+		// ▷ 프로필 아작스
+			function formSubmit(){
+				var formData = new FormData($("#bizInsert")[0]);
+				console.log("왔니..")
+				console.log(inputFileList)
+				for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
+					}
+				
+				if(deleteList.length!=0){
+					exFileDeleteAjax();
+				}
+				
+				$.ajax({	
+					url : "/bizInsert",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						alert("[수정완료] 회원정보 수정이 완료되었습니다 :D");
+						location.href = "/dealMain";
+					},
+					error : function(err){
+						alert("[수정실패] 수정 중 오류가 발생하였습니다. :(");
+					}
+				});
+				
+			}
+		
+		//==============================================================================
+		//✅ 파일 삭제 ajax
+			function exFileDeleteAjax(){
+				$.ajax({	
+					url : "/deleteProfile",
+					type : "post",
+					data :  userId,
+					success : function(delCnt) {
+							console.log(delCnt)
+					},
+					error : function(err){
+						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
+					}
+				});	
+			}
+
+
+
+
+
+//===============================================deal에서 가져옴============================================================
+
+			//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+			$(function() {
+				$("#files").on("change", function(e) {
+					$("#fileErrMsg").text("")
+					inputFile(e);
+				});
+				
+				$("#cate").on("change", function(){
+					$("#ctgryErrMsg").text("")
+				})
+				
+				$("#btnSave").on("click", function() {
+					submitForm();
+				});
+				
+				console.log(sessionStorage.getItem('dealArea')+"거래지역")
+				$("#area").val()
+			});
+
+
+			//✅ 화면/배열에서 delete 실행하는 함수
+			function submitForm() {
+				// 선택한 카테고리 > hidden input value로 넣기
+				var ctgry = $("#cate option:selected").val(); 
+				$("#ctgry").val(ctgry); 
+				
+				// 네고여부 > 체크시 value로 Y 주기  //디폴트 N(java에서 처리할 예정~!)
+				console.log($('#negoYn'))
+				if ($('#negoYn').is(":checked")) {
+					console.log("checked!")
+		            $('#negoYn').val("Y");
+		        }
+					
+				$('#stts').val("판매중"); // 인서트할때 늘 판매중으로 들어가게..
+				//submit 전 체크하기
+				if(submitCheck()){
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				var formData = new FormData($("#dFrm")[0]);
+				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				
+				formData.append("deleteFiles", deleteFileList);
+
+				for (var i = 0; i < inputFileList.length; i++) {
+					if (!inputFileList[i].is_delete) {
+						formData.append("files", inputFileList[i]);
+					}
+				}
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				$.ajax({	url : "/testFormSubmit",
+							type : "POST",
+							data : formData,
+							processData : false,
+							contentType : false,
+							success : function(result) {
+								console.log(result)
+									alert("[작성 완료] \""+ result.dlTtl+"\"게시글 작성이 완료되었습니다 :D");
+									location.href = "/dealMain";
+								
+							},
+							error : function(err){
+								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
+							}
+						});
+				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
+				}
+			}
+		</script>
+	</div>
+</body>
+
+</html>
