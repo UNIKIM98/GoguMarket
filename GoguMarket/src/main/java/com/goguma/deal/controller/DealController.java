@@ -138,7 +138,7 @@ public class DealController {
 
 		return "deal/dealform";
 	}
-	
+
 	// ===========================
 	// ▷ 중고거래 게시글 작성 submit
 	@RequestMapping("/my/dealformsubmit") // 딜폼창확인
@@ -156,23 +156,24 @@ public class DealController {
 
 	// ▷ 중고거래 리뷰 작성 폼 : 단건 게시글에 대한 리뷰
 	@RequestMapping("/dealReview/{dlNo}")
-	public String dealReview(Model model,@PathVariable int dlNo) {
+	public String dealReview(Model model, @PathVariable int dlNo) {
 		model.addAttribute("deal", dealService.selectDeal(dlNo));
-		
+
 		return "deal/dealReview";
 	}
+
 	// ▷ 중고거래 리뷰 작성 submit
 	@RequestMapping("/dealReviewsubmit")
 	@ResponseBody
-	public String dealReview(DealReviewVO rvo, List<MultipartFile> files){
+	public String dealReview(DealReviewVO rvo, List<MultipartFile> files) {
 		int atchId = atchService.insertFile(files);
 
 		if (atchId > 0) {
 			rvo.setAtchId(atchId);
 		}
-		//후기입력
+		// 후기입력
 		RvService.insertDealRv(rvo);
-		return "redirect:dealReview/{dlNo}"; // 이전페이지로 가고싶은데 dlNo 유지한채로되나? 
+		return "redirect:dealReview/{dlNo}"; // 이전페이지로 가고싶은데 dlNo 유지한채로되나?
 	}
 
 	// ===========================
@@ -244,8 +245,6 @@ public class DealController {
 		/* return Collections.singletonMap("result", "success delete"); */
 	}
 
-	
-	
 	// ===========================
 	// ❤❤ 판매자 페이지(로 추정)
 	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
@@ -258,9 +257,8 @@ public class DealController {
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
 		model.addAttribute("review", RvService.getDealRv(ntslId));// 여러건 . 후기 조회
-
+		System.out.println(RvService.getDealRv(ntslId));
 		return "deal/dealSellerPage";
 	}
-	
 
 }
