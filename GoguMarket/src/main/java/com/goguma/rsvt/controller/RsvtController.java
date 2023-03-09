@@ -47,7 +47,7 @@ public class RsvtController {
 	@Autowired
 	MemService memService; // 맴바정보
 
-	@RequestMapping("/book0601/{bizNo}")
+	@RequestMapping("/my/book0601/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 
 		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); // 가게정보
@@ -56,7 +56,7 @@ public class RsvtController {
 
 		return "rsvt/book0601";
 	}
-
+	
 	@GetMapping("/book0602/{bizNo}")
 	public String bizComInfo(@PathVariable String bizNo, Model model) {
 		

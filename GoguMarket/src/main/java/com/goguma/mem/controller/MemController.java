@@ -36,19 +36,25 @@ public class MemController {
 	}
 	// ===========================================================
 	// ▷ 회원 로그인
-//	@RequestMapping("/login")
-	public String userLogin() {
-		return "";
+	@GetMapping("/goguma/login")
+	public String login() {
+		return "mem/login";
 	}
 	
+	//
+	// ▷ 로그아웃
+//	@GetMapping("/goguma/logout")
+//	public String logout() {
+//		return "/logout";
+//	}
 	// ===========================================================
 	// ▷ 일반 회원가입
-	@GetMapping("/newMem/memberJoinForm")
+	@GetMapping("/goguma/memberJoinForm")
 	public String memberJoinForm() {
 		return "mem/memberJoinForm";
 	}
 
-	@PostMapping("/newMem/memberJoin")
+	@PostMapping("/goguma/memberJoinForm")
 	public String memberJoin(MemVO mVO, HttpServletResponse response) {
 		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
 		mVO.setUserStts("0"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감

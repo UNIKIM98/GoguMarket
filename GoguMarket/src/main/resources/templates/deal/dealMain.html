@@ -179,7 +179,7 @@ layout:decorate="~{layouts/layout}">
                                         <div th:each="deal : ${lists}"  class="col-lg-3 col-md-4">
                                             <div class="product-item product-item-2"  >
                                                 <div class="product-img">
-                                                    <a th:href="@{/dealdetail/{dlNo}(dlNo=${deal.dlNo})}">
+                                                    <a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}">
                                                         <img th:src="${deal.atchNm}"style="width:270px; height:270px;" />
                                                     </a>
                                                 </div>
