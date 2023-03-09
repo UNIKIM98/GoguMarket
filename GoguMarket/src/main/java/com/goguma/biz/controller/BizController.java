@@ -72,7 +72,7 @@ public class BizController {
 	}
 
 	// 동네가게 상세정보(book0205)
-	@RequestMapping("/book0205/{bizNo}")
+	@RequestMapping("/bookmain/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
