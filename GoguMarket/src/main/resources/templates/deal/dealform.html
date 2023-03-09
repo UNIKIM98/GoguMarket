@@ -48,19 +48,19 @@
 	width: 25%;
 }
 
-#dFrm span{
-	color : red;
+#dFrm span {
+	color: red;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.3.js"
-		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-		crossorigin="anonymous"></script>
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<!-- Body main wrapper start -->
-		<div class="wrapper" >
+		<div class="wrapper">
 			<!-- Start page content -->
 			<section id="page-content" class="page-wrapper section">
 
@@ -71,7 +71,8 @@
 							<div class="col-lg-12" style="width: 70%">
 								<div class="message-box box-shadow white-bg">
 									<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의1 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-									<form id="dFrm" method="post" enctype="multipart/form-data" onsubmit="return false">
+									<form id="dFrm" method="post" enctype="multipart/form-data"
+										onsubmit="return false">
 										<!-- ■■↑ form id 새로 지정해주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="row">
 											<div class="col-lg-12">
@@ -80,53 +81,54 @@
 										</div>
 										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="col-lg-10" id="inputFile">
-											<label for="files">상품사진<span> *</span></label> 
-											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
-											<br>
-											<span id="fileErrMsg"></span>
+											<label for="files">상품사진<span> *</span></label> <input
+												type="file" id="files" placeholder="첨부파일"
+												multiple="multiple"> <br> <span id="fileErrMsg"></span>
 											<div id="fileList">
-												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
-													 class="message-box box-shadow white-bg"></div>
+												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳'
+													class="message-box box-shadow white-bg"></div>
 											</div>
 										</div>
 										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="col-lg-10 mb-10">
-											<label for="cate">카테고리<span> *</span></label> 
-											<select name="cate" id="cate">
+											<label for="cate">카테고리<span> *</span></label> <select
+												name="cate" id="cate">
 												<option value="" disabled selected>선택</option>
-												<option th:each="ct : ${category}" 
-														th:text="${ct.commonNm}"
-														th:value="${ct.commonDetailCode}"></option>
-												</select>
-											<span id="ctgryErrMsg"></span>
-											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> 
+												<option th:each="ct : ${category}" th:text="${ct.commonNm}"
+													th:value="${ct.commonDetailCode}"></option>
+											</select> <span id="ctgryErrMsg"></span> <input type="hidden"
+												name="ctgry" id="ctgry" placeholder="카테고리">
 										</div>
 										<div class="col-lg-10 ">
-											<label for="dlTtl">글제목<span> *</span></label>
-											<input type="text" name="dlTtl" id="dlTtl" placeholder="글 제목을 입력하세요.">
+											<label for="dlTtl">글제목<span> *</span></label> <input
+												type="text" name="dlTtl" id="dlTtl"
+												placeholder="글 제목을 입력하세요.">
 										</div>
 										<div class="col-lg-10">
 											<label for="dlCn">상품설명<span> *</span></label>
-											<textarea class="custom-textarea" name="dlCn" id="dlCn" 
-													  placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)"></textarea>
+											<textarea class="custom-textarea" name="dlCn" id="dlCn"
+												placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)"></textarea>
 										</div>
-										
+
 										<div class="col-lg-10">
-											<label for="dlPrc">상품가격<span> *</span></label>
-											<input type="text" name="dlPrc" id="dlPrc" placeholder="상품가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-										</div>
-										<div class="col-lg-10">
-											<label for="area">거래지역</label>
-											<input type="text" name="area" id="area" placeholder="거래지역"/>
+											<label for="dlPrc">상품가격<span> *</span></label> <input
+												type="text" name="dlPrc" id="dlPrc" placeholder="상품가격"
+												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 										</div>
 										<div class="col-lg-10">
-											<label for="negoYn">가격 제안받기</label>
-											<input type="checkbox" name="negoYn" id="negoYn" style="margin:0px">
+											<label for="area">거래지역</label> <input type="text" name="area"
+												id="area" placeholder="거래지역" />
+										</div>
+										<div class="col-lg-10">
+											<label for="negoYn">가격 제안받기</label> 
+											<input type="checkbox"
+												name="negoYn" id="negoYn" style="margin: 0px">
 										</div>
 										<input type="hidden" name="stts" id="stts" value="판매중">
-										<input type="hidden" name="ntslId" id="ntslId" th:value="${session.userId}">
-										
-										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="등록하기">
+										<input type="hidden" name="ntslId" id="ntslId"
+											th:value="${session.userId}"> <input
+											class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+											id="btnSave" role="button" value="등록하기">
 									</form>
 								</div>
 								<!-- </form> -->
@@ -136,8 +138,8 @@
 				</div>
 			</section>
 		</div>
-	
-	<script th:inline="javascript">
+
+		<script th:inline="javascript">
 		//==============================================================================
 		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
 			$(function() {
@@ -239,7 +241,7 @@
 					}
 				}
 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-				$.ajax({	url : "/testFormSubmit",
+				$.ajax({	url : "/my/dealformsubmit",
 							type : "POST",
 							data : formData,
 							processData : false,
@@ -305,7 +307,7 @@
 			}
 			
 	</script>
-</div>
+	</div>
 	<!-- jquery latest version -->
 	<script src="js/vendor/jquery-3.6.0.min.js"></script>
 	<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
