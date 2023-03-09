@@ -1,5 +1,7 @@
 package com.goguma.mem.serviceImple;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +12,19 @@ import com.goguma.mem.vo.MemVO;
 @Service
 public class MemServiceImpl implements MemService {
 
+
 	@Autowired
 	private MemMapper mapper;
 
 	@Override
 	public int memberJoin(MemVO vo) {
 		return mapper.memberJoin(vo);
+	}
+	
+	@Override
+	public List<MemVO> selectMemberList(MemVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.selectMemberList(vo);
 	}
 
 	@Override

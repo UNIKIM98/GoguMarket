@@ -131,7 +131,7 @@
 	<!-- 게시글 작성 -->
 	<insert id="insertDeal"
 			parameterType="com.goguma.deal.vo.DealVO">
-	<selectKey keyProperty="dlNo" resultType="int"
+		<selectKey keyProperty="dlNo" resultType="int"
 			order="BEFORE">
 			SELECT
 			CASE WHEN MAX(dl_no) IS NULL THEN 1 ELSE

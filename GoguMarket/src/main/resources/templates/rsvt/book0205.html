@@ -301,6 +301,7 @@
 		<!-- 큰 덩어리 끝 -->
 		<script type="text/javascript">
 			function moveRsvt() {
+				console.log(sessionStorage.getItem("userId"))
 				var url = window.location.href;
 				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
 				console.log("가게번호넘겨벌이기-=-----" + urlBizNo)

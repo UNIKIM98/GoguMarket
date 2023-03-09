@@ -2,50 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
     layout:decorate="~{/layouts/layout}">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>경매 상품 등록</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+@font-face {
+	font-family: 'S-CoreDream-3Light';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/icon/favicon.png">
+* {
+	font-family: 'S-CoreDream-3Light';
+}
 
-    <!-- All CSS Files -->
-    <!-- Bootstrap fremwork main css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Nivo-slider css -->
-    <link rel="stylesheet" href="lib/css/nivo-slider.css">
-    <!-- This core.css file contents all plugings css file. -->
-    <link rel="stylesheet" href="css/core.css">
-    <!-- Theme shortcodes/elements style -->
-    <link rel="stylesheet" href="css/shortcode/shortcodes.css">
-    <!-- Theme main style -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- User style -->
-    <link rel="stylesheet" href="css/custom.css">
+#uploadFileList {
+	width: 100%;
+	height: 20%;
+	padding: 10px;
+	/* 		border: 1px solid lightgrey; */
+	/* 		border-radius: 5px; */
+	margin-bottom: 30px;
+}
 
-    <!-- Style customizer (Remove these two lines please) -->
-    <link rel="stylesheet" href="css/style-customizer.css">
-    <link href="#" data-style="styles" rel="stylesheet">
+#uploadFileList:empty:before {
+	content: attr(data-placeholder);
+	color: #999;
+	font-size: .9em;
+}
 
-    <!-- Modernizr JS -->
-    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+.message-box input[type=text], textarea {
+	width: 70%;
+}
+
+.message-box label {
+	width: 25%;
+}
+
+#aFrm span{
+	color : red;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+		crossorigin="anonymous"></script>
 </head>
-
 <body>
-    <article layout:fragment="content">
-
-        <!-- Body main wrapper start -->
-        <div class="wrapper">
-
-
-            <!-- BREADCRUMBS SETCTION START -->
-            <div class="breadcrumbs-section plr-200 mb-80 section">
+<div layout:fragment="content">
+		<!-- Body main wrapper start -->
+		<div class="wrapper" >
+		<div class="breadcrumbs-section plr-200 mb-80 section">
                 <div class="breadcrumbs overlay-bg">
                     <div class="container">
                         <div class="row">
@@ -62,201 +71,253 @@
                     </div>
                 </div>
             </div>
-            <!-- BREADCRUMBS SETCTION END -->
+			<!-- Start page content -->
+			<section id="page-content" class="page-wrapper section">
 
-            <!-- Start page content -->
-            <section id="page-content" class="page-wrapper section">
-
-
-                <!-- MESSAGE BOX SECTION START -->
-                <div class="message-box-section mb-80">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12" style="width: 700px">
-                                <div class="message-box box-shadow white-bg">
-                                    <form id="contact-form" action="auctInsert" method="post" enctype="multipart/form-data">
-                                        <!-- <div class="row"> -->
-                                    
-                                        <div class="col-lg-12">
-                                            <h4 class="blog-section-title border-left mb-30">get in auction</h4>
+				<!-- MESSAGE BOX SECTION START -->
+				<div class="message-box-section mb-80">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12" style="width: 70%">
+								<div class="message-box box-shadow white-bg">
+									<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의1 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+									<form id="auctInsertForm" method="post" enctype="multipart/form-data" onsubmit="return false">
+										<!-- ■■↑ form id 새로 지정해주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										<div class="row">
+											<div class="col-lg-12">
+												<h4 class="blog-section-title border-left mb-30">get in auction</h4>
+											</div>
+										</div>
+										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										<div class="col-lg-10" id="inputFile">
+											<label for="files">상품사진<span> *</span></label> 
+											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
+											<br>
+											<span id="fileErrMsg"></span>
+											<div id="fileList">
+												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
+													 class="message-box box-shadow white-bg"></div>
+											</div>
+										</div>
+										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										 
+										 <div class="col-lg-10 mb-10">
+											<label for="cate">카테고리<span> *</span></label> 
+											<select name="cate" id="cate">
+												<option value="" disabled selected>선택</option>
+												<option th:each="ct : ${category}" 
+														th:text="${ct.commonNm}"
+														th:value="${ct.commonDetailCode}"></option>
+												</select>
+											<span id="ctgryErrMsg"></span>
+											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> 
+										</div>
+										<div class="col-lg-10 ">
+											<label for="auctTtl">글제목<span> *</span></label>
+											<input type="text" name="auctTtl" id="auctTtl" placeholder="글 제목을 입력하세요.">
+										</div>
+										<div class="col-lg-10">
+											<label for="auctCn">상품설명<span> *</span></label>
+											<textarea class="custom-textarea" name="auctCn" id="auctCn" 
+													  placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)"></textarea>
+										</div>
+										<div class="col-lg-10">
+											<label for="lowPrc">경매시작가<span> *</span></label>
+                                            <input type="text" name="lowPrc" id="lowPrc" placeholder="경매시작가" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                         </div>
-
-                                        <div class="col-lg-6" style="width: 550px">
-                                            <h6>카테고리</h6>
-                                            <input type="radio" name="ctgry" value="HA">생활가전
-                                            <input type="radio" name="ctgry" value="HO">취미/게임/음반
-                                            <input type="radio" name="ctgry" value="FU">가구/인테리어
-                                            <input type="radio" name="ctgry" value="FO">가공식품
-                                            <input type="radio" name="ctgry" value="ETC">기타
-                                            <input type="radio" name="ctgry" value="FR">무료나눔
+                                        <div class="col-lg-10">
+                                        	<label for="quickPrc">즉시구매가(선택)</label>     
+                                            <input type="text" name="quickPrc" id="quickPrc" placeholder="즉시구매가" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                         </div>
-                                        
-                                        <span id='View_area'>
-                                            <div class="mega-menu-photo f-left">
-                                            </div>
-                                        </span>
-
-                                        <div class="col-lg-6" style="width: 550px">
-                                            <input type="text" name="auctTtl" placeholder="상품 제목">
+                                        <div class="col-lg-10">
+                                        	<label for="ddlnYmd">경매종료일<span> *</span></label>     
+                                            <input type="date" name="ddlnYmd" id="ddlnYmd">
                                         </div>
-
-                                        <div class="col-lg-6" style="width: 550px">
-                                            <input type="text" name="lowPrc" placeholder="경매시작가">
-                                        </div>
-
-                                        <div class="col-lg-6" style="width: 550px">
-                                            <input type="checkbox">즉시구매가 설정
-                                            <input type="number" name="quickPrc" placeholder="즉시구매가">
-                                        </div>
-
-                                        <div class="col-lg-6" style="width: 550px">
-                                            <h5>경매종료일</h5>
-                                            <input type="date" name="ddlnYmd">
-                                        </div>
-                                    
-                                        <div class="col-lg-12">
-                                            <textarea class="custom-textarea" name="auctCn"
-                                                placeholder="상품설명란"></textarea>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <input type="file" name="files" id="files" placeholder="첨부파일"
-                                                onchange="previewImage(this,'View_area')"
-                                                multiple="multiple">
-                                        </div>
-
-                                        
                                         <button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
-                                        <button class="submit-btn-1 mt-30 btn-hover-1"
-                                                onclick="goList()"
-                                                style="left: 100px">목록</button>
-                                        <button class="submit-btn-1 mt-30 btn-hover-1" type="submit"
-                                                style="left: 200px">상품등록 완료</button>
-                                    
-                                        <!-- </div> -->
-                                        <p class="form-message"></p>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <!-- MESSAGE BOX SECTION END -->
+										<button class="submit-btn-1 mt-30 btn-hover-1"
+                                                onclick="goList()" >목록</button>
+										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="등록하기">
+									</form>
+								</div>
+								<!-- </form> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	
+	<script th:inline="javascript">
+		//==============================================================================
+		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+			$(function() {
+				$("#files").on("change", function(e) {
+					$("#fileErrMsg").text("")
+					inputFile(e);
+				});
+				console.log(typeof($(".ctgry")))
+				
+				$("#cate").on("change", function(){
+					$("#ctgryErrMsg").text("")
+				})
+				
+				$("#btnSave").on("click", function() {
+					submitForm();
+				});
+			});
+		
+		//==============================================================================
+		//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+			var fileCount = 0; //현재 첨부파일 개수
+			var totalCount = 10; // 첨부 가능한 파일 개수
+			var fileNum = 0; //첨부파일 인덱스
+			var inputFileList = new Array(); // insert 파일 배열
+			var deleteFileList = new Array(); // delete 파일 배열
+			var isSubmitOk = true;
 
+			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
 
+		//==============================================================================
+		//✅ input 실행하는 함수
+			function inputFile(e) {
+				var files = e.target.files;
+				var filesArr = Array.prototype.slice.call(files);
 
-        <script th:inline="javascript">
-
-            function previewImage(targetObj, View_area) {
-                var fileArr;
-                var fileInfoArr = [];
-
-                var files = targetObj.files;
-				fileArr = Array.prototype.slice.call(files);
-
-				var preview = document.getElementById(View_area); //div id
-				var ua = window.navigator.userAgent;
-
-				//ie일때(IE8 이하에서만 작동)
-				if (ua.indexOf("MSIE") > -1) {
-					targetObj.select();
-					try {
-						var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
-						var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
-
-
-						if (ie_preview_error) {
-							preview.removeChild(ie_preview_error); //error가 있으면 delete
-						}
-
-						var img = document.getElementById(View_area); //이미지가 뿌려질 곳
-
-						//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
-						img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + src +
-							"', sizingMethod='scale')";
-					} catch (e) {
-						if (!document.getElementById("ie_preview_error_" + View_area)) {
-							var info = document.createElement("<p>");
-							info.id = "ie_preview_error_" + View_area;
-							info.innerHTML = e.name;
-							preview.insertBefore(info, null);
-						}
-					}
-					//ie가 아닐때(크롬, 사파리, FF)
+				if (fileCount + filesArr.length > totalCount) {
+					alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+					return;
 				} else {
-					var files = targetObj.files;
-					for (var i = 0; i < files.length; i++) {
-						var file = files[i];
-						fileInfoArr.push(file);
+					fileCount = fileCount + filesArr.length;
+				}
 
-						var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
-						if (!file.type.match(imageType))
-							continue;
-						// var prevImg = document.getElementById("prev_" + View_area); //이전에 미리보기가 있다면 삭제
-						// if (prevImg) {
-						//     preview.removeChild(prevImg);
-						// }
-
-						var span = document.createElement('span');
-						span.id = "img_id_" + i;
-						span.style.width = '100px';
-						span.style.height = '100px';
-						preview.appendChild(span);
-
-						var img = document.createElement("img");
-						img.className = "addImg";
-						img.classList.add("obj");
-						img.file = file;
-						img.style.width = 'inherit';
-						img.style.height = 'inherit';
-						img.style.cursor = 'pointer';
-						const idx = i;
-						img.onclick = () => fileRemove(idx); //이미지를 클릭했을 때.
-						span.appendChild(img);
-
-						if (window.FileReader) { // FireFox, Chrome, Opera 확인.
-							var reader = new FileReader();
-							reader.onloadend = (function (aImg) {
-								return function (e) {
-									aImg.src = e.target.result;
+				filesArr.forEach(function(f) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+									inputFileList.push(f);
+									$('#uploadFileList').append(
+																`<img style=${img_style} src=${e.target.result}
+																	   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+																)
+									fileNum++;
 								};
-							})(img);
-							reader.readAsDataURL(file);
-						} else { // safari is not supported FileReader
-							//alert('not supported FileReader');
-							if (!document.getElementById("sfr_preview_error_" +
-									View_area)) {
-								var info = document.createElement("p");
-								info.id = "sfr_preview_error_" + View_area;
-								info.innerHTML = "not supported FileReader";
-								preview.insertBefore(info, null);
-							}
-						}
-                        // function fileRemove(idx) {
-                        //     return null;
-                        // }
+					reader.readAsDataURL(f);
+				});
+				$("#files").val("");
+			}
+
+		//==============================================================================
+		//✅ 화면/배열에서 delete 실행하는 함수			
+			function fileDelete(fileNum) {
+				var no = fileNum.replace(/[^0-9]/g, "");
+				inputFileList[no].is_delete = true;
+				$('#' + fileNum).remove();
+				fileCount--;
+				if(fileCount==0){
+					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+					isSubmitOk = false;
+				}
+			}
+
+		//==============================================================================
+		//✅ 화면/배열에서 delete 실행하는 함수
+			function submitForm() {
+				// 선택한 카테고리 > hidden input value로 넣기
+				var ctgry = $("#cate option:selected").val(); 
+				$("#ctgry").val(ctgry); 
+				
+				console.log("담은 ctgry =>"+ctgry)
+	
+				
+				//submit 전 체크하기
+				if(submitCheck()){
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				var formData = new FormData($("#auctInsertForm")[0]);
+				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				
+				formData.append("deleteFiles", deleteFileList);
+
+				for (var i = 0; i < inputFileList.length; i++) {
+					if (!inputFileList[i].is_delete) {
+						formData.append("files", inputFileList[i]);
 					}
 				}
-            }
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				$.ajax({	url : "/my/auctInsert",
+							type : "POST",
+							data : formData,
+							processData : false,
+							contentType : false,
+							success : function(result) {
+								console.log(result)
+									alert("[작성 완료] 게시글 작성이 완료되었습니다 :D");
+									location.href = "/auctList";
+								
+							},
+							error : function(err){
+								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
+							}
+						});
+				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
+				}
+			}
+		//==============================================================================
+		//✅ 화면/배열에서 delete 실행하는 함수
+			function submitCheck(){
+			//1. 파일 업로드 여부
+			if(inputFileList.length==0){
+				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+				isSubmitOk = false;
+			}
+			
+			//2. 카테고리 선택 여부
+			else if($("#ctgry").val()==""){
+				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
+				isSubmitOk = false;
+			}
+			
+			//3. 글제목 작성 여부
+			else if($("#auctTtl").val()==""){
+				$("#auctTtl").focus();
+				isSubmitOk = false;
+			}
+			
+			//4. 글내용 작성 여부
+			else if($("#auctCn").val()==""){
+				$("#auctCn").focus();
+				isSubmitOk = false;
+			}
 
-            function goList() {
+			//5. 최소가격 작성 여부
+			else if($("#lowPrc").val()==""){
+			   $("#lowPrc").focus();
+				isSubmitOk = false;
+			
+			//6. 데드라인 설정 여부
+			}else if($("#ddlnYmd").val()==""){
+				   $("#ddlnYmd").focus();
+					isSubmitOk = false;
+			}else if($("#quickPrc").val()==""){
+				   $("#quickPrc").val(Number(0))
+			}else{
+				isSubmitOk = true;
+			}		
+			
+			return isSubmitOk;			
+		}
+		
+		//==============================================================================
+		//✅ (수정/삭제에서 사용) 기존 db에서 삭제할 파일들을 배열에 담아서 보내는 함수
+			function deleteFile(elem) {
+// 				console.log(elem.value);
+// 				$(elem).parent().remove();
+// 				if (!deleteFileList.includes(elem.value)) {
+// 					deleteFileList.push(elem.value);
+// 					}
+			}
+			
+			function goList() {
                 location.href = "auctList";
             }
-        </script>
-
-
-
-
-
-
-
-        </div>
-        <!-- Body main wrapper end -->
-
-
-    </article>
+	</script>
 </body>
-
 </html>

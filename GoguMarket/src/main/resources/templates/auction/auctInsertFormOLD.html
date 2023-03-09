@@ -1,0 +1,262 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+    layout:decorate="~{/layouts/layout}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>경매 상품 등록</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/icon/favicon.png">
+
+    <!-- All CSS Files -->
+    <!-- Bootstrap fremwork main css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Nivo-slider css -->
+    <link rel="stylesheet" href="lib/css/nivo-slider.css">
+    <!-- This core.css file contents all plugings css file. -->
+    <link rel="stylesheet" href="css/core.css">
+    <!-- Theme shortcodes/elements style -->
+    <link rel="stylesheet" href="css/shortcode/shortcodes.css">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- User style -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Style customizer (Remove these two lines please) -->
+    <link rel="stylesheet" href="css/style-customizer.css">
+    <link href="#" data-style="styles" rel="stylesheet">
+
+    <!-- Modernizr JS -->
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+</head>
+
+<body>
+    <article layout:fragment="content">
+
+        <!-- Body main wrapper start -->
+        <div class="wrapper">
+
+
+            <!-- BREADCRUMBS SETCTION START -->
+            <div class="breadcrumbs-section plr-200 mb-80 section">
+                <div class="breadcrumbs overlay-bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="breadcrumbs-inner">
+                                    <h1 class="breadcrumbs-title">경매품 등록하기</h1>
+                                    <ul class="breadcrumb-list">
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="#">Auction Insert Form</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- BREADCRUMBS SETCTION END -->
+
+            <!-- Start page content -->
+            <section id="page-content" class="page-wrapper section">
+
+
+                <!-- MESSAGE BOX SECTION START -->
+                <div class="message-box-section mb-80">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12" style="width: 700px">
+                                <div class="message-box box-shadow white-bg">
+                                    <form id="contact-form" action="auctInsert" method="post" enctype="multipart/form-data">
+                                        <!-- <div class="row"> -->
+                                    
+                                        <div class="col-lg-12">
+                                            <h4 class="blog-section-title border-left mb-30">get in auction</h4>
+                                        </div>
+
+                                        <div class="col-lg-6" style="width: 550px">
+                                            <h6>카테고리</h6>
+                                            <input type="radio" name="ctgry" value="HA">생활가전
+                                            <input type="radio" name="ctgry" value="HO">취미/게임/음반
+                                            <input type="radio" name="ctgry" value="FU">가구/인테리어
+                                            <input type="radio" name="ctgry" value="FO">가공식품
+                                            <input type="radio" name="ctgry" value="ETC">기타
+                                            <input type="radio" name="ctgry" value="FR">무료나눔
+                                        </div>
+                                        
+                                        <span id='View_area'>
+                                            <div class="mega-menu-photo f-left">
+                                            </div>
+                                        </span>
+
+                                        <div class="col-lg-6" style="width: 550px">
+                                            <input type="text" name="auctTtl" placeholder="상품 제목">
+                                        </div>
+
+                                        <div class="col-lg-6" style="width: 550px">
+                                            <input type="text" name="lowPrc" placeholder="경매시작가">
+                                        </div>
+
+                                        <div class="col-lg-6" style="width: 550px">
+                                            <input type="checkbox">즉시구매가 설정
+                                            <input type="number" name="quickPrc" placeholder="즉시구매가">
+                                        </div>
+
+                                        <div class="col-lg-6" style="width: 550px">
+                                            <h5>경매종료일</h5>
+                                            <input type="date" name="ddlnYmd">
+                                        </div>
+                                    
+                                        <div class="col-lg-12">
+                                            <textarea class="custom-textarea" name="auctCn"
+                                                placeholder="상품설명란"></textarea>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <input type="file" name="files" id="files" placeholder="첨부파일"
+                                                onchange="previewImage(this,'View_area')"
+                                                multiple="multiple">
+                                        </div>
+
+                                        
+                                        <button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+                                        <button class="submit-btn-1 mt-30 btn-hover-1"
+                                                onclick="goList()"
+                                                style="left: 100px">목록</button>
+                                        <button class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+                                                style="left: 200px">상품등록 완료</button>
+                                    
+                                        <!-- </div> -->
+                                        <p class="form-message"></p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- MESSAGE BOX SECTION END -->
+
+
+
+        <script th:inline="javascript">
+
+            function previewImage(targetObj, View_area) {
+                var fileArr;
+                var fileInfoArr = [];
+
+                var files = targetObj.files;
+				fileArr = Array.prototype.slice.call(files);
+
+				var preview = document.getElementById(View_area); //div id
+				var ua = window.navigator.userAgent;
+
+				//ie일때(IE8 이하에서만 작동)
+				if (ua.indexOf("MSIE") > -1) {
+					targetObj.select();
+					try {
+						var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
+						var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
+
+
+						if (ie_preview_error) {
+							preview.removeChild(ie_preview_error); //error가 있으면 delete
+						}
+
+						var img = document.getElementById(View_area); //이미지가 뿌려질 곳
+
+						//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
+						img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + src +
+							"', sizingMethod='scale')";
+					} catch (e) {
+						if (!document.getElementById("ie_preview_error_" + View_area)) {
+							var info = document.createElement("<p>");
+							info.id = "ie_preview_error_" + View_area;
+							info.innerHTML = e.name;
+							preview.insertBefore(info, null);
+						}
+					}
+					//ie가 아닐때(크롬, 사파리, FF)
+				} else {
+					var files = targetObj.files;
+					for (var i = 0; i < files.length; i++) {
+						var file = files[i];
+						fileInfoArr.push(file);
+
+						var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
+						if (!file.type.match(imageType))
+							continue;
+						// var prevImg = document.getElementById("prev_" + View_area); //이전에 미리보기가 있다면 삭제
+						// if (prevImg) {
+						//     preview.removeChild(prevImg);
+						// }
+
+						var span = document.createElement('span');
+						span.id = "img_id_" + i;
+						span.style.width = '100px';
+						span.style.height = '100px';
+						preview.appendChild(span);
+
+						var img = document.createElement("img");
+						img.className = "addImg";
+						img.classList.add("obj");
+						img.file = file;
+						img.style.width = 'inherit';
+						img.style.height = 'inherit';
+						img.style.cursor = 'pointer';
+						const idx = i;
+						img.onclick = () => fileRemove(idx); //이미지를 클릭했을 때.
+						span.appendChild(img);
+
+						if (window.FileReader) { // FireFox, Chrome, Opera 확인.
+							var reader = new FileReader();
+							reader.onloadend = (function (aImg) {
+								return function (e) {
+									aImg.src = e.target.result;
+								};
+							})(img);
+							reader.readAsDataURL(file);
+						} else { // safari is not supported FileReader
+							//alert('not supported FileReader');
+							if (!document.getElementById("sfr_preview_error_" +
+									View_area)) {
+								var info = document.createElement("p");
+								info.id = "sfr_preview_error_" + View_area;
+								info.innerHTML = "not supported FileReader";
+								preview.insertBefore(info, null);
+							}
+						}
+                        // function fileRemove(idx) {
+                        //     return null;
+                        // }
+					}
+				}
+            }
+
+            function goList() {
+                location.href = "auctList";
+            }
+        </script>
+
+
+
+
+
+
+
+        </div>
+        <!-- Body main wrapper end -->
+
+
+    </article>
+</body>
+
+</html>

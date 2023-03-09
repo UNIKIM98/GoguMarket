@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
@@ -39,7 +40,7 @@ public class BizController {
 //	}
 
 	// 동네가게 예약 메인 페이징
-	@GetMapping("/bookmain")
+	@GetMapping("/goguma/bookmain")
 	public String bizListPage(Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, BizMemVO vo) {
 		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
 		pvo.setPageSize(5);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
@@ -71,11 +72,13 @@ public class BizController {
 	}
 
 	// 동네가게 상세정보(book0205)
-	@RequestMapping("/bookmain/{bizNo}")
+	@RequestMapping("/goguma/book0205/{bizNo}")
+
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
 		System.out.println("가게정보 ==========="+memService.bizInfo(bizNo));
+		
 		// 가게 소식
 		model.addAttribute("news", newsService.bizNews(bizNo));
 		// 가게 메뉴
@@ -103,7 +106,22 @@ public class BizController {
 		return "rsvt/book0205";
 	}
 
+	// 동네가게 등록(shop01)
+	@PostMapping("/biz/shop1")
+	public String bizInsert() {
+		
+		
+		
+		
+		
+		
+		return "my/shop01"; //들어왔던곳으로 나옴.여기가 shopMain일거임 변경해도될듯
+	}
 	// ==============================
+	@GetMapping("/my/shop01")
+	public String shop01() {
+		return "biz/shop01";
+	}
 
 	@GetMapping("/shop04")
 	public String shop04() {

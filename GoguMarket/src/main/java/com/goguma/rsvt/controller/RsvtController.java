@@ -50,7 +50,9 @@ public class RsvtController {
 	@Autowired
 	MemService memService; // 맴바정보
 
+
 	// 일반예약
+
 	@RequestMapping("/my/book0601/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 

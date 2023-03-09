@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{/admin/adminLayout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="adminContent">
+
+		<h1>관리자페이지</h1>
+		<div class="container-fluid">
+
+			<!-- Page Heading -->
+			<h1 class="h3 mb-2 text-gray-800 mt-15">회원 관리</h1>
+			<p class="mb-4">이곳은 고구마켓의 모든 회원들을 관리 하는곳입니다.</p>
+			<!-- DataTales Example -->
+
+			<hr class="sidebar-divider">
+
+
+			<!-- DataTales Example -->
+			<div class="card shadow mb-4 tableGroup">
+				<div class="card-header py-3">
+					<form id="valueForm" method="post" onsubmit="return false">
+						<h6 class="m-0 font-weight-bold text-primary">
+							MEMBER TABLE <br> 
+							
+						</h6>
+					 	<h6 class="m-0 font-weight-bold text-primary pl-100">
+						USER_SE<select class="f-right mr-10 ml-10"
+								name="userSe" id="sekey">
+
+
+							</select> USER_STTS<select class="f-right mr-10" name="userStts" id="key">
+
+
+							</select> SORT<select class="f-right mr-10" name="searchKey" id="sort">
+
+
+							</select>
+							<button onclick="selectMemberList()" class="btn btn-primary" style="height:25px; line-height:15px">출력</button>
+						</h6>
+					</form>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="memberTable" width="100%"
+							cellspacing="0">
+							<thead>
+								<tr>
+									<th>INDEX</th>
+									<th>ID</th>
+									<th>NAME</th>
+									<th>NICK</th>
+									<th>ADDR</th>
+									<th>TEL</th>
+									<th>EMAIL</th>
+									<th>STTS</th>
+									<th>CHANG STTS</th>
+								</tr>
+							</thead>
+
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>
