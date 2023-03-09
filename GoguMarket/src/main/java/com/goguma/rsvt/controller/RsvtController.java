@@ -89,8 +89,8 @@ public class RsvtController {
 	@GetMapping("/my/mybook01")
 	public String mybook01(@PathVariable String userId, Model model) {
 		
-		model.addAttribute("rsvt", rsvtService.selectMyRsvtList(userId));
-		
+		//model.addAttribute("rsvt", rsvtService.selectMyRsvtList(userId));
+		System.out.println(rsvtService.selectMyRsvtList(userId));
 		return "myPages/mybook01";
 	}
 
