@@ -10,9 +10,35 @@
         where dl_no in 
                     (select dl_no
                      from deal
-                     where ntsl_id = 
-                                    (select ntsl_id
-                                     from deal
-                                     where dl_no= #{dlNo}))
+                     where ntsl_id = #{ntslId}
+                                    
 	</select>
+	
+	<insert id="insertDealRv"
+			parameterType="com.goguma.deal.vo.DealReviewVO">
+		<selectKey keyProperty="rvNo" resultType="int"
+			order="BEFORE">
+			SELECT
+			CASE WHEN MAX(rv_no) IS NULL THEN 1 ELSE
+			MAX(rv_no) + 1 END as rvNo
+			FROM rv
+		</selectKey>
+		insert into rv (rv_no,
+						user_id,
+						pst_se,
+						rv_ymd,
+						rv_cn,
+						atch_id,
+						rv_yn,
+						rvvt_cn)
+				values(#{rvNo},
+					   #{userId},
+					   #{pstSe},
+					   CURRENT_DATE,
+					   #{rvCn},
+					   #{atchId},
+					   #{rvYn},
+					   #{rvvtCn})
+		
+	</insert>
 </mapper>

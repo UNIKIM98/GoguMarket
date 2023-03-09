@@ -196,7 +196,7 @@
 																	<div class="clearfix">
 																		<div class="name-commenter f-left">
 																			<h6 class="media-heading">
-																				<a th:text="${l.dlTtl}" a
+																				<a th:text="${l.dlTtl}" 
 																					th:href="@{/dealdetail/{dlNo}(dlNo=${l.dlNo})}">타이틀자리</a>
 																			</h6>
 																			<p class="mb-10" th:text="${l.dlYmd}">27 Jun,
@@ -252,8 +252,12 @@
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" th:if="${session.userId == deal.ntslId}"
 															onclick="deleteDeal()">삭제하기</button></li>
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit">구매문의</button></li>
+													<li th:each="d : ${deal}">
+															<button class="submit-btn-1 mt-30 btn-hover-1"
+															type="submit" 
+															th:onclick="|location.href='@{/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
+															>구매+리뷰하기</button>
+													</li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit">신고하기</button></li>
 												</ul>
