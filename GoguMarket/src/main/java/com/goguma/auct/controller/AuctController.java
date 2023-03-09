@@ -41,7 +41,7 @@ public class AuctController {
 	@Autowired
 	private CommonCodeService codeService;
 
-	@GetMapping("/auctList")
+	@GetMapping("/goguma/auctList")
 	public String getauctList(Model model, AuctVO vo) {
 		// 전체품목 리스트
 
@@ -60,8 +60,8 @@ public class AuctController {
 		return "auction/auctList";
 	}
 
-	@GetMapping("/auctSelect/{auctNo}") // 경매 번호에 따른 단일페이지 번호 변경
-	public String getAuct(@PathVariable int auctNo, Model model) {
+	@GetMapping("/goguma/auctSelect/{auctNo}") // 경매 번호에 따른 단일페이지 번호 변경
+	public String auctSelect(@PathVariable int auctNo, Model model) {
 		// 단일품목 값
 
 		AuctVO vo = new AuctVO();

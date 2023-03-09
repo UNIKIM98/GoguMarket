@@ -20,12 +20,9 @@
 								<li><a href="/my/myInfoCheck"> <i
 										class="zmdi zmdi-account"></i> My Page
 								</a></li>
-								<li><a href="wishlist.html"> <i
-										class="zmdi zmdi-favorite"></i> Wish List (0)
-								</a></li>
-								<li><a href="login.html"> <i class="zmdi zmdi-lock"></i>
-										Login
-								</a></li>
+								<li th:if="${session.userId==null}"><a href="/goguma/memberJoinForm"> <i class="zmdi zmdi-favorite"></i> Join </a></li>
+								<li th:if="${session.userId==null}"><a href="/goguma/login"> <i class="zmdi zmdi-lock"></i>Login</a></li>
+								<li th:if="${session.userId!=null}"><a href="/logout"> <i class="zmdi zmdi-lock"></i>Logout</a></li>
 							</ul>
 						</div>
 					</div>
@@ -51,29 +48,32 @@
 								<ul class="main-menu text-center">
 									<li class="pr-20"><a href="index.html">중고마켓</a>
 										<ul class="dropdwn">
-											<li><a href="/dealMain">중고거래메인</a></li>
-											<li><a href="/dealSearchResult">판매상품검색결과</a></li>
-											<li><a href="/dealList">판매상품리스트</a></li>
-											<li><a href="/dealdetail">판매상품상세조회</a></li>
-											<li><a href="/dealSellerpage">판매자페이지</a></li>
+											<li><a href="/goguma/dealMain">중고거래메인</a></li>
+											<li><a href="/goguma/dealSearchResult">판매상품검색결과</a></li>
+											<li><a href="/goguma/dealList">판매상품리스트</a></li>
+											<li><a href="/goguma/dealdetail">판매상품상세조회</a></li>
+											<li><a href="/goguma/dealSellerpage">판매자페이지</a></li>
 										</ul>
 									</li>
-									<li class="pr-20"><a href="/auctList">경매</a>
+									<li class="pr-20"><a href="/goguma/auctList">경매</a>
 										<ul class="dropdwn">
-											<li><a href="/auctList">경매</a></li>
-											<li><a href="/my/auctExpired">경매기간 만료</a></li>
+
+											<li><a href="/goguma/auctList">경매</a></li>
+											<li><a href="#">필요한</a></li>
 											<li><a href="#">걸로</a></li>
 											<li><a href="#">넣어서</a></li>
 											<li><a href="#">쓰세효근</a></li>
 
 										</ul>
 									</li>
-									<li class="pr-20"><a href="/bookmain">동네가게</a>
+									<li class="pr-20"><a href="/goguma/bookmain">동네가게</a>
 										<ul class="dropdwn">
-											<li><a href="/bookmain">bookmain</a></li>
-											<li><a href="/my/book0602">book0602</a></li>
-											<li><a href="/my/book0603">book0603</a></li>
-											<li><a href="/my/book0604">book0604</a></li>
+
+											<li><a href="/goguma/bookmain">bookmain</a></li>
+											<li><a href="/goguma/book0601">book0601</a></li>
+											<li><a href="/goguma/book0602">book0602</a></li>
+											<li><a href="/goguma/book0603">book0603</a></li>
+											<li><a href="/goguma/book0604">book0604</a></li>
 											<li><a href="/my/mybook01">mybook01</a></li>
 											<li><a href="/my/mybook02">mybook02</a></li>
 											<li><a href="/my/mybook04">mybook04</a></li>
@@ -83,6 +83,7 @@
 											<li><a href="/shop0602">shop0602</a></li>
 											<li><a href="/shop07">shop07</a></li>
 											<li><a href="/shop08">shop08</a></li>
+
 											
 										</ul>
 									</li>

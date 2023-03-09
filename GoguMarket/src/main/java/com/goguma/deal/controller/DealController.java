@@ -77,7 +77,7 @@ public class DealController {
 
 	// ===========================
 	// ▷ 중고거래 메인
-	@RequestMapping("/dealMain") // 중고거래 메인 페이지
+	@RequestMapping("/goguma/dealMain") // 중고거래 메인 페이지
 	public String dealMain(Paging paging, Model model, SearchVO scvo, @ModelAttribute("dsvo") DealSearchVO svo) {
 		paging.setPageUnit(8); // 한 페이지에 출력할 글 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
@@ -98,7 +98,7 @@ public class DealController {
 
 	// ===========================
 	// ▷ 판매중 전체조회
-	@RequestMapping("/dealList") // 판매상품 전체 조회
+	@RequestMapping("/goguma/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
 
 		paging.setPageUnit(5); // 한 페이지에 출력할 레코드 건수
@@ -117,7 +117,7 @@ public class DealController {
 
 	// ===========================
 	// ▷ 판매상품 단건조회
-	@RequestMapping("/dealdetail/{dlNo}")
+	@RequestMapping("/goguma/dealdetail/{dlNo}")
 	public String getDeal(@PathVariable int dlNo, Model model) {
 
 		System.out.println("단건조회 =====> " + dlNo);
@@ -221,7 +221,7 @@ public class DealController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/dealMain';");
+				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/goguma/dealMain';");
 
 				out.println("</script>");
 
@@ -232,7 +232,7 @@ public class DealController {
 
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
-				out.println("alert('[삭제실패] 게시글 삭제 중 오류가 발생하였습니다 :( '); location.href='/dealMain';");
+				out.println("alert('[삭제실패] 게시글 삭제 중 오류가 발생하였습니다 :( '); location.href='/goguma/dealMain';");
 				out.println("</script>");
 
 				out.flush();
@@ -248,7 +248,7 @@ public class DealController {
 	
 	// ===========================
 	// ❤❤ 판매자 페이지(로 추정)
-	@RequestMapping("/dealSellerpage/{ntslId}")
+	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
 	public String getDealSeller(@PathVariable String ntslId, Model model) {
 
 		System.out.println("왔슈...." + ntslId);

@@ -120,8 +120,8 @@
 												id="area" placeholder="거래지역" />
 										</div>
 										<div class="col-lg-10">
-											<label for="negoYn">가격 제안받기</label> 
-											<input type="checkbox"
+											<label for="negoYn">가격 제안받기</label> <input type="checkbox"
+
 												name="negoYn" id="negoYn" style="margin: 0px">
 										</div>
 										<input type="hidden" name="stts" id="stts" value="판매중">
@@ -249,7 +249,7 @@
 							success : function(result) {
 								console.log(result)
 									alert("[작성 완료] \""+ result.dlTtl+"\"게시글 작성이 완료되었습니다 :D");
-									location.href = "/dealMain";
+									location.href = "/goguma/dealMain";
 								
 							},
 							error : function(err){

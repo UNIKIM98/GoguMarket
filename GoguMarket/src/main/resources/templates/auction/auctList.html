@@ -53,7 +53,7 @@
 									<div class="active-featured-product slick-arrow-2">
 										<!-- product-item start -->
 										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts!=2}">
-											<a th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
+											<a th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 												<div class="product-item" th:each="nowPrc : ${nowPrcs}"
 													th:if="${auct.auctNo == nowPrc.auctNo}">
 													<div class="product-img">
