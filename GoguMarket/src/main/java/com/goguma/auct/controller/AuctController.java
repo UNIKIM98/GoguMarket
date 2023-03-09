@@ -184,6 +184,10 @@ public class AuctController {
 	
 	@GetMapping("/my/auctExpired")
 		public String auctExpired() {
+		
+		
+		
+		
 		return "/my/auctExpired";
 	}
 }
