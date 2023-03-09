@@ -38,6 +38,12 @@ public class MemServiceImpl implements MemService {
 	}
 
 	@Override
+	public int updateStts(MemVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.updateStts(vo);
+	}
+
+	@Override
 	public MemVO selectUser(MemVO mVo) {
 		return mapper.selectUser(mVo);
 	}
