@@ -195,7 +195,7 @@
 			}
 			
 			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			/* $.ajax({	url : "/dealReviewsubmit",
+			 $.ajax({	url : "/dealReviewsubmit",
 						type : "POST",
 						data : formData,
 						processData : false,
@@ -203,14 +203,14 @@
 						success : function(result) {
 							console.log(result)
 								/* alert("[작성 완료] \""+ result.dlTtl+"\"리뷰 작성이 완료되었습니다 :D");
-								location.href = "/dealdetail"; */
+								location.href = "/dealdetail"; 
 						},
 						error : function(err){
 							alert("[작성 실패] 리뷰 작성을 실패하였습니다. :(");
 						}
 					});
 				}
-			} */
+			} 
 		// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
 		
 		function submitCheck(){
