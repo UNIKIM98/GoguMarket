@@ -1,6 +1,7 @@
 package com.goguma.rsvt.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import com.goguma.biz.service.BizMemService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
+import com.goguma.rsvt.mapper.RsvtMapper;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.HelloMessage;
@@ -39,17 +41,11 @@ public class RsvtController {
 //		return "rsvt/book0601";
 //	}
 
-	@Autowired
-	BizMemService bizMemService; // 가게정보
-	@Autowired
-	BizMenuService menuService; // 메뉴 들고오기 위함
-	@Autowired
-	CommonCodeService codeService; // 공통코드
-	@Autowired
-	RsvtService rsvtService; // 예약
-	@Autowired
-	MemService memService; // 맴바정보
-
+	@Autowired BizMemService bizMemService; // 가게정보
+	@Autowired BizMenuService menuService; 	// 메뉴 들고오기 위함
+	@Autowired CommonCodeService codeService; // 공통코드
+	@Autowired RsvtService rsvtService; 	// 예약
+	@Autowired MemService memService; 		// 맴바정보
 
 	// 일반예약
 
@@ -89,10 +85,20 @@ public class RsvtController {
 	
 	//예약내역
 	@GetMapping("/my/mybook01")
-	public String mybook01(@PathVariable String userId, Model model) {
+	public String mybook01(String userId, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userId = (String)session.getAttribute("userId");
 		
-		//model.addAttribute("rsvt", rsvtService.selectMyRsvtList(userId));
-		System.out.println(rsvtService.selectMyRsvtList(userId));
+		List<Map> Lists = rsvtService.selectMyRsvtDetail(userId);
+		List<Map> simple = rsvtService.selectMyRsvtList(userId);
+		
+		System.out.println("프린트2" + Lists.get(0));
+		
+		model.addAttribute("lists", Lists);
+		model.addAttribute("simple", simple);
+		
+		
+		
 		return "myPages/mybook01";
 	}
 
