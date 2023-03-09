@@ -1,5 +1,7 @@
 package com.goguma.mem.service;
 
+import java.util.List;
+
 import com.goguma.mem.vo.MemVO;
 
 public interface MemService {
@@ -13,6 +15,9 @@ public interface MemService {
 	// 닉네임 중복확인
 	int isNickNmCheck(String nickNm);
 
+	// 유저 전체 조회
+	List<MemVO> selectMemberList(MemVO vo);
+	
 	// 유저(일반유저) 한 명 조회
 	MemVO selectUser(MemVO mVO);
 

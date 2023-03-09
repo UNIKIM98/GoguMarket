@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MemManController {
 	
 
-	@GetMapping("/memberMange")
+	@GetMapping("/admin/adminMember")
 	public String memberManage() {
 
-		return "manage/memberManage";
+		return "admin/adminMember";
 	}
 
+	
+	
+	
 }
