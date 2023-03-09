@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizMemService;
@@ -72,6 +73,7 @@ public class BizController {
 
 	// 동네가게 상세정보(book0205)
 	@RequestMapping("/goguma/book0205/{bizNo}")
+
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 		// 가게 정보(홈)
 		model.addAttribute("biz", memService.bizInfo(bizNo));
@@ -104,7 +106,22 @@ public class BizController {
 		return "rsvt/book0205";
 	}
 
+	// 동네가게 등록(shop01)
+	@PostMapping("/biz/shop1")
+	public String bizInsert() {
+		
+		
+		
+		
+		
+		
+		return "my/shop01"; //들어왔던곳으로 나옴.여기가 shopMain일거임 변경해도될듯
+	}
 	// ==============================
+	@GetMapping("/my/shop01")
+	public String shop01() {
+		return "biz/shop01";
+	}
 
 	@GetMapping("/shop04")
 	public String shop04() {

@@ -6,5 +6,7 @@ import com.goguma.deal.vo.DealReviewVO;
 
 public interface DealReviewService {
 
-	List<DealReviewVO> getDealRv(int dlNo); // 글번호로 -> 리뷰
+	List<DealReviewVO> getDealRv(String ntslId); // 판매자아이디로 -> 리뷰
+	
+	int insertDealRv (DealReviewVO vo); // 후기 작성
 }

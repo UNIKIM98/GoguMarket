@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.CommonCodeVO;
 import com.goguma.mem.service.MemService;
+import com.goguma.mem.vo.MemVO;
 
 @RestController
 public class RestMemManController {
@@ -21,24 +22,38 @@ public class RestMemManController {
 	@Autowired
 	MemService member;
 
-	@GetMapping("/keyValue")
-	public Map<String,Object> keyValue() {
-		Map<String,Object> map = new HashMap<String, Object>();
-		
+	@GetMapping("/admin/keyValue")
+	public Map<String, Object> keyValue() {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		List<CommonCodeVO> selist = new ArrayList();
 		List<CommonCodeVO> codelist = new ArrayList();
-		
-		codelist =common.codeList("004");
-		
-		System.out.println(codelist);
-		
-		
-		map.put("codelist",codelist);
-		
-		System.out.println(map);
+		List<CommonCodeVO> searchlist = new ArrayList();
+
+		selist = common.codeList("003");
+		codelist = common.codeList("004");
+		searchlist = common.codeList("009");
 
 		
+
+		map.put("selist", selist);
+		map.put("codelist", codelist);
+		map.put("searchlist", searchlist);
+
 
 		return map;
+	}
+
+	@GetMapping("/admin/selectMemberList")
+	public List<MemVO> selectMemberList(MemVO vo) {
+		
+		System.out.println(vo.getUserSe());
+		System.out.println(vo.getUserStts());
+		System.out.println(vo.getSearchKey());
+		
+		System.out.println(member.selectMemberList(vo));
+		
+		return member.selectMemberList(vo);
 	}
 
 }
