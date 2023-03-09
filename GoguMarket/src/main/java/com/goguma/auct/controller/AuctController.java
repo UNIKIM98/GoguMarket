@@ -73,10 +73,7 @@ public class AuctController {
 		System.out.println(atchList.size() + "======auctMem size================");
 		System.out.println(atchList.size() == 0);
 
-		// auctMem이 null이 아니면 모델에 담아준다!
-//		if (atchList.size() != 0) {
-//		}
-
+		
 		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 
 		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
@@ -184,5 +181,9 @@ public class AuctController {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@GetMapping("/my/auctExpired")
+		public String auctExpired() {
+		return "/my/auctExpired";
+	}
 }
