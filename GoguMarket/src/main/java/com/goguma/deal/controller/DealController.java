@@ -155,14 +155,14 @@ public class DealController {
 	}
 
 	// ▷ 중고거래 리뷰 작성 폼 : 단건 게시글에 대한 리뷰
-	@RequestMapping("/dealReview/{dlNo}")
+	@RequestMapping("/my/dealReview/{dlNo}")
 	public String dealReview(Model model,@PathVariable int dlNo) {
-		model.addAttribute("deal", dealService.selectDeal(dlNo));
+		model.addAttribute("deal", dealService.selectDeal(dlNo)); 
 		
 		return "deal/dealReview";
 	}
 	// ▷ 중고거래 리뷰 작성 submit
-	@RequestMapping("/dealReviewsubmit")
+	@RequestMapping("/my/dealReviewsubmit")
 	@ResponseBody
 	public String dealReview(DealReviewVO rvo, List<MultipartFile> files){
 		int atchId = atchService.insertFile(files);
@@ -172,7 +172,7 @@ public class DealController {
 		}
 		//후기입력
 		RvService.insertDealRv(rvo);
-		return "redirect:dealReview/{dlNo}"; // 이전페이지로 가고싶은데 dlNo 유지한채로되나? 
+		return "redirect:/goguma/dealdetail/"+rvo.getDlNo(); // 이전페이지로 가고싶은데 dlNo 유지한채로되나? 
 	}
 
 	// ===========================

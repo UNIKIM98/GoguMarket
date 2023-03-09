@@ -22,6 +22,7 @@
 * {
 	font-family: 'S-CoreDream-3Light';
 }
+
 .message-box input[type=text], textarea {
 	width: 70%;
 }
@@ -30,106 +31,114 @@
 	width: 25%;
 }
 
-#reviewFrm span{
-	font-weight:bold;
-	color:orange;
+#reviewFrm span {
+	font-weight: bold;
+	color: orange;
 }
 </style>
 </head>
 <body class="wide-layout">
 	<div layout:fragment="content">
 
-<!-- MESSAGE BOX SECTION START -->
-<div class="message-box-section mb-80">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12" style="width: 70%">
-				<div class="message-box box-shadow white-bg">
-
-
-				<form id="reviewFrm" method="post" enctype="multipart/form-data" onsubmit="return false">
-				
-				<input type="hidden" name="pstSe" id="pstSe">
-				
+		<!-- MESSAGE BOX SECTION START -->
+		<div class="message-box-section mb-80">
+			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
-						<h4 class="blog-section-title border-left mb-30">거래후기등록</h4>
+					<div class="col-lg-12" style="width: 70%">
+						<div class="message-box box-shadow white-bg">
+
+
+							<form id="reviewFrm" method="post" onsubmit="return false">
+
+								<input type="hidden" name="pstSe" id="pstSe">
+								<input type="hidden" name="rvYn" id="rvYn">
+								<input type="hidden" name="dlNo" id="dlNo" th:text="deal.dlNo">
+
+								<div class="row">
+									<div class="col-lg-12">
+										<h4 class="blog-section-title border-left mb-30">거래후기등록</h4>
+									</div>
+								</div>
+
+
+								<!-- 후기투표항목 rv_vote -->
+								<div class="col-lg-14">
+									<label for="reviewlike">🐶<span>김펭귄</span>님과 거래하며 좋았던
+										점을 선택해주세요
+									</label>
+								</div>
+								<div>
+									<input type="checkbox" id="1" name="rvvtCn" checked> <label
+										for="1">제가 있는 곳 까지 와서 거래했어요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="2" name="rvvtCn" checked> <label
+										for="2">친절하고 매너가 좋아요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="3" name="rvvtCn"> <label
+										for="rvvtCn">시간 약속을 잘 지켜요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="4" name="rvvtCn"> <label
+										for="rvvtCn">응답이 빨라요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="5" name="rvvtCn"> <label
+										for="rvvtCn">상품상태가 설명한 것과 같아요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="6" name="rvvtCn"> <label
+										for="rvvtCn">좋은 상품을 저렴하게 판매해요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="7" name="rvvtCn"> <label
+										for="rvvtCn">상품 설명이 자세해요</label>
+								</div>
+								<div>
+									<input type="checkbox" id="8" name="rvvtCn"> <label
+										for="rvvtCn">무료나눔을 해줬어요</label>
+								</div>
+								<hr>
+								<div class="col-lg-14">
+									<label for="reviewthanks">🐶<span>김펭귄</span>님에게 감사의 인사를
+										남겨보세요!
+									</label> <br>
+									<textarea class="custom-textarea" name="rvCn" id="rvCn"
+										placeholder="글자내용제한?"></textarea>
+								</div>
+								<br>
+								<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 첨부파일코너 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+								<!-- 				<div class="col-lg-10" id="inputFile"> -->
+								<!-- 					<label for="files">🐶리뷰사진</label>  -->
+								<!-- 					<input type="file" id="files" placeholder="첨부파일" multiple="multiple"> -->
+								<!-- 					<br> -->
+								<!-- 					<div id="fileList"> -->
+								<!-- 						<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳'  -->
+								<!-- 							 class="message-box box-shadow white-bg"></div> -->
+								<!-- 					</div> -->
+								<!-- 				</div> -->
+
+								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+									id="btnSave" role="button" value="등록하기">
+							</form>
+
+						</div>
 					</div>
 				</div>
-				
-			
-				<!-- 후기투표항목 rv_vote -->
-				<div class="col-lg-14">
-					<label for="reviewlike">🐶<span>김펭귄</span>님과 거래하며 좋았던 점을 선택해주세요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="1" name="rvvtCn" checked>
-					  <label for="1">제가 있는 곳 까지 와서 거래했어요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="2" name="rvvtCn" checked>
-					  <label for="2">친절하고 매너가 좋아요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="3" name="rvvtCn" >
-					  <label for="rvvtCn">시간 약속을 잘 지켜요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="4" name="rvvtCn" >
-					  <label for="rvvtCn">응답이 빨라요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="5" name="rvvtCn" >
-					  <label for="rvvtCn">상품상태가 설명한 것과 같아요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="6" name="rvvtCn" >
-					  <label for="rvvtCn">좋은 상품을 저렴하게 판매해요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="7" name="rvvtCn" >
-					  <label for="rvvtCn">상품 설명이 자세해요</label>
-				</div>
-				<div>
-					  <input type="checkbox" id="8" name="rvvtCn" >
-					  <label for="rvvtCn">무료나눔을 해줬어요</label>
-				</div>
-				<hr>
-				<div class="col-lg-14">
-					<label for="reviewthanks">🐶<span>김펭귄</span>님에게 감사의 인사를 남겨보세요!</label>
-					<br><textarea class="custom-textarea" name="rvCn" id="rvCn"
-					placeholder="글자내용제한?"></textarea>
-				</div><br>
-				<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 첨부파일코너 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-				<div class="col-lg-10" id="inputFile">
-					<label for="files">🐶리뷰사진</label> 
-					<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
-					<br>
-					<div id="fileList">
-						<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
-							 class="message-box box-shadow white-bg"></div>
-					</div>
-				</div>
-				
-				<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="등록하기" onclick="submitForm()">
-				</form>
-				
 			</div>
 		</div>
-	</div>
-</div>
-		</div>			
-					
-	<script th:inline="javascript">
-	//==============================================================================
-	//✅ DOM 그리면서 실행되는 함수 (== document.onload())
-		$(function() {
+
+		<script th:inline="javascript">
+			//==============================================================================
+			//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+			$(function() {
 				$("#btnSave").on("click", function() {
 					submitForm();
 				});
-		});
-	
-	//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+			});
+
+			//📌	 공통으로 쓰일 변수 선언(전역변수 var)
 			var fileCount = 0; //현재 첨부파일 개수
 			var totalCount = 3; // 첨부 가능한 파일 개수
 			var fileNum = 0; //첨부파일 인덱스
@@ -138,90 +147,95 @@
 			var isSubmitOk = true;
 
 			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
-	//✅ input 실행하는 함수
-		function inputFile(e) {
-			var files = e.target.files;
-			var filesArr = Array.prototype.slice.call(files);
+			//✅ input 실행하는 함수
+			// 		function inputFile(e) {
+			// 			var files = e.target.files;
+			// 			var filesArr = Array.prototype.slice.call(files);
 
-			if (fileCount + filesArr.length > totalCount) {
-				alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
-				return;
-			} else {
-				fileCount = fileCount + filesArr.length;
-			}
+			// 			if (fileCount + filesArr.length > totalCount) {
+			// 				alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+			// 				return;
+			// 			} else {
+			// 				fileCount = fileCount + filesArr.length;
+			// 			}
 
-			filesArr.forEach(function(f) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-								inputFileList.push(f);
-								$('#uploadFileList').append(
-															`<img style=${img_style} src=${e.target.result}
-																   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
-															)
-								fileNum++;
-							};
-				reader.readAsDataURL(f);
-			});
-			$("#files").val("");
-		}
-			
-		
-		//===============
-		function submitForm(){
-			$('#pstSe').val("DE"); // 중고거래 분류로 늘 들어가도록
-			
-			//rvvtCn내용 체크표시별 삽입
-			if($('#1').is("checked")){
-				$('#1').val("#제가 있는 곳 까지 와서 거래했어요")  //#으로 자를라고 넣어놓음
-			}
-			if($('#2').is("checked")){
-				$('#2').val("#친절하고 매너가 좋아요")
-			}
-			console.log("=========================")
-			console.log($('#1').val());
-			console.log($('#2').val());
-			//submit 전 체크하기
-			if(submitCheck()){
-			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			var formData = new FormData($("#reviewFrm")[0]);
-			// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			
-			formData.append("deleteFiles", deleteFileList);
-	
-			for (var i = 0; i < inputFileList.length; i++) {
-				if (!inputFileList[i].is_delete) {
-					formData.append("files", inputFileList[i]);
-				}
-			}
-			
-			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			/* $.ajax({	url : "/dealReviewsubmit",
+			// 			filesArr.forEach(function(f) {
+			// 				var reader = new FileReader();
+			// 				reader.onload = function(e) {
+			// 								inputFileList.push(f);
+			// 								$('#uploadFileList').append(
+			// 															`<img style=${img_style} src=${e.target.result}
+			// 																   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+			// 															)
+			// 								fileNum++;
+			// 							};
+			// 				reader.readAsDataURL(f);
+			// 			});
+			// 			$("#files").val("");
+			// 		}
+
+			//===============
+			function submitForm() {
+
+				$('#pstSe').val("DE"); // 중고거래 분류로 늘 들어가도록
+				$('#rvYn').val("N");   // 글숨김여부. 중고거래에선 안쓰므로 항상 N
+				isSubmitOk = true;
+				//rvvtCn내용 체크표시별 삽입
+				/* 			if($('#1').is(":checked")){
+				 $('#1').val("제가 있는 곳 까지 와서 거래했어요")  //#으로 자를라고 넣어놓음
+				 }
+				 if($('#2').is(":checked")){
+				 $('#2').val("친절하고 매너가 좋아요")
+				 } */
+
+				console.log("=========================")
+				console.log($('#1').val());
+				console.log($('#2').val());
+				//submit 전 체크하기
+				if (submitCheck()) {
+					// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+					var formData = new FormData($("#reviewFrm")[0]);
+					// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+					/* formData.append("deleteFiles", deleteFileList);
+					
+					for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
+					} */
+
+					// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+					$.ajax({
+						url : "/my/dealReviewsubmit",
 						type : "POST",
 						data : formData,
 						processData : false,
 						contentType : false,
 						success : function(result) {
 							console.log(result)
-								/* alert("[작성 완료] \""+ result.dlTtl+"\"리뷰 작성이 완료되었습니다 :D");
-								location.href = "/dealdetail"; */
+							alert("[작성 완료] \"" + result.dlTtl
+									+ "\"리뷰 작성이 완료되었습니다 :D");
+							location.href = "/dealdetail";
 						},
-						error : function(err){
+						error : function(err) {
 							alert("[작성 실패] 리뷰 작성을 실패하였습니다. :(");
 						}
 					});
 				}
-			} */
-		// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
-		
-		function submitCheck(){
-			//4. 글내용 작성 여부
-			if($("#rvCn").val()==""){
-				$("#rvCn").focus();
-				isSubmitOk = false;
 			}
-			return isSubmitOk;	
-		}
-	</script>
+
+			// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
+
+			function submitCheck() {
+				//4. 글내용 작성 여부
+				if ($("#rvCn").val() == "") {
+					$("#rvCn").focus();
+					isSubmitOk = false;
+				}
+				return isSubmitOk;
+			}
+		</script>
 	</div>
 </body>
 </html>
