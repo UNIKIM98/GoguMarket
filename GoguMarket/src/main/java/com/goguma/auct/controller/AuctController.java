@@ -103,7 +103,7 @@ public class AuctController {
 		codeList.remove(0);
 
 		model.addAttribute("category", codeList);
-		return "auction/auctInsertFormNew";
+		return "auction/auctInsertForm";
 
 	}
 
