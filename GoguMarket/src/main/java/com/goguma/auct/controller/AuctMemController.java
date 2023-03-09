@@ -28,7 +28,7 @@ public class AuctMemController {
 		
 		auctMemService.insertAuctMem(vo); //vo값 그대로 서비스의 insertAuctMem실행
 		
-		return "redirect:auctSelect/"+vo.getAuctNo(); //단건조회페이지로 완료되면 단건조회페이지로~
+		return "redirect:/auctSelect/"+vo.getAuctNo(); //단건조회페이지로 완료되면 단건조회페이지로~
 	}
 	
 	
