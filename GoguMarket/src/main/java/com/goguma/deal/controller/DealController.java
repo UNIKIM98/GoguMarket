@@ -180,7 +180,7 @@ public class DealController {
 	@GetMapping("/my/dealupdate/{dlNo}")
 	public String updateTest(Model model, HttpServletRequest request, @PathVariable int dlNo) {
 		// 임시로그인 : 세션에 아이디, 거래지역 담기
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();  
 		MemVO mVO = new MemVO();
 
 		mVO.setUserId((String) session.getAttribute("userId"));

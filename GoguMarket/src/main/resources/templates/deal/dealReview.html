@@ -52,7 +52,7 @@
 
 								<input type="hidden" name="pstSe" id="pstSe">
 								<input type="hidden" name="rvYn" id="rvYn">
-								<input type="hidden" name="dlNo" id="dlNo" th:text="deal.dlNo">
+								<input type="hidden" name="dlNo" id="dlNo" th:text="${deal.dlNo}">
 
 								<div class="row">
 									<div class="col-lg-12">
@@ -181,13 +181,12 @@
 				$('#rvYn').val("N");   // 글숨김여부. 중고거래에선 안쓰므로 항상 N
 				isSubmitOk = true;
 				//rvvtCn내용 체크표시별 삽입
-				/* 			if($('#1').is(":checked")){
+				if($('#1').is(":checked")){
 				 $('#1').val("제가 있는 곳 까지 와서 거래했어요")  //#으로 자를라고 넣어놓음
 				 }
 				 if($('#2').is(":checked")){
 				 $('#2').val("친절하고 매너가 좋아요")
-				 } */
-
+				 } 
 				console.log("=========================")
 				console.log($('#1').val());
 				console.log($('#2').val());
