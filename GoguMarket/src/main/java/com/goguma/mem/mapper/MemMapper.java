@@ -26,6 +26,7 @@ public interface MemMapper {
 	
 	int updateStts(MemVO vo);
 	
+	int deleteMember(MemVO vo);
 	
 	//====================================관리자 사용
 

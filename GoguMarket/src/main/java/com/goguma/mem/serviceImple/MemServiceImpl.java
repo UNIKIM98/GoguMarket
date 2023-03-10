@@ -13,6 +13,7 @@ import com.goguma.mem.vo.MemVO;
 public class MemServiceImpl implements MemService {
 
 
+
 	@Autowired
 	private MemMapper mapper;
 
@@ -41,6 +42,13 @@ public class MemServiceImpl implements MemService {
 	public int updateStts(MemVO vo) {
 		// TODO Auto-generated method stub
 		return mapper.updateStts(vo);
+	}
+	
+	@Override
+	public int deleteMember(MemVO vo) {
+		// TODO Auto-generated method stub
+		System.out.println("나 impl");
+		return mapper.deleteMember(vo);
 	}
 
 	@Override

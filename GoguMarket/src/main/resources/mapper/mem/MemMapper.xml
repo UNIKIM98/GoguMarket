@@ -59,19 +59,27 @@
 				AND user_se = #{userSe}
 			</if>
 		</where>
+	
 
 	</select>
 
 	<!-- ▶ 관리자 멤버 상태 변경 -->
 	<update id="updateStts" parameterType="com.goguma.mem.vo.MemVO">
 
-		UPDATE mem SET user_stts = #{userStts} WHERE [조건]
+		UPDATE mem SET user_stts =
+		#{userStts}
+		WHERE user_id = #{userId}
 
 	</update>
 
+	<!-- ▶ 관리자 멤버 제명(delete) -->
 
+	<delete id="deleteMember"
+		parameterType="com.goguma.mem.vo.MemVO">
 
+		DELETE FROM mem WHERE user_id = #{userId}
 
+	</delete>
 
 
 	<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->
