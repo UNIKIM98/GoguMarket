@@ -37,7 +37,7 @@ public class AuctController {
 	@Autowired
 	private AuctMemService auctMemService; // 경매 입찰자 영역
 	@Autowired
-	private CommonCodeService codeService;
+	private CommonCodeService codeService; // 공통코드 영역
 
 	@GetMapping("/goguma/auctList")
 	public String getauctList(Model model, AuctVO vo) {
@@ -103,7 +103,7 @@ public class AuctController {
 		codeList.remove(0);
 
 		model.addAttribute("category", codeList);
-		return "auction/auctInsertFormNew";
+		return "auction/auctInsertForm";
 
 	}
 
@@ -159,7 +159,7 @@ public class AuctController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/auctList';");
+				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/goguma/auctList';");
 
 				out.println("</script>");
 
@@ -179,4 +179,62 @@ public class AuctController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
+	@GetMapping("/my/allAuction")
+	public String allAuction(Model model, HttpServletRequest request) {
+		// 마이페이지 나의 모든 경매 이동
+		model.addAttribute("lists", auctService.getAuctList());
+		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
+		model.addAttribute("session", request.getSession());
+		// ▲타임리프로 쓸려고 모델에 세션박아놓긴했는데 필요없으면 지웡
+		
+		// 세션의 id값과 작성 글의 id값이 같은 게시물만 보여준다.
+		HttpSession session = request.getSession();
+//		String myList = auctService.getAuctList();
+//		if (session = myList) {}
+		
+		
+		
+		
+		System.out.println("==============================마이페이지"+model);
+		
+		
+		
+		return "auction/allAuction";
+
+	}
+
+	@GetMapping("/my/takePartAuction")
+	public String takePartAuction(Model model) {
+		// 마이페이지 나의 모든 경매 이동
+
+		List<CommonCodeVO> codeList = codeService.codeList("002");
+		codeList.remove(0);
+
+		model.addAttribute("category", codeList);
+		return "auction/takePartAuction";
+
+	}
+
+	@GetMapping("/my/hostedAuction")
+	public String hostedAuction(Model model) {
+		// 마이페이지 내가 참여한 경매 이동
+
+		List<CommonCodeVO> codeList = codeService.codeList("002");
+		codeList.remove(0);
+
+		model.addAttribute("category", codeList);
+		return "auction/hostedAuction";
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

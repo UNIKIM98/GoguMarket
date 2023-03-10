@@ -33,12 +33,4 @@
 		VALUES (#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc},
 		#{pntCnt})
 	</insert>
-
-	<!-- 낙찰건 조회쿼리문인데 이거아님!!!!!!!!!!변경해야함!!!
-	<select id="selectAuctExpired" resultType="com.goguma.auct.vo.AuctVO">
-		SELECT *
-		FROM AUCT A FULL OUTER JOIN AUCT_MEM B
-		ON A.AUCT_NO = B.AUCT_NO
-	</select> -->
-	
 </mapper>

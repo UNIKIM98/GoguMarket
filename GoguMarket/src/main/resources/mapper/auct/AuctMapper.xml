@@ -74,7 +74,7 @@
 		WHERE TO_DATE(DDLN_YMD,'YYYY/MM/DD/HH24:MI') < TO_DATE(CURRENT_DATE,'YYYY/MM/DD/HH24:MI')
 		]]>
 	</update>
-	<!-- 삭제할때 쓰는 int auctNo -->
+	<!-- 삭제할때 쓰는 auctNo int->VO -->
 	<select id="selectAuct" parameterType="int"
 		resultType="com.goguma.auct.vo.AuctVO">
 		SELECT * FROM AUCT
