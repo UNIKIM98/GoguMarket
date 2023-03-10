@@ -51,6 +51,7 @@
 		<if test="quickPrc != 0">,#{quickPrc}</if>
 		)
 	</insert>
+	
 	<!-- 삭제 -->
 	<delete id="deleteAuct"
 		parameterType="com.goguma.auct.vo.AuctVO">
@@ -74,10 +75,21 @@
 		WHERE TO_DATE(DDLN_YMD,'YYYY/MM/DD/HH24:MI') < TO_DATE(CURRENT_DATE,'YYYY/MM/DD/HH24:MI')
 		]]>
 	</update>
-	<!-- 삭제할때 쓰는 int auctNo -->
+	
+	<!-- 삭제할때 쓰는 auctNo int->VO -->
 	<select id="selectAuct" parameterType="int"
 		resultType="com.goguma.auct.vo.AuctVO">
 		SELECT * FROM AUCT
 		WHERE auct_no = #{auctNo}
+	</select>
+	
+	<!-- 마이페이지에 쓰는 userId -->
+	<select id="selectUserId"
+			parameterType="String"
+			resultType="com.goguma.auct.vo.AuctVO">
+		SELECT *
+		FROM AUCT
+		WHERE USER_ID = #{userId}
+		ORDER BY AUCT_NO DESC
 	</select>
 </mapper>

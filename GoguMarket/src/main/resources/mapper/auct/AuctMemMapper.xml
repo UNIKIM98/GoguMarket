@@ -8,8 +8,8 @@
 		SELECT AUCT_MEM_NO , USER_ID , AUCT_NO , AUCT_YMD , NOW_PRC , PNT_CNT
 		FROM AUCT_MEM
 		WHERE AUCT_NO =(SELECT AUCT_NO
-		FROM AUCT
-		WHERE AUCT_NO = #{auctNo})
+						FROM AUCT
+						WHERE AUCT_NO = #{auctNo})
 		ORDER BY NOW_PRC DESC
 	</select>
 	<!-- 입찰 현재가 -->
@@ -33,12 +33,6 @@
 		VALUES (#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc},
 		#{pntCnt})
 	</insert>
-
-	<!-- 낙찰건 조회쿼리문인데 이거아님!!!!!!!!!!변경해야함!!!
-	<select id="selectAuctExpired" resultType="com.goguma.auct.vo.AuctVO">
-		SELECT *
-		FROM AUCT A FULL OUTER JOIN AUCT_MEM B
-		ON A.AUCT_NO = B.AUCT_NO
-	</select> -->
+	
 	
 </mapper>

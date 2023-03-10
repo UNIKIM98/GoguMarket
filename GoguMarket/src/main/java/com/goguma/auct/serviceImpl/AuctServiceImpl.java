@@ -49,14 +49,20 @@ public class AuctServiceImpl implements AuctService{
 	}
 
 	@Override
-	public AuctVO selectAuct(int auctNo) {
+	public AuctVO selectAuctNo(int auctNo) {
 		// 삭제에 쓰는 int auctNo
-		return auctMapper.selectAuct(auctNo);
+		return auctMapper.selectAuctNo(auctNo);
 	}
 
 	@Override
 	public List<AtchVO> selectAuctAtch(int auctNo) {
 		// 단건조회 모든 이미지
 		return auctMapper.selectAuctAtch(auctNo);
+	}
+
+	@Override
+	public List<AuctVO> selectUserId(String userId) {
+		// 마이페이지에 쓰는 String auctId
+		return auctMapper.selectUserId(userId);
 	}
 }

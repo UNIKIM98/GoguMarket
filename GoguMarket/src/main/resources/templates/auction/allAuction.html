@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://ultraq.net/thymeleaf/layout"
+    layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>전체조회 머가리부분</title>
+</head>
+
+<body>
+    <script th:inline="javascript">
+        function goPage(){
+            location.href='/goguma/auctSelect/${myAuctList.auctNo}'
+        }
+
+    </script>
+    <article layout:fragment="content">
+        경매 전체조회 페이지입니다.
+        짜잔쓰
+        근데 이거 나의 경매에서 AJAX처리하면 한페이지에 다 떄려박을 수 있지 않을까요?
+        그리구 사이드바에서 중고거래랑 경매랑 따로 분리하는게 좋을듯함!
+        <table class="table" border="1">
+
+            <thead>
+                <tr style="text-align: center;">
+                    <th>글번호</th>
+                    <th>등록일</th>
+                    <th>마감일</th>
+                    <th>상품명</th>
+                    <th>카테고리</th>
+                    <th>경매상태</th>
+                    <th>조회수</th>
+                    <th>낙찰자ID</th>
+                    <th>낙찰가</th>
+                    <th>낙찰일시</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="myAuctList:${myAuctList}"
+					onmouseover='this.style.background="#fcecae";'
+					onmouseleave='this.style.background="#FFFFFF";'
+                    onclick="goPage()">
+                    <td th:text="${myAuctList.auctNo}"></td>
+                    <td th:text="${myAuctList.regYmd}"></td>
+                    <td th:text="${myAuctList.ddlnYmd}"></td>
+                    <td th:text="${myAuctList.auctTtl}"></td>
+                    <td th:text="${myAuctList.ctgry}"></td>
+                    <th:block th:switch="${myAuctList.stts}">
+                        <td th:case="1">경매가 진행중입니다.</td>
+                        <td th:case="2">경매가 종료되었습니다.</td>
+                        <td th:case="3">유찰되었습니다.</td>
+                        <td th:case="*">경매가 진행중입니다.</td>
+                    </th:block>
+                    <td th:text="${myAuctList.inqCnt}"></td>
+                    <td th:text="${myAuctList.prchsId}"></td>
+                    <td th:text="${myAuctList.prchsPrc}"></td>
+                    <td th:text="${myAuctList.prchsYmd}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script src="js/vendor/jquery-3.6.0.min.js"></script>
+		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+		<!-- Bootstrap framework js -->
+		<script src="js/bootstrap.bundle.min.js"></script>
+		<!-- jquery.nivo.slider js -->
+		<script src="lib/js/jquery.nivo.slider.js"></script>
+		<!-- All js plugins included in this file. -->
+		<script src="js/plugins.js"></script>
+		<!-- Main js file that contents all jQuery plugins activation. -->
+		<script src="js/main.js"></script>
+    </article>
+</body>
+
+</html>
