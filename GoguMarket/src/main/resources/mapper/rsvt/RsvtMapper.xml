@@ -107,8 +107,17 @@
 					ON b.menu_no = m.menu_no
                     JOIN biz_mem bm
                     On b.biz_no = bm.biz_no
-		WHERE r.user_id = #{userId}
-		ORDER BY r.rsvt_no
+		WHERE r.rsvt_no = #{rsvtNo}
+	</select>
+	
+	<!-- 예약 한건 조회 -->
+	
+	<select id="selectRsvtOne" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
+		select r.*, m.*, b.*
+		from rsvt r, mem m, biz_mem b
+		where r.user_id = m.user_id
+		and r.biz_no = b.biz_no
+		AND rsvt_no = #{rsvtNo}
 	</select>
 
 

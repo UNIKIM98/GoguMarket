@@ -25,5 +25,11 @@ public class RsvtVO extends RsvtRvVO{	//예약내역 테이블
 	String payMthhd;		//결제수단
 	String alarmYn;			//알림여부
 	
+	String bizNm;
+	String nickNm;
+	String mblTelno;
+	
+	String menuNm;
+	
 	
 }

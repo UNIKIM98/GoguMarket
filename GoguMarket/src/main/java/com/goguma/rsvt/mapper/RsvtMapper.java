@@ -22,4 +22,7 @@ public interface RsvtMapper {
 	
 	//예약상세내역
 	List<Map> selectMyRsvtDetail(String userId);
+	
+	//예약 한건
+	RsvtVO selectRsvtOne(String rsvtNo);
 }
