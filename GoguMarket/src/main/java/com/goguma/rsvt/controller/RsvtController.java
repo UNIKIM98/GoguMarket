@@ -51,9 +51,10 @@ public class RsvtController {
 	RsvtService rsvtService; // 예약
 	@Autowired
 	MemService memService; // 맴바정보
+	
+	
 
 	// 일반예약
-
 	@RequestMapping("/my/book0601/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 
@@ -82,30 +83,54 @@ public class RsvtController {
 
 	// 예약완료
 	@GetMapping("/my/book0604/{rsvtNo}")
-	public String book0604(@PathVariable int rsvtNo) {
+	public String book0604(@PathVariable int rsvtNo, Model model) {
 		System.out.println(rsvtNo);
-
+		model.addAttribute("info", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
+		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		return "rsvt/book0604";
 	}
+	
 
 	// 예약내역
 	@GetMapping("/my/mybook01")
 	public String mybook01(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
+		
 
-		List<Map> Lists = rsvtService.selectMyRsvtDetail(userId);
+		//List<Map> Lists = rsvtService.selectMyRsvtDetail(userId); =>아작스로 교체
 		List<Map> simple = rsvtService.selectMyRsvtList(userId);
 
-		System.out.println("프린트2 : " + Lists.size() + ", " + simple.size());
+		//System.out.println("프린트2 : " + Lists.size() + ", " + simple.size());
 
-		model.addAttribute("lists", Lists);
+		//model.addAttribute("lists", Lists);
 		model.addAttribute("simple", simple);
 		model.addAttribute("code", codeService.codeList("007"));
-
+		
 		return "myPages/mybook01";
 
 	}
+	
+	//예약상세내역 메뉴부분 ajax
+	@GetMapping("/my/myRsvtAjax")
+	@ResponseBody
+	public List<Map> myRsvtAjax(RsvtVO vo) {
+		
+		int rsvtNo = vo.getRsvtNo();
+		System.out.println("예약번호=="+rsvtNo);
+				
+		return rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo));
+	}
+	
+	//예약상세내역 예악자부분 ajax
+	@GetMapping("/my/myRsvtInfoAjax")
+	@ResponseBody
+	public RsvtVO myRsvtInfoAjax(RsvtVO vo) {
+		int rsvtNo = vo.getRsvtNo();
+		return rsvtService.selectRsvtOne(Integer.toString(rsvtNo));
+	}
+	
+	
 
 	@GetMapping("/my/mybook02")
 	public String mybook02() {
@@ -113,6 +138,7 @@ public class RsvtController {
 	}
 
 	@GetMapping("/mybook04")
+	
 	public String mybook04() {
 		return "myPages/mybook04";
 	}
@@ -194,13 +220,13 @@ public class RsvtController {
 //		//db를 이용해서 할때는 @SendTo어노테이션을 지우고 service를 이용하여 insert 하면된다(?)
 //		//service.insert(vo);
 //	}
-
-	@MessageMapping("/hello")
-	public void greeting(HelloMessage message) throws Exception {
-		Thread.sleep(1000); // simulated delay
-		MemVO memVO = new MemVO();
-		memVO.setUserNm(message.getName());
-		memService.selectUser(memVO);
-	}
+//
+//	@MessageMapping("/hello")
+//	public void greeting(HelloMessage message) throws Exception {
+//		Thread.sleep(1000); // simulated delay
+//		MemVO memVO = new MemVO();
+//		memVO.setUserNm(message.getName());
+//		memService.selectUser(memVO);
+//	}
 
 }

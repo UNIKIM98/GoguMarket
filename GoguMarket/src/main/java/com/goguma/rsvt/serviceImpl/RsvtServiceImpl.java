@@ -46,6 +46,12 @@ public class RsvtServiceImpl implements RsvtService{
 	public List<Map> selectMyRsvtDetail(String userId) {
 		return map.selectMyRsvtDetail(userId);
 	}
+	
+	//예약 한건
+	@Override
+	public RsvtVO selectRsvtOne(String rsvtNo) {
+		return map.selectRsvtOne(rsvtNo);
+	}
 
 	
 	
