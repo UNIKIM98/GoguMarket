@@ -30,6 +30,7 @@ public class DealVO extends AtchVO{
 	private String atchNm;  // 파일명
 	private int atchId;
 	
+	
 	// 공통코드
 	private String commonCode;
 	private String commonDetailCode;

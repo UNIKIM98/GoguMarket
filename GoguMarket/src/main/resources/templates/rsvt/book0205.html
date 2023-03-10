@@ -157,11 +157,6 @@
 																<td class="td-title-1"
 																	th:if="${biz.endTm}==${code.commonDetailCode}"
 																	th:each="code: ${code}" th:text="${code.commonNm}"></td>
-																<!-- 																<td class="td-title-1" -->
-																<!-- 																	th:text="|${biz.bgngTm} ~ ${biz.endTm}|">(영업시간)</td> -->
-																<!-- 															<td class="td-title-1" -->
-																<!-- 																th:text="{biz.bgngTm}==${code.commonDetailCode} ? ${code.commonNm}">(영업시간)</td> -->
-
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">가게소개
@@ -305,12 +300,12 @@
 				var url = window.location.href;
 				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
 				console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
-				window.location.href = "../my/book0601/" + urlBizNo;
+				window.location.href = "/../my/book0601/" + urlBizNo;
 			}
 			function moveComRsvt(){
 				var url = window.location.href;
 				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-				window.location.href = "../my/book0602/" + urlBizNo;
+				window.location.href = "/../my/book0602/" + urlBizNo;
 			}
 		</script>
 	</div>

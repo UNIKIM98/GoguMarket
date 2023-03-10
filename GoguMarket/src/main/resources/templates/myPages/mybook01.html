@@ -8,6 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="myContent">
+
 		<div class="col-lg-12">
 			<form action="#">
 
@@ -18,7 +19,7 @@
 						</div>
 					</div>
 				</div>
-
+				
 
 				<!-- 내용 윗쪽 -->
 				<div class="row">
@@ -27,16 +28,26 @@
 						<table class="table">
 							<tr>
 								<th class="td-title-1">가게명</th>
-								<th class="td-title-1">예약일</th>
+								<th class="td-title-1" colspan="2">예약일</th>
 								<th class="td-title-1">예약상태</th>
 							</tr>
 
 							<!-- 예약1건 -->
-							<tr>
-								<td class="td-title-1">커피맛을 조금 아는 남자..</td>
-								<td class="td-title-1">2023-02-14 15:00</td>
-								<td class="td-title-1">예약완료</td>
+							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}" onclick="abc()" style="cursor: pointer;">
+								<th:block th:if="${sim != null}">
+									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
+									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
+									<td class="td-title-1" th:each="code: ${code}"
+										th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
+										th:text="${code.commonNm}">(예약시간)</td>
+									<td class="td-title-1" th:text="${sim.RSVT_STTS}">(예약상태)</td>
+								</th:block>
+								<th:block th:if="${sim == null}">
+									<td class="td-title-1" colspan="4">예약 내역이 없습니다.</td>
+
+								</th:block>
 							</tr>
+
 
 						</table>
 					</div>
@@ -48,63 +59,81 @@
 				<!--내용 아랫쪽-->
 				<div class="row">
 					<div class="col-lg-6 offset-lg-1">
+					
 						<!--테이블1 : 주문메뉴-->
-						<div class="tab-pane active" id="order-complete">
-							<div class="order-complete-content box-shadow"
-								style="padding: 20px;">
+						<div class="myRsvtDetail" th:each="list: ${lists}"
+											th:if="${list != null} and ${listStat.index == 0}" 
+											th:id="${list.RSVT_NO}">
+							<div class="tab-pane active" id="order-complete">
+								<div class="order-complete-content box-shadow"
+									style="padding: 20px;">
 
-								<table>
-									<tr>
-										<th class="td-title-1">메뉴</th>
-										<th class="td-title-1">수량</th>
-										<th class="td-title-2">가격</th>
-									</tr>
-									<!-- 메뉴 1건 -->
-									<tr>
-										<td class="td-title-1">커피커피커피</td>
-										<td class="td-title-1">1</td>
-										<td class="td-title-2">4,000원</td>
-									</tr>
-									
-									<tr>
-										<th class="order-total">합계</th>
-										<td class="order-total"></td>
-										<td class="order-total-price">10,000원</td>
-									</tr>
-								</table>
-								<hr>
-								
-								<!--테이블2 : 시간, 인원, 요청사항-->
-								<table>
-									<tr>
-										<th class="td-title-1">예약일자</th>
-										<td class="td-title-1">2023. 02. 12(일) 오후 4:30</td>
-									</tr>
-									<tr>
-										<th class="td-title-1">예약인원</th>
-										<td class="td-title-1">3명</td>
-									</tr>
-									<tr>
-										<th class="td-title-1">예약자정보</th>
-										<td class="td-title-1">도리눈아</td>
-										<td class="td-title-1">010-0123-0123</td>
-									</tr>
-									<tr>
-									</tr>
-									<tr>
-										<th class="td-title-1">요청사항</th>
-										<td class="td-title-1" colspan="2">요청사항이 없습니다.</td>
-									</tr>
-								</table>
+									<table>
+										<tr>
+											<th class="td-title-1">메뉴</th>
+											<th class="td-title-1">수량</th>
+											<th class="td-title-2">가격</th>
+										</tr>
+										<!-- 메뉴 1건 -->
 
+										<tr th:each="list: ${lists}" th:if="${list != null }">
+											<td class="td-title-1" th:text="${list.MENU_NM}">(메뉴이름)</td>
+											<td class="td-title-1" th:text="${list.AMOUNT}">(수량)</td>
+											<td class="td-title-2"
+												th:text="|${list.AMOUNT * list.MENU_PRC}|">(수량*각 가격)</td>
+										</tr>
+
+										<tr th:each="list: ${lists}"
+											th:if="${list != null} and ${listStat.index == 0}">
+											<th class="order-total">합계</th>
+											<td class="order-total"></td>
+											<td class="order-total-price" th:text="${list.PAY_AMT}">(합계)</td>
+										</tr>
+									</table>
+									<hr>
+
+									<!--테이블2 : 시간, 인원, 요청사항-->
+									<table>
+										<tr th:each="sim: ${simple}">
+											<th class="td-title-1">예약일자</th>
+											<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
+											<td class="td-title-1" th:each="code: ${code}"
+												th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
+												th:text="${code.commonNm}">(예약시간)</td>
+										</tr>
+										<tr th:each="sim: ${simple}">
+											<th class="td-title-1">예약인원</th>
+											<td class="td-title-1" colspan="2" th:text="${sim.RSVT_NOPE}">(인원수)</td>
+										</tr>
+										<tr>
+											<th class="td-title-1">예약자정보</th>
+											<td class="td-title-1" id="tdNick" value="">(닉네임)</td>
+											<td class="td-title-1" id="tdTel" value="">(전화번호)</td>
+										</tr>
+										<tr>
+										</tr>
+										<tr th:each="sim: ${simple}">
+											<th class="td-title-1">요청사항</th>
+											<th:block th:if="${sim != null}">
+												<td class="td-title-1" colspan="2"
+													th:text="${sim.RSVT_WANT}">(요청사항)</td>
+											</th:block>
+											<th:block th:if="${sim == null}">
+												<td class="td-title-1" colspan="2">요청사항이 없습니다.</td>
+											</th:block>
+										</tr>
+									</table>
+
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-4">
 						<div class="tab-pane active pt-30" id="order-complete">
 							<a class="button extra-small mb-20" href="#"><span>1/n정산하기
-							</span></a> <a class="button extra-small mb-20" onclick="aaa()" style="cursor:pointer;"><span>예약변경신청</span></a>
-							<a class="button extra-small mb-20" href="#"><span>예약취소하기</span>
+							</span></a> <a class="button extra-small mb-20" onclick="aaa()"
+								style="cursor: pointer;"><span>예약변경신청</span></a> <a
+								class="button extra-small mb-20" href="#"><span>예약취소하기</span>
 							</a> <a class="button extra-small mb-20" href="#" id="modalBtn"><span>알림설정</span>
 							</a>
 
@@ -143,11 +172,50 @@
 			</div>
 		</div>
 		<!-- 모달창 끝-->
-	
-	<script>
+
+		<script th:inline="javascript">
 		function aaa(){
-			window.location.href = "/my/mybook02"
+			window.location.href = "/my/mybook02"	//예약번호 받아서 넘기기
 		}
+		
+		//세션에 담긴 정보 변수에 담아주기
+		/*<![CDATA[*/
+			let userId = /*[[ ${session.userId} ]]*/
+			let userNm = /*[[ ${session.userNm} ]]*/
+			let nickNm = /*[[ ${session.nickNm} ]]*/
+			let mblTelno = /*[[ ${session.mblTelno} ]]*/
+			let email = /*[[ ${session.eml} ]]*/
+		/*]]*/
+		console.log("유저아이디="+userId, "전화번호="+mblTelno, "닉넴="+nickNm);
+		
+		//세션으로 받아온거 화면에 출력, value에 값넣기
+		$("#tdNick").text(nickNm);
+		$("#tdTel").text(mblTelno);
+		$("#nickNm").val(nickNm);
+		$("#mblTelno").val(mblTelno);
+		
+		$(function(){
+			$('.myRsvtDetail').attr('style','display:none;');
+		});
+		
+		function abc(){
+			console.log("tr클릭")
+			
+			 $('.table tr:not(:first-child)').each(function() {
+				var simId = $(this).attr('id');
+				console.log(simId);
+				
+				var listId = $('.myRsvtDetail').attr('id');
+				console.log(listId)
+				 
+				if(simId == listId){
+					$('.myRsvtDetail').attr('style','display:block;');
+				}
+			 });
+			
+			
+		}
+
 	</script>
 
 	</div>

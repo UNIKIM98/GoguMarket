@@ -45,12 +45,12 @@ public class TestController {
 
 	@GetMapping("/admin/test")
 	public String adminTest() {
-		return "admin/adminMain";
+		return "myPages/myAct";
 	}
 
 	@GetMapping("/biz/test")
 	public String buzTest() {
-		return "biz/test";
+		return "myPages/myAct";
 	}
 
 	@GetMapping("/my/test")
@@ -79,7 +79,7 @@ public class TestController {
 	}
 
 	// ▷ insertForm 테스트 -----------------------------------
-	@GetMapping("/insertTest")
+	@GetMapping("/biz/insertTest")
 	public String testForm(Model model) {
 		model.addAttribute("category", codeService.codeList("002"));
 		return "common/cmInsertForm";
@@ -101,7 +101,7 @@ public class TestController {
 	}
 
 	// ▷ updateForm 테스트 -----------------------------------
-	@GetMapping("/updateTest")
+	@GetMapping("/my/updateTest")
 	public String updateTest(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemVO mVO = new MemVO();

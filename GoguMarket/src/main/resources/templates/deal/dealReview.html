@@ -49,10 +49,10 @@
 
 
 							<form id="reviewFrm" method="post" onsubmit="return false">
-
+								<input type="hidden" name="userId" id="userId" th:value=${session.userId}>
 								<input type="hidden" name="pstSe" id="pstSe">
 								<input type="hidden" name="rvYn" id="rvYn">
-								<input type="hidden" name="dlNo" id="dlNo" th:text="${deal.dlNo}">
+								<input type="hidden" name="dlNo" id="dlNo" th:value="${deal.dlNo}">
 
 								<div class="row">
 									<div class="col-lg-12">
@@ -187,9 +187,13 @@
 				 if($('#2').is(":checked")){
 				 $('#2').val("친절하고 매너가 좋아요")
 				 } 
-				console.log("=========================")
-				console.log($('#1').val());
-				console.log($('#2').val());
+				 if($('#3').is(":checked")){
+					 $('#3').val("시간 약속을 잘 지켜요")
+					 } 
+				 if($('#4').is(":checked")){
+					 $('#4').val("응답이 빨라요")
+					 } 
+				 
 				//submit 전 체크하기
 				if (submitCheck()) {
 					// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -213,12 +217,11 @@
 						contentType : false,
 						success : function(result) {
 							console.log(result)
-							alert("[작성 완료] \"" + result.dlTtl
-									+ "\"리뷰 작성이 완료되었습니다 :D");
-							location.href = "/dealdetail";
+							alert("[작성 완료]	리뷰 작성이 완료되었습니다 :D");
+							location.href = "/goguma/dealdetail/"+result;
 						},
 						error : function(err) {
-							alert("[작성 실패] 리뷰 작성을 실패하였습니다. :(");
+							alert("[작성 실패] 리뷰 작성을 실패하였습니다. :("); 
 						}
 					});
 				}

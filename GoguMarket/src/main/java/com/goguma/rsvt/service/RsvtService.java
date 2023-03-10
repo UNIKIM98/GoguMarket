@@ -1,6 +1,7 @@
 package com.goguma.rsvt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
@@ -16,6 +17,9 @@ public interface RsvtService {
 	// 결제정보테이블(rsvt_payment) 등록
 	int insertRsvtPayment(RsvtPaymentVO payVo);
 	
-	//예약내역
-	List<RsvtVO> selectMyRsvtList(String userId);
+	//예약간단내역
+	List<Map> selectMyRsvtList(String userId);
+		
+	//예약상세내역
+	List<Map> selectMyRsvtDetail(String userId);
 }

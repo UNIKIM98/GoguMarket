@@ -82,10 +82,12 @@ layout:decorate="~{layouts/layout}">
 				frmSearch.submit();
 			}
 			
-			// 카테검색은되는데 키워드인식이안됨..
-			function SearchSubmit(){
-				dealMain.submit();
+			// 
+			function SearchSubmit(orderby){
+				frmSearch.orderby.value = orderby;
+				frmSearch.submit();
 			}
+			
 		</script>
     <!-- Body main wrapper start -->
     <div class="wrapper">
@@ -111,10 +113,11 @@ layout:decorate="~{layouts/layout}">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-lg-8 offset-lg-2">
+	                                                <form name="frmSearch" align="center">
                                                     <div class="newsletter"> 
                                                         <div class="subcribe clearfix">
-	                                                        <form name="frmSearch" align="center">
 																<input type="hidden" name="page" value="1"> 
+																<input type="hidden" name="orderby" value="dl_no"> 
 																<select name="ctgry">
 																	<!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
 																	<option value="">전체
@@ -123,29 +126,27 @@ layout:decorate="~{layouts/layout}">
 																		th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
 																</select>
 																<button class="btn-hover-2" >카테고리별검색</button>
-															</form>
+															
 														</div/>
 													</div/>
 													<div class="newsletter"> 
-                                                        <div class="subcribe clearfix">														
-																<!-- 키워드별검색 + 키워드저장(실검에쓸) -->
-                                                            <form action="dealMain" id="dealMain">
-                                                            	<input type="hidden" name="page" value="1"> 
+                                                        <div class="subcribe clearfix">				 										
+																<!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
 																	<select id="searchType" name="searchType" title="검색 유형 선택">
 																		<option value="">전체 검색</option>
-																		<option value="dlTtl">글제목</option>
-																		<option value="dlCn" >글내용</option>
-																		<option value="ntslId" >판매자</option>
+																		<option value="dlTtl" th:selected="'dlTtl'==${dsvo.searchType}">글제목</option>
+																		<option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
+																		<option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
 																	</select> 
-                                                                <input type="text" name="searchTtl" id="searchTtl"
+                                                                <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
                                                                 		placeholder="검색어를 입력하세요" title="키워드 입력"/>
                                                                 
                                                                
                                                                 <button class="submit-btn-2 btn-hover-2" 
-                                                                		type="button" onclick="SearchSubmit()">검 색</button>
-                                                            </form>
+                                                                		type="submit">검 색</button>
                                                         </div>
                                                     </div>
+                                                   </form>
                                                    </div>
                                                         <br>
                                                         <div class="newsletter-info text-center">
@@ -189,7 +190,7 @@ layout:decorate="~{layouts/layout}">
                                             	</table>
                                             </div>
                                         </div>
-                                    </div>
+                            
 
         <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
@@ -197,7 +198,7 @@ layout:decorate="~{layouts/layout}">
             <div class="mb-80">
 
             <!-- PRODUCT TAB SECTION START -->
-            <div class="product-tab-section section-bg-tb pt-80 pb-55">
+            <div>
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
@@ -207,13 +208,13 @@ layout:decorate="~{layouts/layout}">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="product-tab pro-tab-menu pro-tab-menu-2 text-end f-right">
+                            <div class=" text-end f-right">
                                 <!-- Nav tabs -->
-                                <ul class="nav">
-                                    <li><a href="#new-arrival" data-bs-toggle="tab">최신순</a></li>
-                                    <li><a href="#best-seller" data-bs-toggle="tab">조회순</a></li>
-                                    <li><a class="active" href="#popular-product" data-bs-toggle="tab">인기순 </a></li>
-                                    <li><a href="#special-offer" data-bs-toggle="tab">관심순</a></li>
+                                <ul>
+                                    <li><a th:class="'dl_no'==${dsvo.orderby}?'active'" href="#"  onclick="javascript:SearchSubmit('dl_no')">최신순</a></li>
+                                    <li><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#"  onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
+                                    <li><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#"   onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
+                                   
                                 </ul>
                             </div>
                         </div>
@@ -230,9 +231,9 @@ layout:decorate="~{layouts/layout}">
 						</div>
                         <div class="col-lg-12">
                             <!-- Tab panes -->
-                            <div class="tab-content">
+                            <div>
                                 <!-- popular-product start -->
-                                <div id="popular-product" class="tab-pane active show">
+                                <div id="popular-product">
                                     <div class="row">
                                         <!-- product-item start -->
                                         <div th:each="deal : ${lists}"  class="col-lg-3 col-md-4">
@@ -270,44 +271,7 @@ layout:decorate="~{layouts/layout}">
                                     </div>
                                 </div>
                                 <!-- new-arrival end -->
-                                <!-- best-seller start -->
-                                <div id="best-seller" class="tab-pane" role="tabpanel">
-                                    <div class="row">
-                                        <!-- product-item start -->
-                                        <div class="col-lg-3 col-md-4">
-                                            <div class="product-item product-item-2">
-                                                <div class="product-img">
-                                                    <a href="single-product.html">
-                                                        <img src="img/product-2/1.jpg" alt="" />
-                                                    </a>
-                                                </div>
-                                                <div class="product-info">
-                                                    <h6 class="product-title">
-                                                        <a href="single-product.html">Product Name</a>
-                                                    </h6>
-                                                    <h6 class="brand-name">Sumsung</h6>
-                                                    <h3 class="pro-price">$ 869.00</h3>
-                                                </div>
-                                                <ul class="action-button">
-                                                    <li>
-                                                        <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
-                                                                class="zmdi zmdi-zoom-in"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- product-item end -->
-                                    </div>
-                                </div>
+                         
                                 <!-- special-offer end -->
                             </div>
                         </div>
@@ -320,11 +284,13 @@ layout:decorate="~{layouts/layout}">
         </section>
         <!-- End page content -->
 
-      
+      </div>
     
     <!-- Body main wrapper end -->
 	<script th:inline="javascript">
-		
+	
+	/* 인기검색어 롤링기능 관련 자스  */
+	
 	/*<![CDATA[*/
 	let Data = /*[[ ${word} ]]*/
 	console.log(Data);
@@ -337,11 +303,6 @@ layout:decorate="~{layouts/layout}">
 	console.log(rollingData);
 	}
 
-//     let rollingData = [
-//     		'대구',
-			
-//     		]// 롤링할 데이터 넣기. 갯수제한 x
-
     let timer = 2000 // 롤링되는 주기 입니다 (1000 => 1초)
 
     let first = document.getElementById('first'),
@@ -352,10 +313,8 @@ layout:decorate="~{layouts/layout}">
     let listCnt = 1
 
     //위 선언은 따로 완전히 수정하지 않는 한 조정할 필요는 없습니다.
-
     first.children[0].innerHTML = rollingData[0]
     
-	
     setInterval(() => {
         if(move == 2){
             first.classList.remove('card_sliding')
@@ -408,14 +367,10 @@ layout:decorate="~{layouts/layout}">
 
         console.log(listCnt)
     }, timer);
-    
-	
 	</script>
 
-    <!-- Placed JS at the end of the document so the pages load faster -->
 
-    <!-- jquery latest version -->
-    <script src="js/vendor/jquery-3.6.0.min.js"></script>
+    <!-- Placed JS at the end of the document so the pages load faster -->
     <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
     <!-- Bootstrap framework js -->
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -425,7 +380,6 @@ layout:decorate="~{layouts/layout}">
     <script src="js/plugins.js"></script>
     <!-- Main js file that contents all jQuery plugins activation. -->
     <script src="js/main.js"></script>
-
 </body>
 
 </html>

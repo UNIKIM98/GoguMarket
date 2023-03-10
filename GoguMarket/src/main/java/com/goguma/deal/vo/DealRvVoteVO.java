@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class DealRvVoteVO {
 
-	private String rvVtNo;	// 후기 투표 번호
-	private String rvNo;	// 글번호
+	private int rvVtNo;	// 후기 투표 번호
+	private int rvNo;	// 글번호
 	private String rvvtCn;	// 투표상세내용
 }
 //CREATE TABLE `RV_VOTE` (

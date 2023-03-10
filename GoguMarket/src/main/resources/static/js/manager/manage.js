@@ -1,8 +1,11 @@
-a = $("<select>");
+a = $("<select>").attr({
+	"name": "userStts",
+	"id": "key"
+});
 btn = $("<button>").attr({
 	"class": "btn btn-primary",
 	"id": "updateButton",
-	"onclick": "updataStts(check)"
+
 });
 
 $(document).ready(function() {
@@ -20,8 +23,8 @@ function keyValue() {
 
 		success: function(data) {
 			console.log(data);
-				$(".tableGroup")
-					.find("#sekey").append(`<option value="">전체</option>`)
+			$(".tableGroup")
+				.find("#sekey").append(`<option value="">전체</option>`)
 			$(data["selist"]).each(function(index, obj) {
 				$(".tableGroup")
 					.find("#sekey")
@@ -32,6 +35,7 @@ function keyValue() {
 			});
 
 			$(data["codelist"]).each(function(index, obj) {
+
 				$(".tableGroup")
 					.find("#key")
 					.append(
@@ -59,7 +63,7 @@ function keyValue() {
 
 function selectMemberList() {
 	console.log('ㅎㅇㅎㅇ')
-	var formData = $("#valueForm").serialize();
+	let formData = $("#valueForm").serialize();
 
 	console.log(formData);
 
@@ -72,8 +76,9 @@ function selectMemberList() {
 			console.log(data);
 			$("#memberTable tbody").empty()
 			$(data).each(function(index, mem) {
-			let check = a.clone();
-				check.find('[value='+mem.userStts+']').attr("selected","selected")
+				let userId = JSON.stringify(mem.userId);
+				let check = a.clone();
+				check.find('[value=' + mem.userStts + ']').attr("selected", "selected")
 				$("#memberTable tbody")
 					.append("<tr>")
 					.append($("<td>").text(index + 1))
@@ -84,7 +89,7 @@ function selectMemberList() {
 					.append($("<td>").text(mem.mblTelno))
 					.append($("<td>").text(mem.eml))
 					.append($("<td>").html(check))
-					.append($("<td>").html(btn.clone().text('변경')));
+					.append($("<td>").html(btn.clone().text('변경').attr("onclick", "updataStts(" + userId + ")")));
 
 			});
 
@@ -99,10 +104,112 @@ function selectMemberList() {
 			.append(`<td>${mem.eml}</td>`)
 			.append(`<td>${a.clone().html()}</td>`) // 상태 출력 및 변경 옵션
 			.append(`<td>${mem.userStts}</td>`); // 상태 변경 업데이트 (제명 / delete)
-  			*/
+				*/
 		},
 		error: function(error) {
 			console.log(error);
 		},
 	});
+}
+
+
+
+function Search() {
+
+
+	let search = $("#searchForm").serialize(); // 검색키
+
+	console.log(search);
+
+	$.ajax({
+		url: "/search",
+		type: "get",
+		data: search,
+		dataType: "JSON",
+
+		success: function(data) {
+			console.log(data)
+		},error:function(error){
+			console.log(error)
+		}
+	})
+
+
+
+}
+
+
+
+function updataStts(userId) {
+
+	console.log(userId)
+	let edit = event.currentTarget.parentNode;
+	let userStts = $(edit).prev().find("select").val();
+
+	console.log(userStts)
+
+
+
+	if (userStts == 2) {
+		deleteMember(userId, userStts)
+		console.log('삭제')
+
+	} else {
+
+		$.ajax({
+			url: "/updateStts",
+			type: "POST",
+			data: {
+				userStts: userStts,
+				userId: userId,
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success: function(data) {
+				console.log(data)
+				if (data != null) {
+					alert("수정이 완료 되었습니다.")
+					$("#memberTable tbody").empty()
+					selectMemberList()
+				} else {
+					alert("수정에 실패했습니다.")
+				}
+
+
+			}, error: function() {
+				console.log(error)
+			}
+
+
+		});
+
+	}
+}
+
+function deleteMember(userId, userStts) {
+	console.log('gdgd')
+	$.ajax({
+		url: "/deleteMember",
+		type: "POST",
+		data: {
+			userId: userId,
+		},
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function(data) {
+			console.log(data + "성공?")
+			if (data != null) {
+				alert("제명되었습니다..")
+				$("#memberTable tbody").empty()
+				selectMemberList()
+			} else {
+				alert("다시 시도해주세요")
+			}
+
+
+		}, error: function() {
+			console.log(error)
+		}
+
+
+	});
+
 }

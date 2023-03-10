@@ -16,9 +16,8 @@
 	
 	<insert id="insertDealRv"
 			parameterType="com.goguma.deal.vo.DealReviewVO">
-			
-			
-		<selectKey keyProperty="rvNo" resultType="int"
+		<selectKey keyProperty="rvNo" 
+			resultType="int"
 			order="BEFORE">
 			SELECT
 			CASE WHEN MAX(rv_no) IS NULL THEN 1 ELSE
@@ -30,7 +29,6 @@
 							pst_se,
 							rv_ymd,
 							rv_cn,
-							atch_id,
 							rv_yn,
 							dl_no)
 					values(#{rvNo},
@@ -38,7 +36,6 @@
 						   #{pstSe},
 						   CURRENT_DATE,
 						   #{rvCn},
-						   #{atchId},
 						   #{rvYn},
 						   #{dlNo})
 					into rv_vote (rv_vt_no,

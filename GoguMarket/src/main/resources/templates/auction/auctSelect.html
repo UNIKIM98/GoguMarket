@@ -90,17 +90,17 @@
 												<!-- hr -->
 												<hr>
 												<!-- single-product-price -->
-												<h2 class="pro-price">현재 입찰 가격 : 원</h2>
-
+												<h2 class="pro-price"> 현재 입찰 가격 : [[${auctMem[0].nowPrc}]] 원</h2>
+												
 												<!--  hr -->
 												<hr>
-												<a href="/my/auctInsertForm" id="addAuct"
+												<a th:if="${session.userId!=null}" href="/my/auctInsertForm" id="addAuct"
 													style="position: fixed; bottom: 100px; right: 100px; border: none; border-radius: 16px; background: royalblue; color: white; padding: 12px; font-weight: bold; box-shadow: 0px 5px 15px gray; cursor: pointer;">
 													상품 등록 </a>
 												<div>
 													<a class="button extra-small button-black" tabindex="-1" id="myBtn">
 														<span>Bid now</span>
-													</a> <a href="/auctList" class="button extra-small button-black">
+													</a> <a href="/goguma/auctList" class="button extra-small button-black">
 														<span>목록으로</span>
 													</a> <input type="button" value="삭제하기" onclick="auctDelete()"
 														th:if="${session.userId == auct.userId}">
@@ -168,16 +168,16 @@
 
 								<!-- AJAX 경매 등록 -->
 
-								<div id="myModal" class="modal">
+								<div id="myModal" class="modal" >
 									<!-- Modal content -->
-									<div class="modal-content">
+									<div class="modal-content" style="width:25%">
 										<form action="/my/insertAuctMem" method="post">
-											<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
+											<div class="modal-body" style="padding: 20px; margin-bottom: 5px; ">
 												<button class="close1" onclick=""
 													style="color: black; padding: 10px;">x</button>
 												<div class="login-account p-30 box-shadow mtb-15">
-													<div class="col-lg-4 col-md-6 pb-10">
-														<div class="banner-item banner-3" style="width: 1000px;">
+													<div style="margin:0px auto">
+														<div class="banner-item banner-3" style="width:100%;">
 
 															<div class="banner-img">
 																<!-- 이미지 부분 -->
@@ -189,7 +189,7 @@
 
 																	<div>
 																		<!-- <div style="float: right;"> -->
-																		<table border="1">
+																		<table>
 																			<tr>
 																				<th>상품명</th>
 																				<td>[[ ${auct.auctTtl} ]]</td>
@@ -207,13 +207,13 @@
 																				<td>[[ ${auct.auctTtl} ]]</td>
 																			</tr>
 																		</table>
-																		<table border="1">
+																		<table>
 																			<tr>
 																				<th>현재가</th>
 																				<td th:if="${auctMem!='nothing'}"
 																					th:text="${auctMem[0].nowPrc}"></td>
 																				<td th:if="${auctMem=='nothing'}">입찰자가
-																					없습니다.</td>
+																					없습니다 :)</td>
 
 																				<th>즉구가</th>
 																				<td>[[ ${auct.quickPrc} ]]</td>
@@ -232,15 +232,14 @@
 													<h6 th:if="${auctMem!='nothing'}" th:text="${auctMem[0].nowPrc}">
 													</h6>
 													<h6 th:if="${auctMem=='nothing'}">입찰자가 없습니다.</h6>
-													<input name="nowPrc" id="nowPrc" class="mb-15" type="number"
-														placeholder="입찰금액을 기입하세요">
-													<input name="auctNo" type="hidden"
-														th:value="${auct.auctNo}">
+													<input name="nowPrc" id="nowPrc" class="mb-15" type="number" placeholder="입찰금액을 기입하세요">
+													<input name="auctNo" type="hidden" th:value="${auct.auctNo}">
 												</div>
 											</div>
-
-											<button class="submit-btn-1 btn-hover-1 f-left" type="reset">취소</button>
-											<button class="submit-btn-1 btn-hover-1 f-right" type="submit">입찰완료</button>
+											<div>
+											<button class="submit-btn-1 btn-hover-1 " type="reset">취소</button>
+											<button class="submit-btn-1 btn-hover-1 " type="submit">입찰하기</button>
+											</div>
 										</form>
 										<!-- writeForm -->
 

@@ -24,6 +24,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			throws IOException, ServletException {
 		System.out.println("=================================================");
 		MemVO memVO = (MemVO) auth.getPrincipal();
+		System.out.println(memVO);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", memVO.getUserId()); // 아이디
