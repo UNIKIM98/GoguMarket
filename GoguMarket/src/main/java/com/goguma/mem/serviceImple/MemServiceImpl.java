@@ -32,6 +32,7 @@ public class MemServiceImpl implements MemService {
 		return mapper.selectMemberList(vo);
 	}
 
+
 	@Override
 	public int isIdCheck(String userId) {
 		return mapper.isIdCheck(userId);
