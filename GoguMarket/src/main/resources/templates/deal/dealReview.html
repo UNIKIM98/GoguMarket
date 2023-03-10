@@ -100,16 +100,7 @@
 					<br><textarea class="custom-textarea" name="rvCn" id="rvCn"
 					placeholder="글자내용제한?"></textarea>
 				</div><br>
-				<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 첨부파일코너 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-				<div class="col-lg-10" id="inputFile">
-					<label for="files">🐶리뷰사진</label> 
-					<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
-					<br>
-					<div id="fileList">
-						<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
-							 class="message-box box-shadow white-bg"></div>
-					</div>
-				</div>
+		
 				
 				<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="등록하기" onclick="submitForm()">
 				</form>
@@ -130,42 +121,8 @@
 		});
 	
 	//📌	 공통으로 쓰일 변수 선언(전역변수 var)
-			var fileCount = 0; //현재 첨부파일 개수
-			var totalCount = 3; // 첨부 가능한 파일 개수
-			var fileNum = 0; //첨부파일 인덱스
-			var inputFileList = new Array(); // insert 파일 배열
-			var deleteFileList = new Array(); // delete 파일 배열
 			var isSubmitOk = true;
 
-			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
-	//✅ input 실행하는 함수
-		function inputFile(e) {
-			var files = e.target.files;
-			var filesArr = Array.prototype.slice.call(files);
-
-			if (fileCount + filesArr.length > totalCount) {
-				alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
-				return;
-			} else {
-				fileCount = fileCount + filesArr.length;
-			}
-
-			filesArr.forEach(function(f) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-								inputFileList.push(f);
-								$('#uploadFileList').append(
-															`<img style=${img_style} src=${e.target.result}
-																   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
-															)
-								fileNum++;
-							};
-				reader.readAsDataURL(f);
-			});
-			$("#files").val("");
-		}
-			
-		
 		//===============
 		function submitForm(){
 			$('#pstSe').val("DE"); // 중고거래 분류로 늘 들어가도록
@@ -177,40 +134,30 @@
 			if($('#2').is("checked")){
 				$('#2').val("#친절하고 매너가 좋아요")
 			}
-			console.log("=========================")
-			console.log($('#1').val());
-			console.log($('#2').val());
+			
 			//submit 전 체크하기
 			if(submitCheck()){
 			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			var formData = new FormData($("#reviewFrm")[0]);
 			// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			
-			formData.append("deleteFiles", deleteFileList);
 	
-			for (var i = 0; i < inputFileList.length; i++) {
-				if (!inputFileList[i].is_delete) {
-					formData.append("files", inputFileList[i]);
-				}
-			}
-			
 			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			/* $.ajax({	url : "/dealReviewsubmit",
+			 $.ajax({	url : "/dealReviewsubmit",
 						type : "POST",
 						data : formData,
 						processData : false,
 						contentType : false,
 						success : function(result) {
 							console.log(result)
-								/* alert("[작성 완료] \""+ result.dlTtl+"\"리뷰 작성이 완료되었습니다 :D");
-								location.href = "/dealdetail"; */
+								 alert("[작성 완료] \""+ result.dlTtl+"\"리뷰 작성이 완료되었습니다 :D");
+								location.href = "/dealdetail"; 
 						},
 						error : function(err){
 							alert("[작성 실패] 리뷰 작성을 실패하였습니다. :(");
 						}
 					});
 				}
-			} */
+			} 
 		// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
 		
 		function submitCheck(){
