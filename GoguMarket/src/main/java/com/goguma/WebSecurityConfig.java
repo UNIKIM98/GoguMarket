@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import com.goguma.socialLogin.OAuthUserService;
+import com.goguma.mem.socialLogin.OAuthUserService;
 
 import lombok.RequiredArgsConstructor;
 

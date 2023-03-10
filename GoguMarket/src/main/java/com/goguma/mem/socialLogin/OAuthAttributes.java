@@ -1,4 +1,4 @@
-package com.goguma.socialLogin;
+package com.goguma.mem.socialLogin;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -10,7 +10,7 @@ import com.nimbusds.oauth2.sdk.id.ClientID;
 import lombok.Data;
 
 
-//@Data
+@Data
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;

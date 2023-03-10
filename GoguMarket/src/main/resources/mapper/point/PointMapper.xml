@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.mem.mapper.PointMapper">
+
+
+	<!-- ❤ 포인트 적립 -->
+	<insert id="insertPoint"
+		parameterType="com.goguma.mem.vo.PointVO">
+		<selectKey keyProperty="pointNo" resultType="int"
+			order="BEFORE">
+			SELECT
+			CASE WHEN MAX(point_no) IS NULL THEN 1 ELSE
+			MAX(point_no) + 1 END as pointNo
+			FROM point
+		</selectKey>
+		INSERT INTO POINT 
+		VALUES(#{pointNo}, #{userId}, #{point}, #{pointMthd}, CURRENT_DATE, null)
+	</insert>
+	
+	
+	<!-- ❤ 포인트 사용 -->
+	<insert id="insertUsedPoint"
+		parameterType="com.goguma.mem.vo.PointVO">
+		<selectKey keyProperty="pointNo" resultType="int"
+			order="BEFORE">
+			SELECT
+			CASE WHEN MAX(point_no) IS NULL THEN 1 ELSE
+			MAX(point_no) + 1 END as pointNo
+			FROM point
+		</selectKey>
+		INSERT INTO POINT 
+		VALUES(#{pointNo}, #{userId}, -200, '끌어올리기', null, CURRENT_DATE)
+	</insert>
+	
+	
+	<!-- ▷ 포인트 전체조회 (관리자용) -->
+	<select id="selectPointList"
+		resultType="com.goguma.mem.vo.PointVO">
+		SELECT * FROM POINT
+	</select>
+	
+	
+	<!-- ❤ 특정 유저 보유 포인트 조회 (유저용) -->
+	<select id="selectPointListForUser" parameterType="String"
+		resultType="com.goguma.mem.vo.PointVO">
+		SELECT * FROM POINT
+		WHERE USER_ID = #{userId}
+	</select>
+
+
+</mapper>

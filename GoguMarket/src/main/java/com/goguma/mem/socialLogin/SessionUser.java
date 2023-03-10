@@ -1,4 +1,4 @@
-package com.goguma.socialLogin;
+package com.goguma.mem.socialLogin;
 
 import java.io.Serializable;
 

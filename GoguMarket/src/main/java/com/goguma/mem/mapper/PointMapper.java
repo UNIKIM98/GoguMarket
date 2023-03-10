@@ -1,11 +1,11 @@
-package com.goguma.mem.service;
+package com.goguma.mem.mapper;
 
 import java.util.List;
 
 import com.goguma.mem.vo.PointVO;
 
-public interface PointService {
-	// ❤ 포인트 적립(출석(100~1000p)/무료나눔()/후기작성())
+public interface PointMapper {
+	// ❤ 포인트 적립(출석(100~1000p) / 무료나눔(200p) / 후기작성(100p))
 	int insertPoint(PointVO pVO);
 
 	// ❤ 포인트 사용
