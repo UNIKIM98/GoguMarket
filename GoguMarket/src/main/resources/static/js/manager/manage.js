@@ -47,6 +47,8 @@ function keyValue() {
 
 			});
 
+			$(".tableGroup")
+				.find("#sort").append(`<option value="">전체</option>`)
 			$(data["searchlist"]).each(function(index, obj) {
 				$(".tableGroup")
 					.find("#sort")
@@ -65,11 +67,11 @@ function selectMemberList(dis) {
 	console.log('ㅎㅇㅎㅇ')
 	let formData = {}//$("#valueForm").serialize();
 	//console.log(formData);
-	if(dis == 1){
+	if (dis == 1) {
 		formData = $("#valueForm").serialize();
-		
-		
-	}else{
+
+
+	} else {
 		formData = $("#searchForm").serialize();
 	}
 	$.ajax({
@@ -80,7 +82,7 @@ function selectMemberList(dis) {
 		success: function(data) {
 			console.log(data);
 			$("#memberTable tbody").empty()
-			$(data).each(function(index, mem) {
+			$(data.list).each(function(index, mem) {
 				let userId = JSON.stringify(mem.userId);
 				let check = a.clone();
 				check.find('[value=' + mem.userStts + ']').attr("selected", "selected")
@@ -96,7 +98,27 @@ function selectMemberList(dis) {
 					.append($("<td>").html(check))
 					.append($("<td>").html(btn.clone().text('변경').attr("onclick", "updataStts(" + userId + ")")));
 
-			});
+			})
+
+			$(".pagination").append(`
+				<li class="page-item disabled"><a class="page-link" id="previous"
+									href="${data.page.first - 1}" tabindex="-1" aria-disabled="true">Previous</a></li>
+									<li class="page-item disabled"><a class="page-link" id="previous"
+									href="${data.page.first - 1}" tabindex="-1" aria-disabled="true">${data.page.startPage}</a></li>
+			`)
+			$(data.page).each(function(index, mem) {
+				$(".pagination").append(`
+				<li class="page-item"><a class="page-link" href="#">${mem.page}</a></li>
+			`)
+				$(".pagination").append(`
+				<li class="page-item disabled"><a class="page-link" id="previous"
+									href="${data.page.first - 1}" tabindex="-1" aria-disabled="true">${data.page.lastPage}</a></li>
+				<li class="page-item disabled"><a class="page-link" id="next"
+									href="${data.page.last - 1}" tabindex="-1" aria-disabled="true">Next</a></li>
+			`)
+
+			})
+
 
 
 
@@ -133,11 +155,11 @@ function updataStts(userId) {
 
 	if (userStts == 2) {
 		let confirmMessage = confirm('정말 제명하시겠습니까?')
-		
-		if(confirmMessage)
-		
-		deleteMember(userId, userStts)
-	
+
+		if (confirmMessage)
+
+			deleteMember(userId, userStts)
+
 
 	} else {
 
@@ -171,7 +193,7 @@ function updataStts(userId) {
 }
 
 function deleteMember(userId, userStts) {
-	
+
 	$.ajax({
 		url: "/deleteMember",
 		type: "POST",
