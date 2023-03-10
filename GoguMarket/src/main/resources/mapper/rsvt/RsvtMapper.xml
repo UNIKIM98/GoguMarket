@@ -111,13 +111,21 @@
 	</select>
 	
 	<!-- 예약 한건 조회 -->
-	
 	<select id="selectRsvtOne" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
 		select r.*, m.*, b.*
 		from rsvt r, mem m, biz_mem b
 		where r.user_id = m.user_id
 		and r.biz_no = b.biz_no
 		AND rsvt_no = #{rsvtNo}
+	</select>
+	
+	<!-- 예약번호 가게메뉴 조회 -->
+	<select id="selectRsvtBizMenu" parameterType="String" resultType="com.goguma.rsvt.vo.BizMenuVO">
+		select r.rsvt_no, b.biz_nm, m.*
+		from biz_mem b, rsvt r, biz_menu m
+		where b.biz_no = r.biz_no
+		    and r.biz_no = m.biz_no
+		    and r.rsvt_no = #{rsvtNo}
 	</select>
 
 

@@ -25,4 +25,7 @@ public interface RsvtMapper {
 	
 	//예약 한건
 	RsvtVO selectRsvtOne(String rsvtNo);
+	
+	//예약번호 가게메뉴 조회
+	List<Map> selectRsvtBizMenu(String rsvtNo);
 }

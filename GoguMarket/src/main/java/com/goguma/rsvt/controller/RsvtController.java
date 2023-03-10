@@ -82,9 +82,9 @@ public class RsvtController {
 	}
 
 	// 예약완료
-	@GetMapping("/my/book0604/{rsvtNo}")
+	@GetMapping("/my/rsvtComplete/{rsvtNo}")
 	public String book0604(@PathVariable int rsvtNo, Model model) {
-		System.out.println(rsvtNo);
+		//System.out.println(rsvtNo);
 		model.addAttribute("info", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
 		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		return "rsvt/book0604";
@@ -92,7 +92,7 @@ public class RsvtController {
 	
 
 	// 예약내역
-	@GetMapping("/my/mybook01")
+	@GetMapping("/my/myReservation")
 	public String mybook01(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
@@ -131,9 +131,16 @@ public class RsvtController {
 	}
 	
 	
-
-	@GetMapping("/my/mybook02")
-	public String mybook02() {
+	//예약수정
+	@GetMapping("/my/mybook02/{rsvtNo}")
+	public String mybook02(@PathVariable int rsvtNo, Model model) {
+		System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
+		
+		model.addAttribute("rsvt",rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
+		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
+		model.addAttribute("code", codeService.codeList("007"));
+		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
+		
 		return "myPages/mybook02";
 	}
 

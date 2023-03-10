@@ -13,4 +13,5 @@ public class BizMenuVO {	//가게메뉴 테이블
 	String menuCn;		//메뉴설명
 	String atchId;		//첨부파일id(메뉴사진)
 	
+	
 }
