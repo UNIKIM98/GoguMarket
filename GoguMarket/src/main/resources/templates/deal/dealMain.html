@@ -77,12 +77,12 @@ layout:decorate="~{layouts/layout}">
 <body>
 	<div layout:fragment="content">
     	<script>
+    		// 함수로받아서
 			function gopage(page) {
 				frmSearch.page.value = page;
 				frmSearch.submit();
 			}
-			
-			// 
+			// 검색어 결과가 유지되도록 + 서브밋 함수 
 			function SearchSubmit(orderby){
 				frmSearch.orderby.value = orderby;
 				frmSearch.submit();
@@ -98,7 +98,7 @@ layout:decorate="~{layouts/layout}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="breadcrumbs-inner">
-                                <h1 class="breadcrumbs-title">배너</h1>
+                                <h1 class="breadcrumbs-title">중고거래</h1>
                                 <ul class="breadcrumb-list">
                                     <li><a href="index.html">홈으로가기</a></li>
                                     <li>중고거래메인</li>
@@ -109,88 +109,71 @@ layout:decorate="~{layouts/layout}">
                 </div>
             </div>
         </div>
-                                       <div class="newsletter-section section-bg-tb pt-60 pb-80">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-lg-8 offset-lg-2">
-	                                                <form name="frmSearch" align="center">
-                                                    <div class="newsletter"> 
-                                                        <div class="subcribe clearfix">
-																<input type="hidden" name="page" value="1"> 
-																<input type="hidden" name="orderby" value="dl_no"> 
-																<select name="ctgry">
-																	<!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
-																	<option value="">전체
-																	<option th:each="ct : ${category}" th:text="${ct.commonNm}"
-																		th:value="${ct.commonDetailCode}"
-																		th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
-																</select>
-																<button class="btn-hover-2" >카테고리별검색</button>
-															
-														</div/>
-													</div/>
-													<div class="newsletter"> 
-                                                        <div class="subcribe clearfix">				 										
-																<!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
-																	<select id="searchType" name="searchType" title="검색 유형 선택">
-																		<option value="">전체 검색</option>
-																		<option value="dlTtl" th:selected="'dlTtl'==${dsvo.searchType}">글제목</option>
-																		<option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
-																		<option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
-																	</select> 
-                                                                <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
-                                                                		placeholder="검색어를 입력하세요" title="키워드 입력"/>
-                                                                
-                                                               
-                                                                <button class="submit-btn-2 btn-hover-2" 
-                                                                		type="submit">검 색</button>
-                                                        </div>
-                                                    </div>
-                                                   </form>
-                                                   </div>
-                                                        <br>
-                                                        <div class="newsletter-info text-center">
-                                                            <ul class="nav mb-20 col-lg-8 offset-lg-2">
-                                                                <li> <h4>카테고리 || </h4></li>&nbsp;&nbsp;
-                                                                <li> <h4>#의류</h4></li>&nbsp;
-                                                                <li> <h4>#생활가전</h4></li>&nbsp;
-                                                                <li> <h4>#생활용품</h4></li>&nbsp;
-                                                                <li> <h4>#상품권</h4></li>&nbsp;
-                                                                <li> <h4>#식품</h4></li>&nbsp;
-                                                                <li> <h4>#취미</h4></li>&nbsp;
-                                                            </ul>   
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="col-lg-3 f-right">
-                                            	<!-- 인기검색어 롤링박스 -->
-                                            	<div class="rolling_box">
-												  <ul id ="rolling_box">
-												    <li class="card_sliding" id ="first"><p></p></li>
-												    <li class="" id ="second"><p></p></li>
-												    <li class="" id ="third"><p></p></li>
-												  </ul>
-												</div>
-                                            	
-                                            	<table>
-												<thead>
-													<tr>
-		                                            	<th>순위</th>
-		                                            	<th>검색어</th>
-		                                            </tr>
-	                                            </thead>
-	                                            <tbody id="word">
-	                                            	<tr th:each="word, i : ${word}">
-		                                            	<td th:text=${i.index+1}></td>
-		                                            	<td th:text="${word.searchTtl}"></td>
-	                                            	</tr>
-	                                            </tbody>
-                                            	</table>
-                                            </div>
-                                        </div>
-                            
+
+        <div class="newsletter-section section-bg-tb pt-60 pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                    <a>카테고리 | 글분류</a>
+                       <!-- 카테고리&검색&페이징 삼위일체로 한큐에 : form 태그로 감싼다 -->
+                        <form name="frmSearch" align="center">
+                            <div class="newsletter"> 
+                                <div class="subcribe clearfix">
+                                        <input type="hidden" name="page" value="1"> 
+                                        <input type="hidden" name="orderby" value="dl_no"> 
+                                            <select name="ctgry">
+                                                <!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
+                                                <option value="">전체
+                                                <option th:each="ct : ${category}" th:text="${ct.commonNm}"
+                                                    th:value="${ct.commonDetailCode}"
+                                                    th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
+                                            </select>
+                                             <!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
+	                                        <select id="searchType" name="searchType" title="검색 유형 선택">
+	                                            <option value="">전체 검색</option>
+	                                            <option value="dlTtl" th:selected="'dlTtl'==${dsvo.searchType}">글제목</option>
+	                                            <option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
+	                                            <option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
+	                                        </select> 
+	                                    <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
+	                                            placeholder="검색어를 입력하세요" title="키워드 입력"/>
+                                    <button class="submit-btn-2 btn-hover-2" type="submit">검 색</button>
+                                </div>
+                             </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            <div class="col-lg-3 f-right">
+                <!-- 인기검색어 롤링박스 -->
+                <div class="rolling_box">
+                    <ul id ="rolling_box">
+                    <li class="card_sliding" id ="first"><p></p></li>
+                    <li class="" id ="second"><p></p></li>
+                    <li class="" id ="third"><p></p></li>
+                    </ul>
+                </div>
+                
+                <table>
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>검색어</th>
+                    </tr>
+                </thead>
+                <tbody id="word">
+                    <tr th:each="word, i : ${word}">
+                        <td th:text=${i.index+1}></td>
+                        <td th:text="${word.searchTtl}"></td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+
 
         <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
@@ -211,9 +194,9 @@ layout:decorate="~{layouts/layout}">
                             <div class=" text-end f-right">
                                 <!-- Nav tabs -->
                                 <ul>
-                                    <li><a th:class="'dl_no'==${dsvo.orderby}?'active'" href="#"  onclick="javascript:SearchSubmit('dl_no')">최신순</a></li>
-                                    <li><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#"  onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
-                                    <li><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#"   onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
+                                    <li><a th:class="'dl_no'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_no')">최신순</a></li>
+                                    <li><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
+                                    <li><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
                                    
                                 </ul>
                             </div>
@@ -230,7 +213,6 @@ layout:decorate="~{layouts/layout}">
 								th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
 						</div>
                         <div class="col-lg-12">
-                            <!-- Tab panes -->
                             <div>
                                 <!-- popular-product start -->
                                 <div id="popular-product">
