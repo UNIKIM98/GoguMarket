@@ -1,6 +1,6 @@
 a = $("<select>").attr({
 	"name": "userStts",
-	"id":  "key"
+	"id": "key"
 });
 btn = $("<button>").attr({
 	"class": "btn btn-primary",
@@ -35,6 +35,7 @@ function keyValue() {
 			});
 
 			$(data["codelist"]).each(function(index, obj) {
+
 				$(".tableGroup")
 					.find("#key")
 					.append(
@@ -62,7 +63,7 @@ function keyValue() {
 
 function selectMemberList() {
 	console.log('ㅎㅇㅎㅇ')
-	var formData = $("#valueForm").serialize();
+	let formData = $("#valueForm").serialize();
 
 	console.log(formData);
 
@@ -111,29 +112,68 @@ function selectMemberList() {
 	});
 }
 
+
+
+function Search() {
+
+
+	let search = $("#searchForm").serialize(); // 검색키
+
+	console.log(search);
+
+	$.ajax({
+		url: "/search",
+		type: "get",
+		data: search,
+		dataType: "JSON",
+
+		success: function(data) {
+			console.log(data)
+		},error:function(error){
+			console.log(error)
+		}
+	})
+
+
+
+}
+
+
+
 function updataStts(userId) {
 
 	console.log(userId)
 	let edit = event.currentTarget.parentNode;
-	let key = $(edit).prev().find("select").val();
+	let userStts = $(edit).prev().find("select").val();
+
+	console.log(userStts)
 
 
 
-
-	if (key == 2) {
+	if (userStts == 2) {
+		deleteMember(userId, userStts)
 		console.log('삭제')
+
 	} else {
 
 		$.ajax({
 			url: "/updateStts",
 			type: "POST",
-			data: JSON.stringify({
-				userStts:key,
-				userId: userId
-			}),
+			data: {
+				userStts: userStts,
+				userId: userId,
+			},
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			success: function(data) {
 				console.log(data)
+				if (data != null) {
+					alert("수정이 완료 되었습니다.")
+					$("#memberTable tbody").empty()
+					selectMemberList()
+				} else {
+					alert("수정에 실패했습니다.")
+				}
+
 
 			}, error: function() {
 				console.log(error)
@@ -143,11 +183,33 @@ function updataStts(userId) {
 		});
 
 	}
+}
+
+function deleteMember(userId, userStts) {
+	console.log('gdgd')
+	$.ajax({
+		url: "/deleteMember",
+		type: "POST",
+		data: {
+			userId: userId,
+		},
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function(data) {
+			console.log(data + "성공?")
+			if (data != null) {
+				alert("제명되었습니다..")
+				$("#memberTable tbody").empty()
+				selectMemberList()
+			} else {
+				alert("다시 시도해주세요")
+			}
 
 
+		}, error: function() {
+			console.log(error)
+		}
 
 
-
-
+	});
 
 }

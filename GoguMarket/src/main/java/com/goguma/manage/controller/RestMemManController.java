@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.goguma.common.service.CommonCodeService;
@@ -57,6 +58,16 @@ public class RestMemManController {
 		return member.selectMemberList(vo);
 	}
 	
+	@GetMapping("/search")
+	public Map<String,Object> search(MemVO vo){
+		System.out.println(vo);
+		Map<String,Object>map = new HashMap<String,Object>();
+		
+		return map;
+	}
+	
+	
+	
 	@PostMapping("/updateStts")
 	public int updateStts(MemVO vo) {
 		System.out.println(vo);
@@ -65,6 +76,16 @@ public class RestMemManController {
 		
 		return cnt;
 	}
+	
+	@PostMapping("/deleteMember")
+	public int deleteMember(MemVO vo) {
+		System.out.println(vo);
+		
+		int cnt = member.deleteMember(vo);
+		
+		return cnt;
+	}
+	
 
 
 }

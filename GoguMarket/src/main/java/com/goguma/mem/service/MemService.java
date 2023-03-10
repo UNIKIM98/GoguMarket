@@ -21,6 +21,8 @@ public interface MemService {
 	List<MemVO> selectMemberList(MemVO vo);
 
 	int updateStts(MemVO vo);
+	
+	int deleteMember(MemVO vo);
 
 	// ====================================관리자 사용
 	// 유저(일반유저) 한 명 조회
