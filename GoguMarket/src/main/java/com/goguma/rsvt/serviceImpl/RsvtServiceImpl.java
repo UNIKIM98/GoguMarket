@@ -1,6 +1,7 @@
 package com.goguma.rsvt.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,11 +35,18 @@ public class RsvtServiceImpl implements RsvtService{
 		return map.insertRsvtPayment(payVo);
 	}
 	
-	//예약내역
+	//예약간단내역
 	@Override
-	public List<RsvtVO> selectMyRsvtList(String userId) {
+	public List<Map> selectMyRsvtList(String userId) {
 		return map.selectMyRsvtList(userId);
 	}
+	
+	//예약상세내역
+	@Override
+	public List<Map> selectMyRsvtDetail(String userId) {
+		return map.selectMyRsvtDetail(userId);
+	}
+
 	
 	
 

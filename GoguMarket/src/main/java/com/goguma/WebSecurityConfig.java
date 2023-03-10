@@ -53,8 +53,10 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests((requests) -> requests
 				.antMatchers("/", "/home", "/goguma/**", "/css/**", "/attech/**", "/fonts/**", "/images/**", "/img/**",
 							"/js/**", "/lib/**", "/my/**", "/scss/**", "/vendor/**", "/style.css")
-				.permitAll().antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/biz/**").hasRole("BIZ")
-				.antMatchers("/my/**").hasRole("USER").anyRequest().authenticated())
+				.permitAll()
+				.antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/biz/**").hasRole("BIZ")
+				.antMatchers("/my/**").hasRole("USER")
+				.anyRequest().authenticated())
 				.rememberMe((remember) -> remember.tokenValiditySeconds(86400 + 43200) // 토큰 유효기간(36h)
 											.rememberMeParameter("remember-me").tokenRepository(PersistentTokenRepository()))
 

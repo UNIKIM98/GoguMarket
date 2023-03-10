@@ -88,15 +88,25 @@
 
 	</insert>
 	
-	<!-- 예약가져오기 -->
-	<select id="selectMyRsvtList" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
-		SELECT r.*, m.*, p.*, b.*
+	<!-- 예약목록 가져오기 -->
+	<select id="selectMyRsvtList" parameterType="String" resultType="map">
+		SELECT b.*, r.*
+		FROM biz_mem b join rsvt r
+                on b.biz_no  = r.biz_no
+		WHERE r.user_id = #{userId}
+	</select>
+	
+	<!-- 예약상세내역 가져오기 -->
+	<select id="selectMyRsvtDetail" parameterType="String" resultType="map">
+		SELECT r.*, m.*, p.*, b.*, bm.biz_nm
 		FROM rsvt r JOIN rsvt_menu m
 					ON r.rsvt_no = m.rsvt_no
 					JOIN rsvt_payment p
 					ON p.rsvt_no = r.rsvt_no 
 					JOIN biz_menu b
 					ON b.menu_no = m.menu_no
+                    JOIN biz_mem bm
+                    On b.biz_no = bm.biz_no
 		WHERE r.user_id = #{userId}
 		ORDER BY r.rsvt_no
 	</select>

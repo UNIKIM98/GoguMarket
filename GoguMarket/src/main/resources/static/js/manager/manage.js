@@ -1,8 +1,11 @@
-a = $("<select>");
+a = $("<select>").attr({
+	"name": "userStts",
+	"id":  "key"
+});
 btn = $("<button>").attr({
 	"class": "btn btn-primary",
 	"id": "updateButton",
-	"onclick": "updataStts(check)"
+
 });
 
 $(document).ready(function() {
@@ -20,8 +23,8 @@ function keyValue() {
 
 		success: function(data) {
 			console.log(data);
-				$(".tableGroup")
-					.find("#sekey").append(`<option value="">전체</option>`)
+			$(".tableGroup")
+				.find("#sekey").append(`<option value="">전체</option>`)
 			$(data["selist"]).each(function(index, obj) {
 				$(".tableGroup")
 					.find("#sekey")
@@ -72,8 +75,9 @@ function selectMemberList() {
 			console.log(data);
 			$("#memberTable tbody").empty()
 			$(data).each(function(index, mem) {
-			let check = a.clone();
-				check.find('[value='+mem.userStts+']').attr("selected","selected")
+				let userId = JSON.stringify(mem.userId);
+				let check = a.clone();
+				check.find('[value=' + mem.userStts + ']').attr("selected", "selected")
 				$("#memberTable tbody")
 					.append("<tr>")
 					.append($("<td>").text(index + 1))
@@ -84,7 +88,7 @@ function selectMemberList() {
 					.append($("<td>").text(mem.mblTelno))
 					.append($("<td>").text(mem.eml))
 					.append($("<td>").html(check))
-					.append($("<td>").html(btn.clone().text('변경')));
+					.append($("<td>").html(btn.clone().text('변경').attr("onclick", "updataStts(" + userId + ")")));
 
 			});
 
@@ -99,10 +103,51 @@ function selectMemberList() {
 			.append(`<td>${mem.eml}</td>`)
 			.append(`<td>${a.clone().html()}</td>`) // 상태 출력 및 변경 옵션
 			.append(`<td>${mem.userStts}</td>`); // 상태 변경 업데이트 (제명 / delete)
-  			*/
+				*/
 		},
 		error: function(error) {
 			console.log(error);
 		},
 	});
+}
+
+function updataStts(userId) {
+
+	console.log(userId)
+	let edit = event.currentTarget.parentNode;
+	let key = $(edit).prev().find("select").val();
+
+
+
+
+	if (key == 2) {
+		console.log('삭제')
+	} else {
+
+		$.ajax({
+			url: "/updateStts",
+			type: "POST",
+			data: JSON.stringify({
+				userStts:key,
+				userId: userId
+			}),
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success: function(data) {
+				console.log(data)
+
+			}, error: function() {
+				console.log(error)
+			}
+
+
+		});
+
+	}
+
+
+
+
+
+
+
 }

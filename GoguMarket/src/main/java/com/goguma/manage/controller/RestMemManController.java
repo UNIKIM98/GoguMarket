@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.goguma.common.service.CommonCodeService;
@@ -55,5 +56,15 @@ public class RestMemManController {
 		
 		return member.selectMemberList(vo);
 	}
+	
+	@PostMapping("/updateStts")
+	public int updateStts(MemVO vo) {
+		System.out.println(vo);
+		
+		int cnt = member.updateStts(vo);
+		
+		return cnt;
+	}
+
 
 }

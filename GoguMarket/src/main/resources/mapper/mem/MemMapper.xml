@@ -1,90 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="com.goguma.mem.mapper.MemMapper">
-	
-		<!-- ▶ 회원가입 -->
-		<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
-			INSERT INTO MEM (USER_ID,
-			USER_SE, USER_PW, USER_NM,
-			NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
-			JOIN_YMD, USER_STTS)
-			VALUES(#{userId}, #{userSe},#{userPw}, #{userNm},
-			#{nickNm}, #{addr}, #{dealArea}, #{mblTelno},
-			SYSDATE, #{userStts})
-		</insert>
-	
-		<!-- ▶ 아이디 중복 확인 -->
-		<select id="isIdCheck" resultType="int" parameterType="String">
-			SELECT
-			COUNT(USER_ID)
-			FROM MEM
-			WHERE USER_ID = #{userId}
-		</select>
-	
-		<!-- ▶ 닉네임 중복 확인 -->
-		<select id="isNickNmCheck" resultType="int"
-			parameterType="String">
-			SELECT COUNT(NICK_NM)
-			FROM MEM
-			WHERE NICK_NM = #{nickNm}
-		</select>
-	
-		<!-- ▶ 유저 한 명 정보 전체 조회 -->
-		<select id="selectUser" parameterType="com.goguma.mem.vo.MemVO"
-			resultType="com.goguma.mem.vo.MemVO">
-			SELECT USER_ID, 'ROLE_'||USER_SE as user_se, USER_PW as
-			user_pw, USER_NM,
-			GENDER, NICK_NM, ADDR, DEAL_AREA, EML, BRTH_YMD, MBL_TELNO, ACT_NO,
-			RCMD_CODE, JOIN_YMD, USER_STTS, SOCIAL_TOKEN, RFSH_TOKEN, SOCIAL_SE,
-			ATCH_NM, ATCH_PATH
-			FROM MEM
-			WHERE USER_ID = #{userId}
-		</select>
-	
-		<select id="selectMemberList"
-			parameterType="com.goguma.mem.vo.MemVO"
-			resultType="com.goguma.mem.vo.MemVO">
-			SELECT * FROM mem
-			<where>
-				<if test="userStts != null and userStts != ''">
-					user_stts = #{userStts}
-				</if>
-				
-				<if test="userSe != null and userSe != ''">
-					AND	user_se = #{userSe}
-				</if>
-			</where>
-	
-		</select>
-	
-		<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->
-		<update id="updateDealArea"
-			parameterType="com.goguma.mem.vo.MemVO">
-			UPDATE MEM
-			SET DEAL_AREA = #{dealArea}, ADDR = #{addr}
-			WHERE USER_ID = #{userId}
-		</update>
-	
-		<update id="updateUser" parameterType="com.goguma.mem.vo.MemVO">
-			UPDATE MEM
-			SET user_pw = #{userPw},
-			nick_Nm = #{nickNm},
-			addr = #{addr},
-			deal_area = #{dealArea},
-			<if test="eml != null and eml != ''">eml = #{eml},</if>
-			<if test="birthYmd != null and birthYmd != ''">birth_ymd =#{birthYmd},</if>
-			mbl_telNo = #{mblTelno},
-	
-			<choose>
-				<when test="atchNm == null">atch_nm = null,</when>
-				<otherwise>atch_nm = #{atchNm},</otherwise>
-			</choose>
-	
-			<choose>
-				<when test="atchPath == null">atch_path = null</when>
-				<otherwise>atch_path = #{atchPath}</otherwise>
-			</choose>
-			WHERE user_id = #{userId}
-		</update>
-	
+<mapper namespace="com.goguma.mem.mapper.MemMapper">
+
+	<!-- ▶ 회원가입 -->
+	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
+		INSERT INTO MEM (USER_ID,
+		USER_SE, USER_PW, USER_NM,
+		NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
+		JOIN_YMD, USER_STTS)
+		VALUES(#{userId}, #{userSe},#{userPw}, #{userNm},
+		#{nickNm}, #{addr}, #{dealArea}, #{mblTelno},
+		SYSDATE, #{userStts})
+	</insert>
+
+	<!-- ▶ 아이디 중복 확인 -->
+	<select id="isIdCheck" resultType="int" parameterType="String">
+		SELECT
+		COUNT(USER_ID)
+		FROM MEM
+		WHERE USER_ID = #{userId}
+	</select>
+
+	<!-- ▶ 닉네임 중복 확인 -->
+	<select id="isNickNmCheck" resultType="int"
+		parameterType="String">
+		SELECT COUNT(NICK_NM)
+		FROM MEM
+		WHERE NICK_NM = #{nickNm}
+	</select>
+
+	<!-- ▶ 유저 한 명 정보 전체 조회 -->
+	<select id="selectUser" parameterType="com.goguma.mem.vo.MemVO"
+		resultType="com.goguma.mem.vo.MemVO">
+		SELECT USER_ID, 'ROLE_'||USER_SE as user_se, USER_PW as
+		user_pw, USER_NM,
+		GENDER, NICK_NM, ADDR, DEAL_AREA, EML, BRTH_YMD,
+		MBL_TELNO, ACT_NO,
+		RCMD_CODE, JOIN_YMD, USER_STTS, SOCIAL_TOKEN,
+		RFSH_TOKEN, SOCIAL_SE,
+		ATCH_NM, ATCH_PATH
+		FROM MEM
+		WHERE USER_ID =
+		#{userId}
+	</select>
+
+
+	<!-- ▶ 관리자 멤버 전체 조회/구분 기능 가능 -->
+	<select id="selectMemberList"
+		parameterType="com.goguma.mem.vo.MemVO"
+		resultType="com.goguma.mem.vo.MemVO">
+		SELECT * FROM mem
+		<where>
+			<if test="userStts != null and userStts != ''">
+				user_stts = #{userStts}
+			</if>
+
+			<if test="userSe != null and userSe != ''">
+				AND user_se = #{userSe}
+			</if>
+		</where>
+
+	</select>
+
+	<!-- ▶ 관리자 멤버 상태 변경 -->
+	<update id="updateStts" parameterType="com.goguma.mem.vo.MemVO">
+
+		UPDATE mem SET user_stts = #{userStts} WHERE [조건]
+
+	</update>
+
+
+
+
+
+
+	<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->
+	<update id="updateDealArea"
+		parameterType="com.goguma.mem.vo.MemVO">
+		UPDATE MEM
+		SET DEAL_AREA = #{dealArea}, ADDR = #{addr}
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<update id="updateUser" parameterType="com.goguma.mem.vo.MemVO">
+		UPDATE MEM
+		SET user_pw = #{userPw},
+		nick_Nm = #{nickNm},
+		addr = #{addr},
+		deal_area = #{dealArea},
+		<if test="eml != null and eml != ''">eml = #{eml},</if>
+		<if test="birthYmd != null and birthYmd != ''">birth_ymd =#{birthYmd},</if>
+		mbl_telNo = #{mblTelno},
+
+		<choose>
+			<when test="atchNm == null">atch_nm = null,</when>
+			<otherwise>atch_nm = #{atchNm},</otherwise>
+		</choose>
+
+		<choose>
+			<when test="atchPath == null">atch_path = null</when>
+			<otherwise>atch_path = #{atchPath}</otherwise>
+		</choose>
+		WHERE user_id = #{userId}
+	</update>
+
 </mapper>
