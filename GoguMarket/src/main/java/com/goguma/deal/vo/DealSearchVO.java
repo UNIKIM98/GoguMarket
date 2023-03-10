@@ -1,8 +1,10 @@
 package com.goguma.deal.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class DealSearchVO extends DealVO {
 	
 	Integer first;
@@ -10,4 +12,7 @@ public class DealSearchVO extends DealVO {
 	String keyword;
 	String searchTtl;
 	String searchType;
+	
+	private String orderby;
+	
 }

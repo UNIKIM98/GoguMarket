@@ -139,13 +139,13 @@
 											<hr>
 										</div>
 
-										<div role="tabpanel" class="tab-pane" id="mannor">
+										<div role="tabpanel" class="tab-pane" id="mannor" th:each="v: ${vote}">
 											<p>매너 칭찬 리스트가 들어갈 자리입니다</p>
 
 											<ul>
-												<li><a>1. 시간 약속을 잘 지켜요</a></li>
+												<li><a th:text="${v.ccn}">1. 시간 약속을 잘 지켜요</a></li>
 												<hr>
-												<li><a>2. 친절하고 매너가 좋아요</a></li>
+												<li><a th:text="${v.cn}">2. 친절하고 매너가 좋아요</a></li>
 												<hr>
 												<li><a>3. 응답이 빨라요</a></li>
 												<hr>

@@ -22,6 +22,7 @@ public class DealServiceImpl implements DealService {
 	@Override
 	public List<DealVO> dealListSelect(DealSearchVO svo) {
 		// 판매 리스트 전체 조회 : 페이징 O 검색X
+		System.out.println(svo+"svo넘어오낫!!");
 		return map.dealListSelect(svo);
 	}
 
