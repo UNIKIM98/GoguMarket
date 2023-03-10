@@ -12,16 +12,20 @@ import com.goguma.mem.vo.MemVO;
 @Service
 public class MemServiceImpl implements MemService {
 
-
-
 	@Autowired
 	private MemMapper mapper;
+
+	@Override
+	public int getcountTotal(MemVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.getcountTotal(vo);
+	}
 
 	@Override
 	public int memberJoin(MemVO vo) {
 		return mapper.memberJoin(vo);
 	}
-	
+
 	@Override
 	public List<MemVO> selectMemberList(MemVO vo) {
 		// TODO Auto-generated method stub
@@ -43,15 +47,13 @@ public class MemServiceImpl implements MemService {
 		// TODO Auto-generated method stub
 		return mapper.updateStts(vo);
 	}
-	
+
 	@Override
 	public int deleteMember(MemVO vo) {
 		// TODO Auto-generated method stub
 		System.out.println("나 impl");
 		return mapper.deleteMember(vo);
 	}
-
-
 
 	@Override
 	public MemVO selectUser(MemVO mVo) {
@@ -60,7 +62,7 @@ public class MemServiceImpl implements MemService {
 
 	@Override
 	public int updateDealArea(MemVO mVO) {
-		return	mapper.updateDealArea(mVO);
+		return mapper.updateDealArea(mVO);
 	}
 
 	@Override

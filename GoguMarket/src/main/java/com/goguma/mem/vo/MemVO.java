@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+
 import lombok.Data;
 
 @Data
@@ -23,6 +24,10 @@ public class MemVO implements UserDetails {
 	private String searchKey;
 	private String search;
 	private String userStts;
+
+	private int first;
+	private int last; //페이징 사용 - 마지막페이지
+	
 	//=>
 	
 	
