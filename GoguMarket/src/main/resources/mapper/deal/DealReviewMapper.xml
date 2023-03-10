@@ -11,8 +11,9 @@
                     (select dl_no
                      from deal
                      where ntsl_id = #{ntslId})
-                                    
 	</select>
+	
+
 	
 	<insert id="insertDealRv"
 			parameterType="com.goguma.deal.vo.DealReviewVO">

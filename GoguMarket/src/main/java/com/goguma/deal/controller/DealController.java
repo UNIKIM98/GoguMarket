@@ -25,9 +25,9 @@ import com.goguma.common.service.TestService;
 import com.goguma.common.vo.AtchVO;
 import com.goguma.common.vo.SearchVO;
 import com.goguma.deal.service.DealReviewService;
+import com.goguma.deal.service.DealRvVoteService;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealReviewVO;
-import com.goguma.deal.vo.DealRvVoteVO;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
@@ -43,6 +43,9 @@ public class DealController {
 
 	@Autowired
 	private DealReviewService RvService;
+	
+	@Autowired
+	private DealRvVoteService voteService;
 
 	@Autowired
 	private AtchService atchService;
@@ -256,8 +259,8 @@ public class DealController {
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
-		model.addAttribute("review", RvService.getDealRv(ntslId));// 여러건 . 후기 조회
-		System.out.println(RvService.getDealRv(ntslId));
+		model.addAttribute("review", RvService.getDealRv(ntslId));// 여러건의 후기 조회
+		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
 		return "deal/dealSellerPage";
 	}
 
