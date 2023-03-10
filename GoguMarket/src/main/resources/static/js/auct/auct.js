@@ -21,8 +21,7 @@ var exCnt = 0;
 
 
 
-
-
+/* JS타이머입니다 안쓸듯ㅋㅋ
 const remainTime = document.querySelector("#remain-time");
 function diffDay(){
     const ddln = new Date("2023-12-25");
@@ -40,9 +39,8 @@ function diffDay(){
 
 diffDay();
 setInterval(diffDay, 1000);
+*/
 
-
-/**/
             $.ajax({
                 url : "/auctSelect/{auctNo}",
                 type : "Post",
@@ -124,5 +122,3 @@ window.onclick = function(event) {
 span.onclick = function() {
 	modal.style.display = "none";
 };
-
-

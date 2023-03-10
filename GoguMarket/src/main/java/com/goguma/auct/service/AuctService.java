@@ -12,9 +12,9 @@ public interface AuctService {
 	int insertAuct(AuctVO vo); // 등록
 	int deleteAuct(AuctVO vo); // 삭제
 
-	int auctHitUpdate(int auctNo); // 조회수 증가
+	int auctHitUpdate(int auctNo); // 조회수 증가용도 근데 고장남ㅋㅋㅋ
 
-	AuctVO selectAuct(int auctNo); // Auct 게시글 정보(auctNo)를 int 값으로 가져오기(삭제용도)
+	AuctVO selectAuctNo(int auctNo); // int auctNo를 넣어서 auctVO값 가져오기(삭제용도)
+	List<AuctVO> selectUserId(String userId);// userId를 넣어서 auctVO값(여러개라서 List임)(마이페이지용도)
 	List<AtchVO> selectAuctAtch(int auctNo); // Auct 게시글 한 개의 첨부파일들 다 가져오기
-	
 }
