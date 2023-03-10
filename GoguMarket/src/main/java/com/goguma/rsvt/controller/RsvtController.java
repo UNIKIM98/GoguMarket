@@ -41,11 +41,16 @@ public class RsvtController {
 //		return "rsvt/book0601";
 //	}
 
-	@Autowired BizMemService bizMemService; // 가게정보
-	@Autowired BizMenuService menuService; 	// 메뉴 들고오기 위함
-	@Autowired CommonCodeService codeService; // 공통코드
-	@Autowired RsvtService rsvtService; 	// 예약
-	@Autowired MemService memService; 		// 맴바정보
+	@Autowired
+	BizMemService bizMemService; // 가게정보
+	@Autowired
+	BizMenuService menuService; // 메뉴 들고오기 위함
+	@Autowired
+	CommonCodeService codeService; // 공통코드
+	@Autowired
+	RsvtService rsvtService; // 예약
+	@Autowired
+	MemService memService; // 맴바정보
 
 	// 일반예약
 
@@ -82,24 +87,24 @@ public class RsvtController {
 
 		return "rsvt/book0604";
 	}
-	
-	//예약내역
+
+	// 예약내역
 	@GetMapping("/my/mybook01")
 	public String mybook01(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		userId = (String)session.getAttribute("userId");
-		
+		userId = (String) session.getAttribute("userId");
+
 		List<Map> Lists = rsvtService.selectMyRsvtDetail(userId);
 		List<Map> simple = rsvtService.selectMyRsvtList(userId);
-		
-		System.out.println("프린트2" + Lists.get(0));
-		
+
+		System.out.println("프린트2 : " + Lists.size() + ", " + simple.size());
+
 		model.addAttribute("lists", Lists);
 		model.addAttribute("simple", simple);
-		
-		
-		
+		model.addAttribute("code", codeService.codeList("007"));
+
 		return "myPages/mybook01";
+
 	}
 
 	@GetMapping("/my/mybook02")
