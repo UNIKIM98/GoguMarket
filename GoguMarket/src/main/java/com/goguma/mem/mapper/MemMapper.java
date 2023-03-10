@@ -28,6 +28,8 @@ public interface MemMapper {
 	
 	int deleteMember(MemVO vo);
 	
+
+	
 	//====================================관리자 사용
 
 	// ▷ 마이페이지 ========================

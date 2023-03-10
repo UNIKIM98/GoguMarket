@@ -18,10 +18,14 @@ public class MemVO implements UserDetails {
 
 	private String userId;
 
+	//=> 관리자 사용
 	private String userSe;
 	private String searchKey;
+	private String search;
 	private String userStts;
-
+	//=>
+	
+	
 	private String userPw;
 	private String userNm;
 	private String gender;

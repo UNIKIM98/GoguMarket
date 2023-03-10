@@ -9,7 +9,7 @@
 <body>
 	<div layout:fragment="adminContent">
 
-		<h1>관리자페이지</h1>
+
 		<div class="container-fluid">
 
 			<!-- Page Heading -->
@@ -22,46 +22,51 @@
 
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4 tableGroup">
-				<div class="card-header py-3">
+				<div class="card-header py-2">
 					MEMBER TABLE
 
-					<form id="valueForm" method="post" onsubmit="return false">
+					<form id="valueForm" name="valueForm" method="post"
+						onsubmit="return false">
 
 
-						<h6 class="m-0 font-weight-bold text-primary pl-100">
-							USER_SE || <select class="f-right mr-10 ml-10" name="userSe"
-								id="sekey">
-							</select> USER_STTS || <select class="f-right mr-10" name="userStts"
-								id="key">
+						<h6 class="m-0 font-weight-bold text-primary pl-100 f-left">
+							USER_SE || <select class=" mr-10 ml-10" name="userSe" id="sekey">
+							</select> USER_STTS || <select class=" mr-10" name="userStts" id="key">
 
 
 							</select>
 
-							<button onclick="selectMemberList()" class="btn btn-primary"
+							<button onclick="selectMemberList(1)" class="btn btn-primary"
 								style="height: 25px; line-height: 15px">출력</button>
-
-
 						</h6>
 					</form>
-					<div class="col-8">
-						<form id="searchForm" method="get" onsubmit="return false">
-							<select class="mr-10" name="searchKey" id="sort">
 
 
-							</select> <input type="text" placeholder=" search.." id="searchCn" name="searchCn">
-							<button id="searchButton" class="btn btn-primary" onclick="Search()"
-								style="height: 25px; line-height: 15px">SEARCH</button>
 
-						</form>
 
-					</div>
 
 
 				</div>
 				<div class="card-body">
+					<div class="col-4" style="float: right; margin-bottom: 10px;">
+						<form id="searchForm" name="searchForm" method="get"
+							onsubmit="return false" style="margin-left: 30px">
+							<h6 class="m-0 font-weight-bold text-primary pl-100">
+								<select class="mr-10" name="searchKey" id="sort">
+
+
+								</select> <input type="text" placeholder=" search.." id="searchCn"
+									name="search">
+								<button id="searchButton" class="btn btn-primary"
+									onclick="selectMemberList(2)"
+									style="height: 25px; line-height: 15px">SEARCH</button>
+							</h6>
+						</form>
+
+					</div>
 					<div class="table-responsive">
 						<table class="table table-bordered" id="memberTable" width="100%"
-							cellspacing="0">
+							cellspacing="0" style="text-align: center">
 							<thead>
 								<tr>
 									<th>INDEX</th>
@@ -80,6 +85,13 @@
 
 							</tbody>
 						</table>
+						<div class="pagination" align="center">
+						
+							<form name="frmSearch" align="center">
+								<input type="text" name="keyword" value="">
+								<input type="hidden" name="page" value="1">
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

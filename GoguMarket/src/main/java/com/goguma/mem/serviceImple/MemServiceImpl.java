@@ -51,6 +51,8 @@ public class MemServiceImpl implements MemService {
 		return mapper.deleteMember(vo);
 	}
 
+
+
 	@Override
 	public MemVO selectUser(MemVO mVo) {
 		return mapper.selectUser(mVo);

@@ -58,8 +58,16 @@
 			<if test="userSe != null and userSe != ''">
 				AND user_se = #{userSe}
 			</if>
+			
+			<if test="searchKey =='EM'">eml LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='ID'">user_Id LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='NK'">nick_Nm LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='NM'">user_Nm LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='PH'">mbl_Telno LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey ==''"></if>
+
 		</where>
-	
+
 
 	</select>
 
@@ -80,6 +88,23 @@
 		DELETE FROM mem WHERE user_id = #{userId}
 
 	</delete>
+
+
+	<!-- ▶ 관리자 멤버 제명(delete) -->
+
+	<select id="search" parameterType="com.goguma.mem.vo.MemVO"
+		resultType="com.goguma.mem.vo.MemVO">
+
+		select * from mem
+		where
+		<if test="searchKey =='EM'">eml LIKE '%'||#{search}||'%'</if>
+		<if test="searchKey =='ID'">user_Id LIKE '%'||#{search}||'%'</if>
+		<if test="searchKey =='NK'">nick_Nm LIKE '%'||#{search}||'%'</if>
+		<if test="searchKey =='NM'">user_Nm LIKE '%'||#{search}||'%'</if>
+		<if test="searchKey =='PH'">mbl_Telno LIKE '%'||#{search}||'%'</if>
+		<if test="searchKey ==''"></if>
+
+	</select>
 
 
 	<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->

@@ -61,12 +61,17 @@ function keyValue() {
 	});
 }
 
-function selectMemberList() {
+function selectMemberList(dis) {
 	console.log('ㅎㅇㅎㅇ')
-	let formData = $("#valueForm").serialize();
-
-	console.log(formData);
-
+	let formData = {}//$("#valueForm").serialize();
+	//console.log(formData);
+	if(dis == 1){
+		formData = $("#valueForm").serialize();
+		
+		
+	}else{
+		formData = $("#searchForm").serialize();
+	}
 	$.ajax({
 		url: "/admin/selectMemberList",
 		//method:""
@@ -114,30 +119,6 @@ function selectMemberList() {
 
 
 
-function Search() {
-
-
-	let search = $("#searchForm").serialize(); // 검색키
-
-	console.log(search);
-
-	$.ajax({
-		url: "/search",
-		type: "get",
-		data: search,
-		dataType: "JSON",
-
-		success: function(data) {
-			console.log(data)
-		},error:function(error){
-			console.log(error)
-		}
-	})
-
-
-
-}
-
 
 
 function updataStts(userId) {
@@ -151,8 +132,12 @@ function updataStts(userId) {
 
 
 	if (userStts == 2) {
+		let confirmMessage = confirm('정말 제명하시겠습니까?')
+		
+		if(confirmMessage)
+		
 		deleteMember(userId, userStts)
-		console.log('삭제')
+	
 
 	} else {
 
@@ -186,7 +171,7 @@ function updataStts(userId) {
 }
 
 function deleteMember(userId, userStts) {
-	console.log('gdgd')
+	
 	$.ajax({
 		url: "/deleteMember",
 		type: "POST",
