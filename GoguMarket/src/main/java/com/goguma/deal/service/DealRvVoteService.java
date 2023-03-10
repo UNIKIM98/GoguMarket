@@ -6,4 +6,5 @@ import com.goguma.deal.vo.DealRvVoteVO;
 
 public interface DealRvVoteService {
 	List<DealRvVoteVO> getDealRvVote(String ntslId); // 판매자번호로 리뷰투표조회
+
 }

@@ -21,4 +21,5 @@ public class DealRvVoteServiceImpl implements DealRvVoteService{
 		return map.getDealRvVote(ntslId);
 	}
 
+
 }

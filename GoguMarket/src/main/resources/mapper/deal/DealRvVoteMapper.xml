@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.deal.DealRvVoteMapper">
+<mapper namespace="com.goguma.deal.mapper.DealRvVoteMapper">
+
+	<insert id="insertDealRvVote"
+			parameterType="com.goguma.deal.vo.DealRvVoteVO">
+	insert into rv_vote (rv_vt_no,
+				  rv_no,
+				  rvvt_cn)
+			values(vote_seq.nextval,
+				   #{rvNo},
+				   #{rvvtCn})
+	</insert>
 
 	<select id="getDealRvVote"
 			parameterType="String"
 			resultType="com.goguma.deal.vo.DealRvVoteVO">
-		select *
-		from rv_vote
-		where rv_no in 
-		           (select rv_no
-		            from rv
-		            where dl_no in 
-		                        (select dl_no
-		                         from deal
-		                         where ntsl_id = #{ntslId}))
+	select rvvt_cn as cn, count(rvvt_cn) as ccn
+	from rv_vote
+	where rv_no in 
+	           (select rv_no
+	            from rv
+	            where dl_no in 
+	                        (select dl_no
+	                         from deal
+	                         where ntsl_id = #{ntslId}))
+	group by rvvt_cn
+	order by ccn desc
 	</select>
 	
 </mapper>

@@ -83,7 +83,7 @@
 			order by ${orderby} desc
 		</if>
 		<if test="orderby == null " >
-			order by dl_no desc
+			order by dl_ymd desc
 		</if>
 	<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}

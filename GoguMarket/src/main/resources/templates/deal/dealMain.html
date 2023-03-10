@@ -120,7 +120,7 @@ layout:decorate="~{layouts/layout}">
                             <div class="newsletter"> 
                                 <div class="subcribe clearfix">
                                         <input type="hidden" name="page" value="1"> 
-                                        <input type="hidden" name="orderby" value="dl_no"> 
+                                        <input type="hidden" name="orderby" value="dl_ymd"> 
                                             <select name="ctgry">
                                                 <!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
                                                 <option value="">전체
@@ -194,7 +194,7 @@ layout:decorate="~{layouts/layout}">
                             <div class=" text-end f-right">
                                 <!-- Nav tabs -->
                                 <ul>
-                                    <li><a th:class="'dl_no'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_no')">최신순</a></li>
+                                    <li><a th:class="'dl_ymd'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_ymd')">최신순</a></li>
                                     <li><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
                                     <li><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
                                    

@@ -12,20 +12,16 @@
                      from deal
                      where ntsl_id = #{ntslId})
 	</select>
-	
-
-	
-	<insert id="insertDealRv"
-			parameterType="com.goguma.deal.vo.DealReviewVO">
-		<selectKey keyProperty="rvNo" 
-			resultType="int"
-			order="BEFORE">
+	<select id="selectRvNo" resultType="int">
 			SELECT
 			CASE WHEN MAX(rv_no) IS NULL THEN 1 ELSE
 			MAX(rv_no) + 1 END as rvNo
 			FROM rv
-		</selectKey>
-		insert all into rv (rv_no,
+	</select>
+	
+	<insert id="insertDealRv"
+			parameterType="com.goguma.deal.vo.DealReviewVO">
+		insert into rv (rv_no,
 							user_id,
 							pst_se,
 							rv_ymd,
@@ -39,13 +35,8 @@
 						   #{rvCn},
 						   #{rvYn},
 						   #{dlNo})
-					into rv_vote (rv_vt_no,
-								  rv_no,
-								  rvvt_cn)
-							values(vote_seq.nextval,
-								   #{rvNo},
-								   #{rvvtCn})
-			select * from dual
-		
 	</insert>
+	
+
+	
 </mapper>

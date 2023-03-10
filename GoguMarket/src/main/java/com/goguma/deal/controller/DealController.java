@@ -28,6 +28,7 @@ import com.goguma.deal.service.DealReviewService;
 import com.goguma.deal.service.DealRvVoteService;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealReviewVO;
+import com.goguma.deal.vo.DealRvVoteVO;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
@@ -53,7 +54,7 @@ public class DealController {
 	@Autowired
 	private CommonCodeService codeService;
 
-	@Autowired
+	@Autowired // common-search
 	private SearchService searchService;
 
 	@Autowired
@@ -112,7 +113,7 @@ public class DealController {
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
 
-		paging.setTotalRecord(dealService.getcountTotal(svo));
+		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 deal테이블에 있는 총 데이터건수 
 
 		model.addAttribute("lists", dealService.dealListSelect(svo));
 		model.addAttribute("category", codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는
@@ -171,10 +172,14 @@ public class DealController {
 	// ▷ 중고거래 리뷰 작성 submit
 	@RequestMapping("/my/dealReviewsubmit")
 	@ResponseBody
-	public int dealReview(DealReviewVO rvo) {
-		
+	public int dealReview(DealReviewVO rvo, DealRvVoteVO vtList) {
+
+		List<String> list = vtList.getVtList();
 		// 아주 잘 나오신답니다 ^ㅇ^ System.out.println(rvo+"ddddddddddddddd");
-		RvService.insertDealRv(rvo);
+		// 리뷰 인서트
+		int rvNo = RvService.insertDealRv(rvo, list);
+		
+		System.out.println(rvo.getRvNo()+"===== 리뷰번호");
 		return rvo.getDlNo(); // 이전페이지로 가고싶은데 dlNo 유지한채로되나? 
 		
 	}

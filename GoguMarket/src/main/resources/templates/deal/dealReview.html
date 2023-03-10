@@ -68,35 +68,35 @@
 									</label>
 								</div>
 								<div>
-									<input type="checkbox" id="1" name="rvvtCn" checked> <label
+									<input type="checkbox" id="1" name="vtList" checked> <label
 										for="1">제가 있는 곳 까지 와서 거래했어요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="2" name="rvvtCn" checked> <label
+									<input type="checkbox" id="2" name="vtList" checked> <label
 										for="2">친절하고 매너가 좋아요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="3" name="rvvtCn"> <label
+									<input type="checkbox" id="3" name="vtList"> <label
 										for="rvvtCn">시간 약속을 잘 지켜요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="4" name="rvvtCn"> <label
+									<input type="checkbox" id="4" name="vtList"> <label
 										for="rvvtCn">응답이 빨라요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="5" name="rvvtCn"> <label
+									<input type="checkbox" id="5" name="vtList"> <label
 										for="rvvtCn">상품상태가 설명한 것과 같아요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="6" name="rvvtCn"> <label
+									<input type="checkbox" id="6" name="vtList"> <label
 										for="rvvtCn">좋은 상품을 저렴하게 판매해요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="7" name="rvvtCn"> <label
+									<input type="checkbox" id="7" name="vtList"> <label
 										for="rvvtCn">상품 설명이 자세해요</label>
 								</div>
 								<div>
-									<input type="checkbox" id="8" name="rvvtCn"> <label
+									<input type="checkbox" id="8" name="vtList"> <label
 										for="rvvtCn">무료나눔을 해줬어요</label>
 								</div>
 								<hr>
@@ -180,19 +180,32 @@
 				$('#pstSe').val("DE"); // 중고거래 분류로 늘 들어가도록
 				$('#rvYn').val("N");   // 글숨김여부. 중고거래에선 안쓰므로 항상 N
 				isSubmitOk = true;
-				//rvvtCn내용 체크표시별 삽입
+				
+				//rvvtCn내용 체크표시별 삽입 value는 공통코드010번의 1~8번
 				if($('#1').is(":checked")){
-				 $('#1').val("제가 있는 곳 까지 와서 거래했어요")  //#으로 자를라고 넣어놓음
+				 $('#1').val("1")  //#으로 자를라고 넣어놓음
 				 }
 				 if($('#2').is(":checked")){
-				 $('#2').val("친절하고 매너가 좋아요")
+				 $('#2').val("2")
 				 } 
 				 if($('#3').is(":checked")){
-					 $('#3').val("시간 약속을 잘 지켜요")
-					 } 
+				 $('#3').val("3")
+				 } 
 				 if($('#4').is(":checked")){
-					 $('#4').val("응답이 빨라요")
-					 } 
+				 $('#4').val("4")
+				 }
+				 if($('#5').is(":checked")){
+				 $('#5').val("5")
+				 } 
+				 if($('#6').is(":checked")){
+				 $('#6').val("6")
+				 } 
+				 if($('#7').is(":checked")){
+				 $('#7').val("7")
+				 } 
+				 if($('#8').is(":checked")){
+				 $('#8').val("8")
+				 } 
 				 
 				//submit 전 체크하기
 				if (submitCheck()) {
