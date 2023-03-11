@@ -11,7 +11,17 @@ btn = $("<button>").attr({
 $(document).ready(function() {
 	keyValue();
 	selectMemberList();
+	
+
+	
+	
+	
 });
+
+
+
+
+
 
 function keyValue() {
 	$.ajax({
@@ -23,8 +33,7 @@ function keyValue() {
 
 		success: function(data) {
 			console.log(data);
-			$(".tableGroup")
-				.find("#sekey").append(`<option value="">전체</option>`)
+			$(".tableGroup").find("#sekey").append(`<option value="">전체</option>`)
 			$(data["selist"]).each(function(index, obj) {
 				$(".tableGroup")
 					.find("#sekey")
@@ -34,6 +43,8 @@ function keyValue() {
 
 			});
 
+			$(".tableGroup")
+				.find("#key").append(`<option value="">전체</option>`)
 			$(data["codelist"]).each(function(index, obj) {
 
 				$(".tableGroup")
@@ -63,17 +74,47 @@ function keyValue() {
 	});
 }
 
-function selectMemberList(dis) {
-	console.log('ㅎㅇㅎㅇ')
+$(document).on("click", ".pageShiftIcon", function(){
+		setPageJs($(this).attr('shiftType'));
+});
+
+
+var finalDis = 1;
+var finalPage = 0;
+var maxPage = 1;
+
+
+function setPageJs(pageNum) {
+	if (pageNum == "prev") pageNum = finalPage - 1;
+	if (pageNum == "next") pageNum = finalPage + 1;
+	if (pageNum < 1 ) {pageNum = 1; return false;}
+	if (pageNum > maxPage ) {pageNum = maxPage; return false;}
+	console.log("clickCall : " + pageNum);
+	selectMemberList(finalDis, pageNum);
+	
+}
+
+
+
+function selectMemberList(dis, pageNum) {
+	finalDis = dis;
+	if (!pageNum) {
+		console.log("is null to set");
+		pageNum = 1;
+	}
+
+	
+	finalPage = pageNum;
+
+	
 	let formData = {}//$("#valueForm").serialize();
-	//console.log(formData);
 	if (dis == 1) {
 		formData = $("#valueForm").serialize();
-
-
 	} else {
 		formData = $("#searchForm").serialize();
 	}
+	formData += "&userNowPage=" + pageNum;
+	console.log("테스트 " + formData);
 	$.ajax({
 		url: "/admin/selectMemberList",
 		//method:""
@@ -81,7 +122,10 @@ function selectMemberList(dis) {
 		//contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		success: function(data) {
 			console.log(data);
-			$("#memberTable tbody").empty()
+			
+			
+			$("#memberTable tbody").empty();
+			$(".pageArrow").empty();
 			$(data.list).each(function(index, mem) {
 				let userId = JSON.stringify(mem.userId);
 				let check = a.clone();
@@ -99,27 +143,24 @@ function selectMemberList(dis) {
 					.append($("<td>").html(btn.clone().text('변경').attr("onclick", "updataStts(" + userId + ")")));
 
 			})
+			
+			console.log("마지막 페이지 : " + data.page["endPage"]);
+			console.log("레코드 카운트 : " + data.page["totalRecord"]);
+			maxPage = data.page["endPage"];
+			
+			$(".pagination").append('<li class="page-item prevBtn"><a class="page-link pageShiftIcon " shiftType="prev" aria-disabled="true">Previous</a></li>');
+			
+			for (i = 0 ; i < parseInt(data.page["endPage"]) ; i++) {
+				$(".pagination").append(' <li class="page-item page_'+(i+1)+'"><a class="page-link" href="#" onClick="setPageJs('+ (i+1) +')"> ' + (i+1) + '</a></li>');		
+				
+			}
+			$(".pagination").append('<li class="page-item nextBtn"><a class="page-link pageShiftIcon" shiftType="next" aria-disabled="true">Next</a></li>')			
 
-			$(".pagination").append(`
-				<li class="page-item disabled"><a class="page-link" id="previous"
-									href="${data.page.first - 1}" tabindex="-1" aria-disabled="true">Previous</a></li>
-									<li class="page-item disabled"><a class="page-link" id="previous"
-									href="${data.page.first - 1}" tabindex="-1" aria-disabled="true">${data.page.startPage}</a></li>
-			`)
-			$(data.page).each(function(index, mem) {
-				$(".pagination").append(`
-				<li class="page-item"><a class="page-link" href="#">${mem.page}</a></li>
-			`)
-				$(".pagination").append(`
-				<li class="page-item disabled"><a class="page-link" id="previous"
-									href="${data.page.first - 1}" tabindex="-1" aria-disabled="true">${data.page.lastPage}</a></li>
-				<li class="page-item disabled"><a class="page-link" id="next"
-									href="${data.page.last - 1}" tabindex="-1" aria-disabled="true">Next</a></li>
-			`)
-
-			})
-
-
+			if (pageNum == 1) $(".prevBtn").addClass("disabled");
+			else $(".prevBtn").removeClass("disabled");
+			if (pageNum == maxPage) $(".nextBtn").addClass("disabled");
+			else $(".nextBtn").removeClass("disabled");			
+			$(".page_"+finalPage).addClass("active");
 
 
 			/*.append(`<td>${index}</td>`)

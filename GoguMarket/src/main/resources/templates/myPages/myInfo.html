@@ -22,7 +22,7 @@
 		<div class="message-box-section mb-80">
 			<div class="container">
 				<div class="message-box box-shadow white-bg">
-					<form id="memUpdateForm" class="memUpdateForm" action="/memUpdateFormSubmit" method="post"
+					<form id="memUpdateForm" class="memUpdateForm" action="/my/memUpdateFormSubmit" method="post"
 						onsubmit="return false">
 						<div class="row">
 							<div class="col-lg-12">
@@ -328,7 +328,7 @@
 		// ▷ 닉네임 중복 체크 아작스
 			function nickNmCkAjax() {
 				$.ajax({
-					url : 'nickNmChk/' + $('#nickNm').val(),
+					url : '/goguma/nickNmChk/' + $('#nickNm').val(),
 					dataType : 'json',
 					type : 'get',
 					contentType : 'application/json; charset = utf-8',
@@ -415,7 +415,7 @@
 				}
 				
 				$.ajax({	
-					url : "/memUpdateFormSubmit",
+					url : "/my/memUpdateFormSubmit",
 					type : "POST",
 					data : formData,
 					processData : false,
@@ -423,7 +423,7 @@
 					success : function(result) {
 						console.log(result)
 						alert("[수정완료] 회원정보 수정이 완료되었습니다 :D");
-						location.href = "/dealMain";
+						location.href = "/my/myInfoCheck";
 					},
 					error : function(err){
 						alert("[수정실패] 수정 중 오류가 발생하였습니다. :(");
@@ -436,7 +436,7 @@
 		//✅ 파일 삭제 ajax
 			function exFileDeleteAjax(){
 				$.ajax({	
-					url : "/deleteProfile",
+					url : "/my/deleteProfile",
 					type : "post",
 					data :  userId,
 					success : function(delCnt) {

@@ -58,7 +58,7 @@
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				height: '500px',
 				initialView: 'dayGridMonth',
-				//       locale : 'ko'
+				locale : 'ko',
 				events: [
 
 						$.ajax({
@@ -90,11 +90,18 @@
 									textColor : "black"
 								})
 							}
+							//▷ 오늘 출석여부 체크
+							isAttendYn(result);
 						}
 					}) 
 				]
 			});
 			calendar.render();
+			
+			
+ 		}
+ 		function isAttendYn(result){
+ 			
  		}
 		function makeAttend() {
 			let confirmPlz = confirm("출석하시겠습니까?")

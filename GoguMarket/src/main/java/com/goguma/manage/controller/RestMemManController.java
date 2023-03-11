@@ -45,24 +45,25 @@ public class RestMemManController {
 
 	@GetMapping("/admin/selectMemberList")
 	public Map<String, Object> selectMemberList(CommonPaging page, MemVO vo) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
 		
-
-
-		page.setPageUnit(5); // 한 페이지에 출력할 레코드 건수
+		System.out.println("1번 호출" + vo.getUserNowPage());
+		Map<String, Object> map = new HashMap<String, Object>();
+		page.setPage(vo.getUserNowPage());
+		page.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
 		page.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
-
 		vo.setFirst(page.getFirst());
 		vo.setLast(page.getLast());
+		
 
 		page.setTotalRecord(member.getcountTotal(vo));
-
 		map.put("list",member.selectMemberList(vo));
 		map.put("page",page);
 
 		return map;
 	}
+
+	
+	
 
 	@PostMapping("/updateStts")
 	public int updateStts(MemVO vo) {
