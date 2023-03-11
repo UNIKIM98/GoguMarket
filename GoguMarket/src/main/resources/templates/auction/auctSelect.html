@@ -63,8 +63,8 @@
 												<hr>
 												<!-- single-pro-color-rating -->
 												<div class="single-pro-color-rating clearfix">
-													<h3 class="pro-rating sin-pro-rating f-right">경매 종료까지
-														: [[${auct.ddlnYmd}]]</h3>
+													<h3 class="pro-rating sin-pro-rating f-right">
+														종료까지 디데이ㄱ : [[${auct.ddlnYmd}]]</h3>
 													<h3>즉시구매가 : [[${auct.quickPrc}]]</h3>
 												</div>
 												<!-- hr -->
@@ -82,17 +82,21 @@
 													<div class="pro-rating sin-pro-rating f-right">
 														<p class="color-title f-left">마감일</p>
 														<h5>[[${auct.ddlnYmd}]]</h5>
-														<h4>타이머연습</h4>
-														<h5 id="remain-time"></h5>
+														<!-- <h4>타이머연습</h4>
+														<h5 id="remain-time"></h5> -->
 													</div>
 												</div>
 												<!-- plus-minus-pro-action end -->
 												<!-- hr -->
 												<hr>
 												<!-- single-product-price -->
+
 												
 												<h2 class="pro-price" th:if="${auctMem!='nothing'}"> 현재 최고가 : [[${auctMem[0].nowPrc}]] 원</h2>
 												<h2 class="pro-price" th:if="${auctMem=='nothing'}"> 현재최고가 없음</h2>
+
+												<h2 class="pro-price">현재 입찰 가격 : [[${auctMem[0].nowPrc}]] 원</h2>
+
 												<!--  hr -->
 												<hr>
 												<a th:if="${session.userId!=null}" href="/my/auctInsertForm" id="addAuct"

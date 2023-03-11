@@ -14,6 +14,13 @@ public class MemManController {
 		return "admin/adminMember";
 	}
 
+	@GetMapping("/admin/adminBoard")
+	public String boardManage() {
+
+		return "admin/adminBoard";
+	}
+
+	
 	
 	
 	

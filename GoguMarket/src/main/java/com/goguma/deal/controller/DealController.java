@@ -25,8 +25,10 @@ import com.goguma.common.service.TestService;
 import com.goguma.common.vo.AtchVO;
 import com.goguma.common.vo.SearchVO;
 import com.goguma.deal.service.DealReviewService;
+import com.goguma.deal.service.DealRvVoteService;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealReviewVO;
+import com.goguma.deal.vo.DealRvVoteVO;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
@@ -42,6 +44,9 @@ public class DealController {
 
 	@Autowired
 	private DealReviewService RvService;
+	
+	@Autowired
+	private DealRvVoteService voteService;
 
 	@Autowired
 	private AtchService atchService;
@@ -49,7 +54,7 @@ public class DealController {
 	@Autowired
 	private CommonCodeService codeService;
 
-	@Autowired
+	@Autowired // common-search
 	private SearchService searchService;
 
 	@Autowired
@@ -90,9 +95,10 @@ public class DealController {
 																		// common_detail_code만 들고오면됨
 
 		model.addAttribute("word", searchService.getPopularWord());
-
-		searchService.insertSearch(scvo); // 검색어저장ㅅㅂ
-		System.out.println(searchService.getPopularWord() + "wkfs나오낫");
+		if (scvo.getSearchTtl() != null && !scvo.getSearchTtl().equals(""))
+		{
+			searchService.insertSearch(scvo);
+		} // 검색어저장
 		return "deal/dealMain";
 	}
 
@@ -107,7 +113,7 @@ public class DealController {
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
 
-		paging.setTotalRecord(dealService.getcountTotal(svo));
+		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 deal테이블에 있는 총 데이터건수 
 
 		model.addAttribute("lists", dealService.dealListSelect(svo));
 		model.addAttribute("category", codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는
@@ -155,7 +161,8 @@ public class DealController {
 	}
 
 	// ▷ 중고거래 리뷰 작성 폼 : 단건 게시글에 대한 리뷰
-	@RequestMapping("/dealReview/{dlNo}")
+
+	@RequestMapping("/my/dealReview/{dlNo}")
 	public String dealReview(Model model, @PathVariable int dlNo) {
 		model.addAttribute("deal", dealService.selectDeal(dlNo));
 
@@ -163,17 +170,18 @@ public class DealController {
 	}
 
 	// ▷ 중고거래 리뷰 작성 submit
-	@RequestMapping("/dealReviewsubmit")
+	@RequestMapping("/my/dealReviewsubmit")
 	@ResponseBody
-	public String dealReview(DealReviewVO rvo, List<MultipartFile> files) {
-		int atchId = atchService.insertFile(files);
+	public int dealReview(DealReviewVO rvo, DealRvVoteVO vtList) {
 
-		if (atchId > 0) {
-			rvo.setAtchId(atchId);
-		}
-		// 후기입력
-		RvService.insertDealRv(rvo);
-		return "redirect:dealReview/{dlNo}"; // 이전페이지로 가고싶은데 dlNo 유지한채로되나?
+		List<String> list = vtList.getVtList();
+		// 아주 잘 나오신답니다 ^ㅇ^ System.out.println(rvo+"ddddddddddddddd");
+		// 리뷰 인서트
+		int rvNo = RvService.insertDealRv(rvo, list);
+		
+		System.out.println(rvo.getRvNo()+"===== 리뷰번호");
+		return rvo.getDlNo(); // 이전페이지로 가고싶은데 dlNo 유지한채로되나? 
+		
 	}
 
 	// ===========================
@@ -181,7 +189,7 @@ public class DealController {
 	@GetMapping("/my/dealupdate/{dlNo}")
 	public String updateTest(Model model, HttpServletRequest request, @PathVariable int dlNo) {
 		// 임시로그인 : 세션에 아이디, 거래지역 담기
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();  
 		MemVO mVO = new MemVO();
 
 		mVO.setUserId((String) session.getAttribute("userId"));
@@ -256,8 +264,8 @@ public class DealController {
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
-		model.addAttribute("review", RvService.getDealRv(ntslId));// 여러건 . 후기 조회
-		System.out.println(RvService.getDealRv(ntslId));
+		model.addAttribute("review", RvService.getDealRv(ntslId));// 여러건의 후기 조회
+		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
 		return "deal/dealSellerPage";
 	}
 

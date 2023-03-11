@@ -2,6 +2,28 @@
 	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.mem.mapper.MemMapper">
 
+	<sql id="creiteria">
+		<where>
+			<if test="userStts != null and userStts != ''">
+				user_stts = #{userStts}
+			</if>
+
+			<if test="userSe != null and userSe != ''">
+				AND user_se = #{userSe}
+			</if>
+
+			<if test="searchKey =='EM'">eml LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='ID'">user_Id LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='NK'">nick_Nm LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='NM'">user_Nm LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey =='PH'">mbl_Telno LIKE '%'||#{search}||'%'</if>
+			<if test="searchKey ==''"></if>
+
+		</where>
+	</sql>
+
+
+
 	<!-- ▶ 회원가입 -->
 	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
 		INSERT INTO MEM (USER_ID,
@@ -49,17 +71,16 @@
 	<select id="selectMemberList"
 		parameterType="com.goguma.mem.vo.MemVO"
 		resultType="com.goguma.mem.vo.MemVO">
+		select *
+		from (select rownum rn,a.* from(
 		SELECT * FROM mem
-		<where>
-			<if test="userStts != null and userStts != ''">
-				user_stts = #{userStts}
-			</if>
-
-			<if test="userSe != null and userSe != ''">
-				AND user_se = #{userSe}
-			</if>
-		</where>
-	
+		
+		<include refid="creiteria"></include>
+		order by join_ymd
+		
+		<![CDATA[
+		) a where rownum <= #{last} )b where rn >= #{first}
+		]]>
 
 	</select>
 
@@ -80,6 +101,18 @@
 		DELETE FROM mem WHERE user_id = #{userId}
 
 	</delete>
+
+
+	<!-- ▶ 관리자 멤버 제명(delete) -->
+
+
+
+	<select id="getcountTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM mem
+		<include refid="creiteria"></include>
+
+	</select>
 
 
 	<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->

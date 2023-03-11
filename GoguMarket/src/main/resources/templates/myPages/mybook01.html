@@ -19,7 +19,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 
 				<!-- 내용 윗쪽 -->
 				<div class="row">
@@ -33,7 +33,8 @@
 							</tr>
 
 							<!-- 예약1건 -->
-							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}" onclick="abc()" style="cursor: pointer;">
+							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
+								th:onclick="abc([[${sim.RSVT_NO}]])" style="cursor: pointer;">
 								<th:block th:if="${sim != null}">
 									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
 									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
@@ -59,69 +60,45 @@
 				<!--내용 아랫쪽-->
 				<div class="row">
 					<div class="col-lg-6 offset-lg-1">
-					
+
 						<!--테이블1 : 주문메뉴-->
-						<div class="myRsvtDetail" th:each="list: ${lists}"
-											th:if="${list != null} and ${listStat.index == 0}" 
-											th:id="${list.RSVT_NO}">
+						<div class="myRsvtDetail">
 							<div class="tab-pane active" id="order-complete">
 								<div class="order-complete-content box-shadow"
 									style="padding: 20px;">
 
-									<table>
-										<tr>
-											<th class="td-title-1">메뉴</th>
-											<th class="td-title-1">수량</th>
-											<th class="td-title-2">가격</th>
-										</tr>
+									<table id="menuTbl">
+										<thead>
+											<tr>
+												<th class="td-title-1">메뉴</th>
+												<th class="td-title-1">수량</th>
+												<th class="td-title-2">가격</th>
+											</tr>
+										</thead>
 										<!-- 메뉴 1건 -->
+										<tbody>
+											<!-- <tr> -->
+											<!-- <td class="td-title-1">(메뉴이름)</td> -->
+											<!-- <td class="td-title-1">(수량)</td> -->
+											<!-- <td class="td-title-1">(수량*각 가격)</td> -->
+											<!-- </tr> -->
+										</tbody>
 
-										<tr th:each="list: ${lists}" th:if="${list != null }">
-											<td class="td-title-1" th:text="${list.MENU_NM}">(메뉴이름)</td>
-											<td class="td-title-1" th:text="${list.AMOUNT}">(수량)</td>
-											<td class="td-title-2"
-												th:text="|${list.AMOUNT * list.MENU_PRC}|">(수량*각 가격)</td>
-										</tr>
+									</table>
 
-										<tr th:each="list: ${lists}"
-											th:if="${list != null} and ${listStat.index == 0}">
-											<th class="order-total">합계</th>
-											<td class="order-total"></td>
-											<td class="order-total-price" th:text="${list.PAY_AMT}">(합계)</td>
-										</tr>
+									<table id="totalTbl">
+										<!-- <tr> -->
+										<!-- <th class="order-total">합계</th> -->
+										<!-- <td class="order-total"></td> -->
+										<!-- <td class="order-total-price" id="totalSum">(합계)</td> -->
+										<!-- </tr> -->
 									</table>
 									<hr>
 
 									<!--테이블2 : 시간, 인원, 요청사항-->
-									<table>
-										<tr th:each="sim: ${simple}">
-											<th class="td-title-1">예약일자</th>
-											<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
-											<td class="td-title-1" th:each="code: ${code}"
-												th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
-												th:text="${code.commonNm}">(예약시간)</td>
-										</tr>
-										<tr th:each="sim: ${simple}">
-											<th class="td-title-1">예약인원</th>
-											<td class="td-title-1" colspan="2" th:text="${sim.RSVT_NOPE}">(인원수)</td>
-										</tr>
-										<tr>
-											<th class="td-title-1">예약자정보</th>
-											<td class="td-title-1" id="tdNick" value="">(닉네임)</td>
-											<td class="td-title-1" id="tdTel" value="">(전화번호)</td>
-										</tr>
-										<tr>
-										</tr>
-										<tr th:each="sim: ${simple}">
-											<th class="td-title-1">요청사항</th>
-											<th:block th:if="${sim != null}">
-												<td class="td-title-1" colspan="2"
-													th:text="${sim.RSVT_WANT}">(요청사항)</td>
-											</th:block>
-											<th:block th:if="${sim == null}">
-												<td class="td-title-1" colspan="2">요청사항이 없습니다.</td>
-											</th:block>
-										</tr>
+									<table id="rsvtInfo">
+				
+
 									</table>
 
 								</div>
@@ -198,23 +175,91 @@
 			$('.myRsvtDetail').attr('style','display:none;');
 		});
 		
-		function abc(){
+		function abc(rsvtNo){
 			console.log("tr클릭")
-			
-			 $('.table tr:not(:first-child)').each(function() {
-				var simId = $(this).attr('id');
-				console.log(simId);
+			//클릭시 상세정보 보이게
+			$('.myRsvtDetail').attr('style','display:block;');
+		
+		//메뉴부분 ajax호출
+		$.ajax({
+			url:"/my/myRsvtAjax",
+			type:"get",
+			data: {rsvtNo},
+
+			success: function(lists){
+				//누를때마다 지워지고 append하기 위함 
+				$('#menuTbl tbody').empty()	
+				$('#totalTbl').empty()		
+
+				// 총 결제금액을 저장할 변수
+				let totalPrice = 0; 
 				
-				var listId = $('.myRsvtDetail').attr('id');
-				console.log(listId)
-				 
-				if(simId == listId){
-					$('.myRsvtDetail').attr('style','display:block;');
+				for(list of lists){
+					$('#menuTbl tbody').append(
+					`<tr>
+						<td class="td-title-1">${list.MENU_NM}</td>
+						<td class="td-title-1">${list.AMOUNT}</td>
+						<td class="td-title-2">${list.AMOUNT * list.MENU_PRC}</td>
+					</tr>`
+					)
+					 totalPrice += list.AMOUNT * list.MENU_PRC;
+				
 				}
-			 });
-			
+					$('#totalTbl').append(
+							`
+							<tr>
+								<th class="order-total">합계</th>
+								<td class="order-total"></td>
+								<td class="order-total-price">${totalPrice}</td>
+							</tr>
+							`		
+						)
+				
+				
+			},error : function(err){
+				console.log("error")
+			}
+		})
+		
+		//상세내역 예약자부분 ajax
+		$.ajax({
+			url:"/my/myRsvtInfoAjax",
+			type:"get",
+			data: {rsvtNo},
+
+			success: function(list){
+				console.log("밑에꺼: "+list.mblTelno + list.nickNm)
+				$('#rsvtInfo').empty()
+				$('#rsvtInfo').append(
+				`<tr>
+					<th class="td-title-1">예약일자</th>
+					<td class="td-title-1">${list.rsvtYmd}</td>
+					<td class="td-title-1">${list.rsvtTm}</td>
+				</tr>
+				<tr>
+					<th class="td-title-1">예약인원</th>
+					<td class="td-title-1" colspan="2" >${list.rsvtNope}</td>
+				</tr>
+				<tr>
+					<th class="td-title-1">예약자정보</th>
+					<td class="td-title-1">${list.nickNm}</td>
+					<td class="td-title-1">${mblTelno}</td>
+				</tr>
+				<tr>
+					<th class="td-title-1">요청사항</th>
+					<td class="td-title-1" colspan="2">${list.rsvtWant}</td>
+				</tr>
+				`
+				)
+				
+				
+			},error : function(err){
+				console.log("error")
+			}
+		})
 			
 		}
+		
 
 	</script>
 

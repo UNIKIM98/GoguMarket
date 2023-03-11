@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+
 import lombok.Data;
 
 @Data
@@ -18,10 +19,19 @@ public class MemVO implements UserDetails {
 
 	private String userId;
 
+	//=> 관리자 사용
 	private String userSe;
 	private String searchKey;
+	private String search;
 	private String userStts;
+	private int userNowPage;
 
+	private int first;
+	private int last; //페이징 사용 - 마지막페이지
+	
+	//=>
+	
+	
 	private String userPw;
 	private String userNm;
 	private String gender;

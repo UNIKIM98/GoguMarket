@@ -69,7 +69,7 @@
 
 	<!-- deal 리스트 셀렉트(페이징) -->
 	<select id="dealListSelect" 
-			parameterType="com.goguma.deal.vo.DealVO"
+			parameterType="com.goguma.deal.vo.DealSearchVO"
 			resultType="com.goguma.deal.vo.DealVO">
 	select * 
 			from (select rownum rn,a.* from(
@@ -79,8 +79,12 @@
 	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
 			FROM DEAL d
 			<include refid="creiteria"></include>
-		
-			order by dl_no
+		<if test="orderby != null and orderby != ''" >
+			order by ${orderby} desc
+		</if>
+		<if test="orderby == null " >
+			order by dl_ymd desc
+		</if>
 	<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>	

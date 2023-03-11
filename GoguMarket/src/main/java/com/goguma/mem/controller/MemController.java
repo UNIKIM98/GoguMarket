@@ -52,6 +52,7 @@ public class MemController {
 	}
 
 	// 회원가입 폼 submit
+
 	@PostMapping("/goguma/memberJoin")
 	public String memberJoin(MemVO mVO, HttpServletResponse response) {
 		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감

@@ -448,14 +448,14 @@
 					// 합계 출력
 					var totalRow = $('#orderMenu').find("tr:last");
 					var totalPrice = totalRow.find(".order-total-price");
-					var totalPriceValue = totalRow.find(".order-total-price").attr('value');
-					console.log("총액"+totalPrice)
-					var afterPrice = totalPriceValue - menuPriceRight;
-					console.log("계산 후 총액 " + afterPrice)
+					//var totalPriceValue = totalRow.find(".order-total-price").attr('value');
+					console.log("총액"+totalSum)
+					totalSum = totalSum - menuPriceRight;
+					console.log("계산 후 총액 " + totalSum)
 					//totalPrice.nextSibling.remove()
-					totalPrice.text(afterPrice).attr("value",afterPrice).append(
+					totalPrice.text(totalSum).attr("value",totalSum).append(
 						`
-						<input type=hidden id=rsvtPay name=rsvtPay value="${afterPrice}">
+						<input type=hidden id=rsvtPay name=rsvtPay value="${totalSum}">
 						`
 					);
 

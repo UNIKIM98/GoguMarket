@@ -28,6 +28,10 @@ public interface MemMapper {
 	
 	int deleteMember(MemVO vo);
 	
+	int getcountTotal(MemVO vo);
+	
+
+	
 	//====================================관리자 사용
 
 	// ▷ 마이페이지 ========================

@@ -37,22 +37,20 @@ public class AuctController {
 	@Autowired
 	private AuctMemService auctMemService; // 경매 입찰자 영역
 	@Autowired
-	private CommonCodeService codeService;
+	private CommonCodeService codeService; // 공통코드 영역
 
 	@GetMapping("/goguma/auctList")
 	public String getauctList(Model model, AuctVO vo) {
 		// 전체품목 리스트
 
 		// 아래는 auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
-		model.addAttribute("lists", auctService.getAuctList()); 
+		model.addAttribute("lists", auctService.getAuctList());
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
-		
-		
+
 //		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 //		model.addAttribute(cnt); 리스트에서 뭐 클릭시 증가시켜주면? 근데 셀렉트 안에서 새로고침한다면?
-														// 클릭수가 새로고침 조회수 조작은 의미없는 듯 그냥 리스트에서 클릭 고고
-		
-		
+		// 클릭수가 새로고침 조회수 조작은 의미없는 듯 그냥 리스트에서 클릭 고고
+
 		System.out.println(model); // 모델 확인
 
 		return "auction/auctList";
@@ -71,7 +69,6 @@ public class AuctController {
 		System.out.println(atchList.size() + "======auctMem size================");
 		System.out.println(atchList.size() == 0);
 
-		
 		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 
 		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
@@ -85,7 +82,6 @@ public class AuctController {
 		}
 		System.out.println(avoList.equals(null) + "equals");
 		System.out.println((avoList.size() == 0) + "size");
-
 
 		System.out.println("조회수" + cnt); // 조회수 증가 확인
 		System.out.println("첨부파일" + atchList); // 첨부파일 확인
@@ -140,7 +136,7 @@ public class AuctController {
 	public void auctDelete(@PathVariable int auctNo, HttpServletResponse response) {
 		System.out.println(auctNo + " => 삭제할 글 번호");
 
-		AuctVO vo = auctService.selectAuct(auctNo);
+		AuctVO vo = auctService.selectAuctNo(auctNo);
 		System.out.println(vo + " => 삭제할 글 정보");
 
 		List<AtchVO> atchList = auctService.selectAuctAtch(auctNo);
@@ -151,7 +147,7 @@ public class AuctController {
 
 		int delAtch = atchService.deleteFile(atchList);
 		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
-		
+
 		try {
 			if (delAuct > 0) {
 				System.out.println("왔니..delAcut 안쪽임");
@@ -159,7 +155,7 @@ public class AuctController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/auctList';");
+				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/goguma/auctList';");
 
 				out.println("</script>");
 
@@ -179,4 +175,47 @@ public class AuctController {
 			e.printStackTrace();
 		}
 	}
+
+	@GetMapping("/my/allAuction")
+	public String allAuction(Model model, HttpServletRequest request) {
+		// 마이페이지 나의 모든 경매 이동
+
+		// 세션의 id값과 작성 글의 id값이 같은 게시물만 보여준다.
+		HttpSession session = request.getSession();				//세션값을 가져옵니다
+		String userId = (String)session.getAttribute("userId");	//세션값중 "userId"를 String으로가져오고 userId라 명명합니다.
+		List<AuctVO> myAuctList = auctService.selectUserId(userId); //userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
+		
+		model.addAttribute("myAuctList",myAuctList);			//모델에 잘 요리된 myAuctList를 담아줍니다.
+		model.addAttribute("nowPrcs", auctMemService.selectNowPrc()); //myAuctList 위에 nowPrc를 뿌려줍니다.
+		
+		System.out.println("==============================마이페이지" + model);
+
+		return "auction/allAuction";
+
+	}
+
+	@GetMapping("/my/takePartAuction")
+	public String takePartAuction(Model model) {
+		// 마이페이지 나의 모든 경매 이동
+
+		List<CommonCodeVO> codeList = codeService.codeList("002");
+		codeList.remove(0);
+
+		model.addAttribute("category", codeList);
+		return "auction/takePartAuction";
+
+	}
+
+	@GetMapping("/my/hostedAuction")
+	public String hostedAuction(Model model) {
+		// 마이페이지 내가 참여한 경매 이동
+
+		List<CommonCodeVO> codeList = codeService.codeList("002");
+		codeList.remove(0);
+
+		model.addAttribute("category", codeList);
+		return "auction/hostedAuction";
+
+	}
+
 }
