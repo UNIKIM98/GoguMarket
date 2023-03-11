@@ -1,4 +1,4 @@
-package com.goguma.rsvt.vo;
+package com.goguma.common.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Greeting {
-	private String content;
+public class HelloMessage {
+	private String name;
 }
