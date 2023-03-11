@@ -81,7 +81,7 @@ public class MemRestController {
 	}
 
 	// 회원 정보 수정
-	@PostMapping("/memUpdateFormSubmit")
+	@PostMapping("/my/memUpdateFormSubmit")
 	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files) {
 		System.out.println("수정할 VO => " + memVO);
 
@@ -121,7 +121,7 @@ public class MemRestController {
 		return memUpdateCnt;
 	}
 
-	@RequestMapping("/deleteProfile")
+	@RequestMapping("/my/deleteProfile")
 	@ResponseBody
 	public int deleteProfile(@RequestBody String userId) {
 		int cnt = 0;

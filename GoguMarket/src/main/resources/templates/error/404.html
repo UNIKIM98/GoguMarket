@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+</body>
+<div layout:fragment="content">
+	<script type="text/javascript">
+		$(function() {
+			console.log("404 에러 발생")
+			alert("⚠ 없는 페이지입니다.")
+			location.href = "/goguma/dealMain"
+		})
+	</script>
+</div>
+</html>

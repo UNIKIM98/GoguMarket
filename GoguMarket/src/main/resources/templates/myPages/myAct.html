@@ -46,6 +46,7 @@
 <script>
 	// ==============================================================
 	var imgSrc = "";
+	var memActNo = "";
 
 	// ==============================================================
 	// ▷ 계좌 등록 함수
@@ -57,7 +58,6 @@
 	// ▷ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
 		$(function(){
 			actInfoAjax();
-			var memActNo = "";
 		})
 		
 		function actInfoAjax(){
@@ -172,7 +172,7 @@
 		}
 
 		//▷ 대표계좌로 설정하기
-		function updateMemActAjax(event){0
+		function updateMemActAjax(event){
 			let actNo = $(event.target).parent().parent().attr('id');
 
 			if(actNo == memActNo){
@@ -371,7 +371,7 @@
 						<!--▶ 대표계좌 -->
 						<div class="row mb-100" id="memActSection">
 							<div class="section-title text-start ">
-								<h2 class="blog-section-title border-left mb-30">나의계좌</h2>
+								<h4 class="blog-section-title border-left mb-30">나의계좌</h4>
 								<hr>
 								<h4 style="font-weight: bold;">대표계좌</h4>
 							</div>

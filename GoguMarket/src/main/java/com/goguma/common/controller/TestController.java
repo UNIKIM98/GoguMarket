@@ -161,9 +161,5 @@ public class TestController {
 		return "deal/dealMain";
 	}
 
-	@GetMapping("/chatTest")
-	public String chatTest() {
-		return "common/chatTest";
-	}
 
 }
