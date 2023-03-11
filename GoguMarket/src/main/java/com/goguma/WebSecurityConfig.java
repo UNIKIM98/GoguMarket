@@ -64,7 +64,8 @@ public class WebSecurityConfig {
 				.antMatchers("/my/**").hasAnyRole("USER", "ADMIN")
 				.antMatchers("/biz/**").hasAnyRole("BIZ", "ADMIN")
 				.antMatchers("/admin/**").hasRole("ADMIN")
-				.anyRequest().authenticated())
+//				.anyRequest().authenticated()
+				)
 				
 				// 로그인 유지 ------------------------------------------------------------------------------------------------
 				//.rememberMe((remember) -> remember.tokenValiditySeconds(86400 + 43200) // 토큰 유효기간(36h)

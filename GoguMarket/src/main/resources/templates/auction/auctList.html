@@ -52,7 +52,7 @@
 								<div class="featured-product">
 									<div class="active-featured-product slick-arrow-2">
 										<!-- product-item start -->
-										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts!=2}">
+										<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts==1}">
 											<a th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 												<div class="product-item" th:each="nowPrc : ${nowPrcs}"
 													th:if="${auct.auctNo == nowPrc.auctNo}">
@@ -117,9 +117,10 @@
 
 											<!-- product-item start -->
 
-											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts!=2}">
+											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts==1}">
+											[[${auct.auctNo}]]
 												<a
-													th:href="@{/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
+													th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 													<div class="product-item" th:each="nowPrc : ${nowPrcs}"
 														th:if="${auct.auctNo == nowPrc.auctNo}">
 														<div class="product-img">
@@ -171,17 +172,17 @@
 
 		<!-- Placed JS at the end of the document so the pages load faster -->
 
-		<!-- jquery latest version -->
-		<script src="js/vendor/jquery-3.6.0.min.js"></script>
-		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-		<!-- Bootstrap framework js -->
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<!-- jquery.nivo.slider js -->
-		<script src="lib/js/jquery.nivo.slider.js"></script>
-		<!-- All js plugins included in this file. -->
-		<script src="js/plugins.js"></script>
-		<!-- Main js file that contents all jQuery plugins activation. -->
-		<script src="js/main.js"></script>
+<!-- 		<!-- jquery latest version --> -->
+<!-- 		<script src="js/vendor/jquery-3.6.0.min.js"></script> -->
+<!-- 		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script> -->
+<!-- 		<!-- Bootstrap framework js --> -->
+<!-- 		<script src="js/bootstrap.bundle.min.js"></script> -->
+<!-- 		<!-- jquery.nivo.slider js --> -->
+<!-- 		<script src="lib/js/jquery.nivo.slider.js"></script> -->
+<!-- 		<!-- All js plugins included in this file. --> -->
+<!-- 		<script src="js/plugins.js"></script> -->
+<!-- 		<!-- Main js file that contents all jQuery plugins activation. --> -->
+<!-- 		<script src="js/main.js"></script> -->
 	</article>
 </body>
 

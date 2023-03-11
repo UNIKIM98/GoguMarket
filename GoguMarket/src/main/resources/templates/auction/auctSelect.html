@@ -90,8 +90,9 @@
 												<!-- hr -->
 												<hr>
 												<!-- single-product-price -->
-												<h2 class="pro-price"> 현재 입찰 가격 : [[${auctMem[0].nowPrc}]] 원</h2>
 												
+												<h2 class="pro-price" th:if="${auctMem!='nothing'}"> 현재 최고가 : [[${auctMem[0].nowPrc}]] 원</h2>
+												<h2 class="pro-price" th:if="${auctMem=='nothing'}"> 현재최고가 없음</h2>
 												<!--  hr -->
 												<hr>
 												<a th:if="${session.userId!=null}" href="/my/auctInsertForm" id="addAuct"
