@@ -34,7 +34,7 @@
 
 							<!-- 예약1건 -->
 							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
-								th:onclick="abc([[${sim.RSVT_NO}]])" style="cursor: pointer;">
+								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;">
 								<th:block th:if="${sim != null}">
 									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
 									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
@@ -107,8 +107,8 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="tab-pane active pt-30" id="order-complete">
-							<a class="button extra-small mb-20" href="#"><span>1/n정산하기
-							</span></a> <a class="button extra-small mb-20" onclick="aaa()"
+							<a class="button extra-small mb-20" href="/chat/test.do"><span>1/n정산하기
+							</span></a> <a class="button extra-small mb-20" onclick="rsvtModify()"
 								style="cursor: pointer;"><span>예약변경신청</span></a> <a
 								class="button extra-small mb-20" href="#"><span>예약취소하기</span>
 							</a> <a class="button extra-small mb-20" href="#" id="modalBtn"><span>알림설정</span>
@@ -151,8 +151,12 @@
 		<!-- 모달창 끝-->
 
 		<script th:inline="javascript">
-		function aaa(){
-			window.location.href = "/my/mybook02"	//예약번호 받아서 넘기기
+		
+		var getRsvtNo = 0; 
+		console.log(getRsvtNo)
+		
+		function rsvtModify(){
+			window.location.href = "/my/mybook02/" + getRsvtNo	//예약번호 받아서 넘기기
 		}
 		
 		//세션에 담긴 정보 변수에 담아주기
@@ -175,7 +179,7 @@
 			$('.myRsvtDetail').attr('style','display:none;');
 		});
 		
-		function abc(rsvtNo){
+		function trClick(rsvtNo){
 			console.log("tr클릭")
 			//클릭시 상세정보 보이게
 			$('.myRsvtDetail').attr('style','display:block;');
@@ -214,7 +218,8 @@
 							</tr>
 							`		
 						)
-				
+				getRsvtNo = list.RSVT_NO
+				console.log(getRsvtNo)
 				
 			},error : function(err){
 				console.log("error")

@@ -53,6 +53,12 @@ public class RsvtServiceImpl implements RsvtService{
 		return map.selectRsvtOne(rsvtNo);
 	}
 
+	//예약번호 가게메뉴 조회
+	@Override
+	public List<Map> selectRsvtBizMenu(String rsvtNo) {
+		return map.selectRsvtBizMenu(rsvtNo);
+	}
+
 	
 	
 

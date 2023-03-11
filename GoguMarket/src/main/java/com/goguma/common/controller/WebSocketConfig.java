@@ -1,4 +1,4 @@
-package com.goguma.rsvt.controller;
+package com.goguma.common.controller;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -13,9 +13,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 	 
 	 @Override
 	  public void configureMessageBroker(MessageBrokerRegistry config) {  //application 내부에서 사용할 path를 지정한다.
-	    config.enableSimpleBroker("/topic");				
+	    config.enableSimpleBroker("/sub");				
 	    		//▲ 구독신청(메시지를 받겠다는 신청) : SimpleBroker를 등록함. 그게먼데? => 해당경로를 subscribe하는 client에게 메시지 전달
-	    config.setApplicationDestinationPrefixes("/app");	//메시지를 보냄 (client에서 send요청을 처리함)
+	    config.setApplicationDestinationPrefixes("/pub");	//메시지를 보냄 (client에서 send요청을 처리함)
 	  }
 
 	  @Override

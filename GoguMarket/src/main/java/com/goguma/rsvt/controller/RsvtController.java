@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goguma.biz.service.BizMemService;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.common.vo.ChatVO;
+import com.goguma.common.vo.Greeting;
+import com.goguma.common.vo.HelloMessage;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 import com.goguma.rsvt.mapper.RsvtMapper;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtService;
-import com.goguma.rsvt.vo.HelloMessage;
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
 import com.goguma.rsvt.vo.RsvtVO;
@@ -82,9 +85,9 @@ public class RsvtController {
 	}
 
 	// 예약완료
-	@GetMapping("/my/book0604/{rsvtNo}")
+	@GetMapping("/my/rsvtComplete/{rsvtNo}")
 	public String book0604(@PathVariable int rsvtNo, Model model) {
-		System.out.println(rsvtNo);
+		//System.out.println(rsvtNo);
 		model.addAttribute("info", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
 		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		return "rsvt/book0604";
@@ -92,7 +95,7 @@ public class RsvtController {
 	
 
 	// 예약내역
-	@GetMapping("/my/mybook01")
+	@GetMapping("/my/myReservation")
 	public String mybook01(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
@@ -131,9 +134,16 @@ public class RsvtController {
 	}
 	
 	
-
-	@GetMapping("/my/mybook02")
-	public String mybook02() {
+	//예약수정
+	@GetMapping("/my/mybook02/{rsvtNo}")
+	public String mybook02(@PathVariable int rsvtNo, Model model) {
+		System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
+		
+		model.addAttribute("rsvt",rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
+		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
+		model.addAttribute("code", codeService.codeList("007"));
+		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
+		
 		return "myPages/mybook02";
 	}
 
@@ -208,25 +218,7 @@ public class RsvtController {
 
 	}
 
-	// 웹소켓......
-
-//	@MessageMapping("/hello")
-//	@SendTo("/topic/greetings")
-//	public Greeting greeting(HelloMessage message) throws Exception {
-//		Thread.sleep(1000); // simulated delay
-//		return new Greeting(message.getName());
-//										//▲ 태그가 포함되어있으면 제거해줌(?)
-//		
-//		//db를 이용해서 할때는 @SendTo어노테이션을 지우고 service를 이용하여 insert 하면된다(?)
-//		//service.insert(vo);
-//	}
-//
-//	@MessageMapping("/hello")
-//	public void greeting(HelloMessage message) throws Exception {
-//		Thread.sleep(1000); // simulated delay
-//		MemVO memVO = new MemVO();
-//		memVO.setUserNm(message.getName());
-//		memService.selectUser(memVO);
-//	}
+	
+	
 
 }
