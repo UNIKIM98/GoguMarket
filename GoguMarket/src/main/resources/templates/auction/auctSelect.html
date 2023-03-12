@@ -55,17 +55,15 @@
 										<!-- single-product-info start -->
 										<div class="col-lg-7">
 											<div class="single-product-info">
-												<h3 class="text-black-1">[[ ${auct.auctTtl} ]]</h3>
-												<h5 class="pro-rating sin-pro-rating f-right">조회수
-													[[${auct.inqCnt}]]</h5>
-												<h6 class="brand-name-2">[[ ${auct.userId} ]]</h6>
+												<h3 class="text-black-1" th:text="${auct.auctTtl}">[[  ]]</h3>
+												<h5 class="pro-rating sin-pro-rating f-right">조회수</h5>
+												<h6 class="brand-name-2" th:text="${auct.userId}"></h6>
 												<!--  hr -->
 												<hr>
 												<!-- single-pro-color-rating -->
 												<div class="single-pro-color-rating clearfix">
-													<h3 class="pro-rating sin-pro-rating f-right">
-														종료까지 디데이ㄱ : [[${auct.ddlnYmd}]]</h3>
-													<h3>즉시구매가 : [[${auct.quickPrc}]]</h3>
+													<h3 class="pro-rating sin-pro-rating f-right">경매마감일 : <span th:text="${auct.ddlnYmd}"></span></h3>
+													<h3 th:if="${auct.quickPrc != null}" th:text="${auct.quickPrc}">즉시구매가 : <span th:text="${auct.ddlnYmd}"></span></h3>
 												</div>
 												<!-- hr -->
 												<hr>
@@ -73,31 +71,18 @@
 												<div class="plus-minus-pro-action clearfix">
 													<div class="sin-plus-minus f-left clearfix">
 														<p class="color-title f-left">등록일</p>
-														<h5>[[${auct.regYmd}]]</h5>
+														<h5 th:text="${auct.regYmd}"></h5>
 													</div>
-													<span
-														th:if="${auct.stts.equals(1)}">----------경매중입니다----------</span>
-													<span
-														th:if="${auct.stts.equals(2)}">----------마감되었습니다----------</span>
+													<span th:if="${auct.stts.equals(1)}" th:text="----------경매중입니다----------"></span>
+													<span th:if="${auct.stts.equals(2)}" th:text="----------마감되었습니다----------"></span>
 													<div class="pro-rating sin-pro-rating f-right">
 														<p class="color-title f-left">마감일</p>
-														<h5>[[${auct.ddlnYmd}]]</h5>
-														<!-- <h4>타이머연습</h4>
-														<h5 id="remain-time"></h5> -->
+														<h5 th:text="${auct.ddlnYmd}"></h5>
 													</div>
 												</div>
-												<!-- plus-minus-pro-action end -->
-												<!-- hr -->
-												<hr>
-												<!-- single-product-price -->
-
-												
-												<h2 class="pro-price" th:if="${auctMem!='nothing'}"> 현재 최고가 : [[${auctMem[0].nowPrc}]] 원</h2>
-												<h2 class="pro-price" th:if="${auctMem=='nothing'}"> 현재최고가 없음</h2>
-
-												<h2 class="pro-price">현재 입찰 가격 : [[${auctMem[0].nowPrc}]] 원</h2>
-
-												<!--  hr -->
+												<hr>												
+												<h2 class="pro-price" th:if="${auctMem!='nothing'}" th:text="${auctMem[0].nowPrc}">현재최고가 없음</h2>
+<!-- 												<h2 class="pro-price" th:if="${auctMem=='nothing'}"> </h2> -->
 												<hr>
 												<a th:if="${session.userId!=null}" href="/my/auctInsertForm" id="addAuct"
 													style="position: fixed; bottom: 100px; right: 100px; border: none; border-radius: 16px; background: royalblue; color: white; padding: 12px; font-weight: bold; box-shadow: 0px 5px 15px gray; cursor: pointer;">
@@ -129,13 +114,11 @@
 												</ul>
 												<div class="tab-content">
 													<div role="tabpanel" class="tab-pane active show" id="description">
-														<h3>[[${auct.auctCn}]]</h3>
+														<h3 th:text="${auct.auctCn}"></h3>
 														<!-- 상품 설명 부분 -->
 													</div>
-													<div role="tabpanel" class="tab-pane" id="information"
-														th:each="atch : ${atch}">
-														<img th:src="${atch.atchPath}" class="zoom_03" alt=""
-															style="width: 100%; height: 100%;">
+													<div role="tabpanel" class="tab-pane" id="information" th:each="atch : ${atch}">
+														<img th:src="${atch.atchPath}" class="zoom_03" alt="" style="width: 100%; height: 100%;">
 														<!-- 이미지 부분 -->
 													</div>
 													<div role="tabpanel" class="tab-pane" id="reviews">
@@ -148,17 +131,16 @@
 																</tr>
 															</thead>
 															<tbody>
-																<tr th:if="${auctMem!='nothing'}"
-																	th:each="auctMem : ${auctMem}">
-																	<td th:text="${auctMem.userId}"></td>
-																	<td th:text="${auctMem.auctYmd}"></td>
-																	<td th:text="${auctMem.nowPrc}"></td>
+																<tr th:if="${auctMem!='nothing'}" th:each="auctMem : ${auctMem}">
+																	<td th:text="${auctMem.userId}">입찰자 없음</td>
+																	<td th:text="${auctMem.auctYmd}">입찰자 없음</td>
+																	<td th:text="${auctMem.nowPrc}">입찰자 없음</td>
 																</tr>
-																<tr th:if="${auctMem=='nothing'}">
-																	<td>입찰자ㄴ</td>
-																	<td>입찰자ㄴ</td>
-																	<td>입찰자ㄴ</td>
-																</tr>
+<!-- 																<tr th:if="${auctMem=='nothing'}"> -->
+<!-- 																	<td>입찰자ㄴ</td> -->
+<!-- 																	<td>입찰자ㄴ</td> -->
+<!-- 																	<td>입찰자ㄴ</td> -->
+<!-- 																</tr> -->
 														</table>
 														<!-- 테이블 부분 -->
 													</div>
@@ -197,31 +179,30 @@
 																		<table>
 																			<tr>
 																				<th>상품명</th>
-																				<td>[[ ${auct.auctTtl} ]]</td>
+																				<td th:text="${auct.auctTtl}"></td>
 																			</tr>
 																			<tr>
 																				<th>등록자</th>
-																				<td>[[ ${auct.userId} ]]</td>
+																				<td th:text="${auct.userId}"></td>
 																			</tr>
 																			<tr>
 																				<th>경매 마감일</th>
-																				<td>[[ ${auct.ddlnYmd} ]]</td>
+																				<td th:text="${auct.ddlnYmd}"></td>
 																			</tr>
 																			<tr>
 																				<th>경매 참여인원</th>
-																				<td>[[ ${auct.auctTtl} ]]</td>
+																				<td th:text="${auct.auctTtl}"></td>
 																			</tr>
 																		</table>
 																		<table>
 																			<tr>
 																				<th>현재가</th>
-																				<td th:if="${auctMem!='nothing'}"
-																					th:text="${auctMem[0].nowPrc}"></td>
-																				<td th:if="${auctMem=='nothing'}">입찰자가
-																					없습니다 :)</td>
+																				<td th:if="${auctMem!='nothing'}" th:text="${auctMem[0].nowPrc}">입찰자가없습니다 :)</td>
+<!-- 																				<td th:if="${auctMem=='nothing'}" th:text="${auctMem[0].nowPrc}">입찰자가없습니다 :)</td> -->
 
 																				<th>즉구가</th>
-																				<td>[[ ${auct.quickPrc} ]]</td>
+																				<td th:if="${auct.quickPrc != null}" th:text="${auct.quickPrc}"></td>
+<!-- 																				<td th:if="${auct.quickPrc == null}"></td> -->
 																			</tr>
 																		</table>
 																	</div>
@@ -234,9 +215,8 @@
 													</div>
 
 
-													<h6 th:if="${auctMem!='nothing'}" th:text="${auctMem[0].nowPrc}">
-													</h6>
-													<h6 th:if="${auctMem=='nothing'}">입찰자가 없습니다.</h6>
+													<h6 th:if="${auctMem!='nothing'}" th:text="${auctMem[0].nowPrc}">입찰자가 없습니다.</h6>
+<!-- 													<h6 th:if="${auctMem=='nothing'}"></h6> -->
 													<input name="nowPrc" id="nowPrc" class="mb-15" type="number" placeholder="입찰금액을 기입하세요">
 													<input name="auctNo" type="hidden" th:value="${auct.auctNo}">
 												</div>

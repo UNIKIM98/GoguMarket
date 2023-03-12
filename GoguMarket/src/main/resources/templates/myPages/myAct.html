@@ -45,17 +45,18 @@
 
 <script>
 	// ==============================================================
-	var imgSrc = "";
-	var memActNo = "";
+	// ❤️ 전역변수 선언
+	var imgSrc = ""; // imgsrc
+	var memActNo = ""; // 대표계좌정보()
 
 	// ==============================================================
-	// ▷ 계좌 등록 함수
+	// ❤️ 새 계좌 등록 페이지로 이동
 	function goMemAct(){
 		location.href="/my/makeNewAct"
 	}
 	
 	// ==============================================================
-	// ▷ 전체 정보 가져오는 아작스(대표계좌, 계좌 전체 목록)
+	// ❤️ 전체 정보 가져오는 Ajax(대표계좌, 계좌목록)
 		$(function(){
 			actInfoAjax();
 		})
@@ -76,8 +77,9 @@
 			}
 		})
 		}
-		// ==============================================================
-		// ▷ 계좌 전체 목록
+	
+	// ==============================================================
+	// ❤️ 전체계좌목록
 		function actListMake(actList){
 							//↑ actList 타입 == 객체(object) (* 타입 확인하는 방법 : console.log(typeof(확인하고자 하는 것));)
 			//↓ for문 돌면서 객체의 값을 하나씩 꺼내줌
@@ -102,8 +104,9 @@
 			}
 		}
 		}
-
-		//▷ Tbody 만들기
+		
+	// ==============================================================
+	// ❤️ 전체계좌 그리기
 		function makeTbody(act){
 			$("#actListTable").children().eq(1).append(
 				`
@@ -118,8 +121,9 @@
 				`
 			)
 		}
-
-		//▷ 전체 계좌에서 한 개 삭제
+		
+	// ==============================================================
+	// ❤️ 전체 계좌 중 하나 삭제 (+Ajax)
 		function deleteActListOne(event){
 			let actNo = $(event.target).parent().parent().attr('id');
 			let memActNoYn = 'N';
@@ -141,8 +145,9 @@
 				}
 			})
 		}
-		
-		//▷ 전체 계좌 중 한 개 DB 삭제 이후
+	
+	// ==============================================================
+	// ❤️ 전체계좌 중 하나 삭제 Ajax 이후
 		function deleteActListOneAfter(result, actNo, memActNoYn){
 			if(result.result != 1){
 				alert("[계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다. :()")
@@ -171,7 +176,8 @@
 			}
 		}
 
-		//▷ 대표계좌로 설정하기
+	// ==============================================================
+	// ❤️ 대표계좌 설정 Ajax
 		function updateMemActAjax(event){
 			let actNo = $(event.target).parent().parent().attr('id');
 
@@ -195,7 +201,8 @@
 			
 		}
 
-		//▷ 대표계좌 설정 변경 이후
+	// ==============================================================
+	// ❤️ 대표계좌 설정 Ajax 이후
 		function updateMemActAjaxAfter(result){
 			if(result=="fail"){
 				alert("[대표계좌 변경 실패] 대표계좌 변경 중 오류가 발생하였습니다. :()")
@@ -248,8 +255,8 @@
 			}
 		}
 
-		//▶ 대표계좌 
-		//▷ 대표계좌 그리기
+	// ==============================================================
+	// ❤️ 대표계좌 그리기
 		function memActMake(result) {
 			// # 대표계좌 없을 때(== BankNm이 Nothing일 때) : 대표계좌 등록하라는 문구 출력
 			if (result == "Nothing") {
@@ -308,7 +315,7 @@
 			}
 		}
 
-// 		//▷ 대표계좌 드롭다운 버튼 : http://www.w3bai.com/ko/howto/howto_js_dropdown.html 참고
+// 		//❤️ 대표계좌 드롭다운 버튼 : http://www.w3bai.com/ko/howto/howto_js_dropdown.html 참고
 // 		function myFunction() {
 // 			document.getElementById("myDropdown").classList.toggle("show");
 // 		}
@@ -325,7 +332,8 @@
 // 			}
 // 		}
 
-		//▷ 대표계좌 삭제 아작스
+	// ==============================================================
+	// ❤️ 대표계좌 삭제 Ajax
 		function delMemActAjax() {
 			$.ajax({
 				url: "/my/delMemActAjax",
@@ -341,7 +349,8 @@
 			})
 		}
 
-		//▷ 대표계좌 DB 삭제 후  
+	// ==============================================================
+	// ❤️ 대표계좌 삭제 Ajax 이후
 		function delMemActAjaxAfter(data) {
 			if (data == "success") {
 				alert("[대표계좌 삭제 성공] 계좌가 정상적으로 삭제되었습니다.");
@@ -368,7 +377,8 @@
 			<section id="page-content" class="page-wrapper section">
 				<div class="about-section mb-80">
 					<div class="container">
-						<!--▶ 대표계좌 -->
+					<br>
+						<!-- 대표계좌 -->
 						<div class="row mb-100" id="memActSection">
 							<div class="section-title text-start ">
 								<h4 class="blog-section-title border-left mb-30">나의계좌</h4>
@@ -378,12 +388,12 @@
 							<div class="mt-20"></div>
 						</div>
 
-						<!--▶ 전체 계좌 목록-->
+						<!-- 전체 계좌 목록-->
 						<div class="row">
 							<div class="section-title text-start mb-20">
 								<hr>
-								<h3 style="font-weight: bold;">계좌목록</h3>
-								<p>계좌는 최대 3개까지 등록할 수 있습니다.</p>
+								<h4 style="font-weight: bold;">계좌목록</h4>
+								<p>📌 계좌는 최대 3개까지 등록할 수 있습니다.</p>
 							</div>
 							<div style="text-align: center">
 								<table class="table" id="actListTable">

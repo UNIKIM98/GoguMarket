@@ -24,7 +24,7 @@ public class ActController {
 	@Autowired
 	MemService memService;
 
-	// ▶ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
+	// ❤️ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
 	@GetMapping("/my/myAct")
 	public String auctSelect() {
 		return "myPages/myAct";
@@ -43,8 +43,6 @@ public class ActController {
 
 				out.println("<script language='javascript'>");
 				out.println("alert('[계좌등록완료]"+actVO.getBankNm()+"은행 계좌 등록이 완료되었습니다.');location.href='/my/myAct';");
-				// ※ 메인페이지로 가게 고쳐야함!!
-
 				out.println("</script>");
 
 				out.flush();

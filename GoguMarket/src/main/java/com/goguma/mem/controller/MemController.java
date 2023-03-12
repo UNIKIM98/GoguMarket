@@ -37,14 +37,14 @@ public class MemController {
 	}
 
 	// ===========================================================
-	// ▷ 회원 로그인
+	// ❤️ 회원 로그인
 	@GetMapping("/goguma/login")
 	public String login() {
 		return "mem/login";
 	}
 
 	// ===========================================================
-	// ▷ 일반 회원가입
+	// ❤️ 일반 회원가입
 	// 회원가입페이지 이동
 	@GetMapping("/goguma/memberJoinForm")
 	public String memberJoinForm() {
@@ -52,14 +52,13 @@ public class MemController {
 	}
 
 	// 회원가입 폼 submit
-
 	@PostMapping("/goguma/memberJoin")
 	public String memberJoin(MemVO mVO, HttpServletResponse response) {
 		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
 		mVO.setUserStts("0"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감
 		System.out.println(mVO);
 
-		// ※ 비밀번호 암호화하기
+		// 비밀번호 암호화하기
 		String userPw = mVO.getUserPw();
 		userPw = bCryptPasswordEncoder.encode(userPw);
 
@@ -73,7 +72,7 @@ public class MemController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[회원가입성공] " + mVO.getUserNm() + "님 환영합니다 :D '); location.href='/auctList';");
+				out.println("alert('[회원가입성공] " + mVO.getUserNm() + "님 환영합니다 :D '); location.href='/goguma/dealMain';");
 				// ※ 메인페이지로 가게 고쳐야함!!
 
 				out.println("</script>");
@@ -85,7 +84,7 @@ public class MemController {
 
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
-				out.println("alert('[회원가입실패] 회원가입 페이지로 이동합니다.');location.href='/memberJoinForm';"); // ※ 메인페이지로 가게
+				out.println("alert('[회원가입실패] 다시 시도해주세요 :(');location.href='/goguma/memberJoinForm';"); // ※ 메인페이지로 가게
 																									// 고쳐야함!!
 				out.println("</script>");
 
@@ -99,7 +98,7 @@ public class MemController {
 	}
 
 	// ===========================================================
-	// ▷ 소셜회원가입
+	// ❤️ 소셜회원가입
 
 	@GetMapping("/test")
 	public String test() {
@@ -107,14 +106,7 @@ public class MemController {
 	}
 
 	// ===========================================================
-	// ▷ 내 쿠폰/포인트
-	@GetMapping("/my/myCouponNPoint")
-	public String myCouponNPoint() {
-		return "myPages/myCouponNPoint";
-	}
-
-	// ===========================================================
-	// ▷ 우리동네 설정
+	// ❤️ 우리동네 설정
 	@GetMapping("/my/myArea")
 	public String myArea(HttpServletRequest request, MemVO mVO, Model model) {
 		HttpSession session = request.getSession();
@@ -127,7 +119,7 @@ public class MemController {
 	}
 
 	// ===========================================================
-	// ▷ 회원정보 수정
+	// ❤️ 회원정보 수정
 	@GetMapping("/my/myInfoCheck")
 	public String myInfoCheck() {
 		return "myPages/myInfoCheck";
@@ -175,7 +167,7 @@ public class MemController {
 	}
 
 	// ===========================================================
-	// ▷ 계좌 등록
+	// ❤️ 계좌 등록
 	@RequestMapping("/my/makeNewAct")
 	public String makeNewAct() {
 		return "myPages/makeNewAct";
