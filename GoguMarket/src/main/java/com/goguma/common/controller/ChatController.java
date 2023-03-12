@@ -5,12 +5,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goguma.common.vo.Greeting;
 import com.goguma.common.vo.HelloMessage;
 
+@Controller
 public class ChatController {
 	// 웹소켓 채팅......
 
@@ -27,6 +29,13 @@ public class ChatController {
 		}
 
 	    // 채팅 기능 테스트
+		@RequestMapping("/test.do")
+		public String test(Model model, HttpServletRequest request) {
+			HttpSession session = request.getSession();
+			String nickNm = (String)session.getAttribute("nickNm");
+			System.out.println("닉넹ㅁ==="+nickNm);
+			return "rsvt/test";
+		}
 		@RequestMapping("/chat/test.do")
 		public String chatTest(Model model, HttpServletRequest request) {
 			HttpSession session = request.getSession();
