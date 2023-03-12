@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.goguma.deal.mapper.DealReviewMapper;
 import com.goguma.deal.mapper.DealRvVoteMapper;
-import com.goguma.deal.mapper.DealRvVoteMapper;
 import com.goguma.deal.service.DealReviewService;
 import com.goguma.deal.vo.DealReviewVO;
 import com.goguma.deal.vo.DealRvVoteVO;
+import com.goguma.mem.mapper.PointMapper;
+import com.goguma.mem.vo.PointVO;
 
 @Service
 public class DealReviewServiceImpl implements DealReviewService {
@@ -21,7 +22,8 @@ public class DealReviewServiceImpl implements DealReviewService {
 	@Autowired
 	private DealRvVoteMapper vmap;
 	
-	// 포인트매퍼~나중에 넣으세요~
+	@Autowired
+	private PointMapper pmap;
 	
 	@Override
 	public List<DealReviewVO> getDealRv(String ntslId) {
@@ -50,6 +52,13 @@ public class DealReviewServiceImpl implements DealReviewService {
 				
 				vmap.insertDealRvVote(rvvo);
 				cnt++;
+				
+				PointVO pvo = new PointVO();
+				pvo.setPoint(100);
+				pvo.setPointMthd("무료나눔");
+				pvo.setUserId("prchsId"); // 구매자 아이뒤집어넣어야.. 그럼 저거 인서드딜리뷰에 스트링 구매자아뒤도 집어처넣?
+				
+				pmap.insertPoint(pvo);
 			}
 			
 		}

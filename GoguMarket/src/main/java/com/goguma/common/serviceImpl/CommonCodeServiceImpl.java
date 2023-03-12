@@ -20,4 +20,10 @@ public class CommonCodeServiceImpl implements CommonCodeService{
 		return cMapper.codeList(commonCode);
 	}
 
+	@Override
+	public List<CommonCodeVO> voteList(String ntslId) {
+		// TODO Auto-generated method stub
+		return cMapper.voteList(ntslId);
+	}
+
 }

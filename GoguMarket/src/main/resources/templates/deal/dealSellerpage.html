@@ -51,7 +51,7 @@
 				<div class="featured-product-section mb-50">
 					<div class="container">
 						<div class="row">
-							<!-- <div class="col-lg-12">
+							<!--  <div class="col-lg-12">
 								<div class="section-title text-start mb-40">
 									<div class="profile">
 										<div class="leftProfile">
@@ -63,7 +63,7 @@
 											<h6 th:text="${dealList[0].ADDR}">주소</h6>
 										</div>
 									</div>
-								</div> -->
+								</div>  -->
 
 								<!-- single-product-tab -->
 								<div class="single-product-tab reviews-tab">
@@ -76,7 +76,7 @@
 										<div role="tabpanel" class="tab-pane active show" id="description">
 											<p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
 											<!-- 판매목록포문돌리면될듯? >> ❤️yes~! 판매자 for문 돌렸구 아래에 값 나오는 거 보고(화면보시면 찍혀욧) 나머지 부분 채워주세욧 -->
-											[[${dealList[0]}]]
+										<!-- 	[[${dealList[0]}]] -->
 											<div class="featured-product" >
 												<div class="active-featured-product slick-arrow-2" >
 													<div class="product-item" th:each="deal : ${dealList}">
@@ -142,16 +142,23 @@
 										<div role="tabpanel" class="tab-pane" id="mannor" th:each="v: ${vote}">
 											<p>매너 칭찬 리스트가 들어갈 자리입니다</p>
 
-											<ul>
-												<li><a th:text="${v.ccn}">1. 시간 약속을 잘 지켜요</a></li>
-												<hr>
-												<li><a th:text="${v.cn}">2. 친절하고 매너가 좋아요</a></li>
-												<hr>
-												<li><a>3. 응답이 빨라요</a></li>
-												<hr>
-												<li><a>4. 제가 있는 곳까지 와서 거래했어요</a></li>
-												<hr>
-											</ul>
+											<table th:each="c:${code}">
+											<!-- if문으로 c.common_detail_code == v.cn 이면 c.common_cn 나오게몬함?-->
+								                <thead>
+								                    <tr>
+								                        <th>순위</th>
+								                        <th>투표내용</th>
+								                        <th>투표수</th>
+								                    </tr>
+								                </thead>
+								                <tbody id="vote">
+								                    <tr th:each="vote, i : ${vote}">
+								                        <td th:text=${i.index+1}></td>
+								                        <td th:if="${c.commonDetailCode}==${v.cn}">[[${c.commonCn}]]</td>
+								                        <td th:text="${vote.ccn}"></td>
+								                    </tr>
+								                </tbody>
+							                </table>
 										</div>
 									</div>
 								</div>
