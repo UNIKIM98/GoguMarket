@@ -9,15 +9,16 @@
 		<div class="header-top-bar plr-185" style="background-color: #ff7f00;">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-6 col-md-6 d-none d-md-block">
+					<div class="col-lg-6 col-md-6 d-none d-md-block" th:if="${session.userId!=null}">
 						<div class="call-us">
-							<p class="mb-0 roboto text-white">GO GUMARKET</p>
+							<img alt="프로필사진" th:src="${session.atchPath}" style="width: 30px; height: 30px; border-radius: 70%; display:inline-block;">
+							<p class="mb-0 roboto text-white" th:text="${session.nickNm}">GOGUMARKET</p>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="top-link clearfix">
 							<ul class="link f-right">
-								<li><a href="/my/myInfoCheck"> <i
+								<li th:if="${session.userId!=null}"><a href="/my/myInfoCheck"> <i
 										class="zmdi zmdi-account"></i> My Page
 								</a></li>
 								<li th:if="${session.userId==null}"><a href="/goguma/memberJoinForm"> <i class="zmdi zmdi-favorite"></i> Join </a></li>

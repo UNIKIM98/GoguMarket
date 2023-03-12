@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,11 +34,14 @@ public class MemRestController {
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Value("${goguma.save}")
 	private String saveFolder;
 
-	// 아이디체크
+	// ❤️ 아이디체크
 	@GetMapping("/goguma/userIdChk/{userId}")
 	public String userIdChk(@PathVariable String userId) {
 		// 있으면 1 없으면 0
@@ -50,7 +54,7 @@ public class MemRestController {
 		return result;
 	}
 
-	// 닉네임 체크
+	// ❤️ 닉네임 체크
 	@GetMapping("/goguma/nickNmChk/{nickNm}")
 	public String nickNmChk(@PathVariable String nickNm) {
 		int chk = memService.isNickNmCheck(nickNm);
@@ -63,8 +67,8 @@ public class MemRestController {
 		return result;
 	}
 
-	// 거래지역 체크
-	@PostMapping("/goguma/myAreaSetAjax")
+	// ❤️ 거래지역 설정
+	@PostMapping("/my/myAreaSetAjax")
 	public String myAreaSetAjax(@RequestBody MemVO vo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -80,11 +84,11 @@ public class MemRestController {
 		return result;
 	}
 
-	// 회원 정보 수정
+	// ❤️ 회원 정보 수정
 	@PostMapping("/my/memUpdateFormSubmit")
-	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files) {
-		System.out.println("수정할 VO => " + memVO);
-
+	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
 		// 프로필사진 있으면 실행
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
@@ -104,9 +108,10 @@ public class MemRestController {
 
 				memVO.setAtchNm(fileName);
 				memVO.setAtchPath("/upload/" + fileName);
+				session.setAttribute("atchPath", session)
 			}
 
-			// 없으면
+		// 없으면
 		} else {
 			memVO.setAtchNm(null);
 			memVO.setAtchPath(null);

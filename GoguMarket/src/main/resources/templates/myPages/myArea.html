@@ -7,11 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- 다음 우편번호 API -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=235765131723c6d6cee12c6f95e9a46a&libraries=services"></script> -->
 <!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=235765131723c6d6cee12c6f95e9a46"></script> -->
 <style>
-.errPlaceHolder::placeholder {color:red;}
+.errPlaceHolder::placeholder {
+	color: red;
+}
 </style>
 </head>
 
@@ -22,45 +25,44 @@
 				<div class="about-section mb-80">
 					<div class="container">
 						<!--▶ 우리동네 select -->
-						<div class="row mb-100" id="myAreaNow">
+						<div class="row" id="myAreaNow">
 							<div class="section-title text-start ">
 							<br>
-								<h4 class="blog-section-title border-left mb-30">우리동네</h4>
-								<h4 th:if="${userInfo!=null}">
+								<h4 class="blog-section-title border-left mb-30">우리 동네</h4>
+								<h4 th:if="${userInfo.dealArea!=null}">
 									지금 우리 동네는 <span style="font-weight: bold;" class="myArea"
 										th:text="${userInfo.dealArea}"></span> 입니다.
 								</h4>
-								<h4 th:if="${userInfo == null}">우리동네를 설정해주세요 :D</h4>
+								<h4 th:if="${userInfo.dealArea == null}">우리동네를 설정해주세요 :D</h4>
 							</div>
 							<div class="mt-20"></div>
 						</div>
-						<div class="row mb-100" id="setMyArea">
+						<hr>
+						<div class="row mb-80" id="setMyArea">
 							<div class="section-title text-start ">
-								<h4 class="blog-section-title border-left mb-30">우리동네 설정하기</h4>
-								<p>주소를 입력하면 자동으로 해당 구가 우리동네로 설정됩니다.</p>
+								<h4 class="blog-section-title border-left mb-30">우리 동네 설정하기</h4>
+								<p>📌 우리동네 설정시 주소도 함께 변경됩니다.</p>
 								<br>
 								<table>
 									<tbody>
-									<tr>
+										<tr>
 											<th><label for="addr">주소</label></th>
 											<td><input type="text" id="addr" name="addr"
-														placeholder="주소 입력을 위해 클릭해주세요."
-														readonly="readonly"
-														onclick="findAddr()">
-											</td>
+												placeholder="주소 입력을 위해 클릭해주세요." readonly="readonly"
+												onclick="findAddr()"></td>
 										</tr>
 										<tr>
-											<th><label for="dealArea">거래지역</label></th>
+											<th><label for="dealArea">우리동네</label></th>
 											<td><input type="text" id="dealArea" name="dealArea"
-														placeholder="입력하신 주소의 구로 자동 설정됩니다."
-														readonly="readonly">
+												placeholder="입력하신 주소의 구로 자동 설정됩니다." readonly="readonly">
 											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 							<div class="mt-20">
-								<button class="submit-btn-1 btn-hover-1" type="button" onclick="checkInfo()">설정하기</button>
+								<button class="submit-btn-1 btn-hover-1" type="button"
+									onclick="checkInfo()">설정하기</button>
 							</div>
 						</div>
 					</div>
@@ -68,8 +70,8 @@
 			</section>
 		</div>
 		<script>
-		// ==============================================================
-		// ▷ 주소/거래지역 설정
+			// ==============================================================
+			// ❤️ 주소/거래지역 설정 api
 			function findAddr() {
 				new daum.Postcode(
 						{
@@ -77,46 +79,53 @@
 								let road = data.roadAddress; // 도로명 주소
 								let jibun = data.jibunAddress; // 지번 주소
 
-								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
-									$('#addr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
-											  .addClass("errPlaceHolder")
-											  .val("").focus();
+								if ((road.substring(0, 2) || jibun.substring(0,
+										2)) != '대구') {
+									$('#addr').attr("placeholder",
+											"대구광역시 소재의 주소지를 입력해주세요 :D")
+											.addClass("errPlaceHolder").val("")
+											.focus();
 								} else {
 									if ((road !== '') || (jibun !== '')) {
 										$("#addr").val(
-												data.sido + " " + data.sigungu + " " + data.bname);
+												data.sido + " " + data.sigungu
+														+ " " + data.bname);
 										$("#dealArea").val(data.sigungu);
 									}
 								}
 							}
 						}).open();
 			}
-
+			
+			// ==============================================================
+			// ❤️ ajax 유효성 확인
 			function checkInfo() {
 				let addr = $("#addr").val()
 				let Gu = $("#dealArea").val();
-				
-				if(addr!=""){
-				let confirmMsg = confirm("우리 동네를 " + Gu + "(으)로 설정하시겠습니까?");
+
+				if (addr != "") {
+					let confirmMsg = confirm("우리 동네를 " + Gu + "(으)로 설정하시겠습니까?");
 					if (confirmMsg) {
 						myAreaSetAjax(addr, Gu);
 					}
-				}else{
+				} else {
 					alert("설정할 주소를 입력해주세요 :D");
 					$("#addr").focus();
 					return false;
 				}
 
 			}
-
+			
+			// ==============================================================
+			// ❤️ 주소/거래지역 변경 Ajax
 			function myAreaSetAjax(addr, Gu) {
 				let memVO = {
 					addr : addr,
 					dealArea : Gu
 				};
-				
+
 				$.ajax({
-					url : "/myAreaSetAjax",
+					url : "/my/myAreaSetAjax",
 					type : 'post',
 					data : JSON.stringify(memVO),
 					dataType : 'text',
@@ -129,14 +138,17 @@
 					}
 				})
 			}
-
+			
+			// ==============================================================
+			// ❤️ 주소/거래지역 화면에서 변경
 			function afterAjax(result, memVO) {
 				console.log(memVO.dealArea)
 				if (result == "success") {
-					alert("[우리동네 설정 완료] 우리동네를 " + memVO.dealArea + "(으)로 변경하였습니다 :D");
+					alert("[우리동네 설정 완료] 우리동네를 " + memVO.dealArea
+							+ "(으)로 변경하였습니다 :D");
 					$("#addr").val("");
 					$("#dealArea").val("");
-					
+
 					$(".myArea").text(memVO.dealArea);
 				} else {
 					alert("[우리동네 설정 실패] 설정 중 오류가 발생하였습니다.")

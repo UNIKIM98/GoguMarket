@@ -22,13 +22,15 @@ public class AtchServiceImpl implements AtchService {
 	@Value("${goguma.save}")
 	private String saveFolder;
 
+	// ===========================
+	// ❤️ 다중파일 업로드
 	@Override
 	public int insertFile(List<MultipartFile> files) {
 		int atchId = 0;
 
 		if (files != null && !files.isEmpty()) {
 			atchId = atchMapper.selectAtchId();
-			
+
 			for (MultipartFile file : files) {
 				if (file.getSize() == 0)
 					continue;
@@ -59,11 +61,13 @@ public class AtchServiceImpl implements AtchService {
 		}
 		return atchId;
 	}
-	
+
+	// ===========================
+	// ❤️ 다중파일 수정
 	@Override
 	public int insertFile(int atchId, List<MultipartFile> files) {
 
-		if (files != null && !files.isEmpty()) {			
+		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
 				if (file.getSize() == 0)
 					continue;
@@ -105,6 +109,8 @@ public class AtchServiceImpl implements AtchService {
 		return atchMapper.selectAtch(atchId);
 	}
 
+	// ===========================
+	// ❤️ 다중파일 삭제
 	@Override
 	public int deleteFile(List<AtchVO> atchVOs) {
 		int cnt = 0;
@@ -126,6 +132,5 @@ public class AtchServiceImpl implements AtchService {
 	public AtchVO selectFile(AtchVO atchVO) {
 		return atchMapper.selectFile(atchVO);
 	}
-
 
 }

@@ -62,16 +62,22 @@ public class AuctController {
 
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
+		
+		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
 
-		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
-		System.out.println(atchList.size() + "======auctMem size================");
-		System.out.println(atchList.size() == 0);
+		System.out.println("=======atch" + atchList );
+		
+		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
+		System.out.println("======auctMem size================");
+		System.out.println(avoList.size()==0);
+		System.out.println(avoList.isEmpty());
+		System.out.println("=====auctMem"+avoList);
+		
+		System.out.println("=======auct"+vo);
+		
 
-		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
-
-		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
 
@@ -80,6 +86,7 @@ public class AuctController {
 		} else {
 			model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
 		}
+
 		System.out.println(avoList.equals(null) + "equals");
 		System.out.println((avoList.size() == 0) + "size");
 

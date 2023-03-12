@@ -68,7 +68,7 @@ public class AttendController {
 		PointVO pVO = new PointVO();
 		
 		pVO.setPoint(point);
-		pVO.setPointMthd("[출석하기]");
+		pVO.setPointMthd("출석하기");
 		pVO.setUserId(userId);
 		//→ 포인트 Pk >> selectKey로 설정
 		//→ 포인트 적립일 >> mapper에서 current date로 설정

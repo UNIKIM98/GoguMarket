@@ -22,20 +22,16 @@
 		</where>
 	</sql>
 
-
-
-	<!-- ▶ 회원가입 -->
+	<!-- ❤️ 회원가입 -->
 	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
-		INSERT INTO MEM (USER_ID,
-		USER_SE, USER_PW, USER_NM,
-		NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
-		JOIN_YMD, USER_STTS)
+		INSERT INTO MEM (USER_ID, USER_SE, USER_PW, USER_NM,
+						NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
+						JOIN_YMD, USER_STTS)
 		VALUES(#{userId}, #{userSe},#{userPw}, #{userNm},
-		#{nickNm}, #{addr}, #{dealArea}, #{mblTelno},
-		SYSDATE, #{userStts})
+				#{nickNm}, #{addr}, #{dealArea}, #{mblTelno}, SYSDATE, #{userStts})
 	</insert>
 
-	<!-- ▶ 아이디 중복 확인 -->
+	<!-- ❤️ 아이디 중복 확인 -->
 	<select id="isIdCheck" resultType="int" parameterType="String">
 		SELECT
 		COUNT(USER_ID)
@@ -43,7 +39,7 @@
 		WHERE USER_ID = #{userId}
 	</select>
 
-	<!-- ▶ 닉네임 중복 확인 -->
+	<!-- ❤️ 닉네임 중복 확인 -->
 	<select id="isNickNmCheck" resultType="int"
 		parameterType="String">
 		SELECT COUNT(NICK_NM)
@@ -51,7 +47,7 @@
 		WHERE NICK_NM = #{nickNm}
 	</select>
 
-	<!-- ▶ 유저 한 명 정보 전체 조회 -->
+	<!-- ❤️ 유저 한 명 정보 전체 조회 -->
 	<select id="selectUser" parameterType="com.goguma.mem.vo.MemVO"
 		resultType="com.goguma.mem.vo.MemVO">
 		SELECT USER_ID, 'ROLE_'||USER_SE as USER_SE, USER_PW as
@@ -115,7 +111,7 @@
 	</select>
 
 
-	<!--▶ 우리동네 수정(회원 주소도 같이 변경됨) -->
+	<!-- ❤️ 우리동네 수정(회원 주소도 같이 변경됨) -->
 	<update id="updateDealArea"
 		parameterType="com.goguma.mem.vo.MemVO">
 		UPDATE MEM
@@ -123,6 +119,7 @@
 		WHERE USER_ID = #{userId}
 	</update>
 
+	<!-- ❤️ 회원정보 수정 -->
 	<update id="updateUser" parameterType="com.goguma.mem.vo.MemVO">
 		UPDATE MEM
 		SET user_pw = #{userPw},
