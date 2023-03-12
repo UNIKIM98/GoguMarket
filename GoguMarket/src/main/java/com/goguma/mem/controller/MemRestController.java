@@ -36,7 +36,7 @@ public class MemRestController {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
-	private AuthenticationManager authenticationManager;
+//	private AuthenticationManager authenticationManager;
 
 	@Value("${goguma.save}")
 	private String saveFolder;

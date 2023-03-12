@@ -193,8 +193,9 @@ public class AuctController {
 		List<AuctVO> myAuctList = auctService.selectUserId(userId); //userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
 		
 		model.addAttribute("myAuctList",myAuctList);			//모델에 잘 요리된 myAuctList를 담아줍니다.
-//		model.addAttribute("nowPrcs", auctMemService.selectNowPrc()); //myAuctList 위에 nowPrc를 뿌려줍니다. 이거 필요없는듯?
 		
+		
+		// 낙찰자 ID클릭시 이름, 계좌 전송하는것 구현?
 		System.out.println("==============================마이페이지" + model);
 
 		return "auction/allAuction";
@@ -202,13 +203,15 @@ public class AuctController {
 	}
 
 	@GetMapping("/my/takePartAuction")
-	public String takePartAuction(Model model) {
-		// 마이페이지 나의 모든 경매 이동
-
-		List<CommonCodeVO> codeList = codeService.codeList("002");
-		codeList.remove(0);
-
-		model.addAttribute("category", codeList);
+	public String takePartAuction(Model model, HttpServletRequest request) {
+		// 마이페이지 낙찰자에게 이름, 계좌번호 보내기
+//		HttpSession session = request.getSession();
+//		String userId = (String)session.getAttribute("userId");
+//		List<AuctVO> myAuctList = auctService.selectUserId(userId);
+//		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
+		
+		
+		
 		return "auction/takePartAuction";
 
 	}
