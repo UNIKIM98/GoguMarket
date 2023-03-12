@@ -35,4 +35,10 @@ public class AuctMemServiceImpl implements AuctMemService{
 		return auctMemMapper.selectNowPrc();
 	}
 
+	@Override
+	public List<AuctMemVO> bidAuction(String userId) {
+		// 입찰한 경매품
+		return auctMemMapper.bidAuction(userId);
+	}
+
 }
