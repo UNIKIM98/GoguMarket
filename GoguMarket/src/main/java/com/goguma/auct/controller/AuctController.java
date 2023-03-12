@@ -186,7 +186,7 @@ public class AuctController {
 		List<AuctVO> myAuctList = auctService.selectUserId(userId); //userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
 		
 		model.addAttribute("myAuctList",myAuctList);			//모델에 잘 요리된 myAuctList를 담아줍니다.
-		model.addAttribute("nowPrcs", auctMemService.selectNowPrc()); //myAuctList 위에 nowPrc를 뿌려줍니다.
+//		model.addAttribute("nowPrcs", auctMemService.selectNowPrc()); //myAuctList 위에 nowPrc를 뿌려줍니다. 이거 필요없는듯?
 		
 		System.out.println("==============================마이페이지" + model);
 
