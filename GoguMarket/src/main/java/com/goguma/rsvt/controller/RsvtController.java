@@ -137,12 +137,12 @@ public class RsvtController {
 	//예약수정
 	@GetMapping("/my/mybook02/{rsvtNo}")
 	public String mybook02(@PathVariable int rsvtNo, Model model) {
-		System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
+		//System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
 		
 		model.addAttribute("rsvt",rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
-		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
-		model.addAttribute("code", codeService.codeList("007"));
-		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
+//		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
+//		model.addAttribute("code", codeService.codeList("007"));
+//		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		
 		return "myPages/mybook02";
 	}
