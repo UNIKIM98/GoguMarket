@@ -60,7 +60,7 @@ public class SnsCmntController {
 		
 		
 		System.out.println(vo.getCmntNo()+"=========");
-		int success =  service.deleteRreply(vo.getCmntNo());
+		int success =  service.deleteRreply(vo);
 		
 		map.put("result",success);
 	
@@ -70,10 +70,11 @@ public class SnsCmntController {
 	
 	
 	@PostMapping("/rreplyEdit")
-	public int rreplyEdit(SnsCmntVO vo, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		vo.setCmntMem(userId);
+	public int rreplyEdit(SnsCmntVO vo) {
+		System.out.println(vo+"댓글");
+		
+		
+		
 		
 		 int success;
 		 success = service.updateCmnt(vo);
