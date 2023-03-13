@@ -1,15 +1,59 @@
 <!DOCTYPE html>
-<html class="no-js" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout">
+<head>
+<style>
+.padding {
+	padding-bottom: 50px;
+}
+</style>
+<meta charset="UTF-8">
+<title>LAYOUT</title>
+<link rel="shortcut icon" type="image/x-icon"
+	href="img/icon/favicon.png">
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
+<!-- All CSS Files -->
+<!-- Bootstrap fremwork main css -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<!-- Nivo-slider css -->
+<link rel="stylesheet" href="/lib/css/nivo-slider.css">
+<!-- This core.css file contents all plugings css file. -->
+<link rel="stylesheet" href="/css/core.css">
+<!-- Theme shortcodes/elements style -->
+<link rel="stylesheet" href="/css/shortcode/shortcodes.css">
+<!-- Theme main style -->
+<link rel="stylesheet" href="/style.css">
+<!-- Responsive css -->
+<link rel="stylesheet" href="/css/responsive.css">
+<!-- User style -->
+<link rel="stylesheet" href="/css/custom.css">
+<!-- Style customizer (Remove these two lines please) -->
+<link rel="stylesheet" href="/css/style-customizer.css">
+<link href="#" data-style="styles" rel="stylesheet">
+
+<!-- Placed JS at the end of the document so the pages load faster -->
+<!-- Modernizr JS -->
+<script src="../../../js/vendor/modernizr-3.11.2.min.js"></script>
+<!-- jquery latest version -->
+
+<script src="/../js/vendor/jquery-3.6.0.min.js"></script>
+<!-- <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script> -->
+<!-- Bootstrap framework js -->
+<script src="/../js/bootstrap.bundle.min.js"></script>
+<!-- jquery.nivo.slider js -->
+<script src="/../lib/js/jquery.nivo.slider.js"></script>
+<!-- All js plugins included in this file. -->
+<script src="/../js/plugins.js"></script>
+<!-- Main js file that contents all jQuery plugins activation. -->
+<script src="/../js/main.js"></script>
+</head>
 
 <body>
-
-<div layout:fragment="content">
-
+<th:block th:replace="layouts/header :: headerFragment"></th:block>
 <!-- Body main wrapper start -->
     <div class="wrapper">
-    
 		<!-- shop페이지 사이드메뉴 -->
         <!-- BREADCRUMBS SETCTION START -->
         <div class="breadcrumbs-section plr-200 mb-80 section">
@@ -26,7 +70,6 @@
             </div>
         </div>
         <!-- BREADCRUMBS SETCTION END -->
-
         <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
 
@@ -65,8 +108,7 @@
 
                         <!--오른쪽 내용쪽-->
                         <div class="col-lg-9">
-                           <div layout:fragment="bizContent"></div>
-
+							<div layout:fragment="Bizcontent"></div>
                         </div>
                     </div>
                 </div>
@@ -77,6 +119,7 @@
 
     </div>
     <!-- Body main wrapper end -->
+<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 
 </div>
 
