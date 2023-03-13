@@ -235,9 +235,9 @@
 
 	<!-- 게시글 끌올 -->
 	<update id="updateYmd">
-	update deal
-	set dl_ymd = current_date
-	where dl_no = #{dlNo} and ntsl_id = #{ntslId};
+		update deal
+		set dl_ymd = current_date
+		where dl_no = #{dlNo} and ntsl_id = #{ntslId}
 	</update>
 	
 	<select id="selectDealList"
