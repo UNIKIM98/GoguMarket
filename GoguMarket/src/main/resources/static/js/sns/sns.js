@@ -102,8 +102,8 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#rrpCmntMem").text(item.cmntMem);
 								$(obj).find("#rrpCmntYmd").text(item.cmntYmd);
 								$(obj).find("#cmntCn").text(item.cmntCn);
-								$(obj).find("#delbutton").attr("onclick", "rreplyDel(" + item.cmntNo + ", " + item.groupNo + ")")
-								$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + ")")
+								$(obj).find("#delbutton").attr("onclick", "rreplyDel(" + item.cmntNo + ", " + item.groupNo + "," + item.snsNo + ")")
+								$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + "," + item.snsNo + ")")
 
 
 								return true;
@@ -118,12 +118,20 @@ function SelectCmntlist(snsNo) {
 						$(addedDiv).find(".replyGroup").each(function(index, obj) {
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
-								$(obj).addClass("numbering_" + forCnt);
+								$(obj).addClass("numbering" + forCnt);
+								$(obj).find("#rpGroupNo").val(item.groupNo);
+								$(obj).find("#rpCmntNo").val(item.cmntNo);
+								$(obj).find("#rpSnsNo").val(item.snsNo);
 								$(obj).find("#cmntMem").text(item.cmntMem);
 								$(obj).find("#cmntYmd").text(item.cmntYmd);
 								$(obj).find("#cmntCn").text(item.cmntCn);
+								$(obj).find("#cmntCn").attr('id', 'cmntCn' + item.cmntNo);
+								$(obj).find(".name-commenter").attr('id', 'replyGroup' + item.cmntNo);
+								$(obj).find("#replydel").attr('onclick', "rreplyDel(" + item.cmntNo + ", " + item.groupNo + "," + item.snsNo + ")");
 								$(obj).find("#reInput").attr('onclick', 'ShowRrpInput(' + item.cmntNo + ',' + item.snsNo + ')');
+								$(obj).find(".replyGroup").attr('id', 'replyGroup' + item.cmntNo);
 								$(obj).find(".rrplyGroup").attr('id', 'rrplyGroup_' + item.cmntNo);
+								$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + ", " + item.groupNo + ")")
 								return true;
 							}
 
@@ -199,9 +207,9 @@ function insertReply() {
 
 		success: function(data) {
 			if (data == "") {
-				alert("게시물 등록에 실패했습니다.");
+				alert("댓글 등록에 실패했습니다.");
 			} else {
-				alert("게시물 등록에 성공했습니다.");
+				alert("댓글 등록에 성공했습니다.");
 				$("#Sns-reply").empty();
 				SelectCmntlist(snsNo);
 			}
@@ -263,50 +271,24 @@ function insertRrp() {
 
 }
 
-function replyDel(rrpCmntNo, rrpGroupNo) {
 
-	$.ajax({
-		url: "/deleteReply",
-		type: "POST",
-		data: JSON.stringify({
-			cmntNo: rrpCmntNo,
-			groupNo: rrpGroupNo,
+function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo) {
 
-		}),
+	let button = event.currentTarget.parentNode;
 
-		contentType: "application/json",
-		success: function(data) {
-			console.loc("sec");
-		}, error: function() {
-			console.log(error)
-		}
-	});
 
+	$('#cmntCn' + rpCmntNo).remove();
+	$("#replyGroup" + rpCmntNo).append(`<textarea class="form-control" id="cmntCn" name="cmntCn" required></textarea>`);
+
+	event.currentTarget.remove();
+	$(button).append(`<input type="submit" class="btn btn-dark mt-3 f-left"
+								 style="margin: 10px" id="editButton" onclick="rreplyEdit(${rpSnsNo},${rpGroupNo})" value="수정" rows="1000" cols="8">`)
 }
 
 
-function rreplyDel(rrpCmntNo, rrpGroupNo) {
-	$.ajax({
-		url: "/deleteRreply",
-		type: "POST",
-		data: JSON.stringify({
-			cmntNo: rrpCmntNo,
-			groupNo: rrpGroupNo,
-		}),
-		contentType: "application/json",
+//=========================답글 수정============================
 
-		success: function(data) {
-
-		},
-		error: function() {
-			cosole.log(error)
-		}
-	});
-}
-
-
-
-function rreplyEditForm(rrpCmntNo) {
+function rreplyEditForm(rrpCmntNo, rrpSnsNo) { //답글 수정폼 생성
 	/*console.log('넘어옴');
 	$("#rrpContent #rrpCmntCn").remove();
 	$("#editForm").remove();
@@ -326,29 +308,37 @@ function rreplyEditForm(rrpCmntNo) {
 	event.currentTarget.remove();
 
 	$(button).append(`<input type="submit" class="btn btn-dark mt-3 f-right"
-								 style="margin: 10px" id="editButton" onclick="rreplyEdit()" value="수정" rows="300" cols="8">`)
+								 style="margin: 10px" id="editButton" onclick="rreplyEdit(${rrpSnsNo})" value="수정" rows="300" cols="8">`)
 
 
 }
 
-function rreplyEdit() {
-
-	console.log($("#cmntNo").val())
-	console.log($("#groupNo").val())
-	console.log($("#snsNo").val())
+function rreplyEdit(rrpSnsNo, rpGroupNo) { //답글 수정
 
 
-	let cmntCn = $("#cmntCn1").val()
-	console.log($("#cmntCn").val())
-	console.log($("#cmntCn").text())
-	
-	
-	var formData = new FormData($("#rrpView")[0]);
-	
-	
-	
+
+	console.log(rpGroupNo)
+
+
+	var formData = {};
+
+	if (rpGroupNo != 0) {
+		console.log($(rrpCmntNo).val())
+
+		formData = new FormData($("#rrpView")[0]);
+		console.log(formData)
+
+	} else {
+		console.log($(rpCmntNo).val())
+		formData = new FormData($("#editForm")[0]);
+		console.log(formData)
+	}
+
+
+
+
 	console.log
-	
+
 	$.ajax({
 		url: "/rreplyEdit",
 		type: "POST",
@@ -357,14 +347,14 @@ function rreplyEdit() {
 		contentType: false,
 
 		success: function(data) {
-			if(data == null) {
+			if (data == null) {
 				console.log('수정에 실패했습니다.')
 				$("#Sns-reply").empty();
-				SelectCmntlist(snsNo);
-			}else{
+				SelectCmntlist(rrpSnsNo);
+			} else {
 				console.log('수정성공했습니다.')
 				$("#Sns-reply").empty();
-				SelectCmntlist(snsNo);
+				SelectCmntlist(rrpSnsNo);
 			}
 		},
 		error: function() {
@@ -373,6 +363,36 @@ function rreplyEdit() {
 	});
 
 
+}
+function rreplyDel(rrpCmntNo, rrpGroupNo, rrpSnsNo) { //댓글 답글 삭제
+
+
+	let confirmMessage = confirm('정말 삭제 하시겠습니까?')
+
+	if (confirmMessage)
+
+
+		$.ajax({
+			url: "/deleteRreply",
+			type: "POST",
+			data: JSON.stringify({
+				cmntNo: rrpCmntNo,
+				groupNo: rrpGroupNo,
+			}),
+			contentType: "application/json",
+
+			success: function(data) {
+				if (data != null) {
+					$("#Sns-reply").empty();
+					alert('삭제가 완료 되었습니다.')
+				}
+				SelectCmntlist(rrpSnsNo);
+
+			},
+			error: function() {
+				console.log(error)
+			}
+		});
 }
 
 
