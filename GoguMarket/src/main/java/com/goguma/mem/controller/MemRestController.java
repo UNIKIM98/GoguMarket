@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.goguma.UsersService;
 import com.goguma.common.service.AtchService;
 import com.goguma.mem.mail.EmailService;
 import com.goguma.mem.service.MemService;
@@ -30,20 +34,17 @@ import com.goguma.mem.vo.MemVO;
 public class MemRestController {
 	// ■ Services ==========================================
 	@Autowired
-	MemService memService;
+	private MemService memService;
 
 	@Autowired
-	AtchService atchService;
+	private AtchService atchService;
 
 	@Autowired
-	BCryptPasswordEncoder bCryptPasswordEncoder;
-
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
 	private EmailService emailService;
-
-
-
+	
 	@Value("${goguma.save}")
 	private String saveFolder;
 
@@ -124,9 +125,10 @@ public class MemRestController {
 	// ======================================
 	// ❤️ 회원 정보 수정
 	@PostMapping("/my/memUpdateFormSubmit")
-	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request) {
+	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request,
+			Authentication auth) {
 		HttpSession session = request.getSession();
-
+		
 		// 프로필사진 있으면 실행
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
@@ -203,20 +205,20 @@ public class MemRestController {
 
 		return result;
 	}
-	
+
 	//
 	@GetMapping("/goguma/isEmlExistAjax/{eml}")
 	public String isEmlExistAjax(@PathVariable String eml) {
-		System.out.println("넘어온  eml > "+eml);
-		
+		System.out.println("넘어온  eml > " + eml);
+
 		String result = "no";
-		
+
 		MemVO memVO = new MemVO();
 		memVO.setEml(eml);
-		
+
 		memVO = memService.selectUser(memVO);
-		
-		System.out.println("찾아온 vo"+memVO);
+
+		System.out.println("찾아온 vo" + memVO);
 		if (memVO != null && memVO.getEml() != null && memVO.getEml().equals(eml)) {
 			result = memVO.getUserId();
 		}
