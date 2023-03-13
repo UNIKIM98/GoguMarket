@@ -143,7 +143,10 @@ public class AuctController {
 	public void auctDelete(@PathVariable int auctNo, HttpServletResponse response) {
 		System.out.println(auctNo + " => 삭제할 글 번호");
 
-		AuctVO vo = auctService.selectAuctNo(auctNo);
+		
+		AuctVO vo = new AuctVO();
+		vo.setAuctNo(auctNo);
+		vo = auctService.getAuct(vo);
 		System.out.println(vo + " => 삭제할 글 정보");
 
 		List<AtchVO> atchList = auctService.selectAuctAtch(auctNo);
