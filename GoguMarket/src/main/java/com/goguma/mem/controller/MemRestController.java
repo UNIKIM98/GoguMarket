@@ -42,8 +42,7 @@ public class MemRestController {
 	@Autowired
 	private EmailService emailService;
 
-//	@Autowired
-//	private AuthenticationManager authenticationManager; //회원정보수정 session 수정
+
 
 	@Value("${goguma.save}")
 	private String saveFolder;
