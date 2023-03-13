@@ -70,6 +70,7 @@ public class BizMemServiceImpl implements BizMemService {
 	public String selectBizNo(String userId) {
 		// TODO Auto-generated method stub
 		return map.selectBizNo(userId);
+	}
 
 	//가게등록
 	@Override
