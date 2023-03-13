@@ -78,7 +78,7 @@
 		SELECT * FROM mem
 		
 		<include refid="creiteria"></include>
-		order by join_ymd
+		order by join_ymd,user_Stts
 		
 		<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}

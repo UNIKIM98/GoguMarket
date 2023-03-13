@@ -37,12 +37,9 @@ public class MemRestController {
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
+ 
 	@Autowired
 	private EmailService emailService;
-
-
 
 	@Value("${goguma.save}")
 	private String saveFolder;
