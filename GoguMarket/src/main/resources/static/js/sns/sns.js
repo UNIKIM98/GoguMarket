@@ -46,6 +46,8 @@ function snsModal(id) {
 	//활상화
 	Sns.style.display = "block"; //개인 게시글 창 활성화
 
+
+	$("#replyUserId").val("[[${session.userId}]]")
 	//전 이벤트 자식중 아이디값과 이미지 아이디 값을 가져옴
 	//단건을 조회하는 ajax를 실행
 	console.log(id);

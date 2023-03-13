@@ -1,8 +1,8 @@
 package com.goguma.sns.service;
 
 import java.util.List;
-import java.util.Map;
 
+import com.goguma.common.vo.AtchVO;
 import com.goguma.sns.vo.SnsVO;
 
 public interface SnsService {
@@ -11,6 +11,10 @@ public interface SnsService {
 	int getCountTotal(SnsVO vo);
 
 	SnsVO selectSns(int id); // sns조회
+	
+	SnsVO selectPerSns(String userId); //마이페이지 조회
+	
+	List<AtchVO> selectSnsAtch(int snsNo); //게시글 삭제를 위한 이미지 아이디 찾기
 
 	int insertSns(SnsVO vo); // sns등록
 

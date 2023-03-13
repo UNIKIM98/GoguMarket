@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.goguma.auct.vo.AuctMemVO;
+import com.goguma.common.service.AlarmService;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.common.vo.AlarmVO;
 import com.goguma.common.vo.CommonCodeVO;
 import com.goguma.common.vo.CommonPaging;
 import com.goguma.deal.service.DealService;
@@ -27,11 +29,12 @@ public class RestMemManController {
 	@Autowired
 	MemService member;
 	
-	@Autowired
-	DealService Deal;
+	@Autowired 
+	AlarmService alarm;
 
 	@GetMapping("/admin/keyValue")
 	public Map<String, Object> keyValue() {
+		System.out.println("gdgd");
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		List<CommonCodeVO> selist = new ArrayList();
@@ -58,7 +61,7 @@ public class RestMemManController {
 		System.out.println("1번 호출" + vo.getUserNowPage());
 		Map<String, Object> map = new HashMap<String, Object>();
 		page.setPage(vo.getUserNowPage());
-		page.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
+		page.setPageUnit(5); // 한 페이지에 출력할 레코드 건수
 		page.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		vo.setFirst(page.getFirst());
 		vo.setLast(page.getLast());
@@ -72,16 +75,26 @@ public class RestMemManController {
 	}
 
 	
-	
-
 	@PostMapping("/updateStts")
 	public int updateStts(MemVO vo) {
-		System.out.println(vo);
-
+		
+	
+		AlarmVO avo = new AlarmVO();
+		
+		avo.setPstSe("AD");
+		avo.setUserId(vo.getUserId());
+		avo.setAlmCn("[관리자 알림] "+vo.getUserStts()+"로 변경되었습니다/.");
+		
 		int cnt = member.updateStts(vo);
+		if(cnt > 0) {
+			alarm.insertAlarm(avo);
+			
+		}
 
 		return cnt;
 	}
+	
+	
 
 	@PostMapping("/deleteMember")
 	public int deleteMember(MemVO vo) {
@@ -93,23 +106,7 @@ public class RestMemManController {
 	}
 	
 	
-	@GetMapping("/admin/boradkeyValue")
-	public Map<String, Object> boradkeyValue() {
-		Map<String, Object> map = new HashMap<String, Object>();
 
-		List<CommonCodeVO> categori = new ArrayList();
-	
-		List<CommonCodeVO> searchlist = new ArrayList();
-
-		categori = common.codeList("001");
-		searchlist = common.codeList("009");
-
-		map.put("categori", categori);
-		map.put("searchlist", searchlist);
-
-		return map;
-	}
-	
 	
 
 	

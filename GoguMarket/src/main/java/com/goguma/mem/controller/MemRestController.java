@@ -35,8 +35,9 @@ public class MemRestController {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	/*
+	 * @Autowired private AuthenticationManager authenticationManager;
+	 */
 
 	@Value("${goguma.save}")
 	private String saveFolder;
@@ -108,7 +109,7 @@ public class MemRestController {
 
 				memVO.setAtchNm(fileName);
 				memVO.setAtchPath("/upload/" + fileName);
-				session.setAttribute("atchPath", session)
+				session.setAttribute("atchPath", session);
 			}
 
 		// 없으면

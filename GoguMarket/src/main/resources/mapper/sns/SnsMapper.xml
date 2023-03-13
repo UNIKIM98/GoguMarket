@@ -18,6 +18,25 @@
 
 
 	</select>
+	
+	<select id="selectPerSns" resultType="com.goguma.sns.vo.SnsVO">
+
+		SELECT *
+		FROM SNS
+		WHERE user_id =
+		#{userId}
+
+
+	</select>
+	
+	<select id="selectSnsAtch" parameterType="int"
+		resultType="com.goguma.sns.vo.SnsVO">
+		SELECT * FROM sns
+		WHERE ATCH_ID = (SELECT atch_id
+		FROM sns
+		WHERE sns_no = #{snsNo})
+	</select>
+	
 
 	<insert id="insertSns" parameterType="com.goguma.sns.vo.SnsVO">
 		<selectKey keyProperty="snsNo" resultType="int"
@@ -58,5 +77,14 @@
 		WHERE SNS_NO =
 		#{snsNo}
 	</update>
+	
+	<delete id="deleteSns" parameterType="com.goguma.sns.vo.SnsVO">
+	
+	delete from sns where
+	sns_no = #{snsNo} and user_Id= #{userId}
+	
+
+	</delete>
+	
 
 </mapper>
