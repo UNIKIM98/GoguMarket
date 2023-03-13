@@ -33,7 +33,9 @@ import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
 import com.goguma.deal.vo.Paging;
 import com.goguma.mem.service.MemService;
+import com.goguma.mem.service.PointService;
 import com.goguma.mem.vo.MemVO;
+import com.goguma.mem.vo.PointVO;
 
 @Controller
 
@@ -43,7 +45,7 @@ public class DealController {
 	private DealService dealService;
 
 	@Autowired
-	private DealReviewService RvService;
+	private DealReviewService rvService;
 	
 	@Autowired
 	private DealRvVoteService voteService;
@@ -57,28 +59,25 @@ public class DealController {
 	@Autowired // common-search
 	private SearchService searchService;
 
+	@Autowired // 포인트적립해부러리
+	private PointService pService;
+	
 	@Autowired
 	TestService testService;
 
 	@Autowired
 	MemService memService;
-
-// ❤ 온니 안 쓰는 거 같아서 일단 막아뒀어요
-//	// 판매상품 등록 : 계좌정보와 아이디값이 없으면 등록할 수 없다 => @PostMapping("/deal/{acntno}/{id}")
-//	// 일단 폼데이타로 부메랑에서 들어가는지 확인해보자
-//	@PostMapping("/deal")
-//	@ResponseBody
-//	public DealVO insertDeal(DealVO vo, MultipartFile file) {
-//		return vo;
-//	}
-
-//판매자 페이지에 있던 것
-//❤❤ 언니 요거 안 써서 일단 주석해뒀어욤
-//	model.addAttribute("deal", dealService.selectDeal(dlNo)); // 단건
-//	model.addAttribute("list", dealService.getDealSeller(dlNo));// 여러건
-
-//	int id = Integer.parseInt(dealService.getId(dlNo));
-//	model.addAttribute("file", atchService.selectAtch(id));
+	
+	// ===========================
+	// ▷ 중고거래 마이페이지
+	@RequestMapping("/my/myDeal")
+	public String mydeal(String userId, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
+		
+		
+		return "myPages/myDeal";
+	}
 
 	// ===========================
 	// ▷ 중고거래 메인
@@ -149,7 +148,7 @@ public class DealController {
 	// ▷ 중고거래 게시글 작성 submit
 	@RequestMapping("/my/dealformsubmit") // 딜폼창확인
 	@ResponseBody
-	public String dealform(DealVO vo, List<MultipartFile> files) {
+	public String dealform(PointVO pvo, DealVO vo, List<MultipartFile> files) {
 		/* System.out.println(vo.getAtchId() + "메롱"); */
 		int atchId = atchService.insertFile(files);
 
@@ -157,9 +156,14 @@ public class DealController {
 			vo.setAtchId(atchId);
 		}
 		dealService.insertDeal(vo);
+		pService.insertPoint(pvo); // 후기작성시 포인트적립고
+		// 카테고리가 무료나눔이면 포인트적립 이라고 여기다 쓰면 안되고 임플에다? 자바에다 써야겟죠?
+		if (vo.getCtgry() == "FR") {
+			pvo.setPoint(200); 
+		}
 		return "redirect:dealList";
 	}
-
+	// ===========================
 	// ▷ 중고거래 리뷰 작성 폼 : 단건 게시글에 대한 리뷰
 
 	@RequestMapping("/my/dealReview/{dlNo}")
@@ -168,19 +172,18 @@ public class DealController {
 
 		return "deal/dealReview";
 	}
-
+	// ===========================
 	// ▷ 중고거래 리뷰 작성 submit
 	@RequestMapping("/my/dealReviewsubmit")
 	@ResponseBody
-	public int dealReview(DealReviewVO rvo, DealRvVoteVO vtList) {
+	public int dealReview(PointVO pvo,DealReviewVO rvo, DealRvVoteVO vtList) {
 
 		List<String> list = vtList.getVtList();
-		// 아주 잘 나오신답니다 ^ㅇ^ System.out.println(rvo+"ddddddddddddddd");
 		// 리뷰 인서트
-		int rvNo = RvService.insertDealRv(rvo, list);
-		
+		int rvNo = rvService.insertDealRv(rvo, list);
+		pService.insertPoint(pvo); // 후기작성시 포인트적립고
 		System.out.println(rvo.getRvNo()+"===== 리뷰번호");
-		return rvo.getDlNo(); // 이전페이지로 가고싶은데 dlNo 유지한채로되나? 
+		return rvo.getDlNo();
 		
 	}
 
@@ -254,7 +257,7 @@ public class DealController {
 	}
 
 	// ===========================
-	// ❤❤ 판매자 페이지(로 추정)
+	// ❤❤ 판매자 페이지
 	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
 	public String getDealSeller(@PathVariable String ntslId, Model model) {
 
@@ -264,8 +267,9 @@ public class DealController {
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
-		model.addAttribute("review", RvService.getDealRv(ntslId));// 여러건의 후기 조회
+		model.addAttribute("review", rvService.getDealRv(ntslId));// 여러건의 후기 조회
 		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
+		//model.addAttribute("code",codeService.voteList(ntslId));//아이디로 공통코드불러오는거ㅎ..
 		return "deal/dealSellerPage";
 	}
 
