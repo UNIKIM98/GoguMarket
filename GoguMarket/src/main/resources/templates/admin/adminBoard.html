@@ -23,16 +23,15 @@
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4 tableGroup" >
 				<div class="card-header py-3">
-					MEMBER TABLE
+					BOARD TABLE
 
-					<form id="valueForm" name="valueForm" method="post" onsubmit="return false">
-
+					<form id="searchForm" name="searchForm" method="get"
+						onsubmit="return false">
 
 						<h6 class="m-0 font-weight-bold text-primary pl-100 f-left">
 							USER_SE || <select class=" mr-10 ml-10" name="userSe"
-								id="sekey">
-							</select> USER_STTS || <select class=" mr-10" name="userStts"
-								id="key">
+								id="categori">
+
 
 
 							</select>
@@ -42,37 +41,37 @@
 
 
 						</h6>
-					</form>
-					<div class="col-8 f-right" style="margin:0">
-						<form id="searchForm" name="searchForm" method="get" onsubmit="return false">
+
+						<div class="col-8 f-right" style="margin: 0">
+
 							<select class="mr-10" name="searchKey" id="sort">
 
 
-							</select> <input type="text" placeholder=" search.." id="searchCn" name="search">
-							<button id="searchButton" class="btn btn-primary" onclick="selectMemberList(2)"
+							</select> <input type="text" placeholder=" search.." id="searchCn"
+								name="search">
+							<button id="searchButton" class="btn btn-primary"
+								onclick="selectMemberList(2)"
 								style="height: 25px; line-height: 15px">SEARCH</button>
 
-						</form>
 
-					</div>
+						</div>
+					</form>
 
 
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-bordered" id="memberTable" width="100%"
+						<table class="table table-bordered" id="BoardTable" width="100%"
 							cellspacing="0" style="text-align:center">
 							<thead>
 								<tr>
 									<th>INDEX</th>
+									<th>CATEGOTI</th>
+									<th>TITLE</th>
 									<th>ID</th>
-									<th>NAME</th>
-									<th>NICK</th>
-									<th>ADDR</th>
-									<th>TEL</th>
-									<th>EMAIL</th>
-									<th>STTS</th>
-									<th>CHANG STTS</th>
+									<th>WRITER</th>
+									<th>YMD</th>
+									<th>ETC</th>
 								</tr>
 							</thead>
 

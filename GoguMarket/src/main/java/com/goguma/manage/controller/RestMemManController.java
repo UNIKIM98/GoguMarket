@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.goguma.auct.vo.AuctMemVO;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.CommonCodeVO;
 import com.goguma.common.vo.CommonPaging;
+import com.goguma.deal.service.DealService;
+import com.goguma.deal.vo.DealVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
@@ -23,6 +26,9 @@ public class RestMemManController {
 
 	@Autowired
 	MemService member;
+	
+	@Autowired
+	DealService Deal;
 
 	@GetMapping("/admin/keyValue")
 	public Map<String, Object> keyValue() {
@@ -42,6 +48,9 @@ public class RestMemManController {
 
 		return map;
 	}
+	
+	
+	
 
 	@GetMapping("/admin/selectMemberList")
 	public Map<String, Object> selectMemberList(CommonPaging page, MemVO vo) {
@@ -82,5 +91,29 @@ public class RestMemManController {
 
 		return cnt;
 	}
+	
+	
+	@GetMapping("/admin/boradkeyValue")
+	public Map<String, Object> boradkeyValue() {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		List<CommonCodeVO> categori = new ArrayList();
+	
+		List<CommonCodeVO> searchlist = new ArrayList();
+
+		categori = common.codeList("001");
+		searchlist = common.codeList("009");
+
+		map.put("categori", categori);
+		map.put("searchlist", searchlist);
+
+		return map;
+	}
+	
+	
+
+	
+	
+	
 
 }

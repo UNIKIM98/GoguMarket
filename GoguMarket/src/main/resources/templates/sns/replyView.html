@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout">
 <div class="replyGroup" id="">
 	<div class="card mb-1">
 		<div class="card-body bg-light">
@@ -6,30 +8,43 @@
 					<a href="#"><img class="media-object" src="img/author/1.jpg"
 						alt="#"></a>
 				</div>
-				<div class="media-body ml-10">
-					<div class="clearfix">
-						<div class="name-commenter pull-left">
-							<h6 class="media-heading">
-								<a href="#" id="cmntMem">작성자</a> <br> <a
-									href="#" style="opacity: 50%" id="cmntYmd">게시날짜</a>
-							</h6>
-							<div class="form-inline" id="cmntCn"
-								style="word-break: break-all;">댓글내용</div>
+				<form id="editForm" name="editForm" method="post"
+					onsubmit="return false">
+					<div class="media-body ml-10">
+
+						<div class="clearfix">
+							<div class="name-commenter pull-left">
+								<h6 class="media-heading">
+									<a href="#" id="cmntMem">작성자</a> <br> <a href="#"
+										style="opacity: 50%" id="cmntYmd">게시날짜</a>
+								</h6>
+								<div class="form-inline" id="cmntCn"
+									style="word-break: break-all;">댓글내용</div>
+							</div>
 						</div>
 					</div>
-				</div> 
+					<input type="hidden" id="rpCmntNo" name="cmntNo"> 
+					<input type="hidden" id="rpGroupNo" name="groupNo">
+					<input type="hidden" id="rpSnsNo" name="snsNo"> 
+					<input type="hidden" id="rpCmntMem" name="cmntMem">
+				</form>
 			</div>
-			<input type="button" class="btn btn-dark mt-3 f-right"
-				id="reInput" onClick=""  value="reply"/>
+			<div class="buttonDiv" style="padding: 10px">
+				<button type="button" class="btn btn-dark mt-3 f-left"
+					onclick="rreplyDel()" id="replydel">삭제</button>
+				&nbsp;&nbsp;&nbsp;
+				<button type="button" id="editbutton"
+					class="btn btn-dark mt-3 f-ledft">수정</button>
+				<input type="button" class="btn btn-dark mt-3 f-right" id="reInput"
+					onClick="replyEditForm()" value="reply" />
+			</div>
 		</div>
 	</div>
 	<!--Insert form-->
 
-	<div class="rrplyGroup" id="rrplyGroup_${댓글번호}">
-	
-	
-	</div>
+	<div class="rrplyGroup" id="rrplyGroup_${댓글번호}"></div>
 
 
 
 </div>
+</html>

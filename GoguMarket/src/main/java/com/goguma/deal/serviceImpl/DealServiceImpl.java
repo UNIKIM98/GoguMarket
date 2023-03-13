@@ -98,4 +98,5 @@ public class DealServiceImpl implements DealService {
 		return map.selectNtslDeal(ntslId);
 	}
 
+
 }
