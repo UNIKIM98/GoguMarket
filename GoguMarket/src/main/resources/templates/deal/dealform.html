@@ -149,7 +149,12 @@
 				});
 				
 				$("#cate").on("change", function(){
-					$("#ctgryErrMsg").text("")
+					$("#ctgryErrMsg").text("");
+					if($("#cate").val() == "FR"){
+						//의 밸류가 무나면 가격 dlprc disabled한당
+						$("#dlPrc").attr("disabled",true).val("0");
+						
+					}
 				})
 				
 				$("#btnSave").on("click", function() {
@@ -285,14 +290,18 @@
 				$("#dlCn").focus();
 				isSubmitOk = false;
 			}
-
+			
+			
 			//5. 상품가격 작성 여부
+			// 카테고리.value도 () 가 아니면 ~하게따도 추가해야된다구함미다..
 			else if($("#dlPrc").val()==""){
 			   $("#dlPrc").focus();
 				isSubmitOk = false;
 			}else{
 				isSubmitOk = true;
 			}		
+			
+			
 			
 			return isSubmitOk;			
 		}

@@ -20,104 +20,85 @@
 						</div>
 					</div>
 				</div>
-
-
-				<!-- 내용 윗쪽 -->
-				<div class="row">
-
-					<div class="col-lg-8">
-						<table class="table">
-							<tr>
-								<th class="td-title-1">가게명</th>
-								<th class="td-title-1" colspan="2">예약일</th>
-								<th class="td-title-1">예약상태</th>
-							</tr>
-
-							<!-- 예약1건 -->
-							<!-- <tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
-								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;">
-								<th:block th:if="${sim != null}">
-									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
-									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
-									<td class="td-title-1" th:each="code: ${code}"
-										th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
-										th:text="${code.commonNm}">(예약시간)</td>
-									<td class="td-title-1" th:text="${sim.RSVT_STTS}">(예약상태)</td>
-								</th:block>
-								<th:block th:if="${sim == null}">
-									<td class="td-title-1" colspan="4">예약 내역이 없습니다.</td>
-
-								</th:block>
-							</tr> -->
-
-
-						</table>
-					</div>
-
-					<div class="col-lg-4">달력자리</div>
-				</div>
 				<hr>
-
-				<!--내용 아랫쪽-->
-				<div class="row">
-					<div class="col-lg-6 offset-lg-1">
-
-						<!--테이블1 : 주문메뉴-->
-						<div class="myRsvtDetail">
-							<div class="tab-pane active" id="order-complete">
-								<div class="order-complete-content box-shadow"
-									style="padding: 20px;">
-
-									<table id="menuTbl">
-										<thead>
-											<tr>
-												<th class="td-title-1">메뉴</th>
-												<th class="td-title-1">수량</th>
-												<th class="td-title-2">가격</th>
-											</tr>
-										</thead>
-										<!-- 메뉴 1건 -->
-										<tbody>
-											<!-- <tr> -->
-											<!-- <td class="td-title-1">(메뉴이름)</td> -->
-											<!-- <td class="td-title-1">(수량)</td> -->
-											<!-- <td class="td-title-1">(수량*각 가격)</td> -->
-											<!-- </tr> -->
-										</tbody>
-
-									</table>
-
-									<table id="totalTbl">
-										<!-- <tr> -->
-										<!-- <th class="order-total">합계</th> -->
-										<!-- <td class="order-total"></td> -->
-										<!-- <td class="order-total-price" id="totalSum">(합계)</td> -->
-										<!-- </tr> -->
-									</table>
+				<!-- single-product-tab -->
+								<div class="single-product-tab reviews-tab">
+									<ul class="nav mb-20">
+										<li><a class="active" href="#description" data-bs-toggle="tab">판매중</a></li>
+										<li><a href="#soldout" data-bs-toggle="tab">판매완료</a></li>
+										<li><a href="#prchs" data-bs-toggle="tab">구매내역</a></li>
+									</ul>
 									<hr>
+									<div class="tab-content">
+										<div role="tabpanel" class="tab-pane active show" id="description">
+											<p>판매자[userid부르고싶삼]가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
+											<div class="featured-product" >
+												<div class="active-featured-product slick-arrow-2" >
+													<div class="product-item" th:each="deal : ${dealList}"
+																				th:if="${deal.STTS} == '판매중'">
+														<div class="product-img" style="height:150px">
+															<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+														</div>
+														<div class="product-info">
+															<h6 class="product-title"
+																th:text=${deal.DL_TTL}>상품명</h6>
+															<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
+															<ul class="action-button">
+																<button>끌어올리기</button>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
 
-									<!--테이블2 : 시간, 인원, 요청사항-->
-									<table id="rsvtInfo">
-				
+										</div>
+										<div role="tabpanel" class="tab-pane" id="soldout">
+											<p>판매 완료 리스트가 들어갈 자리입니다</p>
+											<!-- reviews-tab-desc -->
+											<div class="featured-product" >
+												<div class="active-featured-product slick-arrow-2" >
+													<div class="product-item" th:each="deal : ${dealList}"
+																				th:if="${deal.STTS} == '판매완료'">
+														<div class="product-img" style="height:150px">
+															<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+														</div>
+														<div class="product-info">
+															<h6 class="product-title"
+																th:text=${deal.DL_TTL}>상품명</h6>
+															<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
+															<ul class="action-button">
+																<button>끌어올리기</button>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 
-									</table>
+									 	<div role="tabpanel" class="tab-pane" id="prchs" > 
+											<p>구매 내역 리스트가 들어갈 자리입니다</p>
 
+											<div class="featured-product" >
+												<div class="active-featured-product slick-arrow-2" >
+													<div class="product-item" th:each="b : ${buyList}"
+																				th:if="${b.PRCHS_ID== session.userId}">
+														<div class="product-img" style="height:150px">
+															<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${b.DL_NO})}">
+																<img th:src="${b.ATCH_NM}" alt="중고 대표 사진"/></a>
+														</div>
+														<div class="product-info">
+															<h6 class="product-title"
+																th:text=${b.DL_TTL}>상품명</h6>
+															<h3 class="pro-price" th:text=${b.DL_PRC}>가격</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="tab-pane active pt-30" id="order-complete">
-							<a class="button extra-small mb-20" href="/chat/test.do"><span>1/n정산하기
-							</span></a> <a class="button extra-small mb-20" onclick="rsvtModify()"
-								style="cursor: pointer;"><span>예약변경신청</span></a> <a
-								class="button extra-small mb-20" href="#"><span>예약취소하기</span>
-							</a> <a class="button extra-small mb-20" href="#" id="modalBtn"><span>알림설정</span>
-							</a>
-
-						</div>
-					</div>
-				</div>
 
 
 			</form>

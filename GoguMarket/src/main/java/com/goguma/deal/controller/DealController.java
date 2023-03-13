@@ -75,10 +75,24 @@ public class DealController {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
 		
-		
+		model.addAttribute("dealList", dealService.selectNtslDeal(userId)); // 판매중+완료 내역
+		//System.out.println(dealService.selectNtslDeal(userId)+"tqsdfadfasdfasdfsaf");
+		model.addAttribute("buyList", dealService.selectPrchsDeal(userId)); // 구매내역
 		return "myPages/myDeal";
 	}
 
+	// ===========================
+	// ▷ 중고거래 가계부
+	@RequestMapping("/my/myCashbook")
+	public String mycashbook(String userId, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
+		
+		model.addAttribute("cashSell",dealService.selectCashNtsl(userId));  // 판매자일때 건수+데이터조회
+		model.addAttribute("cashBuy",dealService.selectCashPrchs(userId));	// 구매자일때 건수+데이터조회
+		return "myPages/myCashbook";
+	}
+	
 	// ===========================
 	// ▷ 중고거래 메인
 	@RequestMapping("/goguma/dealMain") // 중고거래 메인 페이지
@@ -139,6 +153,8 @@ public class DealController {
 	// ▷ 중고거래 게시글 작성
 	@RequestMapping("/my/dealform") // 딜폼창확인
 	public String dealform(Model model) {
+		
+		
 		model.addAttribute("category", codeService.codeList("002"));
 
 		return "deal/dealform";
@@ -148,19 +164,16 @@ public class DealController {
 	// ▷ 중고거래 게시글 작성 submit
 	@RequestMapping("/my/dealformsubmit") // 딜폼창확인
 	@ResponseBody
-	public String dealform(PointVO pvo, DealVO vo, List<MultipartFile> files) {
-		/* System.out.println(vo.getAtchId() + "메롱"); */
+	public String dealform(DealVO vo, List<MultipartFile> files, String userId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
+		
 		int atchId = atchService.insertFile(files);
 
 		if (atchId > 0) {
 			vo.setAtchId(atchId);
 		}
-		dealService.insertDeal(vo);
-		pService.insertPoint(pvo); // 후기작성시 포인트적립고
-		// 카테고리가 무료나눔이면 포인트적립 이라고 여기다 쓰면 안되고 임플에다? 자바에다 써야겟죠?
-		if (vo.getCtgry() == "FR") {
-			pvo.setPoint(200); 
-		}
+		dealService.insertDeal(vo, userId); // pointVO에 userId담아줄라공~
 		return "redirect:dealList";
 	}
 	// ===========================
@@ -176,15 +189,15 @@ public class DealController {
 	// ▷ 중고거래 리뷰 작성 submit
 	@RequestMapping("/my/dealReviewsubmit")
 	@ResponseBody
-	public int dealReview(PointVO pvo,DealReviewVO rvo, DealRvVoteVO vtList) {
-
+	public int dealReview(PointVO pvo,DealReviewVO rvo, DealRvVoteVO vtList, String userId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
+		
 		List<String> list = vtList.getVtList();
 		// 리뷰 인서트
-		int rvNo = rvService.insertDealRv(rvo, list);
-		pService.insertPoint(pvo); // 후기작성시 포인트적립고
-		System.out.println(rvo.getRvNo()+"===== 리뷰번호");
-		return rvo.getDlNo();
+		int rvNo = rvService.insertDealRv(rvo, list, userId);
 		
+		return rvo.getDlNo();
 	}
 
 	// ===========================
@@ -200,9 +213,7 @@ public class DealController {
 
 		// 게시글 정보 담기
 		model.addAttribute("dealInfo", testService.selectDealTest(dlNo)); // 7번 게시글 정보
-
 		model.addAttribute("atchList", testService.selectDealAtchTest(dlNo)); // 7번 게시글 첨부파일 목록
-
 		model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
 
 		return "deal/dealUpdateForm";
@@ -269,7 +280,7 @@ public class DealController {
 		// ❤❤ 넣어야함!!!
 		model.addAttribute("review", rvService.getDealRv(ntslId));// 여러건의 후기 조회
 		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
-		//model.addAttribute("code",codeService.voteList(ntslId));//아이디로 공통코드불러오는거ㅎ..
+		//model.addAttribute("code",codeService.voteList(ntslId));//아이디로 공통코드불러오는거ㅎ..관련된거다지우샘!!!
 		return "deal/dealSellerPage";
 	}
 

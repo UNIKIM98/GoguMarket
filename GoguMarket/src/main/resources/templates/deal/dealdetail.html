@@ -42,6 +42,8 @@
 				})
 			})
 			 */
+			
+			 
 			// 판매자정보더보기 누르면 가는곳
 			function seller() {
 
@@ -241,11 +243,7 @@
 
 											<div class="sin-pro-action f-right">
 												<ul class="action-button">
-													<li><a href="#" title="Wishlist" tabindex="0"><i
-															class="zmdi zmdi-favorite"></i>찜</a></li>
-													<li><a href="#" data-bs-toggle="modal"
-														data-bs-target="#productModal" title="Quickview"
-														tabindex="0"><i class="zmdi zmdi-zoom-in"></i>챗</a></li>
+													
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="button" onclick="updateform()"
 															th:if="${session.userId == deal.ntslId}">수정하기</button></li>
@@ -255,6 +253,7 @@
 													<li th:each="d : ${deal}">
 															<button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" 
+															 th:if="${session.userId != deal.ntslId}" 
 															th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>구매+리뷰하기</button>
 													</li>

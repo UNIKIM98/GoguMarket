@@ -2,10 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.deal.mapper.DealMapper">
 	
+	<!-- 판매자일때의 월별 가계부조회 -->
+	<select id="selectCashNtsl"
+			parameterType="String"
+					resultType="map">
+	     SELECT extract(month from dl_ymd) AS month, 
+           TO_CHAR(SUM(NVL(dl_prc,0)), 'FM999,999,999') AS totalprc,
+           count(extract(month from dl_ymd)) AS cnt,
+           count(CASE WHEN nego_yn = 'Y' THEN 1 ELSE NULL END) AS ncnt
+	    FROM deal
+	    WHERE dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')
+	      AND ntsl_id = #{ntslId}
+	    GROUP BY extract(month from dl_ymd)
+	    ORDER BY month DESC
+	</select>
 	
-	
+	<!-- 구매자일때의 월별 가계부 조회 -->
+	<select id="selectCashPrchs"
+			parameterType="String"
+					resultType="map">
+	SELECT extract(month from dl_ymd) AS month, 
+           TO_CHAR(SUM(NVL(dl_prc,0)), 'FM999,999,999') AS totalprc,
+           count(extract(month from dl_ymd)) AS cnt,
+           count(CASE WHEN nego_yn = 'Y' THEN 1 ELSE NULL END) AS ncnt
+	    FROM deal
+	    WHERE dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')
+	      AND prchs_id = #{prchsId}
+	    GROUP BY extract(month from dl_ymd)
+	    ORDER BY month DESC
+    </select>
+    
 	<!-- 채은추가!! 확인후 주석은 지워주세욧 -->
 	<select id="selectNtslDeal" 
+			parameterType="String"
+			resultType="map">
+ 	SELECT d.* ,
+		       (SELECT ATCH_PATH
+	       		FROM ATCH
+	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
+                , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
+	FROM deal d JOIN MEM m 
+    ON d.ntsl_Id = m.user_id
+	WHERE ntsl_id = #{ntslId}
+	</select>
+	
+	<!-- 구매내역입장에서의 셀렉트 -->
+	<select id="selectPrchsDeal" 
 			parameterType="String"
 			resultType="map">
 	SELECT d.* ,
@@ -15,8 +57,10 @@
                 , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
 	FROM deal d JOIN MEM m 
     ON d.ntsl_Id = m.user_id
-	WHERE ntsl_id = #{ntslId}
+	WHERE prchs_id = #{prchsId}
 	</select>
+	
+	
 	<!-- ====== ❤ new(getId+getAtch >> selectDealAtch ====== -->
 	<select id="selectDealAtch" 
 			parameterType="int" 
@@ -25,12 +69,6 @@
 	WHERE ATCH_ID = (SELECT atch_id FROM DEAL
 	                WHERE dl_no = #{dlNo})
 	</select>
-	<!-- 	<select id="getId" -->
-	<!-- 			resultType="String"> -->
-	<!-- 	SELECT ATCH_ID -->
-	<!-- 			FROM DEAL -->
-	<!-- 			WHERE DL_NO = #{dlNo} -->
-	<!-- 	</select> -->
 
 	
 	<!-- ====== ❤ getDeal >> selectDeal ======= -->
@@ -209,8 +247,8 @@
 		<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>
-
 	</select>
 	
-	
+
+
 </mapper>

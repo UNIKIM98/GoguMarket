@@ -15,17 +15,25 @@
 	<select id="getDealRvVote"
 			parameterType="String"
 			resultType="com.goguma.deal.vo.DealRvVoteVO">
-	select rvvt_cn as cn, count(rvvt_cn) as ccn
-	from rv_vote
-	where rv_no in 
-	           (select rv_no
-	            from rv
-	            where dl_no in 
-	                        (select dl_no
-	                         from deal
-	                         where ntsl_id = #{ntslId}))
-	group by rvvt_cn
-	order by ccn desc
+	select a.ccn, a.rvvt_cn, b.common_cn
+	from 
+	  (select rvvt_cn, count(rvvt_cn) as ccn
+	   from rv_vote
+	   where rv_no in 
+	              (select rv_no
+	               from rv
+	               where dl_no in 
+	                           (select dl_no
+	                            from deal
+	                            where ntsl_id = #{ntslId}))
+	   group by rvvt_cn
+	   order by ccn desc) a
+	join 
+	  (select  v.rvvt_cn, c.common_cn
+	   from rv_vote v join common_code c
+	    on v.rvvt_cn = c.common_detail_code
+	    where c.common_code = 010) b
+	on a.rvvt_cn = b.rvvt_cn
 	</select>
 	
 </mapper>
