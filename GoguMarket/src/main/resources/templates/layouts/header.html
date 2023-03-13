@@ -9,10 +9,11 @@
 		<div class="header-top-bar plr-185" style="background-color: #ff7f00;">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-6 col-md-6 d-none d-md-block" th:if="${session.userId!=null}">
-						<div class="call-us">
-							<img alt="프로필사진" th:src="${session.atchPath}" style="width: 30px; height: 30px; border-radius: 70%; display:inline-block;">
-							<p class="mb-0 roboto text-white" th:text="${session.nickNm}">GOGUMARKET</p>
+					<div class="col-lg-6 col-md-6 d-none d-md-block">
+						<div class="call-us" th:if="${session.userId != null}" style="display: flex; align-items: center;">
+						  <img alt="프로필사진" th:if="${session.atchPath != null}" th:src="${session.atchPath}" style="width: 30px; height: 30px; border-radius: 70%;">
+						  <img alt="프로필사진" th:if="${session.atchPath == null}" src="/attech/222.jpg" style="width: 30px; height: 30px; border-radius: 70%;">
+						  <p class="mb-0 roboto text-white" th:text="${session.nickNm}" style="margin-left: 10px;">GOGUMARKET</p>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
