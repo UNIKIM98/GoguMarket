@@ -60,13 +60,12 @@
 		resultType="com.goguma.mem.vo.MemVO">
 		SELECT USER_ID, 'ROLE_'||USER_SE as USER_SE, USER_PW as USER_PW, USER_NM,
 				GENDER, NICK_NM, ADDR, DEAL_AREA, EML, BRTH_YMD, MBL_TELNO, ACT_NO,
-				RCMD_CODE, JOIN_YMD, USER_STTS, SOCIAL_TOKEN,
+                RCMD_CODE, JOIN_YMD, USER_STTS, SOCIAL_TOKEN,
 				RFSH_TOKEN, SOCIAL_SE,
 				ATCH_NM, ATCH_PATH
 		FROM MEM
-		WHERE 
 		<if test="eml != null and eml != ''">EML = #{eml}</if>
-		<if test="userId != null and userId != ''">USER_ID =#{userId}</if>
+		<if test="userId != null and userId != ''">WHERE user_id=#{userId}</if>
 	</select>
 
 	<!-- ▶ 관리자 멤버 전체 조회/구분 기능 가능 -->
@@ -135,12 +134,11 @@
 		</choose>
 		WHERE user_id = #{userId}
 	</update>
-	
+
 	<!-- ❤️ 비밀번호 수정 -->
 	<update id="updateUserPw">
 		UPDATE MEM
 		SET user_pw = #{userPw}
 		WHERE user_id = #{userId}
 	</update>
-	
 </mapper>

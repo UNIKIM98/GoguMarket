@@ -11,20 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Service;
 
+import com.goguma.biz.service.BizMemService;
+import com.goguma.biz.vo.BizMemVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
+@Service
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Autowired
 	MemService memService;
 
+	@Autowired
+	BizMemService bizService;
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
-		System.out.println("=================================================");
 		MemVO memVO = (MemVO) auth.getPrincipal();
-		System.out.println(memVO);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", memVO.getUserId()); // 아이디
@@ -36,6 +41,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("userNm", memVO.getUserNm()); // 전화번호
 		session.setAttribute("eml", memVO.getEml()); // 이메일
 
+		if (memVO.getUserSe().equals("ROLE_BIZ")) {
+			String bizId = memVO.getUserId();
+			session.setAttribute("bizNo", bizService.selectBizNo(bizId));
+		}
 		response.sendRedirect("/goguma/dealMain");
 	}
 
