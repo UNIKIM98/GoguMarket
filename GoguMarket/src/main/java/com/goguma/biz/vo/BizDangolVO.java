@@ -21,4 +21,7 @@ public class BizDangolVO {
 
 	// # 단골 카운트
 	private int dCount;
+	
+	private String atchPath;
+	private String nickNm;
 }

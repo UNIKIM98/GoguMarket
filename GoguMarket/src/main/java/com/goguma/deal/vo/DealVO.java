@@ -2,6 +2,8 @@ package com.goguma.deal.vo;
 
 import java.sql.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,7 +13,7 @@ import lombok.Data;
 
 @Data
 public class DealVO extends AtchVO{
-
+	
 	private int dlNo; 	// 글번호
 	private String ntslId; 	// 판매자
 	private String prchsId;	// 구매자
@@ -30,6 +32,11 @@ public class DealVO extends AtchVO{
 	private String atchNm;  // 파일명
 	private int atchId;
 	
+	// 가계부 알리아스
+	private String month;
+	private String cnt;
+	private String ncnt;
+	private String totalprc;
 	
 	// 공통코드
 	private String commonCode;

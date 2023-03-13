@@ -45,6 +45,7 @@ public class MemRestController {
 	@Autowired
 	private EmailService emailService;
 	
+
 	@Value("${goguma.save}")
 	private String saveFolder;
 

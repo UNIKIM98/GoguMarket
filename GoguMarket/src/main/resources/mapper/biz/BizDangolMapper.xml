@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.biz.mapper.BizDangolMapper">
-
-<select id="countDangol" resultType="com.goguma.biz.vo.BizDangolVO">
-	SELECT COUNT(d.dg_no) as dCount, m.biz_no as bizNo 
-	FROM biz_dangol d RIGHT JOIN biz_mem m
-	ON d.biz_no = m.biz_no
-	GROUP BY d.biz_no,  m.biz_no
-	ORDER BY d.biz_no
-</select>
-
+	
+	<select id="countDangol"
+		resultType="com.goguma.biz.vo.BizDangolVO">
+		SELECT COUNT(d.dg_no) as dCount, m.biz_no as bizNo
+		FROM biz_dangol d RIGHT JOIN biz_mem m
+		ON d.biz_no = m.biz_no
+		GROUP BY d.biz_no, m.biz_no
+		ORDER BY d.biz_no
+	</select>
+	
+	<!-- shop06단골 카운팅(가게번호)-->
+	<select id="selectShopDangolCnt" parameterType="String" resultType="int">
+		SELECT count(d.dg_no) dCount, m.biz_no
+		FROM biz_dangol d RIGHT JOIN biz_mem m
+				ON d.biz_no = m.biz_no
+                WHERE d.biz_no = 'bn001'
+				GROUP BY d.biz_no,  m.biz_no
+				ORDER BY #{bizNo}
+	</select>
+	
+	<!-- shop06단골 기간 -->
+	<select id="selectDangolPeriod" resultType="int">
+		SELECT COUNT(*) AS count
+		FROM biz_dangol
+		WHERE dangol_ymd BETWEEN SYSDATE - 10 AND SYSDATE
+	</select>
+	
+	<!-- 단골리스트 출력 -->
+	<select id="selectDangolList" parameterType="String" resultType="com.goguma.biz.vo.BizDangolVO">
+		SELECT b.*, m.*
+		FROM biz_dangol b, mem m
+		WHERE b.user_id = m.user_id
+		AND b.biz_no = #{bizNo}
+	</select>
 </mapper>

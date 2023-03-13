@@ -1,8 +1,10 @@
 package com.goguma.deal.serviceImpl;
 
-import java.io.Console;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +14,50 @@ import com.goguma.deal.mapper.DealMapper;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealSearchVO;
 import com.goguma.deal.vo.DealVO;
+import com.goguma.mem.mapper.PointMapper;
+import com.goguma.mem.vo.PointVO;
 
 @Service
 public class DealServiceImpl implements DealService {
 
 	@Autowired
 	private DealMapper map;
+	@Autowired
+	private PointMapper pmap;
 
+//	@Override
+//	public int insertDeal(DealVO deal) {
+//		// 판매 상품 등록
+//		return map.insertDeal(deal);
+//	}
+	
+	@Override
+	public int insertDeal(DealVO deal, String userId) {
+		// 판매 상품 등록
+		// 카테고리가 "무료나눔" 이면 200포인트 증정해라
+		
+		PointVO pvo = new PointVO();
+		if (deal.getCtgry().equals("FR")) {
+			pvo.setPoint(200); 
+			pvo.setUserId(userId); // 세션의 현재 유저아이디 불러와야되는데 유유
+			pvo.setPointMthd("무료나눔");
+		}
+		pmap.insertPoint(pvo); // 포인트 vo 에 담아주기
+		
+		return map.insertDeal(deal);
+	}
+	
+	@Override
+	public int updateYmd(DealVO dVO, String userId) {
+		// 게시글 끌어올리기
+		PointVO pvo = new PointVO();
+		pvo.setPoint(-200);
+		pvo.setUserId(userId); // 세션의 현재 유저아이디 불러와야되는데 유유
+		pvo.setPointMthd("무료나눔");
+		
+		return map.updateYmd(dVO);
+	}
+	
 	@Override
 	public List<DealVO> dealListSelect(DealSearchVO svo) {
 		// 판매 리스트 전체 조회 : 페이징 O 검색X
@@ -32,11 +71,7 @@ public class DealServiceImpl implements DealService {
 		return map.getcountTotal(svo);
 	}
 
-	@Override
-	public int insertDeal(DealVO deal) {
-		// 판매 상품 등록
-		return map.insertDeal(deal);
-	}
+
 
 	@Override
 	public int updateDeal(DealVO deal) {
@@ -97,6 +132,26 @@ public class DealServiceImpl implements DealService {
 	public List<Map> selectNtslDeal(String ntslId) {
 		return map.selectNtslDeal(ntslId);
 	}
+
+	@Override
+	public List<Map> selectPrchsDeal(String prchsId) {
+		// TODO Auto-generated method stub
+		return map.selectPrchsDeal(prchsId);
+	}
+
+	@Override
+	public List<Map> selectCashNtsl(String ntslId) {
+		// 판매자일때의 월별 가계부 조회
+		return map.selectCashNtsl(ntslId);
+	}
+
+	@Override
+	public List<Map> selectCashPrchs(String prchsId) {
+		// 구매자일때의 월별 가계부 조회
+		return map.selectCashPrchs(prchsId);
+	}
+
+
 
 
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{/admin/adminLayout}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+.sendAdd {
+	list-style: none;
+	margin: 0;
+}
+
+.sendAdd li {
+	float: left;
+	margin-left: 30px;
+}
+</style>
+</head>
+
+<body>
+	<div layout:fragment="adminContent">
+		<div class="card" style="width: 60%; margin: 0 auto; margin-top: 5%;">
+			<div class="card-body" style="text-align: center">
+				<div class="newsletter-info text-center">
+					<h5 class="card-title">SEND MESSAGE</h5>
+					<h6 class="card-subtitle mb-2 text-muted">
+						<input type="text" placeholder="제목을 입력하세요" style="width: 60%">
+					</h6>
+				</div>
+				<form name="alarmForm" method="post"
+						onsubmit="return false">
+					<select class=" mr-10 ml-10" name="userSe" id="sekey">
+					</select> <input type="hidden" id="userId" th:value="${userId}">
+					<ul class="sendAdd">
+						<li>보내는 사람: [[${session.userId}]]</li>
+						<li>받는 사람: [[${userId}]]</li>
+						<li style="margin-left: 350px">전송날짜: 2023-03-13</li>
+
+					</ul>
+					<br>
+					<hr style="margin: 0;">
+					<br>
+
+
+
+					<div>
+						<textarea rows="5" cols="100"></textarea>
+					</div>
+				</form>
+			</div>
+			<div style="float: left; margin: 0 auto;">
+				<button class="btn btn-primary"
+					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">전송</button>
+				<button class="btn btn-primary"
+					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">취소</button>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

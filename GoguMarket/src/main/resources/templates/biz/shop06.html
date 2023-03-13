@@ -6,168 +6,142 @@
 <body>
 
 	<div layout:fragment="bizContent">
+		<script>
+			function gopage(page) {
+				frmSearch.page.value = page;
+				frmSearch.submit();
+			}
+
+			function ctgryId(name) {
+				console.log(name) //치킨 <- 이런식으로 나옴
+			}
+		</script>
 		<div class="row">
 
 			<div class="col-lg-12">
-
-				<form action="#">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="section-title text-start mb-20">
-								<h2 class="uppercase">단골 관리</h2>
-								<h6>단골들에게 관심을 더해보세요</h6>
-							</div>
+				<!-- 제목부분 -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title text-start mb-20">
+							<h2 class="uppercase">단골 관리</h2>
+							<h6>단골들에게 관심을 더해보세요</h6>
 						</div>
 					</div>
-					<hr>
-					<div class="d-flex justify-content-center">
-						<table>
-							<tr>
-								<td class="td-title-1">총 단골 수는</td>
-								<td class="td-title-1">10월 1일 ~ 11월 11일 기간동안</td>
-								<td class="td-title-1">페이지를 방문한 단골은</td>
-								<td class="td-title-1">소식을 읽은 단골은</td>
-							</tr>
-							<tr>
-								<th class="td-title-1">1,123명</th>
-								<th class="td-title-1">32명</th>
-								<th class="td-title-1">298명</th>
-								<th class="td-title-1">542명</th>
-							</tr>
-							<tr>
-								<td class="td-title-1">이에요</td>
-								<td class="td-title-1">늘어났어요</td>
-								<td class="td-title-1">이에요</td>
-								<td class="td-title-1">이에요</td>
-							</tr>
-						</table>
-					</div>
-					<hr>
+				</div>
+				<hr>
 
-					<!-- 단골목록 : 반복 -->
-					<div class="reviews-tab-desc">
-						<div class="row mb-30">
-							<!-- 단골목록 반복 -->
-							<div class="col-md-3">
-								<div class="media mt-30">
-									<div class="media-left">
-										<a href="#"><img class="media-object"
-											src="img/author/2.jpg" alt="#"></a>
-									</div>
-									<div class="media-body">
-										<div class="clearfix">
-											<div class="name-commenter f-left">
-												<h65 class="media-heading">
-												<a href="#">김또치</a>
-												</h6>
-												<p class="mb-10">단골 20일째</p>
-											</div>
+				<div class="d-flex justify-content-center">
+					<table>
+						<tr>
+							<td class="td-title-1" style="text-align: center;">총 단골 수는</td>
+							<td class="td-title-1" style="text-align: center;" id="pd">10월1일
+								~ 11월 11일 기간동안</td>
+							<td class="td-title-1" style="text-align: center;">페이지를 방문한
+								단골은</td>
+							<td class="td-title-1" style="text-align: center;">소식을 읽은
+								단골은</td>
+						</tr>
+						<tr>
+							<th class="td-title-1" style="text-align: center;"
+								th:text="|${cnt}명|">(몇명)</th>
+							<th class="td-title-1" style="text-align: center;"
+								th:text="|${prd}명|">(몇명)</th>
+							<th class="td-title-1" style="text-align: center;">21명</th>
+							<th class="td-title-1" style="text-align: center;">58명</th>
+						</tr>
+						<tr>
+							<td class="td-title-1" style="text-align: center;">이에요</td>
+							<td class="td-title-1" style="text-align: center;">늘어났어요</td>
+							<td class="td-title-1" style="text-align: center;">이에요</td>
+							<td class="td-title-1" style="text-align: center;">이에요</td>
+						</tr>
+					</table>
+				</div>
+				<hr>
 
-											<br>
-										</div>
-										<p class="mb-0">매주 토요일 저녁 9시에 양념반 후라이드반 무많이 시키는 두류동 고객님</p>
-									</div>
+				<!-- 단골목록 : 반복 -->
+				<div class="reviews-tab-desc">
+					<div class="row mb-30">
+					
+						<!-- 페이징을 위해 form태그에 name추가, hidden타입 input태그 추가 -->
+						<form name="frmSearch" action="#">
+							<!-- ▼ 추가된 input -->
+							<input type="hidden" name="page" value="1">
+						</form>
+						<!-- 단골목록 반복 -->
+						<div class="col-lg-3" th:each="dg:${dg}">
+						<h1 th:text="${dg.userId}"></h1>
+							<div class="media mt-30">
+								<div class="media-left">
+									<a href="#"><img class="media-object"
+										th:src="${dg.atchPath}" alt="#"></a>
 								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="media mt-30">
-									<div class="media-left">
-										<a href="#"><img class="media-object"
-											src="img/author/2.jpg" alt="#"></a>
-									</div>
-									<div class="media-body">
-										<div class="clearfix">
-											<div class="name-commenter f-left">
-												<h65 class="media-heading">
-												<a href="#">김또치</a>
-												</h6>
-												<p class="mb-10">단골 20일째</p>
-											</div>
-
-											<br>
+								<div class="media-body">
+									<div class="clearfix">
+										<div class="name-commenter f-left">
+											<h6 class="media-heading">
+												<a th:href="#" th:text="${dg.nickNm}">(닉네임)</a>
+											</h6>
+											<p class="mb-10" th:text="|등록일 : ${dg.dangolYmd}|">(단골등록날짜)</p>
 										</div>
-										<p class="mb-0">매주 토요일 저녁 9시에 양념반 후라이드반 무많이 시키는 두류동 고객님</p>
-									</div>
-								</div>
-							</div>
 
-							<div class="col-md-3">
-								<div class="media mt-30">
-									<div class="media-left">
-										<a href="#"><img class="media-object"
-											src="img/author/2.jpg" alt="#"></a>
+										<br>
 									</div>
-									<div class="media-body">
-										<div class="clearfix">
-											<div class="name-commenter f-left">
-												<h65 class="media-heading">
-												<a href="#">김또치</a>
-												</h6>
-												<p class="mb-10">단골 20일째</p>
-											</div>
-
-											<br>
-										</div>
-										<p class="mb-0">매주 토요일 저녁 9시에 양념반 후라이드반 무많이 시키는 두류동 고객님</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="media mt-30">
-									<div class="media-left">
-										<a href="#"><img class="media-object"
-											src="img/author/2.jpg" alt="#"></a>
-									</div>
-									<div class="media-body">
-										<div class="clearfix">
-											<div class="name-commenter f-left">
-												<h65 class="media-heading">
-												<a href="#">김또치</a>
-												</h6>
-												<p class="mb-10">단골 20일째</p>
-											</div>
-
-											<br>
-										</div>
-										<p class="mb-0">매주 토요일 저녁 9시에 양념반 후라이드반 무많이 시키는 두류동 고객님</p>
-									</div>
+									<p class="mb-0" th:text="${dg.dangolMemo}">(메모내용)</p>
 								</div>
 							</div>
 						</div>
 
-
-
-
 					</div>
 
-					<!-- 페이지번호 -->
-					<div class="row">
-						<div class="col-lg-12">
-							<!-- shop-pagination start -->
-							<ul class="shop-pagination box-shadow text-center ptblr-10-30">
-								<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-								<li><a href="#">01</a></li>
-								<li><a href="#">02</a></li>
-								<li><a href="#">03</a></li>
-								<li><a href="#">...</a></li>
-								<li><a href="#">05</a></li>
-								<li class="active"><a href="#"><i
-										class="zmdi zmdi-chevron-right"></i></a></li>
-							</ul>
-							<!-- shop-pagination end -->
-						</div>
-					</div>
+				</div>
 
-				</form>
+				<!-- 페이지번호 -->
+				<div class="row">
+					<div class="col-lg-12">
+						<!-- 페이징 -->
+						<ul class="shop-pagination box-shadow text-center ptblr-10-30">
+							<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+							<li
+								th:each="num: *{#numbers.sequence(pagingVO.startPage, pagingVO.endPage)}"
+								th:class="${pagingVO.page}==${num} ? 'active'"><a
+								th:href="|javascript:gopage(${num})|">[[${num}]]</a></li>
+
+							<li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
+						</ul>
+						<!-- 페이징-->
+					</div>
+				</div>
+
+
 
 			</div>
 
 		</div>
 
-	</div>
+		<script th:inline="javascript">
+			// 현재 날짜 가져오기
+			var today = new Date();
 
+			// 날짜를 10일 전으로 설정
+			var tenDaysAgo = new Date(today.getFullYear(), today.getMonth(),
+					today.getDate() - 10);
+
+			// 출력할 날짜 형식 설정
+			var dateFormat = {
+				month : 'long',
+				day : 'numeric'
+			};
+
+			var today = today.toLocaleDateString('ko-KR', dateFormat)
+			var tenDaysAgo = tenDaysAgo.toLocaleDateString('ko-KR', dateFormat)
+			console.log(today)
+			console.log(tenDaysAgo)
+
+			console.log($('#pd').text(tenDaysAgo + " ~ " + today + " 기간동안"));
+		</script>
+	</div>
+	<!-- 타임리프 div 끝 -->
 </body>
 
 </html>
