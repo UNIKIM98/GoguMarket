@@ -34,7 +34,7 @@ public class MemRestController {
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 //	private AuthenticationManager authenticationManager;
 
@@ -108,7 +108,7 @@ public class MemRestController {
 
 				memVO.setAtchNm(fileName);
 				memVO.setAtchPath("/upload/" + fileName);
-				session.setAttribute("atchPath", session)
+				session.setAttribute("atchPath", session);
 			}
 
 		// 없으면

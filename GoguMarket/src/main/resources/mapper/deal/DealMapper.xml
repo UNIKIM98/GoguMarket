@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.deal.mapper.DealMapper">
 	
+	
+	
 	<!-- 채은추가!! 확인후 주석은 지워주세욧 -->
 	<select id="selectNtslDeal" 
 			parameterType="String"
@@ -192,6 +194,23 @@
 		SET INQ_CNT = INQ_CNT + 1
 		WHERE DL_NO = #{dlNo}
 	</update>
+	
+	
+	<select id="selectDealList"
+		parameterType="com.goguma.deal.vo.DealVO"
+		resultType="com.goguma.deal.vo.DealVO">
+		select *
+		from (select rownum rn,a.* from(
+		SELECT * FROM deal
+		
+		<include refid="creiteria"></include>
+		order by deal_ymd
+		
+		<![CDATA[
+		) a where rownum <= #{last} )b where rn >= #{first}
+		]]>
+
+	</select>
 	
 	
 </mapper>

@@ -53,16 +53,17 @@
 		)
 	</insert>
 
-	<delete id="deleteRreply" parameterType="int">
+	<delete id="deleteRreply" parameterType="com.goguma.sns.vo.SnsCmntVO">
 		delete from sns_cmnt
 		where cmnt_no = #{cmntNo}
-
+		
 	</delete>
 
 	<update id="updateCmnt"
 		parameterType="com.goguma.sns.vo.SnsCmntVO">
-		UPDATE sns_cmnt SET cmnt_cn = #{cmntCn} , 
-		cmnt_ymd = sysdate
+		UPDATE sns_cmnt SET cmnt_cn = #{cmntCn} ,
+		cmnt_ymd =
+		sysdate
 		WHERE cmnt_no = #{cmntNo}
 	</update>
 

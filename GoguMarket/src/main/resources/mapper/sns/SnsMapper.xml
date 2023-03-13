@@ -23,7 +23,7 @@
 		<selectKey keyProperty="snsNo" resultType="int"
 			order="BEFORE">
 			SELECT NVL(MAX(sns_No),0)+1
-			AS snsNO
+			AS snsNo
 			FROM SNS
 		</selectKey>
 		INSERT INTO SNS (

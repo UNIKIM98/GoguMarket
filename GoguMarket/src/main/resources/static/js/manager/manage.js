@@ -19,10 +19,6 @@ $(document).ready(function() {
 });
 
 
-
-
-
-
 function keyValue() {
 	$.ajax({
 		url: "/admin/keyValue",
