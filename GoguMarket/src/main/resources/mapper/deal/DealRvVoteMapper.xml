@@ -15,7 +15,7 @@
 	<select id="getDealRvVote"
 			parameterType="String"
 			resultType="com.goguma.deal.vo.DealRvVoteVO">
-	select a.ccn, a.rvvt_cn, b.common_cn
+	select distinct a.ccn, a.rvvt_cn, b.common_cn
 	from 
 	  (select rvvt_cn, count(rvvt_cn) as ccn
 	   from rv_vote
@@ -34,6 +34,7 @@
 	    on v.rvvt_cn = c.common_detail_code
 	    where c.common_code = 010) b
 	on a.rvvt_cn = b.rvvt_cn
+	order by ccn desc
 	</select>
 	
 </mapper>

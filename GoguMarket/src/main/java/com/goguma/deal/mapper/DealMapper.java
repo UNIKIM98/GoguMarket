@@ -49,6 +49,9 @@ public interface DealMapper {
 
 	// Deal 게시글 update
 	int updateDeal(DealVO dVO);
+	
+	// Deal 게시글 끌어올리깃!
+	int updateYmd(DealVO dVO);
 
 	// Deal 게시글 삭제(DB에서 영구삭제)
 	int deleteDeal(DealVO dVO);

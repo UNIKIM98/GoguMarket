@@ -71,16 +71,28 @@ public class DealController {
 	// ===========================
 	// ▷ 중고거래 마이페이지
 	@RequestMapping("/my/myDeal")
-	public String mydeal(String userId, Model model, HttpServletRequest request) {
+	public String mydeal(DealVO dVO,String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
 		
 		model.addAttribute("dealList", dealService.selectNtslDeal(userId)); // 판매중+완료 내역
-		//System.out.println(dealService.selectNtslDeal(userId)+"tqsdfadfasdfasdfsaf");
 		model.addAttribute("buyList", dealService.selectPrchsDeal(userId)); // 구매내역
+		
+		
 		return "myPages/myDeal";
 	}
 
+	@RequestMapping("/my/myDealSubmit") // 게시글업데이트..
+	@ResponseBody
+	public String mydeal(DealVO dVO,String userId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
+		
+		
+		dealService.updateYmd(dVO, userId); // pointVO에 userId담아줄라공~
+		return "myPages/myDeal";
+	}
+	
 	// ===========================
 	// ▷ 중고거래 가계부
 	@RequestMapping("/my/myCashbook")

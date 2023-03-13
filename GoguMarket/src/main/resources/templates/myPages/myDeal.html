@@ -32,26 +32,32 @@
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active show" id="description">
 											<p>판매자[userid부르고싶삼]가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
-											<div class="featured-product" >
-												<div class="active-featured-product slick-arrow-2" >
-													<div class="product-item" th:each="deal : ${dealList}"
-																				th:if="${deal.STTS} == '판매중'">
-														<div class="product-img" style="height:150px">
-															<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
-														</div>
-														<div class="product-info">
-															<h6 class="product-title"
-																th:text=${deal.DL_TTL}>상품명</h6>
-															<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
-															<ul class="action-button">
-																<button>끌어올리기</button>
-															</ul>
+											<!-- ■■■■■■끌올하려고 폼으로 감싸기 -->
+											<form id="updateFrm" method="post">
+												<div class="featured-product" >
+													<div class="active-featured-product slick-arrow-2" >
+														<div class="product-item" th:each="deal : ${dealList}"
+																					th:if="${deal.STTS} == '판매중'">
+															<div class="product-img" style="height:150px">
+																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																	<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+															</div>
+															<div class="product-info">
+																<h6 class="product-title"
+																	th:text=${deal.DL_TTL}>상품명</h6>
+																<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
+																<ul class="action-button">
+																<input type="hidden" name="ntslId" id="ntslId" th:value="${session.userId}">
+																<input type="hidden" name="dlNo" id="dlNo" th:value="${deal.DL_NO}">
+																	<input
+																			class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+																			id="btnSave" role="button" value="등록하기">
+																</ul>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-
+											</form>
 										</div>
 										<div role="tabpanel" class="tab-pane" id="soldout">
 											<p>판매 완료 리스트가 들어갈 자리입니다</p>
@@ -99,12 +105,54 @@
 										</div>
 									</div>
 								</div>
-
-
 			</form>
 
 		</div>
-	
+		
+		<script th:inline="javascript">
+		//==============================================================================
+		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+		$(function() {
+			$("#btnSave").on("click", function() {
+				submitForm();
+			});
+		});
+		
+		//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+		var isSubmitOk = true;
+		
+		function submitForm() {
+				//submit 전 체크하기 : 체크할거잇음? 아 쓸 포인트가 있는지 물어보면 좋을듯
+				if (submitCheck()) {
+					var formData = new FormData($("#updateFrm")[0]);
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				$.ajax({
+					url : "/my/myDealSubmit",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						alert("[완료]	게시글 끌어올리기가 완료되었습니다 :D");
+						location.href = "/goguma/dealdetail/"+result;
+					},
+					error : function(err) {
+						alert("[실패] 게시글 끌어올리기를 실패하였습니다. :("); 
+					}
+				});
+			}
+		}
+		function submitCheck() {
+			// 포인트가 200이상이어야 끌올을 할수있겟쬬? : 200 미만이면 false
+			if ($("#point").val() <"200") {
+				$("#point").focus();
+				isSubmitOk = false;
+			}
+			return isSubmitOk;
+		}
+		
+		</script>
 	
 	</div>
 </body>

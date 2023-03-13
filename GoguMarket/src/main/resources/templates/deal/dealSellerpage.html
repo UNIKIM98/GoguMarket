@@ -75,10 +75,9 @@
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active show" id="description">
 											<p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
-										
-											<div class="featured-product" th:each="deal:${dealList}">
+											<div class="featured-product">
 												<div class="active-featured-product slick-arrow-2" >
-													<div class="product-item"  >
+													<div class="product-item"   th:each="deal:${dealList}">
 													
 														<div class="product-img" style="height:150px;">
 																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
@@ -143,7 +142,6 @@
 											<p>매너 칭찬 리스트가 들어갈 자리입니다</p>
 
 											<table>
-											if문으로 c.common_detail_code == v.cn 이면 c.common_cn 나오게몬함? 도됨시비알 챗지피티짱
 								                <thead>
 								                    <tr>
 								                        <th>순위</th>

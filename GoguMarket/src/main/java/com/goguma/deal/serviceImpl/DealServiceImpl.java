@@ -48,6 +48,17 @@ public class DealServiceImpl implements DealService {
 	}
 	
 	@Override
+	public int updateYmd(DealVO dVO, String userId) {
+		// 게시글 끌어올리기
+		PointVO pvo = new PointVO();
+		pvo.setPoint(-200);
+		pvo.setUserId(userId); // 세션의 현재 유저아이디 불러와야되는데 유유
+		pvo.setPointMthd("무료나눔");
+		
+		return map.updateYmd(dVO);
+	}
+	
+	@Override
 	public List<DealVO> dealListSelect(DealSearchVO svo) {
 		// 판매 리스트 전체 조회 : 페이징 O 검색X
 		System.out.println(svo+"svo넘어오낫!!");
@@ -139,6 +150,8 @@ public class DealServiceImpl implements DealService {
 		// 구매자일때의 월별 가계부 조회
 		return map.selectCashPrchs(prchsId);
 	}
+
+
 
 
 }
