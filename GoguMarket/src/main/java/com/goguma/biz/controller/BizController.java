@@ -107,9 +107,9 @@ public class BizController {
 	}
 
 	// 동네가게 등록(shop01)
-	@PostMapping("/biz/shop1")
+	@GetMapping("/biz/shop1")
 	public String bizInsert() {
-		return "my/shop01";
+		return "biz/shop01";
 	}
 	// ==============================
 	@GetMapping("/my/shop01")
