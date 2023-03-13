@@ -107,7 +107,7 @@ public class RsvtController {
 
 	}
 	
-	//예약상세내역 메뉴부분 ajax
+	//예약상세내역 메뉴부분 ajax(mybook01, 02에서 사용)
 	@GetMapping("/my/myRsvtAjax")
 	@ResponseBody
 	public List<Map> myRsvtAjax(RsvtVO vo) {

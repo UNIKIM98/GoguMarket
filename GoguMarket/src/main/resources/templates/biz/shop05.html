@@ -6,86 +6,89 @@
 <body>
 
 	<div layout:fragment="bizContent">
+		<script>
+			function gopage(page) {
+				frmSearch.page.value = page;
+				frmSearch.submit();
+			}
+
+			function ctgryId(name) {
+				console.log(name) //치킨 <- 이런식으로 나옴
+			}
+		</script>
+		<!-- 본문 -->
 		<div class="row">
 
+			<!-- 큰제목 -->
 			<div class="col-lg-12">
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<!-- shopping-cart start -->
-					<div class="tab-pane active" id="shopping-cart">
-						<div class="shopping-cart-content">
-							<form action="#">
-
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="section-title text-start mb-20">
-											<h2 class="uppercase">후기 관리</h2>
-											<h6>고객들의 소리를 들어보세요</h6>
-										</div>
-									</div>
-								</div>
-								<hr>
-
-								<div class="row">
-									<div class="col-md-12">
-
-										<div class="table-content table-responsive mb-30">
-											<table class="text-center">
-												<thead>
-													<tr>
-														<th style="width: 5%;">번호</th>
-														<th style="width: 20%;">글쓴이</th>
-														<th style="width: 85%">후기 미리보기</th>
-													</tr>
-												</thead>
-												<tbody>
-													<!-- tr -->
-													<tr id="modalTr">
-														<td class="">1</td>
-														<td class="">도리눈아</td>
-														<td class="">리뷰 많아서 와봤는데 만족하고 갑니당...</td>
-													</tr>
-													<!-- tr -->
-													<tr>
-														<td class="">2</td>
-														<td class="">폴눈아</td>
-														<td class="">존맛탱 반박시 맛알못ㅇㅈ?...</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-
-									</div>
-								</div>
-
-								<!-- 페이지번호 -->
-								<div class="row">
-									<div class="col-lg-12">
-										<!-- shop-pagination start -->
-										<ul class="shop-pagination box-shadow text-center ptblr-10-30">
-											<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-											<li><a href="#">01</a></li>
-											<li><a href="#">02</a></li>
-											<li><a href="#">03</a></li>
-											<li><a href="#">...</a></li>
-											<li><a href="#">05</a></li>
-											<li class="active"><a href="#"><i
-													class="zmdi zmdi-chevron-right"></i></a></li>
-										</ul>
-										<!-- shop-pagination end -->
-									</div>
-								</div>
-
-							</form>
+				<div class="shopping-cart-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="section-title text-start mb-20">
+								<h2 class="uppercase">후기 관리</h2>
+								<h6>고객들의 소리를 들어보세요</h6>
+							</div>
 						</div>
 					</div>
-					<!-- shopping-cart end -->
+					<hr>
+
+					<!-- 페이징을 위해 form태그에 name추가, hidden타입 input태그 추가 -->
+					<form name="frmSearch" action="#">
+						<!-- ▼ 추가된 input -->
+						<input type="hidden" name="page" value="1">
+					</form>
+					<!-- 테이블 부분 -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="table-content table-responsive mb-30">
+								<table class="text-center">
+									<thead>
+										<tr>
+											<th style="width: 5%;">번호</th>
+											<th style="width: 20%;">글쓴이</th>
+											<th style="width: 85%">후기 미리보기</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										<!-- 후기 1건 -->
+										<tr id="modalTr"
+											th:each="i : ${#numbers.sequence(0,rv.size()-1)}">
+											<td th:text="${[i]+1}">(번호)</td>
+											<td th:text="${rv[i].nickNm}">(닉네임)</td>
+											<td th:text="${rv[i].rvCn}">()</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+
+					<!-- 페이지번호 -->
+					<div class="row">
+						<div class="col-lg-12">
+							<!-- 페이징 -->
+							<ul class="shop-pagination box-shadow text-center ptblr-10-30">
+								<li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+								<li
+									th:each="num: *{#numbers.sequence(pagingVO.startPage, pagingVO.endPage)}"
+									th:class="${pagingVO.page}==${num} ? 'active'"><a
+									th:href="|javascript:gopage(${num})|">[[${num}]]</a></li>
+
+								<li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
+							</ul>
+							<!-- 페이징 -->
+						</div>
+					</div>
 
 				</div>
+
 			</div>
 
 		</div>
-		<!-- Body main wrapper end -->
+		<!-- 본문 끝 -->
 
 		<!-- shop 05 모달창 -->
 		<div id="shopModal" class="shopmodal">
@@ -94,42 +97,42 @@
 
 				<div class="row">
 					<div class="blog-desc">
-						<div class="row">
-							<div class="col-lg-10">
-								<div class="reviews-tab-desc">
-									<div class="media mt-30">
-										<div class="media-left">
-											<a href="#"><img class="media-object"
-												src="img/author/1.jpg" alt="#"></a>
-										</div>
-										<div class="media-body mt-15">
-											<h5>도리눈아</h5>
-											<p class="mb-10 f-left">두류동</p>
-											<p class="mb-10 f-left">&nbsp;/&nbsp;</p>
-											<p class="mb-10 f-right">2일전</p>
+						<th:block>
+							<div class="row">
+								<div class="col-lg-9">
+									<div class="reviews-tab-desc">
+										<div class="media mt-30">
+											<div class="media-left">
+												<a href="#"><img class="media-object"
+													src="img/author/1.jpg" alt="#"></a>
+											</div>
+											<div class="media-body mt-15">
+												<h5 th:text="${rv[0].nickNm}">(닉네임)</h5>
+												<p class="mb-10 f-right" th:text="${rv[0].rvYmd}">(날짜)</p>
+											</div>
 										</div>
 									</div>
 								</div>
+								<div class="col-lg-3 mt-50">
+									<a class="button extra-small button-white mb-20" href="#"><span>신고하기</span>
+									</a>
+								</div>
 							</div>
-							<div class="col-lg-2 mt-50">
-								<a class="button extra-small button-white mb-20" href="#"><span>신고하기</span>
-								</a>
-							</div>
-						</div>
-						<hr>
+							<hr>
 
-						<p>생각보다 문어가 엄청 커요~ 싱싱하고 가리비도 주문했는데 실하네용ㅎㅎ 다음에도 주문하겠습니다</p>
-						<div class="mb-20">
-							<div class="pull-right">
-								<ul class="reply-delate">
-									<li><a href="#">친절해요</a></li>
-									<li>/</li>
-									<li><a href="#">가격이싸요</a></li>
-									<li>/</li>
-									<li><a href="#">만족스</a></li>
-								</ul>
+							<p th:text="${rv[0].rvCn}">(리뷰내용)</p>
+							<div class="mb-20">
+								<div class="pull-right">
+									<ul class="reply-delate">
+										<li><a href="#">친절해요</a></li>
+										<li>/</li>
+										<li><a href="#">가격이싸요</a></li>
+										<li>/</li>
+										<li><a href="#">만족스</a></li>
+									</ul>
+								</div>
 							</div>
-						</div>
+						</th:block>
 					</div>
 
 					<div class="col-md-3">
