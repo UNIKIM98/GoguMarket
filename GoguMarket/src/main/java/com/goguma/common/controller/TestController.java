@@ -108,20 +108,20 @@ public class TestController {
 		return "common/cmInsertForm";
 	}
 
-	@RequestMapping("/testFormSubmit")
-	@ResponseBody
-	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
-		int atchId = atchService.insertFile(files);
-
-		System.out.println("==============================" + vo);
-		System.out.println(vo.getNegoYn() != "Y");
-		if (atchId > 0) {
-			vo.setAtchId(atchId);
-		}
-		dealService.insertDeal(vo);
-
-		return vo;
-	}
+//	@RequestMapping("/testFormSubmit")
+//	@ResponseBody
+//	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
+//		int atchId = atchService.insertFile(files);
+//
+//		System.out.println("==============================" + vo);
+//		System.out.println(vo.getNegoYn() != "Y");
+//		if (atchId > 0) {
+//			vo.setAtchId(atchId);
+//		}
+//		dealService.insertDeal(vo);
+//
+//		return vo;
+//	}
 
 	// ▷ updateForm 테스트 -----------------------------------
 	@GetMapping("/my/updateTest")
