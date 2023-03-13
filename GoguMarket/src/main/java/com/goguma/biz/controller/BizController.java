@@ -17,6 +17,7 @@ import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.biz.vo.PagingVO;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.mem.service.MemService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
 
@@ -107,14 +108,21 @@ public class BizController {
 	}
 
 	// 동네가게 등록(shop01)
-	@GetMapping("/biz/shop1")
-	public String bizInsert() {
-		return "biz/shop01";
-	}
-	// ==============================
 	@GetMapping("/my/shop01")
 	public String shop01() {
-		return "biz/shop01";
+		return "/biz/shop01";
+	}
+	// ==============================
+	@PostMapping("/my/bizInsert")
+	public String bizInsert(BizMemVO vo) {
+		String result = "fail";
+		int cnt = memService.bizInsert(vo);
+
+		if(cnt>0) {
+			vo.setBizNo(result);
+			result = "success";
+		}
+		return "redirect:/goguma/bookmain";
 	}
 
 	@GetMapping("/shop04")
