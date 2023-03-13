@@ -14,38 +14,29 @@ import lombok.Data;
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
-    private String id;
-    private String name;
-    private String pwd;
-    private Date birthDate;
-    private String genCd;
-    private String email;
-    private String tel;
-    private String token;
-    private String reToken;
-    private String loginCd;
-    private String profile;
-    private String clientID;
+    private String userId;
+    private String userNm;
+    private String userPw;
+    private Date birthYmd;
+    private String eml;
+    private String mblTelno;
+    private String socialToken;
+    private String rfshToken;
 
     
     //생성자 생성
 	public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String id, String name, String pwd,
-			Date birthDate, String genCd, String email, String tel, String token, String reToken, String loginCd,
-			String profile, String clientID) {
+			Date birthDate, String email, String tel, String token, String reToken) {
 		this.attributes = attributes;
 		this.nameAttributeKey = nameAttributeKey;
-		this.id = id;
-		this.name = name;
-		this.pwd = pwd;
-		this.birthDate = birthDate;
-		this.genCd = genCd;
-		this.email = email;
-		this.tel = tel;
-		this.token = token;
-		this.reToken = reToken;
-		this.loginCd = loginCd;
-		this.profile = profile;
-		this.clientID = clientID;
+		this.userId = id;
+		this.userNm = name;
+		this.userPw = pwd;
+		this.birthYmd = birthDate;
+		this.eml = email;
+		this.mblTelno = tel;
+		this.socialToken = token;
+		this.rfshToken = reToken;
 	}
 	
 	
@@ -53,10 +44,7 @@ public class OAuthAttributes {
 	public OAuthAttributes() {
 		
 	}
-	
-	
 
-    
     // 해당 로그인인 서비스가 kakao인지 google인지 구분하여, 알맞게 매핑을 해주도록 합니다.
     // 여기서 registrationId는 OAuth2 로그인을 처리한 서비스 명("kakao","naver"..)이 되고,
     // userNameAttributeName은 해당 서비스의 map의 키값이 되는 값이됩니다. {, kakao="id", naver="response"}
@@ -102,14 +90,10 @@ public class OAuthAttributes {
     			,(String) response.get("name")
     			,password
     			,birthDate
-    			,(String) response.get("gender")
     			,email
     			,(String) response.get("mobile")
     			,token
     			,reToken
-    			,loginCd
-    			,(String) response.get("profile_image")
-    			,(String) response.get("id")
         		);
     }
     
@@ -153,14 +137,10 @@ public class OAuthAttributes {
     			,(String) profile.get("nickname")
     			,password
     			,birthDate
-    			,(String) kakao_account.get("gender")
     			,email
     			,tel
     			,token
     			,reToken
-    			,loginCd
-    			,(String) profile.get("profile_image_url")
-    			,(String) attributes.get("id")
         		);
     }
 

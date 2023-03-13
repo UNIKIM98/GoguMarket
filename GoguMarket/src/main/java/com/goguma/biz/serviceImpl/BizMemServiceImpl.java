@@ -65,6 +65,12 @@ public class BizMemServiceImpl implements BizMemService {
 		return map.bizDetailImg(bizNo);
 	}
 
+	//가게등록
+	@Override
+	public int bizInsert(BizMemVO vo) {
+		return map.bizInsert(vo);
+	}
+
 
 	
 	

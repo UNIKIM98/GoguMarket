@@ -2,7 +2,6 @@ package com.goguma.biz.service;
 
 import java.util.List;
 
-import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 
@@ -29,5 +28,8 @@ public interface BizMemService {
 	
 	//상세사진
 	List<BizMemVO> bizDetailImg(String bizNo);
+	
+	//가게등록
+	int bizInsert(BizMemVO vo);
 	
 }

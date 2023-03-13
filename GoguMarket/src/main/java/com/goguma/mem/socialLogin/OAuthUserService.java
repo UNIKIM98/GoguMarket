@@ -1,6 +1,7 @@
 package com.goguma.mem.socialLogin;
 
 
+import java.sql.Date;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,9 +52,7 @@ public class OAuthUserService implements OAuth2UserService<OAuth2UserRequest, OA
 		
 		//세션보에 담기
 		httpSession.setAttribute("user", new SessionUser(user));
-		
-		System.out.println(attributes+ "====== loadUser 누구세요ㅠㅠ");
-		
+				
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getUserSe()))
                 , attributes.getAttributes()
                 , attributes.getNameAttributeKey());
@@ -62,32 +61,23 @@ public class OAuthUserService implements OAuth2UserService<OAuth2UserRequest, OA
     private MemVO saveOrUpdate(OAuthAttributes attributes) {
     	//보에 담아서 인써트
         MemVO vo = new MemVO();
-        vo.setUserId(attributes.getId());
-        vo.setUserPw(attributes.getPwd());
-        vo.setUserNm(attributes.getName());
-        vo.setMblTelno(attributes.getTel());
-//        vo.setBirthYmd(attributes.getBirthDate());
-        vo.setUserSe(attributes.getGenCd()); // ???
-//        vo.setLoginCd(attributes.getLoginCd());  // ???
-        vo.setSocialToken(attributes.getToken());
-        vo.setEml(attributes.getEmail());
-//        vo.setAtchNm(attributes.getProfile());
-        System.out.println(attributes.getProfile()+"ddddddddddddddddddddddddd>????????");
+        vo.setUserId(attributes.getUserId());
+        vo.setUserPw(attributes.getUserPw());
+        vo.setUserNm(attributes.getUserNm());
+        vo.setMblTelno(attributes.getMblTelno());
+        vo.setBirthYmd((Date)attributes.getBirthYmd());
+        vo.setSocialToken(attributes.getSocialToken());
+        vo.setEml(attributes.getEml());
         
         MemVO mvo = new MemVO();
-//		UserVO uvo = new UserVO();
 		mvo = memberService.selectUser(vo);
 		if(mvo == null) {
 			memberService.memberJoin(vo);
 			vo = memberService.selectUser(vo);
-//			uvo.setId(vo.getUserId());
-//			uvo.setMemCd(vo.getUserSe); //???
-//			uvo.setPwd(vo.getUserPw());
 		}else {
 			//디비에 값이있음 uvo에만 담아준다.
-//			uvo.setId(mvo.getUserId());
-//			uvo.setMemCd(mvo.getMemCd()); //???
-//			uvo.setPwd(mvo.getUserPw());
+			vo.setUserId(mvo.getUserId());
+			vo.setUserPw(mvo.getUserPw());
 		}
 
         return vo;

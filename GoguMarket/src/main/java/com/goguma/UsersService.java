@@ -10,7 +10,7 @@ import com.goguma.mem.mapper.MemMapper;
 import com.goguma.mem.vo.MemVO;
 
 @Service
-public class UsersService implements UserDetailsService{
+public class UsersService implements UserDetailsService {
 	
 	@Autowired 
 	MemMapper mapper;

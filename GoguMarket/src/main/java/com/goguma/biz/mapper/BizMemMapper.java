@@ -29,6 +29,9 @@ public interface BizMemMapper {
 	//상세사진
 	List<BizMemVO> bizDetailImg(String bizNo);
 
+	//가게등록
+	int bizInsert(BizMemVO vo);
+
 
 	
 }
