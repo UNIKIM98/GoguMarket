@@ -114,14 +114,19 @@ public class AtchServiceImpl implements AtchService {
 	@Override
 	public int deleteFile(List<AtchVO> atchVOs) {
 		int cnt = 0;
+		
 		if (atchVOs != null && !atchVOs.isEmpty()) {
 
 			for (AtchVO atch : atchVOs) {
 				atch = atchMapper.selectFile(atch);
+				
 				File file = new File(saveFolder + atch.getAtchNm());
+				System.out.println(file);
 				boolean result = file.delete();
+				
 				if (result) {
-					cnt += atchMapper.deleteFile(atch);
+					cnt += 1;
+					atchMapper.deleteFile(atch);
 				}
 			}
 		}

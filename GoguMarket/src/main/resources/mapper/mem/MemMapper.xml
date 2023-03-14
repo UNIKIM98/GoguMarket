@@ -64,7 +64,7 @@
 				RFSH_TOKEN, SOCIAL_SE,
 				ATCH_NM, ATCH_PATH
 		FROM MEM
-		<if test="eml != null and eml != ''">EML = #{eml}</if>
+		<if test="eml != null and eml != ''">WHERE EML = #{eml}</if>
 		<if test="userId != null and userId != ''">WHERE user_id=#{userId}</if>
 	</select>
 

@@ -21,7 +21,7 @@ public class MemVO implements UserDetails {
 	private String email;
 	private String picture;
 	private String role = "ROLE_USER";
-
+	
 	private String userId;
 
 	// => 관리자 사용
