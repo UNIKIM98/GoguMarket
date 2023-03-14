@@ -32,4 +32,7 @@ public interface RsvtMapper {
 	
 	//예약업데이트 테이블 insert
 	int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpVo);
+	
+	//예약내역 삭제
+	int deleteAllByRsvtNo(RsvtVO rsvtVo);
 }

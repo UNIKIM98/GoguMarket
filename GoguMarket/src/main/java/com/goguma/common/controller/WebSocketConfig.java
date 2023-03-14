@@ -19,10 +19,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 	  }
 
 	  @Override
-//	  public void registerStompEndpoints(StompEndpointRegistry registry) {
-//	    registry.addEndpoint("/chatServer").withSockJS();
-//	    	//웹소켓 서버 접속요청하는 url(클라이언트가 WebSocket 핸드셰이크를 위해 연결되어야 하는 URL)
-//	  }
 	  public void registerStompEndpoints(StompEndpointRegistry registry) {
 	        registry.addEndpoint("/stomp/chat")
 	                .setAllowedOrigins("http://localhost:80")

@@ -92,7 +92,7 @@
 											&nbsp;
 											<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">예약취소하기</button>
 											&nbsp;
-											<button class="submit-btn-1 mt-30 btn-hover-1" type="button">메인으로</button>
+											<button class="submit-btn-1 mt-30 btn-hover-1" type="button" onclick="goToMain()">메인으로</button>
 										</div>
 									</form>
 								</div>
@@ -110,10 +110,15 @@
 		/*<![CDATA[*/
 		var rsvtNo = /*[[ ${rsvt.rsvtNo} ]]*/
 		/*]]*/
+		console.log(rsvtNo)
+		
+		//
+		$('#modifySubmitBtn').attr('onclick',"modifyRsvtRequest(rsvtNo)");
 		
 		$(function(){
 			// 메뉴 저장정보를 불러오는 함수
 			savedMenuLoad();
+			
 		});
 		
 		// 메뉴 저장정보를 불러오는 함수
@@ -132,12 +137,12 @@
 					for(list of lists){
 						console.log(list)
 						$('#menuTbl tbody').append(
-						`<tr id="${list.MENU_NO}">
-							
+						`<tr id="${list.MENU_NO}">							
 							<td class="td-title-1">${list.MENU_NM}
 							</td>
 								<input type="hidden" id="menuNm" name="menuNm" value="${list.MENU_NM}">
-								<input type="hidden" id="rsvtNo" name="rsvtNo" value="${rsvtNo}">
+								<input type="hidden" id="menuNo" name="menuNo" value="${list.MENU_NO}">
+								<input type="hidden" id="menuPrc" name="menuPrc" value="${list.MENU_PRC}">
 							<td class="td-title-1">
 								<div class="cart-plus-minus f-left">
 									<div class="dec qtybutton" onclick="qtyBtnClick(this)">-</div>
@@ -148,11 +153,12 @@
 							<td class="td-title-2" id="tdSum_${list.MENU_NO}">${list.AMOUNT * list.MENU_PRC}
 							</td>
 								<input type="hidden" id="menuSum" name="menuSum" value="${list.AMOUNT * list.MENU_PRC}">
-						</tr>`
+						</tr>
+						`
 						)
 						//토탈가격을 변수에 저장
 						 totalPrice += list.AMOUNT * list.MENU_PRC;
-					
+						
 					}
 					
 					//총 합계 저장
@@ -164,8 +170,11 @@
 								<td class="order-total-price">${totalPrice}</td>
 								<input type="hidden" id="totalSum" name="rsvtPay" value="${totalPrice}">
 							</tr>
+
+							<input type="hidden" id="rsvtNo" name="rsvtNo" value="${rsvtNo}">
 							`		
 					)
+					
 					
 				},error : function(err){
 					console.log("error")
@@ -361,7 +370,7 @@
 			$('#rsvtWant').attr("value",modifyWant);
 		}
 		
-		$('#modifySubmitBtn').attr('onclick',"modifyRsvtRequest(rsvtNo)")
+		
 		
 		//
 
@@ -394,6 +403,9 @@
                 contentType : false,
                 success: function(result){
                 	console.log(result);
+                	alert("예약변경이 접수되었습니다.");
+                	window.location.href="/my/myReservation";
+                	
                 }, error: function(err){
                 	alert("인서트-실패--")
                 }
@@ -401,6 +413,10 @@
 			});
 			//form데이터 submit
 			$("#modifyRsvtInfo").submit();
+		}
+		
+		function goToMain(){
+			window.location.href="/";
 		}
 		
 		
