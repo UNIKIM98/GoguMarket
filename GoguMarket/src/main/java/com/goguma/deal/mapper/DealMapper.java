@@ -20,10 +20,12 @@ public interface DealMapper {
 
 	int dealHitUpdate(int dlNo); // 조회수 증가
 
-	List<DealVO> getDealSeller(int dlNo); // 판매상품 판매자로 조회 -> 판매자의 다른상품
+	List<DealSearchVO> getDealSeller(DealSearchVO vo); // 판매상품 판매자로 조회 -> 판매자의 다른상품
 
 	List<DealVO> getDealCtgry(int dlNo); // 판매상품 판매자로 조회 -> 유사 카테고리 상품
-
+	// 시세 조회
+	List<Map> selectPrice(DealSearchVO vo);
+	
 	// ==========
 	// 정상작동 하는 거
 	int insertDeal(DealVO deal); // 판매상품 등록
@@ -36,7 +38,7 @@ public interface DealMapper {
 	// ===========================
 	// 채은 추가! 확인 후 주석 지워주세욧
 	// 특정 판매자 게시글 전부 가져오기
-	List<Map> selectNtslDeal(String ntslId);
+	List<Map> selectNtslDeal(DealVO vo);
 	
 	List<Map> selectPrchsDeal(String prchsId);
 	

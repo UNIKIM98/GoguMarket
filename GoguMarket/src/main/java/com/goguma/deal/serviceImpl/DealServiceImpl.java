@@ -53,7 +53,8 @@ public class DealServiceImpl implements DealService {
 		PointVO pvo = new PointVO();
 		pvo.setPoint(-200);
 		pvo.setUserId(userId); // 세션의 현재 유저아이디 불러와야되는데 유유
-		pvo.setPointMthd("무료나눔");
+		pvo.setPointMthd("끌어올리기");
+		pmap.insertPoint(pvo);
 		
 		return map.updateYmd(dVO);
 	}
@@ -86,9 +87,9 @@ public class DealServiceImpl implements DealService {
 	}
 
 	@Override
-	public List<DealVO> getDealSeller(int dlNo) {
+	public List<DealSearchVO> getDealSeller(DealSearchVO vo) {
 		// 판매자의 다른상품 리스트조회
-		return map.getDealSeller(dlNo);
+		return map.getDealSeller(vo);
 	}
 
 	@Override
@@ -129,8 +130,8 @@ public class DealServiceImpl implements DealService {
 
 	//채은추가
 	@Override
-	public List<Map> selectNtslDeal(String ntslId) {
-		return map.selectNtslDeal(ntslId);
+	public List<Map> selectNtslDeal(DealVO vo) {
+		return map.selectNtslDeal(vo);
 	}
 
 	@Override
@@ -149,6 +150,12 @@ public class DealServiceImpl implements DealService {
 	public List<Map> selectCashPrchs(String prchsId) {
 		// 구매자일때의 월별 가계부 조회
 		return map.selectCashPrchs(prchsId);
+	}
+
+	@Override
+	public List<Map> selectPrice(DealSearchVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectPrice(vo);
 	}
 
 
