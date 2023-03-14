@@ -53,14 +53,22 @@
 						</div>
 						본문내용 자리 시작
 						<!-- 본문내용 자리 시작 -->
-						
+						<h5 class="sin-pro-action f-right">
+							<button onclick="">글쓰기</button>
+						</h5>
 							<div id="selectBizNewsAjax">
-									<table>
-										<tbody id="trgt">
-										
-											
+								<div id="newsList">
+
+
+								</div>
+									<!-- <table>
+										<tbody id="newsList">
+											<tr onclick='location.href="#"'>
+												<th>${n.atchId}</th>
+												<td>${n.ntcTtl}</td>
+											</tr>
 										</tbody>
-									</table>
+									</table> -->
 							</div>
 
 						
@@ -68,21 +76,6 @@
 							<div class="by-brand-product">
 								<div class="active-by-brand slick-arrow-2" id="news"></div>
 							</div>
-							<table>
-								<tbody>
-									<tr onclick='location.href="#"'>
-										<th><label for="atchId">Today Posting</label></th>
-										<td>
-											<div>
-												사진영역
-												<h5 class="sin-pro-action f-right">
-													내용영역
-												</h5>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
 						</div>
 					</div>
 				</div>
@@ -107,13 +100,17 @@
 						let news = result.news;
 
 						news.forEach(n=>{
-								$("#trgt").append(
+								$("#newsList").append(
 											`
-											<tr>
-											<th>${n.ntcTtl}</th>
-												<td>${n.ntcCn}</td>
-											</tr>
-										`
+											<div class="single-brand-product"
+													id="clickSns"
+													onclick="selectOneBizNews(${n.ntcNo})">
+	                            						${n.ntcTtl} / ${n.ntcYmd}
+	                         							<img src="${n.atchId}">
+	                         							조회수&nbsp👀:${n.inqCnt}
+											</div>
+											
+											`
 
 								)
 							

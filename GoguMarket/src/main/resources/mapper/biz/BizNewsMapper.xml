@@ -5,8 +5,9 @@
 	<!-- 나의 가게 전체 소식 -->
 	<select id="selectBizNews" parameterType="string" resultType="com.goguma.biz.vo.BizNewsVO">
 		SELECT *
-		FROM biz_news
-		WHERE biz_no = #{bizNo}
+		FROM BIZ_NEWS
+		WHERE BIZ_NO = #{bizNo}
+		ORDER BY NTC_YMD DESC;
 	</select>
 	
 	<!-- 나의 가게 단건 소식 -->
