@@ -47,4 +47,13 @@
 		WHERE now_prc = max_now_prc
 		ORDER BY auct_no DESC
 	</select>
+	<select id="selectMemCount"
+			parameterType="com.goguma.auct.vo.AuctMemVO"
+			resultType="int">
+		SELECT COUNT(AUCT_NO) AS COUNT
+		FROM AUCT_MEM
+		WHERE AUCT_NO = ${auctNo}
+		GROUP BY AUCT_NO
+		ORDER BY AUCT_NO DESC
+	</select>
 </mapper>

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.goguma.auct.mapper.AuctMemMapper;
 import com.goguma.auct.service.AuctMemService;
 import com.goguma.auct.vo.AuctMemVO;
-import com.goguma.auct.vo.AuctVO;
 
 @Service
 public class AuctMemServiceImpl implements AuctMemService{
@@ -39,6 +38,12 @@ public class AuctMemServiceImpl implements AuctMemService{
 	public List<AuctMemVO> bidAuction(String userId) {
 		// 입찰한 경매품
 		return auctMemMapper.bidAuction(userId);
+	}
+
+	@Override
+	public AuctMemVO selectMemCount(AuctMemVO auctNo) {
+		// 입찰자 수
+		return auctMemMapper.selectMemCount(auctNo);
 	}
 
 }
