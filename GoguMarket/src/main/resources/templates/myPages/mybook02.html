@@ -9,15 +9,6 @@
 <body>
 	<div layout:fragment="myContent">
 
-		<div>
-			<h1 th:text="${rsvt}"></h1>
-			하위우이ㅟ이
-
-
-		</div>
-
-
-
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="tab-content">
@@ -27,78 +18,83 @@
 							<div class="row d-flex justify-content-center">
 
 								<!-- 오른쪽부분-->
-								<div class="col-md-6">
+								<!-- action="/requestModifyAjax" -->
+								<form id="modifyRsvtInfo" action="/requestModifyAjax">
+									<div class="col-md-6">
 
-									<div class="payment-details pl-10 mb-50">
-										<div class="billing-details pr-10">
-											<h6 class="widget-title border-left mb-20">가게명</h6>
-											<p th:text="${rsvt.bizNm}">(가게이름)</p>
-										</div>
-										<hr>
+										<div class="payment-details pl-10 mb-50">
+											<div class="billing-details pr-10">
+												<h6 class="widget-title border-left mb-20">가게명</h6>
+												<p th:text="${rsvt.bizNm}">(가게이름)</p>
+											</div>
+											<hr>
 
-										<h6 class="widget-title border-left mb-20">예약수정확인</h6>
+											<h6 class="widget-title border-left mb-20">예약수정확인</h6>
 
-										<!--테이블1 : 주문메뉴 : mybook01에서 쓴거 적용-->
-										<table class="table" id="menuTbl">
-											<thead>
+											<!--테이블1 : 주문메뉴 : mybook01에서 쓴거 적용-->
+											<table class="table" id="menuTbl">
+												<thead>
+													<tr>
+														<td class="td-title-1">메뉴</td>
+														<td class="td-title-1">수량</td>
+														<td class="td-title-2">가격</td>
+													</tr>
+												</thead>
+												<!-- 메뉴1건 -->
+												<tbody>
+													<!-- <tr> -->
+													<!-- <td class="td-title-1">(메뉴명)</td> -->
+													<!-- <td class="td-title-1">(수량)</td> -->
+													<!-- <td class="td-title-2">(가격)</td> -->
+													<!-- </tr> -->
+												</tbody>
+											</table>
+
+											<table id="totalTbl">
 												<tr>
-													<td class="td-title-1">메뉴</td>
-													<td class="td-title-1">수량</td>
-													<td class="td-title-2">가격</td>
+													<!-- <th class="order-total">합계</th> -->
+													<!-- <td class="order-total"></td> -->
+													<!-- <td class="order-total-price">(합계)</td> -->
 												</tr>
-											</thead>
-											<!-- 메뉴1건 -->
-											<tbody>
+											</table>
+											<hr>
+
+											<!--테이블2 : 시간, 인원, 요청사항-->
+											<table id="rsvtInfo">
 												<!-- <tr> -->
-												<!-- <td class="td-title-1">(메뉴명)</td> -->
-												<!-- <td class="td-title-1">(수량)</td> -->
-												<!-- <td class="td-title-2">(가격)</td> -->
+												<!-- <th class="td-title-1">예약일자</th> -->
+												<!-- <td class="td-title-1" th:text="${rsvt.rsvtYmd}">(예약날짜)</td> -->
+												<!-- <td class="td-title-1" th:text="${rsvt.rsvtTm}">(예약시간)</td> -->
 												<!-- </tr> -->
-											</tbody>
-										</table>
-
-										<table id="totalTbl">
-											<tr>
-												<!-- <th class="order-total">합계</th> -->
-												<!-- <td class="order-total"></td> -->
-												<!-- <td class="order-total-price">(합계)</td> -->
-											</tr>
-										</table>
-										<hr>
-
-										<!--테이블2 : 시간, 인원, 요청사항-->
-										<table id="rsvtInfo">
-											<!-- 											<tr> -->
-											<!-- 												<th class="td-title-1">예약일자</th> -->
-											<!-- 												<td class="td-title-1" th:text="${rsvt.rsvtYmd}">(예약날짜)</td> -->
-											<!-- 												<td class="td-title-1" th:text="${rsvt.rsvtTm}">(예약시간)</td> -->
-											<!-- 											</tr> -->
-											<!-- 											<tr id="trRsvtNope"> -->
-											<!-- 												<th class="td-title-1">예약인원</th> -->
-											<!-- 												<td class="td-title-1" th:text="${rsvt.rsvtNope}">(몇명)</td> -->
-											<!-- 											</tr> -->
-											<!-- 											<tr> -->
-											<!-- 												<th class="td-title-1">예약자정보</th> -->
-											<!-- 												<td class="td-title-1" th:text="${rsvt.nickNm}">(닉네임)</td> -->
-											<!-- 												<td class="td-title-1" th:text="${rsvt.mblTelno}">(전화번호)</td> -->
-											<!-- 											</tr> -->
-											<!-- 											<tr> -->
-											<!-- 											</tr> -->
-											<!-- 											<tr> -->
-											<!-- 												<td class="td-title-1">요청사항</td> -->
-											<!-- 												<td class="td-title-1" colspan="2"><textarea -->
-											<!-- 														class="custom-textarea" th:text="${rsvt.rsvtWant}"></textarea> -->
-											<!-- 												</td> -->
-											<!-- 											</tr> -->
-										</table>
-										<hr>
+												<!-- <tr id="trRsvtNope"> -->
+												<!-- <th class="td-title-1">예약인원</th> -->
+												<!-- <td class="td-title-1" th:text="${rsvt.rsvtNope}">(몇명)</td> -->
+												<!-- </tr> -->
+												<!-- <tr> -->
+												<!-- <th class="td-title-1">예약자정보</th> -->
+												<!-- <td class="td-title-1" th:text="${rsvt.nickNm}">(닉네임)</td> -->
+												<!-- <td class="td-title-1" th:text="${rsvt.mblTelno}">(전화번호)</td> -->
+												<!-- </tr> -->
+												<!-- <tr> -->
+												<!-- </tr> -->
+												<!-- <tr> -->
+												<!-- <td class="td-title-1">요청사항</td> -->
+												<!-- <td class="td-title-1" colspan="2"><textarea -->
+												<!-- class="custom-textarea" th:text="${rsvt.rsvtWant}"></textarea> -->
+												<!-- </td> -->
+												<!-- </tr> -->
+											</table>
+											<hr>
+										</div>
+										<div class="d-flex justify-content-center">
+											<button class="submit-btn-1 mt-30 btn-hover-1" type="button" onclick="modifyRsvtRequest()">예약변경하기</button>
+											&nbsp;
+											<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">예약취소하기</button>
+											&nbsp;
+											<button class="submit-btn-1 mt-30 btn-hover-1" type="button">메인으로</button>
+										</div>
 									</div>
-									<div class="d-flex justify-content-center">
-										<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">예약변경하기</button>
-										&nbsp;
-										<button class="submit-btn-1 mt-30 btn-hover-1" type="submit">예약취소하기</button>
-									</div>
-								</div>
+								</form>
 								<!-- 오른쪽부분 끝 -->
 							</div>
 
@@ -109,18 +105,19 @@
 		</div>
 
 		<script th:inline="javascript">
+
+		/*<![CDATA[*/
+		var rsvtNo = /*[[ ${rsvt.rsvtNo} ]]*/
+		/*]]*/
+		
 		$(function(){
-			
 			// 메뉴 저장정보를 불러오는 함수
 			savedMenuLoad();
 		});
 		
-		
+		// 메뉴 저장정보를 불러오는 함수
 		function savedMenuLoad(){
-			/*<![CDATA[*/
-			var rsvtNo = /*[[ ${rsvt.rsvtNo} ]]*/
-			/*]]*/
-			
+			//메뉴판 ajax
 			$.ajax({
 				url:"/my/myRsvtAjax",
 				type:"get",
@@ -130,13 +127,14 @@
 					// 총 결제금액을 저장할 변수
 					let totalPrice = 0;
 					
+					//메뉴판 반복문으로 생성
 					for(list of lists){
 						console.log(list)
 						$('#menuTbl tbody').append(
 						`<tr id="${list.MENU_NO}">
 							<td class="td-title-1">${list.MENU_NM}
-								<input type="hidden" id="menuNm" name="menuNm" value="${list.MENU_NM}">
 							</td>
+								<input type="hidden" id="menuNm" name="menuNm" value="${list.MENU_NM}">
 							<td class="td-title-1">
 								<div class="cart-plus-minus f-left">
 									<div class="dec qtybutton" onclick="qtyBtnClick(this)">-</div>
@@ -145,24 +143,26 @@
 								</div>
 							</td>
 							<td class="td-title-2" id="tdSum_${list.MENU_NO}">${list.AMOUNT * list.MENU_PRC}
-								<input type="hidden" id="menuSum" name="menuSum" value="${list.AMOUNT * list.MENU_PRC}">
 							</td>
+								<input type="hidden" id="menuSum" name="menuSum" value="${list.AMOUNT * list.MENU_PRC}">
 						</tr>`
 						)
+						//토탈가격을 변수에 저장
 						 totalPrice += list.AMOUNT * list.MENU_PRC;
 					
 					}
-						$('#totalTbl').append(
-								`
-								<tr>
-									<th class="order-total">합계</th>
-									<td class="order-total"></td>
-									<td class="order-total-price">${totalPrice}</td>
-									<input type="hidden" id="totalSum" name="totalSum" value="${totalPrice}">
-								</tr>
-								`		
-							)
-						
+					
+					//총 합계 저장
+					$('#totalTbl').append(
+							`
+							<tr>
+								<th class="order-total">합계</th>
+								<td class="order-total"></td>
+								<td class="order-total-price">${totalPrice}</td>
+								<input type="hidden" id="totalSum" name="totalSum" value="${totalPrice}">
+							</tr>
+							`		
+					)
 					
 				},error : function(err){
 					console.log("error")
@@ -174,15 +174,26 @@
 				url:"/my/myRsvtInfoAjax",
 				type:"get",
 				data: {rsvtNo},
-
+				
+				//예약내역 출력
 				success: function(list){
+						console.log(list)
 					$('#rsvtInfo').append(
 							`<tr>
 								<th class="td-title-1">예약일자</th>
 								<td class="td-title-1">
-									<input type="date" value="${list.rsvtYmd}">
+									<input type="date" id="rsvtDate" value="${list.rsvtYmd}" onchange="modifyDate(this)">
 								</td>
-								<td class="td-title-1">${list.rsvtTm}</td>
+								<td class="td-title-1">
+									<select class="custom-select mb-0">
+										<option value="${list.rsvtTm}">${list.rsvtTime}</option>
+										<option value="${list.bgngTm}">${list.openTime}</option>
+										<option value="31">15시 00분</option>
+										<option value="39">19시 00분</option>
+										<option value="${list.endTm}">${list.closeTime}</option>
+									</select>
+								
+								</td>
 							</tr>
 							<tr>
 								<th class="td-title-1">예약인원</th>
@@ -197,12 +208,12 @@
 							<tr>
 								<th class="td-title-1">예약자정보</th>
 								<td class="td-title-1">${list.nickNm}</td>
-								<td class="td-title-1">[[${session.mblTelno}]]</td>
+								<td class="td-title-1">${list.mblTelno} </td>
 							</tr>
 							<tr>
 								<th class="td-title-1">요청사항</th>
 								<td class="td-title-1" colspan="2">
-									<textarea class="custom-textarea" text="${list.rsvtWant}"></textarea>
+									<textarea class="custom-textarea" id="rsvtWant" onchange="modifyRsvtWant(this)">${list.rsvtWant}</textarea>
 								
 								</td>
 							</tr>
@@ -219,10 +230,11 @@
 		function qtyBtnClick(obj){
 			var $button = $(obj);
 			
+			//요소로 넣어준 menuPrice와 menuNo를 변수에 넣어줌
 			var menuPrice = $button.parent().find("input").attr("menuPrice");
 			var menuNo = $button.parent().find("input").attr("menuNo");
 			
-			var tdSum = $("#tdSum_"+menuNo); // 메뉴별 합계 인풋(박스)
+			var tdSum = $("#tdSum_"+menuNo); 	// 메뉴별 합계 인풋(박스)
 			var totalSum = $("#totalSum").val();
 			
 			
@@ -232,7 +244,7 @@
 	            var newVal = parseFloat(oldValue) + 1;
 	        }
 	        else {
-	            // Don't allow decrementing below zero
+	            // 0이하는 안되게 설정
 	            if (oldValue > 0) {
 	                var newVal = parseFloat(oldValue) - 1;
 	            } 
@@ -240,51 +252,51 @@
 	                newVal = 0;
 	            }
 	        }
-	        	$button.parent().find("input").val(newVal);
-	        	
-	        	if ($button.hasClass('inc')) {
-	        		  // "+" 버튼 클릭 시 실행될 코드
-	        		  var input = $(obj).prev('input[name="amount"]');
-	        		  var value = parseInt(input.val());
-	        		  console.log(value);
-
-	        		  // input 요소의 값을 증가시켜 저장
-	        		  input.attr('value', value);
-	        		  
-	        		  //메뉴별 가격 계산
-	        		  var calcTdSum = value * menuPrice;
-	        		  tdSum.text(calcTdSum);
-	        		  
-	        		  //총 가격 계산
-	        		  var calcTotalSum = parseInt(totalSum) + parseInt(menuPrice);
-	        		  $('.order-total-price').text(calcTotalSum);
-	        		  $('#totalSum').val(calcTotalSum);
-	        		  
-	        		  
-	        		} else if ($button.hasClass('dec')) {
-	        		  // "-" 버튼 클릭 시 실행될 코드
-	        		  var input = $(obj).next('input[name="amount"]');
-	        		  var value = parseInt(input.val());
-	        		  console.log(value);
-
-	        		  // input 요소의 값을 감소시켜 저장
-	        		  input.attr('value', value);
-	        		  
-	        		  // -수량 가격계산 예외처리
-	        		  //console.log(tdSum.text());
-	        		  if(tdSum.text() <= 0){
-	        			  return;
-	        		  }
-	        		  
-	        		  //메뉴별 가격 계산
-	        		  var calcTdSum = value * menuPrice;
-	        		  tdSum.text(calcTdSum);
-	        		  
-	        		  //총 가격 계산
-	        		  var calcTotalSum = parseInt(totalSum) - parseInt(menuPrice);
-	        		  $('.order-total-price').text(calcTotalSum);
-	        		  $('#totalSum').val(calcTotalSum);	        			  
-	        		}
+        	$button.parent().find("input").val(newVal);
+        	
+        	//버튼누를때
+        	if ($button.hasClass('inc')) {
+	   			// "+" 버튼 클릭 시 실행될 코드
+	   			var input = $(obj).prev('input[name="amount"]');
+	   		  	var value = parseInt(input.val());
+	   		  	console.log(value);
+	
+		   		// input 요소의 값을 증가시켜 저장
+		   		input.attr('value', value);
+		   		  
+		   		//메뉴별 가격 계산
+		   		var calcTdSum = value * menuPrice;
+		   		tdSum.text(calcTdSum);
+		   		  
+		   		//총 가격 계산
+		   		var calcTotalSum = parseInt(totalSum) + parseInt(menuPrice);
+		   		$('.order-total-price').text(calcTotalSum);
+		   		$('#totalSum').val(calcTotalSum);
+       		  
+       		} else if ($button.hasClass('dec')) {
+	       		// "-" 버튼 클릭 시 실행될 코드
+	       		var input = $(obj).next('input[name="amount"]');
+	       		var value = parseInt(input.val());
+	       		console.log(value);
+	
+	       		// input 요소의 값을 감소시켜 저장
+	       		input.attr('value', value);
+	       		  
+	       		// -수량 가격계산 예외처리
+	       		//console.log(tdSum.text());
+	       		if(tdSum.text() <= 0){
+	       			return;
+	       		}
+       		  
+       		 	//메뉴별 가격 계산
+	       		var calcTdSum = value * menuPrice;
+	       		tdSum.text(calcTdSum);
+	       		  
+	       		//총 가격 계산
+	       		var calcTotalSum = parseInt(totalSum) - parseInt(menuPrice);
+	       		$('.order-total-price').text(calcTotalSum);
+	       		$('#totalSum').val(calcTotalSum);	        			  
+       		}
 	        	
 		}
 		
@@ -304,29 +316,68 @@
 	                newVal = 0;
 	            }
 	        }
-	        	$button.parent().find("input").val(newVal);
+			
+	        $button.parent().find("input").val(newVal);
 	        	
-	        	if ($button.hasClass('inc')) {
-	        		  // "+" 버튼 클릭 시 실행될 코드
-	        		  var input = $(obj).prev('input[name="rsvtNope"]');
-	        		  var value = parseInt(input.val());
-	        		  console.log(value);
-
-	        		  // input 요소의 값을 증가시켜 저장
-	        		  input.attr('value', value);
-	        		  
-	        		  
-	        		} else if ($button.hasClass('dec')) {
-	        		  // "-" 버튼 클릭 시 실행될 코드
-	        		  var input = $(obj).next('input[name="rsvtNope"]');
-	        		  var value = parseInt(input.val());
-	        		  console.log(value);
-
-	        		  // input 요소의 값을 감소시켜 저장
-	        		  input.attr('value', value);
-	        		  
-					}	
+	        if ($button.hasClass('inc')) {
+       			// "+" 버튼 클릭 시 실행될 코드
+	       		var input = $(obj).prev('input[name="rsvtNope"]');
+	       		var value = parseInt(input.val());
+	       		console.log(value);
+	
+	       		// input 요소의 값을 증가시켜 저장
+	       		input.attr('value', value);
+        		  
+        		  
+       		} else if ($button.hasClass('dec')) {
+       		  	// "-" 버튼 클릭 시 실행될 코드
+	       		var input = $(obj).next('input[name="rsvtNope"]');
+	       		var value = parseInt(input.val());
+	       		console.log(value);
+	
+	       		// input 요소의 값을 감소시켜 저장
+	       		input.attr('value', value);
+       		  
+			}	
 		}
+		
+		//날짜 수정시 value값 저장
+		function modifyDate(obj){
+			//선택한 날짜 변수에 저장
+			selectedDate = event.target.value;
+			console.log(selectedDate)
+			//value에 넣기
+			$('#rsvtDate').attr("value",selectedDate);
+			
+		}
+		
+		//요청사항 수정시 value값 저장
+		function modifyRsvtWant(obj){
+			modifyWant = event.target.value;
+			console.log(modifyWant)
+			$('#rsvtWant').attr("value",modifyWant);
+		}
+		
+		//예약 수정정보 폼데이터 DB에 저장하기
+		function modifyRsvtRequest(){
+			var formData = new FormData($("#modifyRsvtInfo")[0]);	
+			$.ajax({
+				url: "/requestModifyAjax",
+				type: "POST",
+				data: formData,
+				processData : false,
+                contentType : false,
+                success: function(result){
+                	console.log(result);
+                }, error: function(err){
+                	alert("인서트 안됐지롱")
+                }
+				
+			});
+			//form데이터 submit
+			$("#modifyRsvtInfo").submit();
+		}
+		
 		
 		
 		

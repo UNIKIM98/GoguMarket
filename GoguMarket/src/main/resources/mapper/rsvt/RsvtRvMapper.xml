@@ -28,9 +28,9 @@
 		FROM (
 		    SELECT ROWNUM, M.NICK_NM, RV.RV_CN, RV.RV_YMD 
 		    FROM RSVT_RV RV, RSVT R, MEM M 
-		    WHERE RV.RSVT_NO = R.RSVT_NO 
-		    AND R.USER_ID = M.USER_ID 
-		    AND R.BIZ_NO = #{bizNo}
+			WHERE RV.RSVT_NO = R.RSVT_NO 
+				AND R.USER_ID = M.USER_ID 
+				AND R.BIZ_NO = #{bizNo}		
 		)
 	</select>
 

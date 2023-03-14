@@ -5,7 +5,7 @@
 
 <body>
 
-	<div layout:fragment="bizContent">
+	<div layout:fragment="Bizcontent">
 		<script>
 			function gopage(page) {
 				frmSearch.page.value = page;
@@ -69,18 +69,18 @@
 							<input type="hidden" name="page" value="1">
 						</form>
 						<!-- 단골목록 반복 -->
-						<div class="col-lg-3" th:each="dg:${dg}">
-						<h1 th:text="${dg.userId}"></h1>
+						<th:block  th:each="dg:${dg}">
+						<div class="col-lg-3">
 							<div class="media mt-30">
 								<div class="media-left">
 									<a href="#"><img class="media-object"
-										th:src="${dg.atchPath}" alt="#"></a>
+										src="" alt="#"></a>
 								</div>
 								<div class="media-body">
 									<div class="clearfix">
 										<div class="name-commenter f-left">
 											<h6 class="media-heading">
-												<a th:href="#" th:text="${dg.nickNm}">(닉네임)</a>
+												<a th:href="@{/biz/dangolDetailPage/{userId}(userId=${dg.userId})}" th:text="${dg.nickNm}">(닉네임)</a>
 											</h6>
 											<p class="mb-10" th:text="|등록일 : ${dg.dangolYmd}|">(단골등록날짜)</p>
 										</div>
@@ -91,6 +91,7 @@
 								</div>
 							</div>
 						</div>
+						</th:block>
 
 					</div>
 

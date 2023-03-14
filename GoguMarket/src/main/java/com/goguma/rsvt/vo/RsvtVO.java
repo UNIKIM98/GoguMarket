@@ -30,6 +30,8 @@ public class RsvtVO extends RsvtRvVO{	//예약내역 테이블
 	String mblTelno;
 	
 	String menuNm;
+	String bgngTm;
+	String rsvtTime;
 	
 	
 }

@@ -36,6 +36,7 @@
 							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
 								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;">
 								<th:block th:if="${sim != null}">
+								<h1 th:text="${sim}"></h1>
 									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
 									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
 									<td class="td-title-1" th:each="code: ${code}"
@@ -233,13 +234,13 @@
 			data: {rsvtNo},
 
 			success: function(list){
-				console.log("밑에꺼: "+list.mblTelno + list.nickNm)
+				console.log("밑에꺼: "+list)
 				$('#rsvtInfo').empty()
 				$('#rsvtInfo').append(
 				`<tr>
 					<th class="td-title-1">예약일자</th>
 					<td class="td-title-1">${list.rsvtYmd}</td>
-					<td class="td-title-1">${list.rsvtTm}</td>
+					<td class="td-title-1">${list.rsvtTime}</td>
 				</tr>
 				<tr>
 					<th class="td-title-1">예약인원</th>
