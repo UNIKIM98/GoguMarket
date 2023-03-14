@@ -66,6 +66,12 @@ public class RsvtServiceImpl implements RsvtService{
 		return map.insertRsvtUpdateTbl(rsvtUpVo);
 	}
 
+	//예약내역 삭제
+	@Override
+	public int deleteAllByRsvtNo(RsvtVO rsvtVo) {
+		return map.deleteAllByRsvtNo(rsvtVo);
+	}
+
 	
 	
 
