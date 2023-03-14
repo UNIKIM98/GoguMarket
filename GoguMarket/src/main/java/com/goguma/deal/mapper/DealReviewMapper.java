@@ -10,4 +10,9 @@ public interface DealReviewMapper {
 	int insertDealRv (DealReviewVO vo); // 후기 작성
 	
 	int selectRvNo (); // 셀렉트키 ㅇ
+	
+	List<DealReviewVO> selectGetRv(DealReviewVO vo);
+	List<DealReviewVO> selectSendRv(DealReviewVO vo);
+	List<DealReviewVO> selectNotSendRv(DealReviewVO vo);
+	
 }

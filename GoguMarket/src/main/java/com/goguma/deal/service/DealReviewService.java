@@ -13,5 +13,9 @@ public interface DealReviewService {
 	
 	int selectRvNo (); // 셀렉트키 ㅇ
 	
+	List<DealReviewVO> selectGetRv(DealReviewVO vo);
+	List<DealReviewVO> selectSendRv(DealReviewVO vo);
+	List<DealReviewVO> selectNotSendRv(DealReviewVO vo);
+	
 	
 }

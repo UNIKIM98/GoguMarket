@@ -33,19 +33,14 @@
 	<div layout:fragment="content">
 		<script th:inline="javascript">
 		
-			//판매자정보페이지로가게하기
-			/* $(function() {
-				$(".btnInfo").on("click", function() {
-					
-					// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
-					let url = $(".single-product-info h3 a").text();
-					//location.href="dealdetail/"+url
-					location.href = `dealSellerpage/${url}`
-					console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
-				})
-			})
-			 */
-			 
+	
+		console.log("cccc")
+		/*<![CDATA[*/	
+			var prc = /*[[ ${prc} ]]*/
+		console.log(prc);
+		/*]]*/
+    
+
 			
 			// 판매자정보더보기 누르면 가는곳
 			function seller() {
@@ -268,58 +263,60 @@
 			 // 지도를 표시할 div와  지도 옵션으로 지도를 생성합니다
 			 var map = new kakao.maps.Map(mapContainer, mapOption); 
 	 </script>
+	 <script>
+	 console.log(prc[0].avg+"prc");
 	 
-	<script type="text/javascript">
-    var context = document
-        .getElementById('myChart')
-        .getContext('2d');
-    var myChart = new Chart(context, {
-        type: 'bar', // 차트의 형태
-        data: { // 차트에 들어갈 데이터
-            labels: [
-                //x 축
-                '1월','2월','3월'
-            ],
-            datasets: [
-                { //데이터
-                    label: 'test1', //차트 제목
-                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-                    data: [
-                        21,19,30 //x축 label에 대응되는 데이터 값 : avg 값 넣으면됨
-                    ],
-                    backgroundColor: [
-                        //색상
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
-                    ],
-                    borderColor: [
-                        //경계선 색상
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                       
-                    ],
-                    borderWidth: 1 //경계선 굵기
-                }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                ]
-            }
-        }
-    });
-</script>
-</body>
-</html>
-	</script>
+	 var context = document
+     .getElementById('myChart')
+     .getContext('2d');
+ var myChart = new Chart(context, {
+     type: 'bar', // 차트의 형태
+     data: { // 차트에 들어갈 데이터
+         labels: [
+             //x 축
+             '1월','2월','3월'
+             
+         ],
+         datasets: [
+             { //데이터
+                 label: 'test1', //차트 제목
+                 fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                 data: [
+                	 prc[0].avg, 1, 5
+
+                 ],
+                 backgroundColor: [
+                     //색상
+                     'rgba(255, 99, 132, 0.2)',
+                     'rgba(54, 162, 235, 0.2)',
+                     'rgba(255, 206, 86, 0.2)'
+                 ],
+                 borderColor: [
+                     //경계선 색상
+                     'rgba(255, 99, 132, 1)',
+                     'rgba(54, 162, 235, 1)',
+                     'rgba(255, 206, 86, 1)'
+                    
+                 ],
+                 borderWidth: 1 //경계선 굵기
+             }
+         ]
+     },
+     options: {
+         scales: {
+             yAxes: [
+                 {
+                     ticks: {
+                         beginAtZero: true
+                     }
+                 }
+             ]
+         }
+     }
+ });
+
+	 </script>
+	
 	</div>
 
 

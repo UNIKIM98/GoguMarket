@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="myContent">
+	
+	
+	<div class="col-lg-12">
+			
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title text-start mb-20" >
+							<h2 class="uppercase">나의 리뷰</h2>
+						</div>
+					</div>
+				</div>
+				<hr>
+								<!-- 받은리뷰 / 보낸리뷰 / 구매내역 탭 시작 -->
+								<div class="single-product-tab reviews-tab">
+									<ul class="nav mb-20">
+										<li><a class="active" href="#description" data-bs-toggle="tab">받은리뷰</a></li>
+										<li><a href="#soldout" data-bs-toggle="tab">보낸리뷰</a></li>
+										<li><a href="#prchs" data-bs-toggle="tab">안쓴리뷰</a></li>
+									</ul>
+									<hr>
+									<div class="tab-content">
+										<div role="tabpanel" class="tab-pane active show" id="description">
+											<p>판매자[userid부르고싶삼]가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
+											<!-- ■■■■■■끌올하려고 폼으로 감싸기 -->
+											<form id="updateFrm" method="post">
+												<div class="featured-product" >
+													<div class="active-featured-product slick-arrow-2" >
+														<div class="media mt-30" th:if="${dealList}!=null" th:each="deal : ${dealList}">
+															<div class="media-left">
+																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" style="width: 80px; height: 75px;"/></a>
+																
+															</div>
+															<div class="media-body">
+																<div class="clearfix">
+																	<div class="name-commenter f-left">
+																		<h6 class="media-heading">
+																			<a th:text=${deal.DL_TTL}>타이틀자리</a>
+																		</h6>
+																		<p class="mb-10" th:text="${deal.DL_YMD}">27 Jun,
+																			2022 at 2:30pm</p>
+																	</div>
+																	<div class="f-right">
+																		<ul class="reply-delate">
+																			<li><a th:text=${deal.DL_PRC}>가격</a></li>
+									
+																		</ul>
+																	</div>
+																</div>
+																<ul class="action-button">
+																	<input type="hidden" name="ntslId" id="ntslId" th:value="${session.userId}">
+																	<input type="hidden" name="dlNo" id="dlNo" th:value="${deal.DL_NO}">
+																		<input
+																				class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+																				id="btnSave" role="button" value="끌어올리기">
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+											<div role="tabpanel" class="tab-pane" id="soldout">
+												<p>판매 완료 리스트가 들어갈 자리입니다</p>
+												<!-- reviews-tab-desc -->
+												<div class="featured-product" >
+													<div class="active-featured-product slick-arrow-2" >
+														<div  th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
+														<div class="product-item" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
+															<div class="product-img" style="height:150px">
+																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																	<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+															</div>
+															<div class="product-info">
+																<h6 class="product-title"
+																	th:text="${deal.DL_TTL}">상품명</h6>
+																<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane" id="prchs">
+												<p>구매 완료 리스트가 들어갈 자리입니다</p>
+												<!-- reviews-tab-desc -->
+												<div class="featured-product" >
+													<div class="active-featured-product slick-arrow-2" >
+														<div  th:if="${#lists.isEmpty(buyList)}" th:text="'구매완료 내역이 없습니다'"></div>
+														<div class="product-item" th:if="${buyList}!=null" th:each="deal : ${buyList}">
+															<div class="product-img" style="height:150px">
+																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																	<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+															</div>
+															<div class="product-info">
+																<h6 class="product-title"
+																	th:text="${deal.DL_TTL}">상품명</h6>
+																<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+
+									 	
+									</div>
+								</div>
+	
+
+		
+		<script th:inline="javascript">
+		// 마이포인트 페이지로 가는 버튼 함수
+		function point() {
+			location.href = `/my/myPoint`
+		}
+		
+		//==============================================================================
+		// ❤️ 포인트 토탈 구하기 위한 : 전역변수 선언
+		var pointInfo; // 전체 포인트 정보
+   		var pointTotal = 0; // 전체 총합
+   		
+     	// ❤️ 포인트 전체 가져오기 Ajax
+	       function myPointAjax(){
+	    	   $.ajax({
+	    		   url : '/my/myPointAjax',
+	    		   type : 'get',
+	    		   success : function(result){
+	    			   pointInfo = result;
+	    			   pointInfo.forEach((point, idx)=>{
+								console.log(point)
+								pointTotal += point.point		
+	    	   			})
+	    	   			console.log(pointTotal);
+	    			   $(".totalPTrgt").text(pointTotal);
+	    		   },
+	    		   error : function(err){
+	    			   console.log(err);
+	    		   }
+	    	   })
+	       }
+  
+		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+		$(function() {
+			console.log("=================");
+			myPointAjax(); 
+			$("#btnSave").on("click", function() {
+				submitForm();
+			});
+		});
+		
+		//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+		var isSubmitOk = true;
+		
+		function submitForm() {
+				//submit 전 체크하기 : 체크할거잇음? 아 쓸 포인트가 있는지 물어보면 좋을듯
+				if (submitCheck()) {
+					var formData = new FormData($("#updateFrm")[0]);
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				$.ajax({
+					url : "/my/myDealSubmit",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						if (result > 0 ){
+							alert("[완료]	게시글 끌어올리기가 완료되었습니다 :D");
+							myPointAjax();
+						}else 
+						{
+							alert("[실패] 게시글 끌어올리기를 실패하였습니다. :("); 
+						}
+					},
+					error : function(err) {
+						alert("[실패] 게시글 끌어올리기를 실패하였습니다. :("); 
+					}
+				});
+			}
+		}
+		function submitCheck() {
+			// 포인트가 200이상이어야 끌올을 할수있겟쬬? : 200 미만이면 false
+			// 한번 누르고 오분뒤에 누르게할순없낭
+			if ($(".totalPTrgt").text() < "200") {
+				$(".totalPTrgt").focus();
+				alert("[실패] 남은 포인트를 확인해보세요 :(");
+				isSubmitOk = false;
+			}
+			return isSubmitOk;
+		}
+		
+		</script>
+			</div>
+	
+</body>
+</html>
