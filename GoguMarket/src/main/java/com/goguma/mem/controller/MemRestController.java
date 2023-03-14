@@ -28,6 +28,7 @@ import com.goguma.UsersService;
 import com.goguma.common.service.AtchService;
 import com.goguma.mem.mail.EmailService;
 import com.goguma.mem.service.MemService;
+import com.goguma.mem.serviceImple.MemServiceImpl;
 import com.goguma.mem.vo.MemVO;
 
 @RestController
@@ -126,10 +127,10 @@ public class MemRestController {
 	// ======================================
 	// ❤️ 회원 정보 수정
 	@PostMapping("/my/memUpdateFormSubmit")
-	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request,
-			Authentication auth) {
+	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
+		System.out.println(memVO+"넘어온vo==============");
 		// 프로필사진 있으면 실행
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
@@ -163,6 +164,21 @@ public class MemRestController {
 		memVO.setUserPw(userPw);
 
 		int memUpdateCnt = memService.updateUser(memVO);
+
+		//# session 값 바꾸기
+		MemVO sessionVO = new MemVO();
+
+		sessionVO.setUserId(memVO.getUserId());
+		sessionVO=	memService.selectUser(sessionVO);
+		
+		session.setAttribute("userId", sessionVO.getUserId()); // 아이디
+		session.setAttribute("userSe", sessionVO.getUserSe()); // 권한
+		session.setAttribute("nickNm", sessionVO.getNickNm()); // 닉네임
+		session.setAttribute("dealArea", sessionVO.getDealArea()); // 거래지역
+		session.setAttribute("atchPath", sessionVO.getAtchPath()); // 프로필사진 경로(img src에서 사용)
+		session.setAttribute("mblTelno", sessionVO.getMblTelno()); // 전화번호
+		session.setAttribute("userNm", sessionVO.getUserNm()); // 전화번호
+		session.setAttribute("eml", sessionVO.getEml()); // 이메일
 
 		return memUpdateCnt;
 	}

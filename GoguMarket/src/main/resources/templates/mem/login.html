@@ -10,7 +10,7 @@
 	<div layout:fragment="content">
 		<div class="registered-customers"
 			style="margin: 0px auto; width: 300px">
-			<h3 class="blog-details-title">로그인</h3>
+			<h3 class="blog-section-title border-left mb-30" id="pageTtl">로그인</h3>
 			<form th:action="@{/login_proc}" method="post">
 				<div class="login-account p-30 box-shadow">
 					<p>아이디</p>
@@ -31,21 +31,16 @@
 						</div>
 					</div>
 
-					<div>
-						<a href="/oauth2/authorization/kakao">카카오 아이디로 로그인</a>					
+					<div class="mb-10">
+						<input type="checkbox" name="remember-me"> 로그인 상태 유지 
 					</div>
-<!-- 					<div class="mb-10"> -->
-						<input type="checkbox" name="remember-me"> 로그인유지 
-<!-- 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
-<!-- 					</div> -->
-					<div class="mb-40">
-						<div class="f-left">
+					<div style="text-align: center;margin: 10px">
+						<button type="button" onclick="kakaoLogin()"><img alt="카카오로그인" src="/attech/kakaoLogin.png" style="width: 150px;"></button>					
+					</div>
+					<div class="mb-40" style="text-align: center;">
 							<button class="submit-btn-1 btn-hover-1" type="submit">로그인</button>
-						</div>
-						<div class="f-right">
 							<button class="submit-btn-1 btn-hover-1" type="button"
 								onclick="joinForm()">회원가입</button>
-						</div>
 					</div>
 
 				</div>
@@ -54,6 +49,9 @@
 		<script type="text/javascript">
 			function joinForm() {
 				location.href = "/goguma/memberJoinForm";
+			}
+			function kakaoLogin(){
+				location="/oauth2/authorization/kakao";
 			}
 		</script>
 	</div>
