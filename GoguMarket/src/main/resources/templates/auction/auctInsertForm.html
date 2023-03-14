@@ -95,8 +95,10 @@
 											<br>
 											<span id="fileErrMsg"></span>
 											<div id="fileList">
-												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
-													 class="message-box box-shadow white-bg"></div>
+												<div id="uploadFileList"
+													data-placeholder='🐶첨부파일이 없습니다🌳' 
+													class="message-box box-shadow white-bg">
+												</div>
 											</div>
 										</div>
 										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
@@ -195,9 +197,9 @@
 					reader.onload = function(e) {
 									inputFileList.push(f);
 									$('#uploadFileList').append(
-																`<img style=${img_style} src=${e.target.result}
-																	   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
-																)
+										`<img style=${img_style} src=${e.target.result}
+										id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+										)
 									fileNum++;
 								};
 					reader.readAsDataURL(f);

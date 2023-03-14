@@ -131,6 +131,12 @@ public class BizController {
 		return "redirect:/goguma/bookmain";
 	}
 
+	// 동네가게 프로필
+	@GetMapping("/biz/shop02")
+	public String shop02() {
+		return "biz/shop02";
+	}
+	
 	@GetMapping("/biz/shop04")
 	public String shop04() {
 		return "biz/shop04";
