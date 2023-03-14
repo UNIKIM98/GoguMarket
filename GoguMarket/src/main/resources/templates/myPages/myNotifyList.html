@@ -12,13 +12,11 @@
 .notifyGroup {
 	width: 60%;
 	min-height: 70%;
-	border: 1px solid gray;
 }
 
 .notifyView {
 	width: 90%;
 	min-height: 70px;
-	border: 1px solid salmon;
 	margin: 3px auto;
 }
 </style>
@@ -41,6 +39,8 @@ function checkNotify(){
 	    type: 'GET',
 	    success: function (data) {
 	      console.log(data);
+	      
+	      $("")
 
 	      if ( data > 0 ) {
 	    	  loadNotify();
@@ -54,19 +54,51 @@ function checkNotify(){
 	}
 
 
-function loadNotify() {
+function loadNotify(pstSe) {
+	
+	console.log(pstSe);
 
   $.ajax({
 	    url: "/my/selectNotify",
-    type: 'GET',
+    	type: 'GET',
+    	data: {pstSe},
     success: function (data) {
       console.log(data);
-
-      $(".notifyGroup").empty();
-      $(data).each(function (index, obj) {
-        $(".notifyGroup").append(
-        		"<td class='notifyView' id='viewIndex_"+ index + "'><p>"+ obj['almCn'] + "</p></td>"
-        )
+	  $(".notifyGroup").empty();
+	  
+	
+	 
+	  let pstSed='';
+	  
+	  console.log(pstSe)
+	  
+      $(data).each(function (index,data) {
+    	  
+    	  if(data.pstSe == 'AD'){
+    		  pstSed=' [ 관리자 알림 ] '
+    	  }
+    	  if(data.pstSe == 'AU'){
+    		  pstSed=' [ 경매 알림 ] '	  
+    	  }
+    	  
+    	  if(data.pstSe == 'SN'){
+    		  pstSed=' [ 동네 생활 ] '
+    	  }
+    	  if(data.pstSe == 'BI'){
+    		  pstSed=' [ 동네 가게 ] '
+    	  }
+    	  if(data.pstSe == 'DE'){
+    		  pstSed=' [ 중고 거래 ] '
+    	  }
+    	  
+    	  
+    		$(".notifyGroup")
+			.append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
+			.append($("<td>").text(index+1))
+			.append($("<td>").text(pstSed))
+			.append($("<td>").text(data.almCn))
+			.append($("<td>").text(data.almYmd))
+      
       });
       updateNotify();
 
@@ -114,26 +146,31 @@ function updateNotify() {
 						<h4 class="blog-section-title border-left mb-30">나의 쪽지함</h4>
 					</div>
 					<div class="order-complete-content box-shadow">
-						<div class="order-info p-30 mb-10">
+						<div class="order-info p-5 mb-10">
 							<ul class="order-info-list">
 								<li><a class="totalP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">현재 포인트</a>
+									onclick="loadNotify('AD')" value="AD">관리자</a>
 									<p>
 										총 <span class="totalPTrgt"
 											style="color: #fd7e14; font-weight: bold;">0</span>포인트
 									</p></li>
 								<li><a class="attendP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">출석하기</a>
+									onclick="loadNotify('DE');" value="DE">중고거래</a>
 									<p>
 										<span class="attendPTrgt">0</span>포인트
 									</p></li>
 								<li><a class="dealP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">거래후기</a>
+									onclick="loadNotify('AU');" value="AU">경매</a>
 									<p>
 										<span class="dealPTrgt">0</span>포인트
 									</p></li>
 								<li><a class="freeP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">무료나눔</a>
+									onclick="loadNotify('SN');" value="AD">동네생활</a>
+									<p>
+										<span class="freePTrgt">0</span>포인트
+									</p></li>
+								<li><a class="freeP" href='javascript:void(0);'
+									onclick="loadNotify('BI');" value="AD">동네가게</a>
 									<p>
 										<span class="freePTrgt">0</span>포인트
 									</p></li>
@@ -142,18 +179,17 @@ function updateNotify() {
 						</div>
 						<div class="row">
 							<div>
-								<table style="text-align: center">
-									<thead>
+								<table class="table" style="text-align: center">
+									<thead style="border: 1px">
 										<tr>
 											<th>NO</th>
 											<th>FROM</th>
 											<th>ALM_CN</th>
 											<th>YMD</th>
-											<th>CHK</th>
 										</tr>
 									</thead>
 									<tbody class="notifyGroup">
-										
+
 									</tbody>
 								</table>
 							</div>

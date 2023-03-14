@@ -97,10 +97,12 @@ public class AlarmController {
 
 	@GetMapping("/my/selectNotify")
 	@ResponseBody
-	public List<AlarmVO> selectNotify(HttpServletRequest request) {
+	public List<AlarmVO> selectNotify(HttpServletRequest request,String pstSe) {
+		System.out.println(pstSe);
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		AlarmVO vo = new AlarmVO();
+		vo.setPstSe(pstSe);
 		vo.setUserId(userId);
 		List<AlarmVO> result = alarm.selectNotify(vo);
 		return result;

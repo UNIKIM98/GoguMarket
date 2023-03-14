@@ -3,7 +3,8 @@
 <mapper namespace="com.goguma.common.mapper.AlarmMapper">
 
 	<insert id="insertAlarm">
-		INSERT INTO alarm VALUES(ALARM_SEQ.nextval,#{userId}, CURRENT_DATE,
+		INSERT INTO alarm VALUES(ALARM_SEQ.nextval,#{userId},
+		CURRENT_DATE,
 		#{pstSe},#{almCn},1)
 	</insert>
 
@@ -18,7 +19,13 @@
 	<select id="selectNotify"
 		parameterType="com.goguma.common.vo.AlarmVO"
 		resultType="com.goguma.common.vo.AlarmVO">
-		select * from alarm where user_id = #{userId}
+		select * from alarm
+		where user_id = #{userId}
+		<if test="pstSe != null and pstSe !=''">
+			AND pst_Se = #{pstSe}
+		</if>
+		order by pst_Se
+
 	</select>
 
 	<update id="updateNotify"
