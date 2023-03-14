@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
+import com.goguma.rsvt.vo.RsvtUpdateVO;
 import com.goguma.rsvt.vo.RsvtVO;
 
 public interface RsvtService {
@@ -28,4 +29,7 @@ public interface RsvtService {
 	
 	//예약번호 가게메뉴 조회
 	List<Map> selectRsvtBizMenu(String rsvtNo);
+	
+	//예약업데이트 테이블 insert
+	int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpVo);
 }

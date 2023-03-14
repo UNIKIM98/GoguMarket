@@ -14,5 +14,10 @@ public class DealSearchVO extends DealVO {
 	String searchType;
 	
 	private String orderby;
+
+	// 시세에 사용할 변수 : selectPrice
+	Integer avg;
+	Integer max;
+	Integer min;
 	
 }

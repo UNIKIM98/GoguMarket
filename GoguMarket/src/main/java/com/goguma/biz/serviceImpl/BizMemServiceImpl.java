@@ -16,12 +16,15 @@ import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
+import com.goguma.mem.mapper.MemMapper;
 
 @Service
 public class BizMemServiceImpl implements BizMemService {
 
 	@Autowired
 	private BizMemMapper map;
+	@Autowired
+	private MemMapper memMap;
 	
 	//가게 목록 전체조회
 	@Override
@@ -81,6 +84,7 @@ public class BizMemServiceImpl implements BizMemService {
 	//가게등록
 	@Override
 	public int bizInsert(BizMemVO vo) {
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //기존 권한
 		List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities()); 
 		
