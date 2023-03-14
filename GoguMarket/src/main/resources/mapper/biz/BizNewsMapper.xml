@@ -3,7 +3,7 @@
 <mapper namespace="com.goguma.biz.mapper.BizNewsMapper">
 
 	<!-- 가게 소식 -->
-	<select id="bizNews" parameterType="string" resultType="com.goguma.biz.vo.BizNewsVO">
+	<select id="selectBizNews" parameterType="string" resultType="com.goguma.biz.vo.BizNewsVO">
 		SELECT *
 		FROM biz_news
 		WHERE biz_no = #{bizNo}
