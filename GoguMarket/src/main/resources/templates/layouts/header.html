@@ -10,14 +10,16 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-6 col-md-6 d-none d-md-block">
-						<div class="call-us">
-							<p class="mb-0 roboto text-white">GO GUMARKET</p>
+						<div class="call-us" th:if="${session.userId != null}" style="display: flex; align-items: center;">
+						  <img alt="프로필사진" th:if="${session.atchPath != null}" th:src="${session.atchPath}" style="width: 30px; height: 30px; border-radius: 70%;">
+						  <img alt="프로필사진" th:if="${session.atchPath == null}" src="/attech/222.jpg" style="width: 30px; height: 30px; border-radius: 70%;">
+						  <p class="mb-0 roboto text-white" th:text="${session.nickNm}" style="margin-left: 10px;">GOGUMARKET</p>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="top-link clearfix">
 							<ul class="link f-right">
-								<li><a href="/my/myInfoCheck"> <i
+								<li th:if="${session.userId!=null}"><a href="/my/myInfoCheck"> <i
 										class="zmdi zmdi-account"></i> My Page
 								</a></li>
 								<li th:if="${session.userId==null}"><a href="/goguma/memberJoinForm"> <i class="zmdi zmdi-favorite"></i> Join </a></li>
@@ -59,8 +61,8 @@
 										<ul class="dropdwn">
 
 											<li><a href="/goguma/auctList">경매메인</a></li>
-											<li><a href="/my/allAuction">나의 경매품</a></li>
-											<li><a href="#">걸로</a></li>
+											<li><a href="/my/allAuction">내가 등록한 경매품</a></li>
+											<li><a href="/my/bidAuction">내가 입찰한 경매품</a></li>
 											<li><a href="#">넣어서</a></li>
 											<li><a href="#">쓰세효근</a></li>
 
@@ -76,7 +78,7 @@
 											<li><a href="/my/myReservation">mybook01</a></li>
 											<li><a href="/my/mybook02">mybook02</a></li>
 											<li><a href="/my/mybook04">mybook04 -xxx</a></li>
-											<li><a href="/biz/shop04">shop04</a></li>
+											<li><a href="/biz/shop04">shop04-xxx</a></li>
 											<li><a href="/biz/shop05">shop05</a></li>
 											<li><a href="/biz/shop06">shop06</a></li>
 											<li><a href="/biz/shop0602">shop0602</a></li>

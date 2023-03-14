@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.nimbusds.oauth2.sdk.id.ClientID;
 
 import lombok.Data;
-
 
 @Data
 public class OAuthAttributes {
@@ -27,8 +29,7 @@ public class OAuthAttributes {
     private String profile;
     private String clientID;
 
-    
-    //생성자 생성
+	// 생성자 생성
 	public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String id, String name, String pwd,
 			Date birthDate, String genCd, String email, String tel, String token, String reToken, String loginCd,
 			String profile, String clientID) {
@@ -47,21 +48,18 @@ public class OAuthAttributes {
 		this.profile = profile;
 		this.clientID = clientID;
 	}
-	
-	
-	
-	public OAuthAttributes() {
-		
-	}
-	
-	
 
-    
-    // 해당 로그인인 서비스가 kakao인지 google인지 구분하여, 알맞게 매핑을 해주도록 합니다.
+	public OAuthAttributes() {
+
+	}
+
+	// 해당 로그인인 서비스가 kakao인지 google인지 구분하여, 알맞게 매핑을 해주도록 합니다.
     // 여기서 registrationId는 OAuth2 로그인을 처리한 서비스 명("kakao","naver"..)이 되고,
     // userNameAttributeName은 해당 서비스의 map의 키값이 되는 값이됩니다. {, kakao="id", naver="response"}
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-        if (registrationId.equals("kakao")) {
+    		System.out.println("outhAttributes================" + registrationId);
+    	if (registrationId.equals("kakao")) {
+    		System.out.println("outhAttributes kakao==================");
             return ofKakao(userNameAttributeName, attributes);
         }else
             return ofNaver(userNameAttributeName,attributes);
@@ -116,6 +114,7 @@ public class OAuthAttributes {
     
     //카카오 필드값 넣어주기
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
+    	System.out.println(attributes+"=================================");
         Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");  // 카카오로 받은 데이터에서 계정 정보가 담긴 kakao_account 값을 꺼낸다.
         Map<String, Object> profile = (Map<String, Object>) kakao_account.get("profile");   // 마찬가지로 profile(nickname, image_url.. 등) 정보가 담긴 값을 꺼낸다.
 
@@ -167,3 +166,4 @@ public class OAuthAttributes {
 
     
 }
+

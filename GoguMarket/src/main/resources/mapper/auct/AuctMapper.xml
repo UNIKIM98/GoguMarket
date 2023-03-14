@@ -5,9 +5,9 @@
 	<!-- 전체 리스트 -->
 	<select id="getAuctList" resultType="com.goguma.auct.vo.AuctVO">
 		SELECT a.* ,
-		(SELECT ATCH_PATH
-		FROM ATCH
-		WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1) ATCH_NM
+			(SELECT ATCH_PATH
+			FROM ATCH
+			WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1) ATCH_NM
 		FROM AUCT a
 		ORDER BY AUCT_NO
 		DESC
@@ -35,11 +35,11 @@
 	<!-- 등록 -->
 	<insert id="insertAuct"
 		parameterType="com.goguma.auct.vo.AuctVO">
-		<selectKey keyProperty="auctNo" resultType="int"
-			order="BEFORE">
-			SELECT NVL(MAX(AUCT_NO),0)+1 AS AUCTNO
-			FROM AUCT
-		</selectKey>
+			<selectKey keyProperty="auctNo" resultType="int"
+				order="BEFORE">
+				SELECT NVL(MAX(AUCT_NO),0)+1 AS AUCTNO
+				FROM AUCT
+			</selectKey>
 		INSERT INTO AUCT (
 		AUCT_NO, REG_YMD, DDLN_YMD, AUCT_TTL, CTGRY,
 		AUCT_CN, LOW_PRC, ATCH_ID, USER_ID
@@ -66,17 +66,17 @@
 		#{auctNo}
 	</update>
 
-	<!-- 경매 마감기한 쿼리문인데 스케줄러가 해주는데 굳이 있어야하는지...?ㅋㅋㅋㅋㅋ -->
-	<update id="ddlnAuct">
-		UPDATE AUCT
-		<![CDATA[
-		SET STTS = 2
-		age <= 20
-		WHERE TO_DATE(DDLN_YMD,'YYYY/MM/DD/HH24:MI') < TO_DATE(CURRENT_DATE,'YYYY/MM/DD/HH24:MI')
-		]]>
-	</update>
+	<!-- 경매 마감기한 쿼리문인데 스케줄러가 해당역할 해줘서 필요없음 -->
+<!-- 	<update id="ddlnAuct"> -->
+<!-- 		UPDATE AUCT -->
+<!-- 		<![CDATA[ -->
+<!-- 		SET STTS = 2 -->
+<!-- 		age <= 20 -->
+<!-- 		WHERE TO_DATE(DDLN_YMD,'YYYY/MM/DD/HH24:MI') < TO_DATE(CURRENT_DATE,'YYYY/MM/DD/HH24:MI') -->
+<!-- 		]]> -->
+<!-- 	</update> -->
 	
-	<!-- 삭제할때 쓰는 auctNo int->VO -->
+	<!-- 삭제할때 쓰는 auctNo int=>VO -->
 	<select id="selectAuct" parameterType="int"
 		resultType="com.goguma.auct.vo.AuctVO">
 		SELECT * FROM AUCT

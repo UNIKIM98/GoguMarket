@@ -1,18 +1,15 @@
 package com.goguma;
 
-import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.goguma.mem.socialLogin.OAuthUserService;
 
@@ -24,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig {
 
 	// ===================================================================================================================
-	// ▶ 로그인 유지(정배오빠)
+	// ❤️ 로그인 유지(정배오빠)
 //	@Autowired
 //	DataSource dataSource;
 
@@ -36,24 +33,29 @@ public class WebSecurityConfig {
 //	}
 	
 	// ===================================================================================================================
-	// ▶ 소셜로그인(태경언니)
-	//private final OAuthUserService userService;
+	// ❤️ 소셜로그인(태경언니)
+
+	private final OAuthUserService userService;
+	
+	private final LoginSuccessHandler loginSuccessHandler;
+	
+//	private final KakaoLoginSuccessHandler kakaoLoginSuccessHandler; //카카오로그인
 	
 	// ===================================================================================================================
-	// ▶ 비밀번호 암호화
+	// ❤️ 비밀번호 암호화
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
 	// ===================================================================================================================
-	// ▶ static 권한 설정 해제(절대경로 필요)
+	// ❤️ static 권한 설정 해제(절대경로 필요)
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
 	// ====================================================================================================================
-	// ▶ 시큐리티 필터 체인 설정
+	// ❤️ 시큐리티 필터 체인 설정
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> requests
@@ -61,7 +63,7 @@ public class WebSecurityConfig {
 				// 경로별 권한 설정 --------------------------------------------------------------------------------------------
 				.antMatchers("/", "/home", "/goguma/**", "/css/**", "/attech/**", "/fonts/**", "/images/**", "/img/**",
 							"/js/**", "/lib/**", "/scss/**", "/vendor/**", "/style.css").permitAll()
-				.antMatchers("/my/**").hasAnyRole("USER", "ADMIN")
+				.antMatchers("/my/**").hasAnyRole("USER", "ADMIN", "BIZ")
 				.antMatchers("/biz/**").hasAnyRole("BIZ", "ADMIN")
 				.antMatchers("/admin/**").hasRole("ADMIN")
 //				.anyRequest().authenticated()
@@ -74,15 +76,14 @@ public class WebSecurityConfig {
 				// 커스텀로그인 ------------------------------------------------------------------------------------------------
 				.formLogin((form) -> form.loginPage("/goguma/login")
 										 .loginProcessingUrl("/login_proc")
-										 .successHandler(new LoginSuccessHandler()).permitAll())
+										 .successHandler(loginSuccessHandler).permitAll())
 				
 				// 소셜로그인 --------------------------------------------------------------------------------------------------
-//				.oauth2Login((oauthLogin)-> oauthLogin
-//								     .loginPage("/login/oauth")
-//								     .permitAll()
-//								     .successHandler(new LoginSuccessHandler()) // 💙 커스텀 로그인 석세스 헨들러 따로 주신 이유는 몰까..
-//								     .userInfoEndpoint()
-//								     .userService(userService))
+				.oauth2Login((oauthLogin)-> oauthLogin
+									 .permitAll()
+									 .successHandler(new KakaoLoginSuccessHandler())
+								     .userInfoEndpoint()
+								     .userService(userService))
 				
 				// 로그아웃 ----------------------------------------------------------------------------------------------------
 				.logout((logout) -> logout.permitAll().logoutSuccessUrl("/goguma/dealMain").invalidateHttpSession(true))
@@ -92,6 +93,6 @@ public class WebSecurityConfig {
 	}
 
 	// =======================================================================================================================
-	// ▶ 로그인 실패 핸들러
+	// ❤️ 로그인 실패 핸들러
 
 }

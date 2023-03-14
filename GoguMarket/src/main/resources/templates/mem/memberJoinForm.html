@@ -60,6 +60,27 @@
                                  </td>
                               </tr>
                               <tr>
+                                 <th><label for="eml">이메일주소 <span>*</span></label></th>
+                                 <td><input type="text" id="eml" name="eml"
+                                          placeholder="example@email.com"
+                                          style="width: 38%; margin-right: 50px;">
+                                 <button class="submit-btn-1 btn-hover-1" type="button" 
+                                 		 onclick="emlDupCkAjax()"
+                                 		 id="emlBtn"
+                                 		 value="1">인증번호 발송</button>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <th><label for="emlCk">이메일 인증확인 <span>*</span></label></th>
+                                 <td><input type="text" id="emlCk" name="emlCk"
+                                          placeholder="인증번호를 입력해주세요." style="width: 38%; margin-right: 50px;">
+                                 <button class="submit-btn-1 btn-hover-1" type="button" 
+                                 		 onclick="isAuthNumOk()" 
+                                 		 id="emlAuthBtn"
+                                 		 value="1">인증번호 확인</button>
+                                 </td>
+                              </tr>
+                              <tr>
                                  <th><label for="userNm">이름<span> *</span></label></th>
                                  <td><input type="text" id="userNm" name="userNm"
                                           placeholder="이름을 입력하세요." 
@@ -74,9 +95,9 @@
                                           required="required"
                                           style="width: 40%; margin-right: 50px;">
                                     <button class="submit-btn-1 btn-hover-1"
-                                          onclick="nickNmCkAjax()" 
-                                          id="nickNmBtn" value="1"
-                                          type="button">중복확인</button>
+	                                          onclick="nickNmCkAjax()" 
+	                                          id="nickNmBtn" value="1"
+	                                          type="button">중복확인</button>
                                     </td>
                               </tr>
                               <tr>
@@ -102,14 +123,6 @@
                                           placeholder="-/공백 없이 전화번호를 입력해주세요."
                                           style="width: 40%; margin-right: 50px;"
                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                                    <button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <th><label for="eml">이메일주소</label></th>
-                                 <td><input type="text" id="eml" name="eml"
-                                          placeholder="email@naver.com의 형태로 입력해주세요."
-                                          style="width: 60%;">
                                  </td>
                               </tr>
                               <tr>
@@ -174,12 +187,16 @@
                   </div>
                </form>
             </div>
-            
          </div>
       </div>
       <script type="text/javascript">
+      
       // ==============================================================
-      // ▷ DOM 실행 함수
+      // ❤️ 전역변수 선언
+      	var authNum = 0; //이메일 인증번호
+      
+      // ==============================================================
+      // ❤️ DOM 실행 함수
          $(function(){
             // # 아이디 중복체크 초기화
             $("#userId").on("change", function() {
@@ -189,6 +206,16 @@
             //# 닉네임 중복 체크 초기화
             $("#nickNm").on("change", function() {
                $("#nickNmBtn").val("1");
+            });
+            
+            //# 이메일 중복 체크 초기화
+            $("#eml").on("change", function() {
+               $("#emlBtn").val("1");
+            });
+            
+            //# 이메일 인증번호 체크 초기화
+            $("#eml").on("change", function() {
+               $("#emlAuthBtn").val("1");
             });
 
             // # 비밀번호 유효성 체크
@@ -215,20 +242,73 @@
             $("#allAgree").on("change",function(e){
                allAgreeChk(e);
             })
-            
          })
       
+     // ==============================================================
+     // ❤️ 이메일 중복체크 Ajax
+     	function emlDupCkAjax(){
+        	let eml = $("#eml").val();
+        	
+        	if(isEmlOk()){
+        		$.ajax({
+        			url:'/goguma/emlDupCkAjax/'+eml,
+        			type:'get',
+        			success:function(result){
+        				console.log(result);
+        				if(result==0){
+        					emlConfirm(eml);
+        				}else{
+        					alert("이미 등록되어 있는 이메일입니다.");
+        		               $('#eml').val("").focus();
+        				}
+        			}
+        		})
+        	}
+      	}
+     
+     // ==============================================================
+     // ❤️ 이메일 confirm
+      	function emlConfirm(eml){
+	    	  if(confirm(eml+"로 인증번호를 전송하시겠습니까?")){
+	    		  emlCheckAJax(eml);
+	    		  $("#emlBtn").val("0");
+	    		  $("#emlCk").val("");
+	    	  }
+    	  console.log(eml);
+      }
+
+    // ==============================================================
+    // ❤️ 이메일 인증 Ajax
+    	function  emlCheckAJax(eml){
+    	  console.log(eml)
+	   	 $.ajax({
+	  		  url:'/goguma/emlCheckAJax/'+eml,
+	  		  type:'get',
+	  		  success: function(result){
+	  			authNum = result;
+	  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
+	  			  console.log(result);
+	  		  },
+	  		  error: function(err){
+	  			  console.log(err);
+	  		  }
+       	  }) 
+      	}
+    
+	  // ==============================================================
+      // ❤️ 이메일 인증번호 일치여부 확인
+      function isAuthNumOk(){
+		  console.log(authNum);
+		  if(authNum == $("#emlCk").val()){
+			  alert("이메일 인증이 완료되었습니다.");
+			  $("#emlAuthBtn").val("0");
+		  }else{
+			  alert("인증번호가 일치하지 않습니다.");
+		  }
+	  }
+          
       // ==============================================================
-      // ▷ 약관 동의 전체 체크
-         function allAgreeChk(e){
-            let agreeChk = $('input[id="agree"]');
-             for(let i = 0; i < agreeChk.length; i++){
-                  agreeChk[i].checked = e.target.checked;
-                }
-         }
-      
-      // ==============================================================
-      // ▷ 이메일주소 유효성 체크
+      // ❤️ 이메일주소 유효성 체크
          function isEmlOk(){
          let isEmlOk = false;
          const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -238,10 +318,11 @@
             isEmlOk = false;
             $("#eml").val("").addClass("errPlaceHolder").focus();
          }
+         return isEmlOk;
       }
       
       // ==============================================================
-      // ▷ 비밀번호 유효성 체크
+      // ❤️ 비밀번호 유효성 체크
          function pwRegExpCk(){
             $('#userPwCk').attr("placeholder","비밀번호를 한 번 더 입력해주세요.").val("");
             if($('#userPwCk').hasClass('errPlaceHolder') == true){
@@ -262,7 +343,7 @@
       }
       
       // ==============================================================
-      // ▷ 비밀번호 일치 확인
+      // ❤️ 비밀번호 일치 확인
          function isSamePw(){
             if($('#userPw').val()!= $('#userPwCk').val()){
                $('#userPwCk').attr("placeholder","비밀번호가 일치하지 않습니다.")
@@ -272,7 +353,7 @@
       }
 
       // ==============================================================
-      // ▷ 휴대번호 유효성 체크 
+      // ❤️ 휴대번호 유효성 체크 
          function ismblTelnoOk(){
          if($("#mblTelno").val().length > 11){
             $("#mblTelno").attr("placeholder","휴대번호는 11자리 까지만 입력 가능합니다.")
@@ -282,7 +363,7 @@
       }
       
       // ==============================================================
-      // ▷ 아이디 중복 체크 아작스 
+      // ❤️ 아이디 중복 체크 아작스 
          function userIdCkAjax() {
             $.ajax({
                url : '/goguma/userIdChk/' + $('#userId').val(),
@@ -297,8 +378,9 @@
                }
             })
          }
-
-      // ▷ 아이디 중복 체크 결과 출력
+      
+      // ==============================================================
+      // ❤️ 아이디 중복 체크 결과 출력
          function userIdCk(bool) {
             if (bool == "0") {
                alert("사용할 수 있는 아이디입니다. :)");
@@ -310,7 +392,7 @@
          }
 
       // ==============================================================
-      // ▷ 닉네임 중복 체크 아작스
+      // ❤️ 닉네임 중복 체크 아작스
          function nickNmCkAjax() {
             $.ajax({
                url : '/goguma/nickNmChk/' + $('#nickNm').val(),
@@ -325,8 +407,9 @@
                }
             })
          }
-
-      // ▷ 닉네임 중복 체크 결과 출력
+      
+      // ==============================================================
+      // ❤️ 닉네임 중복 체크 결과 출력
          function nickNmCk(str) {
             if (str == "0") {
                alert("사용가능한 닉네임입니다.");
@@ -338,7 +421,7 @@
          }   
 
       // ==============================================================
-      // ▷ 주소/거래지역 설정
+      // ❤️ 주소/거래지역 설정
          function findAddr() {
             new daum.Postcode(
                   {
@@ -360,25 +443,57 @@
                      }
                   }).open();
          }
+      
+      
+	// ==============================================================
+	// ❤️ 약관 동의 전체 체크
+		function allAgreeChk(e){
+               let agreeChk = $('input[id="agree"]');
+                for(let i = 0; i < agreeChk.length; i++){
+                     agreeChk[i].checked = e.target.checked;
+                   }
+            }
+         
 
       // ==============================================================
-      // ▷ submit 전 정보 유효성 체크
+      // ❤️ submit 전 정보 유효성 체크
          function frmChk() {
-//             if ($('#userIdBtn').val() == '1') {
-//                alert("아이디 중복체크를 해주세요.");
-//                return false;
-//             } else if ($('#nickNmBtn').val() == '1') {
-//                alert("닉네임 중복체크를 해주세요.");
-//                return false;
-//             } else if ($('#addr').val() == "") {
-//                alert("주소를 입력해주세요.");
-//                return false;
-//             } else if((!$('input[id="agree"]').eq(0).is(':checked'))||(!$('input[id="agree"]').eq(1).is(':checked'))){
-//                alert("필수 약관에 동의해주세요.");
-//                return false;
-//             }
-//          }
-      }
+            if ($('#userIdBtn').val() == '1') {
+               alert("아이디 중복체크를 해주세요.");
+               return false;
+            } 
+
+            else if ($('#nickNmBtn').val() == '1') {
+               alert("닉네임 중복체크를 해주세요.");
+               return false;
+            } 
+
+            else if ($('#emlBtn').val() == '1') {
+                alert("이메일 인증을 해주세요.");
+                return false;
+             } 
+            
+            else if ($('#emlAuthBtn').val() == '1') {
+                alert("이메일 인증번호 확인이 완료되지 않았습니다.");
+                return false;
+             } 
+
+            else if ($('#addr').val() == "") {
+               alert("주소를 입력해주세요.");
+               return false;
+            } 
+            
+            else if ($('#mblTelno').val() == "") {
+                alert("휴대폰 번호를 입력해주세요.");
+                $('#mblTelno').focus();
+                return false;
+             } 
+
+            else if((!$('input[id="agree"]').eq(0).is(':checked'))||(!$('input[id="agree"]').eq(1).is(':checked'))){
+               alert("필수 약관에 동의해주세요.");
+               return false;
+            }
+         }
       </script>
    </div>
 </body>

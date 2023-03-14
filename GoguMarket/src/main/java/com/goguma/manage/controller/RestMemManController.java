@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.goguma.auct.vo.AuctMemVO;
+import com.goguma.common.service.AlarmService;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.common.vo.AlarmVO;
 import com.goguma.common.vo.CommonCodeVO;
 import com.goguma.common.vo.CommonPaging;
+import com.goguma.deal.service.DealService;
+import com.goguma.deal.vo.DealVO;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
@@ -23,9 +28,13 @@ public class RestMemManController {
 
 	@Autowired
 	MemService member;
+	
+	@Autowired 
+	AlarmService alarm;
 
 	@GetMapping("/admin/keyValue")
 	public Map<String, Object> keyValue() {
+		System.out.println("gdgd");
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		List<CommonCodeVO> selist = new ArrayList();
@@ -42,6 +51,9 @@ public class RestMemManController {
 
 		return map;
 	}
+	
+	
+	
 
 	@GetMapping("/admin/selectMemberList")
 	public Map<String, Object> selectMemberList(CommonPaging page, MemVO vo) {
@@ -49,7 +61,7 @@ public class RestMemManController {
 		System.out.println("1번 호출" + vo.getUserNowPage());
 		Map<String, Object> map = new HashMap<String, Object>();
 		page.setPage(vo.getUserNowPage());
-		page.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
+		page.setPageUnit(5); // 한 페이지에 출력할 레코드 건수
 		page.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		vo.setFirst(page.getFirst());
 		vo.setLast(page.getLast());
@@ -63,16 +75,26 @@ public class RestMemManController {
 	}
 
 	
-	
-
 	@PostMapping("/updateStts")
 	public int updateStts(MemVO vo) {
-		System.out.println(vo);
-
+		
+	
+		AlarmVO avo = new AlarmVO();
+		
+		avo.setPstSe("AD");
+		avo.setUserId(vo.getUserId());
+		avo.setAlmCn("[관리자 알림] "+vo.getUserStts()+"로 변경되었습니다/.");
+		
 		int cnt = member.updateStts(vo);
+		if(cnt > 0) {
+			alarm.insertAlarm(avo);
+			
+		}
 
 		return cnt;
 	}
+	
+	
 
 	@PostMapping("/deleteMember")
 	public int deleteMember(MemVO vo) {
@@ -82,5 +104,13 @@ public class RestMemManController {
 
 		return cnt;
 	}
+	
+	
+
+	
+
+	
+	
+	
 
 }

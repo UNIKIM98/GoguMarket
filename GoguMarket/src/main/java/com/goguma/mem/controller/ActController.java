@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.goguma.mem.service.ActService;
 import com.goguma.mem.service.MemService;
@@ -23,13 +24,22 @@ public class ActController {
 
 	@Autowired
 	MemService memService;
-
-	// ▶ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
+	// ===========================================================
+	// ❤️ 계좌번호 창으로 가기(대표계좌 조회 + 계좌 리스트 조회)
 	@GetMapping("/my/myAct")
 	public String auctSelect() {
 		return "myPages/myAct";
 	}
-
+	
+	// ===========================================================	
+	// ❤️ 계좌 등록
+	@RequestMapping("/my/makeNewAct")
+	public String makeNewAct() {
+		return "myPages/makeNewAct";
+	}
+	
+	// ===========================================================	
+	// ❤️ 계좌 등록 submit
 	@PostMapping("/my/makeNewActSubmit")
 	public void makeNewActSubmit(ActVO actVO, HttpServletResponse response) {
 		System.out.println("actVO ==> "+ actVO);
@@ -43,8 +53,6 @@ public class ActController {
 
 				out.println("<script language='javascript'>");
 				out.println("alert('[계좌등록완료]"+actVO.getBankNm()+"은행 계좌 등록이 완료되었습니다.');location.href='/my/myAct';");
-				// ※ 메인페이지로 가게 고쳐야함!!
-
 				out.println("</script>");
 
 				out.flush();
@@ -64,5 +72,4 @@ public class ActController {
 			e.printStackTrace();
 		}
 	}
-
 }

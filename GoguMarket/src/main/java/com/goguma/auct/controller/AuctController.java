@@ -62,16 +62,22 @@ public class AuctController {
 
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
+		
+		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
 
-		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
-		System.out.println(atchList.size() + "======auctMem size================");
-		System.out.println(atchList.size() == 0);
+		System.out.println("=======atch" + atchList );
+		
+		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
+		System.out.println("======auctMem size================");
+		System.out.println(avoList.size()==0);
+		System.out.println(avoList.isEmpty());
+		System.out.println("=====auctMem"+avoList);
+		
+		System.out.println("=======auct"+vo);
+		
 
-		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
-
-		model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
 
@@ -80,6 +86,7 @@ public class AuctController {
 		} else {
 			model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
 		}
+
 		System.out.println(avoList.equals(null) + "equals");
 		System.out.println((avoList.size() == 0) + "size");
 
@@ -186,8 +193,9 @@ public class AuctController {
 		List<AuctVO> myAuctList = auctService.selectUserId(userId); //userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
 		
 		model.addAttribute("myAuctList",myAuctList);			//모델에 잘 요리된 myAuctList를 담아줍니다.
-		model.addAttribute("nowPrcs", auctMemService.selectNowPrc()); //myAuctList 위에 nowPrc를 뿌려줍니다.
 		
+		
+		// 낙찰자 ID클릭시 이름, 계좌 전송하는것 구현?
 		System.out.println("==============================마이페이지" + model);
 
 		return "auction/allAuction";
@@ -195,13 +203,15 @@ public class AuctController {
 	}
 
 	@GetMapping("/my/takePartAuction")
-	public String takePartAuction(Model model) {
-		// 마이페이지 나의 모든 경매 이동
-
-		List<CommonCodeVO> codeList = codeService.codeList("002");
-		codeList.remove(0);
-
-		model.addAttribute("category", codeList);
+	public String takePartAuction(Model model, HttpServletRequest request) {
+		// 마이페이지 낙찰자에게 이름, 계좌번호 보내기
+//		HttpSession session = request.getSession();
+//		String userId = (String)session.getAttribute("userId");
+//		List<AuctVO> myAuctList = auctService.selectUserId(userId);
+//		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
+		
+		
+		
 		return "auction/takePartAuction";
 
 	}

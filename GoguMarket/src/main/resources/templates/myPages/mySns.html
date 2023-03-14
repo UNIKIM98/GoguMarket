@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
+<style>
+.snsList tr :hover {
+	background-color: yellow;
+}
+</style>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="myContent">
+
+		<div class="container">
+
+			<br>
+			<div>
+				<h4 class="blog-section-title border-left mb-30">나의 동네생활</h4>
+			</div>
+			<form id="info">
+				<table class="table" style="text-align: center;">
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col">SNS_NO</th>
+							<th scope="col">USER_ID</th>
+							<th scope="col">SNS_CN</th>
+							<th scope="col">SNS_YMD</th>
+							<th scope="col">SNS_CNT</th>
+							<th scope="col">DELETE</th>
+							<th scope="col">EDIT</th>
+
+						</tr>
+					</thead>
+					<tbody th:each="list : ${list}" id="snsList" class="snsList">
+						<tr th:id="${list.snsNo}" th:value="${list.snsNo}"
+							th:onclick="|location.href='@{/sns/selectperSns/{snsNo}(snsNo=${list.snsNo})}'|">
+							<td id="snsNo" th:text="${list.snsNo}"></td>
+							<td th:text="${list.snsNo}" th:value="${list.snsNo}"></td>
+							<td th:text="${list.userId}"></td>
+							<td th:text="${list.snsCn}"></td>
+							<td th:text="${list.snsYmd}"></td>
+							<td th:text="${list.inqCnt}"></td>
+							<td><button id="delButton" onclick="deleteSns(event)" th:value="${list.snsNo}">삭제</button></td>
+							<td><button id="editButton"
+									th:onclick="|location.href='@{/sns/UpdateSns/{snsNo}(snsNo=${list.snsNo})}'|">수정</button></td>
+						</tr>
+
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<script th:inline="javascript">
+			function deleteSns(event) {
+					console.log($(event.target).val())
+				let confirmMessage = confirm("정말 삭제 하시겠습니까??");
+				
+
+			}
+
+			function editSns() {
+				console.log(event.target);
+
+				let confirmMessage = confirm("정말 삭제 하시겠습니까??");
+
+			}
+		</script>
+	</div>
+
+</body>
+</html>

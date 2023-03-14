@@ -43,10 +43,10 @@ public class CmntServiceImpl implements CmntService {
 	
 
 	@Override
-	public int deleteRreply(int cmntNo) {
+	public int deleteRreply(SnsCmntVO vo) {
 		
 		
-		return map.deleteRreply(cmntNo);
+		return map.deleteRreply(vo);
 	}
 
 	 

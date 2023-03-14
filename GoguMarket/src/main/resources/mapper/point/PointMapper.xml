@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.mem.mapper.PointMapper">
 
-
+	<!-- ⚠️⚠️ 자동정렬(ctrl + F) 금지 ⚠️⚠️-->
 	<!-- ❤ 포인트 적립 -->
 	<insert id="insertPoint"
 		parameterType="com.goguma.mem.vo.PointVO">
 		<selectKey keyProperty="pointNo" resultType="int"
 			order="BEFORE">
-			SELECT
-			CASE WHEN MAX(point_no) IS NULL THEN 1 ELSE
-			MAX(point_no) + 1 END as pointNo
+			SELECT CASE WHEN MAX(point_no) IS NULL 
+						THEN 1 
+				   		ELSE MAX(point_no) + 1 
+				   END as pointNo
 			FROM point
 		</selectKey>
 		INSERT INTO POINT 
@@ -23,29 +24,47 @@
 		parameterType="com.goguma.mem.vo.PointVO">
 		<selectKey keyProperty="pointNo" resultType="int"
 			order="BEFORE">
-			SELECT
-			CASE WHEN MAX(point_no) IS NULL THEN 1 ELSE
-			MAX(point_no) + 1 END as pointNo
+			SELECT CASE WHEN MAX(point_no) IS NULL 
+						THEN 1 
+				   		ELSE MAX(point_no) + 1 
+				   END as pointNo
 			FROM point
 		</selectKey>
 		INSERT INTO POINT 
 		VALUES(#{pointNo}, #{userId}, -200, '끌어올리기', null, CURRENT_DATE)
 	</insert>
 	
-	
-	<!-- ▷ 포인트 전체조회 (관리자용) -->
+	<!-- ⚠️⚠️ 자동정렬(ctrl + F) 금지 ⚠️⚠️-->
+	<!-- ❤ 포인트 전체조회 (관리자용) -->
 	<select id="selectPointList"
 		resultType="com.goguma.mem.vo.PointVO">
 		SELECT * FROM POINT
 	</select>
 	
-	
 	<!-- ❤ 특정 유저 보유 포인트 조회 (유저용) -->
 	<select id="selectPointListForUser" parameterType="String"
 		resultType="com.goguma.mem.vo.PointVO">
 		SELECT * FROM POINT
-		WHERE USER_ID = #{userId}
+		WHERE user_id = #{userId}
+		ORDER BY point_no DESC
 	</select>
 
-
+	<!-- 💙 특정 유저 보유 포인트 조회 (페이징, 카테고리) -->
+	<select id="selectPointListForUserPaging" 
+			parameterType="com.goguma.mem.vo.PointVO" 
+			resultType="com.goguma.mem.vo.PointVO">
+		SELECT * 
+		FROM (SELECT ROWNUM rn, A.* 
+		      FROM(SELECT p.*
+		           FROM point p) A
+	<![CDATA[ 
+		      WHERE ROWNUM <= #{last} ) B
+		WHERE rn >= #{first}
+	]]>	
+		AND user_id = #{userId}
+		AND point_mthd IN ('끌어올리기'
+		<if test="searchPoint != null">, '#{searchPoint}'</if>
+		)
+		ORDER BY point_no DESC
+	</select>
 </mapper>

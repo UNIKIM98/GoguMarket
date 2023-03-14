@@ -1,162 +1,172 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/sideBar}">
-
 <head>
-	<meta charset='utf-8' />
-	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style type="text/css">
+#isTodayAttend span {
+	color: #fd7e14;
+	font-weight: bold;
+}
+</style>
+<meta charset='utf-8' />
+<script
+	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
 
-	<script>
-		//fullcalendar 불러오기
-		document.addEventListener('DOMContentLoaded', function () {
+<body>
+	<div layout:fragment="myContent">
+		<section id="page-content" class="page-wrapper section">
+			<div class="about-section mb-80">
+				<div class="container">
+					<br>
+					<div>
+						<h4 class="blog-section-title border-left mb-30">출석하기</h4>
+					</div>
+					<div id="isTodayAttend"></div>
+					<div id='calendar' style="width: 550px"></div>
+					<div style="text-align: center; margin-right: 40%;">
+						<button onclick="makeAttend()" id="attendBtn"
+							class="submit-btn-1 mt-30 btn-hover-1"
+							style="display: inline-block;">출석하기</button>
+						<button onclick="goPoint()" id="attendBtn"
+							class="submit-btn-1 mt-30 btn-hover-1">내 포인트 확인하기</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+<script>
+
+	// ==============================================================
+	// ❤️ 변수 선언
+		let date = new Date();
+
+		let year = date.getFullYear();
+		let month = ('0' + (date.getMonth() + 1)).slice(-2);
+		let day = ('0' + date.getDate()).slice(-2);
+
+		var today = year + '-' + month + '-' + day;
+		
+		var attendYn = false;
+		var todayPoint = null;
+		
+	// ==============================================================
+	// ❤️ fullCalendar 그리기
+		document.addEventListener('DOMContentLoaded', function() {
 			let eventList = [];
-			// $.ajax({
-			// 	type: "get",
-			// 	url: "/selectAttendList",
-			// 	success: function (result) {
-
-			// 		let aList = result.aList
-
-			// 		//날짜 확인
-			// 		let date = new Date();
-
-			// 		let year = date.getFullYear();
-			// 		let month = ('0' + (date.getMonth() + 1)).slice(-2);
-			// 		let day = ('0' + date.getDate()).slice(-2);
-
-			// 		let today = year + '-' + month + '-' + day;
-			// 		for (let i in aList) {
-			// 			console.log(i + "번째 도는 중")
-			// 			if (aList[i].attendYmd == today) {
-			// 				$("#attendBtn").attr("disabled", "disabled")
-			// 			}
-			// 			let eventOne = {
-			// 				title: aList[i].point,
-			// 				start: aList[i].attendYmd,
-			// 				end: aList[i].attendYmd,
-			// 				display: 'background',
-			// 				backgroundColor: "#00b9ba",
-			// 				textColor: "black"
-
-			// 			};
-			// 			console.log(evento)
-			// 			eventList.push(eventOne)
-			// 		}
-			// 		for (let i in eventList) {
-			// 			calendar.addEvent(eventList[i])
-			// 		}
-			// 		console.log(eventList)
-
-			// 	}
-			// })
 			makeCal();
-			
+
 		});
- 		function makeCal(){
- 			var calendarEl = document.getElementById('calendar');
+		function makeCal() {
+			var calendarEl = document.getElementById('calendar');
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				height: '500px',
-				initialView: 'dayGridMonth',
+				height : '500px',
+				initialView : 'dayGridMonth',
 				locale : 'ko',
-				events: [
+				events : [
 
-						$.ajax({
-						type : "get",
-						url : "/my/selectAttendList",
-						success : function(result) {
+				$.ajax({
+					type : "get",
+					url : "/my/selectAttendList",
+					success : function(result) {
 
-							let aList = result.aList
+						let aList = result.aList;
 
-							//날짜 확인
-							let date = new Date();
-
-							let year = date.getFullYear();
-							let month = ('0' + (date.getMonth() + 1)).slice(-2);
-							let day = ('0' + date.getDate()).slice(-2);
-
-							let today = year + '-' + month + '-' + day;
-
-							for ( let i in aList) {
-								if (aList[i].attendYmd == today) {
-									$("#attendBtn").attr("disabled", "disabled")
-								}
-								calendar.addEvent({
-									title : aList[i].point,
-									start : aList[i].attendYmd,
-									end : aList[i].attendYmd,
-									display : 'background',
-									backgroundColor : "#00b9ba",
-									textColor : "black"
-								})
-							}
-							//▷ 오늘 출석여부 체크
-							isAttendYn(result);
+						for ( let i in aList) {
+							calendar.addEvent({
+								title : aList[i].point,
+								start : aList[i].attendYmd,
+								end : aList[i].attendYmd,
+								display : 'background',
+								backgroundColor : "#00b9ba",
+								textColor : "black"
+							})
 						}
-					}) 
-				]
+						//▷ 오늘 출석여부 체크
+						isAttendYn(result);
+					}
+				}) ]
 			});
 			calendar.render();
-			
-			
- 		}
- 		function isAttendYn(result){
- 			
- 		}
+
+		}
+		
+	// ==============================================================
+	// ❤️ 오늘 출석 여부 확인
+		function isAttendYn(result) {
+			let findToday = result.aList;
+					console.log(findToday)
+			for (i in findToday) {
+				console.log(i)
+				if (findToday[i].attendYmd == today) {
+					todayPoint = findToday[i].point;
+					attendYn = true;
+					
+				}
+			}
+					
+			if(attendYn){
+				$("#isTodayAttend").children().remove()
+				$("#isTodayAttend").append(
+						`
+						<p>[출석완료🎁] 오늘의 출석 포인트는 <span> ${findToday[i].point}</span>점입니다!<p/>
+						`		
+						)
+				$("#attendBtn").attr("disabled", "disabled").text("출석완료")
+			}else{
+				$("#isTodayAttend").append(
+						`
+						<p>🎁 출석해서 오늘의 랜덤포인트를 확인해보세요<p/>
+						`
+						)
+					}
+		}
+	
+	// ==============================================================
+	// ❤️ 출석하기
 		function makeAttend() {
 			let confirmPlz = confirm("출석하시겠습니까?")
 			if (confirmPlz) {
-				// let date = new Date();
-
-				// let year = date.getFullYear();
-				// let month = ('0' + (date.getMonth() + 1)).slice(-2);
-				// let day = ('0' + date.getDate()).slice(-2);
-
-				// let today = year + '-' + month + '-' + day;
 				insertAttend();
 			}
 		}
 
+	// ==============================================================
+	// ❤️ 출석하기 Ajax
 		function insertAttend() {
 			$.ajax({
-				url: '/my/insertAttend/',
-				type: 'get',
-				dataType: 'json',
-				contentType: 'application/json; charset = utf-8',
-				success: function (aVO) {
+				url : '/my/insertAttend/',
+				type : 'get',
+				dataType : 'json',
+				contentType : 'application/json; charset = utf-8',
+				success : function(aVO) {
 					console.log(aVO);
 					afterInsert(aVO);
 				},
-				error: function (err) {
+				error : function(err) {
 					console.log(err);
 				}
 			})
 		}
 
+	// ==============================================================
+	// ❤️ 출석 후 포인트 알림
 		function afterInsert(aVO) {
 			console.log(aVO)
 			alert("[출석완료] " + aVO.point + " 포인트가 적립되었습니다! 🎉");
-			// $("#calendar").addEvent({
-			// 	title: aVO.point,
-			// 	start: aVO.attendYmd,
-			// 	end: aVO.attendYmd,
-			// 	display: 'background',
-			// 	backgroundColor: "#00b9ba",
-			// 	textColor: "black"
-			// })
 			makeCal();
 		}
-	</script>
-</head>
 
-<body>
-	<div layout:fragment="myContent">
-	<br>
-	<div><h4 class="blog-section-title border-left mb-30">출석하기</h4></div>
-		<div id='calendar' style="width: 550px"></div>
-		<div>
-			<button onclick="makeAttend()" id="attendBtn">출석하기</button>
-		</div>
+	// ==============================================================
+	// ❤️ 마이페이지 > 포인트 확인으로 이동
+		function goPoint(){
+			location="/my/myPoint"
+		}
+	</script>
+		
 	</div>
 </body>
 

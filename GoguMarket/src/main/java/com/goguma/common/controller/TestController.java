@@ -3,6 +3,7 @@ package com.goguma.common.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,7 @@ import com.goguma.common.service.TestService;
 import com.goguma.common.vo.AtchVO;
 import com.goguma.deal.service.DealService;
 import com.goguma.deal.vo.DealVO;
+import com.goguma.mem.mail.EmailService;
 import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
@@ -43,7 +45,29 @@ public class TestController {
 	@Autowired
 	TestService testService;
 
-	@GetMapping("/admin/test")
+	 @Autowired
+	 private EmailService emailService;
+	 
+	// ■ Controllers =======================================
+	@GetMapping("/goguma/emailTest")
+	@ResponseBody
+	public int emailTest(String eml) {
+		
+		int token = 0;
+		String emailTtl = "[고구마켓] 이메일 인증번호 확인 후 회원가입을 완료해주세요 :D";
+		//이메일 전송
+		try {
+			emailService.sendVerificationMail(eml, token, emailTtl);
+            
+        } catch (MessagingException e) {
+            // 이메일 전송 실패 시
+        	System.out.println("[이메일 발송 실패] 에러발생 :( ");
+        }
+		
+		return token;
+	}
+	 
+	 @GetMapping("/admin/test")
 	public String adminTest() {
 		return "myPages/myAct";
 	}
@@ -58,7 +82,6 @@ public class TestController {
 		return "myPages/myAct";
 	}
 
-	// ■ Controllers =======================================
 	// ▷ 첨부파일 삭제 ajax 테스트 -------------------------------
 	@GetMapping("/delteFileTest")
 	public String delteFileTest() {
@@ -85,20 +108,20 @@ public class TestController {
 		return "common/cmInsertForm";
 	}
 
-	@RequestMapping("/testFormSubmit")
-	@ResponseBody
-	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
-		int atchId = atchService.insertFile(files);
-
-		System.out.println("==============================" + vo);
-		System.out.println(vo.getNegoYn() != "Y");
-		if (atchId > 0) {
-			vo.setAtchId(atchId);
-		}
-		dealService.insertDeal(vo);
-
-		return vo;
-	}
+//	@RequestMapping("/testFormSubmit")
+//	@ResponseBody
+//	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
+//		int atchId = atchService.insertFile(files);
+//
+//		System.out.println("==============================" + vo);
+//		System.out.println(vo.getNegoYn() != "Y");
+//		if (atchId > 0) {
+//			vo.setAtchId(atchId);
+//		}
+//		dealService.insertDeal(vo);
+//
+//		return vo;
+//	}
 
 	// ▷ updateForm 테스트 -----------------------------------
 	@GetMapping("/my/updateTest")

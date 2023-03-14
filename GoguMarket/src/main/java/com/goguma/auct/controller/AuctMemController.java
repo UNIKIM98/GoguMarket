@@ -1,10 +1,15 @@
 package com.goguma.auct.controller;
 
+
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.goguma.auct.service.AuctMemService;
@@ -31,5 +36,18 @@ public class AuctMemController {
 		return "redirect:/goguma/auctSelect/"+vo.getAuctNo(); //단건조회페이지로 완료되면 단건조회페이지로~
 	}
 	
+	@GetMapping("/my/bidAuction")
+	private String bidAuction(Model model, HttpServletRequest request) {
+		// 마이페이지 내가 입찰한 경매 이동
+
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
+		
+		model.addAttribute("mybidList",mybidList);
+		return "auction/bidAuction";
+		
+	}
+
 	
 }

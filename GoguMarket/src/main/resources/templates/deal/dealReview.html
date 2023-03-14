@@ -147,34 +147,7 @@
 			var isSubmitOk = true;
 
 			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
-			//✅ input 실행하는 함수
-			// 		function inputFile(e) {
-			// 			var files = e.target.files;
-			// 			var filesArr = Array.prototype.slice.call(files);
-
-			// 			if (fileCount + filesArr.length > totalCount) {
-			// 				alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
-			// 				return;
-			// 			} else {
-			// 				fileCount = fileCount + filesArr.length;
-			// 			}
-
-			// 			filesArr.forEach(function(f) {
-			// 				var reader = new FileReader();
-			// 				reader.onload = function(e) {
-			// 								inputFileList.push(f);
-			// 								$('#uploadFileList').append(
-			// 															`<img style=${img_style} src=${e.target.result}
-			// 																   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
-			// 															)
-			// 								fileNum++;
-			// 							};
-			// 				reader.readAsDataURL(f);
-			// 			});
-			// 			$("#files").val("");
-			// 		}
-
-			//===============
+			
 			function submitForm() {
 
 				$('#pstSe').val("DE"); // 중고거래 분류로 늘 들어가도록

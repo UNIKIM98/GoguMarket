@@ -107,7 +107,7 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="tab-pane active pt-30" id="order-complete">
-							<a class="button extra-small mb-20" href="/chat/test.do"><span>1/n정산하기
+							<a class="button extra-small mb-20" onclick="chatTest()"><span>1/n정산하기
 							</span></a> <a class="button extra-small mb-20" onclick="rsvtModify()"
 								style="cursor: pointer;"><span>예약변경신청</span></a> <a
 								class="button extra-small mb-20" href="#"><span>예약취소하기</span>
@@ -161,7 +161,7 @@
 		
 		//세션에 담긴 정보 변수에 담아주기
 		/*<![CDATA[*/
-			let userId = /*[[ ${session.userId} ]]*/
+			var userId = /*[[ ${session.userId} ]]*/
 			let userNm = /*[[ ${session.userNm} ]]*/
 			let nickNm = /*[[ ${session.nickNm} ]]*/
 			let mblTelno = /*[[ ${session.mblTelno} ]]*/
@@ -264,7 +264,10 @@
 		})
 			
 		}
-		
+		function chatTest(){
+			
+			window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
+		}
 
 	</script>
 

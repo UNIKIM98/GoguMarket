@@ -41,106 +41,86 @@
          <version>2.3.0</version>
       </dependency>
 
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-devtools</artifactId>
-         <scope>runtime</scope>
-         <optional>true</optional>
-      </dependency>
-      <dependency>
-         <groupId>com.oracle.database.jdbc</groupId>
-         <artifactId>ojdbc8</artifactId>
-         <scope>runtime</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.projectlombok</groupId>
-         <artifactId>lombok</artifactId>
-         <optional>true</optional>
-      </dependency>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-test</artifactId>
-         <scope>test</scope>
-         <!-- ================= 시큐리티 ================= -->
-      </dependency>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-security</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.thymeleaf.extras</groupId>
-         <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.springframework.security</groupId>
-         <artifactId>spring-security-test</artifactId>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.bgee.log4jdbc-log4j2</groupId>
-         <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
-         <version>1.16</version>
-      </dependency>
-      <!-- ================= 시큐리티 ================= -->
-      <!-- ================= 웹소켓 ================= -->
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-websocket</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.webjars</groupId>
-         <artifactId>webjars-locator-core</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.webjars</groupId>
-         <artifactId>sockjs-client</artifactId>
-         <version>1.0.2</version>
-      </dependency>
-      <dependency>
-         <groupId>org.webjars</groupId>
-         <artifactId>stomp-websocket</artifactId>
-         <version>2.3.3</version>
-      </dependency>
-      <dependency>
-         <groupId>org.webjars</groupId>
-         <artifactId>bootstrap</artifactId>
-         <version>3.3.7</version>
-      </dependency>
-      <dependency>
-         <groupId>org.webjars</groupId>
-         <artifactId>jquery</artifactId>
-         <version>3.1.1-1</version>
-      </dependency>
-      <!-- ================= 웹소켓 ================= -->
-      <!-- ================= 소셜로그인 ================= -->
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-security</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-oauth2-client</artifactId>
-      </dependency>
-      <!-- ================= 소셜로그인 ================= -->
-      <!-- ================= 메일링 ================= -->
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-mail</artifactId>
-      </dependency>
-      <!-- <dependency> -->
-      <!-- <groupId>javax.mail</groupId> -->
-      <!-- <artifactId>javax.mail-api</artifactId> -->
-      <!-- <version>1.5.5</version> -->
-      <!-- </dependency> -->
 
-      <!-- <dependency> -->
-      <!-- <groupId>javax.mail</groupId> -->
-      <!-- <artifactId>mail</artifactId> -->
-      <!-- <version>1.4.7</version> -->
-      <!-- </dependency> -->
-
-   </dependencies>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<!-- ================= ❤️ 시큐리티 ================= -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		<!-- ================= 웹소켓 ================= -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>sockjs-client</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>stomp-websocket</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.1.1-1</version>
+		</dependency>
+		<!-- ================= ❤️ 메일링 ================= -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+	</dependencies>
    <build>
       <plugins>
          <plugin>

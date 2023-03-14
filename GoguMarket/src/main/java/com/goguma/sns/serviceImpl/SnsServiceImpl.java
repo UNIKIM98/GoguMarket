@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goguma.common.vo.AtchVO;
 import com.goguma.sns.mapper.SnsMapper;
 import com.goguma.sns.service.SnsService;
 import com.goguma.sns.vo.SnsVO;
@@ -12,7 +13,24 @@ import com.goguma.sns.vo.SnsVO;
 @Service
 public class SnsServiceImpl implements SnsService {
 
+
+
 	@Autowired SnsMapper map;
+	
+	
+	
+	@Override
+	public List<AtchVO> selectSnsAtch(int snsNo) {
+		// TODO Auto-generated method stub
+		return map.selectSnsAtch(snsNo);
+	}
+
+
+	@Override
+	public SnsVO selectPerSns(String userId) {
+		// TODO Auto-generated method stub
+		return map.selectPerSns(userId);
+	}
 	
 	
 	@Override

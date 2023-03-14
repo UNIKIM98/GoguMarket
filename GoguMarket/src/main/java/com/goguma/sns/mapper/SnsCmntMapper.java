@@ -18,6 +18,6 @@ public interface SnsCmntMapper {
 	public int updateCmnt(SnsCmntVO vo);
 
 	//  답글 삭제
-	public int deleteRreply(int cmntNo);
+	public int deleteRreply(SnsCmntVO vo);
 
 }

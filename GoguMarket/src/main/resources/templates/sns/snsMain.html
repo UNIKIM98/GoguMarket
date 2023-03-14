@@ -46,48 +46,53 @@ textarea {
 										<div class="row">
 											<div class="col-lg-8 offset-lg-2">
 												<div class="newsletter">
+
 													<div class="newsletter-info text-center">
 														<h2 class="newsletter-title">My TOWN</h2>
 														<p>Introduce me to your town.</p>
-													</div>
-													<div class="subcribe clearfix">
-														<form action="#">
-															<input type="text" name="email"
-																placeholder="Enter your town here...${session.userId}" />
-															<button class="submit-btn-2 btn-hover-2" type="submit">subcribe</button>
-														</form>
-													</div>
-												</div>
-												<div class="newsletter-info text-center">
-													<ul class="pl-120">
-														<a href="#"><li class="pl-30">#채은</li></a>
-														<a href="#"><li class="pl-30">#지영</li></a>
-														<a href="#"><li class="pl-30">#예슬</li></a>
-														<a href="#"><li class="pl-30">#효근</li></a>
-														<a href="#"><li class="pl-30">#재엽</li></a>
 
-													</ul>
+													</div>
 
+													<div class="newsletter-info text-center">
+														<div class="searchForm mb-30" style="text-align: center">
+															<form id="searchForm" action="#">
+																<select class="selectpicker mb-30">
+																	<option>전체</option>
+																</select> <br>
+																<div class="subcribe clearfix">
+
+																	<input type="text" name="email"
+																		placeholder="Enter your town here..."
+																		style="width: 80%" />
+
+																	<button class="submit-btn-2 btn-hover-2" type="submit">subcribe</button>
+																</div>
+															</form>
+														</div>
+													</div>
 												</div>
 											</div>
+
 										</div>
 									</div>
 								</div>
 							</div>
-							<form>
-								<div class="by-brand-product">
-									<div class="active-by-brand slick-arrow-2" id="list"></div>
-								</div>
-							</form>
 						</div>
+						<form>
+							<div class="by-brand-product">
+								<div class="active-by-brand slick-arrow-2" id="list"></div>
+							</div>
+						</form>
 					</div>
 				</div>
-				<div th:if="${userId != null}"></div>
+			</div>
+			<div th:if="${session.userId != null}">
 				<br> <a class="button medium button-black mb-30 f-right"
 					href="#" style="margin-right: 10%;" id="myBtn" onclick=""><span>글쓰기</span>
 				</a>
-
 			</div>
+
+
 
 
 		</section>
@@ -114,17 +119,18 @@ textarea {
 										multiple="multiple">
 								</div>
 							</div>
-
-							<!-- userId -->
-							<input th:value="${session.userId}" type="hidden" name="userId"
-								id="userId">
+							<div th:if="${session.userId != null}">
+								<!-- userId -->
+								<input th:value="${session.userId}" type="hidden" name="userId"
+									id="userId">
+							</div>
 							<!-- 게시물 -->
 							<textarea name="snsCn" id="snsCn" class="form-control mb-15"
 								placeholder="게시글 내용 300자 이하."></textarea>
 							<input type="text" name="hash" id="hash">
 							<!--  -->
 							<input type="hidden" name="area" id="area"
-								th:value="${session.area}">
+								th:value="${session.dealArea}">
 						</div>
 
 
@@ -133,7 +139,8 @@ textarea {
 
 				</div>
 				<div class="modal-footer" style="background-color: #000000;">
-					&nbsp;</div></div>
+					&nbsp;</div>
+			</div>
 
 		</div>
 		<!-- writeForm -->
@@ -165,21 +172,20 @@ textarea {
 				<div class="Sns-commet">
 					<div class="card">
 						<div class="card-header bg-light">
-							<i class="fa fa-comment fa"></i> REPLY
+							<i class="fa fa-comment fa"></i> REPLY <input type="hidden"
+								id="userId" name="userId" th:value="${param.userId}">
 						</div>
 
 						<th:block th:if="${session.userId != null}">
 							<!-- 아이디 check-->
 							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
 
-							<div class="Sns-reply" id="Sns-reply">
-							
-							</div>
+							<div class="Sns-reply" id="Sns-reply"></div>
 						</th:block>
 						<th:block th:unless="${session.userId != null}">
 
 							<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
-						
+
 						</th:block>
 						<!--댓글 끝-->
 					</div>
@@ -192,7 +198,7 @@ textarea {
 			</div>
 
 		</div>
-		<div id="loadDiv" style="display:none"></div>
+		<div id="loadDiv" style="display: none"></div>
 		<script th:inline="javascript">
 		$.ajax({
 			url : "/selectSnsList", // 데이터를 가져올 경로 설정
@@ -221,16 +227,16 @@ textarea {
 				})
 			</script>
 
-			
+
 	</article>
 
-	
-	
 
-	
 
-	
-	
+
+
+
+
+
 
 
 

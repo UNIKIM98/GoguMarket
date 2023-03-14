@@ -33,6 +33,18 @@
 		VALUES (#{auctMemNo}, #{userId}, #{auctNo}, CURRENT_DATE, #{nowPrc},
 		#{pntCnt})
 	</insert>
-	
-	
+	<!-- 내가 입찰한 내역 -->
+	<select id="bidAuction"
+			parameterType="String"
+			resultType="com.goguma.auct.vo.AuctMemVO">
+		SELECT auct_mem_no, user_id, auct_no, auct_ymd, now_prc
+		FROM (
+		        SELECT auct_mem_no, user_id, auct_no, auct_ymd, now_prc, 
+		        FIRST_VALUE(now_prc) OVER (PARTITION BY auct_no ORDER BY now_prc DESC) AS max_now_prc
+		        FROM auct_mem
+		        WHERE user_id = #{userId}
+		    )
+		WHERE now_prc = max_now_prc
+		ORDER BY auct_no DESC
+	</select>
 </mapper>

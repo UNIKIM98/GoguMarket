@@ -72,4 +72,17 @@ public class MemServiceImpl implements MemService {
 		return mapper.updateUser(mVO);
 	}
 
+	@Override
+	public int isEmlCheck(String eml) {
+		// TODO Auto-generated method stub
+		return mapper.isEmlCheck(eml);
+	}
+
+	@Override
+	public int updateUserPw(MemVO mVO) {
+		// TODO Auto-generated method stub
+		return mapper.updateUserPw(mVO);
+	}
+
+
 }

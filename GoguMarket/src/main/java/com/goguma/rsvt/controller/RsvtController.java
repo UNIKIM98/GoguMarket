@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goguma.biz.service.BizMemService;
 import com.goguma.common.service.CommonCodeService;
-import com.goguma.common.vo.ChatVO;
-import com.goguma.common.vo.Greeting;
-import com.goguma.common.vo.HelloMessage;
 import com.goguma.mem.service.MemService;
-import com.goguma.mem.vo.MemVO;
-import com.goguma.rsvt.mapper.RsvtMapper;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.RsvtMenuVO;
@@ -114,7 +107,7 @@ public class RsvtController {
 
 	}
 	
-	//예약상세내역 메뉴부분 ajax
+	//예약상세내역 메뉴부분 ajax(mybook01, 02에서 사용)
 	@GetMapping("/my/myRsvtAjax")
 	@ResponseBody
 	public List<Map> myRsvtAjax(RsvtVO vo) {
@@ -137,12 +130,12 @@ public class RsvtController {
 	//예약수정
 	@GetMapping("/my/mybook02/{rsvtNo}")
 	public String mybook02(@PathVariable int rsvtNo, Model model) {
-		System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
+		//System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
 		
 		model.addAttribute("rsvt",rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
-		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
-		model.addAttribute("code", codeService.codeList("007"));
-		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
+//		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
+//		model.addAttribute("code", codeService.codeList("007"));
+//		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		
 		return "myPages/mybook02";
 	}

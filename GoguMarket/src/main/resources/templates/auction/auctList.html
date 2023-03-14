@@ -55,7 +55,7 @@
 													th:if="${auct.auctNo == nowPrc.auctNo}">
 													<div class="product-img">
 														<img th:src="${auct.atchNm}" alt=""
-															style="width: 100%; height: 100%;" />
+															style="width: 268px; height: 280px;" />
 													</div>
 													<div class="product-info">
 
@@ -72,7 +72,7 @@
 
 															<ul class="action-button">
 																<li>
-																	<h6>현재 입찰자 : ㅇㅇ명</h6>
+<!-- 																	<h6 th:if="">현재 입찰자 : ㅇㅇ명</h6> -->
 																</li>
 															</ul>
 														</div>
@@ -115,19 +115,16 @@
 											<!-- product-item start -->
 
 											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts==1}">
-											[[${auct.auctNo}]]
-												<a
-													th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
-													<div class="product-item" th:each="nowPrc : ${nowPrcs}"
-														th:if="${auct.auctNo == nowPrc.auctNo}">
-														<div class="product-img">
-															<img src="img/product/7.jpg" alt="" />
-														</div>
+												<a th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
+													<div class="product-item" th:if="${auct.auctNo == nowPrc.auctNo}" th:each="nowPrc : ${nowPrcs}" >
+														<div class="product-img" >
+														<img th:src="${auct.atchNm}" alt="" style="width: 268px; height: 280px;"
+															  />
+													</div>
 														<div class="product-info">
 															<h6 class="product-title">
 																<a th:text="${auct.auctTtl}"></a>
 															</h6>
-
 															<h3 class="pro-price" th:if="${nowPrc.nowPrc != 0}"
 																th:text="현재가 + ${auct.quickPrc}"></h3>
 															<h3 class="pro-price" th:if="${nowPrc.nowPrc == 0}">입찰자가 없습니다</h3>
