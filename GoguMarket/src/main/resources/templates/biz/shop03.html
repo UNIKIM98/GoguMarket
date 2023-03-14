@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{biz/slide/slide}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>가게 소식</title>
+	<script src="js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+	<div layout:fragment="Bizcontent">
+		<div class="by-brand-section mb-80">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="section-title text-start mb-40">
+							<h2 class="uppercase mt-15">우리 가게 소식</h2>
+							<h6>우리 가게에 무슨일이 있을까요?</h6>
+							<hr>
+							[[${session.bizNo}]]
+							<div class="newsletter-section gray-bg pt-60 pb-80 mt-80">
+								<div class="container">
+									<div class="row">
+										<div class="col-lg-8 offset-lg-2">
+											<div class="newsletter">
+												<div class="newsletter-info text-center">
+													<h2 class="newsletter-title">가게이름</h2>
+													<p>가게 설명</p>
+												</div>
+												<div class="newsletter-info text-center">
+													<div class="searchForm mb-30" style="text-align: center">
+														<form id="searchForm" action="#">
+															<select class="selectpicker mb-30">
+																<option>전체</option>
+															</select> <br>
+															<div class="subcribe clearfix">
+																<input type="text" name="email"
+																	placeholder="Enter your town here..."
+																	style="width: 80%" />
+																<button class="submit-btn-2 btn-hover-2"
+																	type="submit">subcribe</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						본문내용 자리 시작
+						<!-- 본문내용 자리 시작 -->
+						<div>
+							<div class="by-brand-product">
+								<div class="active-by-brand slick-arrow-2" id="news"></div>
+							</div>
+						<table>
+							<tbody>
+								<tr onclick='location.href="#"'>
+									<th><label for="atchId">Today Posting</label></th>
+									<td>
+										<div>
+											사진영역
+											<h5 class="sin-pro-action f-right">
+												내용영역
+											</h5>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				
+				
+				
+			})
+			
+			function selectBizNewsAjax (){
+				
+				$.ajax({
+					url:"/biz/selectBizNewsAjax",
+					type:'get',
+					dataType : 'json',
+					contentType : 'application/json; charset = utf-8',
+					success:function(result){
+						console.log(result);
+						for(news of result){
+							$("#news").append(`	<div class="brand-item">
+	                            				<div class="single-brand-product"
+													id="clickNews"
+													onclick="bizNewsModal(${sns.snsNo})">
+	                            						${news.ntcTtl} / ${news.ntcCn}
+	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+	                         							<img src="${news.atchPath}" alt=""></a>
+	                         							조회수&nbsp👀:${news.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${news.ntcYmd}
+												</div>
+												</div>`)
+						}
+					},
+					error:function(err){
+						console.log(err);
+					}
+				})
+			}
+			
+			
+		</script>
+	</div>
+</body>
+
+</html>
