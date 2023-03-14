@@ -68,6 +68,8 @@ public class DealController {
 	@Autowired
 	MemService memService;
 	
+
+	
 	// ===========================
 	// ▷ 중고거래 마이페이지
 	@RequestMapping("/my/myDeal")
@@ -77,19 +79,20 @@ public class DealController {
 		
 		model.addAttribute("dealList", dealService.selectNtslDeal(userId)); // 판매중+완료 내역
 		model.addAttribute("buyList", dealService.selectPrchsDeal(userId)); // 구매내역
-		
+		model.addAttribute("point",pService.selectPointListForUser(userId));// point 정보 불러와야돼서 모델링 ㄱ
 		
 		return "myPages/myDeal";
 	}
 
 	@RequestMapping("/my/myDealSubmit") // 게시글업데이트..
 	@ResponseBody
-	public String mydeal(DealVO dVO,String userId, HttpServletRequest request) {
+	public String mydeal(Model model,DealVO dVO, PointVO pVO,String userId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
 		
-		
 		dealService.updateYmd(dVO, userId); // pointVO에 userId담아줄라공~
+		
+	
 		return "myPages/myDeal";
 	}
 	
