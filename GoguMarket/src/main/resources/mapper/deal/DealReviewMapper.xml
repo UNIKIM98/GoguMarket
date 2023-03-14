@@ -37,6 +37,28 @@
 						   #{dlNo})
 	</insert>
 	
-
-	
+	<!-- 받은 리뷰  -->
+	<select id = "selectGetRv"
+			parameterType="com.goguma.deal.vo.DealReviewVO">
+		select distinct r.*
+		from rv r join deal d
+		on r.dl_no = d.dl_no
+		where user_id = #{userId};
+	</select>	
+	<!-- 보낸 리뷰 -->
+	<select id = "selectSendRv"
+			parameterType="com.goguma.deal.vo.DealReviewVO">
+		select distinct r.*
+		from rv r join deal d
+		on r.user_id = d.prchs_id
+		where user_id = #{userId};
+	</select>
+	<!-- 안쓴 리뷰 -->
+	<select id = "selectNotSendRv"
+			parameterType="com.goguma.deal.vo.DealReviewVO">
+		select distinct d.*
+		from rv r join deal d
+		on d.dl_no != r.dl_no
+		where prchs_id = #{userId};
+	</select>
 </mapper>

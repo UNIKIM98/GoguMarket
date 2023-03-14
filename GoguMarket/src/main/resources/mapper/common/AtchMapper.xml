@@ -12,7 +12,7 @@
 	<insert id="insertFile"
 		parameterType="com.goguma.common.vo.AtchVO">
 		INSERT INTO ATCH VALUES(#{atchId}, ATCH_SEQ.NEXTVAL,
-						SYSDATE, #{atchNm}, #{orgnlNm}, #{extn},
+						CURRENT_DATE, #{atchNm}, #{orgnlNm}, #{extn},
 						#{atchSize}, #{atchPath})
 	</insert>
 

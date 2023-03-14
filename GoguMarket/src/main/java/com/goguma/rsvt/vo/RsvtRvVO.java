@@ -18,5 +18,12 @@ public class RsvtRvVO {		//예약후기(가게이용후기)테이블
 	String rvYn;		//숨김여부(신고처리)
 	
 	private String nickNm;	//닉네임
+	private String mblTelno;
 	int rownum;
+	private String bizNo;
+	private String bgngTm;
+	private String endTm;
+	private String openTime;
+	private String closeTime;
+	private String bizNm;
 }

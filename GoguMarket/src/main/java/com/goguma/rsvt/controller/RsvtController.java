@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goguma.biz.service.BizMemService;
@@ -23,6 +25,7 @@ import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
+import com.goguma.rsvt.vo.RsvtUpdateVO;
 import com.goguma.rsvt.vo.RsvtVO;
 
 @Controller
@@ -147,7 +150,7 @@ public class RsvtController {
 	}
 
 	// 예약페이지 form submit - js gotoOrder()함수에서 ajax 호출한거 받아옴
-	@PostMapping("/orderFormSubmit")
+	@PostMapping("/my/orderFormSubmit")
 	@ResponseBody
 	public int orderFormSubmit(RsvtVO rsvtInfo, RsvtMenuVO menuInfo, HttpServletRequest request) {
 		// 세션에서 로그인한 아이디 불러오기
@@ -192,7 +195,7 @@ public class RsvtController {
 	}
 
 	// 결제정보 저장 - js saveRsvtPay()함수에서 ajax 호출한거 받아옴
-	@PostMapping("/insertRsvtPayment")
+	@PostMapping("/my/insertRsvtPayment")
 	@ResponseBody
 	public int insertRsvtPayment(@RequestBody RsvtPaymentVO payVo) {
 		/*
@@ -210,8 +213,17 @@ public class RsvtController {
 		return rsvtNo;
 
 	}
+	
+	@PostMapping("/my/requestModifyAjax")
+	@ResponseBody
+	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo) {
+//		System.out.println("수정예약번호===="+rsvtNo);
+		
+		rsvtUpdateVo.setAprvYn("N");
+		System.out.println(rsvtUpdateVo);
+		return 0;
+	}
 
 	
-	
-
 }
+

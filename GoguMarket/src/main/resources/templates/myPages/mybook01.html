@@ -233,13 +233,13 @@
 			data: {rsvtNo},
 
 			success: function(list){
-				console.log("밑에꺼: "+list.mblTelno + list.nickNm)
+				console.log("밑에꺼: "+list)
 				$('#rsvtInfo').empty()
 				$('#rsvtInfo').append(
 				`<tr>
 					<th class="td-title-1">예약일자</th>
 					<td class="td-title-1">${list.rsvtYmd}</td>
-					<td class="td-title-1">${list.rsvtTm}</td>
+					<td class="td-title-1">${list.rsvtTime}</td>
 				</tr>
 				<tr>
 					<th class="td-title-1">예약인원</th>

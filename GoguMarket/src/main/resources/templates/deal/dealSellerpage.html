@@ -41,6 +41,15 @@
 
 <body>
 	<div layout:fragment="content">
+	
+	<script>
+		// 함수로받아서
+		function gopage(page) {
+			frmSearch.page.value = page;
+			frmSearch.submit();
+		}
+	
+	</script>
 		<div class="wrapper">
 
 		<!-- 
@@ -54,18 +63,18 @@
 					<div class="container">
 						<div class="row">
 							  <div class="col-lg-12">
-								<div class="section-title text-start mb-40">
-									<div class="profile">
-										<div class="leftProfile">
-											<img th:src="${dealList[0].PROFILE}" alt=""
-												style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;">
-										</div>
-										<div class="rightProfile">
-											<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2>
-											<h6 th:text="${dealList[0].ADDR}">주소</h6>
-										</div>
-									</div>
-								</div>  
+<!-- 								<div class="section-title text-start mb-40"> -->
+<!-- 									<div class="profile"> -->
+<!-- 										<div class="leftProfile"> -->
+<!-- 											<img th:src="${dealList[0].PROFILE}" alt="" -->
+<!-- 												style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;"> -->
+<!-- 										</div> -->
+<!-- 										<div class="rightProfile"> -->
+<!-- 											<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2> -->
+<!-- 											<h6 th:text="${dealList[0].ADDR}">주소</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div>   -->
 								<div class="single-product-tab reviews-tab">
 									<ul class="nav mb-20">
 										<li><a class="active" href="#description" data-bs-toggle="tab">판매 물품</a></li>
@@ -105,33 +114,40 @@
 										</div>
 										<div role="tabpanel" class="tab-pane" id="reviews">
 											<p>거래 후기 리스트가 들어갈 자리입니다</p>
-											reviews-tab-desc
 											<div class="reviews-tab-desc">
-												리뷰1
-												<div class="media mt-30" th:each="r: ${review}">
-													<div class="media-left">
-														<a href="#"><img class="media-object" src="img/author/1.jpg"
-																alt="#"></a>
-													</div>
-													<div class="media-body">
-														<div class="clearfix">
-															<div class="name-commenter f-left">
-																<h6 class="media-heading" th:text="${r.userId}">구매자아이디자리
-																</h6>
-																<p class="mb-10">2일전</p>
-															</div>
-															&nbsp;&nbsp;&nbsp;
-															<div class="f-right">
-																<ul class="reply-delate">
-																	<li><a href="#">수정</a></li>
-																	<li>/</li>
-																	<li><a href="#">삭제</a></li>
-																</ul>
-															</div>
-														</div>
-														<p class="mb-0" th:text="${r.rvCn}">구매후기내용</p>
-													</div>
+												 <!-- 페이지번호관련  -->
+												<div align="center">
+													<a
+														th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+														th:href="|javascript:gopage(${num})|"
+														th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
 												</div>
+												<form name="frmSearch" align="center">
+													<div class="media mt-30" th:each="r: ${review}">
+														<div class="media-left">
+															<a href="#"><img class="media-object" src="img/author/1.jpg"
+																	alt="#"></a>
+														</div>
+														<div class="media-body">
+															<div class="clearfix">
+																<div class="name-commenter f-left">
+																	<h6 class="media-heading" th:text="${r.userId}">구매자아이디자리
+																	</h6>
+																	<p class="mb-10">2일전</p>
+																</div>
+																&nbsp;&nbsp;&nbsp;
+																<div class="f-right">
+																	<ul class="reply-delate">
+																		<li><a href="#">수정</a></li>
+																		<li>/</li>
+																		<li><a href="#">삭제</a></li>
+																	</ul>
+																</div>
+															</div>
+															<p class="mb-0" th:text="${r.rvCn}">구매후기내용</p>
+														</div>
+													</div>
+												</form>
 												<hr>
 
 											</div>

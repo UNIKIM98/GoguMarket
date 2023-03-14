@@ -7,6 +7,8 @@
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>중고거래상품 상세페이지1</title>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,19 +32,15 @@
 <body class="wide-layout">
 	<div layout:fragment="content">
 		<script th:inline="javascript">
-			//판매자정보페이지로가게하기
-			/* $(function() {
-				$(".btnInfo").on("click", function() {
-					
-					// let url= dlno 위치; $(".btnInfo").closest("tr").children().first().text()
-					let url = $(".single-product-info h3 a").text();
-					//location.href="dealdetail/"+url
-					location.href = `dealSellerpage/${url}`
-					console.log(url); // 어디를 찍든 같은 dlno를 부를수 있도록 
-				})
-			})
-			 */
-			 
+		
+	
+		console.log("cccc")
+		/*<![CDATA[*/	
+			var prc = /*[[ ${prc} ]]*/
+		console.log(prc);
+		/*]]*/
+    
+
 			
 			// 판매자정보더보기 누르면 가는곳
 			function seller() {
@@ -67,50 +65,16 @@
 				location.href = `/my/deleteDeal/${dlno}`
 
 			}
+			
+			function gopage(page) {
+				frmSearch.page.value = page;
+				//frmSearch.submit();
+			}
 		</script>
-
-		<!-- <table class="table" border="1">
-			<thead>
-				<tr>
-					<th>글번호</th>
-					<th>판매자</th>
-					<th>구매자</th>
-					<th>등록일</th>
-					<th>가격</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="deal : ${deal}"
-					onmouseover='this.style.background="#fcecae";'
-					onmouseleave='this.style.background="#FFFFFF";'>
-					<td th:text="${deal.dlNo}"></td>
-					<td th:text="${deal.ntslId}"></td>
-					<td th:text="${deal.prchsId}"></td>
-					<td th:text="${#dates.format(deal.dlYmd, 'yyyy년mm월dd일')}"></td>
-					<td th:text="${deal.dlPrc}"></td>
-				</tr>
-			</tbody>
-		</table>
-
-		<table class="table" border="1">
-			<thead>
-				<tr>
-					<th>상품</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="l : ${list}">
-					<td th:text="${l.dlTtl}"></td>
-				</tr>
-			</tbody>
-		</table> -->
 
 		<hr>
 		<!-- Body main wrapper start -->
 		<div class="wrapper">
-			<!-- Start page content -->
-			<section id="page-content" class="page-wrapper section">
-
 				<!-- SHOP SECTION START -->
 				<div class="shop-section mb-80">
 					<div class="container">
@@ -172,10 +136,10 @@
 														data-bs-toggle="tab">상품설명</a></li>
 													<li><a href="#information" data-bs-toggle="tab">시세</a></li>
 													<li><a href="#map" data-bs-toggle="tab">추천거리</a></li>
-													<li><a href="#reviews" data-bs-toggle="tab">판매자의
-															다른 판매상품</a></li>
-													<!-- <li ><a href="#relation" data-bs-toggle="tab">유사한 상품</a></li> -->
+													<li><a href="#reviews" data-bs-toggle="tab">
+															판매자의 다른 판매상품</a></li>
 												</ul>
+												
 												<div class="tab-content" th:each="deal : ${deal}">
 													<div role="tabpanel" class="tab-pane active show"
 														id="description">
@@ -184,16 +148,29 @@
 													<div role="tabpanel" class="tab-pane" id="information">
 														<p>시세조회가 들어갈 그래프 자리입니다</p>
 														<p>조회결과가 없다면 '조회 결과가 없습니다' 메세지를 호출합니다</p>
+														<div style="width:100%;height:350px;">
+															<!--차트가 그려질 부분-->
+															<canvas id="myChart"></canvas>
+														</div>
 														
 													</div>
 													<div role="tabpanel" class="tab-pane" id="map" style="width:100%;height:350px;">
 													<p>추천지도 선으로 연결 기능</p>
 														
 													</div>
+													
+													<!-- 판매자의 다른 판매상품-->
 													<div role="tabpanel" class="tab-pane" id="reviews">
-
 														<div class="reviews-tab-desc">
-															<!-- 판매자의 다른 판매상품-->
+														<input type="hidden" name="page" value="1">
+<!-- 														페이지번호관련  -->
+														<div align="center">
+															<a
+																th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+																th:href="|javascript:gopage(${num})|"
+																th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
+														</div>
+														<form name="frmSearch" align="center">											
 															<div class="media mt-30" th:each="l : ${list}">
 																<div class="media-left">
 																	<a href="#"><img class="media-object"
@@ -217,15 +194,13 @@
 																			</ul>
 																		</div>
 																	</div>
-																	<p class="mb-0" th:text="${l.dlCn}">상품 상세 설명 넣기 +
-																		말줄임표 이용</p>
+																	<p class="mb-0" th:text="${l.dlCn}">상품 상세 설명 넣기</p>
 																</div>
 															</div>
+															</form>
 														</div>
 													</div>
-													<div role="tabpanel" class="tab-pane" id="relation">
-														<!-- *** 유사상품 자리 : 메모장에 적혀있뜸!!-->
-													</div>
+													
 												</div>
 											</div>
 										</div>
@@ -276,181 +251,75 @@
 						<!-- single-product-area end -->
 					</div>
 				</div>
-		</div>
-	</div>
-	<!-- SHOP SECTION END -->
-	</section>
-	<!-- End page content -->
-
-	<!-- START QUICKVIEW PRODUCT -->
-	<div id="quickview-wrapper">
-		<!-- Modal -->
-		<div class="modal fade" id="productModal" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-bs-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="modal-product clearfix">
-							<div class="product-images">
-								<div class="main-image images">
-									<img alt="" src="">
-								</div>
-							</div>
-							<!-- .product-images -->
-
-							<div class="product-info">
-								<h1>Aenean eu tristique</h1>
-								<div class="price-box-3">
-									<div class="s-price-box">
-										<span class="new-price">£160.00</span> <span class="old-price">£190.00</span>
-									</div>
-								</div>
-								<a href="single-product-left-sidebar.html" class="see-all">See
-									all features</a>
-								<div class="quick-add-to-cart">
-									<form method="post" class="cart">
-										<div class="numbers-row">
-											<input type="number" id="french-hens" value="3" min="1">
-										</div>
-										<button class="single_add_to_cart_button" type="submit">Add
-											to cart</button>
-									</form>
-								</div>
-								<div class="quick-desc">Lorem ipsum dolor sit amet,
-									consectetur adipiscing elit. Nam fringilla augue nec est
-									tristique auctor. Donec non est at libero.</div>
-								<div class="social-sharing">
-									<div class="widget widget_socialsharing_widget">
-										<h3 class="widget-title-modal">Share this product</h3>
-										<ul class="social-icons clearfix">
-											<li><a class="facebook" href="#" title="Facebook"> <i
-													class="zmdi zmdi-facebook"></i>
-											</a></li>
-											<li><a class="google-plus" href="#" title="Google +">
-													<i class="zmdi zmdi-google-plus"></i>
-											</a></li>
-											<li><a class="twitter" href="#" title="Twitter"> <i
-													class="zmdi zmdi-twitter"></i>
-											</a></li>
-											<li><a class="pinterest" href="#" title="Pinterest">
-													<i class="zmdi zmdi-pinterest"></i>
-											</a></li>
-											<li><a class="rss" href="#" title="RSS"> <i
-													class="zmdi zmdi-rss"></i>
-											</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<!-- .product-info -->
-						</div>
-						<!-- .modal-product -->
-					</div>
-					<!-- .modal-body -->
-				</div>
-				<!-- .modal-content -->
 			</div>
-			<!-- .modal-dialog -->
-		</div>
-		<!-- END Modal -->
-	</div>
-	<!-- END QUICKVIEW PRODUCT -->
-
-	<!--style-customizer start -->
-	<div class="style-customizer closed">
-		<div class="buy-button">
-			<a href="index.html" class="customizer-logo"><img
-				src="images/logo/logo.png" alt="Theme Logo"></a> <a class="opener"
-				href="#"><i class="zmdi zmdi-settings"></i></a>
-		</div>
-		<div class="clearfix content-chooser">
-			<h3>Layout Options</h3>
-			<p>Which layout option you want to use?</p>
-			<ul class="layoutstyle clearfix">
-				<li class="wide-layout selected" data-style="wide" title="wide">
-					Wide</li>
-				<li class="boxed-layout" data-style="boxed" title="boxed">
-					Boxed</li>
-			</ul>
-			<h3>Color Schemes</h3>
-			<p>Which theme color you want to use? Select from here.</p>
-			<ul class="styleChange clearfix">
-				<li class="skin-default selected" title="skin-default"
-					data-style="skin-default"></li>
-				<li class="skin-green" title="green" data-style="skin-green"></li>
-				<li class="skin-purple" title="purple" data-style="skin-purple"></li>
-				<li class="skin-blue" title="blue" data-style="skin-blue"></li>
-				<li class="skin-cyan" title="cyan" data-style="skin-cyan"></li>
-				<li class="skin-amber" title="amber" data-style="skin-amber"></li>
-				<li class="skin-blue-grey" title="blue-grey"
-					data-style="skin-blue-grey"></li>
-				<li class="skin-teal" title="teal" data-style="skin-teal"></li>
-			</ul>
-			<h3>Background Patterns</h3>
-			<p>Which background pattern you want to use?</p>
-			<ul class="patternChange clearfix">
-				<li class="pattern-1" data-style="pattern-1" title="pattern-1"></li>
-				<li class="pattern-2" data-style="pattern-2" title="pattern-2"></li>
-				<li class="pattern-3" data-style="pattern-3" title="pattern-3"></li>
-				<li class="pattern-4" data-style="pattern-4" title="pattern-4"></li>
-				<li class="pattern-5" data-style="pattern-5" title="pattern-5"></li>
-				<li class="pattern-6" data-style="pattern-6" title="pattern-6"></li>
-				<li class="pattern-7" data-style="pattern-7" title="pattern-7"></li>
-				<li class="pattern-8" data-style="pattern-8" title="pattern-8"></li>
-			</ul>
-			<h3>Background Images</h3>
-			<p>Which background image you want to use?</p>
-			<ul class="patternChange main-bg-change clearfix">
-				<li class="main-bg-1" data-style="main-bg-1" title="Background 1">
-					<img src="images/customizer/bodybg/01.jpg" alt="">
-				</li>
-				<li class="main-bg-2" data-style="main-bg-2" title="Background 2">
-					<img src="images/customizer/bodybg/02.jpg" alt="">
-				</li>
-				<li class="main-bg-3" data-style="main-bg-3" title="Background 3">
-					<img src="images/customizer/bodybg/03.jpg" alt="">
-				</li>
-				<li class="main-bg-4" data-style="main-bg-4" title="Background 4">
-					<img src="images/customizer/bodybg/04.jpg" alt="">
-				</li>
-				<li class="main-bg-5" data-style="main-bg-5" title="Background 5">
-					<img src="images/customizer/bodybg/05.jpg" alt="">
-				</li>
-				<li class="main-bg-6" data-style="main-bg-6" title="Background 6">
-					<img src="images/customizer/bodybg/06.jpg" alt="">
-				</li>
-				<li class="main-bg-7" data-style="main-bg-7" title="Background 7">
-					<img src="images/customizer/bodybg/07.jpg" alt="">
-				</li>
-				<li class="main-bg-8" data-style="main-bg-8" title="Background 8">
-					<img src="images/customizer/bodybg/08.jpg" alt="">
-				</li>
-			</ul>
-			<ul class="resetAll">
-				<li><a class="button button-border button-reset" href="#">Reset
-						All</a></li>
-			</ul>
-		</div>
-	</div>
-	<!--style-customizer end -->
-	</div>
-
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b">
-			 
+		    
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b&libraries=services">
 			 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			     mapOption = { 
 			         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 			         level: 3 // 지도의 확대 레벨
 			     };
 
-			 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+			 // 지도를 표시할 div와  지도 옵션으로 지도를 생성합니다
 			 var map = new kakao.maps.Map(mapContainer, mapOption); 
 	 </script>
+	 <script>
+	 console.log(prc[0].avg+"prc");
+	 
+	 var context = document
+     .getElementById('myChart')
+     .getContext('2d');
+ var myChart = new Chart(context, {
+     type: 'bar', // 차트의 형태
+     data: { // 차트에 들어갈 데이터
+         labels: [
+             //x 축
+             '1월','2월','3월'
+             
+         ],
+         datasets: [
+             { //데이터
+                 label: 'test1', //차트 제목
+                 fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                 data: [
+                	 prc[0].avg, 1, 5
+
+                 ],
+                 backgroundColor: [
+                     //색상
+                     'rgba(255, 99, 132, 0.2)',
+                     'rgba(54, 162, 235, 0.2)',
+                     'rgba(255, 206, 86, 0.2)'
+                 ],
+                 borderColor: [
+                     //경계선 색상
+                     'rgba(255, 99, 132, 1)',
+                     'rgba(54, 162, 235, 1)',
+                     'rgba(255, 206, 86, 1)'
+                    
+                 ],
+                 borderWidth: 1 //경계선 굵기
+             }
+         ]
+     },
+     options: {
+         scales: {
+             yAxes: [
+                 {
+                     ticks: {
+                         beginAtZero: true
+                     }
+                 }
+             ]
+         }
+     }
+ });
+
+	 </script>
+	
+	</div>
+
+
 
 </body>
 

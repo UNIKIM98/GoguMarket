@@ -14,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.goguma.mem.socialLogin.CustomOAuth2UserService;
+
 //import com.goguma.mem.socialLogin.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-//    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 //------------------------------------------------------------------
 
 	private final UsersService usersSrvice;
@@ -59,8 +61,8 @@ public class WebSecurityConfig {
 				.formLogin((form) -> form.loginPage("/goguma/login").loginProcessingUrl("/login_proc")
 						.successHandler(loginSuccessHandler).permitAll())
 
-//				.oauth2Login((oauthLogin) -> oauthLogin.permitAll().successHandler(new KakaoLoginSuccessHandler())
-//						.userInfoEndpoint().userService(customOAuth2UserService))
+				.oauth2Login((oauthLogin) -> oauthLogin.permitAll().successHandler(new KakaoLoginSuccessHandler())
+						.userInfoEndpoint().userService(customOAuth2UserService))
 
 				.logout((logout) -> logout.permitAll().logoutSuccessUrl("/goguma/dealMain").invalidateHttpSession(true))
 				.csrf().disable();

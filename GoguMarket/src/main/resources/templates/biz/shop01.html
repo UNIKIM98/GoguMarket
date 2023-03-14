@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{biz/slide/slide}">
 
 <head>
@@ -33,235 +32,250 @@
 							<div class="userTable">
 								<table style="border-spacing: 10px;   border-collapse: separate;">
 									<tbody>
-
-											
-										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-										<tr>
-											<th><label for="profAtchId">상품사진<span> *</span></label></th> 
-											<td>
-												<div id="uploadProfAtchId">
-													<img src="경로줘야함" style="width: 60px; height: 60px; border-radius: 70%;">
-												</div>
-											</td>
-											<td>
-												<input type="file" id="profAtchId" name="profAtchId">
-											</td>
-										</tr>
-										<!-- ■■■↑ 수정중입니다.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-
-
-
-										<tr>
-											<th><label for="AtchId">가게 프로필사진<span> *</span></label></th>
-											<td>
-												<div id="AtchId">
-													<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%;">
-												</div>
-											</td>
-											<td>
-												<input type="file" id="profile">
-											</td>
-										</tr>
 										<tr>
 											<th><label for="BizNm">가게명<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-														style="width: 70%;">
+													style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
 											<th><label for="userId">아이디</label></th>
 											<td colspan="2"><input type="text" id="userId" name="userId"
-														readonly="readonly"
-														style="width: 70%;"
-														th:value="${session.userId}">
+													readonly="readonly" style="width: 70%;"
+													th:value="${session.userId}">
 											</td>
 										</tr>
 										<tr>
 											<th class="mblTelno"><label for="bizTel">연락처<span>*</span></label></th>
 											<td colspan="2"><input type="text" id="bizTel" name="bizTel"
-														placeholder="-/공백 없이 입력"
-														style="width: 40%; margin-right: 50px;"
-														oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-														<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
+													placeholder="-/공백 없이 입력" style="width: 40%; margin-right: 50px;"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 											</td>
 										</tr>
 										<tr>
 											<th class="mblTelno"><label for="brNo">사업자 번호<span>*</span></label></th>
 											<td colspan="2"><input type="text" id="brNo" name="brNo"
-														placeholder="-/공백 없이 입력"
-														style="width: 40%; margin-right: 50px">
-														<button class="submit-btn-1 btn-hover-1" type="button" id="brNoBtn" onclick="checkBrNo()">인증하기</button>
+													placeholder="-/공백 없이 입력" style="width: 40%; margin-right: 50px">
+												<button class="submit-btn-1 btn-hover-1" type="button" id="brNoBtn"
+													onclick="checkBrNo()">인증하기</button>
 											</td>
 										</tr>
 										<tr>
 											<th><label for="bizAddr">가게 주소<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="bizAddr" name="bizAddr"
-														placeholder="가게 주소 입력을 위해 클릭해주세요."
-														onclick="findAddr()"
-														style="width: 70%;">
+													placeholder="가게 주소 입력을 위해 클릭해주세요." onclick="findAddr()"
+													readonly="readonly" 
+													style="width: 70%;">
+													<input type="text" id="bizAddrDetail" name="bizAddrDetail"
+													placeholder="가게 상세 주소를 입력해주세요."
+													style="width: 70%;">
 											</td>
 										</tr>
 										<input type="hidden" id="stts" name="stts" value="BIZ">
 									</tbody>
 								</table>
-								</div>
-								<div class="col-lg-12">
-									
-									<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="등록하기">
-									&nbsp;&nbsp;
-									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
-								</div>
+							</div>
+							<div class="col-lg-12">
+
+								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button"
+									value="등록하기">
+								&nbsp;&nbsp;
+								<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-		<script type="text/javascript">
-		var fileNum = 0; //첨부파일 인덱스
+			<script type="text/javascript">
 
-		// ❤️ submit 전 정보 유효성 체크
+				//==============================================================================
+				//✅ input 실행하는 함수
+				function inputFile(e) {
+					var files = e.target.files;
+					var filesArr = Array.prototype.slice.call(files);
 
-		//아래로~
-		$(function(){
-				// # form submit
-				$("#btnSave").on("click", function() {
-					frmChk();
-				});
-		})
-		function frmChk() {
-			if($('#bizAddr').val()==""){
-				alert("주소를 입력해주세요.")
-				return false;
-			} else{
-				formSubmit();
-			}
-		}
-		//아래로~
-		function formSubmit(){
-			//카테고리값 안뜨면 아래주석쓰기
-				// var ctgry = $("#cate option:selected").val(); 
-				// $("#ctgry").val(ctgry); 
-				// console.log("담은 ctgry =>"+ctgry)
-
-
-				var formData = new FormData($("#bizInsertForm")[0]);
-				console.log("왔니..")
-				
-				$.ajax({	
-					url : "/my/bizInsert",
-					type : "POST",
-					data : formData,
-					processData : false,
-					contentType : false,
-					success : function(result) {
-						console.log(result)
-						alert("[등록완료] 가게등록이 완료되었습니다 :D");
-						location.href = "/goguma/bookmain";
-					},
-					error : function(err){
-						alert("[등록실패] 등록 중 오류가 발생하였습니다. :(");
+					if (fileCount + filesArr.length > totalCount) {
+						alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+						return;
+					} else {
+						fileCount = fileCount + filesArr.length;
 					}
-				});
-		}
-		
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// ==================================================
-		// 사업자번호 인증하기
-		function checkBrNo() {
-			console.log($("#brNo").val());
-
-			let brNoVal = $("#brNo").val();
-
-			var data = {
-					"b_no": [brNoVal] // 사업자번호 "xxxxxxx" 로 조회 시,
-				}; 
-				
-				$.ajax({
-				url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=r1Rml7cFLosS9RsDWqWE4EzpCZeoNDBt%2BT0CyNpbpNHiUY80Byh%2F2%2F9Z3sPy08PNtnOJ3vgILS58pCMAywPx6w%3D%3D",  // serviceKey 값을 xxxxxx에 입력
-				type: "POST",
-				data: JSON.stringify(data), // json 을 string으로 변환하여 전송
-				dataType: "JSON",
-				contentType: "application/json",
-				accept: "application/json",
-				success: function(result) {
-					console.log(result.data[0]);
-					checkBrNoAfter(result.data[0].b_stt_cd);
-				},
-				error: function(result) {
-					console.log(result.responseText); //responseText의 에러메세지 확인
+					filesArr.forEach(function (f) {
+						var reader = new FileReader();
+						reader.onload = function (e) {
+							inputFileList.push(f);
+							$('#uploadFileList').append(
+								`<img style=${img_style} src=${e.target.result}
+								id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+							)
+							fileNum++;
+						};
+						reader.readAsDataURL(f);
+					});
+					$("#files").val("");
 				}
-				});
-		}
-		
-		function checkBrNoAfter(stts){
-			if(stts=="01"){
-				alert("사업자 인증이 완료되었습니다.");
-				$("#brNo").attr("disabled", true); //등록완료시 변경X
-				$("#brNoBtn").attr("disabled", true);
-			}else{
-				alert("국세청에 등록되지 않은 사업자번호입니다.");
-				$("#brNo").val("").focus(); //등록실패시 값비우고 커서on
-			}
-		}
 
-				
-		// ==============================================================
-		// ❤️ 주소/거래지역 설정
-			function findAddr() {
-				new daum.Postcode(
+				//==============================================================================
+				//✅ 화면/배열에서 delete 실행하는 함수			
+				function fileDelete(fileNum) {
+					var no = fileNum.replace(/[^0-9]/g, "");
+					inputFileList[no].is_delete = true;
+					$('#' + fileNum).remove();
+					fileCount--;
+					if (fileCount == 0) {
+						$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+						isSubmitOk = false;
+					}
+				}
+
+				//==============================================================================				
+				// ❤️ submit 전 정보 유효성 체크
+				//아래로~
+				$(function () {
+					// # form submit
+					$("#btnSave").on("click", function () {
+						frmChk();
+					});
+				})
+				function frmChk() {
+					if($('#bizNm').val() == ""){
+						alert("상호명을 입력해주세요.")
+						$('#bizNm').focus();
+						return false;
+					} else if ($('#bizTel').val() == "") {
+						alert("연락처를 입력해주세요.")
+						return false;
+					} else if ($('#brNo').val() == "") {
+						alert("사업자번호를 입력해주세요.")
+						return false;
+					} else if ($('#bizAddr').val() == "") {
+						alert("주소를 입력해주세요.")
+						return false;
+					} else {
+						formSubmit();
+					}
+				}
+				//아래로~
+				function formSubmit() {
+
+
+					var formData = new FormData($("#bizInsertForm")[0]);
+					console.log("왔니..")
+
+					$.ajax({
+						url: "/my/bizInsert",
+						type: "POST",
+						data: formData,
+						processData: false,
+						contentType: false,
+						success: function (result) {
+							console.log(result)
+							alert("[등록완료] 가게등록이 완료되었습니다 :D");
+							location.href = "/goguma/bookmain";
+						},
+						error: function (err) {
+							alert("[등록실패] 등록 중 오류가 발생하였습니다. :(");
+						}
+					});
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				// ==================================================
+				// 사업자번호 인증하기
+				function checkBrNo() {
+					console.log($("#brNo").val());
+
+					let brNoVal = $("#brNo").val();
+
+					var data = {
+						"b_no": [brNoVal] // 사업자번호 "xxxxxxx" 로 조회 시,
+					};
+
+					$.ajax({
+						url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=r1Rml7cFLosS9RsDWqWE4EzpCZeoNDBt%2BT0CyNpbpNHiUY80Byh%2F2%2F9Z3sPy08PNtnOJ3vgILS58pCMAywPx6w%3D%3D",  // serviceKey 값을 xxxxxx에 입력
+						type: "POST",
+						data: JSON.stringify(data), // json 을 string으로 변환하여 전송
+						dataType: "JSON",
+						contentType: "application/json",
+						accept: "application/json",
+						success: function (result) {
+							console.log(result.data[0]);
+							checkBrNoAfter(result.data[0].b_stt_cd);
+						},
+						error: function (result) {
+							console.log(result.responseText); //responseText의 에러메세지 확인
+						}
+					});
+				}
+
+				function checkBrNoAfter(stts) {
+					if (stts == "01") {
+						alert("사업자 인증이 완료되었습니다.");
+						$("#brNo").attr("disabled", true); //등록완료시 변경X
+						$("#brNoBtn").attr("disabled", true);
+					} else {
+						alert("국세청에 등록되지 않은 사업자번호입니다.");
+						$("#brNo").val("").focus(); //등록실패시 값비우고 커서on
+					}
+				}
+
+
+				// ==============================================================
+				// ❤️ 주소/거래지역 설정
+				function findAddr() {
+					new daum.Postcode(
 						{
-							oncomplete : function(data) {
+							oncomplete: function (data) {
+								console.log(data)
 								let road = data.roadAddress; // 도로명 주소
 								let jibun = data.jibunAddress; // 지번 주소
 
-								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
-									$('#bizAddr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
-											  .addClass("errPlaceHolder")
-											  .val("").focus();
+								if ((road.substring(0, 2) || jibun.substring(0, 2)) != '대구') {
+									$('#bizAddr').attr("placeholder", "대구광역시 소재의 주소지를 입력해주세요 :D")
+										.addClass("errPlaceHolder")
+										.val("").focus();
 								} else {
 									if ((road !== '') || (jibun !== '')) {
-										$("#bizAddr").val(
-												data.sido + " " + data.sigungu + " " + data.bname);
-										$("#dealArea").val(data.sigungu);
+										$("#bizAddr").val(jibun);
 									}
 								}
 							}
 						}).open();
-			}
+				}
 
 			</script>
 		</div>
-</div>
+	</div>
 </body>
 
 </html>

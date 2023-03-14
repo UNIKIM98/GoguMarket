@@ -9,20 +9,16 @@
 <link rel="stylesheet" href="/css/myPages/myPoint.css">
 
 <style>
-	.notifyGroup{
-		width: 60%;
-		min-height: 70%;
-		border: 1px solid gray;
-	}
-	.notifyView{
-		width: 90%;
-		min-height: 70px;
-		border: 1px solid salmon;
-		margin: 3px auto;
-	
-	}
+.notifyGroup {
+	width: 60%;
+	min-height: 70%;
+}
 
-
+.notifyView {
+	width: 90%;
+	min-height: 70px;
+	margin: 3px auto;
+}
 </style>
 
 
@@ -43,6 +39,8 @@ function checkNotify(){
 	    type: 'GET',
 	    success: function (data) {
 	      console.log(data);
+	      
+	      $("")
 
 	      if ( data > 0 ) {
 	    	  loadNotify();
@@ -56,19 +54,53 @@ function checkNotify(){
 	}
 
 
-function loadNotify() {
+function loadNotify(pstSe) {
+	
+	console.log(pstSe);
 
   $.ajax({
 	    url: "/my/selectNotify",
-    type: 'GET',
-    success: function (data) {
-      console.log(data);
-
-      $(".notifyGroup").empty();
-      $(data).each(function (index, obj) {
-        $(".notifyGroup").append(
-        		"<div class='notifyView' id='viewIndex_"+ index + "'><p>"+ obj['almCn'] + "</p></div>"
-        )
+    	type: 'GET',
+    	data: {pstSe},
+    success: function (result) {
+      
+	  $(".notifyGroup").empty();
+	  
+	
+	 
+	  let pstSed='';
+	  
+	  console.log(pstSe)
+	  
+      $(result.data).each(function (index,data) {
+    	  
+    	  if(data.pstSe == 'AD'){
+    		  pstSed=' [ 관리자 알림 ] '
+    	  }
+    	  if(data.pstSe == 'AU'){
+    		  pstSed=' [ 경매 알림 ] '	  
+    	  }
+    	  
+    	  if(data.pstSe == 'SN'){
+    		  pstSed=' [ 동네 생활 ] '
+    	  }
+    	  if(data.pstSe == 'BI'){
+    		  pstSed=' [ 동네 가게 ] '
+    	  }
+    	  if(data.pstSe == 'DE'){
+    		  pstSed=' [ 중고 거래 ] '
+    	  }
+    	  
+  	  
+    		$(".notifyGroup")
+			.append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
+			.append($("<td>").text(index+1))
+			.append($("<td>").text(pstSed))
+			.append($("<td>").text(data.almCn))
+			.append($("<td>").text(data.almYmd))
+			
+			
+      
       });
       updateNotify();
 
@@ -108,23 +140,75 @@ function updateNotify() {
 <body>
 	<div layout:fragment="myContent">
 		<div class="container">
+
 			<div class="tab-pane active" id="order-complete">
-				<div class="notifyGroup">
-					<button onClick="checkNotify()">테스트용 버튼 입니다 </button>
-					<div class="notifyView" id="sample_1">
-						<p id="notifyCn"></p>
+				<div class="tab-pane active" id="order-complete">
+					<br>
+					<div>
+						<h4 class="blog-section-title border-left mb-30">나의 쪽지함</h4>
 					</div>
-				
-				
+					<div class="order-complete-content box-shadow">
+						<div class="order-info p-5 mb-10">
+							<ul class="order-info-list">
+								<li><a class="totalP" href='javascript:void(0);'
+									onclick="loadNotify('AD')" value="AD">관리자</a>
+									<p>
+										총 <span class="totalPTrgt"
+											style="color: #fd7e14; font-weight: bold;">0</span>포인트
+									</p></li>
+								<li><a class="attendP" href='javascript:void(0);'
+									onclick="loadNotify('DE');" value="DE">중고거래</a>
+									<p>
+										<span class="attendPTrgt">0</span>포인트
+									</p></li>
+								<li><a class="dealP" href='javascript:void(0);'
+									onclick="loadNotify('AU');" value="AU">경매</a>
+									<p>
+										<span class="dealPTrgt">0</span>포인트
+									</p></li>
+								<li><a class="freeP" href='javascript:void(0);'
+									onclick="loadNotify('SN');" value="AD">동네생활</a>
+									<p>
+										<span class="freePTrgt">0</span>포인트
+									</p></li>
+								<li><a class="freeP" href='javascript:void(0);'
+									onclick="loadNotify('BI');" value="AD">동네가게</a>
+									<p>
+										<span class="freePTrgt">0</span>포인트
+									</p></li>
+
+							</ul>
+						</div>
+						<div class="row">
+							<div>
+								<table class="table" style="text-align: center">
+									<thead style="border: 1px">
+										<tr>
+											<th>NO</th>
+											<th>FROM</th>
+											<th>ALM_CN</th>
+											<th>YMD</th>
+										</tr>
+									</thead>
+									<tbody class="notifyGroup">
+
+									</tbody>
+								</table>
+							</div>
+							<div class="pagination">
+							
+							</div>
+						</div>
+					</div>
 				</div>
-			
+
 
 			</div>
 		</div>
 	</div>
 
-    	   
-<!--      <td class="td-title-2">${pointInfo.usedYmd}</td> -->
+
+	<!--      <td class="td-title-2">${pointInfo.usedYmd}</td> -->
 
 </body>
 </html>

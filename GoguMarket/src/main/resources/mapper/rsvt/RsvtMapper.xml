@@ -90,9 +90,16 @@
 	
 	<!-- 예약목록 가져오기 -->
 	<select id="selectMyRsvtList" parameterType="String" resultType="map">
-		SELECT b.*, r.*
-		FROM biz_mem b join rsvt r
-                on b.biz_no  = r.biz_no
+		SELECT b.biz_nm, b.bgng_tm, c.common_nm AS openTime, b.end_tm, cc.common_nm AS closeTime, r.*, ccc.common_nm AS rsvtTime
+		FROM biz_mem b INNER JOIN rsvt r 
+		                ON b.biz_no = r.biz_no
+		                INNER JOIN common_code c 
+		                ON c.common_code = '007' 
+		                AND c.common_detail_code = b.bgng_tm
+		                INNER JOIN common_code cc 
+		                ON cc.common_detail_code = b.end_tm
+		                INNER JOIN common_code ccc
+		                ON ccc.common_detail_code = r.rsvt_tm
 		WHERE r.user_id = #{userId}
 	</select>
 	
@@ -112,11 +119,19 @@
 	
 	<!-- 예약 한건 조회 -->
 	<select id="selectRsvtOne" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
-		select r.*, m.*, b.*
-		from rsvt r, mem m, biz_mem b
-		where r.user_id = m.user_id
-		and r.biz_no = b.biz_no
-		AND rsvt_no = #{rsvtNo}
+		SELECT r.*, m.*, b.biz_nm, b.bgng_tm, c.common_nm AS openTime, b.end_tm, cc.common_nm AS closeTime, ccc.common_nm AS rsvtTime
+		FROM rsvt r INNER JOIN mem m 
+					ON r.user_id = m.user_id
+					INNER JOIN biz_mem b 
+					ON r.biz_no = b.biz_no
+					INNER JOIN common_code c 
+					ON c.common_code = '007' 
+					AND c.common_detail_code = b.bgng_tm
+					INNER JOIN common_code cc 
+					ON cc.common_detail_code = b.end_tm
+					INNER JOIN common_code ccc
+			        ON ccc.common_detail_code = r.rsvt_tm
+		 WHERE rsvt_no = #{rsvtNo}
 	</select>
 	
 	<!-- 예약번호 가게메뉴 조회 -->
@@ -127,6 +142,34 @@
 		    and r.biz_no = m.biz_no
 		    and r.rsvt_no = #{rsvtNo}
 	</select>
-
+	
+	<!-- 예약변경 신청 테이블 등록 (insert) -->
+	<insert id="insertRsvtUpdateTbl" parameterType="com.goguma.rsvt.vo.RsvtUpdateVO">
+		<selectKey keyProperty="rsvtUpdateNo" resultType="int" order="BEFORE">
+			SELECT
+			CASE WHEN MAX(rsvt_update_no) IS NULL THEN 1 ELSE
+			MAX(rsvt_update_no) + 1 END as rsvt_update_no
+			FROM rsvt_update
+		</selectKey>
+		INSERT INTO rsvt_update(
+	        rsvt_update_no,
+	        rsvt_no2,
+	        aprv_yn,
+	        rsvt_nope,
+	        rsvt_want,
+	        rsvt_pay,
+	        rsvt_ymd,
+	        rsvt_tm
+	    )VALUES(
+	        #{rsvtUpdateNo},
+	        #{rsvtNo2},
+	        #{aprvYn},
+	        #{rsvtNope},
+	        #{rsvtWant},
+	        #{rsvtPay},
+	        #{rsvtYmd},
+	        #{rsvtTm}
+	    )
+	</insert>
 
 </mapper>

@@ -9,7 +9,6 @@ public class DealReviewVO extends DealRvVoteVO{
 	private String pstSe;	// 게시판분류 -> 중고거래
 	private String rvYmd;	// 작성일자
 	private String rvCn;	// 게시글내용
-	private String hash;	// 해시태그
 	private String rvYn; 	// 숨김여부
 	private int dlNo;	// 글번호
 	

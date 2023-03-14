@@ -45,7 +45,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			String bizId = memVO.getUserId();
 			session.setAttribute("bizNo", bizService.selectBizNo(bizId));
 		}
-		response.sendRedirect("/goguma/dealMain");
+		response.sendRedirect("/");
 	}
 
 }
