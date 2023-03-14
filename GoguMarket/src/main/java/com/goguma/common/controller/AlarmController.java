@@ -5,34 +5,70 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.goguma.common.service.AlarmService;
 import com.goguma.common.service.CommonCodeService;
+import com.goguma.common.vo.AlarmVO;
 import com.goguma.common.vo.CommonCodeVO;
 
+@Controller
 public class AlarmController {
+
 	@Autowired
-	CommonCodeService common;
+	AlarmService alarm;
+
+	@Autowired
+	CommonCodeService code;
 
 	
-	@GetMapping("/admin/alarmkeyValue")
-	public Map<String, Object> alarmkeyValue() {
-		System.out.println("gdgd");
-		Map<String, Object> map = new HashMap<String, Object>();
 
-		List<CommonCodeVO> selist = new ArrayList();
-		List<CommonCodeVO> codelist = new ArrayList();
-		List<CommonCodeVO> searchlist = new ArrayList();
+	@GetMapping("/my/myNotifyList")
+	public String myNotifyList() {
 
-		selist = common.codeList("003");
-		codelist = common.codeList("004");
-		searchlist = common.codeList("009");
-
-		map.put("selist", selist);
-		map.put("codelist", codelist);
-		map.put("searchlist", searchlist);
-
-		return map;
+		return "myPages/myNotifyList";
 	}
+
+	@GetMapping("/my/checkNotifyCount")
+	@ResponseBody
+	public int checkNotifyCount(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		AlarmVO vo = new AlarmVO();
+		vo.setUserId(userId);
+		int cnt = 99;
+		cnt = alarm.checkNotifyCount(vo);
+		return cnt;
+	}
+
+	@GetMapping("/my/selectNotify")
+	@ResponseBody
+	public List<AlarmVO> selectNotify(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		AlarmVO vo = new AlarmVO();
+		vo.setUserId(userId);
+		List<AlarmVO> result = alarm.selectNotify(vo);
+		return result;
+	}
+
+	@RequestMapping("/my/updateNotify")
+	@ResponseBody
+	public Boolean updateNotify(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		AlarmVO vo = new AlarmVO();
+		vo.setUserId(userId);
+
+		boolean check = alarm.updateNotify(vo);
+		return check;
+	}
+
 }

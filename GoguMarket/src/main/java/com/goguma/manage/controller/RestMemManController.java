@@ -52,6 +52,28 @@ public class RestMemManController {
 		return map;
 	}
 	
+	@GetMapping("/admin/seValue")
+	public Map<String, Object> seValue() {
+		System.out.println("gdgd");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		List<CommonCodeVO> selist = new ArrayList();
+		List<CommonCodeVO> codelist = new ArrayList();
+		List<CommonCodeVO> searchlist = new ArrayList();
+		
+
+		selist = common.codeList("001");
+		codelist = common.codeList("004");
+		searchlist = common.codeList("009");
+
+		map.put("selist", selist);
+		map.put("codelist", codelist);
+		map.put("searchlist", searchlist);
+
+		return map;
+	}
+	
+	
 	
 	
 

@@ -5,15 +5,13 @@
 
 <body>
 
-	<div layout:fragment="bizContent">
+	<div layout:fragment="Bizcontent">
+	
 		<div class="container">
-
-			<!-- single-product-area start -->
 			<div class="single-product-area mb-80">
 				<div class="row">
 
 					<!-- single-product-info start -->
-
 					<div class="single-product-info">
 						<div class="row">
 							<div class="col-sm-2">
@@ -242,15 +240,18 @@
 						<hr>
 
 					</div>
-
-					<!-- single-product-info end -->
 				</div>
 			</div>
-			<!-- single-product-area end -->
 		</div>
-
+	<script th:inline="javascript">
+		//유저번호 받아오기
+		var url = window.location.href;
+		var urlUserId = url.substring(url.lastIndexOf('/') + 1);
+		console.log("-----" + urlUserId)
+		
+	</script>
 	</div>
-
+	<!-- 타임리프 div끝 -->
 </body>
 
 </html>

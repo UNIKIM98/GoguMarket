@@ -161,7 +161,6 @@
 																							and ${code.commonDetailCode} <= ${biz.endTm}"
 																							th:value="${code.commonDetailCode}"
 																							th:text="${code.commonNm}">(시간)</option>
-
 																					</select>
 																				</div>
 																			</div>
@@ -624,7 +623,7 @@
 							alert("ajax성공쓰_예약번호 " + rsvtNo);
 							
 							//예약완료 페이지로 이동(예약번호 파라미터)
-							location.href="/my/book0604/"+rsvtNo;
+							location.href="/my/rsvtComplete"+rsvtNo;
 						}
 					,error : function(err){
 						alert("ajax error db저장안됨")

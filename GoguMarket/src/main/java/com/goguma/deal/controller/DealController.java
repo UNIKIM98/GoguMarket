@@ -76,24 +76,30 @@ public class DealController {
 	public String mydeal(DealVO dVO,String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
+		dVO.setNtslId(userId);
+		dVO.setStts("판매중");		
+		model.addAttribute("dealList", dealService.selectNtslDeal(dVO)); // 판매중 내역
 		
-		model.addAttribute("dealList", dealService.selectNtslDeal(userId)); // 판매중+완료 내역
-		model.addAttribute("buyList", dealService.selectPrchsDeal(userId)); // 구매내역
-		model.addAttribute("point",pService.selectPointListForUser(userId));// point 정보 불러와야돼서 모델링 ㄱ
+		dVO.setStts("판매완료");		
+		model.addAttribute("dealsold", dealService.selectNtslDeal(dVO)); // 판매완료 내역
+		
+		dVO.setPrchsId(userId);
+		model.addAttribute("buyList", dealService.selectNtslDeal(dVO)); // 구매내역
 		
 		return "myPages/myDeal";
 	}
 
 	@RequestMapping("/my/myDealSubmit") // 게시글업데이트..
 	@ResponseBody
-	public String mydeal(Model model,DealVO dVO, PointVO pVO,String userId, HttpServletRequest request) {
+	public int mydeal(Model model,DealVO dVO, PointVO pVO,String userId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
 		
-		dealService.updateYmd(dVO, userId); // pointVO에 userId담아줄라공~
+		
+		int cnt = dealService.updateYmd(dVO, userId); // pointVO에 userId담아줄라공~
 		
 	
-		return "myPages/myDeal";
+		return cnt;
 	}
 	
 	// ===========================
@@ -152,15 +158,31 @@ public class DealController {
 	// ===========================
 	// ▷ 판매상품 단건조회
 	@RequestMapping("/goguma/dealdetail/{dlNo}")
-	public String getDeal(@PathVariable int dlNo, Model model) {
+	public String getDeal(@PathVariable int dlNo, Model model, Paging paging, DealSearchVO svo) {
+		// 페이징 하기위한 재료들 svo에 담는다
+		DealVO vo = dealService.selectDeal(dlNo);
+		
+		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
+		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 
-		System.out.println("단건조회 =====> " + dlNo);
+		svo.setFirst(paging.getFirst());
+		svo.setLast(paging.getLast());
+		
+		svo.setNtslId(vo.getNtslId());
+		System.out.println(svo);
+		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 dlno를 이용한 ntsl_id가 가진 총 데이터건수 
+		
+		// 이ㅏ렇게하는거엿구만!
+		model.addAttribute("list", dealService.getDealSeller(svo));// 판매자의 다른 상품들
+		
 		model.addAttribute("deal", dealService.selectDeal(dlNo));
-		model.addAttribute("list", dealService.getDealSeller(dlNo));// 판매자의 다른 상품들
 		model.addAttribute("ct", dealService.getDealCtgry(dlNo)); // 카테고리
 		model.addAttribute("file", dealService.selectDealAtch(dlNo)); // 해당게시글 첨부파일들
 		model.addAttribute("cnt", dealService.dealHitUpdate(dlNo));// 조회수
 
+		// 시세를 담는 모델
+		model.addAttribute("prc",dealService.selectPrice(svo));
+		
 		return "deal/dealdetail";
 	}
 
@@ -285,17 +307,18 @@ public class DealController {
 	// ===========================
 	// ❤❤ 판매자 페이지
 	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
-	public String getDealSeller(@PathVariable String ntslId, Model model) {
+	public String getDealSeller(DealVO dVO, @PathVariable String ntslId, Model model) {
 
 		System.out.println("왔슈...." + ntslId);
-		model.addAttribute("dealList", dealService.selectNtslDeal(ntslId));
-		System.out.println(dealService.selectNtslDeal(ntslId));
+		
+		model.addAttribute("dealList", dealService.selectNtslDeal(dVO));
+		System.out.println(dealService.selectNtslDeal(dVO));
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
 		model.addAttribute("review", rvService.getDealRv(ntslId));// 여러건의 후기 조회
 		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
-		//model.addAttribute("code",codeService.voteList(ntslId));//아이디로 공통코드불러오는거ㅎ..관련된거다지우샘!!!
+		//model.addAttribute("code",codeService.voteList(ntslId));//잘못된쿼리 지워야함
 		return "deal/dealSellerPage";
 	}
 

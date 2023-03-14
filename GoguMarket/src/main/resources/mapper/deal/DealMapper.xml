@@ -32,9 +32,9 @@
 	    ORDER BY month DESC
     </select>
     
-	<!-- 채은추가!! 확인후 주석은 지워주세욧 -->
+	<!-- 페이징을 하려면 파라미터를 보로.. -->
 	<select id="selectNtslDeal" 
-			parameterType="String"
+			parameterType="com.goguma.deal.vo.DealVO"
 			resultType="map">
  	SELECT d.* ,
 		       (SELECT ATCH_PATH
@@ -43,10 +43,21 @@
                 , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
 	FROM deal d JOIN MEM m 
     ON d.ntsl_Id = m.user_id
-	WHERE ntsl_id = #{ntslId}
+	<where>
+		<if test ="ntslId != null">
+	 	 ntsl_id = #{ntslId}
+		 </if>
+		 <if test="stts != null">
+		 and stts = #{stts} 
+		 </if>
+		 <if test ="prchsId != null">
+	 	 and prchs_id = #{prchsId}
+		 </if>
+	</where>
+	
 	</select>
 	
-	<!-- 구매내역입장에서의 셀렉트 -->
+	<!-- 구매내역입장에서의 셀렉트 : 이거안씀 관련된거 다 없애자-->
 	<select id="selectPrchsDeal" 
 			parameterType="String"
 			resultType="map">
@@ -79,19 +90,39 @@
 	WHERE DL_NO = #{dlNo}
 	</select>
 
+	<!-- 시세 -->
+	<select id="selectPrice"
+			parameterType="com.goguma.deal.vo.DealSearchVO"
+			resultType="com.goguma.deal.vo.DealSearchVO">
+	select ROUND(AVG(dl_prc), -3) AS avg, 
+	        max(dl_prc)as max, 
+	        min(dl_prc)as min, 
+	        extract(month from dl_ymd) AS month
+	from deal
+	WHERE dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')
+	<if test="searchTtl != null and searchTtl != ''">
+	and   dl_ttl like '%'||#{dlTtl}||'%'
+	</if>
+	GROUP BY extract(month from dl_ymd)
+	ORDER BY month DESC
+	</select>
+
 	<!-- ======= 판매자정보(현재 게시글 제외) ======== -->
 	<select id="getDealSeller"
-			parameterType="DealVO"
-			resultType="DealVO">			                
-		SELECT d.* ,
+			parameterType="com.goguma.deal.vo.DealSearchVO"
+			resultType="com.goguma.deal.vo.DealSearchVO">			                
+		         select * 
+			from (select rownum rn,a.* from(
+			SELECT d.* ,
 		       (SELECT ATCH_PATH
 	       		FROM ATCH
-	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
-		FROM deal d
-		WHERE dl_no != ${dlNo}
-		  AND ntsl_id = (	SELECT ntsl_id
-		                    FROM deal
-		                    WHERE dl_no = ${dlNo})
+	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
+			FROM DEAL d
+			where ntsl_id = #{ntslId}
+		 
+		 <![CDATA[
+		) a where rownum <= #{last} )b where rn >= #{first}
+		]]>	
 	</select>
 	
 	<!-- ======= 카테고리 정보======== -->
@@ -132,6 +163,9 @@
 	 
 	<sql id="creiteria">
 		<where>
+			<if test="ntslId != null and ntslId != ''" >
+				ntsl_id = #{ntslId}
+			</if>
 			<if test="ctgry != null and ctgry != ''" >
 				ctgry = #{ctgry}
 			</if>
@@ -168,6 +202,7 @@
 			resultType="int">
 		SELECT COUNT(*)
 		FROM DEAL
+		
 		<include refid="creiteria"></include>
 
 	</select>

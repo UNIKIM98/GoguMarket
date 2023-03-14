@@ -175,12 +175,12 @@ public class BizController {
 	public String shop04() {
 		return "biz/shop04";
 	}
+	
+	//가게 후기리스트 페이지
+	@GetMapping("/biz/reviewList")
+	public String shop05(HttpServletRequest request, Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, RsvtRvVO rvo) {
+		//임시 세션(나중에 진짜 세션에서 불러오기)
 
-	// 가게 후기리스트 페이지
-	@GetMapping("/biz/shop05")
-	public String shop05(HttpServletRequest request, Model model, @ModelAttribute("bobo") BizSearchVO bvo,
-			PagingVO pvo) {
-		// 임시 세션(나중에 진짜 세션에서 불러오기)
 		HttpSession session = request.getSession();
 		session.setAttribute("bizNo", "bn001");
 		String bizNo = (String) session.getAttribute("bizNo");
@@ -194,6 +194,7 @@ public class BizController {
 		pvo.setPageUnit(2); // 한페이지에 몇건씩 보여줄건지
 		pvo.setPageSize(5); // 한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
 
+
 		bvo.setFirst(pvo.getFirst());
 		bvo.setLast(pvo.getLast());
 
@@ -202,10 +203,11 @@ public class BizController {
 		return "biz/shop05";
 	}
 
-	@GetMapping("/biz/shop06")
-	public String shop06(Model model, HttpServletRequest request, @ModelAttribute("bobo") BizSearchVO bvo,
-			PagingVO pvo) {
-		// 임시 세션(나중에 진짜 세션에서 불러오기)
+
+	@GetMapping("/biz/dangolList")
+	public String shop06(Model model, HttpServletRequest request, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
+		//임시 세션(나중에 진짜 세션에서 불러오기)
+
 		HttpSession session = request.getSession();
 		session.setAttribute("bizNo", "bn001");
 		String bizNo = (String) session.getAttribute("bizNo");
@@ -225,8 +227,9 @@ public class BizController {
 		return "biz/shop06";
 	}
 
-	@GetMapping("/biz/shop0602")
-	public String shop0602() {
+	@GetMapping("/biz/dangolDetailPage/{userId}")
+	public String shop0602(@PathVariable String userId, Model model) {
+		System.out.println("뀨");
 		return "biz/shop0602";
 	}
 
