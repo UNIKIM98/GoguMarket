@@ -62,8 +62,8 @@ function loadNotify(pstSe) {
 	    url: "/my/selectNotify",
     	type: 'GET',
     	data: {pstSe},
-    success: function (data) {
-      console.log(data);
+    success: function (result) {
+      
 	  $(".notifyGroup").empty();
 	  
 	
@@ -72,7 +72,7 @@ function loadNotify(pstSe) {
 	  
 	  console.log(pstSe)
 	  
-      $(data).each(function (index,data) {
+      $(result.data).each(function (index,data) {
     	  
     	  if(data.pstSe == 'AD'){
     		  pstSed=' [ 관리자 알림 ] '
@@ -91,13 +91,15 @@ function loadNotify(pstSe) {
     		  pstSed=' [ 중고 거래 ] '
     	  }
     	  
-    	  
+  	  
     		$(".notifyGroup")
 			.append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
 			.append($("<td>").text(index+1))
 			.append($("<td>").text(pstSed))
 			.append($("<td>").text(data.almCn))
 			.append($("<td>").text(data.almYmd))
+			
+			
       
       });
       updateNotify();
@@ -192,6 +194,9 @@ function updateNotify() {
 
 									</tbody>
 								</table>
+							</div>
+							<div class="pagination">
+							
 							</div>
 						</div>
 					</div>
