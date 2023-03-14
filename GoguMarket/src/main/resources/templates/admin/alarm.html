@@ -30,7 +30,7 @@
 						<input type="text" placeholder="제목을 입력하세요" style="width: 60%">
 					</h6>
 				</div>
-				<form name="alarmForm" method="post"
+				<form name="alarmForm" id="alarmForm" method="post"
 						onsubmit="return false">
 					<select class=" mr-10 ml-10" name="userSe" id="sekey">
 					</select> <input type="hidden" id="userId" th:value="${userId}">
@@ -47,7 +47,7 @@
 
 
 					<div>
-						<textarea rows="5" cols="100"></textarea>
+						<textarea rows="5" cols="80"></textarea>
 					</div>
 				</form>
 			</div>
@@ -58,6 +58,12 @@
 					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">취소</button>
 			</div>
 		</div>
+		<script type="text/javascript">
+		
+		 $.ajax({
+			 usrl:""
+		 })
+		</script>
 	</div>
 </body>
 
