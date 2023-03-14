@@ -1,18 +1,18 @@
 a = $("<select>").attr({
 	name: "userStts",
 	id: "key",
-});
+}); // 테이블에 변경항목 추가하기위한 태그 생성
 btn = $("<button>").attr({
 	class: "btn btn-primary",
 	id: "updateButton",
-});
+}); // 테이블에 변경항목 추가하기위한 태그 생성
 
-$(document).ready(function() {
+$(document).ready(function() { //페이지 로딩후 초기 코드,리스트 출력
 	keyValue();
 	selectMemberList();
 });
 
-function keyValue() {
+function keyValue() { //공통코드 가져오기
 	$.ajax({
 		url: "/admin/keyValue",
 		type: "GET",

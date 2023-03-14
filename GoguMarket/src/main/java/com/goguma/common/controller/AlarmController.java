@@ -1,6 +1,8 @@
 package com.goguma.common.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.goguma.common.service.AlarmService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.AlarmVO;
+import com.goguma.common.vo.CommonPaging;
 
 @Controller
 public class AlarmController {
@@ -97,13 +100,32 @@ public class AlarmController {
 
 	@GetMapping("/my/selectNotify")
 	@ResponseBody
-	public List<AlarmVO> selectNotify(HttpServletRequest request) {
+	public Map<String,Object> selectNotify(HttpServletRequest request,String pstSe,CommonPaging page) {
+		System.out.println(pstSe);
+		
+		AlarmVO vo = new AlarmVO();
+		Map<String,Object> map = new HashMap<String, Object>();
+		
+		//page.setPage(vo.getAlarmNowPage());
+		page.setPageUnit(10); // 한 페이지에 출력할 레코드 건수
+		page.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
+		vo.setFirst(page.getFirst());
+		vo.setLast(page.getLast());
+		
+		
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
-		AlarmVO vo = new AlarmVO();
-		vo.setUserId(userId);
+		vo.setPstSe(pstSe); //vo에 가지고 온 상태 저장
+		vo.setUserId(userId); //세션에 있는 유저 아이디 불러오기
+		
+		page.setTotalRecord(alarm.getcountTotal(vo));
 		List<AlarmVO> result = alarm.selectNotify(vo);
-		return result;
+		
+		map.put("data",result);
+		map.put("page",page);
+		
+		
+		return map;
 	}
 
 	@RequestMapping("/my/updateNotify")
@@ -118,12 +140,5 @@ public class AlarmController {
 		return check;
 	}
 
-	@RequestMapping("/admin/sendAlarm")
-	@ResponseBody
-	public int sendAlarm() {
-
-		int cnt = 1;
-		return cnt;
-	}
 
 }
