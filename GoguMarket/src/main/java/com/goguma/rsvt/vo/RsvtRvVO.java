@@ -25,4 +25,5 @@ public class RsvtRvVO {		//예약후기(가게이용후기)테이블
 	private String endTm;
 	private String openTime;
 	private String closeTime;
+	private String bizNm;
 }
