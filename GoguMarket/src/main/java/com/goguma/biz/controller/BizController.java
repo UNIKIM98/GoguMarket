@@ -58,6 +58,7 @@ public class BizController {
 		
 		pvo.setTotalRecord(bizMapper.bizListCnt(bvo));
 		
+		System.out.println("화긴용========" + bizMapper.bizListCnt(bvo));
 		model.addAttribute("lists", bizMapper.bizListPage(bvo));
 
 		//＃ 가게 전체 셀렉트
@@ -137,8 +138,8 @@ public class BizController {
 	}
 	
 	//가게 후기리스트 페이지
-	@GetMapping("/biz/shop05")
-	public String shop05(HttpServletRequest request, Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
+	@GetMapping("/biz/reviewList")
+	public String shop05(HttpServletRequest request, Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo, RsvtRvVO rvo) {
 		//임시 세션(나중에 진짜 세션에서 불러오기)
 		HttpSession session = request.getSession();
 		session.setAttribute("bizNo", "bn001");
@@ -150,7 +151,7 @@ public class BizController {
 		model.addAttribute("biz", memService.bizInfo(bizNo));
 		
 		//페이징
-		pvo.setPageUnit(2);		//한페이지에 몇건씩 보여줄건지
+		pvo.setPageUnit(1);		//한페이지에 몇건씩 보여줄건지
 		pvo.setPageSize(5);		//한페이지에 몇페이지씩 보여줄건지(밑에 페이지 수)
 		
 		bvo.setFirst(pvo.getFirst());
@@ -161,7 +162,7 @@ public class BizController {
 		return "biz/shop05";
 	}
 
-	@GetMapping("/biz/shop06")
+	@GetMapping("/biz/dangolList")
 	public String shop06(Model model, HttpServletRequest request, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo) {
 		//임시 세션(나중에 진짜 세션에서 불러오기)
 		HttpSession session = request.getSession();
@@ -183,8 +184,9 @@ public class BizController {
 		return "biz/shop06";
 	}
 
-	@GetMapping("/biz/shop0602")
-	public String shop0602() {
+	@GetMapping("/biz/dangolDetailPage/{userId}")
+	public String shop0602(@PathVariable String userId, Model model) {
+		System.out.println("뀨");
 		return "biz/shop0602";
 	}
 
