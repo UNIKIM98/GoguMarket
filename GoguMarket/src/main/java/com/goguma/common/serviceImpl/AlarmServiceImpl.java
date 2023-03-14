@@ -13,8 +13,11 @@ public class AlarmServiceImpl implements AlarmService{
 	
 	
 
+
 	@Autowired
 	AlarmMapper alarm;
+	
+	
 	
 	@Override
 	public int checkNotifyCount(AlarmVO vo) {
