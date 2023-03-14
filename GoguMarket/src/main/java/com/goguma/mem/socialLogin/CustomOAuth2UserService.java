@@ -50,18 +50,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		MemVO user = saveOrUpdate(attributes);
 		httpSession.setAttribute("user", user);
 
-		System.out.println(attributes.getAttributes() + "누구세욥===================================");
 		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
 				attributes.getAttributes(), attributes.getNameAttributeKey());
 	}
 
 	// 혹시 이미 저장된 정보라면, update 처리
 	private MemVO saveOrUpdate(OAuthAttributes attributes) {
-		System.out.println("==============service attributes===========" + attributes);
 		MemVO mVO = new MemVO();
 		mVO.setUserId(attributes.getUserId());
 
-		System.out.println(mVO);
 		MemVO nVO = new MemVO();
 		mVO.setUserSe("USER");
 		mVO.setUserPw(attributes.getUserPw());
@@ -71,13 +68,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		mVO.setDealArea("");// 거래지역
 		mVO.setMblTelno(attributes.getMblTelno());
 		mVO.setAtchPath(attributes.getAtchPath());
-		nVO = memService.selectUser(mVO);
+		
+		nVO = memService.selectUser(mVO);//가입여부만 체크(id)
+		
 		if (nVO == null) {
 			mVO.setEml(attributes.getEml());
 			memService.memberJoin(mVO);
-			mVO = memService.selectUser(mVO);
 		}
+		mVO.setEml(attributes.getEml());
 		
+		System.out.println(mVO);
 		return mVO;
 	}
 }

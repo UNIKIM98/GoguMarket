@@ -30,7 +30,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
 		MemVO memVO = (MemVO) auth.getPrincipal();
-
+		System.out.println("일반로그인=======");
+			System.out.println(auth.getPrincipal());
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", memVO.getUserId()); // 아이디
 		session.setAttribute("userSe", memVO.getUserSe()); // 권한
