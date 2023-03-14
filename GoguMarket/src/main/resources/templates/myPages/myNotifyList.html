@@ -9,20 +9,18 @@
 <link rel="stylesheet" href="/css/myPages/myPoint.css">
 
 <style>
-	.notifyGroup{
-		width: 60%;
-		min-height: 70%;
-		border: 1px solid gray;
-	}
-	.notifyView{
-		width: 90%;
-		min-height: 70px;
-		border: 1px solid salmon;
-		margin: 3px auto;
-	
-	}
+.notifyGroup {
+	width: 60%;
+	min-height: 70%;
+	border: 1px solid gray;
+}
 
-
+.notifyView {
+	width: 90%;
+	min-height: 70px;
+	border: 1px solid salmon;
+	margin: 3px auto;
+}
 </style>
 
 
@@ -67,7 +65,7 @@ function loadNotify() {
       $(".notifyGroup").empty();
       $(data).each(function (index, obj) {
         $(".notifyGroup").append(
-        		"<div class='notifyView' id='viewIndex_"+ index + "'><p>"+ obj['almCn'] + "</p></div>"
+        		"<td class='notifyView' id='viewIndex_"+ index + "'><p>"+ obj['almCn'] + "</p></td>"
         )
       });
       updateNotify();
@@ -108,23 +106,68 @@ function updateNotify() {
 <body>
 	<div layout:fragment="myContent">
 		<div class="container">
+
 			<div class="tab-pane active" id="order-complete">
-				<div class="notifyGroup">
-					<button onClick="checkNotify()">테스트용 버튼 입니다 </button>
-					<div class="notifyView" id="sample_1">
-						<p id="notifyCn"></p>
+				<div class="tab-pane active" id="order-complete">
+					<br>
+					<div>
+						<h4 class="blog-section-title border-left mb-30">나의 쪽지함</h4>
 					</div>
-				
-				
+					<div class="order-complete-content box-shadow">
+						<div class="order-info p-30 mb-10">
+							<ul class="order-info-list">
+								<li><a class="totalP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">현재 포인트</a>
+									<p>
+										총 <span class="totalPTrgt"
+											style="color: #fd7e14; font-weight: bold;">0</span>포인트
+									</p></li>
+								<li><a class="attendP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">출석하기</a>
+									<p>
+										<span class="attendPTrgt">0</span>포인트
+									</p></li>
+								<li><a class="dealP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">거래후기</a>
+									<p>
+										<span class="dealPTrgt">0</span>포인트
+									</p></li>
+								<li><a class="freeP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">무료나눔</a>
+									<p>
+										<span class="freePTrgt">0</span>포인트
+									</p></li>
+
+							</ul>
+						</div>
+						<div class="row">
+							<div>
+								<table style="text-align: center">
+									<thead>
+										<tr>
+											<th>NO</th>
+											<th>FROM</th>
+											<th>ALM_CN</th>
+											<th>YMD</th>
+											<th>CHK</th>
+										</tr>
+									</thead>
+									<tbody class="notifyGroup">
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
-			
+
 
 			</div>
 		</div>
 	</div>
 
-    	   
-<!--      <td class="td-title-2">${pointInfo.usedYmd}</td> -->
+
+	<!--      <td class="td-title-2">${pointInfo.usedYmd}</td> -->
 
 </body>
 </html>

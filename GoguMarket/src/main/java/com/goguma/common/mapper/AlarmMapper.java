@@ -15,4 +15,5 @@ public interface AlarmMapper {
 	boolean updateNotify(AlarmVO vo);
 	
 	
+	
 }

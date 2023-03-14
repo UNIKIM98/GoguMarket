@@ -15,5 +15,7 @@ public interface AlarmService {
 	
 	boolean updateNotify(AlarmVO vo);
 	
+
+	
 	
 }
