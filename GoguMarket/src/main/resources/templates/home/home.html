@@ -1,15 +1,379 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout"
-	layout:decorate="~{/layouts/layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<article layout:fragment="content">
-	
-	
-	</article>
+	<div layout:fragment="content">
+
+    <div class="wrapper">
+        <!-- 최상단 슬라이더 부분 -->
+        <div class="slider-area theme-bg ptb-150 mb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slider-desc-3 slider-desc-4  text-center">
+                            <div class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s">
+                                <h1 class="slider2-title-2 cd-headline clip is-full-width">
+                                    <span>GOGUMARKET</span>
+                                    <span class="cd-words-wrapper">
+                                        <b class="is-visible">secondhand</b>
+                                        <b>Auction</b>
+                                        <b>restaurant</b>
+                                        <b>SNS</b>
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.5s">
+                                <h2 class="slider2-title-3">조이름</h2>
+                            </div>
+                            <div class="slider-button wow fadeInUp" data-wow-duration="1s" data-wow-delay="2.5s">
+                                <a href="#" class="button extra-small button-white">
+                                    <span class="text-uppercase">중고거래로이동</span>
+                                </a>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SLIDER AREA -->
+
+        <!-- Start page content -->
+        <section id="page-content" class="page-wrapper section">
+
+            <!-- 고구마켓(중고거래)-->
+            <div class="by-brand-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title text-start mb-40">
+                                <h2 class="uppercase">고구마켓</h2>
+                                <h6>고기로 갈게요 구매 가능한가요? 고구마켓에서 가장 인기있는 상품들을 만나보세요 :D</h6>
+                            </div>
+                            <div class="by-brand-product">
+                                <div class="active-by-brand slick-arrow-2">
+                                    <!-- 중고거래 아작스 돌릴 부분-->
+                                    <div class="brand-item">
+                                        <div class="single-brand-product">
+                                            <a href="single-product.html"><img src="img/product/8.jpg" alt=""></a>
+                                            <h3 class="brand-title text-gray">
+                                                <a href="#">Brand name</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <!-- 중고거래 아작스 돌릴 부분-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 고구마켓 끝 -->
+
+            <!-- 경매 -->
+            <div class="featured-product-section mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title text-start mb-40">
+                                <h2 class="uppercase">경매</h2>
+                                <h6>There are many variations of passages of brands available,</h6>
+                            </div>
+                            <div class="featured-product">
+                                <div class="active-featured-product slick-arrow-2">
+                                    <!-- 경매 아작스 돌릴 부분-->
+                                    <div class="product-item">
+                                        <div class="product-img">
+                                            <a href="single-product.html">
+                                                <img src="img/product/4.jpg" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="product-info">
+                                            <h6 class="product-title">
+                                                <a href="single-product.html">Product Name</a>
+                                            </h6>
+                                            <div class="pro-rating">
+                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                <a href="#"><i class="zmdi zmdi-star-half"></i></a>
+                                                <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+                                            </div>
+                                            <h3 class="pro-price">$ 869.00</h3>
+                                            <ul class="action-button">
+                                                <li>
+                                                    <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
+                                                            class="zmdi zmdi-zoom-in"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- 경매 아작스 돌릴 부분 끝-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FEATURED PRODUCT SECTION END -->
+
+            <!-- PRODUCT TAB SECTION START -->
+            <div class="product-tab-section mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="section-title text-start mb-40">
+                                <h2 class="uppercase">동네가게</h2>
+                                <h6>There are many variations of passages of brands available,</h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="product-tab pro-tab-menu text-end">
+                                <!-- Nav tabs -->
+                                <ul class="nav">
+                                    <li><a class="active" href="#popular-product" data-bs-toggle="tab">한식 </a></li>
+                                    <li><a href="#new-arrival" data-bs-toggle="tab">양식</a></li>
+                                    <li><a href="#best-seller" data-bs-toggle="tab">중식</a></li>
+                                    <li><a href="#special-offer" data-bs-toggle="tab">카페</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- popular-product start -->
+                                <div id="popular-product" class="tab-pane active show">
+                                    <div class="row">
+                                        <!-- 한식 -->
+                                        <div class="col-lg-3 col-md-4">
+                                            <div class="product-item">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img src="img/product/9.jpg" alt="" />
+                                                    </a>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h6 class="product-title">
+                                                        <a href="single-product.html">한식</a>
+                                                    </h6>
+                                                    <h3 class="pro-price">가격부분</h3>
+                                                    <ul class="action-button">
+                                                        <li>
+                                                            <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
+                                                                    class="zmdi zmdi-zoom-in"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- product-item end -->
+                                    </div>
+                                </div>
+                                <!-- popular-product end -->
+                                <!-- new-arrival start -->
+                                <div id="new-arrival" class="tab-pane" role="tabpanel">
+                                    <div class="row">
+                                        <!-- product-item start -->
+                                        <div class="col-lg-3 col-md-4">
+                                            <div class="product-item">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img src="img/product/1.jpg" alt="" />
+                                                    </a>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h6 class="product-title">
+                                                        <a href="single-product.html">양식</a>
+                                                    </h6>
+                                                    <div class="pro-rating">
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star-half"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+                                                    </div>
+                                                    <h3 class="pro-price">$ 869.00</h3>
+                                                    <ul class="action-button">
+                                                        <li>
+                                                            <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
+                                                                    class="zmdi zmdi-zoom-in"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- product-item end -->
+                                        
+                                    </div>
+                                </div>
+                                <!-- new-arrival end -->
+                                <!-- best-seller start -->
+                                <div id="best-seller" class="tab-pane" role="tabpanel">
+                                    <div class="row">
+                                        <!-- product-item start -->
+                                        <div class="col-lg-3 col-md-4">
+                                            <div class="product-item">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img src="img/product/11.jpg" alt="" />
+                                                    </a>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h6 class="product-title">
+                                                        <a href="single-product.html">중식</a>
+                                                    </h6>
+                                                    <div class="pro-rating">
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star-half"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+                                                    </div>
+                                                    <h3 class="pro-price">$ 869.00</h3>
+                                                    <ul class="action-button">
+                                                        <li>
+                                                            <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
+                                                                    class="zmdi zmdi-zoom-in"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- product-item end -->
+                                    </div>
+                                </div>
+                                <!-- best-seller end -->
+                                <!-- special-offer start -->
+                                <div id="special-offer" class="tab-pane" role="tabpanel">
+                                    <div class="row">
+                                        <!-- product-item start -->
+                                        <div class="col-lg-3 col-md-4">
+                                            <div class="product-item">
+                                                <div class="product-img">
+                                                    <a href="single-product.html">
+                                                        <img src="img/product/6.jpg" alt="" />
+                                                    </a>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h6 class="product-title">
+                                                        <a href="single-product.html">카페</a>
+                                                    </h6>
+                                                    <div class="pro-rating">
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star-half"></i></a>
+                                                        <a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+                                                    </div>
+                                                    <h3 class="pro-price">$ 869.00</h3>
+                                                    <ul class="action-button">
+                                                        <li>
+                                                            <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
+                                                                    class="zmdi zmdi-zoom-in"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <!-- special-offer end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCT TAB SECTION END -->
+
+            <!-- BLOG SECTION START -->
+            <div class="blog-section mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title text-start mb-40">
+                                <h2 class="uppercase">SNS</h2>
+                                <h6>There are many variations of passages of brands available,</h6>
+                            </div>
+                            <div class="blog">
+                                <div class="active-blog">
+                                    <div class="blog-item">
+                                        <img src="img/blog/1.jpg" alt="">
+                                        <div class="blog-desc">
+                                            <h5 class="blog-title"><a href="single-blog.html">dummy Blog name</a></h5>
+                                            <p>내용</p>
+                                            <div class="read-more">
+                                                <a href="single-blog.html">Read more</a>
+                                            </div>
+                                            <ul class="blog-meta">
+                                                <li>
+                                                    <a href="#"><i class="zmdi zmdi-favorite"></i>89 Like</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class="zmdi zmdi-comments"></i>59 Comments</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- BLOG SECTION END -->
+        </section>
+        <!-- End page content -->
+    </div>
+	</div>
 </body>
 </html>

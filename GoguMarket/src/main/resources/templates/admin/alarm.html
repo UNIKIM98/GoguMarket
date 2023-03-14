@@ -22,22 +22,30 @@
 
 <body>
 	<div layout:fragment="adminContent">
+		<h1 class="h3 mb-2 text-gray-800 mt-15">회원 알림 보내기</h1>
+		<p class="mb-4">관리자 전용 알림 페이지 입니다.</p>
+		<!-- DataTales Example -->
+
+		<hr class="sidebar-divider">
 		<div class="card" style="width: 60%; margin: 0 auto; margin-top: 5%;">
-			<div class="card-body" style="text-align: center">
-				<div class="newsletter-info text-center">
-					<h5 class="card-title">SEND MESSAGE</h5>
-					<h6 class="card-subtitle mb-2 text-muted">
-						<input type="text" placeholder="제목을 입력하세요" style="width: 60%">
-					</h6>
-				</div>
-				<form name="alarmForm" method="post"
-						onsubmit="return false">
-					<select class=" mr-10 ml-10" name="userSe" id="sekey">
-					</select> <input type="hidden" id="userId" th:value="${userId}">
-					<ul class="sendAdd">
+			<div class="card-body pstSe" style="text-align: center">
+				<form name="alarmForm" id="alarmForm" method="post"
+					action="location.href='admin/adminMember'" onsubmit="return false">
+					<div class="newsletter-info text-center ">
+						<h5 class="card-title">SEND MESSAGE</h5>
+						<h6 class="card-subtitle mb-2 text-muted">
+							<input type="hidden" name="userId" id="userId"
+								th:value="${userId}">
+						</h6>
+					</div>
+
+
+					<ul class="sendAdd" style="text-align: center">
+						<li><select class=" mr-10 ml-10" name="pstSe" id="pstSe">
+						</select></li>
 						<li>보내는 사람: [[${session.userId}]]</li>
 						<li>받는 사람: [[${userId}]]</li>
-						<li style="margin-left: 350px">전송날짜: 2023-03-13</li>
+						<li style="margin-left: 300px">전송날짜: 2023-03-13</li>
 
 					</ul>
 					<br>
@@ -47,17 +55,94 @@
 
 
 					<div>
-						<textarea rows="5" cols="100"></textarea>
+						<textarea id="almCn" name="almCn" rows="5" cols="80"></textarea>
 					</div>
 				</form>
 			</div>
 			<div style="float: left; margin: 0 auto;">
-				<button class="btn btn-primary"
+				<button class="btn btn-primary" onclick="sendAlarm()"
 					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">전송</button>
-				<button class="btn btn-primary"
+				<button class="btn btn-primary" onclick="exitAlarm()"
 					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">취소</button>
 			</div>
 		</div>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script th:inline="javascript">
+			var link = '/admin/adminMember';
+
+			$(document).ready(function() {
+				alert("ready 함수 작동")
+				keyValue();
+
+			});
+
+			function keyValue() {
+				$
+						.ajax({
+							url : "/admin/keyValue",
+							type : "GET",
+							async : false,
+							dataType : "JSON",
+							contentType : "application/json; charset = utf-8",
+
+							success : function(data) {
+								console.log(data);
+								$(".pstSe").find("#pstSe").append(
+										`<option value="">전체</option>`);
+								$(data["pstSe"])
+										.each(
+												function(index, obj) {
+													$(".pstSe")
+															.find("#pstSe")
+															.append(
+																	`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
+												});
+
+							},
+							error : function(data) {
+								console.log(error);
+							},
+						});
+			}
+
+			function sendAlarm() {
+
+				console.log(almCn);
+
+				formData = $("#alarmForm").serialize();
+				console.log(formData)
+
+				$
+						.ajax({
+							url : "/admin/insertAlarm",
+							type : "POST",
+							data : formData,
+							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+							success : function(data) {
+								if (data != 0) {
+									alert("알림 전송에 성공하였습니다.")
+									location.href = link;
+
+								} else {
+									alert("알림 전송에 실패 하였습니다.")
+
+								}
+							},
+							error : function() {
+								console.log(error);
+							}
+						})
+			}
+
+			function exitAlarm() {
+
+				let confirmMessage = confirm("알림 보내기를 취소하시겠습니까?");
+
+				if (confirmMessage) {
+					location.href = link;
+				}
+			}
+		</script>
 	</div>
 </body>
 

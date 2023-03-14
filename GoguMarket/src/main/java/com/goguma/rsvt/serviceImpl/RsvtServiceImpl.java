@@ -10,6 +10,7 @@ import com.goguma.rsvt.mapper.RsvtMapper;
 import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
+import com.goguma.rsvt.vo.RsvtUpdateVO;
 import com.goguma.rsvt.vo.RsvtVO;
 
 @Service
@@ -57,6 +58,12 @@ public class RsvtServiceImpl implements RsvtService{
 	@Override
 	public List<Map> selectRsvtBizMenu(String rsvtNo) {
 		return map.selectRsvtBizMenu(rsvtNo);
+	}
+	
+	//예약업데이트 테이블 insert
+	@Override
+	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpVo) {
+		return map.insertRsvtUpdateTbl(rsvtUpVo);
 	}
 
 	
