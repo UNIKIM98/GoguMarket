@@ -49,9 +49,9 @@
 											<!-- 메뉴1건 -->
 											<tbody>
 												<!-- <tr> -->
-													<!-- <td class="td-title-1">(메뉴명)</td> -->
-													<!-- <td class="td-title-1">(수량)</td> -->
-													<!-- <td class="td-title-2">(가격)</td> -->
+												<!-- <td class="td-title-1">(메뉴명)</td> -->
+												<!-- <td class="td-title-1">(수량)</td> -->
+												<!-- <td class="td-title-2">(가격)</td> -->
 												<!-- </tr> -->
 											</tbody>
 										</table>
@@ -66,29 +66,29 @@
 										<hr>
 
 										<!--테이블2 : 시간, 인원, 요청사항-->
-										<table>
-											<tr>
-												<th class="td-title-1">예약일자</th>
-												<td class="td-title-1" th:text="${rsvt.rsvtYmd}">(예약날짜)</td>
-												<td class="td-title-1" th:text="${rsvt.rsvtTm}">(예약시간)</td>
-											</tr>
-											<tr>
-												<th class="td-title-1">예약인원</th>
-												<td class="td-title-1" th:text="${rsvt.rsvtNope}">(몇명)</td>
-											</tr>
-											<tr>
-												<th class="td-title-1">예약자정보</th>
-												<td class="td-title-1" th:text="${rsvt.nickNm}">(닉네임)</td>
-												<td class="td-title-1" th:text="${rsvt.mblTelno}">(전화번호)</td>
-											</tr>
-											<tr>
-											</tr>
-											<tr>
-												<td class="td-title-1">요청사항</td>
-												<td class="td-title-1" colspan="2"><textarea
-														class="custom-textarea" th:text="${rsvt.rsvtWant}"></textarea>
-												</td>
-											</tr>
+										<table id="rsvtInfo">
+											<!-- 											<tr> -->
+											<!-- 												<th class="td-title-1">예약일자</th> -->
+											<!-- 												<td class="td-title-1" th:text="${rsvt.rsvtYmd}">(예약날짜)</td> -->
+											<!-- 												<td class="td-title-1" th:text="${rsvt.rsvtTm}">(예약시간)</td> -->
+											<!-- 											</tr> -->
+											<!-- 											<tr id="trRsvtNope"> -->
+											<!-- 												<th class="td-title-1">예약인원</th> -->
+											<!-- 												<td class="td-title-1" th:text="${rsvt.rsvtNope}">(몇명)</td> -->
+											<!-- 											</tr> -->
+											<!-- 											<tr> -->
+											<!-- 												<th class="td-title-1">예약자정보</th> -->
+											<!-- 												<td class="td-title-1" th:text="${rsvt.nickNm}">(닉네임)</td> -->
+											<!-- 												<td class="td-title-1" th:text="${rsvt.mblTelno}">(전화번호)</td> -->
+											<!-- 											</tr> -->
+											<!-- 											<tr> -->
+											<!-- 											</tr> -->
+											<!-- 											<tr> -->
+											<!-- 												<td class="td-title-1">요청사항</td> -->
+											<!-- 												<td class="td-title-1" colspan="2"><textarea -->
+											<!-- 														class="custom-textarea" th:text="${rsvt.rsvtWant}"></textarea> -->
+											<!-- 												</td> -->
+											<!-- 											</tr> -->
 										</table>
 										<hr>
 									</div>
@@ -139,11 +139,11 @@
 							<td class="td-title-1">
 								<div class="cart-plus-minus f-left">
 									<div class="dec qtybutton" onclick="qtyBtnClick(this)">-</div>
-										<input type="text" value="${list.AMOUNT}" id="amount" name="amount" class="cart-plus-minus-box">
+										<input type="text" value="${list.AMOUNT}" id="amount" name="amount" class="cart-plus-minus-box" menuPrice="${list.MENU_PRC}" menuNo="${list.MENU_NO}">
 									<div class="inc qtybutton" onclick="qtyBtnClick(this)">+</div>
 								</div>
 							</td>
-							<td class="td-title-2" id="tdSum">${list.AMOUNT * list.MENU_PRC}
+							<td class="td-title-2" id="tdSum_${list.MENU_NO}">${list.AMOUNT * list.MENU_PRC}
 								<input type="hidden" id="menuSum" name="menuSum" value="${list.AMOUNT * list.MENU_PRC}">
 							</td>
 						</tr>`
@@ -156,9 +156,8 @@
 								<tr>
 									<th class="order-total">합계</th>
 									<td class="order-total"></td>
-									<td class="order-total-price">${totalPrice}
+									<td class="order-total-price">${totalPrice}</td>
 									<input type="hidden" id="totalSum" name="totalSum" value="${totalPrice}">
-									</td>
 								</tr>
 								`		
 							)
@@ -169,10 +168,63 @@
 				}
 			});
 			
+			//예약인원 ajax
+			$.ajax({
+				url:"/my/myRsvtInfoAjax",
+				type:"get",
+				data: {rsvtNo},
+
+				success: function(list){
+					$('#rsvtInfo').append(
+							`<tr>
+								<th class="td-title-1">예약일자</th>
+								<td class="td-title-1">
+									<input type="date" value="${list.rsvtYmd}">
+								</td>
+								<td class="td-title-1">${list.rsvtTm}</td>
+							</tr>
+							<tr>
+								<th class="td-title-1">예약인원</th>
+								<td class="td-title-1" colspan="2" >
+									<div class="cart-plus-minus f-left">
+										<div class="dec qtybutton" onclick="nopeClick(this)">-</div>
+											<input type="text" value="${list.rsvtNope}" id="rsvtNope" name="rsvtNope" class="cart-plus-minus-box">
+										<div class="inc qtybutton" onclick="nopeClick(this)">+</div>
+									</div>								
+								</td>
+							</tr>
+							<tr>
+								<th class="td-title-1">예약자정보</th>
+								<td class="td-title-1">${list.nickNm}</td>
+								<td class="td-title-1">[[${session.mblTelno}]]</td>
+							</tr>
+							<tr>
+								<th class="td-title-1">요청사항</th>
+								<td class="td-title-1" colspan="2">
+									<textarea class="custom-textarea" text="${list.rsvtWant}"></textarea>
+								
+								</td>
+							</tr>
+							`
+							)
+				},error : function(err){
+					console.log("error")
+				}
+			});
+			
 		}
 		
+		//메뉴 수량 변경 & 계산
 		function qtyBtnClick(obj){
 			var $button = $(obj);
+			
+			var menuPrice = $button.parent().find("input").attr("menuPrice");
+			var menuNo = $button.parent().find("input").attr("menuNo");
+			
+			var tdSum = $("#tdSum_"+menuNo); // 메뉴별 합계 인풋(박스)
+			var totalSum = $("#totalSum").val();
+			
+			
 	        var oldValue = $button.parent().find("input").val();
 	        if ($button.text() == "+") {
 		        
@@ -198,7 +250,16 @@
 	        		  // input 요소의 값을 증가시켜 저장
 	        		  input.attr('value', value);
 	        		  
-	        		 
+	        		  //메뉴별 가격 계산
+	        		  var calcTdSum = value * menuPrice;
+	        		  tdSum.text(calcTdSum);
+	        		  
+	        		  //총 가격 계산
+	        		  var calcTotalSum = parseInt(totalSum) + parseInt(menuPrice);
+	        		  $('.order-total-price').text(calcTotalSum);
+	        		  $('#totalSum').val(calcTotalSum);
+	        		  
+	        		  
 	        		} else if ($button.hasClass('dec')) {
 	        		  // "-" 버튼 클릭 시 실행될 코드
 	        		  var input = $(obj).next('input[name="amount"]');
@@ -207,24 +268,63 @@
 
 	        		  // input 요소의 값을 감소시켜 저장
 	        		  input.attr('value', value);
+	        		  
+	        		  // -수량 가격계산 예외처리
+	        		  //console.log(tdSum.text());
+	        		  if(tdSum.text() <= 0){
+	        			  return;
+	        		  }
+	        		  
+	        		  //메뉴별 가격 계산
+	        		  var calcTdSum = value * menuPrice;
+	        		  tdSum.text(calcTdSum);
+	        		  
+	        		  //총 가격 계산
+	        		  var calcTotalSum = parseInt(totalSum) - parseInt(menuPrice);
+	        		  $('.order-total-price').text(calcTotalSum);
+	        		  $('#totalSum').val(calcTotalSum);	        			  
 	        		}
 	        	
-	          //합계바꾸기===========ing
-//       		  var trLength = $('table#menuTbl tbody tr').length;
-//       		  for(i=0; i<trLength; i++){
-//       			  var text = $(`tbody tr:eq(${i}) td#tdSum`).text();
-//       			  var menuSum = text.replace(/[^0-9]/g, '');
-//       			  console.log(menuSum)
-//       		  }
-      		  
-//       		$('table#menuTbl tbody tr').each(function(i) {
-//       		  var amountValue = $(this).find("input[name='amount']:eq(" + i + ")").val();
-//       		  console.log(amountValue);
-//       		});
+		}
+		
+		//예약인원 수정
+		function nopeClick(obj){
+			var $button = $(obj);
+			var oldValue = $button.parent().find("input").val();
+			if ($button.text() == "+") {
+	            var newVal = parseFloat(oldValue) + 1;
+	        }
+	        else {
+	            // Don't allow decrementing below zero
+	            if (oldValue > 0) {
+	                var newVal = parseFloat(oldValue) - 1;
+	            } 
+	            else {
+	                newVal = 0;
+	            }
+	        }
+	        	$button.parent().find("input").val(newVal);
+	        	
+	        	if ($button.hasClass('inc')) {
+	        		  // "+" 버튼 클릭 시 실행될 코드
+	        		  var input = $(obj).prev('input[name="rsvtNope"]');
+	        		  var value = parseInt(input.val());
+	        		  console.log(value);
 
-				
-      		
-      		
+	        		  // input 요소의 값을 증가시켜 저장
+	        		  input.attr('value', value);
+	        		  
+	        		  
+	        		} else if ($button.hasClass('dec')) {
+	        		  // "-" 버튼 클릭 시 실행될 코드
+	        		  var input = $(obj).next('input[name="rsvtNope"]');
+	        		  var value = parseInt(input.val());
+	        		  console.log(value);
+
+	        		  // input 요소의 값을 감소시켜 저장
+	        		  input.attr('value', value);
+	        		  
+					}	
 		}
 		
 		

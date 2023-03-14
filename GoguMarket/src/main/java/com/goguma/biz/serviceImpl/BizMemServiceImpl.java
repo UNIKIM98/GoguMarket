@@ -65,10 +65,18 @@ public class BizMemServiceImpl implements BizMemService {
 		return map.bizDetailImg(bizNo);
 	}
 
+
+	@Override
+	public String selectBizNo(String userId) {
+		// TODO Auto-generated method stub
+		return map.selectBizNo(userId);
+	}
+
 	//가게등록
 	@Override
 	public int bizInsert(BizMemVO vo) {
 		return map.bizInsert(vo);
+
 	}
 
 

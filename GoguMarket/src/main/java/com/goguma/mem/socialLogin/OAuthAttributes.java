@@ -1,149 +1,52 @@
-package com.goguma.mem.socialLogin;
-
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
-
-import com.nimbusds.oauth2.sdk.id.ClientID;
-
-import lombok.Data;
-
-
-@Data
-public class OAuthAttributes {
-    private Map<String, Object> attributes;
-    private String nameAttributeKey;
-    private String userId;
-    private String userNm;
-    private String userPw;
-    private Date birthYmd;
-    private String eml;
-    private String mblTelno;
-    private String socialToken;
-    private String rfshToken;
-
-    
-    //생성자 생성
-	public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String id, String name, String pwd,
-			Date birthDate, String email, String tel, String token, String reToken) {
-		this.attributes = attributes;
-		this.nameAttributeKey = nameAttributeKey;
-		this.userId = id;
-		this.userNm = name;
-		this.userPw = pwd;
-		this.birthYmd = birthDate;
-		this.eml = email;
-		this.mblTelno = tel;
-		this.socialToken = token;
-		this.rfshToken = reToken;
-	}
-	
-	
-	
-	public OAuthAttributes() {
-		
-	}
-
-    // 해당 로그인인 서비스가 kakao인지 google인지 구분하여, 알맞게 매핑을 해주도록 합니다.
-    // 여기서 registrationId는 OAuth2 로그인을 처리한 서비스 명("kakao","naver"..)이 되고,
-    // userNameAttributeName은 해당 서비스의 map의 키값이 되는 값이됩니다. {, kakao="id", naver="response"}
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-        if (registrationId.equals("kakao")) {
-            return ofKakao(userNameAttributeName, attributes);
-        }else
-            return ofNaver(userNameAttributeName,attributes);
-        
-    }
-    
-    //네이버 필드 값 넣어주기
-    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
-    	Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-    	
-    	
-    	String loginCd = "LN";
-    	String email = (String) response.get("email");
-    	String id = "naver"+"_"+email.split("@")[0];
-    	
-		String uuid = UUID.randomUUID().toString().substring(0, 6);
-		String password = uuid;
-		//String password = bCryptPasswordEncoder.encode("패스워드"+uuid);  // 임의로 만들어준다ㅣ.// 암호화한 후 주석풀기
-		
-		String birth = ((String) response.get("birthyear")) + "-" + ((String) response.get("birthday"));
-		java.util.Date birthDate = null;
-		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-		
-		
-		try {
-			birthDate = sdf.parse(birth);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		String token = "";
-		String reToken = "";
-    	
-        return new OAuthAttributes(
-        		attributes
-                ,userNameAttributeName
-    			,id
-    			,(String) response.get("name")
-    			,password
-    			,birthDate
-    			,email
-    			,(String) response.get("mobile")
-    			,token
-    			,reToken
-        		);
-    }
-    
-    
-    //카카오 필드값 넣어주기
-    private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-        Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");  // 카카오로 받은 데이터에서 계정 정보가 담긴 kakao_account 값을 꺼낸다.
-        Map<String, Object> profile = (Map<String, Object>) kakao_account.get("profile");   // 마찬가지로 profile(nickname, image_url.. 등) 정보가 담긴 값을 꺼낸다.
-
-        
-        System.out.println(attributes.get("id")+"id값인가여어ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ");
-    	System.out.println(kakao_account);
-    	String loginCd = "LK";
-    	String email = (String) kakao_account.get("email");
-    	System.out.println(email);
-    	String id = "kakao"+"_"+email.split("@")[0];
-    	
-		String uuid = UUID.randomUUID().toString().substring(0, 6);
-		String password = uuid;
-		//String password = bCryptPasswordEncoder.encode("패스워드"+uuid);  // 임의로 만들어준다ㅣ.// 암호화한 후 주석풀기
-		
-		String birth = ((String) kakao_account.get("birthday"));
-		java.util.Date birthDate = null;
-		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMdd");
-		
-		try {
-			birthDate = sdf.parse(birth);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println((String) profile.get("nickname"));
-		String token = "";
-		String reToken = "";
-		String tel = "";
-        
-        return new OAuthAttributes(
-        		attributes
-                ,userNameAttributeName
-    			,id
-    			,(String) profile.get("nickname")
-    			,password
-    			,birthDate
-    			,email
-    			,tel
-    			,token
-    			,reToken
-        		);
-    }
-
-
-    
-}
+//package com.goguma.mem.socialLogin;
+//
+//import java.util.Map;
+//
+//import com.goguma.mem.vo.MemVO;
+//
+//import lombok.Data;
+//@Data
+//public class OAuthAttributes {
+//	
+//    private final Map<String, Object> attributes;
+//    private final String nameAttributeKey;
+//    private final String name;
+//    private final String email;
+//    private final String picture;
+//    private final String userId;
+//    private final String id;
+//
+//    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture, String userId, String id) {
+//        this.attributes = attributes;
+//        this.nameAttributeKey = nameAttributeKey; //이게 id
+//        this.name = name;
+//        this.email = email;
+//        this.picture = picture;
+//        this.userId = userId;
+//        this.id = id;
+//    }
+//
+//
+//    // 해당 로그인인 서비스가 kakao인지 google인지 구분하여, 알맞게 매핑을 해주도록 합니다.
+//    // 여기서 registrationId는 OAuth2 로그인을 처리한 서비스 명("google","kakao","naver"..)이 되고,
+//    // userNameAttributeName은 해당 서비스의 map의 키값이 되는 값이됩니다. {google="sub", kakao="id", naver="response"}
+//    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+//            return ofKakao(registrationId, userNameAttributeName, attributes);
+//    }
+//    
+//    // 카카오
+//    private static OAuthAttributes ofKakao(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+//        Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account");  // 카카오로 받은 데이터에서 계정 정보가 담긴 kakao_account 값을 꺼낸다.
+//        Map<String, Object> profile = (Map<String, Object>) kakao_account.get("profile");   // 마찬가지로 profile(nickname, image_url.. 등) 정보가 담긴 값을 꺼낸다.
+//
+//        
+//        
+//        
+//        
+//        return new OAuthAttributes(attributes,
+//                userNameAttributeName,
+//                (String) profile.get("nickname"),
+//                (String) kakao_account.get("email"),
+//                (String) profile.get("profile_image_url"),profile.get("id"),);
+//    }
+//}

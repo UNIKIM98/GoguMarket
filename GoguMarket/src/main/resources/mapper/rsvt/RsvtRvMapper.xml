@@ -12,5 +12,26 @@
 		AND rsv.biz_no = #{bizNo}
 			
 	</select>
+	
+	<!-- 비즈페이지 후기 리스트 -->
+	<select id="selectReviewList" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtRvVO">
+		SELECT rownum, m.nick_nm, rv.rv_cn, rv.rv_ymd
+		FROM rsvt_rv rv, rsvt r, mem m 
+		WHERE rv.rsvt_no = r.rsvt_no
+			AND r.user_id = m.user_id
+			AND r.biz_no = #{bizNo}
+	</select>
+	
+	<!-- 비즈페이지 후기리스트 카운팅 -->
+	<select id="selectReviewCnt" parameterType="String" resultType="int">
+		SELECT COUNT(*) as cnt
+		FROM (
+		    SELECT ROWNUM, M.NICK_NM, RV.RV_CN, RV.RV_YMD 
+		    FROM RSVT_RV RV, RSVT R, MEM M 
+		    WHERE RV.RSVT_NO = R.RSVT_NO 
+		    AND R.USER_ID = M.USER_ID 
+		    AND R.BIZ_NO = #{bizNo}
+		)
+	</select>
 
 </mapper>

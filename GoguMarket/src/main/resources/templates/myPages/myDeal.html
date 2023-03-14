@@ -15,115 +15,153 @@
 
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="section-title text-start mb-20">
+						<div class="section-title text-start mb-20" >
 							<h2 class="uppercase">중고거래마이페이지</h2>
-						</div>
-					</div>
-				</div>
-
-
-				<!-- 내용 윗쪽 -->
-				<div class="row">
-
-					<div class="col-lg-8">
-						<table class="table">
-							<tr>
-								<th class="td-title-1">가게명</th>
-								<th class="td-title-1" colspan="2">예약일</th>
-								<th class="td-title-1">예약상태</th>
-							</tr>
-
-							<!-- 예약1건 -->
-							<!-- <tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
-								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;">
-								<th:block th:if="${sim != null}">
-									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
-									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
-									<td class="td-title-1" th:each="code: ${code}"
-										th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
-										th:text="${code.commonNm}">(예약시간)</td>
-									<td class="td-title-1" th:text="${sim.RSVT_STTS}">(예약상태)</td>
-								</th:block>
-								<th:block th:if="${sim == null}">
-									<td class="td-title-1" colspan="4">예약 내역이 없습니다.</td>
-
-								</th:block>
-							</tr> -->
-
-
-						</table>
-					</div>
-
-					<div class="col-lg-4">달력자리</div>
-				</div>
-				<hr>
-
-				<!--내용 아랫쪽-->
-				<div class="row">
-					<div class="col-lg-6 offset-lg-1">
-
-						<!--테이블1 : 주문메뉴-->
-						<div class="myRsvtDetail">
-							<div class="tab-pane active" id="order-complete">
-								<div class="order-complete-content box-shadow"
-									style="padding: 20px;">
-
-									<table id="menuTbl">
-										<thead>
-											<tr>
-												<th class="td-title-1">메뉴</th>
-												<th class="td-title-1">수량</th>
-												<th class="td-title-2">가격</th>
-											</tr>
-										</thead>
-										<!-- 메뉴 1건 -->
-										<tbody>
-											<!-- <tr> -->
-											<!-- <td class="td-title-1">(메뉴이름)</td> -->
-											<!-- <td class="td-title-1">(수량)</td> -->
-											<!-- <td class="td-title-1">(수량*각 가격)</td> -->
-											<!-- </tr> -->
-										</tbody>
-
-									</table>
-
-									<table id="totalTbl">
-										<!-- <tr> -->
-										<!-- <th class="order-total">합계</th> -->
-										<!-- <td class="order-total"></td> -->
-										<!-- <td class="order-total-price" id="totalSum">(합계)</td> -->
-										<!-- </tr> -->
-									</table>
-									<hr>
-
-									<!--테이블2 : 시간, 인원, 요청사항-->
-									<table id="rsvtInfo">
-				
-
-									</table>
-
-								</div>
+							<div th:each="p : ${point}">
+							[[${point}]]
+							<!-- <p th:text="${p.user_id}">님의 포인트 현황 : </p><p th:text="${p.point}"></p> -->
+							<!-- 히든 인풋으로 포인트토탈 담아야 밑에서 끌올버튼 누르기전 펑션 실행  -->
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4">
-						<div class="tab-pane active pt-30" id="order-complete">
-							<a class="button extra-small mb-20" href="/chat/test.do"><span>1/n정산하기
-							</span></a> <a class="button extra-small mb-20" onclick="rsvtModify()"
-								style="cursor: pointer;"><span>예약변경신청</span></a> <a
-								class="button extra-small mb-20" href="#"><span>예약취소하기</span>
-							</a> <a class="button extra-small mb-20" href="#" id="modalBtn"><span>알림설정</span>
-							</a>
-
-						</div>
-					</div>
 				</div>
+				<hr>
+				<!-- single-product-tab -->
+								<div class="single-product-tab reviews-tab">
+									<ul class="nav mb-20">
+										<li><a class="active" href="#description" data-bs-toggle="tab">판매중</a></li>
+										<li><a href="#soldout" data-bs-toggle="tab">판매완료</a></li>
+										<li><a href="#prchs" data-bs-toggle="tab">구매내역</a></li>
+									</ul>
+									<hr>
+									<div class="tab-content">
+										<div role="tabpanel" class="tab-pane active show" id="description">
+											<p>판매자[userid부르고싶삼]가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
+											<!-- ■■■■■■끌올하려고 폼으로 감싸기 -->
+											<form id="updateFrm" method="post">
+												<div class="featured-product" >
+													<div class="active-featured-product slick-arrow-2" >
+														<div class="product-item" th:each="deal : ${dealList}"
+																					th:if="${deal.STTS} == '판매중'">
+															<div class="product-img" style="height:150px">
+																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																	<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+															</div>
+															<div class="product-info">
+																<h6 class="product-title"
+																	th:text=${deal.DL_TTL}>상품명</h6>
+																<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
+																<ul class="action-button">
+																<input type="hidden" name="ntslId" id="ntslId" th:value="${session.userId}">
+																<input type="hidden" name="dlNo" id="dlNo" th:value="${deal.DL_NO}">
+																	<input
+																			class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+																			id="btnSave" role="button" value="등록하기">
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+										<div role="tabpanel" class="tab-pane" id="soldout">
+											<p>판매 완료 리스트가 들어갈 자리입니다</p>
+											<!-- reviews-tab-desc -->
+											<div class="featured-product" >
+												<div class="active-featured-product slick-arrow-2" >
+													<div class="product-item" th:each="deal : ${dealList}"
+																				th:if="${deal.STTS} == '판매완료'">
+<!-- 														<div th:if="${deal.STTS} == '판매완료'"> -->
+														
+														</div>
+														<div class="product-img" style="height:150px">
+															<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+														</div>
+														<div class="product-info">
+															<h6 class="product-title"
+																th:text=${deal.DL_TTL}>상품명</h6>
+															<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
+															<ul class="action-button">
+																<button>끌어올리기</button>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 
+									 	<div role="tabpanel" class="tab-pane" id="prchs" > 
+											<p>구매 내역 리스트가 들어갈 자리입니다</p>
 
+											<div class="featured-product" >
+												<div class="active-featured-product slick-arrow-2" >
+													<div class="product-item" th:each="b : ${buyList}"
+																				th:if="${b.PRCHS_ID== session.userId}">
+														<div class="product-img" style="height:150px">
+															<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${b.DL_NO})}">
+																<img th:src="${b.ATCH_NM}" alt="중고 대표 사진"/></a>
+														</div>
+														<div class="product-info">
+															<h6 class="product-title"
+																th:text=${b.DL_TTL}>상품명</h6>
+															<h3 class="pro-price" th:text=${b.DL_PRC}>가격</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 			</form>
 
 		</div>
-	
+		
+		<script th:inline="javascript">
+		//==============================================================================
+		//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+		$(function() {
+			$("#btnSave").on("click", function() {
+				submitForm();
+			});
+		});
+		
+		//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+		var isSubmitOk = true;
+		
+		function submitForm() {
+				//submit 전 체크하기 : 체크할거잇음? 아 쓸 포인트가 있는지 물어보면 좋을듯
+				if (submitCheck()) {
+					var formData = new FormData($("#updateFrm")[0]);
+				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				$.ajax({
+					url : "/my/myDealSubmit",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						alert("[완료]	게시글 끌어올리기가 완료되었습니다 :D");
+						/* 남은 포인트에 대한 알람도 추가해야함 저거 콘솔 왜안찍힘?ㅠ */
+						location.href = "/my/myDeal/";
+					},
+					error : function(err) {
+						alert("[실패] 게시글 끌어올리기를 실패하였습니다. :("); 
+					}
+				});
+			}
+		}
+		function submitCheck() {
+			// 포인트가 200이상이어야 끌올을 할수있겟쬬? : 200 미만이면 false
+			if ($("#point").val() <"200") {
+				$("#point").focus();
+				isSubmitOk = false;
+			}
+			return isSubmitOk;
+		}
+		
+		</script>
 	
 	</div>
 </body>

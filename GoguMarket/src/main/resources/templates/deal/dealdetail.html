@@ -42,6 +42,8 @@
 				})
 			})
 			 */
+			 
+			
 			// 판매자정보더보기 누르면 가는곳
 			function seller() {
 
@@ -169,6 +171,7 @@
 													<li><a class="active" href="#description"
 														data-bs-toggle="tab">상품설명</a></li>
 													<li><a href="#information" data-bs-toggle="tab">시세</a></li>
+													<li><a href="#map" data-bs-toggle="tab">추천거리</a></li>
 													<li><a href="#reviews" data-bs-toggle="tab">판매자의
 															다른 판매상품</a></li>
 													<!-- <li ><a href="#relation" data-bs-toggle="tab">유사한 상품</a></li> -->
@@ -181,6 +184,11 @@
 													<div role="tabpanel" class="tab-pane" id="information">
 														<p>시세조회가 들어갈 그래프 자리입니다</p>
 														<p>조회결과가 없다면 '조회 결과가 없습니다' 메세지를 호출합니다</p>
+														
+													</div>
+													<div role="tabpanel" class="tab-pane" id="map" style="width:100%;height:350px;">
+													<p>추천지도 선으로 연결 기능</p>
+														
 													</div>
 													<div role="tabpanel" class="tab-pane" id="reviews">
 
@@ -241,11 +249,7 @@
 
 											<div class="sin-pro-action f-right">
 												<ul class="action-button">
-													<li><a href="#" title="Wishlist" tabindex="0"><i
-															class="zmdi zmdi-favorite"></i>찜</a></li>
-													<li><a href="#" data-bs-toggle="modal"
-														data-bs-target="#productModal" title="Quickview"
-														tabindex="0"><i class="zmdi zmdi-zoom-in"></i>챗</a></li>
+													
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="button" onclick="updateform()"
 															th:if="${session.userId == deal.ntslId}">수정하기</button></li>
@@ -255,6 +259,7 @@
 													<li th:each="d : ${deal}">
 															<button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" 
+															 th:if="${session.userId != deal.ntslId}" 
 															th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>구매+리뷰하기</button>
 													</li>
@@ -435,8 +440,17 @@
 	<!--style-customizer end -->
 	</div>
 
-	<!-- Body main wrapper end -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b">
+			 
+			 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			     mapOption = { 
+			         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			         level: 3 // 지도의 확대 레벨
+			     };
 
+			 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+			 var map = new kakao.maps.Map(mapContainer, mapOption); 
+	 </script>
 
 </body>
 

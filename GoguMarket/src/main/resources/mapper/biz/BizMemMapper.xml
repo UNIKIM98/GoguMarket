@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.biz.mapper.BizMemMapper">
+	<!-- ❤️ 비즈 번호 가져오기 -->
+	<select id="selectBizNo" parameterType="String"
+		resultType="String">
+		SELECT biz_no
+		FROM biz_mem
+		WHERE user_id = #{userId}
+	</select>
 
 	<!-- 가게목록 전체조회 -->
 	<select id="getBizList" resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT * FROM biz_mem
-		ORDER BY biz_no
+		ORDER BY
+		biz_no
 	</select>
-	
+
 	<!-- 개별조회(가게상세페이지) -->
 	<select id="bizInfo" parameterType="String"
 		resultType="com.goguma.biz.vo.BizMemVO">
@@ -20,16 +28,15 @@
 	<select id="bizListPage"
 		parameterType="com.goguma.biz.vo.BizSearchVO" resultType="BizMemVO">
 		SELECT * FROM(SELECT rownum rn, a.* FROM(
-						SELECT *
-						FROM biz_mem
-						<include refid="criteria"></include>
-						ORDER BY biz_no
+		SELECT *
+		FROM biz_mem
+		<include refid="criteria"></include>
+		ORDER BY biz_no
 		<![CDATA[
 		) a WHERE rownum <= #{last} ) b WHERE rn >= #{first}
 		]]>
 	</select>
-	
-	<!-- 가게 등록 -->
+
 	<insert id="bizInsert" parameterType="com.goguma.biz.vo.BizMemVO">
 			<selectKey keyProperty="bizNo" resultType="String" order="BEFORE">
 				SELECT CONCAT('BN',LPAD(NVL(MAX(SUBSTR(BIZ_NO,3)),0)+1,3,0)) AS BIZ_NO
@@ -66,41 +73,46 @@
 	</select>
 
 	<!-- 단골 수 카운팅 -->
-	<select id="BizDangolCnt" resultType="com.goguma.biz.vo.BizMemVO">
+	<select id="BizDangolCnt"
+		resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT count(d.dg_no) dCount, m.biz_no
-		FROM biz_dangol d RIGHT JOIN biz_mem m
-				ON d.biz_no = m.biz_no
-				GROUP BY d.biz_no,  m.biz_no
-				ORDER BY biz_no
+		FROM biz_dangol d
+		RIGHT JOIN biz_mem m
+		ON d.biz_no = m.biz_no
+		GROUP BY d.biz_no, m.biz_no
+		ORDER BY biz_no
 	</select>
-	
+
 	<!-- 리뷰 수 카운팅 -->
-	<select id="BizReviewCnt" resultType="com.goguma.biz.vo.BizMemVO">
+	<select id="BizReviewCnt"
+		resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT count(rw.res_rv_no) rwCount, m.biz_no
-		FROM rsvt_rv rw JOIN rsvt r
-                        ON rw.rsvt_no = r.rsvt_no
-                        RIGHT JOIN biz_mem m
-                        ON r.biz_no = m.biz_no
-				GROUP BY r.biz_no,  m.biz_no
+		FROM rsvt_rv rw
+		JOIN rsvt r
+		ON rw.rsvt_no = r.rsvt_no
+		RIGHT JOIN biz_mem m
+		ON r.biz_no = m.biz_no
+		GROUP BY r.biz_no, m.biz_no
 	</select>
 
 	<!-- 가게정보 첨부파일 -->
 	<select id="bizImgList" resultType="com.goguma.biz.vo.BizMemVO">
-				SELECT b.*,
-					(SELECT atch_path
-			        	FROM atch 
-			                WHERE b.atch_id = atch_id
-			                AND ROWNUM = 1) atch_nm
-				FROM biz_mem b
-				ORDER BY b.biz_no
+		SELECT b.*,
+		(SELECT atch_path
+		FROM atch
+		WHERE b.atch_id = atch_id
+		AND ROWNUM = 1) atch_nm
+		FROM biz_mem b
+		ORDER BY b.biz_no
 	</select>
 
 	<!-- 가게 상세 파일 -->
-	<select id="bizDetailImg" resultType="com.goguma.biz.vo.BizMemVO">
+	<select id="bizDetailImg"
+		resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT b.biz_no, b.atch_id, a.*
-			FROM biz_mem b RIGHT JOIN atch a
-	                		ON b.atch_id = a.atch_id
-	        WHERE b.biz_no = #{bizNo}
+		FROM biz_mem b RIGHT JOIN atch a
+		ON b.atch_id = a.atch_id
+		WHERE b.biz_no = #{bizNo}
 	</select>
 
 </mapper>
