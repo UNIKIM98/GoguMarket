@@ -4,6 +4,7 @@
 	layout:decorate="~{/admin/adminLayout}">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -30,8 +31,7 @@
 						<input type="text" placeholder="제목을 입력하세요" style="width: 60%">
 					</h6>
 				</div>
-				<form name="alarmForm" method="post"
-						onsubmit="return false">
+				<form name="alarmForm" method="post" onsubmit="return false">
 					<select class=" mr-10 ml-10" name="userSe" id="sekey">
 					</select> <input type="hidden" id="userId" th:value="${userId}">
 					<ul class="sendAdd">
@@ -53,11 +53,49 @@
 			</div>
 			<div style="float: left; margin: 0 auto;">
 				<button class="btn btn-primary"
-					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">전송</button>
+					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;"
+					onclick="send()">전송</button>
 				<button class="btn btn-primary"
 					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">취소</button>
 			</div>
 		</div>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script th:inline="javascript">
+			$(document).ready(function() {
+				keyValue();
+
+			});
+
+			function keyValue() {
+
+				$.ajax({
+							url : "/admin/keyValue",
+							type : "GET",
+							async : false,
+							dataType : "JSON",
+							contentType : "application/json; charset = utf-8",
+
+							success : function(data) {
+								console.log(data)
+								$("#alarmForm").find("#sekey").append(
+										`<option value="">전체</option>`);
+								$(data["selist"])
+										.each(
+												function(index, obj) {
+													$(".alarmForm")
+															.find("#sekey")
+															.append(
+																	`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
+												});
+							},
+							error : function(data) {
+								console.log(error)
+							}
+
+						})
+
+			}
+		</script>
 	</div>
 </body>
 

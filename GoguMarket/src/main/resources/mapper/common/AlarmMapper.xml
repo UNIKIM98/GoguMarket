@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.common.mapper.AlarmMapper">
+	
 	<insert id="insertAlarm">
 	
 	INSERT INTO alarm VALUES(ALARM_SEQ.nextval,#{userId}, CURRENT_DATE,
-	#{pstSe},#{almCn})
+	#{pstSe},#{almCn},1)
 	</insert>
+	
+	<select id="checkNotifyCount" parameterType="com.goguma.common.vo.AlarmVO" resultType="int">
+		select count(*) from alarm where user_id = #{userId} and cked = 1
+	
+	</select>
+	
+	
+	<select id="selectNotify" parameterType="com.goguma.common.vo.AlarmVO" resultType="com.goguma.common.vo.AlarmVO">
+		select * from alarm where user_id = #{userId} 
+	</select>	
+	
+	<update id="updateNotify" parameterType="com.goguma.common.vo.AlarmVO">
+		update alarm set cked = 0
+		where user_Id = #{userId} and cked = 1
+	</update>
+	
+	
 
 </mapper>

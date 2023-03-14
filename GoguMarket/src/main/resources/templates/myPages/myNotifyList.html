@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="/css/myPages/myPoint.css">
+
+<style>
+	.notifyGroup{
+		width: 60%;
+		min-height: 70%;
+		border: 1px solid gray;
+	}
+	.notifyView{
+		width: 90%;
+		min-height: 70px;
+		border: 1px solid salmon;
+		margin: 3px auto;
+	
+	}
+
+
+</style>
+
+
+<script>
+
+
+
+$(document).ready(function () {
+	loadNotify();
+	setInterval(() => checkNotify(), 20000);
+});
+
+
+function checkNotify(){
+	  console.log("새로고침");
+	  $.ajax({
+	    url: "/my/checkNotifyCount",
+	    type: 'GET',
+	    success: function (data) {
+	      console.log(data);
+
+	      if ( data > 0 ) {
+	    	  loadNotify();
+	      } else {
+	      }
+	    },
+	    error: function (error) {
+	      console.log(error);
+	    },
+	  });
+	}
+
+
+function loadNotify() {
+
+  $.ajax({
+	    url: "/my/selectNotify",
+    type: 'GET',
+    success: function (data) {
+      console.log(data);
+
+      $(".notifyGroup").empty();
+      $(data).each(function (index, obj) {
+        $(".notifyGroup").append(
+        		"<div class='notifyView' id='viewIndex_"+ index + "'><p>"+ obj['almCn'] + "</p></div>"
+        )
+      });
+      updateNotify();
+
+
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
+
+function updateNotify() {
+
+  $.ajax({
+	    url: "/my/updateNotify",
+    type: 'GET',
+    success: function (data) {
+      console.log("업데이트 테스트 : " + data);
+     
+ 	
+
+
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
+
+
+
+</script>
+
+
+
+</head>
+<body>
+	<div layout:fragment="myContent">
+		<div class="container">
+			<div class="tab-pane active" id="order-complete">
+				<div class="notifyGroup">
+					<button onClick="checkNotify()">테스트용 버튼 입니다 </button>
+					<div class="notifyView" id="sample_1">
+						<p id="notifyCn"></p>
+					</div>
+				
+				
+				</div>
+			
+
+			</div>
+		</div>
+	</div>
+
+    	   
+<!--      <td class="td-title-2">${pointInfo.usedYmd}</td> -->
+
+</body>
+</html>
