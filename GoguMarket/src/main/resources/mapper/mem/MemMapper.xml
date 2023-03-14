@@ -26,10 +26,12 @@
 	<insert id="memberJoin" parameterType="com.goguma.mem.vo.MemVO">
 		INSERT INTO MEM (USER_ID, USER_SE, USER_PW, USER_NM,
 						NICK_NM, ADDR, DEAL_AREA, MBL_TELNO,
-						JOIN_YMD, USER_STTS)
+						JOIN_YMD, USER_STTS, EML)
 		VALUES(#{userId}, #{userSe},#{userPw}, #{userNm},
-				#{nickNm}, #{addr}, #{dealArea}, #{mblTelno}, SYSDATE, #{userStts})
+				#{nickNm}, #{addr}, #{dealArea}, #{mblTelno}, SYSDATE, #{userStts}, #{eml})
 	</insert>
+
+
 
 	<!-- ❤️ 아이디 중복 확인 -->
 	<select id="isIdCheck" resultType="int" parameterType="String">

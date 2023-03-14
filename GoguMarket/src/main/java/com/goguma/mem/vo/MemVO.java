@@ -15,12 +15,6 @@ import lombok.Data;
 
 @Data
 public class MemVO implements UserDetails {
-	// 카카오
-	private Long id;
-	private String name;
-	private String email;
-	private String picture;
-	private String role = "ROLE_USER";
 	
 	private String userId;
 
