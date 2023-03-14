@@ -96,7 +96,7 @@ public class BizController {
 		System.out.println("가게정보 ===========" + memService.bizInfo(bizNo));
 
 		// 가게 소식
-		model.addAttribute("news", newsService.bizNews(bizNo));
+		model.addAttribute("news", newsService.selectBizNews(bizNo));
 		// 가게 메뉴
 		model.addAttribute("menu", menuService.bizMenu(bizNo));
 		// 가게 리뷰
@@ -162,7 +162,7 @@ public class BizController {
 		HttpSession session = request.getSession();				//세션받아옴
 		String bizNo = (String) session.getAttribute("bizNo");	//세션에서 bizNo값 받아옴
 		
-		List<BizNewsVO> bizNews = newsService.bizNews(bizNo);	//세션에서 받아온bizNo로 bizNews매퍼 돌림
+		List<BizNewsVO> bizNews = newsService.selectBizNews(bizNo);	//세션에서 받아온bizNo로 bizNews매퍼 돌림
 		
 		model.addAttribute("news",bizNews);		//위에서 돌린 List값을 모델에 담아주고 "news"라고함.
 		

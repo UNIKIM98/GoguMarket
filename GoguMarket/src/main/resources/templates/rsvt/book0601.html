@@ -203,7 +203,7 @@
 													<!-- 오른쪽부분-->
 													<div class="col-md-6">
 														<!-- action="/orderFormSubmit" -->
-														<form id="orderForm" action="/orderFormSubmit"
+														<form id="orderForm" action="/my/orderFormSubmit"
 															method="post" onsubmit="return false">
 															<div class="payment-details pl-10 mb-50">
 																<h6 class="widget-title border-left mb-20">예약확인</h6>
@@ -579,7 +579,7 @@
 			function gotoOrder(payMthd){
 				var formData = new FormData($("#orderForm")[0]);	
 				$.ajax({   
-					url : "/orderFormSubmit",
+					url : "/my/orderFormSubmit",
                     type : "POST",
                     data : formData,
                     processData : false,
@@ -615,7 +615,7 @@
 
 				//ajax로 예약번호를 컨트롤러에 전달
 				$.ajax({
-					url: "/insertRsvtPayment", 
+					url: "/my/insertRsvtPayment", 
 					type: "post",
 					data: JSON.stringify(payment),
 					contentType: "application/json; charset=utf-8",

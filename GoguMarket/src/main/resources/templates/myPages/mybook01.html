@@ -36,7 +36,6 @@
 							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
 								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;">
 								<th:block th:if="${sim != null}">
-								<h1 th:text="${sim}"></h1>
 									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
 									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
 									<td class="td-title-1" th:each="code: ${code}"
