@@ -9,7 +9,6 @@ import com.goguma.deal.vo.DealVO;
 
 public interface DealMapper {
 
-	// List<DealVO> dealListSelect(); // 전체 판매상품 조회
 	List<DealVO> dealListSelect(DealSearchVO svo); // 페이징
 
 	int getcountTotal(DealSearchVO svo);
@@ -36,7 +35,6 @@ public interface DealMapper {
 	List<Map> selectCashPrchs(String prchsId);
 	
 	// ===========================
-	// 채은 추가! 확인 후 주석 지워주세욧
 	// 특정 판매자 게시글 전부 가져오기
 	List<Map> selectNtslDeal(DealVO vo);
 	
