@@ -234,7 +234,7 @@
 										<div class="plus-minus-pro-action">
 
 											<div class="sin-pro-action f-right">
-												<ul class="action-button">
+												<ul th:each="d : ${deal}" class="action-button">
 													<!-- 판매자입장에서 -->
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="button" onclick="updateform()"
@@ -242,29 +242,31 @@
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" th:if="${session.userId == deal.ntslId}"
 															onclick="deleteDeal()">삭제하기</button></li>
-													<li th:each="d : ${deal}">
-															<button class="submit-btn-1 mt-30 btn-hover-1"
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															th:if="${d.stts == '예약중' && d.ntslId == session.userId}"
-															type="submit" onclick="cancel()">예약취소</button></li>
-													<li th:each="d : ${deal}">
-															<button class="submit-btn-1 mt-30 btn-hover-1"
+															type="submit" 
+															onclick="cancel()">예약취소</button></li>
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															th:if="${d.stts == '예약완료' && d.ntslId == session.userId}"
-															type="submit" onclick="soldout()">판매완료</button></li>
+															type="submit" 
+															onclick="soldout()">판매완료</button></li>
 															
-													<!-- 구매자입장에서 -->															
+													<!-- 판매자 + 구매자 둘다 사용할 버튼 -->															
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" onclick="chat()">채팅하기(구매문의)</button></li>
+															
+													<!-- 구매자 -->
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit">구매하기</button></li>
-													<li th:each="d : ${deal}">
-															<button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit" 
-															 th:if="${session.userId != deal.ntslId}" 
-															th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
-															>리뷰하기</button>
-													</li>
+															type="submit"
+															th:if="${session.userId != deal.ntslId}" >구매예약</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit">신고하기</button></li>
+														type="submit" 
+														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
+														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
+															>리뷰쓰기</button></li>
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															type="submit"
+															>신고하기</button></li>
 												</ul>
 											</div>
 										</div>
