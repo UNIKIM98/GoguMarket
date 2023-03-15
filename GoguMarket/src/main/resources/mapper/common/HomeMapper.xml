@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goguma.common.mapper.HomeMapper">
+<!-- 채은 main에서 쓸 메퍼들 -->
+<!-- deal -->
+<select id="selectHomeDeal" resultType="map">
+		SELECT ROWNUM RN, c.*
+		FROM (
+		    SELECT a.*, (
+		        SELECT ATCH_PATH
+		        FROM ATCH
+		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
+		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    FROM DEAL a
+		    ORDER BY dl_ymd DESC
+		) c
+		<![CDATA[
+		WHERE ROWNUM < 5
+		]]>
+</select>
+
+<!-- auct -->
+<select id="selectHomeAuct" resultType="map">
+		SELECT ROWNUM RN, c.*
+		FROM (
+		    SELECT a.*, (
+		        SELECT ATCH_PATH
+		        FROM ATCH
+		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
+		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    FROM AUCT a
+		    ORDER BY reg_ymd DESC
+		) c
+		<![CDATA[
+		WHERE ROWNUM < 5
+		]]>
+</select>
+
+<!-- biz -->
+<select id="selectHomeBiz" resultType="map" parameterType="String">
+		SELECT ROWNUM RN, c.*
+		FROM (
+		    SELECT a.*, (
+		        SELECT ATCH_PATH
+		        FROM ATCH
+		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
+		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    FROM BIZ_MEM a
+		    WHERE ctgry = #{ctgry}
+		    ORDER BY bIZ_no DESC
+		) c
+		<![CDATA[
+		WHERE ROWNUM < 5
+		]]>
+</select>
+
+<!-- sns -->
+<select id="selectHomeSns" resultType="map">
+		SELECT ROWNUM RN, c.*
+		FROM (
+		    SELECT a.*, (
+		        SELECT ATCH_PATH
+		        FROM ATCH
+		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
+		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    FROM SNS a
+		    ORDER BY SNS_YMD DESC
+		) c
+		<![CDATA[
+		WHERE ROWNUM < 5
+		]]>
+</select>
+
+
+</mapper>

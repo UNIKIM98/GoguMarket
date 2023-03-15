@@ -6,7 +6,7 @@ import com.goguma.biz.vo.BizNewsVO;
 
 public interface BizNewsService {
 	//가게 소식
-	List<BizNewsVO> bizNews(String bizNo);
+	List<BizNewsVO> selectBizNews(String bizNo);
 
 		
 	

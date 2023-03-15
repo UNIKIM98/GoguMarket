@@ -136,11 +136,7 @@ function selectMemberList(dis, pageNum) {
 					.append($("<td>").text(mem.eml))
 					.append($("<td>").html(check))
 					.append(
-						$("<td>").html(
-							btn
-								.clone()
-								.text("변경")
-								.attr("onclick", "updataStts(" + userId + ")")
+						$("<td>").html(btn.clone().text("변경").attr("onclick", "updataStts(" + userId + ")")
 						)
 					);
 			});

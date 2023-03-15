@@ -71,7 +71,7 @@ public class DealController {
 
 	
 	// ===========================
-	// ▷ 중고거래 마이페이지
+	// ▷ 마이페이지 / 중고거래 : 거래내역
 	@RequestMapping("/my/myDeal")
 	public String mydeal(DealVO dVO,String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -95,15 +95,13 @@ public class DealController {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
 		
-		
 		int cnt = dealService.updateYmd(dVO, userId); // pointVO에 userId담아줄라공~
 		
-	
 		return cnt;
 	}
 	
 	// ===========================
-	// ▷ 중고거래 가계부
+	// ▷ 마이페이지 / 중고거래 가계부
 	@RequestMapping("/my/myCashbook")
 	public String mycashbook(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -113,7 +111,17 @@ public class DealController {
 		model.addAttribute("cashBuy",dealService.selectCashPrchs(userId));	// 구매자일때 건수+데이터조회
 		return "myPages/myCashbook";
 	}
-	
+	// ===========================
+	// ▷ 마이페이지 / 중고거래 거래후기
+		@RequestMapping("/my/myReview")
+		public String myreview(String userId, Model model, HttpServletRequest request,DealReviewVO vo) {
+			HttpSession session = request.getSession();
+			userId = (String) session.getAttribute("userId");
+			
+			vo.setUserId(userId);
+//			model.addAttribute("get",rvService.selectGetRv(userId));
+			return "myPages/myReview";
+		}
 	// ===========================
 	// ▷ 중고거래 메인
 	@RequestMapping("/goguma/dealMain") // 중고거래 메인 페이지
@@ -182,6 +190,7 @@ public class DealController {
 
 		// 시세를 담는 모델
 		model.addAttribute("prc",dealService.selectPrice(svo));
+		System.out.println(dealService.selectPrice(svo)+"시세");
 		
 		return "deal/dealdetail";
 	}
@@ -190,8 +199,6 @@ public class DealController {
 	// ▷ 중고거래 게시글 작성
 	@RequestMapping("/my/dealform") // 딜폼창확인
 	public String dealform(Model model) {
-		
-		
 		model.addAttribute("category", codeService.codeList("002"));
 
 		return "deal/dealform";
@@ -307,18 +314,25 @@ public class DealController {
 	// ===========================
 	// ❤❤ 판매자 페이지
 	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
-	public String getDealSeller(DealVO dVO, @PathVariable String ntslId, Model model) {
+	public String getDealSeller(Paging paging,DealSearchVO svo, @PathVariable String ntslId, Model model) {
 
 		System.out.println("왔슈...." + ntslId);
+		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
+		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
+
+		svo.setFirst(paging.getFirst());
+		svo.setLast(paging.getLast());
 		
-		model.addAttribute("dealList", dealService.selectNtslDeal(dVO));
-		System.out.println(dealService.selectNtslDeal(dVO));
+		paging.setTotalRecord(dealService.getcountTotal(svo));
+		System.out.println(dealService.getcountTotal(svo)+"ㅌㅌㅌㅌ");
+		
+		model.addAttribute("dealList", dealService.selectNtslDeal(svo));
+		System.out.println(dealService.selectNtslDeal(svo));
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
 		model.addAttribute("review", rvService.getDealRv(ntslId));// 여러건의 후기 조회
 		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
-		//model.addAttribute("code",codeService.voteList(ntslId));//잘못된쿼리 지워야함
 		return "deal/dealSellerPage";
 	}
 

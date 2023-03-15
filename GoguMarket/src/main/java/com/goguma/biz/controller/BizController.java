@@ -1,6 +1,8 @@
 package com.goguma.biz.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,11 +26,9 @@ import com.goguma.biz.vo.BizNewsVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.biz.vo.PagingVO;
 import com.goguma.common.service.CommonCodeService;
-import com.goguma.mem.service.MemService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
 import com.goguma.rsvt.vo.RsvtRvVO;
-import com.goguma.rsvt.vo.RsvtVO;
 
 @Controller
 public class BizController {
@@ -96,7 +96,7 @@ public class BizController {
 		System.out.println("가게정보 ===========" + memService.bizInfo(bizNo));
 
 		// 가게 소식
-		model.addAttribute("news", newsService.bizNews(bizNo));
+		model.addAttribute("news", newsService.selectBizNews(bizNo));
 		// 가게 메뉴
 		model.addAttribute("menu", menuService.bizMenu(bizNo));
 		// 가게 리뷰
@@ -142,7 +142,12 @@ public class BizController {
 
 	// 동네가게 프로필 수정폼
 	@GetMapping("/biz/shop02")
-	public String shop02() {
+	public String shop02(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		
+		
+		
+		
 		return "biz/shop02";
 	}
 
@@ -158,17 +163,20 @@ public class BizController {
 	
 	@GetMapping("/biz/selectBizNewsAjax")
 	@ResponseBody
-	public String selectBizNewsAjax(HttpServletRequest request, Model model) {
+	public Map<String,Object> selectBizNewsAjax(HttpServletRequest request, Model model) {
+
+		
+		Map<String,Object> news = new HashMap<String, Object>();
 		HttpSession session = request.getSession();				//세션받아옴
 		String bizNo = (String) session.getAttribute("bizNo");	//세션에서 bizNo값 받아옴
 		
-		List<BizNewsVO> bizNews = newsService.bizNews(bizNo);	//세션에서 받아온bizNo로 bizNews매퍼 돌림
+		List<BizNewsVO> bizNews = newsService.selectBizNews(bizNo);	//세션에서 받아온bizNo로 bizNews매퍼 돌림
 		
-		model.addAttribute("news",bizNews);		//위에서 돌린 List값을 모델에 담아주고 "news"라고함.
+		news.put("news",bizNews);		//위에서 돌린 List값을 모델에 담아주고 "news"라고함.
 		
 		System.out.println(bizNews);
 		System.out.println(model);
-		return "adfafd";
+		return news;
 	}
 
 	@GetMapping("/biz/shop04")

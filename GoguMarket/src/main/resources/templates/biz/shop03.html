@@ -53,67 +53,84 @@
 						</div>
 						본문내용 자리 시작
 						<!-- 본문내용 자리 시작 -->
+						<h5 class="sin-pro-action f-right">
+							<button onclick="">글쓰기</button>
+						</h5>
+							<div id="selectBizNewsAjax">
+								<div id="newsList">
+
+
+								</div>
+									<!-- <table>
+										<tbody id="newsList">
+											<tr onclick='location.href="#"'>
+												<th>${n.atchId}</th>
+												<td>${n.ntcTtl}</td>
+											</tr>
+										</tbody>
+									</table> -->
+							</div>
+
+						
 						<div>
 							<div class="by-brand-product">
 								<div class="active-by-brand slick-arrow-2" id="news"></div>
 							</div>
-						<table>
-							<tbody>
-								<tr onclick='location.href="#"'>
-									<th><label for="atchId">Today Posting</label></th>
-									<td>
-										<div>
-											사진영역
-											<h5 class="sin-pro-action f-right">
-												내용영역
-											</h5>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-			$(function(){
-				
-				
-				
+		<script th:inline="javascript">
+
+
+			$(function () {
+				selectBizNewsAjax();
 			})
-			
-			function selectBizNewsAjax (){
-				
+
+			function selectBizNewsAjax() {
+
 				$.ajax({
-					url:"/biz/selectBizNewsAjax",
-					type:'get',
-					dataType : 'json',
-					contentType : 'application/json; charset = utf-8',
-					success:function(result){
-						console.log(result);
-						for(news of result){
-							$("#news").append(`	<div class="brand-item">
-	                            				<div class="single-brand-product"
-													id="clickNews"
-													onclick="bizNewsModal(${sns.snsNo})">
-	                            						${news.ntcTtl} / ${news.ntcCn}
-	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-	                         							<img src="${news.atchPath}" alt=""></a>
-	                         							조회수&nbsp👀:${news.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${news.ntcYmd}
-												</div>
-												</div>`)
-						}
+					url: "/biz/selectBizNewsAjax",
+					type: 'get',
+					contentType: 'application/json; charset = utf-8',
+					success: function (result) {
+						console.log(result)
+						console.log(result.news)
+						let news = result.news;
+
+						news.forEach(n=>{
+								$("#newsList").append(
+											`
+											<div class="single-brand-product"
+													id="clickSns"
+													onclick="selectOneBizNews(${n.ntcNo})">
+	                            						${n.ntcTtl} / ${n.ntcYmd}
+	                         							<img src="${n.atchId}">
+	                         							조회수&nbsp👀:${n.inqCnt}
+											</div>
+											
+											`
+
+								)
+							
+							
+						})
+						// for (news of result) {
+						// 	$("#news").append(`<div class="by-brand-product">
+	                            				
+	                    //         						${news.bizNo} / ${news.ntcTtl}
+	                            				
+						// 					</div>`)
+						// }
 					},
-					error:function(err){
+					error: function (err) {
 						console.log(err);
 					}
 				})
 			}
-			
-			
+
+
 		</script>
 	</div>
 </body>

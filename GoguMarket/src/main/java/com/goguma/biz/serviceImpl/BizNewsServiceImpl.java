@@ -17,8 +17,8 @@ public class BizNewsServiceImpl implements BizNewsService{
 	
 	//가게 소식
 	@Override
-	public List<BizNewsVO> bizNews(String bizNo) {
-		return map.bizNews(bizNo);
+	public List<BizNewsVO> selectBizNews(String bizNo) {
+		return map.selectBizNews(bizNo);
 	}
 
 }

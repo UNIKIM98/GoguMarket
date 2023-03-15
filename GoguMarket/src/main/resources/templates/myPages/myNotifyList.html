@@ -23,10 +23,20 @@
 
 
 <script>
-
+radio = $("<input>").attr({
+	name: "userStts",
+	class: "select",
+	name:"select",
+	type:"checkbox"
+}); // 테이블에 변경항목 추가하기위한 태그 생성
 
 
 $(document).ready(function () {
+	
+	$(".allCheck").click(function(){
+		$(".check").prop("checked",true);
+	})
+	
 	loadNotify();
 	setInterval(() => checkNotify(), 20000);
 });
@@ -53,21 +63,41 @@ function checkNotify(){
 	  });
 	}
 
+/*var finalDis = 'AD';
+var finalPage = 0;
+var maxPage = 1;
 
-function loadNotify(pstSe) {
+function setPageJs(pageNum) {
+	
+	if (pageNum < 1) {
+		pageNum = 1;
+		return false;
+	}
+	if (pageNum > maxPage) {
+		pageNum = maxPage;
+		return false;
+	}
+	console.log("clickCall : " + pageNum);
+	loadNotify(pstSe, pageNum);
+}*/
+
+
+function loadNotify(pstSe,pageNum) {
 	
 	console.log(pstSe);
+	console.log(pageNum);
 
   $.ajax({
 	    url: "/my/selectNotify",
     	type: 'GET',
     	data: {pstSe},
     success: function (result) {
-      
+      console.log(result)
+      console.log(result.page)
+    	
 	  $(".notifyGroup").empty();
+      $(".pagination").empty();
 	  
-	
-	 
 	  let pstSed='';
 	  
 	  console.log(pstSe)
@@ -91,17 +121,46 @@ function loadNotify(pstSe) {
     		  pstSed=' [ 중고 거래 ] '
     	  }
     	  
+    	$("#allSelect").append
+    	  
+    	  
   	  
-    		$(".notifyGroup")
-			.append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
+    	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
+							.append(
+						$("<td>").html(radio.clone().text("변경").attr({
+							"value":data.almNo,
+							"class":"check_"+data.almNo
+							
+						})
+						)
+								
+						)
+					
 			.append($("<td>").text(index+1))
 			.append($("<td>").text(pstSed))
 			.append($("<td>").text(data.almCn))
 			.append($("<td>").text(data.almYmd))
 			
+		//==================================================================================
 			
-      
+
       });
+		$(result.page).each(function(index,page){
+			for (i = 0; i < parseInt(page.endPage); i++) {
+				$(".pagination").append(
+						' <li class="page-item page_' +
+						(i + 1) +
+						'"><a class="page-link" href="#" onClick="loadNotify(' +
+						(i + 1) +
+						')"> ' +
+						(i + 1) +
+						"</a></li>"
+					);
+			}
+		})
+		
+	  
+	  
       updateNotify();
 
 
@@ -182,8 +241,9 @@ function updateNotify() {
 						<div class="row">
 							<div>
 								<table class="table" style="text-align: center">
-									<thead style="border: 1px">
+									<thead style="border: 1px" >
 										<tr>
+											<th><input type="checkbox" name="select" class="allCheck"></th>
 											<th>NO</th>
 											<th>FROM</th>
 											<th>ALM_CN</th>
@@ -195,11 +255,10 @@ function updateNotify() {
 									</tbody>
 								</table>
 							</div>
-							<div class="pagination">
-							
-							</div>
 						</div>
 					</div>
+					<button class="btn btn-secondary f-right mt-20">delete</button>
+					<div class="pagination mt-30" style="margin-left: 40%"></div>
 				</div>
 
 

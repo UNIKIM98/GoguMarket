@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,8 +102,8 @@ public class AlarmController {
 	@GetMapping("/my/selectNotify")
 	@ResponseBody
 	public Map<String,Object> selectNotify(HttpServletRequest request,String pstSe,CommonPaging page) {
-		System.out.println(pstSe);
-		
+	
+		System.out.println(page+"현제 페이지");
 		AlarmVO vo = new AlarmVO();
 		Map<String,Object> map = new HashMap<String, Object>();
 		
@@ -112,6 +113,7 @@ public class AlarmController {
 		vo.setFirst(page.getFirst());
 		vo.setLast(page.getLast());
 		
+	
 		
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
