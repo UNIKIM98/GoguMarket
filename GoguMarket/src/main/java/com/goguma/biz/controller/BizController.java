@@ -29,6 +29,7 @@ import com.goguma.biz.vo.PagingVO;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtRvService;
+import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.RsvtRvVO;
 
 @Controller
@@ -48,6 +49,8 @@ public class BizController {
 	CommonCodeService codeService; // 공통코드
 	@Autowired
 	BizDangolService dangolService; // 단골
+	@Autowired
+	RsvtService rsvtService;	//예약
 
 //////////////////////▲Autowired▲//////////////////////
 	
@@ -270,7 +273,9 @@ public class BizController {
 		String bizNo = (String) session.getAttribute("bizNo");
 		System.out.println("shop08" + bizNo);
 		
-//		model.addAttribute("lists", )
+		System.out.println(rsvtService.selectBizRsvt(bizNo)); 
+		model.addAttribute("lists", rsvtService.selectBizRsvt(bizNo));
+		model.addAttribute("code", codeService.codeList("007"));
 		return "biz/shop08";
 	}
 }

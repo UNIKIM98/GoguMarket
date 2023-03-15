@@ -47,7 +47,7 @@
 							<tr th:if="${#lists.isEmpty(simple)}">
 								<td class="td-title-1" colspan="4" style="text-align:center;">예약 내역이 없습니다.</td>
 							</tr>
-
+	
 						</table>
 					</div>
 					
@@ -102,6 +102,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="col-lg-4">
 						<div class="tab-pane active pt-30" id="order-complete" th:if="${!#lists.isEmpty(simple)}">
 							<a class="button extra-small mb-20" onclick="chatRoomOpen()">
@@ -143,6 +144,7 @@
 			}else{
 				window.location.href = "/my/mybook02/" + getRsvtNo	//예약번호 받아서 넘기기				
 			}
+			console.log();
 		}
 		
 		//세션에 담긴 정보 변수에 담아주기

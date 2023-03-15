@@ -1,17 +1,14 @@
 package com.goguma.rsvt.vo;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
-public class RsvtUpMenuVO extends RsvtMenuVO{
+public class RsvtUpMenuVO{
 	int upMenuNo;
 	int rsvtUpdateNo;
-	String MenuNO;
+	String menuNo;
 	int amount;
 	int menuPrc;
 	
-	List<RsvtUpMenuVO> upMenuInfo;
 	
 }

@@ -6,6 +6,8 @@
 <body>
 
 	<div layout:fragment="Bizcontent">
+		<script
+			src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
 		<div class="row">
 
 			<div class="col-lg-12">
@@ -22,7 +24,11 @@
 					<hr>
 					<!--달력자리-->
 					<div>
-						달력쓰<br> 들어갈 예정
+						<div id="isTodayAttend"></div>
+						<div id='calendar' style="width: 550px"></div>
+						<div style="text-align: center; margin-right: 40%;">
+							
+						</div>
 
 					</div>
 					<hr>
@@ -30,7 +36,7 @@
 					<!--내용-->
 					<table class="table">
 						<tr>
-							<th class="td-title-1">예약날짜</th>
+							<th class="td-title-1" colspan="2" style="text-align:center;">예약일시</th>
 							<th class="td-title-1">예약자명</th>
 							<th class="td-title-1">요청사항</th>
 							<th class="td-title-1">주문정보</th>
@@ -39,43 +45,130 @@
 						</tr>
 
 						<!-- tr반복 -->
-						<tr>
-							<td class="td-title-1">2023-02-14 15:00</td>
-							<td class="td-title-1">도리눈아</td>
-							<td class="td-title-1">요청사항이 없습니다</td>
+						<tr th:each="list:${lists}">
+							<td class="td-title-1" th:text="${list.rsvtYmd}">(예약날짜)</td>
+							<td class="td-title-1" th:each="code: ${code}"
+								th:if="${code.commonDetailCode} == ${list.rsvtTm} and ${list.rsvtTm} != null"
+								th:text="${code.commonNm}">(시간)
+							</td>
+							<td class="td-title-1" th:if="${list.rsvtTm} == null">
+								없음
+							</td>
+							<td class="td-title-1" th:text="${list.nickNm}">(이름)</td>
+							<td class="td-title-1" th:text="${list.rsvtWant}">(요청사항)</td>
 							<td class="td-title-1">
-								<button class="btn btn-warning btn-sm" type="submit">상세보기</button>
+								<button class="btn btn-warning btn-sm" type="button" th:onclick="rsvtInfo([[${list.rsvtNo}]])">상세보기</button>
 							</td>
 							<td class="td-title-1">
-								<button class="btn btn-success btn-sm" type="submit">예약확정</button>
+								<button class="btn btn-success btn-sm" type="button" th:if="${list.rsvtStts}=='예약확정'">예약확정</button>
+								<button class="btn btn-secondary btn-sm" type="button" th:if="${list.rsvtStts}=='예약변경'" th:onclick="updateRsvt([[${list.rsvtNo}]])">예약변경</button>
+								<button class="btn btn-light btn-sm" type="button" th:if="${list.rsvtStts}=='예약완료'">예약완료</button>
 							</td>
-							<td class="td-title-1"></td>
+							<td class="td-title-1">
+								<button class="btn btn-danger btn-sm" type="button" th:if="${list.rsvtStts}=='예약취소'">예약취소</button>
+							</td>
 						</tr>
 
-						<tr>
-							<td class="td-title-1">2023-02-14 15:00</td>
-							<td class="td-title-1">도리눈아</td>
-							<td class="td-title-1">요청사항이 없습니다</td>
-							<td class="td-title-1">
-								<button class="btn btn-warning btn-sm" type="submit">상세보기</button>
-							</td>
-							<td class="td-title-1">
-								<button class="btn btn-secondary btn-sm" type="submit">예약대기</button>
-							</td>
-							<td class="td-title-1">
-								<button class="btn btn-danger btn-sm" type="submit">예약취소</button>
-							</td>
-						</tr>
+					<!-- <tr> -->
+					<!-- 	<td class="td-title-1">2023-02-14 15:00</td> -->
+					<!-- 	<td class="td-title-1">도리눈아</td> -->
+					<!-- 	<td class="td-title-1">요청사항이 없습니다</td> -->
+					<!-- 	<td class="td-title-1"> -->
+					<!-- 		<button class="btn btn-warning btn-sm" type="submit">상세보기</button> -->
+					<!-- 	</td> -->
+					<!-- 	<td class="td-title-1"> -->
+					<!-- 		<button class="btn btn-secondary btn-sm" type="submit">예약대기</button> -->
+					<!-- 	</td> -->
+					<!-- 	<td class="td-title-1"> -->
+					<!-- 		<button class="btn btn-danger btn-sm" type="submit">예약취소</button> -->
+					<!-- 	</td> -->
+					<!-- </tr> -->
 					</table>
 
 
 				</form>
-
 			</div>
-
 		</div>
+		<script>
+			//주문내역 버튼누르면 예약정보 보여줌
+			function rsvtInfo(rsvtNo){
+				window.location.href ="/my/rsvtComplete/"+rsvtNo;
+			}
+			
+			//변경들어온거 해주기
+			function updateRsvt(rsvtNo){
+				console.log("변경버튼"+rsvtNo)
+				$.ajax({
+					url:"/biz/updateRsvtAjax",
+					type:"put",
+					data: {rsvtNo},
+					success: function(result){
+						console.log(result)
+						
+					},error:function(error){
+						console.log(error)
+					}
+					
+				})
+			}
+		
+		
+		// ==============================================================
+		// ❤️ 변수 선언
+			let date = new Date();
 
+			let year = date.getFullYear();
+			let month = ('0' + (date.getMonth() + 1)).slice(-2);
+			let day = ('0' + date.getDate()).slice(-2);
+
+			var today = year + '-' + month + '-' + day;
+			
+// 			var attendYn = false;
+// 			var todayPoint = null;
+			
+		// ==============================================================
+		// ❤️ fullCalendar 그리기
+			document.addEventListener('DOMContentLoaded', function() {
+				let eventList = [];
+				makeCal();
+
+			});
+			function makeCal() {
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					height : '500px',
+					initialView : 'dayGridMonth',
+					locale : 'ko',
+					events : [
+
+					$.ajax({
+						type : "get",
+						url : "/my/selectAttendList",
+						success : function(result) {
+
+							let aList = result.aList;
+
+							for ( let i in aList) {
+								calendar.addEvent({
+// 									title : aList[i].point,
+// 									start : aList[i].attendYmd,
+// 									end : aList[i].attendYmd,
+									display : 'background',
+									backgroundColor : "#00b9ba",
+									textColor : "black"
+								})
+							}
+							//▷ 오늘 출석여부 체크
+// 							isAttendYn(result);
+						}
+					}) ]
+				});
+				calendar.render();
+
+			}
+		</script>
 	</div>
+	<!-- 타임리프 div끝 -->
 
 </body>
 
