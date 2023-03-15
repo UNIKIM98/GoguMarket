@@ -135,10 +135,12 @@ public class BizController {
 
 	// ==============================
 	@PostMapping("/my/bizInsert")
-	public String bizInsert(BizMemVO vo) {
+	public String bizInsert(BizMemVO vo, HttpSession session) {
 		String result = "fail";
-		int cnt = memService.bizInsert(vo);
+		int cnt = memService.bizInsert(vo,session);
 
+		
+		
 		if (cnt > 0) {
 			vo.setBizNo(result);
 			result = "success";
