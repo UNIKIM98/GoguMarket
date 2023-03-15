@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class BizNewsVO {
 
-	private String ntcNo;	//소식번호
+	private int ntcNo;	//소식번호
 	private String bizNo;	//가게번호
 	private String ntcTtl;	//소식제목
 	private String ntcCn;	//소식내용
