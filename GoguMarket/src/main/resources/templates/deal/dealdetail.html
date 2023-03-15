@@ -76,7 +76,7 @@
 			$(function(){
 				var link = document.location.href; // 현재접속url
 				 console.log(link);
-				var tab = link.split('/').pop();   // 배열의 맨 마지막 요소를 삭제하고 해당값을 반환한다
+				var tab = link.split('/').pop()+'#reviews';   // 배열의 맨 마지막 요소를 삭제하고 해당값을 반환한다
 				console.log(tab);
 				$('a[href$='+tab+']'.trigger("click")); // 해당 앵커 트리거를 이용 클릭이벤트
 			});
@@ -259,9 +259,14 @@
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit"
 															th:if="${session.userId != deal.ntslId}" >구매예약</button></li>
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+													<!-- <li><button class="submit-btn-1 mt-30 btn-hover-1"
 														type="submit" 
 														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
+														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
+															>리뷰쓰기</button></li> -->
+															<li><button class="submit-btn-1 mt-30 btn-hover-1"
+														type="submit" 
+														th:if="${session.userId != deal.ntslId}" 
 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>리뷰쓰기</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
