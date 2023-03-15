@@ -55,7 +55,7 @@ public class RsvtController {
 	
 
 	// 일반예약
-	@RequestMapping("/my/book0601/{bizNo}")
+	@RequestMapping("/my/reservation/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
 
 		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); // 가게정보

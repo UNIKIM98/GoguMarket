@@ -71,6 +71,12 @@ public class RsvtServiceImpl implements RsvtService{
 	public int deleteAllByRsvtNo(RsvtVO rsvtVo) {
 		return map.deleteAllByRsvtNo(rsvtVo);
 	}
+	
+	//비즈페이지 예약내역 리스트
+	@Override
+	public List<RsvtVO> selectBizRsvt(String bizNo) {
+		return map.selectBizRsvt(bizNo);
+	}
 
 	
 	

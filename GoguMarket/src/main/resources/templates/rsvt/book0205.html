@@ -19,6 +19,7 @@
 								alt="#"></a>
 						</div>
 					</div>
+					
 					<div class="col-lg-8">
 						<div class="section-title text-start mt-15">
 							<h2 class="uppercase" th:text="${biz.bizNm}">(가게이름)</h2>
@@ -44,10 +45,10 @@
 							<!-- Nav tabs -->
 							<ul class="nav">
 
-								<li><a href="#" data-bs-toggle="tab"> <i
+								<li><a th:onclick="alertTelno([[${biz.bizTel}]])" style="cursor:pointer;" data-bs-toggle="tab"> <i
 										class="zmdi zmdi-phone"></i>
 										<h6>전화문의</h6></a></li>
-								<li><a class="active" href="#" data-bs-toggle="tab"> <i
+								<li><a onclick="chatRoomOpen()" class="active" href="#" style="cursor:pointer;" data-bs-toggle="tab"> <i
 										class="zmdi zmdi-email"></i>
 										<h6>채팅문의</h6>
 								</a></li>
@@ -295,18 +296,33 @@
 		</div>
 		<!-- 큰 덩어리 끝 -->
 		<script type="text/javascript">
-			function moveRsvt() {
-				console.log(sessionStorage.getItem("userId"))
-				var url = window.location.href;
-				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-				console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
-				window.location.href = "/../my/book0601/" + urlBizNo;
-			}
-			function moveComRsvt(){
-				var url = window.location.href;
-				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-				window.location.href = "/../my/book0602/" + urlBizNo;
-			}
+			
+		//예약페이지로 이동
+		function moveRsvt() {
+			console.log(sessionStorage.getItem("userId"))
+			var url = window.location.href;
+			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+			console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
+			window.location.href = "/../my/reservation/" + urlBizNo;
+		}
+		
+		//함께 예약하기 페이지로 이동
+		function moveComRsvt(){
+			var url = window.location.href;
+			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+			window.location.href = "/../my/book0602/" + urlBizNo;
+		}
+		
+		//전화번호 알림창
+		function alertTelno(tel){
+			console.log(tel)
+			alert("가게 전화번호는 [ "+ tel + " ] 입니다.");
+		}
+		
+		//채팅방 이동
+		function chatRoomOpen(){
+			window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
+		}
 		</script>
 	</div>
 	<!-- 타임리프 div끝 -->
