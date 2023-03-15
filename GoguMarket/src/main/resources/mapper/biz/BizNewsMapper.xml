@@ -18,4 +18,5 @@
 		AND NTC_NO = #{ntcNo}
 	</select>
 	
+
 </mapper>

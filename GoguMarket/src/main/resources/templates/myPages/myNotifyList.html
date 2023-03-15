@@ -25,12 +25,18 @@
 <script>
 radio = $("<input>").attr({
 	name: "userStts",
-	id: "key",
-	type:"radio"
+	class: "select",
+	name:"select",
+	type:"checkbox"
 }); // 테이블에 변경항목 추가하기위한 태그 생성
 
 
 $(document).ready(function () {
+	
+	$(".allCheck").click(function(){
+		$(".check").prop("checked",true);
+	})
+	
 	loadNotify();
 	setInterval(() => checkNotify(), 20000);
 });
@@ -115,12 +121,19 @@ function loadNotify(pstSe,pageNum) {
     		  pstSed=' [ 중고 거래 ] '
     	  }
     	  
+    	$("#allSelect").append
+    	  
+    	  
   	  
     	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
-						 .append($("<td>").html(radio)
-								.clone()
-								.text("변경")
-								.attr("onclick", "updataStts()")
+							.append(
+						$("<td>").html(radio.clone().text("변경").attr({
+							"value":data.almNo,
+							"class":"check_"+data.almNo
+							
+						})
+						)
+								
 						)
 					
 			.append($("<td>").text(index+1))
@@ -228,9 +241,9 @@ function updateNotify() {
 						<div class="row">
 							<div>
 								<table class="table" style="text-align: center">
-									<thead style="border: 1px">
+									<thead style="border: 1px" >
 										<tr>
-											<th>SELECT</th>
+											<th><input type="checkbox" name="select" class="allCheck"></th>
 											<th>NO</th>
 											<th>FROM</th>
 											<th>ALM_CN</th>
@@ -244,6 +257,7 @@ function updateNotify() {
 							</div>
 						</div>
 					</div>
+					<button class="btn btn-secondary f-right mt-20">delete</button>
 					<div class="pagination mt-30" style="margin-left: 40%"></div>
 				</div>
 
