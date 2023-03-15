@@ -71,4 +71,22 @@ public class DealReviewServiceImpl implements DealReviewService {
 		return map.selectRvNo();
 	}
 
+	@Override
+	public List<DealReviewVO> selectGetRv(DealReviewVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectGetRv(vo);
+	}
+
+	@Override
+	public List<DealReviewVO> selectSendRv(DealReviewVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectSendRv(vo);
+	}
+
+	@Override
+	public List<DealReviewVO> selectNotSendRv(DealReviewVO vo) {
+		// TODO Auto-generated method stub
+		return map.selectNotSendRv(vo);
+	}
+
 }

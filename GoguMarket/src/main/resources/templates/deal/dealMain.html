@@ -114,23 +114,25 @@ layout:decorate="~{layouts/layout}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                    <a>카테고리 | 글분류</a>
                        <!-- 카테고리&검색&페이징 삼위일체로 한큐에 : form 태그로 감싼다 -->
                         <form name="frmSearch" align="center">
+		                    <h3>중고거래 통합검색</h3>
+		                    <h6>카테고리와 글유형을 선택하세요</h6>
+		                    <h6>선택하지 않을 시 전체글에서 조회됩니다</h6>
                             <div class="newsletter"> 
                                 <div class="subcribe clearfix">
                                         <input type="hidden" name="page" value="1"> 
                                         <input type="hidden" name="orderby" value="dl_ymd"> 
                                             <select name="ctgry">
                                                 <!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
-                                                <option value="">전체
+                                                <option value="">전체 카테고리
                                                 <option th:each="ct : ${category}" th:text="${ct.commonNm}"
                                                     th:value="${ct.commonDetailCode}"
                                                     th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
                                             </select>
                                              <!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
 	                                        <select id="searchType" name="searchType" title="검색 유형 선택">
-	                                            <option value="">전체 검색</option>
+	                                            <option value="">전체 글 유형</option>
 	                                            <option value="dlTtl" th:selected="'dlTtl'==${dsvo.searchType}">글제목</option>
 	                                            <option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
 	                                            <option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
@@ -149,6 +151,7 @@ layout:decorate="~{layouts/layout}">
         
             <div class="col-lg-3 f-right">
                 <!-- 인기검색어 롤링박스 -->
+                <h3>인기검색어</h3>
                 <div class="rolling_box">
                     <ul id ="rolling_box">
                     <li class="card_sliding" id ="first"><p></p></li>
@@ -157,24 +160,24 @@ layout:decorate="~{layouts/layout}">
                     </ul>
                 </div>
                 
-                <table>
-                <thead>
-                    <tr>
-                        <th>순위</th>
-                        <th>검색어</th>
-                    </tr>
-                </thead>
-                <tbody id="word">
-                    <tr th:each="word, i : ${word}">
-                        <td th:text=${i.index+1}></td>
-                        <td th:text="${word.searchTtl}"></td>
-                    </tr>
-                </tbody>
-                </table>
+<!--                 <table> -->
+<!--                 <thead> -->
+<!--                     <tr> -->
+<!--                         <th>순위</th> -->
+<!--                         <th>검색어</th> -->
+<!--                     </tr> -->
+<!--                 </thead> -->
+<!--                 <tbody id="word"> -->
+<!--                     <tr th:each="word, i : ${word}"> -->
+<!--                         <td th:text=${i.index+1}></td> -->
+<!--                         <td th:text="${word.searchTtl}"></td> -->
+<!--                     </tr> -->
+<!--                 </tbody> -->
+<!--                 </table> -->
             </div>
         </div>
 
-
+		
         <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
             
@@ -201,9 +204,9 @@ layout:decorate="~{layouts/layout}">
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-10"><input type="hidden"></div>
-                        <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/my/dealform'"><span>판매글등록</span></a></div>
                         
+	                        <div class="col-lg-10"><input type="hidden"></div>
+	                        <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/my/dealform'"><span>판매글등록</span></a></div>
                         <hr>
                         <!-- 페이지번호관련  -->
 						<div align="center">
@@ -266,7 +269,7 @@ layout:decorate="~{layouts/layout}">
         </section>
         <!-- End page content -->
 
-      </div>
+      
     
     <!-- Body main wrapper end -->
 	<script th:inline="javascript">
@@ -281,7 +284,7 @@ layout:decorate="~{layouts/layout}">
 	for(i in Data){
 		console.log(i);
 		console.log(Data[i].searchTtl);
-		rollingData.push(Data[i].searchTtl);
+		rollingData.push(i + Data[i].searchTtl);
 	console.log(rollingData);
 	}
 
@@ -350,7 +353,7 @@ layout:decorate="~{layouts/layout}">
         console.log(listCnt)
     }, timer);
 	</script>
-
+</div>
 <!--     jquery latest version -->
 <!--     <script src="js/vendor/jquery-3.6.0.min.js"></script> -->
 <!--     <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script> -->
