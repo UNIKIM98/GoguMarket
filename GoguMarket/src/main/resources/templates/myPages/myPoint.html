@@ -50,7 +50,8 @@
 						<div class="col-md-6">
 							<div class="payment-details p-30">
 								<h6 class="widget-title border-left mb-20"
-									style="display: inline-block;">포인트 적립 내역</h6>
+									style="display: inline-block;"><span style="color: #fd7e14" id="ttlTrgt">전체</span> 적립 내역</h6>
+									
 								<button class="submit-btn-1 btn-hover-1"
 									style="float: right; border-radius: 20px; height: 30px">포인트
 									사용하기</button>
@@ -93,7 +94,9 @@
     // ❤️ 특정 포인트만 출력 
     	function criteriaPoint(event){
    			let criteria = $(event.target).text();
+   			$("#ttlTrgt").text(criteria); // 📌 교수님 피드백 : 사용자가 알기 쉽게 타이틀에 표시하기
    			saveCnt = 0;
+   					console.log(criteria+"for문 안쪽")
    			
 			$(".saveTable").children().remove();
 			
@@ -102,6 +105,7 @@
 					makeSaveTable(point);
 					saveCnt++;
    				}else if(criteria=='현재 포인트' && point.pointMthd != '끌어올리기'){
+   					$("#ttlTrgt").text('전체');
    					makeSaveTable(point);
    					saveCnt++;
    				}
@@ -161,6 +165,8 @@
         		   }
     				// ## 화면에 그리기
     			   makeSaveTable(point);
+    		    	
+
     			
   			   // # 포인트 사용 테이블
     		   }else if(usedYmd != null){
@@ -220,6 +226,7 @@
              </tr>
     		`	  
     	  )
+    	  
        }
 
 	// ==============================================================

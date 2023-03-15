@@ -173,14 +173,19 @@
 	</insert>
 	
 	<!-- 예약 삭제(마이페이지) -->
-	<delete id="deleteAllByRsvtNo" parameterType="String">
+	<delete id="deleteAllByRsvtNo" parameterType="int">
 	    DELETE FROM rsvt 
-	    WHERE rsvt_no = #{rsvtNo};
+	    WHERE rsvt_no = #{rsvtNo}
 	    DELETE FROM rsvt_menu 
-	    WHERE rsvt_no = #{rsvtNo};
+	    WHERE rsvt_no = #{rsvtNo}
 	    DELETE FROM rsvt_payment
-	    WHERE rsvt_no = #{rsvtNo};
+	    WHERE rsvt_no = #{rsvtNo}
 	</delete>
+	
+	<!-- ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저-->
+	<select id="deleteAllRsvt" parameterType="int">
+    { CALL p_delete_rsvt(#{value, mode=IN, jdbcType=INTEGER}) }
+	</select>
 	
 	<!-- 가게 예약 조회(?) -->
 	<select id="selectBizRsvt" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">

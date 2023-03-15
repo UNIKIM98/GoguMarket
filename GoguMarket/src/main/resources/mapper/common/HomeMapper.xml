@@ -29,6 +29,7 @@
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
 		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
 		    FROM AUCT a
+		    WHERE STTS = 1
 		    ORDER BY reg_ymd DESC
 		) c
 		<![CDATA[

@@ -23,7 +23,6 @@ public class KakaoLoginSuccessHandler implements AuthenticationSuccessHandler{
 		System.out.println("kakaoLoginSuccessHandler");
 		System.out.println(auth);
 		System.out.println(auth.getPrincipal());
-//		OAuthAttributes memVO = (OAuthAttributes) auth.getPrincipal();
 
 		HttpSession session = request.getSession();
 		MemVO mvo = (MemVO) session.getAttribute("user");
@@ -34,7 +33,6 @@ public class KakaoLoginSuccessHandler implements AuthenticationSuccessHandler{
 		session.setAttribute("atchPath", mvo.getAtchPath()); // 프로필사진 경로(img src에서 사용)
 		session.setAttribute("userNm", mvo.getUserNm()); // 이름
 		session.setAttribute("eml", mvo.getEml()); // 이메일
-//		
 		
 		response.sendRedirect("/");
 	}

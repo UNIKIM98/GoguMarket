@@ -250,13 +250,13 @@ public class RsvtController {
 		return rsvtNo;
 	}
 
-	@PostMapping("/my/myRsvtDeleteAjax")
+	@GetMapping("/my/myRsvtDeleteAjax/{rsvtNo}")
 	@ResponseBody
-	public int deleteAllByRsvtNo(@RequestBody RsvtVO rsvtVo) {
-		System.out.println(rsvtVo);
-		System.out.println(rsvtService.deleteAllByRsvtNo(rsvtVo));
-	    int cnt = rsvtService.deleteAllByRsvtNo(rsvtVo);
-	    return cnt;
+	public int deleteAllByRsvtNo(@PathVariable int rsvtNo) {
+		
+		//삭제 프로시저
+		rsvtService.deleteAllRsvt(rsvtNo);
+	    return 0;
 	}
 	
 }

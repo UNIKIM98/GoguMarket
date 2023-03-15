@@ -38,4 +38,7 @@ public interface RsvtMapper {
 	
 	//비즈페이지 예약리스트 조회
 	List<RsvtVO> selectBizRsvt(String bizNo);
+	
+	// ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저
+	void deleteAllRsvt(int rsvtNo);
 }

@@ -17,25 +17,28 @@ public interface RsvtService {
 
 	// 결제정보테이블(rsvt_payment) 등록
 	int insertRsvtPayment(RsvtPaymentVO payVo);
-	
-	//예약간단내역
+
+	// 예약간단내역
 	List<Map> selectMyRsvtList(String userId);
-		
-	//예약상세내역
+
+	// 예약상세내역
 	List<Map> selectMyRsvtDetail(String userId);
-	
-	//예약 한건
+
+	// 예약 한건
 	RsvtVO selectRsvtOne(String rsvtNo);
-	
-	//예약번호 가게메뉴 조회
+
+	// 예약번호 가게메뉴 조회
 	List<Map> selectRsvtBizMenu(String rsvtNo);
-	
-	//예약업데이트 테이블 insert
+
+	// 예약업데이트 테이블 insert
 	int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpVo);
-	
-	//예약내역 삭제
+
+	// 예약내역 삭제
 	int deleteAllByRsvtNo(RsvtVO rsvtVo);
-	
-	//비즈페이지 예약리스트 조회
+
+	// 비즈페이지 예약리스트 조회
 	List<RsvtVO> selectBizRsvt(String bizNo);
+
+	// ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저
+	void deleteAllRsvt(int rsvtNo);
 }

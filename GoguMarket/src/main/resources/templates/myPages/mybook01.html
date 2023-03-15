@@ -114,24 +114,19 @@
 								style="cursor: pointer;"><span>예약변경신청</span>
 							</a> 
 							<a class="button extra-small mb-20" id="rsvtDelete">
-								<span>예약취소하기</span>
+								<span>예약취소</span>
 							</a>
-
 						</div>
 					</div>
 				</div>
-
-
 			</form>
-
 		</div>
 
 
 		<script th:inline="javascript">
-		
+
 		var getRsvtNo = 0; 
-		console.log(getRsvtNo)
-		
+
 		//예약변경 페이지로 이동
 		function rsvtModify(){
 			if(getRsvtNo == 0 || getRsvtNo == null){
@@ -140,7 +135,7 @@
 				window.location.href = "/my/mybook02/" + getRsvtNo	//예약번호 받아서 넘기기				
 			}
 		}
-		
+
 		//세션에 담긴 정보 변수에 담아주기
 		/*<![CDATA[*/
 			var userId = /*[[ ${session.userId} ]]*/
@@ -150,7 +145,7 @@
 			let email = /*[[ ${session.eml} ]]*/
 		/*]]*/
 		console.log("유저아이디="+userId, "전화번호="+mblTelno, "닉넴="+nickNm);
-		
+
 		//세션으로 받아온거 화면에 출력, value에 값넣기
 		$("#tdNick").text(nickNm);
 		$("#tdTel").text(mblTelno);
@@ -160,6 +155,10 @@
 		//처음 페이지 진입시 상세정보 안보이게
 		$(function(){
 			$('.myRsvtDetail').attr('style','display:none;');
+			$("#testing").on('click',function(){
+				$("#menuTbl").children().remove();
+				$("#rsvtInfo").children().remove();
+			})
 		});
 		
 		//tr클릭시 예약 상세정보 보이게
@@ -193,7 +192,6 @@
 						 totalPrice += list.AMOUNT * list.MENU_PRC;
 					
 					getRsvtNo = list.RSVT_NO
-					console.log(getRsvtNo)
 					}
 						$('#totalTbl').append(
 								`
@@ -217,7 +215,6 @@
 			data: {rsvtNo},
 
 			success: function(list){
-				console.log("밑에꺼: "+list)
 				$('#rsvtInfo').empty()
 				$('#rsvtInfo').append(
 				`<tr>
@@ -240,15 +237,14 @@
 				</tr>
 				`
 				)
-				
-				
+
 			},error : function(err){
 				console.log("error")
 			}
 		})
-			
+
 		}
-		
+
 		//채팅창 오픈
 		function chatRoomOpen(){
 			window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
@@ -258,22 +254,22 @@
 		$('#rsvtDelete').attr("onclick","rsvtDelete(getRsvtNo)");
 		
 		function rsvtDelete(rsvtNo){
+			console.log("아래는 예약번호입니다.")
+			console.log(rsvtNo)
 			if(getRsvtNo == 0 || getRsvtNo == null){
 				alert("취소할 예약을 먼저 선택해주세요")
 			}else{
+				if(confirm("정말로 예약을 취소하시겠습니까?")){
 				$.ajax({
-					url:"/my/myRsvtDeleteAjax",
-					type:"POST",
-					data: {rsvtNo},
-					success: function(result){
-						console.log(result);
-						alert("예약이 취소되었습니다.")
-						window.location.reload;
-					},error: function(error){
+					url:"/my/myRsvtDeleteAjax/"+rsvtNo,
+					success: function(){
+						alert("[예약 취소 완료] 예약이 정상적으로 취소되었습니다.");
+						history.go(0);					},error: function(error){
 						console.log(error);
-						alert("안됨")
+						alert("[예약 취소 실패] 예약 취소가 실패되었습니다.")
 					}
 				})	
+				}
 			}
 		}
 
