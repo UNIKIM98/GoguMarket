@@ -10,7 +10,7 @@
 		<div class="container">
 			<div class="single-product-area mb-80">
 				<div class="row">
-
+				
 					<!-- single-product-info start -->
 					<div class="single-product-info">
 						<div class="row">
@@ -18,17 +18,17 @@
 								<img class="media-object" src="img/author/1.jpg" alt="#">
 							</div>
 							<div class="col-sm-7 mt-10">
-								<h3 class="text-black-1">김또치</h3>
-								<h6 class="brand-name-2">단골 20일째</h6>
+								<h3 class="text-black-1" th:text="${dangol.nickNm}">김또치</h3>
+								<h6 class="brand-name-2" th:text="|단골 등록일 : ${dangol.dangolYmd}|">단골 20일째</h6>
 							</div>
 							<div class="col-sm-3 mt-10">
-								<a class="button small button mb-20" href="#"><span>1:1 채팅</span>
+								<a class="button small button mb-20" onclick="chatRoomOpen()" style="cursor:pointer;" ><span>1:1 채팅</span>
 								</a>
 							</div>
 						</div>
 						<br>
 						<textarea class="custom-textarea" placeholder="고객에 대한 메모를 입력해보세요"
-							rows="3"></textarea>
+							rows="3">[[${dangol.dangolMemo}]]</textarea>
 						<!-- hr -->
 						<hr>
 						<!-- single-product-tab -->
@@ -60,7 +60,8 @@
 										</div>
 									</div>
 									<br>
-
+									
+									<!-- 후기 1건 -->
 									<div class="tab-pane active" id="order-complete">
 										<div class="order-complete-content box-shadow"
 											style="padding: 20px;">
@@ -243,12 +244,18 @@
 				</div>
 			</div>
 		</div>
+		
 	<script th:inline="javascript">
 		//유저번호 받아오기
 		var url = window.location.href;
 		var urlUserId = url.substring(url.lastIndexOf('/') + 1);
 		console.log("-----" + urlUserId)
 		
+		
+		//채팅방 이동
+		function chatRoomOpen(){
+			window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
+		}
 	</script>
 	</div>
 	<!-- 타임리프 div끝 -->

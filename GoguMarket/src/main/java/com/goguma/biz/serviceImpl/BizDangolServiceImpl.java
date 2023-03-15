@@ -38,4 +38,10 @@ public class BizDangolServiceImpl implements BizDangolService {
 	public List<Map> selectDangolList(String bizNo) {
 		return bMapper.selectDangolList(bizNo);
 	}
+
+	//단골 한명
+	@Override
+	public List<BizDangolVO> selectDangolPersonal(String userId) {
+		return bMapper.selectDangolPersonal(userId);
+	}
 }

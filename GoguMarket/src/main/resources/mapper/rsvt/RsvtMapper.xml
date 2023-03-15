@@ -181,5 +181,15 @@
 	    DELETE FROM rsvt_payment
 	    WHERE rsvt_no = #{rsvtNo};
 	</delete>
+	
+	<!-- 가게 예약 조회(?) -->
+	<select id="selectBizRsvt" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
+		SELECT b.*,r.*, m.nick_nm
+		FROM biz_mem b INNER JOIN rsvt r 
+		                ON b.biz_no = r.biz_no
+                        INNER JOIN mem m
+                        ON r.user_id = m.user_id
+		WHERE b.biz_no = #{bizNo}
+	</select>
 
 </mapper>
