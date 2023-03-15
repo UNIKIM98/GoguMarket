@@ -4,24 +4,21 @@
 	<!-- ❤️ 비즈 번호 가져오기 -->
 	<select id="selectBizNo" parameterType="String"
 		resultType="String">
-		SELECT biz_no
-		FROM biz_mem
+		SELECT biz_no FROM biz_mem
 		WHERE user_id = #{userId}
-	</select>
-
-	<!-- 가게목록 전체조회 -->
-	<select id="getBizList" resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT * FROM biz_mem
-		ORDER BY
-		biz_no
 	</select>
 
 	<!-- 개별조회(가게상세페이지) -->
 	<select id="bizInfo" parameterType="String"
 		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT *
-		FROM biz_mem
+		SELECT * FROM biz_mem
 		WHERE biz_no = #{bizNo}
+	</select>
+
+	<!-- 가게목록 전체조회 -->
+	<select id="getBizList" resultType="com.goguma.biz.vo.BizMemVO">
+		SELECT * FROM biz_mem
+		ORDER BY biz_no
 	</select>
 
 	<!-- 가게목록 페이징(전체조회) -->
@@ -45,6 +42,10 @@
 		INSERT INTO BIZ_MEM (BIZ_NO,USER_ID,BIZ_NM,BIZ_ADDR,BIZ_ADDR_DETAIL,BIZ_TEL,BR_NO,PROF_ATCH_ID)
 		VALUES (#{bizNo},#{userId},#{bizNm},#{bizAddr},#{bizAddrDetail},#{bizTel},#{brNo},#{profAtchId})
 	</insert>
+
+	<update id="updateBizMenu">
+		<!-- !!!!!!!작성해야함!!!!!!! -->
+	</update>
 
 	<!-- 반복 쿼리문 -->
 	<sql id="criteria">

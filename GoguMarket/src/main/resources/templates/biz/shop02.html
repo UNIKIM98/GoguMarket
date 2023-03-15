@@ -23,8 +23,8 @@
 									<tbody>
 										<tr>
 											<th><label for="BizNm">가게명<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-													readonly="readonly"
+											<td colspan="2"><input type="text" id="bizNm" name="bizNm"
+													readonly="readonly" th:value="${bizMem.bizNm}"
 													style="width: 70%;">
 											</td>
 										</tr>
@@ -38,7 +38,7 @@
 										<tr>
 											<th class="mblTelno"><label for="bizTel">연락처<span>*</span></label></th>
 											<td colspan="2"><input type="text" id="bizTel" name="bizTel"
-													placeholder="-/공백 없이 입력" style="width: 40%; margin-right: 50px;"
+													th:placeholder="${bizMem.bizTel}" style="width: 70%; margin-right: 50px;"
 													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 											</td>
 										</tr>
@@ -46,51 +46,40 @@
 											<td><input type="text" name="" id=""></td>
 										</tr>
 										<tr>
-											<th><label for="BizNm">가게설명<span> *</span></label></th>
+											<th><label for="cn">가게설명<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-													style="width: 70%;">
+													th:placeholder="${bizMem.cn}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="BizNm">가게 시작 시간<span> *</span></label></th>
+											<th><label for="bgngTm">가게 시작 시간<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-													style="width: 70%;">
+													th:placeholder="${bizMem.bgngTm}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="BizNm">가게 마감 시간<span> *</span></label></th>
+											<th><label for="endTm">가게 마감 시간<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-													style="width: 70%;">
+													th:placeholder="${bizMem.endTm}"style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="BizNm">가게 프로필사진<span> *</span></label></th>
+											<th><label for="atchId">가게 프로필사진<span> *</span></label></th>
 											<td colspan="2"><input type="file" id="profAtchId" name="profAtchId"
-													style="width: 70%;">
+													th:placeholder="${bizMem.atchId}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="BizNm">카테고리<span> *</span></label></th>
+											<th><label for="ctgry">카테고리<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-													style="width: 70%;">
+													th:placeholder="${bizMem.ctgry}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="BizNm">홈페이지 이메일<span> *</span></label></th>
+											<th><label for="hmpgAddr">홈페이지 이메일<span> *</span></label></th>
 											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
 													readonly="readonly"
-													style="width: 70%;">
-											</td>
-										</tr>
-										<tr>
-											<th><label for="bizAddr">가게 주소<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="bizAddr" name="bizAddr"
-													placeholder="가게 주소 입력을 위해 클릭해주세요." onclick="findAddr()"
-													readonly="readonly" 
-													style="width: 70%;">
-													<input type="text" id="bizAddrDetail" name="bizAddrDetail"
-													placeholder="가게 상세 주소를 입력해주세요."
-													style="width: 70%;">
+													th:placeholder="${bizMem.hmpgAddr}" style="width: 70%;">
 											</td>
 										</tr>
 										<input type="hidden" id="stts" name="stts" value="BIZ">
