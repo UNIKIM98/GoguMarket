@@ -35,5 +35,20 @@
 	    <![CDATA[
         where rownum <= 10
         					]]>	
+        <if test ="pstSe != null">
+        and pst_se = #{pstSe}
+        </if>
 	</select>
+	<!-- 중고거래 검색어 삭제 웨얼절 저거되나?if걸어야됨 -->
+	<delete id="deleteWord"
+			parameterType="com.goguma.common.vo.SearchVO">
+		delete from search
+		where pst_se = #{pstSe}
+	</delete>
+	<!-- 검색어 단어 수정 -->
+	<update id="updateWord">
+		update search
+		set search_ttl = #{searchTtl}
+	</update>
+			
 </mapper>

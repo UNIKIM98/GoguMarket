@@ -23,8 +23,20 @@ public class SearchServiceImpl implements SearchService{
 
 	@Override
 	public List<SearchVO> getPopularWord() {
-		// 인기검색어 리스트로 조회
+		// "중고거래"의 인기검색어 리스트로 조회
 		return map.getPopularWord();
+	}
+
+	@Override
+	public int deleteWord(SearchVO search) {
+		// TODO Auto-generated method stub
+		return map.deleteWord(search);
+	}
+
+	@Override
+	public int updateWord(SearchVO search) {
+		// TODO Auto-generated method stub
+		return map.updateWord(search);
 	}
 
 

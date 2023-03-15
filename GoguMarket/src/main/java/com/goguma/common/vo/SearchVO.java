@@ -18,4 +18,6 @@ public class SearchVO {
 	private Date searchYmd;
 	private String pstSe;
 	private int ttlCnt;
+	
+	
 }
