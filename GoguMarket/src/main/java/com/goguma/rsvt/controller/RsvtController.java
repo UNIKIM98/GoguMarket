@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goguma.biz.service.BizMemService;
@@ -23,6 +25,8 @@ import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.service.RsvtService;
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
+import com.goguma.rsvt.vo.RsvtUpMenuVO;
+import com.goguma.rsvt.vo.RsvtUpdateVO;
 import com.goguma.rsvt.vo.RsvtVO;
 
 @Controller
@@ -133,10 +137,6 @@ public class RsvtController {
 		//System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
 		
 		model.addAttribute("rsvt",rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
-//		model.addAttribute("menu", rsvtService.selectRsvtBizMenu(Integer.toString(rsvtNo)));
-//		model.addAttribute("code", codeService.codeList("007"));
-//		model.addAttribute("info", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
-		
 		return "myPages/mybook02";
 	}
 
@@ -147,7 +147,7 @@ public class RsvtController {
 	}
 
 	// 예약페이지 form submit - js gotoOrder()함수에서 ajax 호출한거 받아옴
-	@PostMapping("/orderFormSubmit")
+	@PostMapping("/my/orderFormSubmit")
 	@ResponseBody
 	public int orderFormSubmit(RsvtVO rsvtInfo, RsvtMenuVO menuInfo, HttpServletRequest request) {
 		// 세션에서 로그인한 아이디 불러오기
@@ -192,7 +192,7 @@ public class RsvtController {
 	}
 
 	// 결제정보 저장 - js saveRsvtPay()함수에서 ajax 호출한거 받아옴
-	@PostMapping("/insertRsvtPayment")
+	@PostMapping("/my/insertRsvtPayment")
 	@ResponseBody
 	public int insertRsvtPayment(@RequestBody RsvtPaymentVO payVo) {
 		/*
@@ -210,8 +210,54 @@ public class RsvtController {
 		return rsvtNo;
 
 	}
-
 	
-	
+	@PostMapping("/my/requestModifyAjax")
+	@ResponseBody
+	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo, RsvtUpMenuVO upMenuInfo, @RequestParam("rsvtNo")int rsvtNo) {
+		System.out.println("수정예약번호===="+rsvtNo);
+		
+		rsvtUpdateVo.setAprvYn("N");
+		
+		//일단 예약번호 param으로 가져옴
+		rsvtUpdateVo.setRsvtNo2(rsvtNo);
+		
+		System.out.println(upMenuInfo);
+		System.out.println(rsvtUpdateVo);
+		
+		//아니 전에했던 메뉴 배열로 불러오는거 왜 따라했는데 안됨?
+		List<RsvtUpMenuVO> lists = upMenuInfo.getUpMenuInfo();
+		System.out.println(lists);
+		/*
+		 * // 예약메뉴 불러오기 위한 list
+		for (int i = 0; i < lists.size(); i++) {
+			System.out.println(i + "번째 메뉴.");
+			System.out.println(lists.get(i).getMenuNm()); // 각 예약메뉴 확인
+			System.out.println(lists.get(i).getAmount());
+			System.out.println(lists.get(i).getMenuNo());
 
+			// 예약메뉴 정보에 userId 넣어주기
+			lists.get(i).setUserId(userId);
+			// RsvtVO에서 가져온 예약번호를 RsvtMenuVO로 넘겨주기
+			lists.get(i).setRsvtNo(rsvtInfo.getRsvtNo());
+
+			System.out.println("=======" + lists.get(i));
+
+		 * */
+		
+		//예약수정 테이블에 insert => 메뉴는 안되는거니..?
+		rsvtService.insertRsvtUpdateTbl(rsvtUpdateVo);
+		
+		return rsvtNo;
+	}
+
+	@PostMapping("/my/myRsvtDeleteAjax")
+	@ResponseBody
+	public int deleteAllByRsvtNo(@RequestBody RsvtVO rsvtVo) {
+		System.out.println(rsvtVo);
+		System.out.println(rsvtService.deleteAllByRsvtNo(rsvtVo));
+	    int cnt = rsvtService.deleteAllByRsvtNo(rsvtVo);
+	    return cnt;
+	}
+	
 }
+

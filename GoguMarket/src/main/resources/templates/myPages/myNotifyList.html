@@ -12,20 +12,22 @@
 .notifyGroup {
 	width: 60%;
 	min-height: 70%;
-	border: 1px solid gray;
 }
 
 .notifyView {
 	width: 90%;
 	min-height: 70px;
-	border: 1px solid salmon;
 	margin: 3px auto;
 }
 </style>
 
 
 <script>
-
+radio = $("<input>").attr({
+	name: "userStts",
+	id: "key",
+	type:"radio"
+}); // 테이블에 변경항목 추가하기위한 태그 생성
 
 
 $(document).ready(function () {
@@ -41,6 +43,8 @@ function checkNotify(){
 	    type: 'GET',
 	    success: function (data) {
 	      console.log(data);
+	      
+	      $("")
 
 	      if ( data > 0 ) {
 	    	  loadNotify();
@@ -53,21 +57,97 @@ function checkNotify(){
 	  });
 	}
 
+/*var finalDis = 'AD';
+var finalPage = 0;
+var maxPage = 1;
 
-function loadNotify() {
+function setPageJs(pageNum) {
+	
+	if (pageNum < 1) {
+		pageNum = 1;
+		return false;
+	}
+	if (pageNum > maxPage) {
+		pageNum = maxPage;
+		return false;
+	}
+	console.log("clickCall : " + pageNum);
+	loadNotify(pstSe, pageNum);
+}*/
+
+
+function loadNotify(pstSe,pageNum) {
+	
+	console.log(pstSe);
+	console.log(pageNum);
 
   $.ajax({
 	    url: "/my/selectNotify",
-    type: 'GET',
-    success: function (data) {
-      console.log(data);
+    	type: 'GET',
+    	data: {pstSe},
+    success: function (result) {
+      console.log(result)
+      console.log(result.page)
+    	
+	  $(".notifyGroup").empty();
+      $(".pagination").empty();
+	  
+	  let pstSed='';
+	  
+	  console.log(pstSe)
+	  
+      $(result.data).each(function (index,data) {
+    	  
+    	  if(data.pstSe == 'AD'){
+    		  pstSed=' [ 관리자 알림 ] '
+    	  }
+    	  if(data.pstSe == 'AU'){
+    		  pstSed=' [ 경매 알림 ] '	  
+    	  }
+    	  
+    	  if(data.pstSe == 'SN'){
+    		  pstSed=' [ 동네 생활 ] '
+    	  }
+    	  if(data.pstSe == 'BI'){
+    		  pstSed=' [ 동네 가게 ] '
+    	  }
+    	  if(data.pstSe == 'DE'){
+    		  pstSed=' [ 중고 거래 ] '
+    	  }
+    	  
+  	  
+    	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
+						 .append($("<td>").html(radio)
+								.clone()
+								.text("변경")
+								.attr("onclick", "updataStts()")
+						)
+					
+			.append($("<td>").text(index+1))
+			.append($("<td>").text(pstSed))
+			.append($("<td>").text(data.almCn))
+			.append($("<td>").text(data.almYmd))
+			
+		//==================================================================================
+			
 
-      $(".notifyGroup").empty();
-      $(data).each(function (index, obj) {
-        $(".notifyGroup").append(
-        		"<td class='notifyView' id='viewIndex_"+ index + "'><p>"+ obj['almCn'] + "</p></td>"
-        )
       });
+		$(result.page).each(function(index,page){
+			for (i = 0; i < parseInt(page.endPage); i++) {
+				$(".pagination").append(
+						' <li class="page-item page_' +
+						(i + 1) +
+						'"><a class="page-link" href="#" onClick="loadNotify(' +
+						(i + 1) +
+						')"> ' +
+						(i + 1) +
+						"</a></li>"
+					);
+			}
+		})
+		
+	  
+	  
       updateNotify();
 
 
@@ -114,26 +194,31 @@ function updateNotify() {
 						<h4 class="blog-section-title border-left mb-30">나의 쪽지함</h4>
 					</div>
 					<div class="order-complete-content box-shadow">
-						<div class="order-info p-30 mb-10">
+						<div class="order-info p-5 mb-10">
 							<ul class="order-info-list">
 								<li><a class="totalP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">현재 포인트</a>
+									onclick="loadNotify('AD')" value="AD">관리자</a>
 									<p>
 										총 <span class="totalPTrgt"
 											style="color: #fd7e14; font-weight: bold;">0</span>포인트
 									</p></li>
 								<li><a class="attendP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">출석하기</a>
+									onclick="loadNotify('DE');" value="DE">중고거래</a>
 									<p>
 										<span class="attendPTrgt">0</span>포인트
 									</p></li>
 								<li><a class="dealP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">거래후기</a>
+									onclick="loadNotify('AU');" value="AU">경매</a>
 									<p>
 										<span class="dealPTrgt">0</span>포인트
 									</p></li>
 								<li><a class="freeP" href='javascript:void(0);'
-									onclick="criteriaPoint(event);">무료나눔</a>
+									onclick="loadNotify('SN');" value="AD">동네생활</a>
+									<p>
+										<span class="freePTrgt">0</span>포인트
+									</p></li>
+								<li><a class="freeP" href='javascript:void(0);'
+									onclick="loadNotify('BI');" value="AD">동네가게</a>
 									<p>
 										<span class="freePTrgt">0</span>포인트
 									</p></li>
@@ -142,23 +227,24 @@ function updateNotify() {
 						</div>
 						<div class="row">
 							<div>
-								<table style="text-align: center">
-									<thead>
+								<table class="table" style="text-align: center">
+									<thead style="border: 1px">
 										<tr>
+											<th>SELECT</th>
 											<th>NO</th>
 											<th>FROM</th>
 											<th>ALM_CN</th>
 											<th>YMD</th>
-											<th>CHK</th>
 										</tr>
 									</thead>
 									<tbody class="notifyGroup">
-										
+
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
+					<div class="pagination mt-30" style="margin-left: 40%"></div>
 				</div>
 
 

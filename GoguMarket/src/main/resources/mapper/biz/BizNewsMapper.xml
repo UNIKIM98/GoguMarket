@@ -2,11 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.biz.mapper.BizNewsMapper">
 
-	<!-- 가게 소식 -->
+	<!-- 나의 가게 전체 소식 -->
 	<select id="selectBizNews" parameterType="string" resultType="com.goguma.biz.vo.BizNewsVO">
 		SELECT *
-		FROM biz_news
-		WHERE biz_no = #{bizNo}
+		FROM BIZ_NEWS
+		WHERE BIZ_NO = #{bizNo}
+		ORDER BY NTC_YMD DESC;
+	</select>
+	
+	<!-- 나의 가게 단건 소식 -->
+	<select id="selectOneBizNews">
+		select *
+		from biz_news
+		where biz_no = #{bizNo}
+		AND NTC_NO = #{ntcNo}
 	</select>
 	
 </mapper>

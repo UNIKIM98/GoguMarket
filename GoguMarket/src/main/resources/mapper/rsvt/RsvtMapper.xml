@@ -171,5 +171,15 @@
 	        #{rsvtTm}
 	    )
 	</insert>
+	
+	<!-- 예약 삭제(마이페이지) -->
+	<delete id="deleteAllByRsvtNo" parameterType="String">
+	    DELETE FROM rsvt 
+	    WHERE rsvt_no = #{rsvtNo};
+	    DELETE FROM rsvt_menu 
+	    WHERE rsvt_no = #{rsvtNo};
+	    DELETE FROM rsvt_payment
+	    WHERE rsvt_no = #{rsvtNo};
+	</delete>
 
 </mapper>

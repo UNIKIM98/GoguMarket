@@ -6,6 +6,6 @@ import com.goguma.biz.vo.BizNewsVO;
 
 public interface BizNewsMapper {
 	//가게 소식
-	List<BizNewsVO> bizNews(String bizNo);
+	List<BizNewsVO> selectBizNews(String bizNo);
 
 }
