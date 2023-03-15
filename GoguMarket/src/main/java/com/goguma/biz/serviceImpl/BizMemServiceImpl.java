@@ -3,6 +3,9 @@ package com.goguma.biz.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -82,7 +85,7 @@ public class BizMemServiceImpl implements BizMemService {
 
 	// 가게등록
 	@Override
-	public int bizInsert(BizMemVO vo) {
+	public int bizInsert(BizMemVO vo, HttpSession session) {
 		// 기존 권한 정보
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); // 기존 권한
 		List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
@@ -96,6 +99,9 @@ public class BizMemServiceImpl implements BizMemService {
 				updatedAuthorities);
 		SecurityContextHolder.getContext().setAuthentication(newAuth); // 추가한 대상으로 바꿔줌
 		System.out.println("새로운 권한"+newAuth);
+		
+		session.setAttribute("userSe","ROLE_BIZ");
+		
 		return map.bizInsert(vo);
 
 	}

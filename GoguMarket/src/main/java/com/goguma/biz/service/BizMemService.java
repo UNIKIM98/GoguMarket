@@ -2,6 +2,8 @@ package com.goguma.biz.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 
@@ -34,7 +36,7 @@ public interface BizMemService {
 	String selectBizNo(String userId);
 
 	//가게등록
-	int bizInsert(BizMemVO vo);
+	int bizInsert(BizMemVO vo, HttpSession session);
 
 	
 }
