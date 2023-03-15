@@ -26,20 +26,34 @@
 radio = $("<input>").attr({
 	name: "userStts",
 	class: "select",
-	name:"select",
-	type:"checkbox"
+	name:"check",
+	type:"checkbox",
+	id:"almNo"
 }); // 테이블에 변경항목 추가하기위한 태그 생성
 
 
 $(document).ready(function () {
-	
-	$(".allCheck").click(function(){
-		$(".check").prop("checked",true);
-	})
-	
+
 	loadNotify();
 	setInterval(() => checkNotify(), 20000);
 });
+
+
+$(document).ready(function(){
+	
+	$("#cbx_chkAll").click(function() {
+		if($("#cbx_chkAll").is(":checked")) $("input[name=almNo]").prop("checked", true);
+		else $("input[name=almNo]").prop("checked", false);
+	});
+	
+	$("input[name=almNo]").click(function() {
+		var total = $("input[name=almNo]").length;
+		var checked = $("input[name=almNo]:checked").length;
+		
+		if(total != checked) $("#cbx_chkAll").prop("checked", false);
+		else $("#cbx_chkAll").prop("checked", true); 
+	});
+})
 
 
 function checkNotify(){
@@ -82,10 +96,9 @@ function setPageJs(pageNum) {
 }*/
 
 
-function loadNotify(pstSe,pageNum) {
+function loadNotify(pstSe) {
 	
 	console.log(pstSe);
-	console.log(pageNum);
 
   $.ajax({
 	    url: "/my/selectNotify",
@@ -121,15 +134,16 @@ function loadNotify(pstSe,pageNum) {
     		  pstSed=' [ 중고 거래 ] '
     	  }
     	  
-    	$("#allSelect").append
     	  
     	  
   	  
-    	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","alarm_"+(index+1)))
+    	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","check_"+(index)))
 							.append(
-						$("<td>").html(radio.clone().text("변경").attr({
+						$("<td>").html(radio.clone().text(data.almNo).attr({
 							"value":data.almNo,
-							"class":"check_"+data.almNo
+							"class":"check_"+data.almNo,
+							"name":"almNo"
+							
 							
 						})
 						)
@@ -190,6 +204,46 @@ function updateNotify() {
 }
 
 
+function deleteAlm(){
+	console.log('gdgd')
+	var almNo = new Array();
+	var deleteArr = new Array();
+	
+	
+	$("input[name=almNo]:checked").each(function(){
+		almNo.push($(this).val()); // push: 배열에 값 삽입
+	});
+	
+	console.log(JSON.stringify(almNo))
+	
+	/* idxArr.push($("input[name=chk]:checked").text());*/
+	
+	
+    $.ajax({
+        url:"/my/deleteAlm",
+        type: "POST",
+        data:JSON.stringify({"almNo":"almNo"}),
+        contentType : "application/json",
+        success: function(result) {
+            console.log(result);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+
+	
+	
+	
+
+
+	
+
+
+
+
 
 </script>
 
@@ -207,57 +261,62 @@ function updateNotify() {
 						<h4 class="blog-section-title border-left mb-30">나의 쪽지함</h4>
 					</div>
 					<div class="order-complete-content box-shadow">
-						<div class="order-info p-5 mb-10">
-							<ul class="order-info-list">
-								<li><a class="totalP" href='javascript:void(0);'
-									onclick="loadNotify('AD')" value="AD">관리자</a>
-									<p>
-										총 <span class="totalPTrgt"
-											style="color: #fd7e14; font-weight: bold;">0</span>포인트
-									</p></li>
-								<li><a class="attendP" href='javascript:void(0);'
-									onclick="loadNotify('DE');" value="DE">중고거래</a>
-									<p>
-										<span class="attendPTrgt">0</span>포인트
-									</p></li>
-								<li><a class="dealP" href='javascript:void(0);'
-									onclick="loadNotify('AU');" value="AU">경매</a>
-									<p>
-										<span class="dealPTrgt">0</span>포인트
-									</p></li>
-								<li><a class="freeP" href='javascript:void(0);'
-									onclick="loadNotify('SN');" value="AD">동네생활</a>
-									<p>
-										<span class="freePTrgt">0</span>포인트
-									</p></li>
-								<li><a class="freeP" href='javascript:void(0);'
-									onclick="loadNotify('BI');" value="AD">동네가게</a>
-									<p>
-										<span class="freePTrgt">0</span>포인트
-									</p></li>
+						<form>
+							<div class="order-info p-5 mb-10">
+								<ul class="order-info-list">
+									<li><a class="totalP" href='javascript:void(0);'
+										onclick="loadNotify('AD');" value="AD">관리자</a>
+										<p>
+											총 <span class="totalPTrgt"
+												style="color: #fd7e14; font-weight: bold;">0</span>포인트
+										</p></li>
+									<li><a class="attendP" href='javascript:void(0);'
+										onclick="loadNotify('DE');" value="DE">중고거래</a>
+										<p>
+											<span class="attendPTrgt">0</span>포인트
+										</p></li>
+									<li><a class="dealP" href='javascript:void(0);'
+										onclick="loadNotify('AU');" value="AU">경매</a>
+										<p>
+											<span class="dealPTrgt">0</span>포인트
+										</p></li>
+									<li><a class="freeP" href='javascript:void(0);'
+										onclick="loadNotify('SN');" value="AD">동네생활</a>
+										<p>
+											<span class="freePTrgt">0</span>포인트
+										</p></li>
+									<li><a class="freeP" href='javascript:void(0);'
+										onclick="loadNotify('BI');" value="AD">동네가게</a>
+										<p>
+											<span class="freePTrgt">0</span>포인트
+										</p></li>
 
-							</ul>
-						</div>
-						<div class="row">
-							<div>
-								<table class="table" style="text-align: center">
-									<thead style="border: 1px" >
-										<tr>
-											<th><input type="checkbox" name="select" class="allCheck"></th>
-											<th>NO</th>
-											<th>FROM</th>
-											<th>ALM_CN</th>
-											<th>YMD</th>
-										</tr>
-									</thead>
-									<tbody class="notifyGroup">
-
-									</tbody>
-								</table>
+								</ul>
 							</div>
-						</div>
+							<div class="row">
+								<div>
+									<table class="table" style="text-align: center">
+										<thead style="border: 1px">
+											<tr>
+												<th><input type="checkbox" name="select"
+													class="cbx_chkAll" id="cbx_chkAll"></th>
+												<th>NO</th>
+												<th>FROM</th>
+												<th>ALM_CN</th>
+												<th>YMD</th>
+											</tr>
+										</thead>
+										<tbody class="notifyGroup">
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</form>
 					</div>
-					<button class="btn btn-secondary f-right mt-20">delete</button>
+					<button type="button" class="btn btn-secondary f-right mt-20"
+						onclick="deleteAlm()">delete</button>
 					<div class="pagination mt-30" style="margin-left: 40%"></div>
 				</div>
 

@@ -6,7 +6,7 @@ import com.goguma.common.vo.AtchVO;
 import com.goguma.sns.vo.SnsVO;
 
 public interface SnsService {
-	List<SnsVO> selectSnsList();
+	List<SnsVO> selectSnsList(SnsVO vo);
 
 	int getCountTotal(SnsVO vo);
 

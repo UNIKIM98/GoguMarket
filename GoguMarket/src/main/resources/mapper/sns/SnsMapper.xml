@@ -4,9 +4,21 @@
 	<select id="selectSnsList" resultType="com.goguma.sns.vo.SnsVO">
 		SELECT s.*
 		,(SELECT
-		ATCH_PATH FROM ATCH a WHERE s.ATCH_ID = a.ATCH_ID AND ROWNUM
+		ATCH_PATH FROM ATCH a WHERE s.ATCH_ID = a.ATCH_ID
+		AND ROWNUM
 		=1)atch_path
 		FROM SNS s
+		<where>
+			<if test="pstSe ==''">snsCn LIKE '%'||#{searchKey}||'%' OR user_Id LIKE
+				'%'||#{searchKey}||'%' OR nick_Nm LIKE '%'||#{searchKey}||'%' OR
+				user_Nm LIKE '%'||#{searchKey}||'%' OR snsCn LIKE
+				'%'||#{searchKey}||'%'</if>
+			<if test="pstSe =='EM'">snsCn LIKE '%'||#{searchKey}||'%'</if>
+			<if test="pstSe =='ID'">user_Id LIKE '%'||#{searchKey}||'%'</if>
+			<if test="pstSe =='NK'">nick_Nm LIKE '%'||#{searchKey}||'%'</if>
+			<if test="pstSe =='NM'">user_Nm LIKE '%'||#{searchKey}||'%'</if>
+			<if test="pstSe =='PH'">snsCn LIKE '%'||#{searchKey}||'%'</if>
+		</where>
 	</select>
 
 	<select id="selectSns" resultType="com.goguma.sns.vo.SnsVO">
@@ -18,17 +30,18 @@
 
 
 	</select>
-	
+
 	<select id="selectPerSns" resultType="com.goguma.sns.vo.SnsVO">
 
 		SELECT *
 		FROM SNS
-		WHERE user_id =
+		WHERE
+		user_id =
 		#{userId}
 
 
 	</select>
-	
+
 	<select id="selectSnsAtch" parameterType="int"
 		resultType="com.goguma.sns.vo.SnsVO">
 		SELECT * FROM sns
@@ -36,7 +49,7 @@
 		FROM sns
 		WHERE sns_no = #{snsNo})
 	</select>
-	
+
 
 	<insert id="insertSns" parameterType="com.goguma.sns.vo.SnsVO">
 		<selectKey keyProperty="snsNo" resultType="int"
@@ -77,14 +90,14 @@
 		WHERE SNS_NO =
 		#{snsNo}
 	</update>
-	
+
 	<delete id="deleteSns" parameterType="com.goguma.sns.vo.SnsVO">
-	
-	delete from sns where
-	sns_no = #{snsNo} and user_Id= #{userId}
-	
+
+		delete from sns where
+		sns_no = #{snsNo} and user_Id= #{userId}
+
 
 	</delete>
-	
+
 
 </mapper>
