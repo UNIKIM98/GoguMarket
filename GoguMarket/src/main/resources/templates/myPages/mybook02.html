@@ -353,8 +353,15 @@
 			}	
 		}
 		
+	
 		//날짜 수정시 value값 저장
 		function modifyDate(obj){
+			//오늘 이전 날짜 선택안되게
+			var today = new Date().toISOString().split('T')[0];
+		    if (obj.value < today) {
+		    	obj.value = today;
+		    }
+			
 			//선택한 날짜 변수에 저장
 			selectedDate = event.target.value;
 			console.log(selectedDate)
@@ -415,10 +422,10 @@
 			$("#modifyRsvtInfo").submit();
 		}
 		
+		//메인으로 가버렷
 		function goToMain(){
 			window.location.href="/";
 		}
-		
 		
 		</script>
 	</div>

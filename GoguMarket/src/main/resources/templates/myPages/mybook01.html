@@ -16,6 +16,7 @@
 					<div class="col-lg-12">
 						<div class="section-title text-start mb-20">
 							<h2 class="uppercase">나의 예약 리스트</h2>
+							<h6>예약 상세내역을 확인하려면 목록을 클릭하세요</h6>
 						</div>
 					</div>
 				</div>
@@ -24,36 +25,32 @@
 				<!-- 내용 윗쪽 -->
 				<div class="row">
 
-					<div class="col-lg-8">
+					<div class="col-lg-12">
 						<table class="table">
 							<tr>
 								<th class="td-title-1">가게명</th>
-								<th class="td-title-1" colspan="2">예약일</th>
+								<th class="td-title-1">예약일</th>
+								<th class="td-title-1">예약시간</th>
 								<th class="td-title-1">예약상태</th>
 							</tr>
 
 							<!-- 예약1건 -->
 							<tr th:each="sim: ${simple}" th:id="${sim.RSVT_NO}"
-								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;">
-								<th:block th:if="${sim != null}">
-									<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
-									<td class="td-title-1" th:text="${sim.RSVT_YMD}">(예약일)</td>
-									<td class="td-title-1" th:each="code: ${code}"
-										th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
-										th:text="${code.commonNm}">(예약시간)</td>
-									<td class="td-title-1" th:text="${sim.RSVT_STTS}">(예약상태)</td>
-								</th:block>
-								<th:block th:if="${sim == null}">
-									<td class="td-title-1" colspan="4">예약 내역이 없습니다.</td>
-
-								</th:block>
+								th:onclick="trClick([[${sim.RSVT_NO}]])" style="cursor: pointer;" th:if="${!#lists.isEmpty(simple)}">
+								<td class="td-title-1" th:text="${sim.BIZ_NM}">(가게명)</td>
+								<td class="td-title-1" th:text="${#dates.format(sim.RSVT_YMD, 'yyyy-MM-dd')}">(예약일)</td>
+								<td class="td-title-1" th:each="code: ${code}"
+									th:if="${code.commonDetailCode} == ${sim.RSVT_TM}"
+									th:text="${code.commonNm}">(예약시간)</td>
+								<td class="td-title-1" th:text="${sim.RSVT_STTS}">(예약상태)</td>
 							</tr>
-
+							<tr th:if="${#lists.isEmpty(simple)}">
+								<td class="td-title-1" colspan="4" style="text-align:center;">예약 내역이 없습니다.</td>
+							</tr>
 
 						</table>
 					</div>
-
-					<div class="col-lg-4">달력자리</div>
+					
 				</div>
 				<hr>
 
@@ -106,7 +103,7 @@
 						</div>
 					</div>
 					<div class="col-lg-4">
-						<div class="tab-pane active pt-30" id="order-complete">
+						<div class="tab-pane active pt-30" id="order-complete" th:if="${!#lists.isEmpty(simple)}">
 							<a class="button extra-small mb-20" onclick="chatRoomOpen()">
 								<span>채팅하기</span>
 							</a> 
@@ -118,6 +115,13 @@
 							</a>
 
 						</div>
+						
+						<div class="tab-pane active pt-30" id="order-complete" th:if="${#lists.isEmpty(simple)}">
+							<a class="button extra-small mb-20" onclick="goToRsvt()">
+								<span>예약하러가기</span>
+							</a> 
+						</div>
+						
 					</div>
 				</div>
 
@@ -256,7 +260,6 @@
 		
 		//예약취소하기
 		$('#rsvtDelete').attr("onclick","rsvtDelete(getRsvtNo)");
-		
 		function rsvtDelete(rsvtNo){
 			if(getRsvtNo == 0 || getRsvtNo == null){
 				alert("취소할 예약을 먼저 선택해주세요")
@@ -276,6 +279,12 @@
 				})	
 			}
 		}
+		
+		//예약하러가기
+		function goToRsvt(){
+			window.location.href = "/goguma/bookmain";
+		}
+		
 
 	</script>
 
