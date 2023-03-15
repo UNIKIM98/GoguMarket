@@ -262,9 +262,13 @@ public class BizController {
 		return "biz/shop0702";
 	}
 
-	@GetMapping("/biz/shop08")
-	public String shop08() {
+	@GetMapping("/biz/bizRsvtApprove")
+	public String shop08(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
+		System.out.println("shop08" + bizNo);
 		
+//		model.addAttribute("lists", )
 		return "biz/shop08";
 	}
 }
