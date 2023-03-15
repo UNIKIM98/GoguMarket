@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://ultraq.net/thymeleaf/layout"
-    layout:decorate="~{layouts/layout}">
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
 
 <head>
     <meta charset="UTF-8">
@@ -14,11 +14,8 @@
         
 
     </script>
-    <article layout:fragment="content">
-        경매 전체조회 페이지입니다.
-        짜잔쓰
-        근데 이거 나의 경매에서 AJAX처리하면 한페이지에 다 떄려박을 수 있지 않을까요?
-        그리구 사이드바에서 중고거래랑 경매랑 따로 분리하는게 좋을듯함!
+	<div layout:fragment="myContent">
+        <h1 style="text-align: center;">입찰하신 상품 페이지입니다.</h1>
         <table class="table" border="1">
 
             <thead>
@@ -57,7 +54,7 @@
 		<script src="js/plugins.js"></script>
 		<!-- Main js file that contents all jQuery plugins activation. -->
 		<script src="js/main.js"></script>
-    </article>
+    </div>
 </body>
 
 </html>
