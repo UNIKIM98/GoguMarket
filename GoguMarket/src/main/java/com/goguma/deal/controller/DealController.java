@@ -120,7 +120,9 @@ public class DealController {
 			userId = (String) session.getAttribute("userId");
 			
 			vo.setUserId(userId);
+
 			//model.addAttribute("get",rvService.selectGetRv(userId));
+
 			return "myPages/myReview";
 		}
 	// ===========================
