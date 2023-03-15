@@ -35,4 +35,7 @@ public interface RsvtService {
 	
 	//예약내역 삭제
 	int deleteAllByRsvtNo(RsvtVO rsvtVo);
+	
+	//비즈페이지 예약리스트 조회
+	List<RsvtVO> selectBizRsvt(String bizNo);
 }

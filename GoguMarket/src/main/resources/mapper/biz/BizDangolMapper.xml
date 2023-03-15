@@ -35,4 +35,13 @@
 		WHERE b.user_id = m.user_id
 		AND b.biz_no = #{bizNo}
 	</select>
+	
+	<!-- 단골 개인 출력 -->
+	<select id="selectDangolPersonal" parameterType="String" resultType="com.goguma.biz.vo.BizDangolVO">
+		SELECT b.*, m.*
+		FROM biz_dangol b, mem m
+		WHERE b.user_id = m.user_id
+		and b.user_id = #{userId}
+	</select>
+	
 </mapper>

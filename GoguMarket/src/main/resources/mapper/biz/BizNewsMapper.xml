@@ -7,7 +7,7 @@
 		SELECT *
 		FROM BIZ_NEWS
 		WHERE BIZ_NO = #{bizNo}
-		ORDER BY NTC_YMD DESC;
+		ORDER BY NTC_YMD DESC
 	</select>
 	
 	<!-- 나의 가게 단건 소식 -->
@@ -18,4 +18,5 @@
 		AND NTC_NO = #{ntcNo}
 	</select>
 	
+
 </mapper>

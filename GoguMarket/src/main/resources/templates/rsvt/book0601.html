@@ -44,11 +44,10 @@
 						<!-- Nav tabs -->
 						<ul class="nav">
 
-							<li><a href="#" data-bs-toggle="tab"> <i
+							<li><a th:onclick="alertTelno([[${biz.bizTel}]])" style="cursor:pointer;" data-bs-toggle="tab"> <i
 									class="zmdi zmdi-phone"></i>
-									<h6>전화문의</h6>
-							</a></li>
-							<li><a class="active" href="#" data-bs-toggle="tab"> <i
+									<h6>전화문의</h6></a></li>
+							<li><a onclick="chatRoomOpen()" class="active" href="#" style="cursor:pointer;" data-bs-toggle="tab"> <i
 									class="zmdi zmdi-email"></i>
 									<h6>채팅문의</h6>
 							</a></li>
@@ -646,6 +645,17 @@
 					});
 				console.log("메뉴이름, 가격, 수량 " +$('#menuNm').val(),$('#menuPrc').val(),$('#amount').val());
 				console.log(urlBizNo + "_" + $('#bizNm').text())
+			}
+			
+			//전화번호 알림창
+			function alertTelno(tel){
+				console.log(tel)
+				alert("가게 전화번호는 [ "+ tel + " ] 입니다.");
+			}
+			
+			//채팅방 이동
+			function chatRoomOpen(){
+				window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
 			}
 			
 		</script>

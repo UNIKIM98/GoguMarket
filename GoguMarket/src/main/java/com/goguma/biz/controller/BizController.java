@@ -21,6 +21,7 @@ import com.goguma.biz.mapper.BizMemMapper;
 import com.goguma.biz.service.BizDangolService;
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.service.BizNewsService;
+import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizNewsVO;
 import com.goguma.biz.vo.BizSearchVO;
@@ -48,6 +49,8 @@ public class BizController {
 	@Autowired
 	BizDangolService dangolService; // 단골
 
+//////////////////////▲Autowired▲//////////////////////
+	
 //	// 동네가게 예약 메인(book01).
 //	@RequestMapping("/bookmain")
 //	public String getBizList(Model model) {
@@ -121,6 +124,9 @@ public class BizController {
 		return "rsvt/book0205";
 	}
 
+///////////////////////////////////////////▲지영▲///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////▼효근▼///////////////////////////////////////////
 	// 동네가게 등록(shop01)
 	@GetMapping("/my/shop01")
 	public String shop01() {
@@ -178,7 +184,9 @@ public class BizController {
 		System.out.println(model);
 		return news;
 	}
-
+///////////////////////////////////////////▲효근▲///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////▼지영▼///////////////////////////////////////////	
 	@GetMapping("/biz/shop04")
 	public String shop04() {
 		return "biz/shop04";
@@ -190,8 +198,8 @@ public class BizController {
 		//임시 세션(나중에 진짜 세션에서 불러오기)
 
 		HttpSession session = request.getSession();
-		session.setAttribute("bizNo", "bn001");
 		String bizNo = (String) session.getAttribute("bizNo");
+		
 		System.out.println("로그인중인 유저의 가게번호 ===" + bizNo);
 		System.out.println("dddd" + rvService.selectReviewList(bizNo));
 
@@ -217,7 +225,6 @@ public class BizController {
 		//임시 세션(나중에 진짜 세션에서 불러오기)
 
 		HttpSession session = request.getSession();
-		session.setAttribute("bizNo", "bn001");
 		String bizNo = (String) session.getAttribute("bizNo");
 
 		// 페이징
@@ -237,7 +244,11 @@ public class BizController {
 
 	@GetMapping("/biz/dangolDetailPage/{userId}")
 	public String shop0602(@PathVariable String userId, Model model) {
-		System.out.println("뀨");
+		List<BizDangolVO> dangols = dangolService.selectDangolPersonal(userId);
+		model.addAttribute("dangol", dangols.get(0));
+		model.addAttribute("dgInfo", dangols);
+		System.out.println("단골정보불러오나?===="+dangols.get(0));
+		System.out.println(dangols);
 		return "biz/shop0602";
 	}
 
@@ -253,6 +264,7 @@ public class BizController {
 
 	@GetMapping("/biz/shop08")
 	public String shop08() {
+		
 		return "biz/shop08";
 	}
 }

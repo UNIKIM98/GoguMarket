@@ -18,4 +18,7 @@ public interface BizDangolService {
 	
 	//단골리스트
 	List<Map> selectDangolList(String bizNo);
+	
+	//단골 한명
+	List<BizDangolVO> selectDangolPersonal(String userId);
 }
