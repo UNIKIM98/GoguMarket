@@ -88,7 +88,8 @@ public class DealController {
 		
 		return "myPages/myDeal";
 	}
-
+	// ===========================
+	// ▷ 마이페이지 / 중고거래 : 끌어올리기  데이터는 impl에서 vo담았음
 	@RequestMapping("/my/myDealSubmit") // 게시글업데이트..
 	@ResponseBody
 	public int mydeal(Model model,DealVO dVO, PointVO pVO,String userId, HttpServletRequest request) {
@@ -101,8 +102,8 @@ public class DealController {
 	}
 	
 	// ===========================
-	// ▷ 마이페이지 / 중고거래 가계부
-	@RequestMapping("/my/myCashbook")
+	// ▷ 마이페이지 / 중고거래 가계부   : 이것도 왠지 셀렉트문 두개 말고.. 매퍼 쿼리에서 where if문으로 제어해야될거같은데
+	@RequestMapping("/my/myCashbook") 
 	public String mycashbook(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
@@ -112,14 +113,16 @@ public class DealController {
 		return "myPages/myCashbook";
 	}
 	// ===========================
-	// ▷ 마이페이지 / 중고거래 거래후기
+	// ▷ 마이페이지 / 중고거래 거래후기   : 저거 모델 쓰면 스트링?하면안된다고뜸 | 페이징하려면 리뷰테이블의 서치보가 따로 있어야하는데 없음
 		@RequestMapping("/my/myReview")
 		public String myreview(String userId, Model model, HttpServletRequest request,DealReviewVO vo) {
 			HttpSession session = request.getSession();
 			userId = (String) session.getAttribute("userId");
 			
 			vo.setUserId(userId);
-//			model.addAttribute("get",rvService.selectGetRv(userId));
+
+			//model.addAttribute("get",rvService.selectGetRv(userId));
+
 			return "myPages/myReview";
 		}
 	// ===========================
@@ -145,7 +148,7 @@ public class DealController {
 	}
 
 	// ===========================
-	// ▷ 판매중 전체조회
+	// ▷ 판매중 전체조회 => 관리자페이지로 가면안되겟냥
 	@RequestMapping("/goguma/dealList") // 판매상품 전체 조회
 	public String dealListSelect(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
 
