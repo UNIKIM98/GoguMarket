@@ -54,13 +54,14 @@
 						본문내용 자리 시작
 						<!-- 본문내용 자리 시작 -->
 						<h5 class="sin-pro-action f-right">
-							<button onclick="">글쓰기</button>
+							<button onclick="insertNews()">글쓰기</button>
 						</h5>
 							<div id="selectBizNewsAjax">
-								<div id="newsList">
+								<table>
+									<tbody id="newsList">
 
-
-								</div>
+									</tbody>
+								</table>
 									<!-- <table>
 										<tbody id="newsList">
 											<tr onclick='location.href="#"'>
@@ -89,7 +90,6 @@
 			})
 
 			function selectBizNewsAjax() {
-
 				$.ajax({
 					url: "/biz/selectBizNewsAjax",
 					type: 'get',
@@ -101,20 +101,15 @@
 
 						news.forEach(n=>{
 								$("#newsList").append(
-											`
-											<div class="single-brand-product"
-													id="clickSns"
-													onclick="selectOneBizNews(${n.ntcNo})">
-	                            						${n.ntcTtl} / ${n.ntcYmd}
-	                         							<img src="${n.atchId}">
-	                         							조회수&nbsp👀:${n.inqCnt}
-											</div>
-											
-											`
-
+										`
+										<tr onclick='location.href=""'>
+											<th>${n.atchId}</th>
+											<td>${n.ntcTtl}	<br>
+												조회수 : ${n.inqCnt}</td>
+											<td>${n.ntcYmd}</td>
+										</tr>
+										`
 								)
-							
-							
 						})
 						// for (news of result) {
 						// 	$("#news").append(`<div class="by-brand-product">
@@ -128,6 +123,10 @@
 						console.log(err);
 					}
 				})
+			}
+
+			function selctOneBizNews(){
+				
 			}
 
 
