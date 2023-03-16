@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -151,7 +152,7 @@ public class BizController {
 		return "redirect:/goguma/bookmain";
 	}
 
-	// 동네가게 프로필 수정폼
+	// 동네가게 프로필 단건조회
 	@GetMapping("/biz/shop02")
 	public String shop02(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -162,23 +163,35 @@ public class BizController {
 		vo = memService.bizInfo(bizNo);
 		
 		model.addAttribute("bizMem",vo);
+		///////////////////
 
-		vo.setBizNo(bizNo);
-		vo.setBizNo(bizNo);
-		vo.setBizNo(bizNo);
-		vo.setBizNo(bizNo);
-		vo.setBizNo(bizNo);
-		
 		System.out.println("=====session====="+session);
 		System.out.println("=====vo====="+vo);
 		
 		return "biz/shop02";
 	}
-
-	// 동네가게 소식
+	
+	@PostMapping("/biz/shopUpdateSubmit")
+	@ResponseBody
+	public String shopUpdateSubmit(BizMemVO vo) {
+		System.out.println(vo);
+		return null;
+	}
+	
+	// 동네가게 수정하기
 	@GetMapping("/biz/shop03")
-	public String shop03() {
-		return "biz/shop03";
+	public String shop03(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
+
+		BizMemVO vo = new BizMemVO();
+		vo.setBizNo(bizNo);
+
+		vo = memService.updateBizMem(bizNo);
+		model.addAttribute("updateBizMem", vo);
+//		model.addAttribute("update",memService.updateBizMem(bizNo));
+		
+		return "biz/shop02";
 	}
 
 	
