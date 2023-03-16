@@ -17,12 +17,24 @@
 		#{pstSe},#{almCn},1)
 	</insert>
 
+
 	<select id="checkNotifyCount"
 		parameterType="com.goguma.common.vo.AlarmVO" resultType="int">
 		select
 		count(*) from alarm where user_id = #{userId} and cked = 1
 
 	</select>
+
+	<select id="countNotify"
+		parameterType="String" resultType="int">
+		SELECT PST_SE,
+		COUNT(*) FROM ALARM
+		WHERE USER_ID = #{userId}
+		GROUP BY PST_SE;
+
+	</select>
+
+
 
 
 	<select id="selectNotify"
@@ -36,7 +48,7 @@
 		<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>
-		order by pst_Se
+		order by alm_ymd desc
 
 	</select>
 
@@ -50,7 +62,14 @@
 	<select id="getcountTotal" resultType="int">
 		SELECT COUNT(*)
 		FROM alarm
+		<include refid="creiteria"></include>
 	</select>
+
+	<delete id="deleteAlm"
+		parameterType="com.goguma.common.vo.AlarmVO">
+		delete from alarm where alm_no = #{almNo}
+	</delete>
+
 
 
 
