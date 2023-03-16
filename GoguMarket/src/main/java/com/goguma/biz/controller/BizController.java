@@ -257,21 +257,29 @@ public class BizController {
 		model.addAttribute("cnt", dangolService.selectShopDangolCnt(bizNo));
 		model.addAttribute("prd", dangolService.selectDangolPeriod(bizNo));
 		model.addAttribute("dg", dangolService.selectDangolList(bizNo));
+		model.addAttribute("biz", memService.bizInfo(bizNo));
 		return "biz/shop06";
 	}
 
 	@GetMapping("/biz/dangolDetailPage/{userId}")
-	public String shop0602(@PathVariable String userId, Model model) {
+	public String shop0602(@PathVariable String userId, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
+		
 		List<BizDangolVO> dangols = dangolService.selectDangolPersonal(userId);
 		model.addAttribute("dangol", dangols.get(0));
 		model.addAttribute("dgInfo", dangols);
-		System.out.println("단골정보불러오나?===="+dangols.get(0));
+		model.addAttribute("biz", memService.bizInfo(bizNo));
+		List<RsvtRvVO> userReview = rvService.selectReviewUser(userId);
+		model.addAttribute("userRv", userReview);
+		System.out.println("리뷰정보불러오나?===="+userReview);
 		System.out.println(dangols);
 		return "biz/shop0602";
 	}
 
-	@GetMapping("/biz/shop07")
+	@GetMapping("/biz/Certification")
 	public String shop07() {
+		
 		return "biz/shop07";
 	}
 
@@ -279,7 +287,8 @@ public class BizController {
 	public String shop0702() {
 		return "biz/shop0702";
 	}
-
+	
+	//비즈 예약관리 페이지
 	@GetMapping("/biz/bizRsvtApprove")
 	public String shop08(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -289,6 +298,27 @@ public class BizController {
 		System.out.println(rsvtService.selectBizRsvt(bizNo)); 
 		model.addAttribute("lists", rsvtService.selectBizRsvt(bizNo));
 		model.addAttribute("code", codeService.codeList("007"));
+		model.addAttribute("biz", memService.bizInfo(bizNo));
 		return "biz/shop08";
 	}
+	
+	// 예약내역 업데이트
+	@GetMapping("/biz/updateRsvtAjax/{rsvtNo}")
+	@ResponseBody
+	public String updateRsvtAjax(@PathVariable String rsvtNo) {
+		System.out.println("=====" + rsvtService.updateRsvtInfo(rsvtNo));
+
+		// rsvt_update 테이블 -> rsvt 테이블 업데이트
+		rsvtService.updateRsvtInfo(rsvtNo);
+
+		// rsvt_update 테이블 승인여부 N -> Y
+		rsvtService.updateApprove(rsvtNo);
+
+		// rsvt테이블 상태변경 (->예약확정);
+		rsvtService.updateRsvtSttsCompl(rsvtNo);
+
+		return rsvtNo;
+
+	}
+	
 }

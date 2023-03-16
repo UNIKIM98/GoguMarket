@@ -41,11 +41,10 @@
 							<th class="td-title-1">요청사항</th>
 							<th class="td-title-1">주문정보</th>
 							<th class="td-title-1">예약상태</th>
-							<th class="td-title-1">예약취소/변경</th>
 						</tr>
 
 						<!-- tr반복 -->
-						<tr th:each="list:${lists}">
+						<tr th:each="list:${lists}" th:if="${!#lists.isEmpty(simple)}">
 							<td class="td-title-1" th:text="${list.rsvtYmd}">(예약날짜)</td>
 							<td class="td-title-1" th:each="code: ${code}"
 								th:if="${code.commonDetailCode} == ${list.rsvtTm} and ${list.rsvtTm} != null"
@@ -64,25 +63,12 @@
 								<button class="btn btn-secondary btn-sm" type="button" th:if="${list.rsvtStts}=='예약변경'" th:onclick="updateRsvt([[${list.rsvtNo}]])">예약변경</button>
 								<button class="btn btn-light btn-sm" type="button" th:if="${list.rsvtStts}=='예약완료'">예약완료</button>
 							</td>
-							<td class="td-title-1">
-								<button class="btn btn-danger btn-sm" type="button" th:if="${list.rsvtStts}=='예약취소'">예약취소</button>
-							</td>
+						</tr>
+						
+						<tr th:if="${#lists.isEmpty(simple)}">
+							<td class="td-title-1" colspan="6" style="text-align:center;">접수된 예약이 없습니다 :( </td>
 						</tr>
 
-					<!-- <tr> -->
-					<!-- 	<td class="td-title-1">2023-02-14 15:00</td> -->
-					<!-- 	<td class="td-title-1">도리눈아</td> -->
-					<!-- 	<td class="td-title-1">요청사항이 없습니다</td> -->
-					<!-- 	<td class="td-title-1"> -->
-					<!-- 		<button class="btn btn-warning btn-sm" type="submit">상세보기</button> -->
-					<!-- 	</td> -->
-					<!-- 	<td class="td-title-1"> -->
-					<!-- 		<button class="btn btn-secondary btn-sm" type="submit">예약대기</button> -->
-					<!-- 	</td> -->
-					<!-- 	<td class="td-title-1"> -->
-					<!-- 		<button class="btn btn-danger btn-sm" type="submit">예약취소</button> -->
-					<!-- 	</td> -->
-					<!-- </tr> -->
 					</table>
 
 
@@ -99,11 +85,12 @@
 			function updateRsvt(rsvtNo){
 				console.log("변경버튼"+rsvtNo)
 				$.ajax({
-					url:"/biz/updateRsvtAjax",
-					type:"put",
-					data: {rsvtNo},
+					url:"/biz/updateRsvtAjax/" + rsvtNo,
+					type:"get",
 					success: function(result){
 						console.log(result)
+						alert("예약변경이 정상적으로 처리되었습니다.")
+						location.reload();
 						
 					},error:function(error){
 						console.log(error)

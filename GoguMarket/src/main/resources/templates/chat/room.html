@@ -119,8 +119,17 @@
 
                    //3. send(path, header, message)로 메세지를 보낼 수 있음
                    stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
+                   
+                   
                 });
-
+                
+                //disconection test - 안됨
+                stomp.disconnect({}, function(){
+                	//test
+                    stomp.send('/pub/chat/leave', {}, JSON.stringify({roomId: roomId, writer: username}))
+                });
+				
+                //버튼 클릭시 메시지 전송
                 $("#button-send").on("click", function(e){
                     var msg = document.getElementById("msg");
 
@@ -128,6 +137,14 @@
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
                     msg.value = '';
                 });
+                
+                //엔터키로 전송하기
+                $('#msg').keypress(function(event){
+                    if (event.which == 13) {
+                        $('#button-send').click();
+                        return false;
+                    }
+               });
             });
         </script>
 

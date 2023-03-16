@@ -57,7 +57,7 @@
 										[[${room.name}]]</a> 
 									</td>
 									<td style="text-align: right;">
-										<a onclick="makeChatList(this)" style="cursor:pointer;"><i class="zmdi zmdi-close"></i></a>
+										<a onclick="deleteChatList(this)" style="cursor:pointer;"><i class="zmdi zmdi-close"></i></a>
 									</td>
 								</tr>
 							</table>
@@ -65,7 +65,7 @@
 						<form th:action="@{/chat/room}" method="post">
 							<input type="text" name="name" class="form-control" placeholder="채팅방 이름을 입력해주세요">
 							<div class="d-flex justify-content-center">
-								<button class="btn btn-secondary">채팅방 만들기</button>
+								<button class="btn btn-secondary" id="btn-create">채팅방 만들기</button>
 
 							</div>
 						</form>
@@ -86,20 +86,20 @@
 		    alert(roomName.name + " 방이 개설되었습니다.");
 		  }
 		  
-		  $(".btn-create").on("click", function(e) {
+		  $("#btn-create").on("click", function(e) {
 		    e.preventDefault();
 		    
 		    var name = $("input[name='name']").val();
 		    
-		    if (name == null) {
-		      alert("Please write the name.");
+		    if (name == "") {
+		      alert("채팅방 이름을 작성해주세요");
 		    } else {
 		      $("form").submit();
 		    }
 		  });
 		});
 	
-		function makeChatList(obj){
+		function deleteChatList(obj){
 			if(confirm("채팅방을 삭제할까요?")){
 				alert("삭제되었습니다")
 				

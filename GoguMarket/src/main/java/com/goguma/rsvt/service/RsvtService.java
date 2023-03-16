@@ -58,5 +58,8 @@ public interface RsvtService {
 	
 	//예약신청 승인여부 업데이트
 	int updateApprove(String rsvtNo);
+	
+	//rsvt테이블 예약상태 업데이트(->예약확정)
+	int updateRsvtSttsCompl(String rsvtNo);
 
 }

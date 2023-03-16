@@ -229,7 +229,7 @@
 																	<tr>
 																		<th class="order-total">합계</th>
 																		<td class="order-total"></td>
-																		<td class="order-total-price">(합계가격) <!-- <input type="hidden" id="totalSum" name="totalSum" value=""> -->
+																		<td class="order-total-price">0 <!-- <input type="hidden" id="totalSum" name="totalSum" value=""> -->
 																		</td>
 																	</tr>
 																</table>
@@ -547,6 +547,28 @@
 //▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼결제하기 버튼 클릭시 실행되는 함수▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 			//1️⃣번째 : 버튼 온클릭
 			function frmSubmit(){
+				
+				//항목이 비어있을때 예외처리
+				if($(".order-total-price").text() == 0){
+					alert("메뉴를 담아주세요")
+					return;
+				}
+				if($("#tdDate").text().trim() === "") {
+					alert("예약 날짜를 선택해주세요.");
+					return;
+				}
+				if($("#tdTime").text().trim() === "") {
+					alert("예약 시간을 선택해주세요.");
+					return;
+				}
+				if($("#tdCnt").text().trim() === "") {
+					alert("예약 인원을 선택해주세요.");
+					return;
+				}
+				if($("#rsvtWant").val() === ""){
+					var msg ='요청사항 없음';
+					$("#rsvtWant").val(msg);
+				}
 
 				//결제 api
 				const {IMP} = window;
@@ -629,10 +651,10 @@
 					data: JSON.stringify(payment),
 					contentType: "application/json; charset=utf-8",
 					success: function(rsvtNo){
-							alert("ajax성공쓰_예약번호 " + rsvtNo);
+							alert("예약이 정상적으로 완료되었습니다.");
 							
 							//예약완료 페이지로 이동(예약번호 파라미터)
-							location.href="/my/rsvtComplete"+rsvtNo;
+							location.href="/my/rsvtComplete/"+rsvtNo;
 						}
 					,error : function(err){
 						alert("ajax error db저장안됨")
