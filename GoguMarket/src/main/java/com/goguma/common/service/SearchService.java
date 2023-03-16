@@ -11,5 +11,5 @@ public interface SearchService {
 	
 	int deleteWord(SearchVO search);
 	
-	int updateWord(List<String> list);
+	int updateWord(List<SearchVO> list);
 }

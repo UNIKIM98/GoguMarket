@@ -2,9 +2,7 @@ package com.goguma.deal.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -180,15 +179,11 @@ public class DealController {
 	
 	
 	// ▶ 관리자 임시 실검 => 완전한 실검으로 등록하기
-	@GetMapping("/admin/adminKeywordboxsubmit")
+	@PostMapping("/admin/adminKeywordboxsubmit")
 	@ResponseBody
-	public String adminKeywordboxsubmit(Model model, SearchVO sList) {
-		// 매퍼에 보낼 서치보생성
-		SearchVO sVO = new SearchVO();
-		sVO.setStts("2");
-		sVO.setPstSe("중고거래");
-		
-		List<String> list = sList.getSList();
+	public String adminKeywordboxsubmit(SearchVO svo) {
+		System.out.println(svo+"svoooooooooo");
+		List<SearchVO> list = svo.getSList();
 		searchService.updateWord(list); //검색어 담아서 업데이트 하셔야죠
 
 		return "redirect:/goguma/dealMain";
