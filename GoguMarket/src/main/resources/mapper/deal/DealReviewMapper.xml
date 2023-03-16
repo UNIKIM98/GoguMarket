@@ -2,9 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.deal.mapper.DealReviewMapper">
 
+	
+	<select id="getcountTotal" 
+		resultType="int">
+	SELECT COUNT(*)
+	FROM rv
+	<include refid="creiteria"></include>
+	</select>
+	<sql id="creiteria">
+		<where>
+			<if test="userId != null and userId != ''" >
+				user_id = #{userId}
+			</if>
+		</where>
+	</sql>	
+	
 	<select id="getDealRv"
-			parameterType="String"
-			resultType="com.goguma.deal.vo.DealReviewVO">
+			parameterType="com.goguma.deal.vo.DealReviewVO"
+			resultType="map">
 	   select *
 		from rv
         where dl_no in 

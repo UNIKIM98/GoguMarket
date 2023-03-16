@@ -1,6 +1,7 @@
 package com.goguma.deal.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,7 @@ public class DealReviewServiceImpl implements DealReviewService {
 	@Autowired
 	private PointMapper pmap;
 	
-	@Override
-	public List<DealReviewVO> getDealRv(String ntslId) {
-		//
-		return map.getDealRv(ntslId);
-	}
+
 
 	@Override
 	public int insertDealRv(DealReviewVO vo, List<String> vtList, String userId) {
@@ -87,6 +84,18 @@ public class DealReviewServiceImpl implements DealReviewService {
 	public List<DealReviewVO> selectNotSendRv(DealReviewVO vo) {
 		// TODO Auto-generated method stub
 		return map.selectNotSendRv(vo);
+	}
+
+	@Override
+	public int getcountTotal(DealReviewVO rvVO) {
+		// 페이지수 계산
+		return map.getcountTotal(rvVO);
+	}
+
+	@Override
+	public List<Map> getDealRv(DealReviewVO rvVO) {
+		// TODO Auto-generated method stub
+		return map.getDealRv(rvVO);
 	}
 
 }

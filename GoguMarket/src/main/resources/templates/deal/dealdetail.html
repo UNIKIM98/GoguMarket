@@ -52,20 +52,24 @@
 				location.href = `/goguma/dealSellerpage/${ntslId}`
 			}
 
+			/* $(".single-product-info a") 이거 널값나옴..wh y ? 
+					캄 걍 걍 th onclick ㄱㄱㄱ*/
+			
 			// 수정하기 버튼 클릭스 수정폼으로 이동
-			function updateform() {
-				let dlno = $(".single-product-info a").first().text();
-				location.href = `/my/dealupdate/${dlno}`
-			}
-			// 삭제하기
-			function deleteDeal() {
-				let dlno = $(".single-product-info a").first().text();
-				location.href = `/my/deleteDeal/${dlno}`
-
-			}
+// 			function updateform() {
+// 				let dlno = $(".single-product-info a").first().text();
+// 				location.href = `/my/dealupdate/${dlno}`
+// 			}
+// 			// 삭제하기
+// 			function deleteDeal() {
+// 				let dlno = $(".single-product-info a").first().text();
+// 				location.href = `/my/deleteDeal/${dlno}`
+// 			}
 			function chat(){
 				window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
 			}
+
+			
 			// 번호 넘어가도록..
 			function gopage(page) {
 				frmSearch.page.value = page;
@@ -101,6 +105,7 @@
 		<hr>
 		<!-- Body main wrapper start -->
 		<div class="wrapper">
+		<h1 th:each="deal : ${dealList}" th:text="${deal.DL_NO}"></h1> 
 				<!-- SHOP SECTION START -->
 				<div class="shop-section mb-80">
 					<div class="container">
@@ -130,30 +135,39 @@
 											</div>
 										</div>
 										<!-- imgs-zoom-area end -->
+										<div class="section-title text-start mb-40"  th:each="deal : ${dealList}" >
+														<div class="profile" >
+															<div class="leftProfile">
+																<img th:src="${dealList[0].PROFILE}" alt=""
+																	style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;">
+															</div>
+															<div class="rightProfile">
+																<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2>
+																<h6 th:text="${dealList[0].ADDR}">주소</h6>
+															</div>
+														</div>
+										</div>
 										<!-- single-product-info start -->
 										<div class="col-md-7">
-											<div class="single-product-info">
-												<tr th:each="deal : ${deal}">
-													<a th:text="${deal.dlNo}"></a>
+											<div class="single-product-info" th:each="deal : ${deal}">
 													<!-- 게시글번호  -->
-													<h3 class="text-black-1">
-														<a th:text="${deal.ntslId}">판매자아이디</a>
-													</h3>
+													<a th:text="'게시글번호 : '+${deal.dlNo}"></a>
+													<h4 th:text="'판매자id : '+${deal.ntslId}">판매자아이디</h4>
+													
 													<h6 class="brand-name-2">
 														<a th:text="${deal.area}">거래지역</a>
 													</h6>
-													<button type="button" class="btnInfo" onClick="seller()">판매자정보더보기</button>
+													<button type="button" class="btnInfo" onClick="seller()">판매자의정보더보기</button>
 													<div class="f-right"></div>
 													<!-- hr -->
 													<hr>
-													<h3 th:text="${deal.dlTtl}" class="text-black-1">뽀로로
-														인형 팝니다</h3>
-
-													<h6 th:text="${deal.dlYmd}" class="brand-name-2">2일전</h6>
-													<h6 class="brand-name-2 f-right">#생활잡화 #인형 #아기용품</h6>
-													<h6 th:text="${deal.ctgry}" class="brand-name-2">생활용품잡화</h6>
-													<h6 th:text="${deal.stts}" class="brand-name-2">판매상태</h6>
-												</tr>
+													<h3 th:text="${deal.dlTtl}" class="text-black-1">글제목이랍니다</h3>
+													<h6 th:text="${deal.dlYmd}" class="brand-name-2">날짜보여주는곳</h6>
+													<h5 th:text="${deal.stts}" class="brand-name-2 f-right">판매상태</h5>
+													<h6 class="brand-name-2" 
+														th:each="c : ${category}"
+														th:if="${deal.ctgry == c.commonDetailCode}"
+														th:text="'카테고리 : '+${c.commonNm}">카테고리</h6>
 											</div>
 											<!-- single-product-tab -->
 											<div class="single-product-tab reviews-tab" >
@@ -167,7 +181,7 @@
 												
 												<div class="tab-content" th:each="deal : ${deal}">
 													<div role="tabpanel" class="tab-pane active show"
-														id="description">
+														id="description" style="width:100%;height:350px;">
 														<p th:text="${deal.dlCn}"></p>
 													</div>
 													<div role="tabpanel" class="tab-pane" id="information">
@@ -185,17 +199,10 @@
 													</div>
 													
 													<!-- 판매자의 다른 판매상품-->
-													<div role="tabpanel"  id="reviews"  class="tab-pane">
+													<div role="tabpanel"  id="reviews"  class="tab-pane" style="width:100%;height:350px;">
 														<div class="reviews-tab-desc">
 														
 														<form name="frmSearch" align="center">		
-<!-- 														페이지번호관련  -->
-														<div align="center">
-															<a
-																th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-																th:href="|javascript:gopage(${num})|"
-																th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-														</div>
 															<input type="hidden" name="page" value="1">
 															<input type="hidden" name="tabName" value="reviews">
 															<div class="media mt-30" th:each="l : ${list}">
@@ -224,6 +231,14 @@
 																	<p class="mb-0" th:text="${l.dlCn}">상품 상세 설명 넣기</p>
 																</div>
 															</div>
+<!-- 																페이지번호관련   -->
+																<div align="center">
+																	<a
+																		th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+																		th:href="|javascript:gopage(${num})|"
+																		th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
+																</div>
+															
 															</form>
 														</div>
 													</div>
@@ -233,13 +248,13 @@
 										</div>
 										<!--  hr -->
 										<hr>
-										<!-- single-pro-color-rating -->
+										<!-- single-pro-color-rating 찜 , 채팅 , 조회수 -->
 										<div class="single-pro-color-rating clearfix">
 											<div class="sin-pro-color">
 												<ul class="nav mb-20">
 													<li><h6 class="brand-name-2">찜 3</h6></li>&nbsp;&nbsp;
 													<li><h6 class="brand-name-2">채팅 4</h6></li>&nbsp;&nbsp;
-													<li><h6 class="brand-name-2">조회수</h6></li>
+													<li><h6 class="brand-name-2 f-right">조회수</h6></li>
 												</ul>
 											</div>
 											</tr>
@@ -253,20 +268,26 @@
 												<ul th:each="d : ${deal}" class="action-button">
 													<!-- 판매자입장에서 -->
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="button" onclick="updateform()"
+															type="button"
+															th:onclick="|location.href='@{/my/dealupdate/{dlNo}(dlNo=${d.dlNo})}'|"
 															th:if="${session.userId == deal.ntslId}">수정하기</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" th:if="${session.userId == deal.ntslId}"
-															onclick="deleteDeal()">삭제하기</button></li>
+															th:onclick="|location.href='@{/my/deleteDeal/{dlNo}(dlNo=${d.dlNo})}'|">삭제하기</button></li>
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															th:if="${d.stts == '예약중' && d.ntslId == session.userId}"
 															type="submit" 
 															onclick="cancel()">예약취소</button></li>
+													<!-- 아작스로. 누르면 판매상태=판매중 구매자=null 으로 수정  -->		
+															<!--  아 걍 구매예약 테이블이 잇어야될거같은데 시뱌 한테이블로하니까 불편한듯 -->
+				
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															th:if="${d.stts == '예약완료' && d.ntslId == session.userId}"
 															type="submit" 
 															onclick="soldout()">판매완료</button></li>
+													<!--  판완은 버튼누르면 걍 바로 stts="판완" 으로 바꾸게 하면안되냐 아작스?로? 아 제안받은 가격처리는 흠.. -->		
 															
+														
 													<!-- 판매자 + 구매자 둘다 사용할 버튼 -->															
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit" onclick="chat()">채팅하기(구매문의)</button></li>
@@ -274,7 +295,9 @@
 													<!-- 구매자 -->
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit"
-															th:if="${session.userId != deal.ntslId}" >구매예약</button></li>
+															th:if="${session.userId != deal.ntslId}"
+															th:onclick="|location.href='@{/my/dealUpdateRsvt/{dlNo}(dlNo=${d.dlNo})}'|"
+															>구매예약</button></li>
 													<!-- <li><button class="submit-btn-1 mt-30 btn-hover-1"
 														type="submit" 
 														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
@@ -285,9 +308,7 @@
 														th:if="${session.userId != deal.ntslId}" 
 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>리뷰쓰기</button></li>
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit"
-															>신고하기</button></li>
+												
 												</ul>
 											</div>
 										</div>
