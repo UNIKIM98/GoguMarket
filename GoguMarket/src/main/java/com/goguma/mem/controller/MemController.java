@@ -177,12 +177,12 @@ public class MemController {
 	// ❤️ 비밀번호 수정
 	@PostMapping("/goguma/updatePw")
 	public String updatePw(MemVO mVO, HttpServletResponse response) {
-		System.out.println("넘어온 vo > "+ mVO);
-		
+		System.out.println("넘어온 vo > " + mVO);
+
 		String userPw = mVO.getUserPw();
 		userPw = bCryptPasswordEncoder.encode(userPw);
 		mVO.setUserPw(userPw);
-		
+
 		int cnt = memService.updateUserPw(mVO);
 		try {
 			if (cnt > 0) {
@@ -203,7 +203,7 @@ public class MemController {
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
 				out.println("alert('[비밀번호 변경 실패] 다시 시도해주세요 :(');location.href='/goguma/login';"); // ※ 메인페이지로 가게
-																										// 고쳐야함!!
+																									// 고쳐야함!!
 				out.println("</script>");
 
 				out.flush();
@@ -213,12 +213,12 @@ public class MemController {
 		}
 		return "myPages/myInfo";
 	}
-	
+
 	// ===========================================================
-		// ❤️ 아이디 찾기
-		@GetMapping("/goguma/findId")
-		public String findId() {
-			return "mem/findId";
-		}
+	// ❤️ 아이디 찾기
+	@GetMapping("/goguma/findId")
+	public String findId() {
+		return "mem/findId";
+	}
 
 }

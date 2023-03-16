@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	 
-	 alert('안녕?')
+//	 alert('안녕?')
 	 keyValue();
 	
 })
@@ -43,7 +43,7 @@ reInput.onclick = function() {
 //----------------공통코드 출력-------------------------
 
 function keyValue() {
-	alert("여기까지 왔나요?")
+//	alert("여기까지 왔나요?")
 	$.ajax({
 		url:"/keyValue",
 		type: "GET",
