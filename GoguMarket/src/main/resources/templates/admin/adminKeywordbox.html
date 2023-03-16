@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 <style>
 .modal_wrap {
 	display: none;
@@ -50,42 +53,87 @@
 </head>
 <body>
 	<div layout:fragment="adminContent">
-	<script>
-	function gopage(page) {
-		frmSearch.page.value = page;
-		frmSearch.submit();
-	}
-	
-	// 전역변수 선언
-	
-	// 임시 실검 word-> 타임리프 모델로 담앗음
-	
-	// 임시 실검 칼럼을 삭제할 아작스
-	function delKeywordAjax(){
-		
-		$.ajax({
-			url:"/admin/delKeywordAjax",
-			type: 'get',
-			dataType:'json',
-			success: function (result) {
-				console.log(result);
-				//delKeywordAjaxAfter(result, searchTtl, ttlCnt)
-			},
-			error: function (err) {
-				console.log(err);
-				}
-		})
-	}
-	
-	// 임시 실검 칼럼 삭제 완료한 모습 => 새로운 완료 실검 테이블로 저장해야함 채은이 계좌삭제이거 화면그릴라고 햇나
-// 	function delKeywordAjaxAfter(){
-		
-// 	}
-	
-	
-	
-	</script>
+		<script th:inline="javascript">
+			console.log("값찍어보기====")
 
+			// 타임리프 데이터
+			/*<![CDATA[*/
+			var word = /*[[ ${word} ]]*/
+			console.log(word);
+			/*]]*/
+
+			//✅ DOM 그리면서 실행되는 함수 (== document.onload())
+			$(function() {
+				// 둥록하기 버튼 누르면 실행될 함수
+				$("#btnSave").on("click", function() {
+					submitForm();
+				});
+			});
+			function submitForm() {
+				// 클릭한 버튼의 얘들을 들고오고싶음..이거안댈듯..
+				if ($('#stts').is(":checked")) {
+					console.log("checked!")
+					$('#pstSe').val("중고거래"); // 중고거래 DE..분류로 늘 들어가도록합니다
+					$('#stts').val("2")
+					let data = $('#stts').is(":checked");
+					for (i = 0; i < 11; i++) {
+						$('#searchTtl').val() == data[i].closest("tr").children[1].innerText; // 얘값이 열개나오지않을까
+					}
+				}
+				isSubmitOk = true;
+
+				// 넘길 값들 순위랑 검색어 . 순위 어케 넘기지
+			}
+			//submit 전 체크하기 . 수정 (검색어등록) 아작스
+// 			if (submitCheck()) {
+// 				var formData = new FormData($("#keywordFrm")[0]);
+// 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+// 				$.ajax({
+// 					url : "/admin/adminKeywordboxsubmit",
+// 					type : "POST",
+// 					data : formData,
+// 					processData : false,
+// 					contentType : false,
+// 					success : function(result) {
+// 						console.log(result)
+// 						alert("[등록 완료]	검색어 등록이 완료되었습니다 :D");
+// 						//location.href = "/goguma/dealMain"; // 실검뜨는거 볼라고 메인페이지로 날라가기 리다이렉트햇음
+// 					},
+// 					error : function(err) {
+// 						alert("[등록 실패] 검색어 등록을 실패하였습니다. :(");
+// 					}
+// 				});
+// 			}
+// 			function submitCheck() {
+// 				return isSubmitOk;
+// 			}
+	
+			// 삭제 아작스 ㄱㄱ
+			
+			function deletekeyword(event) {
+				$(event.target)
+			let keyword = $(event.target).attr("id")
+		
+				$.ajax({
+					url : "/admin/deletekeyword/"+keyword,
+					type : "GET",
+					success : function(result) {
+						console.log(result)
+						alert("[삭제 완료]	검색어가 삭제되었습니다 :D");
+						location.href = "/admin/adminKeywordbox"; // 걍 현재페이지에 있도록
+					},
+					error : function(err) {
+						alert("[삭제 실패] 검색어 삭제를 실패하였습니다. :(");
+					}
+
+				})
+			}
+			// 페이징
+			/* 	function gopage(page) {
+					frmSearch.page.value = page;
+					frmSearch.submit();
+				} */
+		</script>
 		<div class="container-fluid">
 
 			<!-- Page Heading -->
@@ -98,97 +146,61 @@
 
 			<!-- DataTales Example -->
 			<div class="card shadow mb-4 tableGroup">
-				<div class="card-header py-2">
-					KEYWORD BOX UPDATE
-
-					<form id="frmSearch">
-						<h6 class="m-0 font-weight-bold text-primary pl-100 f-left">
-							
-						</h6>
-					</form>
-
-				</div>
+				<div class="card-header py-2">KEYWORD BOX UPDATE</div>
 				<div class="card-body">
-					<div class="col-6"
+					<div class="col-12"
 						style="float: right; margin-bottom: 10px; padding-left: 30px">
 						<form id="searchForm" name="searchForm" method="get"
 							onsubmit="return false" style="margin-left: 30px">
-							<h6 class="m-0 font-weight-bold text-primary pl-100">
-							</h6>
+							<h6 class="m-0 font-weight-bold text-primary pl-100"></h6>
 						</form>
 
 					</div>
 					<div class="table-responsive">
-					<div class="row">
-					<!-- 왼쪽부분 : 현재 저장 되어있는 db값 불러오기 -->
-						<div class="col-md-6">
-							<table class="table table-bordered" id="" width="100%"
-								cellspacing="0" style="text-align: center">
-								             
-				                    <tr>
-				                        <th>순위</th>
-				                        <th>검색어</th>
-				                        <th>삭제</th>
-				                        <th>수정</th>
-				                    </tr>
-				                </thead>
-				                <tbody id="word">
-				                    <tr th:each="word, i : ${word}">
-				                        <td th:text=${i.index+1}></td>
-				                        <td th:text="${word.searchTtl}"></td>
-				                        <td><button class="btn btn-primary"
-								style="height: 25px; line-height: 15px">삭제</button></td>
-				                        <td><button class="btn btn-primary"
-								style="height: 25px; line-height: 15px">수정</button></td>
-				                    </tr>
-				                </tbody>
-							</table>
-							<!-- 페이지번호관련  -->
-						<div align="center">
-							<a
-								th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-								th:href="|javascript:gopage(${num})|"
-								th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-						</div>
-						</div>
-						<!-- 오른쪾부분 : 유저쪽에 보여질 db값 -->
-						<div class="col-md-6">
-							<table class="table table-bordered" id="" width="100%"
-								cellspacing="0" style="text-align: center">
-								             
-				                    <tr>
-				                        <th>순위</th>
-				                        <th>검색어</th>
-				                        
-				                    </tr>
-				                </thead>
-				                <tbody id="word">
-				                    <tr>
-				                        <td ></td>
-				                        <td ></td>
-				                    </tr>
-				                </tbody>
-							</table>
-							<!-- 페이지번호관련  -->
-						<div align="center">
-							<a
-								th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-								th:href="|javascript:gopage(${num})|"
-								th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-						</div>
-							<div align="right"><button type="submit" class="btn btn-primary"
-								style="height: 25px; line-height: 15px">등록하기</button></div>
-						</div>
-					</div>
-						
+
+						<!-- 왼쪽부분 : 현재 저장 되어있는 db값 불러오기 -->
+						<form id="keywordFrm" method="post" onsubmit="return false">
+							<inpuut type="hidden" name="pstSe" id="pstSe"> <inpuut
+								type="hidden" name="stts" id="stts"> <inpuut
+								type="hidden" name="searchTtl" id="searchTtl">
+
+							<div class="col-md-12">
+								<table class="table table-bordered" id="" width="100%"
+									cellspacing="0" style="text-align: center">
+									<thead>
+										<tr>
+											<th>순위</th>
+											<th>검색어</th>
+											<th>삭제</th>
+											<th>등록</th>
+										</tr>
+									</thead>
+									<tbody id="word">
+										<tr th:each="word, i : ${word}">
+											<td th:text=${i.index+1}></td>
+											<td th:text="${word.searchTtl}"></td>
+											<td><button class="btn btn-primary"
+													style="height: 25px; line-height: 15px"
+													onclick="deletekeyword(event)" th:id="${word.searchTtl}">삭제</button></td>
+											<td><input type="checkbox" name="stts" id="stts"></td>
+										</tr>
+									</tbody>
+								</table>
+								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+									id="btnSave" role="button" value="등록하기">
+								<!-- 페이지번호관련  -->
+								<!-- 							<div align="center"> -->
+								<!-- 								<a -->
+								<!-- 									th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" -->
+								<!-- 									th:href="|javascript:gopage(${num})|" -->
+								<!-- 									th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a> -->
+								<!-- 							</div> -->
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-
 		</div>
-
-		
-
 
 	</div>
 </body>

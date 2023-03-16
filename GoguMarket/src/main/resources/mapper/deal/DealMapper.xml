@@ -36,25 +36,31 @@
 	<select id="selectNtslDeal" 
 			parameterType="com.goguma.deal.vo.DealVO"
 			resultType="map">
- 	SELECT d.* ,
-		       (SELECT ATCH_PATH
-	       		FROM ATCH
-	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
-                , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
-	FROM deal d JOIN MEM m 
-    ON d.ntsl_Id = m.user_id
-	<where>
-		<if test ="ntslId != null">
-	 	 ntsl_id = #{ntslId}
-		 </if>
-		 <if test="stts != null">
-		 and stts = #{stts} 
-		 </if>
-		 <if test ="prchsId != null">
-	 	 and prchs_id = #{prchsId}
-		 </if>
-	</where>
-	
+ 	SELECT b.*, ROWNUM AS rnum 
+				FROM (
+				    SELECT a.*, ROWNUM AS rn
+				    FROM (
+				        SELECT d.* ,
+				               (SELECT ATCH_PATH
+				                FROM ATCH
+				                WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM
+				                , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
+				        FROM deal d JOIN MEM m 
+				        ON d.ntsl_Id = m.user_id
+				        <where>
+				            <if test ="ntslId != null">
+				             ntsl_id = #{ntslId}
+				             </if>
+				             <if test="stts != null">
+				             and stts = #{stts} 
+				             </if>
+				             <if test ="prchsId != null">
+				             and prchs_id = #{prchsId}
+				             </if>
+				        </where>
+				        <![CDATA[
+				    	) a WHERE ROWNUM <= #{last}) b WHERE rn >= #{first}
+							]]>
 	</select>
 	
 	<!-- 구매내역입장에서의 셀렉트 : 이거안씀 관련된거 다 없애자-->
@@ -94,26 +100,35 @@
 	<select id="selectPrice"
 			parameterType="com.goguma.deal.vo.DealSearchVO"
 			resultType="com.goguma.deal.vo.DealSearchVO">
-	select ROUND(AVG(dl_prc), -3) AS avg, 
-	        max(dl_prc)as max, 
-	        min(dl_prc)as min, 
-	        extract(month from dl_ymd) AS month
-	from deal
-	WHERE dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')
-	<if test="searchTtl != null and searchTtl != ''">
-	and   dl_ttl like '%'||#{dlTtl}||'%'
-	</if>
-	GROUP BY extract(month from dl_ymd)
-	ORDER BY month DESC
+			
+	select NVL(ROUND(AVG(d.dl_prc), -3),0) AS avg, 
+           NVL(max(d.dl_prc),0)as max, 
+           NVL(min(d.dl_prc),0)as min, 
+           c.month
+   from (SELECT f.*, 
+                extract(month from f.dl_ymd) month 
+           FROM DEAL f 
+           <if test="dlTtl != null and dlTtl != ''">
+          WHERE  dl_ttl like '%'||#{dlTtl}||'%' 
+          </if>
+            and  dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')) d
+    RIGHT JOIN (select extract(month from ADD_MONTHS(SYSDATE, -1*(level-1))) month
+            from dual
+             <![CDATA[
+            connect by level <= 3) c
+            ]]>	
+      ON d.month = c.month
+      GROUP BY c.month
+      ORDER BY c.month DESC
 	</select>
 
 	<!-- ======= 판매자정보(현재 게시글 제외) ======== -->
 	<select id="getDealSeller"
 			parameterType="com.goguma.deal.vo.DealSearchVO"
 			resultType="com.goguma.deal.vo.DealSearchVO">			                
-		         select * 
+		    select * 
 			from (select rownum rn,a.* from(
-			SELECT d.* ,
+				SELECT d.* ,
 		       (SELECT ATCH_PATH
 	       		FROM ATCH
 	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 

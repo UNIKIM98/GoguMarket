@@ -91,6 +91,7 @@ public class DealController {
 		System.out.println(dealService.getcountTotal(svo)+"갯수나오냐?"); // 이건되는데
 		
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매중 내역
+		System.out.println(dealService.selectNtslDeal(svo)+"svoooooo");
 		
 		svo.setStts("판매완료");		
 		model.addAttribute("dealsold", dealService.selectNtslDeal(svo)); // 판매완료 내역
@@ -127,11 +128,11 @@ public class DealController {
 	// ===========================
 	// ▷ 마이페이지 / 중고거래 거래후기   : 저거 모델 쓰면 스트링?하면안된다고뜸 | 페이징하려면 리뷰테이블의 서치보가 따로 있어야하는데 없음
 		@RequestMapping("/my/myReview")
-		public String myreview(String userId, Model model, HttpServletRequest request,DealReviewVO vo) {
+		public String myreview(String userId, Model model, HttpServletRequest request,DealRvSearchVO rvo) {
 			HttpSession session = request.getSession();
 			userId = (String) session.getAttribute("userId");
 			
-			vo.setUserId(userId);
+			rvo.setUserId(userId);
 
 			//model.addAttribute("get",rvService.selectGetRv(userId));
 
@@ -152,6 +153,7 @@ public class DealController {
 																		// common_detail_code만 들고오면됨
 
 		scvo.setPstSe("중고거래"); // 검색어 왜 두번씩 드가냐
+		scvo.setStts("1");		// 처음 들어갈때 상태값은 1
 		model.addAttribute("word", searchService.getPopularWord()); // 이 모델은 실시간 검색되는거고
 																	// 관리자가 수정한 값을 담은 새로운 테이블을 모델에 담아야함.
 		if (scvo.getSearchTtl() != null && !scvo.getSearchTtl().equals(""))
@@ -160,33 +162,46 @@ public class DealController {
 		} // 검색어저장
 		return "deal/dealMain";
 	}
-	
+	// 지도 테스트 잘나온다 w h y?
+	@GetMapping("/goguma/testmap")
+	public String testtest() {
+		return "common/testtest";
+	}
 	// ===========================
 	// ▶ 관리자 실검 관리
 	@RequestMapping("/admin/adminKeywordbox") //
+
 	public String adminKeywordbox(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
 		
-		model.addAttribute("word", searchService.getPopularWord());
+		model.addAttribute("word", searchService.getPopularWord()); // stts=1인 실검가져오기
 		
 		return "admin/adminKeywordbox"; // 뷰페이지명
 	}
 	
-	// ▶ 관리자 임시 실검 삭제
-	@GetMapping("/admin/delKeywordAjax")
+	
+	// ▶ 관리자 임시 실검 => 완전한 실검으로 등록하기
+	@GetMapping("/admin/adminKeywordboxsubmit")
 	@ResponseBody
-	public Map delKeywordAjax() {
-		// 리턴할 hashMap 생성
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	public String adminKeywordboxsubmit(Model model, SearchVO svo) {
+		//searchService.updateWord(svo); //검색어 담아서 업데이트 하셔야죠
+		searchService.insertSearch(svo); // 걍 다시 인서트해도될듯
+		return "redirect:/goguma/dealMain";
+	}
+	
+
+	// ▶ 관리자 임시 실검 삭제
+	@GetMapping("/admin/deletekeyword/{keyword}")
+	@ResponseBody
+	public int delKeywordAjax(@PathVariable String keyword) {
 		
 		// 매퍼에 보낼 서치보생성
 		SearchVO sVO = new SearchVO();
+		sVO.setSearchTtl(keyword);
 		System.out.println("매퍼에 보내는 sVO=====" +sVO);
 		int cnt = searchService.deleteWord(sVO);
-		map.put("result", cnt);
-		
-		return map;
+		System.out.println(cnt);
+		return cnt;
 	}
-	// ▶ 관리자 임시 실검 수정
 	// ▶ 관리자 완료용 실검 인서트?업데이트?
 	
 	
@@ -259,9 +274,11 @@ public class DealController {
 		model.addAttribute("file", dealService.selectDealAtch(dlNo)); // 해당게시글 첨부파일들
 		model.addAttribute("cnt", dealService.dealHitUpdate(dlNo));// 조회수
 
-		// 시세를 담는 모델
-		model.addAttribute("prc",dealService.selectPrice(svo));
-		System.out.println(dealService.selectPrice(svo)+"시세");
+		DealSearchVO dsvo = new DealSearchVO();
+		dsvo.setDlTtl(vo.getDlTtl());
+		// 시세를 담는 모델 : 새로운 생성자를 만들어서 제목을 담고 시세를 조회한다.
+		model.addAttribute("prc",dealService.selectPrice(dsvo));
+		System.out.println(dealService.selectPrice(dsvo)+"시세=====");
 		
 		return "deal/dealdetail";
 	}
@@ -406,8 +423,8 @@ public class DealController {
 		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 
-		rvo.setFirst(paging.getFirst()); // 리뷰 페이징을 담을 rvo 이거 이상함 왜 4랑 
-		rvo.setLast(paging.getLast());	// 6이 나오지..? 설마 그전거가 이어지나?
+		rvo.setFirst(paging.getFirst()); // 
+		rvo.setLast(paging.getLast());	// 
 		
 		rvo.setUserId(ntslId);
 		paging.setTotalRecord(rvService.getcountTotal(rvo));
