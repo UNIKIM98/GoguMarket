@@ -20,13 +20,22 @@
 	<select id="getDealRv"
 			parameterType="com.goguma.deal.vo.DealReviewVO"
 			resultType="map">
-	   select *
-		from rv
-        where dl_no in 
-                    (select dl_no
-                     from deal
-                     where ntsl_id = #{ntslId})
+	   		SELECT *
+			FROM (
+			    SELECT ROWNUM rn, a.*
+			    FROM (
+			        SELECT r.*
+			        FROM rv r
+			        WHERE dl_no IN (
+			            SELECT dl_no
+			            FROM deal
+			            WHERE ntsl_id = #{ntslId}
+			        )
+			<![CDATA[
+			    ) a WHERE ROWNUM <= #{last}) b WHERE rn >= #{first}
+				]]>		
 	</select>
+
 	<select id="selectRvNo" resultType="int">
 			SELECT
 			CASE WHEN MAX(rv_no) IS NULL THEN 1 ELSE
