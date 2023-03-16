@@ -8,13 +8,13 @@ import com.goguma.mem.service.MemService;
 import com.goguma.mem.vo.MemVO;
 
 
-@Component
+//@Component
 public class ScheduleComponent {
 	
-	@Autowired
+//	@Autowired
 	MemService memService;
 	
-	@Scheduled(cron = "2 * * * * *")
+//	@Scheduled(cron = "2 * * * * *")
 	public void scheduleTest() {
 		MemVO memVO = new MemVO();
 		memVO.setUserId("uni");
