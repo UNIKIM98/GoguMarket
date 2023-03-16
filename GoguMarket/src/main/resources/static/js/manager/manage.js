@@ -95,7 +95,7 @@ function selectMemberList(dis, pageNum) {
 
 	let formData = {}; //$("#valueForm").serialize();
 	if (dis == 1) {
-		formData = $("#valueForm").serialize();
+		formData = $("#searchForm").serialize();
 	} else {
 		formData = $("#searchForm").serialize();
 	}

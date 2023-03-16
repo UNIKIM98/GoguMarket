@@ -34,8 +34,8 @@ public class SnsServiceImpl implements SnsService {
 	
 	
 	@Override
-	public List<SnsVO> selectSnsList() {
-		return map.selectSnsList();
+	public List<SnsVO> selectSnsList(SnsVO vo) {
+		return map.selectSnsList(vo);
 	}
 
 	@Override

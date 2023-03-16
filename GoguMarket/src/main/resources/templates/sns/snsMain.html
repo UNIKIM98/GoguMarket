@@ -37,8 +37,7 @@ textarea {
 					<div class="row">
 						<div class="col-md-12">
 							<div class="section-title text-start mb-40">
-								<h2 class="uppercase mt-15">MY TOWN
-									LIFE[[${session.userId}]]</h2>
+								<h2 class="uppercase mt-15">MY TOWN LIFE</h2>
 								<h6>너의 동네를 나에게 소개 시켜줘 !</h6>
 								<hr>
 								<div class="newsletter-section gray-bg pt-60 pb-80 mt-80">
@@ -54,18 +53,20 @@ textarea {
 													</div>
 
 													<div class="newsletter-info text-center">
-														<div class="searchForm mb-30" style="text-align: center">
+														<div class="searchForm mb-30 pstSe"
+															style="text-align: center">
 															<form id="searchForm" action="#">
-																<select class="selectpicker mb-30">
+																 <select class="selectpicker mb-30" id="pstSe" name="pstSe">
 																	<option>전체</option>
-																</select> <br>
+																</select>  <br>
 																<div class="subcribe clearfix">
 
-																	<input type="text" name="email"
+																	<input type="text" name="search" id="search"
 																		placeholder="Enter your town here..."
 																		style="width: 80%" />
 
-																	<button class="submit-btn-2 btn-hover-2" type="submit">subcribe</button>
+																	<button class="submit-btn-2 btn-hover-2" type="button"
+																		onclick="selectSnsList()">search</button>
 																</div>
 															</form>
 														</div>
@@ -200,31 +201,48 @@ textarea {
 		</div>
 		<div id="loadDiv" style="display: none"></div>
 		<script th:inline="javascript">
-		$.ajax({
-			url : "/selectSnsList", // 데이터를 가져올 경로 설정
-			type : "GET", // 데이터를 가져오는 방식
-			dataType : 'json',
-			contentType : 'application/json; charset = utf-8',
-			success : function(result) {
-					  console.log(result)
-					  for(sns of result){
-						$("#list").append(`<div class="brand-item">
-	                            				<div class="single-brand-product"
-													id="clickSns"
-													onclick="snsModal(${sns.snsNo})">
-	                            						${sns.userId} / ${sns.snsYmd}
-	                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-	                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-	                         							<img src="${sns.atchPath}" alt=""></a>
-	                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
-												</div>
-											</div>`)
-	           							 }
-										},
-					error : function(err) {
-						console.log(err);
-					}
-				})
+		$(document).ready(function () {
+			
+			alert('ㅎㅇㅎㅇ')
+			selectSnsList()
+		
+		});
+		
+		function selectSnsList(){
+			
+			formData = $("#searchForm").serialize();
+			console.log(formData);
+			
+			$.ajax({
+				url : "/selectSnsList", // 데이터를 가져올 경로 설정
+				type : "GET", // 데이터를 가져오는 방식
+				data:formData,
+				dataType : 'json',
+				contentType : 'application/json; charset = utf-8',
+				success : function(result) {
+						  console.log(result)
+						  $("#list").empty()
+						  for(sns of result){
+							$("#list").append(`<div class="brand-item">
+		                            				<div class="single-brand-product"
+														id="clickSns"
+														onclick="snsModal(${sns.snsNo})">
+		                            						${sns.userId} / ${sns.snsYmd}
+		                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+		                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+		                         							<img src="${sns.atchPath}" alt=""></a>
+		                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
+													</div>
+												</div>`)
+		           							 }
+											},
+						error : function(err) {
+							console.log(err);
+						}
+					})
+		}
+		
+		
 			</script>
 
 

@@ -13,9 +13,25 @@ import com.goguma.mem.vo.MemVO;
 @Service
 public class AlarmServiceImpl implements AlarmService {
 
+
 	@Autowired
 	AlarmMapper alarm;
 
+	@Override
+	public int deleteAlm(List<AlarmVO>almNo) {
+		
+		int success=0;
+		for(int i=0; i<almNo.size(); i++) {
+			
+			System.out.println(i);
+			/* deleteAlm(almNo[i]); */
+			
+			
+		}
+		
+		return success;
+	}
+	
 	@Override
 	public int getcountTotal(AlarmVO vo) {
 		// TODO Auto-generated method stub

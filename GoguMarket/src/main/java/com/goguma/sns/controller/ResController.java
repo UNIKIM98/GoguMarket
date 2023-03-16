@@ -2,6 +2,7 @@ package com.goguma.sns.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goguma.common.service.AtchService;
+import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.AtchVO;
+import com.goguma.common.vo.CommonCodeVO;
 import com.goguma.sns.service.SnsService;
 import com.goguma.sns.vo.SnsVO;
 
@@ -27,11 +30,38 @@ public class ResController {
 
 	@Autowired
 	AtchService aservice;
+	
+	@Autowired
+	CommonCodeService common;
+	
+	@GetMapping("/keyValue")
+	public Map<String, Object> keyValue() {
+		System.out.println("gdgd");
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		List<CommonCodeVO> pstSe = new ArrayList();
+		List<CommonCodeVO> selist = new ArrayList();
+		List<CommonCodeVO> codelist = new ArrayList();
+		List<CommonCodeVO> searchlist = new ArrayList();
+
+		pstSe = common.codeList("001");
+		selist = common.codeList("003");
+		codelist = common.codeList("004");
+		searchlist = common.codeList("009");
+
+		map.put("pstSe",pstSe);
+		map.put("selist", selist);
+		map.put("codelist", codelist);
+		map.put("searchlist", searchlist);
+
+		return map;
+	}
 
 	@GetMapping("/selectSnsList")
-	public List<SnsVO> getSnsList() {
+	public List<SnsVO> getSnsList(SnsVO vo) {
 
-		List<SnsVO> result = service.selectSnsList();
+		System.out.println(vo);
+		List<SnsVO> result = service.selectSnsList(vo);
 
 		return result;
 

@@ -18,6 +18,8 @@ public interface AlarmService {
 	
 	boolean updateNotify(AlarmVO vo);
 	
+	int deleteAlm(List<AlarmVO>vo); //알림 삭제
+	
 
 	
 	
