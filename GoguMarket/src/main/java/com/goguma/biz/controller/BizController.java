@@ -93,6 +93,28 @@ public class BizController {
 
 		return "rsvt/book01";
 	}
+	
+	//지도 ajax(마커 여러개)
+	@GetMapping("/goguma/mapApiAjax")
+	@ResponseBody
+	public List<BizMemVO> mapApiAjax() {
+		// DB에서 주소 목록을 가져오는 코드
+	    List<BizMemVO> address = memService.getBizList();
+		return address;
+	}
+	
+	//지도 ajax(마커 한개)
+	@GetMapping("/goguma/mapOneApiAjax")
+	@ResponseBody
+	public BizMemVO mapOneApiAjax(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
+		// DB에서 주소를 가져오는 코드
+	    BizMemVO addressOne = memService.bizInfo(bizNo);
+		return addressOne;
+	}
+	
+	
 
 	// 동네가게 상세정보(book0205)
 	@RequestMapping("/goguma/bookmain/{bizNo}")
@@ -332,6 +354,19 @@ public class BizController {
 
 		return rsvtNo;
 
+	}
+	
+	//비즈 메인으로 이동(현재 : 마이페이지에서 목록 선택시 이동)
+	@GetMapping("/biz/bizMain")
+	public String bizMain(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
+		model.addAttribute("biz", memService.bizInfo(bizNo));
+		// 공통코드 시간
+		model.addAttribute("code", codeService.codeList("007"));
+		model.addAttribute("imgDetail", memService.bizDetailImg(bizNo));
+		model.addAttribute("news", newsService.selectBizNews(bizNo));
+		return "/biz/shopMain";
 	}
 
 	// 채은 ============================================
