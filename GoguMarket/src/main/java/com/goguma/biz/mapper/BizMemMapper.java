@@ -36,6 +36,8 @@ public interface BizMemMapper {
 	//가게등록
 	int bizInsert(BizMemVO vo);
 
+	//가게 수정하기
+	BizMemVO updateBizMem(String bizNo);
 
 	
 }

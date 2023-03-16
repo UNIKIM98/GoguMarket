@@ -106,4 +106,10 @@ public class BizMemServiceImpl implements BizMemService {
 
 	}
 
+	@Override
+	public BizMemVO updateBizMem(String bizNo) {
+		// 가게정보 수정하기
+		return map.updateBizMem(bizNo);
+	}
+
 }
