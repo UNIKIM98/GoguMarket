@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.goguma.rsvt.vo.RsvtMenuVO;
 import com.goguma.rsvt.vo.RsvtPaymentVO;
+import com.goguma.rsvt.vo.RsvtUpMenuVO;
 import com.goguma.rsvt.vo.RsvtUpdateVO;
 import com.goguma.rsvt.vo.RsvtVO;
 
@@ -38,4 +39,19 @@ public interface RsvtMapper {
 	
 	//비즈페이지 예약리스트 조회
 	List<RsvtVO> selectBizRsvt(String bizNo);
+	
+	//메뉴변경 insert
+//	int insertModifyMenu(RsvtUpMenuVO upVo);
+//	List<RsvtUpMenuVO> insertModifyMenu();
+	
+	//rsvt테이블 예약상태 업데이트
+	int updateRsvtStts(String rsvtNo);
+	
+	//예약신청된거 업데이트
+	int updateRsvtInfo(String rsvtNo);
+	
+	//예약신청 승인여부 업데이트
+	int updateApprove(String rsvtNo);
+
+	
 }

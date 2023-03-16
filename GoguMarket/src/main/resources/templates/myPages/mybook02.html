@@ -133,7 +133,7 @@
 					// 총 결제금액을 저장할 변수
 					let totalPrice = 0;
 					
-					//메뉴판 반복문으로 생성
+					//메뉴판 반복문으로 생성(시간관계상 메뉴 수량조절은 pass..흑..)
 					for(list of lists){
 						console.log(list)
 						$('#menuTbl tbody').append(
@@ -353,8 +353,16 @@
 			}	
 		}
 		
+	
 		//날짜 수정시 value값 저장
 		function modifyDate(obj){
+			//오늘 이전 날짜 선택안되게
+			var today = new Date().toISOString().split('T')[0];
+		    if (obj.value < today) {
+		    	alert("오늘 이후의 날짜만 선택해주세요")
+		    	obj.value = today;
+		    }
+			
 			//선택한 날짜 변수에 저장
 			selectedDate = event.target.value;
 			console.log(selectedDate)
@@ -415,10 +423,10 @@
 			$("#modifyRsvtInfo").submit();
 		}
 		
+		//메인으로 가버렷
 		function goToMain(){
 			window.location.href="/";
 		}
-		
 		
 		</script>
 	</div>
