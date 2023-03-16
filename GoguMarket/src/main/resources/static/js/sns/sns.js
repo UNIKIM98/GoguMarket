@@ -1,3 +1,10 @@
+$(document).ready(function(){
+	 
+	 alert('안녕?')
+	 keyValue();
+	
+})
+
 var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
 var btn = document.getElementById("myBtn"); // 글쓰기 활성화
@@ -33,11 +40,37 @@ reInput.onclick = function() {
 
 };
 
+//----------------공통코드 출력-------------------------
 
+function keyValue() {
+	alert("여기까지 왔나요?")
+	$.ajax({
+		url:"/keyValue",
+		type: "GET",
+		async: false,
+		dataType: "JSON",
+		contentType: "application/json; charset = utf-8",
 
+		success: function(data) {
+			console.log(data);
+			$(".pstSe").find("#pstSe").append(
+				`<option value="">전체</option>`);
+			$(data["searchlist"])
+				.each(
+					function(index, obj) {
+						$(".pstSe")
+							.find("#pstSe")
+							.append(
+								`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
+					});
 
+		},
+		error: function(data) {
+			console.log(error);
+		},
+	});
+}
 
-//---------------- 게시글 list-------------------------
 
 
 //------------------ 개인 게시글-------------------------

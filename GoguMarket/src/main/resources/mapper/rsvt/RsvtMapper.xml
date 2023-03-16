@@ -105,7 +105,7 @@
 	
 	<!-- 예약상세내역 가져오기 -->
 	<select id="selectMyRsvtDetail" parameterType="String" resultType="map">
-		SELECT r.*, m.*, p.*, b.*, bm.biz_nm
+		SELECT r.*, m.*, p.*, b.*, bm.biz_nm  
 		FROM rsvt r JOIN rsvt_menu m
 					ON r.rsvt_no = m.rsvt_no
 					JOIN rsvt_payment p
@@ -186,8 +186,9 @@
 	<select id="deleteAllRsvt" parameterType="int">
     { CALL p_delete_rsvt(#{value, mode=IN, jdbcType=INTEGER}) }
 	</select>
-	
-	<!-- 가게 예약 조회(?) -->
+
+	<!-- 가게 예약 조회(?) shop06단골리스트에서 연결될예정 -->
+
 	<select id="selectBizRsvt" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
 		SELECT b.*,r.*, m.nick_nm
 		FROM biz_mem b INNER JOIN rsvt r 
@@ -196,5 +197,83 @@
                         ON r.user_id = m.user_id
 		WHERE b.biz_no = #{bizNo}
 	</select>
-
+	
+ 	<!-- 메뉴변경 insert --> 
+<!-- 	<insert id="insertModifyMenu" parameterType="java.util.List"> -->
+<!-- 		INSERT INTO RSVT_UP_MENU( -->
+<!-- 			up_menu_no,  -->
+<!-- 			rsvt_update_no,  -->
+<!-- 			menu_no,  -->
+<!-- 			amount,  -->
+<!-- 			menu_prc -->
+<!-- 		)  -->
+<!--     	VALUES -->
+<!-- 		<foreach collection="list" item="menu" separator=","> -->
+<!-- 			( -->
+<!-- 				#{menu.upMenuNo}, -->
+<!-- 				#{menu.rsvtUpdateNo}, -->
+<!-- 				#{menu.menuNo}, -->
+<!-- 				#{menu.amount}, -->
+<!-- 				#{menu.menuPrc} -->
+<!-- 			) -->
+<!-- 		</foreach> -->
+<!-- 	</insert> -->
+	<!-- 메뉴변경 안돌아감 지워도됨 -->
+	<insert id="insertModifyMenu" parameterType="com.goguma.rsvt.vo.RsvtUpMenuVO">
+		<selectKey keyProperty="upMenuNo" resultType="int" order="BEFORE">
+			SELECT
+			CASE WHEN MAX(up_menu_no) IS NULL THEN 1 ELSE
+			MAX(up_menu_no) + 1 END as up_menu_no
+			FROM rsvt_up_menu
+		</selectKey>
+		INSERT INTO RSVT_UP_MENU(
+			up_menu_no, 
+			rsvt_update_no, 
+			menu_no, 
+			amount, 
+			menu_prc
+		) 
+    	VALUES
+		(
+			#{upMenuNo},
+			#{rsvtUpdateNo},
+			#{menuNo},
+			#{amount},
+			#{menuPrc}
+		)
+	</insert>
+	
+	<!-- 예약변경하면 예약상태 ='예약변경'으로 바뀌게 함 -->
+	<update id="updateRsvtStts" parameterType="String">
+		update rsvt 
+		set rsvt_stts = '예약변경'
+		where rsvt_no = #{rsvtNo}
+	</update>
+	
+	<!-- 변경신청들어온거 update해줌 -->
+	<update id="updateRsvtInfo" parameterType="String">
+		UPDATE rsvt r
+		SET r.rsvt_want = (SELECT ru.rsvt_want
+		                   FROM rsvt_update ru
+		                   WHERE r.rsvt_no = ru.rsvt_no2),
+		    r.rsvt_ymd = (SELECT ru.rsvt_ymd
+		                  FROM rsvt_update ru
+		                  WHERE r.rsvt_no = ru.rsvt_no2),
+		    r.rsvt_tm = (SELECT ru.rsvt_tm
+		                 FROM rsvt_update ru
+		                 WHERE r.rsvt_no = ru.rsvt_no2),
+		    r.rsvt_nope = (SELECT ru.rsvt_nope
+		                   FROM rsvt_update ru
+		                   WHERE r.rsvt_no = ru.rsvt_no2)
+		WHERE EXISTS (SELECT *
+		              FROM rsvt_update ru
+		              WHERE r.rsvt_no = #{rsvtNo})
+	</update>
+	
+	<!-- 변경 신청완료되면 rsvt_update테이블에 승인여부 수정 -->
+	<update id="updateApprove" parameterType="String">
+		update rsvt_update
+		set aprv_yn = 'Y'
+		where rsvt_no2 = #{rsvtNo}
+	</update>
 </mapper>

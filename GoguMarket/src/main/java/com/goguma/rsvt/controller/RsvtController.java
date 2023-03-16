@@ -1,5 +1,7 @@
 package com.goguma.rsvt.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,7 +121,7 @@ public class RsvtController {
 		
 		int rsvtNo = vo.getRsvtNo();
 		System.out.println("예약번호=="+rsvtNo);
-				
+		System.out.println(rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));		
 		return rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo));
 	}
 	
@@ -213,50 +216,65 @@ public class RsvtController {
 	
 	@PostMapping("/my/requestModifyAjax")
 	@ResponseBody
-	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo, RsvtUpMenuVO upMenuInfo, @RequestParam("rsvtNo")int rsvtNo) {
+	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo, @RequestParam("rsvtNo")int rsvtNo, RsvtVO rvo) {
 		System.out.println("수정예약번호===="+rsvtNo);
 		
 		rsvtUpdateVo.setAprvYn("N");
 		
 		//일단 예약번호 param으로 가져옴
 		rsvtUpdateVo.setRsvtNo2(rsvtNo);
-		
-		System.out.println(upMenuInfo);
 		System.out.println(rsvtUpdateVo);
 		
-		//아니 전에했던 메뉴 배열로 불러오는거 왜 따라했는데 안됨?
-		List<RsvtUpMenuVO> lists = upMenuInfo.getUpMenuInfo();
-		System.out.println(lists);
-		/*
-		 * // 예약메뉴 불러오기 위한 list
-		for (int i = 0; i < lists.size(); i++) {
-			System.out.println(i + "번째 메뉴.");
-			System.out.println(lists.get(i).getMenuNm()); // 각 예약메뉴 확인
-			System.out.println(lists.get(i).getAmount());
-			System.out.println(lists.get(i).getMenuNo());
-
-			// 예약메뉴 정보에 userId 넣어주기
-			lists.get(i).setUserId(userId);
-			// RsvtVO에서 가져온 예약번호를 RsvtMenuVO로 넘겨주기
-			lists.get(i).setRsvtNo(rsvtInfo.getRsvtNo());
-
-			System.out.println("=======" + lists.get(i));
-
-		 * */
-		
-		//예약수정 테이블에 insert => 메뉴는 안되는거니..?
+		//예약수정 테이블에 insert
 		rsvtService.insertRsvtUpdateTbl(rsvtUpdateVo);
+		//변경신청하면 상태바뀜
+		rsvtService.updateRsvtStts(Integer.toString(rsvtNo));
+		
+		
+		//============
+		
+//		System.out.println(upVo.get(rsvtNo));
+//		System.out.println("========="+rsvtService.insertModifyMenu(upVo));
+		//System.out.println(rsvtService.insertModifyMenu(upVo));
+		
+		//예약수정 메뉴 insert
+//		System.out.println(rsvtService.insertModifyMenu(menuList)); 
+		
+//		RsvtUpMenuVO testVO = new RsvtUpMenuVO();
+//		testVO.setUpMenuNo(9);
+//		testVO.setRsvtUpdateNo(9);
+//		testVO.setMenuNO("99");
+//		testVO.setAmount(99999);
+//		testVO.setMenuPrc(99999);
+//		menuList.add(testVO);
+//		int cnt = rsvtService.insertModifyMenu(testVO);
+		
+		// 무식한 방법 (플랜B)
+		// 메뉴 리스트의 길이만큼 for문 돌면서
+		// VO로 개벌 인서트하는 메서드를 콜한다 ex)rsvtService.insertModifyMenu(rsvtUpMenuVO)
 		
 		return rsvtNo;
 	}
 
+
 	@GetMapping("/my/myRsvtDeleteAjax/{rsvtNo}")
+
 	@ResponseBody
 	public int deleteAllByRsvtNo(@PathVariable int rsvtNo) {
 		
 		//삭제 프로시저
 		rsvtService.deleteAllRsvt(rsvtNo);
 	    return 0;
+	}
+	
+	//예약내역 업데이트
+	@PutMapping("/biz/updateRsvtAjax")
+	@ResponseBody
+	public int updateRsvtAjax(@RequestBody RsvtVO rsvtVo) {
+		int rsvtNo = rsvtVo.getRsvtNo();
+		System.out.println("====="+rsvtService.updateRsvtInfo(Integer.toString(rsvtNo)));
+		return rsvtNo;
+		
 	}
 	
 }

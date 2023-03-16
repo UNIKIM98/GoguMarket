@@ -63,7 +63,7 @@ public class AuctController {
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
 		
-		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
+		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (조회수 고장남!!!!주의!)
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
 
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회

@@ -17,6 +17,11 @@ public class SnsVO{
 	private String hash; // 해시태그
 	private int likeNocs; // 좋아요수
 	private int cmnt; // 댓글번호
+	
+	//검색 정렬을 위해서 있는것
+	private String search;
+	private String pstSe;
+	//
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

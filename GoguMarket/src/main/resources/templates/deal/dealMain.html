@@ -87,6 +87,15 @@ layout:decorate="~{layouts/layout}">
 				frmSearch.orderby.value = orderby;
 				frmSearch.submit();
 			}
+			// 초기화버튼
+			function reset(){
+				frmSearch.page.value='';
+				frmSearch.orderby.value='';
+				frmSearch.ctgry.value='';
+				frmSearch.searchType.value='';
+				frmSearch.searchTtl.value='';
+				frmSearch.submit();
+			}
 			
 		</script>
     <!-- Body main wrapper start -->
@@ -140,7 +149,7 @@ layout:decorate="~{layouts/layout}">
 	                                    <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
 	                                            placeholder="검색어를 입력하세요" title="키워드 입력"/>
                                     <button class="submit-btn-2 btn-hover-2" type="submit">검 색</button>
-                                </div>
+	                                <button class="submit-btn-2 btn-hover-2" onclick="reset()" type="submit">초기화</button>
                              </div>
                         </form>
                         

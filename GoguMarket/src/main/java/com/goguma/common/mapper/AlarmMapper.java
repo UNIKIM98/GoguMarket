@@ -17,6 +17,6 @@ public interface AlarmMapper {
 	
 	boolean updateNotify(AlarmVO vo); //알람의 상태를 변경하는 메소드
 	
-	
+	int deleteAlm(List<AlarmVO>vo);
 	
 }

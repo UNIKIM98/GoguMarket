@@ -8,7 +8,7 @@ import com.goguma.sns.vo.SnsVO;
 
 
 public interface SnsMapper {
-	List<SnsVO> selectSnsList();
+	List<SnsVO> selectSnsList(SnsVO vo);
 
 	int getCountTotal(SnsVO vo);
 

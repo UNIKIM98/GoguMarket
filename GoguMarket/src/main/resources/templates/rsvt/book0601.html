@@ -480,6 +480,16 @@
 				$('input[id="orderDate"]').on('change', function() {
 					var selectedDate = $(this).val();
 					console.log(selectedDate);
+					var today = new Date();
+					var selected = new Date(selectedDate);
+					    
+					// 오늘 이전의 날짜가 선택되지 않도록 조건문 추가
+					if (selected < today) {
+						alert('오늘 이전의 날짜는 선택할 수 없습니다.');
+						$(this).val('');
+						return false;
+					}
+					
 					$('#tdDate').text(selectedDate).append(
 						`
 						<input type='hidden' id='rsvtYmd' name='rsvtYmd' value='${selectedDate}'>
