@@ -3,13 +3,11 @@
 <mapper namespace="com.goguma.common.mapper.AlarmMapper">
 
 
-	<sql id="criteria">
-		WHERE user_id = #{userId}
+	<sql id="creiteria">
+		where
+		user_id = #{userId}
 		<if test="pstSe != null and pstSe !=''">
 			AND pst_Se = #{pstSe}
-		</if>
-		<if test="pstSe == 'chk'">
-			AND cked = 0
 		</if>
 	</sql>
 
@@ -19,12 +17,24 @@
 		#{pstSe},#{almCn},1)
 	</insert>
 
+
 	<select id="checkNotifyCount"
 		parameterType="com.goguma.common.vo.AlarmVO" resultType="int">
 		select
 		count(*) from alarm where user_id = #{userId} and cked = 1
 
 	</select>
+
+	<select id="countNotify"
+		parameterType="String" resultType="int">
+		SELECT PST_SE,
+		COUNT(*) FROM ALARM
+		WHERE USER_ID = #{userId}
+		GROUP BY PST_SE;
+
+	</select>
+
+
 
 
 	<select id="selectNotify"
@@ -38,7 +48,7 @@
 		<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>
-		order by pst_Se
+		order by alm_ymd desc
 
 	</select>
 

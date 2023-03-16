@@ -18,9 +18,13 @@ public class AlarmServiceImpl implements AlarmService {
 	@Override
 	public int deleteAlm(AlarmVO vo) {
 
-		
-
 		return alarm.deleteAlm(vo);
+	}
+
+	@Override
+	public int countNotify(String userId) {
+		// TODO Auto-generated method stub
+		return alarm.countNotify(userId);
 	}
 
 	@Override

@@ -98,7 +98,22 @@ public class AlarmController {
 		cnt = alarm.checkNotifyCount(vo);
 		return cnt;
 	}
-
+	
+	@GetMapping("/my/countNotify")
+	@ResponseBody
+	public Map<String,Object> countNotify(HttpServletRequest request) {
+		System.out.println("gdgd");
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		AlarmVO vo = new AlarmVO();
+		vo.setUserId(userId);
+		
+		
+		alarm.checkNotifyCount(vo)+"갯수확인";
+		return cnt;
+	}
+	
+	
 	@GetMapping("/my/selectNotify")
 	@ResponseBody
 	public Map<String, Object> selectNotify(HttpServletRequest request, String pstSe, CommonPaging page) {

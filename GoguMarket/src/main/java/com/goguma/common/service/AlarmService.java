@@ -14,6 +14,8 @@ public interface AlarmService {
 	
 	int checkNotifyCount(AlarmVO vo);
 	
+	int countNotify(String userId); //알림의 갯수를 확인
+	
 	List<AlarmVO> selectNotify(AlarmVO vo);
 	
 	boolean updateNotify(AlarmVO vo);

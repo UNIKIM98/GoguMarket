@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/sideBar}">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -23,226 +24,253 @@
 
 
 <script>
-radio = $("<input>").attr({
-	name: "userStts",
-	class: "select",
-	name:"check",
-	type:"checkbox",
-	id:"almNo"
-}); // 테이블에 변경항목 추가하기위한 태그 생성
+		radio = $("<input>").attr({
+			name: "userStts",
+			class: "select",
+			name: "check",
+			type: "checkbox",
+			id: "almNo"
+		}); // 테이블에 변경항목 추가하기위한 태그 생성
 
+		/* hidden = $("<input>").attr({
+			name: "cked",
+			name: "cked",
+			type: "hidden",
+			id: "cked",
 
-$(document).ready(function () {
-
-	loadNotifyAjax();
-	setInterval(() => checkNotify(), 20000);
-});
-
-
-$(document).ready(function(){
-	
-	$("#cbx_chkAll").click(function() {
-		if($("#cbx_chkAll").is(":checked")) $("input[name=almNo]").prop("checked", true);
-		else $("input[name=almNo]").prop("checked", false);
-	});
-	
-	$("input[name=almNo]").click(function() {
-		var total = $("input[name=almNo]").length;
-		var checked = $("input[name=almNo]:checked").length;
+		});
+ */
+		$(document).ready(function () {
 		
-		if(total != checked) $("#cbx_chkAll").prop("checked", false);
-		else $("#cbx_chkAll").prop("checked", true); 
-	});
-})
-
-function deleteAlm(){
-	console.log('gdgd')
-	var almNo = new Array();
-	var deleteArr = new Array();
-	
-	
-	$("input[name=almNo]:checked").each(function(){
-		almNo.push({'almNo':$(this).val()}); // push: 배열에 값 삽입
-	});
-	
-	console.log(JSON.stringify(almNo))
-	
-	/* idxArr.push($("input[name=chk]:checked").text());*/
-	
-	
-    $.ajax({
-        url:"/my/deleteAlm",
-        type: "POST",
-        data:JSON.stringify(almNo),
-        contentType : "application/json",
-        success: function(result) {
-            if(result == 0){
-            	alert("알림 삭제에 실패 했습니다.")
-            }else{
-            	alert(result+"개의 알림을 삭제 했습니다.")
-            }
-            
-            loadNotify();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-}
-
-
-
-function checkNotify(){
-	  console.log("새로고침");
-	  $.ajax({
-	    url: "/my/checkNotifyCount",
-    	async: false,
-		type: 'GET',
-	    success: function (data) {
-	      console.log(data);
-	      
-	      $("")
-
-	      if ( data > 0 ) {
-	    	  loadNotify();
-	      } else {
-	      }
-	    },
-	    error: function (error) {
-	      console.log(error);
-	    },
-	  });
-	}
-
-
-function loadNotify(pstSe){
-	$("#pstSe").val(pstSe);
-	$("#page").val(1);
-	loadNotifyAjax()
-}
-function gopage(page){
-	$("#page").val(page);
-	loadNotifyAjax()
-}
-
-
-function loadNotifyAjax() {
-
-	
-  $.ajax({
-	    url: "/my/selectNotify",
-    	type: 'GET',
-    	async: false,
-    	data: $("#frm").serialize(),
-    success: function (result) {
-      console.log(result)
-      console.log(result.page)
-    	
-	  $(".notifyGroup").empty();
-      $(".pagination").empty();
-	  
-	  let pstSed='';
-	  
-	  console.log(pstSe)
-	  
-      $(result.data).each(function (index,data) {
-    	  
-    	  if(data.pstSe == 'AD'){
-    		  pstSed=' [ 관리자 알림 ] '
-    	  }
-    	  if(data.pstSe == 'AU'){
-    		  pstSed=' [ 경매 알림 ] '	  
-    	  }
-    	  
-    	  if(data.pstSe == 'SN'){
-    		  pstSed=' [ 동네 생활 ] '
-    	  }
-    	  if(data.pstSe == 'BI'){
-    		  pstSed=' [ 동네 가게 ] '
-    	  }
-    	  if(data.pstSe == 'DE'){
-    		  pstSed=' [ 중고 거래 ] '
-    	  }
-    	  
-    	 	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","check_"+(index)))
-							.append(
-						$("<td>").html(radio.clone().text(data.almNo).attr({
-							"value":data.almNo,
-							"class":"check_"+data.almNo,
-							"name":"almNo"
-							})
-						)
-								
-						)
-					
-			.append($("<td>").text(index+1))
-			.append($("<td>").text(pstSed))
-			.append($("<td>").text(data.almCn))
-			.append($("<td>").text(data.almYmd))
+			loadNotifyAjax();
+			countNotify()
+			setInterval(() => checkNotify(), 300000);
+			checkAlm();
 			
-		//==================================================================================
-			
+		});
+		
+		$(document).ready(function () {
 
-      });
-		$(result.page).each(function(index,page){
-			for (i = 0; i < parseInt(page.endPage); i++) {
-				$(".pagination").append(
-						' <li class="page-item page_' +
-						(i + 1) +
-						'"><a class="page-link" href="#" onClick="gopage(' +
-						(i + 1) +
-						')"> ' +
-						(i + 1) +
-						"</a></li>"
-					);
-			}
+			$("#cbx_chkAll").click(function () {
+				if ($("#cbx_chkAll").is(":checked")) $("input[name=almNo]").prop("checked", true);
+				else $("input[name=almNo]").prop("checked", false);
+			});
+
+			$("input[name=almNo]").click(function () {
+				var total = $("input[name=almNo]").length;
+				var checked = $("input[name=almNo]:checked").length;
+
+				if (total != checked) $("#cbx_chkAll").prop("checked", false);
+				else $("#cbx_chkAll").prop("checked", true);
+			});
 		})
-		updateNotify();
 
-},
-    error: function (error) {
-      console.log(error);
-    },
-  });
-}
+		function checkAlm(){
+			
+			 $('.notifyGroup').find("tr[value=" + 0 + "]").css("opacity","50%")
+			
+		}
+		
+		function countNotify() {
+		
+			
+			$.ajax({
+				url: "/my/countNotify",
+				async: false,
+				type: 'GET',
+				success: function (data) {
+					console.log(data);
 
-function updateNotify() {
+					$("")
 
-  $.ajax({
-	    url: "/my/updateNotify",
-    type: 'GET',
-    success: function (data) {
-      console.log("업데이트 테스트 : " + data);
-     
- 	
-
-
-    },
-    error: function (error) {
-      console.log(error);
-    },
-  });
-}
-
-
-
-
-	
-	
-	
-
-
-	
+					if (data > 0) {
+						loadNotify();
+					} else {
+					}
+				},
+				error: function (error) {
+					console.log(error);
+				},
+			});
+		}
+		
+		function deleteAlm() {
+			console.log('gdgd')
+			var almNo = new Array();
+			var deleteArr = new Array();
 
 
+			$("input[name=almNo]:checked").each(function () {
+				almNo.push({ 'almNo': $(this).val() }); // push: 배열에 값 삽입
+			});
+
+			console.log(JSON.stringify(almNo))
+
+			/* idxArr.push($("input[name=chk]:checked").text());*/
+
+
+			$.ajax({
+				url: "/my/deleteAlm",
+				type: "POST",
+				data: JSON.stringify(almNo),
+				contentType: "application/json",
+				success: function (result) {
+					if (result == 0) {
+						alert("알림 삭제에 실패 했습니다.")
+					} else {
+						alert(result + "개의 알림을 삭제 했습니다.")
+					}
+
+					loadNotify();
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(textStatus, errorThrown);
+				}
+			});
+		}
 
 
 
-</script>
+		function checkNotify() {
+			console.log("새로고침");
+			$.ajax({
+				url: "/my/checkNotifyCount",
+				async: false,
+				type: 'GET',
+				success: function (data) {
+					console.log(data);
+
+					$("")
+
+					if (data > 0) {
+						loadNotify();
+					} else {
+					}
+				},
+				error: function (error) {
+					console.log(error);
+				},
+			});
+		}
 
 
 
+
+		function loadNotify(pstSe) {
+			$("#pstSe").val(pstSe);
+			$("#page").val(1);
+			loadNotifyAjax()
+		}
+		function gopage(page) {
+			$("#page").val(page);
+			loadNotifyAjax()
+		}
+
+
+		function loadNotifyAjax() {
+
+
+			$.ajax({
+				url: "/my/selectNotify",
+				type: 'GET',
+				async: false,
+				data: $("#frm").serialize(),
+				success: function (result) {
+					console.log(result)
+					console.log(result.page)
+
+					$(".notifyGroup").empty();
+					$(".pagination").empty();
+					
+					updateNotify();
+
+					let pstSed = '';
+
+					console.log(pstSe)
+
+					$(result.data).each(function (index, data) {
+
+						if (data.pstSe == 'AD') {
+							pstSed = ' [ 관리자 알림 ] '
+						}
+						if (data.pstSe == 'AU') {
+							pstSed = ' [ 경매 알림 ] '
+						}
+
+						if (data.pstSe == 'SN') {
+							pstSed = ' [ 동네 생활 ] '
+						}
+						if (data.pstSe == 'BI') {
+							pstSed = ' [ 동네 가게 ] '
+						}
+						if (data.pstSe == 'DE') {
+							pstSed = ' [ 중고 거래 ] '
+						}
+
+						$(".notifyGroup").append($("<tr class=" + 'ml-30' + ">").attr({
+																					   "id"   : "check",
+																					   "value":data.cked,	
+																					  })
+							.append(
+								$("<td>").html(radio.clone().attr({
+									"value": data.almNo,
+									"class": "check_" + data.almNo,
+									"name": "almNo"
+								})
+								)
+
+							)
+						
+							.append($("<td>").text(index + 1))
+							.append($("<td>").text(pstSed))
+							.append($("<td>").text(data.almCn))
+							.append($("<td>").text(data.almYmd))
+							
+							
+
+)
+						//==================================================================================
+					});
+							checkAlm()
+
+					$(result.page).each(function (index, page) {
+						for (i = 0; i < parseInt(page.endPage); i++) {
+							$(".pagination").append(
+								' <li class="page-item page_' +
+								(i + 1) +
+								'"><a class="page-link" href="#" onClick="gopage(' +
+								(i + 1) +
+								')"> ' +
+								(i + 1) +
+								"</a></li>"
+							);
+						}
+					})
+				
+
+				},
+				error: function (error) {
+					console.log(error);
+				},
+			});
+		}
+
+		function updateNotify() {
+
+			$.ajax({
+				url: "/my/updateNotify",
+				type: 'GET',
+				success: function (data) {
+					console.log("업데이트 테스트 : " + data);
+		},
+				error: function (error) {
+					console.log(error);
+				},
+			});
+		}
+	</script>
 </head>
+
 <body>
 	<div layout:fragment="myContent">
 		<form id="frm">
@@ -263,6 +291,12 @@ function updateNotify() {
 						<form>
 							<div class="order-info p-5 mb-10">
 								<ul class="order-info-list">
+									<li><a class="totalP" href='javascript:void(0);'
+										onclick="loadNotify();" value="AD">전체</a>
+										<p>
+											총 <span class="totalPTrgt"
+												style="color: #fd7e14; font-weight: bold;">0</span>포인트
+										</p></li>
 									<li><a class="totalP" href='javascript:void(0);'
 										onclick="loadNotify('AD');" value="AD">관리자</a>
 										<p>
@@ -289,12 +323,6 @@ function updateNotify() {
 										<p>
 											<span class="freePTrgt">0</span>포인트
 										</p></li>
-									<li><a class="freeP" href='javascript:void(0);'
-										onclick="loadNotify('chk');" value="AD">읽은 알림</a>
-										<p>
-											<span class="freePTrgt">0</span>포인트
-										</p></li>
-
 								</ul>
 							</div>
 							<div class="row">
@@ -333,4 +361,5 @@ function updateNotify() {
 	<!--      <td class="td-title-2">${pointInfo.usedYmd}</td> -->
 
 </body>
+
 </html>
