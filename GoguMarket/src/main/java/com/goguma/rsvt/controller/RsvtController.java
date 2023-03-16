@@ -255,15 +255,16 @@ public class RsvtController {
 		
 		return rsvtNo;
 	}
-	
-	//삭제하는거 안돌아가쥬?ㅋ
-	@PostMapping("/my/myRsvtDeleteAjax")
+
+
+	@GetMapping("/my/myRsvtDeleteAjax/{rsvtNo}")
+
 	@ResponseBody
-	public int deleteAllByRsvtNo(@RequestBody RsvtVO rsvtVo) {
-		System.out.println(rsvtVo);
-		System.out.println(rsvtService.deleteAllByRsvtNo(rsvtVo));
-	    int cnt = rsvtService.deleteAllByRsvtNo(rsvtVo);
-	    return cnt;
+	public int deleteAllByRsvtNo(@PathVariable int rsvtNo) {
+		
+		//삭제 프로시저
+		rsvtService.deleteAllRsvt(rsvtNo);
+	    return 0;
 	}
 	
 	//예약내역 업데이트

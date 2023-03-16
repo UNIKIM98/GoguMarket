@@ -118,6 +118,13 @@ public class RsvtServiceImpl implements RsvtService{
 
 	
 
+	// ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저
+	@Override
+	public void deleteAllRsvt(int rsvtNo) {
+		map.deleteAllRsvt(rsvtNo);
+		
+	}
+
 	
 	
 

@@ -31,7 +31,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			throws IOException, ServletException {
 		MemVO memVO = (MemVO) auth.getPrincipal();
 		System.out.println("일반로그인=======");
-			System.out.println(auth.getPrincipal());
+
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", memVO.getUserId()); // 아이디
 		session.setAttribute("userSe", memVO.getUserSe()); // 권한
@@ -46,7 +46,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			String bizId = memVO.getUserId();
 			session.setAttribute("bizNo", bizService.selectBizNo(bizId));
 		}
-		response.sendRedirect("/");
+		if(memVO.getUserSe().equals("ROLE_ADMIN")) {
+			response.sendRedirect("/admin/adminMember");
+		}else {
+			response.sendRedirect("/");
+		}
 	}
 
 }
