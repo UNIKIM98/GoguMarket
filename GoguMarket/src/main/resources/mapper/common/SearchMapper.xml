@@ -52,10 +52,12 @@
 		delete from search
 		where search_ttl = #{searchTtl}
 	</delete>
+	
 	<!-- 검색어 단어 수정 -->
 	<update id="updateWord">
 		update search
-		set search_ttl = #{searchTtl}
+		stts = #{stts}
+		where search_ttl = #{searchTtl}
 	</update>
 			
 </mapper>

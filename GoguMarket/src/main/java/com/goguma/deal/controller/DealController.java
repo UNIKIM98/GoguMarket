@@ -182,9 +182,15 @@ public class DealController {
 	// ▶ 관리자 임시 실검 => 완전한 실검으로 등록하기
 	@GetMapping("/admin/adminKeywordboxsubmit")
 	@ResponseBody
-	public String adminKeywordboxsubmit(Model model, SearchVO svo) {
-		//searchService.updateWord(svo); //검색어 담아서 업데이트 하셔야죠
-		searchService.insertSearch(svo); // 걍 다시 인서트해도될듯
+	public String adminKeywordboxsubmit(Model model, SearchVO sList) {
+		// 매퍼에 보낼 서치보생성
+		SearchVO sVO = new SearchVO();
+		sVO.setStts("2");
+		sVO.setPstSe("중고거래");
+		
+		List<String> list = sList.getSList();
+		searchService.updateWord(list); //검색어 담아서 업데이트 하셔야죠
+
 		return "redirect:/goguma/dealMain";
 	}
 	
@@ -324,6 +330,7 @@ public class DealController {
 	public int dealReview(PointVO pvo,DealReviewVO rvo, DealRvVoteVO vtList, String userId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
+		
 		
 		List<String> list = vtList.getVtList();
 		// 리뷰 인서트
