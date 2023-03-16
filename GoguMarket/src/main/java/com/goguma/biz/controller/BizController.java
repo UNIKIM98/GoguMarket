@@ -152,9 +152,22 @@ public class BizController {
 	@GetMapping("/biz/shop02")
 	public String shop02(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
 		
+		BizMemVO vo = new BizMemVO();
+		vo.setBizNo(bizNo);
+		vo = memService.bizInfo(bizNo);
 		
+		model.addAttribute("bizMem",vo);
+
+		vo.setBizNo(bizNo);
+		vo.setBizNo(bizNo);
+		vo.setBizNo(bizNo);
+		vo.setBizNo(bizNo);
+		vo.setBizNo(bizNo);
 		
+		System.out.println("=====session====="+session);
+		System.out.println("=====vo====="+vo);
 		
 		return "biz/shop02";
 	}
