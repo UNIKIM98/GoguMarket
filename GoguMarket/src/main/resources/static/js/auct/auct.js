@@ -26,6 +26,7 @@ diffDay();
 setInterval(diffDay, 1000);
 */
 
+
 // 모달 나가기 - 모달 외에 화면을 누르면 모달창 상태를 none 으로 바꿈
 window.onclick = function(event) {
 	if (event.target == modal) {

@@ -19,6 +19,7 @@ public class AlarmVO {
 	private Date almYmd;
 	private String pstSe;
 	private String almCn;
+	private int cked;
 	
 
 	private int first;

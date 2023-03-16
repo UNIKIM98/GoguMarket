@@ -46,7 +46,7 @@ public class AuctController {
 		// 아래는 auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
 		model.addAttribute("lists", auctService.getAuctList());
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
-		model.addAttribute("cntMem",auctMemService.selectMemCount(mvo));
+		model.addAttribute("cntMem", auctMemService.selectMemCount(mvo));
 //		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
 //		model.addAttribute(cnt); 리스트에서 뭐 클릭시 증가시켜주면? 근데 셀렉트 안에서 새로고침한다면?
 		// 클릭수가 새로고침 조회수 조작은 의미없는 듯 그냥 리스트에서 클릭 고고
@@ -62,38 +62,21 @@ public class AuctController {
 
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
-		
-		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (조회수 고장남!!!!주의!)
+
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
 
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
-		System.out.println("=======atch" + atchList );
-		
 		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
-		System.out.println("======auctMem size================");
-		System.out.println(avoList.size()==0);
-		System.out.println(avoList.isEmpty());
-		System.out.println("=====auctMem"+avoList);
-		
-		System.out.println("=======auct"+vo);
-		
-
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
-
+		
+		System.out.println("auctSelect 왔음"+vo);
+		
 		if (avoList.size() == 0) {
 			model.addAttribute("auctMem", "nothing");
 		} else {
 			model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
 		}
-
-		System.out.println(avoList.equals(null) + "equals");
-		System.out.println((avoList.size() == 0) + "size");
-
-		System.out.println("조회수" + cnt); // 조회수 증가 확인
-		System.out.println("첨부파일" + atchList); // 첨부파일 확인
-		System.out.println("입찰자" + avoList); // 입찰자 확인
-		System.out.println("단건조회VO" + vo); // vo값 확인
 
 		return "auction/auctSelect";
 	}
@@ -143,7 +126,6 @@ public class AuctController {
 	public void auctDelete(@PathVariable int auctNo, HttpServletResponse response) {
 		System.out.println(auctNo + " => 삭제할 글 번호");
 
-		
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
 		vo = auctService.getAuct(vo);
@@ -191,13 +173,12 @@ public class AuctController {
 		// 마이페이지 나의 모든 경매 이동
 
 		// 세션의 id값과 작성 글의 id값이 같은 게시물만 보여준다.
-		HttpSession session = request.getSession();				//세션값을 가져옵니다
-		String userId = (String)session.getAttribute("userId");	//세션값중 "userId"를 String으로가져오고 userId라 명명합니다.
-		List<AuctVO> myAuctList = auctService.selectUserId(userId); //userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
-		
-		model.addAttribute("myAuctList",myAuctList);			//모델에 잘 요리된 myAuctList를 담아줍니다.
-		
-		
+		HttpSession session = request.getSession(); // 세션값을 가져옵니다
+		String userId = (String) session.getAttribute("userId"); // 세션값중 "userId"를 String으로가져오고 userId라 명명합니다.
+		List<AuctVO> myAuctList = auctService.selectUserId(userId); // userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
+
+		model.addAttribute("myAuctList", myAuctList); // 모델에 잘 요리된 myAuctList를 담아줍니다.
+
 		// 낙찰자 ID클릭시 이름, 계좌 전송하는것 구현?
 		System.out.println("==============================마이페이지" + model);
 
@@ -212,9 +193,7 @@ public class AuctController {
 //		String userId = (String)session.getAttribute("userId");
 //		List<AuctVO> myAuctList = auctService.selectUserId(userId);
 //		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
-		
-		
-		
+
 		return "auction/takePartAuction";
 
 	}

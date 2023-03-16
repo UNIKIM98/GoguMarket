@@ -80,7 +80,7 @@
                         <!-- 왼쪽 목록 -->
                         <div class="col-lg-3">
                             <aside class="widget widget-categories box-shadow mb-30">
-                                <h6 class="widget-title border-left">커피 맛을 조금 아는 남자</h6>
+                                <h3 class="widget-title border-left" th:text="${biz.bizNm}">(가게이름)</h3>
                                 <hr>
                                 <div id="cat-treeview" class="product-cat">
                                     <ul>
@@ -97,11 +97,10 @@
                                                 <li><a href="#">소식 작성</a></li>
                                             </ul>
                                         </li>
-                                        <li class="closed"><a href="#">쿠폰</a></li>
-                                        <li class="closed"><a href="#">후기</a></li>
-                                        <li class="closed"><a href="#">단골관리</a></li>
-                                        <li class="closed"><a href="#">사업자 인증</a></li>
-                                        <li class="closed"><a href="#">예약관리</a></li>
+                                        <li class="closed"><a href="/biz/reviewList">후기</a></li>
+                                        <li class="closed"><a href="/biz/dangolList">단골관리</a></li>
+                                        <li class="closed"><a href="/biz/Certification">사업자 인증</a></li>
+                                        <li class="closed"><a href="/biz/bizRsvtApprove">예약관리</a></li>
                                     </ul>
                                 </div>
                             </aside>
