@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -125,7 +126,7 @@ public class MemController {
 		return "myPages/myInfoCheck";
 	}
 
-	@GetMapping("/my/myPwCh")
+	@PostMapping("/my/myPwCh")
 	public String myPwCh(HttpServletRequest request, MemVO checkVO, Model model, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
@@ -219,6 +220,32 @@ public class MemController {
 	@GetMapping("/goguma/findId")
 	public String findId() {
 		return "mem/findId";
+	}
+
+	@GetMapping("/my/goodbye")
+	public String goodBye() {
+		return "myPages/goodBye";
+	}
+
+	@GetMapping("/my/goodByeAjax")
+	public void goodByeAjax(HttpSession session, MemVO vo) {
+		String userId = (String)session.getAttribute("userId");
+		vo.setUserId(userId);
+		memService.deleteMember(vo);
+		SecurityContextHolder.clearContext();
+		
+		session.removeAttribute("userId");
+		session.removeAttribute("userSe"); // 권한
+		session.removeAttribute("nickNm"); // 닉네임
+		session.removeAttribute("dealArea"); // 거래지역
+		session.removeAttribute("atchPath"); // 프로필사진 경로(img src에서 사용)
+		session.removeAttribute("mblTelno"); // 전화번호
+		session.removeAttribute("userNm"); // 전화번호
+		session.removeAttribute("eml"); // 이메일
+		
+		
+		
+		
 	}
 
 }

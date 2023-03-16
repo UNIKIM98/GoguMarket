@@ -334,11 +334,4 @@ public class BizController {
 
 	}
 
-	// 채은 ============================================
-	//❤ 비즈 메뉴 관리 페이지로 이동 
-	@GetMapping("/biz/bizMenu")
-	public String bizMenu() {
-		return "biz/bizMenu";
-	}
-	
 }

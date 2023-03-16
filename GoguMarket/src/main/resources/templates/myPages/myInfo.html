@@ -29,9 +29,9 @@
 								<h4 class="blog-section-title border-left mb-30">회원정보수정</h4>
 							</div>
 							<div class="userTable">
-								<table style="border-spacing: 10px;   border-collapse: separate;">
+								<table style="border-spacing: 10px;   border-collapse: separate;" id="frmTbl">
 									<tbody>
-										<tr >
+										<tr>
 											<th><label for="profile">프로필사진</label></th>
 											<td>
 												<div id="pfTrgt">
@@ -107,27 +107,31 @@
 											</td>
 										</tr>
 										<tr>
-											<th class="mblTelno"><label for="mblTelno">휴대폰 번호 <span>*</span></label></th>
-											<td colspan="2"><input type="text" id="mblTelno" name="mblTelno"
-														placeholder="-/공백 없이 입력"
-														style="width: 40%; margin-right: 50px;"
-														oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-														th:value="${userInfo.mblTelno}">
-												<button class="submit-btn-1 btn-hover-1" type="button">인증하기</button>
-											</td>
-										</tr>
-										<tr>
-											<th><label for="eml">이메일주소</label></th>
-											<td colspan="2"><input type="text" id="eml" name="eml"
-														placeholder="EX) email@naver.com"
-														style="width: 70%;"
-														th:value="${userInfo.eml}">
-											</td>
-										</tr>
-										<tr>
 											<th><label for="brthYmd">생년월일</label></th>
 											<td colspan="2"><input type="date" id="brthYmd" name="brthYmd"
 														style="width: 40%; margin-right: 50px; border: white solid 1px">
+											</td>
+										</tr>
+										<tr>
+											<th class="mblTelno"><label for="mblTelno">휴대폰 번호 <span>*</span></label></th>
+											<td colspan="2"><input type="text" id="mblTelno" name="mblTelno"
+														placeholder="-/공백 없이 입력"
+														style="width: 70%;"
+														oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+														th:value="${userInfo.mblTelno}">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="eml">이메일주소 <span>*</span></label></th>
+											<td colspan="2">
+											<input type="text" id="eml" name="eml"
+														placeholder="EX) email@naver.com"
+														style="width: 40%; margin-right: 50px;"
+														th:value="${userInfo.eml}" readonly="readonly">
+														<button class="submit-btn-1 btn-hover-1" type="button" 
+						                                 		 onclick="letChangeEml(event)"
+						                                 		 id="emlBtn"
+						                                 		 value="1">변경하기</button>
 											</td>
 										</tr>
 										
@@ -184,6 +188,16 @@
 					isEmlOk();
 				})
 				
+				//# 이메일 중복 체크 초기화
+	            $("#eml").on("change", function() {
+	               $("#emlBtn").val("1");
+	            });
+	            
+	            //# 이메일 인증번호 체크 초기화
+	            $("#eml").on("change", function() {
+	               $("#emlAuthBtn").val("1");
+	            });
+				
 				// # 기존 프로필 사진
 				extistingProfile();
 				
@@ -200,6 +214,92 @@
 
 			})
 
+	function letChangeEml(event){
+				console.log("ddddddd")
+				$(event.target)
+							.removeAttr("onclick")
+							.attr("onclick","emlDupCkAjax()").text("인증번호 발송")
+							.prev().attr("readonly",false);
+								
+				$("#frmTbl").append(`
+						<tr>
+                        <th><label for="emlCk">인증확인 <span>*</span></label></th>
+                        <td colspan="2"><input type="text" id="emlCk" name="emlCk"
+							style="width: 40%; margin-right: 50px;"
+                                 placeholder="인증번호를 입력해주세요." 
+                                 >
+                        <button class="submit-btn-1 btn-hover-1" type="button" 
+                        		 onclick="isAuthNumOk()" 
+                        		 id="emlAuthBtn"
+                        		 value="1">인증하기</button>
+                        </td>
+                     </tr>
+						`)
+				
+			}
+	// ==============================================================
+	// ❤️ 이메일 중복체크 Ajax
+	   function emlDupCkAjax(){
+		console.log("lllllllllllll")
+	        	let eml = $("#eml").val();
+	        	
+	        	if(isEmlOk()){
+	        		$.ajax({
+	        			url:'/goguma/emlDupCkAjax/'+eml,
+	        			type:'get',
+	        			success:function(result){
+	        				console.log(result);
+	        				if(result==0){
+	        					emlConfirm(eml);
+	        				}else{
+	        					alert("이미 등록되어 있는 이메일입니다.");
+	        		               $('#eml').val("").focus();
+	        				}
+	        			}
+	        		})
+	        	}
+	      	}
+			
+		// ==============================================================
+		// ❤️ 이메일 confirm
+		    function emlConfirm(eml){
+			    	  if(confirm(eml+"로 인증번호를 전송하시겠습니까?")){
+			    		  emlCheckAJax(eml);
+			    		  $("#emlBtn").val("0");
+			    		  $("#emlCk").val("");
+			    	  }
+		    	  console.log(eml);
+		      }
+
+		// ==============================================================
+		// ❤️ 이메일 인증 Ajax
+			function  emlCheckAJax(eml){
+		    	  console.log(eml)
+			   	 $.ajax({
+			  		  url:'/goguma/emlCheckAJax/'+eml,
+			  		  type:'get',
+			  		  success: function(result){
+			  			authNum = result;
+			  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
+			  			  console.log(result);
+			  		  },
+			  		  error: function(err){
+			  			  console.log(err);
+			  		  }
+		       	  }) 
+		      	}
+		    
+		// ==============================================================
+		// ❤️ 이메일 인증번호 일치여부 확인
+		     function isAuthNumOk(){
+				  console.log(authNum);
+				  if(authNum == $("#emlCk").val()){
+					  alert("이메일 인증이 완료되었습니다.");
+					  $("#emlAuthBtn").val("0");
+				  }else{
+					  alert("인증번호가 일치하지 않습니다.");
+				  }
+			  }
 		// ==============================================================
 		// ❤️ 프로필사진 변경/삭제
 			function inputProfile(e){
@@ -274,14 +374,16 @@
 		// ==============================================================
 		// ❤️ 이메일주소 유효성 체크
 			function isEmlOk(){
-			let isEmlOk = false;
+			console.log("ssssss")
+			let emlChck = false;
 			const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			if(emlRegExp.test($("#eml").val())){
-				isEmlOk = true;
+				emlChck = true;
 			}else{
-				isEmlOk = false;
+				emlChck = false;
 				$("#eml").val("").addClass("errPlaceHolder").focus();
 			}
+			return emlChck;
 		}
 		
 		// ==============================================================
