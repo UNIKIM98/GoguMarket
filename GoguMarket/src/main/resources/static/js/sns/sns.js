@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	 keyValue();
 })
 
@@ -40,6 +41,7 @@ reInput.onclick = function() {
 //----------------공통코드 출력-------------------------
 
 function keyValue() {
+
 	$.ajax({
 		url:"/keyValue",
 		type: "GET",

@@ -45,29 +45,29 @@ public class TestController {
 	@Autowired
 	TestService testService;
 
-	 @Autowired
-	 private EmailService emailService;
-	 
+	@Autowired
+	private EmailService emailService;
+
 	// ■ Controllers =======================================
+
 	@GetMapping("/goguma/emailTest")
 	@ResponseBody
 	public int emailTest(String eml) {
-		
+
 		int token = 0;
 		String emailTtl = "[고구마켓] 이메일 인증번호 확인 후 회원가입을 완료해주세요 :D";
-		//이메일 전송
+		// 이메일 전송
 		try {
 			emailService.sendVerificationMail(eml, token, emailTtl);
-            
-        } catch (MessagingException e) {
-            // 이메일 전송 실패 시
-        	System.out.println("[이메일 발송 실패] 에러발생 :( ");
-        }
-		
+
+		} catch (MessagingException e) {
+			// 이메일 전송 실패 시
+			System.out.println("[이메일 발송 실패] 에러발생 :( ");
+		}
 		return token;
 	}
-	 
-	 @GetMapping("/admin/test")
+
+	@GetMapping("/admin/test")
 	public String adminTest() {
 		return "myPages/myAct";
 	}
@@ -183,6 +183,5 @@ public class TestController {
 
 		return "deal/dealMain";
 	}
-
 
 }

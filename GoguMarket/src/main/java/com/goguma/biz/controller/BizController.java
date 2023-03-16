@@ -314,8 +314,8 @@ public class BizController {
 		model.addAttribute("biz", memService.bizInfo(bizNo));
 		return "biz/shop08";
 	}
-	
-	// 예약내역 업데이트
+  
+		// 예약내역 업데이트
 	@GetMapping("/biz/updateRsvtAjax/{rsvtNo}")
 	@ResponseBody
 	public String updateRsvtAjax(@PathVariable String rsvtNo) {
@@ -332,6 +332,13 @@ public class BizController {
 
 		return rsvtNo;
 
+	}
+
+	// 채은 ============================================
+	//❤ 비즈 메뉴 관리 페이지로 이동 
+	@GetMapping("/biz/bizMenu")
+	public String bizMenu() {
+		return "biz/bizMenu";
 	}
 	
 }

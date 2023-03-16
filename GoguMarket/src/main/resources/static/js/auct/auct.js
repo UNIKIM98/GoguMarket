@@ -1,22 +1,7 @@
 /**
  * 경매 메인페이지
- * 
- * 
- * 
- * 
- * 
- * var span = document.getElementsByClassName("close1")[0];
  */
-//📌	 공통변수 선언부
-var fileCount = 0; //현재 첨부파일 개수
-var totalCount = 10; // 첨부 가능한 파일 개수
-var fileNum = 0; //첨부파일 인덱스
-var inputFileList = new Array(); // insert 파일 배열
-var deleteList = new Array(); // delete 파일 배열
-var isSubmitOk = true; //submit 유효성 체크 boolean
 
-var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
-var exCnt = 0;
 
 
 
@@ -40,7 +25,6 @@ function diffDay(){
 diffDay();
 setInterval(diffDay, 1000);
 */
-
 
 
 // 모달 나가기 - 모달 외에 화면을 누르면 모달창 상태를 none 으로 바꿈

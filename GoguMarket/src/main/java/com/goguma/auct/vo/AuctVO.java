@@ -1,6 +1,7 @@
 package com.goguma.auct.vo;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,9 +14,13 @@ import lombok.Data;
 public class AuctVO extends AtchVO{
 	 private int auctNo;	//경매번호
 	 private String userId;	//경매유저 ID
+	 
 	 @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	 private Date regYmd;	//등록날짜
+
+	 @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
+	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	 private Date ddlnYmd;	//마감날짜
 	 private String auctTtl;//상품명
 	 private String ctgry;	//카테고리
