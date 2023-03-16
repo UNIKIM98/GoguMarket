@@ -47,7 +47,8 @@
 
 						<!--원래 rooms.html내용-->
 						<div class="col-12">
-							<h3 class="brand-title text-gray">여기는[ [[${room.name}]] ]입니다 </h3>
+							<h3 class="brand-title text-gray">여기는[ [[${room.name}]] ]입니다
+							</h3>
 							<hr>
 						</div>
 						<div>
@@ -60,6 +61,7 @@
 											id="button-send" style="height: 40px;">전송</button>
 									</div>
 								</div>
+								
 							</div>
 						</div>
 						<div class="col-12"></div>
@@ -121,12 +123,6 @@
                    stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
                    
                    
-                });
-                
-                //disconection test - 안됨
-                stomp.disconnect({}, function(){
-                	//test
-                    stomp.send('/pub/chat/leave', {}, JSON.stringify({roomId: roomId, writer: username}))
                 });
 				
                 //버튼 클릭시 메시지 전송
