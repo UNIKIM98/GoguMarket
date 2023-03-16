@@ -3,11 +3,13 @@
 <mapper namespace="com.goguma.common.mapper.AlarmMapper">
 
 
-	<sql id="creiteria">
-		where
-		user_id = #{userId}
+	<sql id="criteria">
+		WHERE user_id = #{userId}
 		<if test="pstSe != null and pstSe !=''">
 			AND pst_Se = #{pstSe}
+		</if>
+		<if test="pstSe == 'chk'">
+			AND cked = 0
 		</if>
 	</sql>
 
@@ -50,7 +52,14 @@
 	<select id="getcountTotal" resultType="int">
 		SELECT COUNT(*)
 		FROM alarm
+		<include refid="creiteria"></include>
 	</select>
+
+	<delete id="deleteAlm"
+		parameterType="com.goguma.common.vo.AlarmVO">
+		delete from alarm where alm_no = #{almNo}
+	</delete>
+
 
 
 

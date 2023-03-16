@@ -8,30 +8,21 @@ import org.springframework.stereotype.Service;
 import com.goguma.common.mapper.AlarmMapper;
 import com.goguma.common.service.AlarmService;
 import com.goguma.common.vo.AlarmVO;
-import com.goguma.mem.vo.MemVO;
 
 @Service
 public class AlarmServiceImpl implements AlarmService {
-
 
 	@Autowired
 	AlarmMapper alarm;
 
 	@Override
-	public int deleteAlm(List<AlarmVO>almNo) {
+	public int deleteAlm(AlarmVO vo) {
+
 		
-		int success=0;
-		for(int i=0; i<almNo.size(); i++) {
-			
-			System.out.println(i);
-			/* deleteAlm(almNo[i]); */
-			
-			
-		}
-		
-		return success;
+
+		return alarm.deleteAlm(vo);
 	}
-	
+
 	@Override
 	public int getcountTotal(AlarmVO vo) {
 		// TODO Auto-generated method stub

@@ -34,7 +34,7 @@ radio = $("<input>").attr({
 
 $(document).ready(function () {
 
-	loadNotify();
+	loadNotifyAjax();
 	setInterval(() => checkNotify(), 20000);
 });
 
@@ -55,12 +55,49 @@ $(document).ready(function(){
 	});
 })
 
+function deleteAlm(){
+	console.log('gdgd')
+	var almNo = new Array();
+	var deleteArr = new Array();
+	
+	
+	$("input[name=almNo]:checked").each(function(){
+		almNo.push({'almNo':$(this).val()}); // push: 배열에 값 삽입
+	});
+	
+	console.log(JSON.stringify(almNo))
+	
+	/* idxArr.push($("input[name=chk]:checked").text());*/
+	
+	
+    $.ajax({
+        url:"/my/deleteAlm",
+        type: "POST",
+        data:JSON.stringify(almNo),
+        contentType : "application/json",
+        success: function(result) {
+            if(result == 0){
+            	alert("알림 삭제에 실패 했습니다.")
+            }else{
+            	alert(result+"개의 알림을 삭제 했습니다.")
+            }
+            
+            loadNotify();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+
 
 function checkNotify(){
 	  console.log("새로고침");
 	  $.ajax({
 	    url: "/my/checkNotifyCount",
-	    type: 'GET',
+    	async: false,
+		type: 'GET',
 	    success: function (data) {
 	      console.log(data);
 	      
@@ -77,33 +114,26 @@ function checkNotify(){
 	  });
 	}
 
-/*var finalDis = 'AD';
-var finalPage = 0;
-var maxPage = 1;
 
-function setPageJs(pageNum) {
+function loadNotify(pstSe){
+	$("#pstSe").val(pstSe);
+	$("#page").val(1);
+	loadNotifyAjax()
+}
+function gopage(page){
+	$("#page").val(page);
+	loadNotifyAjax()
+}
+
+
+function loadNotifyAjax() {
+
 	
-	if (pageNum < 1) {
-		pageNum = 1;
-		return false;
-	}
-	if (pageNum > maxPage) {
-		pageNum = maxPage;
-		return false;
-	}
-	console.log("clickCall : " + pageNum);
-	loadNotify(pstSe, pageNum);
-}*/
-
-
-function loadNotify(pstSe) {
-	
-	console.log(pstSe);
-
   $.ajax({
 	    url: "/my/selectNotify",
     	type: 'GET',
-    	data: {pstSe},
+    	async: false,
+    	data: $("#frm").serialize(),
     success: function (result) {
       console.log(result)
       console.log(result.page)
@@ -134,18 +164,13 @@ function loadNotify(pstSe) {
     		  pstSed=' [ 중고 거래 ] '
     	  }
     	  
-    	  
-    	  
-  	  
-    	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","check_"+(index)))
+    	 	$(".notifyGroup").append($("<tr class="+'ml-30'+">").attr("id","check_"+(index)))
 							.append(
 						$("<td>").html(radio.clone().text(data.almNo).attr({
 							"value":data.almNo,
 							"class":"check_"+data.almNo,
 							"name":"almNo"
-							
-							
-						})
+							})
 						)
 								
 						)
@@ -164,7 +189,7 @@ function loadNotify(pstSe) {
 				$(".pagination").append(
 						' <li class="page-item page_' +
 						(i + 1) +
-						'"><a class="page-link" href="#" onClick="loadNotify(' +
+						'"><a class="page-link" href="#" onClick="gopage(' +
 						(i + 1) +
 						')"> ' +
 						(i + 1) +
@@ -172,13 +197,9 @@ function loadNotify(pstSe) {
 					);
 			}
 		})
-		
-	  
-	  
-      updateNotify();
+		updateNotify();
 
-
-    },
+},
     error: function (error) {
       console.log(error);
     },
@@ -204,34 +225,6 @@ function updateNotify() {
 }
 
 
-function deleteAlm(){
-	console.log('gdgd')
-	var almNo = new Array();
-	var deleteArr = new Array();
-	
-	
-	$("input[name=almNo]:checked").each(function(){
-		almNo.push($(this).val()); // push: 배열에 값 삽입
-	});
-	
-	console.log(JSON.stringify(almNo))
-	
-	/* idxArr.push($("input[name=chk]:checked").text());*/
-	
-	
-    $.ajax({
-        url:"/my/deleteAlm",
-        type: "POST",
-        data:JSON.stringify({"almNo":"almNo"}),
-        contentType : "application/json",
-        success: function(result) {
-            console.log(result);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-}
 
 
 	
@@ -252,6 +245,12 @@ function deleteAlm(){
 </head>
 <body>
 	<div layout:fragment="myContent">
+		<form id="frm">
+			<input type="hidden" name="pstSe" id="pstSe"
+				th:value="${param.pstSe}"> <input type="hidden" name="page"
+				id="page" value="1">
+		</form>
+
 		<div class="container">
 
 			<div class="tab-pane active" id="order-complete">
@@ -287,6 +286,11 @@ function deleteAlm(){
 										</p></li>
 									<li><a class="freeP" href='javascript:void(0);'
 										onclick="loadNotify('BI');" value="AD">동네가게</a>
+										<p>
+											<span class="freePTrgt">0</span>포인트
+										</p></li>
+									<li><a class="freeP" href='javascript:void(0);'
+										onclick="loadNotify('chk');" value="AD">읽은 알림</a>
 										<p>
 											<span class="freePTrgt">0</span>포인트
 										</p></li>
