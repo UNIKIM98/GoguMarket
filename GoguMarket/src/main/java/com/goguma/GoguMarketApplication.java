@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 @MapperScan(basePackages = "com.goguma.**.mapper")
 public class GoguMarketApplication {
