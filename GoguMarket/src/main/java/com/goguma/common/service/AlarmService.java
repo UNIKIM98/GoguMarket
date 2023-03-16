@@ -14,11 +14,13 @@ public interface AlarmService {
 	
 	int checkNotifyCount(AlarmVO vo);
 	
+	int countNotify(String userId); //알림의 갯수를 확인
+	
 	List<AlarmVO> selectNotify(AlarmVO vo);
 	
 	boolean updateNotify(AlarmVO vo);
 	
-	int deleteAlm(List<AlarmVO>vo); //알림 삭제
+	int deleteAlm(AlarmVO vo); //알림 삭제
 	
 
 	

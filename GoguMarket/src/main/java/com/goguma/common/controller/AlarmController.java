@@ -68,10 +68,10 @@ public class AlarmController {
 			content = "[동네생활 알림]";
 			break;
 		}
-		
+
 		String almCn = vo.getAlmCn();
-		vo.setAlmCn(content+almCn);
-		
+		vo.setAlmCn(content + almCn);
+
 		alarm.insertAlarm(vo);
 
 		/*
@@ -81,7 +81,6 @@ public class AlarmController {
 		 * (categori == "RS") { content = "[예약관련 알림]"; } else if (categori == "SN") {
 		 * content = "[동네생활 알림]"; }
 		 */
-
 
 		int cnt = 1;
 
@@ -99,35 +98,47 @@ public class AlarmController {
 		cnt = alarm.checkNotifyCount(vo);
 		return cnt;
 	}
-
+	
+	@GetMapping("/my/countNotify")
+	@ResponseBody
+	public Map<String,Object> countNotify(HttpServletRequest request) {
+		System.out.println("gdgd");
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		AlarmVO vo = new AlarmVO();
+		vo.setUserId(userId);
+		
+		
+		alarm.checkNotifyCount(vo)+"갯수확인";
+		return cnt;
+	}
+	
+	
 	@GetMapping("/my/selectNotify")
 	@ResponseBody
-	public Map<String,Object> selectNotify(HttpServletRequest request,String pstSe,CommonPaging page) {
-	
-		System.out.println(page+"현제 페이지");
+	public Map<String, Object> selectNotify(HttpServletRequest request, String pstSe, CommonPaging page) {
+
+		System.out.println(page + "현제 페이지");
 		AlarmVO vo = new AlarmVO();
-		Map<String,Object> map = new HashMap<String, Object>();
-		
-		//page.setPage(vo.getAlarmNowPage());
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		// page.setPage(vo.getAlarmNowPage());
 		page.setPageUnit(10); // 한 페이지에 출력할 레코드 건수
 		page.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		vo.setFirst(page.getFirst());
 		vo.setLast(page.getLast());
-		
-	
-		
+
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
-		vo.setPstSe(pstSe); //vo에 가지고 온 상태 저장
-		vo.setUserId(userId); //세션에 있는 유저 아이디 불러오기
-		
+		vo.setPstSe(pstSe); // vo에 가지고 온 상태 저장
+		vo.setUserId(userId); // 세션에 있는 유저 아이디 불러오기
+
 		page.setTotalRecord(alarm.getcountTotal(vo));
 		List<AlarmVO> result = alarm.selectNotify(vo);
-		
-		map.put("data",result);
-		map.put("page",page);
-		
-		
+
+		map.put("data", result);
+		map.put("page", page);
+
 		return map;
 	}
 
@@ -142,25 +153,28 @@ public class AlarmController {
 		boolean check = alarm.updateNotify(vo);
 		return check;
 	}
-	
-	
-	
+
 	@PostMapping("/my/deleteAlm")
 	@ResponseBody
 	public int deleteAlm(@RequestBody List<AlarmVO> almNo) {
 		System.out.println(almNo);
-	
 
-
+		int cnt=0;
 		
-		
-	
+		for (AlarmVO vo : almNo) {
+			System.out.println(vo);
+			int success = alarm.deleteAlm(vo);
+			
+			if(success == 0) {
+				cnt=0;
+			}else {
+				cnt+=1;
+			}
 
-		int success = 0;
-		return success;
+		}
+		System.out.println("count :"+cnt);
+
+		return cnt;
 	}
-	
-	
-
 
 }

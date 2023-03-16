@@ -33,7 +33,6 @@ public class RestMemManController {
 
 	@GetMapping("/admin/keyValue")
 	public Map<String, Object> keyValue() {
-		System.out.println("gdgd");
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		List<CommonCodeVO> pstSe = new ArrayList();

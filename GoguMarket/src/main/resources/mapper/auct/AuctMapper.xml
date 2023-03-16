@@ -82,7 +82,11 @@
 		SELECT * FROM AUCT
 		WHERE auct_no = #{auctNo}
 	</select>
-	
+	<!-- int AuctNo 값 구하기 -->
+	<select id="intAuctNo">
+		SELECT AUCT_NO FROM AUCT
+		WHERE AUCT_NO = #{auctNo}
+	</select>
 	<!-- 마이페이지에 쓰는 userId -->
 	<select id="selectUserId"
 			parameterType="String"

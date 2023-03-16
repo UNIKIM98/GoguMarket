@@ -23,6 +23,7 @@ public class PointController {
 	// ❤️ 나의 포인트
 	@GetMapping("/my/myPoint")
 	public String myCouponNPoint() {
+		System.out.println("포인트--------------------------------");
 		return "myPages/myPoint";
 	}
 	

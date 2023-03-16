@@ -4,132 +4,264 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>가게 소식</title>
+	<title>가게 정보 등록하기</title>
 	<script src="js/vendor/jquery-3.6.0.min.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body>
 	<div layout:fragment="Bizcontent">
-		<div class="by-brand-section mb-80">
+		<div class="message-box-section mb-80">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="section-title text-start mb-40">
-							<h2 class="uppercase mt-15">우리 가게 소식</h2>
-							<h6>우리 가게에 무슨일이 있을까요?</h6>
-							<hr>
-							[[${session.bizNo}]]
-							<div class="newsletter-section gray-bg pt-60 pb-80 mt-80">
-								<div class="container">
+				<div class="message-box box-shadow white-bg">
+						<div class="row">
+							<div class="col-lg-12">
+								<h4 class="blog-section-title border-left mb-30">가게 정보등록 하기</h4>
+							</div>
+							<div class="userTable">
+								<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의1 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+								<form id="uForm" method="post" enctype="multipart/form-data"
+									onsubmit="return false">
+									<!-- ■■↑ form id 새로 지정해주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 									<div class="row">
-										<div class="col-lg-8 offset-lg-2">
-											<div class="newsletter">
-												<div class="newsletter-info text-center">
-													<h2 class="newsletter-title">가게이름</h2>
-													<p>가게 설명</p>
-												</div>
-												<div class="newsletter-info text-center">
-													<div class="searchForm mb-30" style="text-align: center">
-														<form id="searchForm" action="#">
-															<select class="selectpicker mb-30">
-																<option>전체</option>
-															</select> <br>
-															<div class="subcribe clearfix">
-																<input type="text" name="email"
-																	placeholder="Enter your town here..."
-																	style="width: 80%" />
-																<button class="submit-btn-2 btn-hover-2"
-																	type="submit">subcribe</button>
-															</div>
-														</form>
-													</div>
-												</div>
+										<div class="col-lg-12">
+											<h4 class="blog-section-title border-left mb-30">가게 정보 수정</h4>
+										</div>
+									</div>
+									<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+									<div class="col-lg-10" id="inputFile">
+										<label for="files">프로필 사진<span> *</span></label>
+										<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
+										<br>
+										<span id="fileErrMsg"></span>
+										<div id="fileList">
+											<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳'
+												class="message-box box-shadow white-bg">
 											</div>
 										</div>
 									</div>
-								</div>
+									<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+
+									<!--<div class="col-lg-10 mb-10">
+										<label for="cate">카테고리<span> *</span></label>
+										<select name="cate" id="cate">
+											<option value="" disabled selected>선택</option>
+											<option th:each="ct : ${category}" th:text="${ct.commonNm}"
+												th:value="${ct.commonDetailCode}"></option>
+										</select>
+										<span id="ctgryErrMsg"></span>
+										<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리">
+									</div>-->
+									<div class="col-lg-10 ">
+										<label for="bizNm">가게명<span> *</span></label>
+										<input type="text" name="bizNm" id="bizNm" th:value="${updateBizMem.bizNm}" readonly="readonly">
+									</div>
+									<div class="col-lg-10">
+										<label for="cn">가게설명<span> *</span></label>
+										<textarea class="custom-textarea" name="cn" id="cn"
+											placeholder="간단한 가게 설명을 작성해주세요. :)"></textarea>
+									</div>
+									<div class="col-lg-10">
+										<label for="bgngTm">오픈시간</label>
+										<input class="custom-textarea" name="bgngTm" id="bgngTm"></input>~
+										<input class="custom-textarea" name="endTm" id="endTm"></input>
+										<label for="endTm">마감시간</label>
+									</div>
+									
+									<div class="col-lg-10">
+										<label for="ddlnYmd">경매종료일<span> *</span></label>
+										<input type="date" name="ddlnYmd" id="ddlnYmd">
+									</div>
+									<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+									<button class="submit-btn-1 mt-30 btn-hover-1" onclick="goList()">목록</button>
+									<input class="submit-btn-1 mt-30  btn-hover-1" type="submit" id="btnSave"
+										role="button" value="등록하기">
+								</form>
+							</div>
+							<div class="col-lg-12">
+
+								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btn"
+									onclick="location.href='/biz/shop03'" value="수정하기">
+								&nbsp;&nbsp;
+								<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
 							</div>
 						</div>
-						본문내용 자리 시작
-						<!-- 본문내용 자리 시작 -->
-						<h5 class="sin-pro-action f-right">
-							<button onclick="insertNews()">글쓰기</button>
-						</h5>
-							<div id="selectBizNewsAjax">
-								<table>
-									<tbody id="newsList">
-
-									</tbody>
-								</table>
-									<!-- <table>
-										<tbody id="newsList">
-											<tr onclick='location.href="#"'>
-												<th>${n.atchId}</th>
-												<td>${n.ntcTtl}</td>
-											</tr>
-										</tbody>
-									</table> -->
-							</div>
-
-						
-						<div>
-							<div class="by-brand-product">
-								<div class="active-by-brand slick-arrow-2" id="news"></div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
+
 		<script th:inline="javascript">
-
-
+			//==============================================================================
+			//✅ DOM 그리면서 실행되는 함수 (== document.onload())
 			$(function () {
-				selectBizNewsAjax();
-			})
+				$("#files").on("change", function (e) {
+					$("#fileErrMsg").text("")
+					inputFile(e);
+				});
+				console.log(typeof ($(".ctgry")))
 
-			function selectBizNewsAjax() {
-				$.ajax({
-					url: "/biz/selectBizNewsAjax",
-					type: 'get',
-					contentType: 'application/json; charset = utf-8',
-					success: function (result) {
-						console.log(result)
-						console.log(result.news)
-						let news = result.news;
-
-						news.forEach(n=>{
-								$("#newsList").append(
-										`
-										<tr onclick='location.href=""'>
-											<th>${n.atchId}</th>
-											<td>${n.ntcTtl}	<br>
-												조회수 : ${n.inqCnt}</td>
-											<td>${n.ntcYmd}</td>
-										</tr>
-										`
-								)
-						})
-						// for (news of result) {
-						// 	$("#news").append(`<div class="by-brand-product">
-	                            				
-	                    //         						${news.bizNo} / ${news.ntcTtl}
-	                            				
-						// 					</div>`)
-						// }
-					},
-					error: function (err) {
-						console.log(err);
-					}
+				$("#cate").on("change", function () {
+					$("#ctgryErrMsg").text("")
 				})
+
+				$("#btnSave").on("click", function () {
+					submitForm();
+				});
+			});
+
+			//==============================================================================
+			//📌	 공통으로 쓰일 변수 선언(전역변수 var)
+			var fileCount = 0; //현재 첨부파일 개수
+			var totalCount = 1; // 첨부 가능한 파일 개수
+			var fileNum = 0; //첨부파일 인덱스
+			var inputFileList = new Array(); // insert 파일 배열
+			var deleteFileList = new Array(); // delete 파일 배열
+			var isSubmitOk = true;
+
+			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
+
+			//==============================================================================
+			//✅ input 실행하는 함수
+			function inputFile(e) {
+				var files = e.target.files;
+				var filesArr = Array.prototype.slice.call(files);
+
+				if (fileCount + filesArr.length > totalCount) {
+					alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
+					return;
+				} else {
+					fileCount = fileCount + filesArr.length;
+				}
+
+				filesArr.forEach(function (f) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						inputFileList.push(f);
+						$('#uploadFileList').append(
+							`<img style=${img_style} src=${e.target.result}
+											id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
+						)
+						fileNum++;
+					};
+					reader.readAsDataURL(f);
+				});
+				$("#files").val("");
 			}
 
-			function selctOneBizNews(){
-				
+			//==============================================================================
+			//✅ 화면/배열에서 delete 실행하는 함수			
+			function fileDelete(fileNum) {
+				var no = fileNum.replace(/[^0-9]/g, "");
+				inputFileList[no].is_delete = true;
+				$('#' + fileNum).remove();
+				fileCount--;
+				if (fileCount == 0) {
+					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+					isSubmitOk = false;
+				}
 			}
 
+			//==============================================================================
+			//✅ 화면/배열에서 delete 실행하는 함수
+			function submitForm() {
+				// 선택한 카테고리 > hidden input value로 넣기
+				var ctgry = $("#cate option:selected").val();
+				$("#ctgry").val(ctgry);
 
+				console.log("담은 ctgry =>" + ctgry)
+
+
+				//submit 전 체크하기
+				if (submitCheck()) {
+					// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+					var formData = new FormData($("#uForm")[0]);
+					// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+					formData.append("deleteFiles", deleteFileList);
+
+					for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
+					}
+					// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+					$.ajax({
+						url: "/biz/shopUpdateSubmit",
+						type: "POST",
+						data: formData,
+						processData: false,
+						contentType: false,
+						success: function (result) {
+							console.log(result)
+							alert("[작성 완료] 가게 프로필 수정이 완료되었습니다. :D");
+							location.href = "/goguma/auctList";
+
+						},
+						error: function (err) {
+							alert("[작성 실패] 가게 프로필 수정에 실패했습니다. :(");
+						}
+					});
+					// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
+				}
+			}
+			//==============================================================================
+			//✅ 화면/배열에서 delete 실행하는 함수
+			function submitCheck() {
+				//1. 파일 업로드 여부
+				if (inputFileList.length == 0) {
+					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+					isSubmitOk = false;
+				}
+
+				//2. 카테고리 선택 여부
+				else if ($("#ctgry").val() == "") {
+					$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
+					isSubmitOk = false;
+				}
+
+				//3. 글제목 작성 여부
+				else if ($("#auctTtl").val() == "") {
+					$("#auctTtl").focus();
+					isSubmitOk = false;
+				}
+
+				//4. 글내용 작성 여부
+				else if ($("#auctCn").val() == "") {
+					$("#auctCn").focus();
+					isSubmitOk = false;
+				}
+
+				//5. 최소가격 작성 여부
+				else if ($("#lowPrc").val() == "") {
+					$("#lowPrc").focus();
+					isSubmitOk = false;
+
+					//6. 데드라인 설정 여부
+				} else if ($("#ddlnYmd").val() == "") {
+					$("#ddlnYmd").focus();
+					isSubmitOk = false;
+				} else if ($("#quickPrc").val() == "") {
+					$("#quickPrc").val(Number(0))
+				} else {
+					isSubmitOk = true;
+				}
+
+				return isSubmitOk;
+			}
+
+			//==============================================================================
+			//✅ (수정/삭제에서 사용) 기존 db에서 삭제할 파일들을 배열에 담아서 보내는 함수
+			function deleteFile(elem) {
+				// 				console.log(elem.value);
+				// 				$(elem).parent().remove();
+				// 				if (!deleteFileList.includes(elem.value)) {
+				// 					deleteFileList.push(elem.value);
+				// 					}
+			}
+
+			function goList() {
+				location.href = "/goguma/auctList";
+			}
 		</script>
 	</div>
 </body>
