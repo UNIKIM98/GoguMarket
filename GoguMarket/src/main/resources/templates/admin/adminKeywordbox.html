@@ -71,7 +71,7 @@
 			});
 			function submitForm() {
 				// 클릭한 버튼의 얘들을 들고오고싶음..이거안댈듯..
-				if ($('#stts').is(":checked")) {
+				/* if ($('#stts').is(":checked")) {
 					console.log("checked!")
 					$('#pstSe').val("중고거래"); // 중고거래 DE..분류로 늘 들어가도록합니다
 					$('#stts').val("2")
@@ -79,37 +79,36 @@
 					for (i = 0; i < 11; i++) {
 						$('#searchTtl').val() == data[i].closest("tr").children[1].innerText; // 얘값이 열개나오지않을까
 					}
-				}
+				} */
 				isSubmitOk = true;
 
 				// 넘길 값들 순위랑 검색어 . 순위 어케 넘기지
 			}
-			//submit 전 체크하기 . 수정 (검색어등록) 아작스
-// 			if (submitCheck()) {
-// 				var formData = new FormData($("#keywordFrm")[0]);
-// 				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-// 				$.ajax({
-// 					url : "/admin/adminKeywordboxsubmit",
-// 					type : "POST",
-// 					data : formData,
-// 					processData : false,
-// 					contentType : false,
-// 					success : function(result) {
-// 						console.log(result)
-// 						alert("[등록 완료]	검색어 등록이 완료되었습니다 :D");
-// 						//location.href = "/goguma/dealMain"; // 실검뜨는거 볼라고 메인페이지로 날라가기 리다이렉트햇음
-// 					},
-// 					error : function(err) {
-// 						alert("[등록 실패] 검색어 등록을 실패하였습니다. :(");
-// 					}
-// 				});
-// 			}
-// 			function submitCheck() {
-// 				return isSubmitOk;
-// 			}
+			// submit 전 체크하기 . 수정 (검색어등록) 아작스
+			if (submitCheck()) {
+				var formData = new FormData($("#keywordFrm")[0]);
+				// ■■■■■■■■■■■■■■■■■■ 아작스부분 ■■■■■■■■■■■■■■
+				$.ajax({
+					url : "/admin/adminKeywordboxsubmit",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						alert("[등록 완료]	검색어 등록이 완료되었습니다 :D");
+						//location.href = "/goguma/dealMain"; // 실검뜨는거 볼라고 메인페이지로 날라가기 리다이렉트햇음
+					},
+					error : function(err) {
+						alert("[등록 실패] 검색어 등록을 실패하였습니다. :(");
+					}
+				});
+			}
+			function submitCheck() {
+				return isSubmitOk;
+			}
 	
 			// 삭제 아작스 ㄱㄱ
-			
 			function deletekeyword(event) {
 				$(event.target)
 			let keyword = $(event.target).attr("id")
@@ -172,7 +171,7 @@
 											<th>순위</th>
 											<th>검색어</th>
 											<th>삭제</th>
-											<th>등록</th>
+											
 										</tr>
 									</thead>
 									<tbody id="word">
@@ -182,7 +181,7 @@
 											<td><button class="btn btn-primary"
 													style="height: 25px; line-height: 15px"
 													onclick="deletekeyword(event)" th:id="${word.searchTtl}">삭제</button></td>
-											<td><input type="checkbox" name="stts" id="stts"></td>
+											
 										</tr>
 									</tbody>
 								</table>

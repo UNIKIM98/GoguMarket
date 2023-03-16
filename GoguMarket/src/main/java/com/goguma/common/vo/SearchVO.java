@@ -1,6 +1,7 @@
 package com.goguma.common.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,5 +21,5 @@ public class SearchVO {
 	private String stts; // 실검 상태값
 	private int ttlCnt;
 	
-	
+	List<String> sList;
 }
