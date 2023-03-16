@@ -9,6 +9,7 @@ import com.goguma.auct.mapper.AuctMapper;
 import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctVO;
 import com.goguma.common.vo.AtchVO;
+import com.goguma.mem.vo.MemVO;
 
 @Service
 public class AuctServiceImpl implements AuctService{
@@ -26,6 +27,8 @@ public class AuctServiceImpl implements AuctService{
 	@Override
 	public AuctVO getAuct(AuctVO vo) {
 		// 단건 조회
+		auctMapper.auctHitUpdate(vo.getAuctNo());
+		System.out.println("111111"+vo.getInqCnt());
 		return auctMapper.getAuct(vo);
 		
 	}

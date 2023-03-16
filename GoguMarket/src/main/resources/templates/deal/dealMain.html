@@ -88,13 +88,13 @@ layout:decorate="~{layouts/layout}">
 				frmSearch.submit();
 			}
 			// 초기화버튼
-			function reset(){
-				frmSearch.page.value='';
+			function resetSearch(){
+				frmSearch.page.value='1';
 				frmSearch.orderby.value='';
 				frmSearch.ctgry.value='';
 				frmSearch.searchType.value='';
 				frmSearch.searchTtl.value='';
-				frmSearch.submit();
+				
 			}
 			
 		</script>
@@ -149,7 +149,7 @@ layout:decorate="~{layouts/layout}">
 	                                    <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
 	                                            placeholder="검색어를 입력하세요" title="키워드 입력"/>
                                     <button class="submit-btn-2 btn-hover-2" type="submit">검 색</button>
-	                                <button class="submit-btn-2 btn-hover-2" onclick="reset()" type="submit">초기화</button>
+	                                <button class="submit-btn-2 btn-hover-2" onclick="resetSearch()" type="button">초기화</button>
                              </div>
                         </form>
                         
@@ -242,7 +242,10 @@ layout:decorate="~{layouts/layout}">
                                                         <a th:text="${deal.dlTtl}" href="single-product.html">Product Name</a>
                                                     </h6>
                                                     <h6 th:text="${deal.ctgry}" class="brand-name">Sumsung</h6>
-                                                    <h3 th:text="${deal.dlPrc}" class="pro-price">$ 869.00</h3>
+                                                   
+                                                    <h3 th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" class="pro-price"
+                                                    	>$ 869.00</h3>
+                                                    <h3 th:if="${deal.dlPrc == ''}" th:text="${#numbers.formatInteger(deal.dlPrc, 0, 'COMMA') + '원'}"></h3>
                                                 </div>
                                                 <ul class="action-button">
                                                     <li>

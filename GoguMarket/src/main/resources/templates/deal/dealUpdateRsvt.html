@@ -145,8 +145,7 @@
 			var deleteList = new Array(); // delete 파일 배열
 			var isSubmitOk = true; //submit 유효성 체크 boolean
 
-			var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
-			var exCnt = 0;
+			
 			
 		//==============================================================================
 		//📌	 함수 선언부
@@ -157,11 +156,6 @@
 					$("#fileErrMsg").text("")
 					inputFile(e);
 				});
-				
-				// 카테고리 change
-				$("#cate").on("change", function(){
-					$("#ctgryErrMsg").text("")
-				})
 				
 				// form submit
 				$("#btnSave").on("click", function() {
@@ -177,11 +171,6 @@
 		//✅ 기존 정보들 화면에 뿌리기(카테고리, 사진, 네고여부)
 			function existingFiles(){
 			if(exCnt==0){
-			/*<![CDATA[*/
-				//1. 카테고리
-					let ctgry = /*[[ ${dealInfo.ctgry} ]]*/
-					$("#cate option").val(ctgry).attr("selected",true);
-			
 				//2. 사진
 					var atchList = /*[[ ${atchList} ]]*/
 					console.log(atchList.length>0);
@@ -198,17 +187,6 @@
 							fileCount++;
 						}
 					}
-			
-				//3. 네고여부(체크박스)
-				let exNegoYn = /*[[ ${dealInfo.negoYn} ]]*/
-				console.log(exNegoYn);
-				
-				if(exNegoYn=="Y"){
-					$("#negoYn").attr("checked",true);
-				}
-				exCnt++;
-				console.log(exCnt)
-			/*]]*/
 			}
 			}
 		
@@ -257,33 +235,12 @@
 			}
 		
 		//==============================================================================
-		//✅ exFile 중에서 삭제할 파일 정보 
-			function deleteFile(id, atchId, atchNo) {
-				$("#"+id).remove();
-				deleteList.push({
-						"atchId": Number(atchId),
-						"atchNo": Number(atchNo)  
-					})
-		}
-		//==============================================================================
 		//✅ form submit
 			function formSubmit() {
-				// 카테고리 val
-				var ctgry = $("#cate option:selected").val(); 
-				$("#ctgry").val(ctgry); 
-				
-				// 네고여부
-				if ($('#negoYn').is(":checked")) {
-		            $('#negoYn').val("Y");
-		        }else{
-		        	$('#negoYn').val("");
-		        }
-				
 				// form submit 전 유효성 체크
 				if(submitCheck()){
 					var formData = new FormData($("#dFrm")[0]);
 					// formData.append("deleteList", JSON.stringify(deleteList));
-
 					for (var i = 0; i < inputFileList.length; i++) {
 						if (!inputFileList[i].is_delete) {
 							formData.append("files", inputFileList[i]);
@@ -291,10 +248,6 @@
 					}
 					console.log(formData);
 					// 기존 파일 삭제 ajax
-					console.log(deleteList.length!=0)
-					if(deleteList.length!=0){
-						exFileDeleteAjax();
-					}
 					
 					// 삭제할 파일 없으면 수정 ajax만 실행
 					$.ajax({	
@@ -312,25 +265,7 @@
 							alert("[수정실패] 게시글 수정 중 오류가 발생하였습니다. :(");
 						}
 					});
-				
 				}
-			}
-
-		//==============================================================================
-		//✅ 파일 삭제 ajax
-			function exFileDeleteAjax(){
-				$.ajax({	
-					url : "/deleteTest",
-					type : "post",
-					data :  JSON.stringify(deleteList),
-					contentType: "application/json; charset=utf-8",
-					success : function(delCnt) {
-							console.log(delCnt)
-					},
-					error : function(err){
-						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
-					}
-				});	
 			}
 
 		//==============================================================================

@@ -22,7 +22,7 @@
 								<table style="border-spacing: 10px;   border-collapse: separate;">
 									<tbody>
 										<tr>
-											<th><label for="BizNm">가게명<span> *</span></label></th>
+											<th><label for="BizNm">가게명</label></th>
 											<td colspan="2"><input type="text" id="bizNm" name="bizNm"
 													readonly="readonly" th:value="${bizMem.bizNm}"
 													style="width: 70%;">
@@ -37,7 +37,7 @@
 										</tr>
 										<tr>
 											<th class="mblTelno"><label for="bizTel">연락처<span>*</span></label></th>
-											<td colspan="2"><input type="text" id="bizTel" name="bizTel"
+											<td colspan="2"><input type="text" id="bizTel" name="bizTel" readonly="readonly" 
 													th:placeholder="${bizMem.bizTel}" style="width: 70%; margin-right: 50px;"
 													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 											</td>
@@ -46,50 +46,48 @@
 											<td><input type="text" name="" id=""></td>
 										</tr>
 										<tr>
-											<th><label for="cn">가게설명<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
-													th:placeholder="${bizMem.cn}" style="width: 70%;">
+											<th><label for="cn">가게설명</label></th>
+											<td colspan="2"><input type="text" id="cn" name="cn" readonly="readonly" 
+													th:value="${bizMem.cn}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="bgngTm">가게 시작 시간<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
+											<th><label for="bgngTm">가게 시작 시간</label></th>
+											<td colspan="2"><input type="text" id="bgngTm" name="bgngTm" readonly="readonly" 
 													th:placeholder="${bizMem.bgngTm}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="endTm">가게 마감 시간<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
+											<th><label for="endTm">가게 마감 시간</label></th>
+											<td colspan="2"><input type="text" id="endTm" name="endTm" readonly="readonly" 
 													th:placeholder="${bizMem.endTm}"style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="atchId">가게 프로필사진<span> *</span></label></th>
-											<td colspan="2"><input type="file" id="profAtchId" name="profAtchId"
+											<th><label for="atchId">가게 프로필사진</label></th>
+											<td colspan="2"><input type="file" id="profAtchId" name="profAtchId" readonly="readonly" 
 													th:placeholder="${bizMem.atchId}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="ctgry">카테고리<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
+											<th><label for="ctgry">카테고리</label></th>
+											<td colspan="2"><input type="text" id="ctgry" name="ctgry" readonly="readonly" 
 													th:placeholder="${bizMem.ctgry}" style="width: 70%;">
 											</td>
 										</tr>
 										<tr>
-											<th><label for="hmpgAddr">홈페이지 이메일<span> *</span></label></th>
-											<td colspan="2"><input type="text" id="BizNm" name="BizNm"
+											<th><label for="hmpgAddr">홈페이지 이메일</label></th>
+											<td colspan="2"><input type="email" id="BizNm" name="BizNm"
 													readonly="readonly"
 													th:placeholder="${bizMem.hmpgAddr}" style="width: 70%;">
 											</td>
 										</tr>
-										<input type="hidden" id="stts" name="stts" value="BIZ">
 									</tbody>
 								</table>
 							</div>
 							<div class="col-lg-12">
 
-								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button"
-									value="수정하기">
+								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btn" onclick="location.href='/biz/shop03'" value="수정하기">
 								&nbsp;&nbsp;
 								<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
 							</div>
@@ -98,6 +96,10 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+
+		</script>
 	</div>
 </body>
 </html>

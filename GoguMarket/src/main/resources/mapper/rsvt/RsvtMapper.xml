@@ -90,17 +90,13 @@
 	
 	<!-- 예약목록 가져오기 -->
 	<select id="selectMyRsvtList" parameterType="String" resultType="map">
-		SELECT b.biz_nm, b.bgng_tm, c.common_nm AS openTime, b.end_tm, cc.common_nm AS closeTime, r.*, ccc.common_nm AS rsvtTime
+		SELECT b.*, r.*, c.common_nm AS rsvtTime
 		FROM biz_mem b INNER JOIN rsvt r 
 		                ON b.biz_no = r.biz_no
 		                INNER JOIN common_code c 
 		                ON c.common_code = '007' 
-		                AND c.common_detail_code = b.bgng_tm
-		                INNER JOIN common_code cc 
-		                ON cc.common_detail_code = b.end_tm
-		                INNER JOIN common_code ccc
-		                ON ccc.common_detail_code = r.rsvt_tm
-		WHERE r.user_id = #{userId}
+		WHERE c.common_detail_code = r.rsvt_tm
+		AND r.user_id = #{userId}
 	</select>
 	
 	<!-- 예약상세내역 가져오기 -->
@@ -119,19 +115,15 @@
 	
 	<!-- 예약 한건 조회 -->
 	<select id="selectRsvtOne" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtVO">
-		SELECT r.*, m.*, b.biz_nm, b.bgng_tm, c.common_nm AS openTime, b.end_tm, cc.common_nm AS closeTime, ccc.common_nm AS rsvtTime
+		SELECT r.*, m.*, b.*, c.common_nm AS rsvtTime
 		FROM rsvt r INNER JOIN mem m 
 					ON r.user_id = m.user_id
 					INNER JOIN biz_mem b 
 					ON r.biz_no = b.biz_no
 					INNER JOIN common_code c 
 					ON c.common_code = '007' 
-					AND c.common_detail_code = b.bgng_tm
-					INNER JOIN common_code cc 
-					ON cc.common_detail_code = b.end_tm
-					INNER JOIN common_code ccc
-			        ON ccc.common_detail_code = r.rsvt_tm
-		 WHERE rsvt_no = #{rsvtNo}
+    	WHERE c.common_detail_code = r.rsvt_tm
+		AND rsvt_no = #{rsvtNo}
 	</select>
 	
 	<!-- 예약번호 가게메뉴 조회 -->
@@ -275,5 +267,12 @@
 		update rsvt_update
 		set aprv_yn = 'Y'
 		where rsvt_no2 = #{rsvtNo}
+	</update>
+	
+	<!-- 예약변경완료되면 예약상태 ='예약확정'으로 바뀌게 함 -->
+	<update id="updateRsvtSttsCompl" parameterType="String">
+		update rsvt 
+		set rsvt_stts = '예약확정'
+		where rsvt_no = #{rsvtNo}
 	</update>
 </mapper>

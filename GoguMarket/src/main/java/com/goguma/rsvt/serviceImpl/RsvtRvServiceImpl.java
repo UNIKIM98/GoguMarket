@@ -34,4 +34,10 @@ public class RsvtRvServiceImpl implements RsvtRvService{
 		return map.selectReviewCnt(bizNo);
 	}
 	
+	//유저 후기
+	@Override
+	public List<RsvtRvVO> selectReviewUser(String userId) {
+		return map.selectReviewUser(userId);
+	}
+	
 }

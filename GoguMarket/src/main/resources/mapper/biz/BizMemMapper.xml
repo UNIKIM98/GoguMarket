@@ -43,8 +43,16 @@
 		VALUES (#{bizNo},#{userId},#{bizNm},#{bizAddr},#{bizAddrDetail},#{bizTel},#{brNo},#{profAtchId})
 	</insert>
 
-	<update id="updateBizMenu">
-		<!-- !!!!!!!작성해야함!!!!!!! -->
+	<update id="updateBizMem">
+		UPDATE BIZ_MEM
+			<set>
+				<if test="bizTel != null"> BIZ_TEL = #{bizTel},</if>
+				<if test="cn != null"> CN = #{cn},</if>
+				<if test="bgngTm != null"> BGNG_TM = #{bgngTm},</if>
+				<if test="endTm != null"> END_TM = #{endTm},</if>
+				<if test="ctgry != null"> CTGRY= #{ctgry}</if>
+			</set>
+		WHERE BIZ_NO = #{bizNo}
 	</update>
 
 	<!-- 반복 쿼리문 -->
@@ -116,4 +124,4 @@
 		WHERE b.biz_no = #{bizNo}
 	</select>
 
-</mapper>
+</mapper> 
