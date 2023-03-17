@@ -14,4 +14,5 @@ public class BizMenuVO { // 가게메뉴 테이블
 	private String atchId; // 첨부파일id(메뉴사진)
 
 	private List<BizMenuVO> menuList;
+	private List<BizMenuVO> newList;
 }

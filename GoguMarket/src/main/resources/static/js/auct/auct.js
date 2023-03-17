@@ -27,20 +27,19 @@ var isSubmitOk = true; //submit 유효성 체크 boolean
 
 
 
-
 $.ajax({
-    url : "/auctSelect/{auctNo}",
-    type : "Post",
-    dataType : 'json',
-    contentType : 'application/json; charset = utf-8',
-    success : function(result) {
+    url: "/auctSelect/{auctNo}",
+    type: "Post",
+    dataType: 'json',
+    contentType: 'application/json; charset = utf-8',
+    success: function (result) {
         console.log(result)
-        
+
 
 
 
     },
-    error : function(err) {
+    error: function (err) {
         console.log(err);
     }
 })
@@ -50,51 +49,51 @@ $.ajax({
 
 //✅ exFile 중에서 삭제할 파일 정보 
 function deleteFile(id, atchId, atchNo) {
-$("#"+id).remove();
-deleteList.push({
-"atchId": Number(atchId),
-"atchNo": Number(atchNo)  
-})
+    $("#" + id).remove();
+    deleteList.push({
+        "atchId": Number(atchId),
+        "atchNo": Number(atchNo)
+    })
 }
 //✅ 화면/배열에서 delete 실행하는 함수			
 function fileDelete(fileNum) {
-var no = fileNum.replace(/[^0-9]/g, "");
-inputFileList[no].is_delete = true;
-$('#' + fileNum).remove();
-fileCount--;
-if(fileCount==0){
-$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
-isSubmitOk = false;
-}
+    var no = fileNum.replace(/[^0-9]/g, "");
+    inputFileList[no].is_delete = true;
+    $('#' + fileNum).remove();
+    fileCount--;
+    if (fileCount == 0) {
+        $("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+        isSubmitOk = false;
+    }
 }
 //✅ 파일 삭제 ajax
-function exFileDeleteAjax(){
-$.ajax({	
-url : "/deleteTest",
-type : "post",
-data :  JSON.stringify(deleteList),
-contentType: "application/json; charset=utf-8",
-success : function(delCnt) {
-    console.log(delCnt)
-},
-error : function(err){
-alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
-}
-});	
+function exFileDeleteAjax() {
+    $.ajax({
+        url: "/deleteTest",
+        type: "post",
+        data: JSON.stringify(deleteList),
+        contentType: "application/json; charset=utf-8",
+        success: function (delCnt) {
+            console.log(delCnt)
+        },
+        error: function (err) {
+            alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
+        }
+    });
 }
 
 // 모달 나가기 - 모달 외에 화면을 누르면 모달창 상태를 none 으로 바꿈
-window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 
-	if (event.target == Sns) {
-		Sns.style.display = "none";
-	}
+    if (event.target == Sns) {
+        Sns.style.display = "none";
+    }
 };
 
 // 글쓰기 창 나가기
-span.onclick = function() {
-	modal.style.display = "none";
+span.onclick = function () {
+    modal.style.display = "none";
 };

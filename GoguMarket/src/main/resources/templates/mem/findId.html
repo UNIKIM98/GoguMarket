@@ -109,13 +109,13 @@
 		// ❤️ 존재시 이메일 인증번호 전송
 		function sendEmlAuth(eml) {
 			console.log(eml);
+					appendAuth();
 			$.ajax({
 				url : '/goguma/emlCheckAJax/' + eml,
 				type : 'get',
 				success : function(result) {
 					authNum = result;
 					console.log(authNum);
-					appendAuth();
 				},
 				error : function(err) {
 					console.log(err);
@@ -144,6 +144,7 @@
 					}
 				},
 				error : function(err) {
+					alert("⚠ 이메일 전송 중 오류가 발생했습니다.")
 					console.log(err);
 				}
 			})

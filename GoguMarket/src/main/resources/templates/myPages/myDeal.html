@@ -104,8 +104,7 @@
 																		<h6 class="media-heading">
 																			<a th:text=${deal.DL_TTL}>타이틀자리</a>
 																		</h6>
-																		<p class="mb-10" th:text="${deal.DL_YMD}">27 Jun,
-																			2022 at 2:30pm</p>
+																		<p class="mb-10" th:text="${#dates.format(deal.DL_YMD, 'yyyy/MM/dd')}"></p>
 																	</div>
 																	<div class="f-right">
 																		<ul class="reply-delate">
@@ -142,7 +141,7 @@
 													<!-- reviews-tab-desc -->
 													<div class="featured-product" >
 														<div class="active-featured-product slick-arrow-2" >
-															<div  th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
+															<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
 															<div class="product-item" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
 																<div class="product-img" style="height:150px">
 																	<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
@@ -201,6 +200,10 @@
 		// ❤️ 포인트 토탈 구하기 위한 : 전역변수 선언
 		var pointInfo; // 전체 포인트 정보
    		var pointTotal = 0; // 전체 총합
+   		
+   		$(function(){
+   			
+   		})
    		
      	// ❤️ 포인트 전체 가져오기 Ajax
 	       function myPointAjax(){
@@ -261,10 +264,12 @@
 				});
 			}
 		}
+		
 		function submitCheck() {
 			// 포인트가 200이상이어야 끌올을 할수있겟쬬? : 200 미만이면 false
+					
 			// 한번 누르고 오분뒤에 누르게할순없낭
-			if ($(".totalPTrgt").text() < "200") {
+			if ($(".totalPTrgt").text() < 200) {
 				$(".totalPTrgt").focus();
 				alert("[실패] 남은 포인트를 확인해보세요 :(");
 				isSubmitOk = false;

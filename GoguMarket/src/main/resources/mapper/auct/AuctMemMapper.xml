@@ -47,6 +47,7 @@
 		WHERE now_prc = max_now_prc
 		ORDER BY auct_no DESC
 	</select>
+	<!-- 입찰자 카운트 -->
 	<select id="selectMemCount"
 			parameterType="com.goguma.auct.vo.AuctMemVO"
 			resultType="int">

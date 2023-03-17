@@ -78,16 +78,6 @@
 												<h5>업데이트페이지임. 직거래장소/희망가격/prchs_id/stts="예약중" 으로 업뎃하샘</h5>
 											</div>
 										</div>
-										<div class="col-lg-10" id="inputFile">
-											<label for="files">상품사진<span> *</span></label> 
-											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
-											<br>
-											<span id="fileErrMsg"></span>
-											<div id="fileList">
-												<div id="uploadFileList" data-placeholder='🐶첨부파일이 없습니다🌳' 
-													 class="message-box box-shadow white-bg"></div>
-											</div>
-										</div>
 										<div>
 											<table class="table">
 													<tr>
@@ -110,7 +100,7 @@
 										
 										<div class="col-lg-10">
 											<label for="area">직거래장소</label>
-											<input type="text" name="area" id="area" placeholder="직거래장소" th:value=${d.area}>
+											<input type="text" name="area" id="area" placeholder="직거래장소" th:value=${session.dealArea}>
 										</div>
 										<div class="col-lg-10">
 											<!-- 네고 y 인 사람은 가격 제안할 수 있또록.. -->
@@ -136,103 +126,6 @@
 		</div>
 	
 	<script th:inline="javascript">
-		//==============================================================================
-		//📌	 공통변수 선언부
-			var fileCount = 0; //현재 첨부파일 개수
-			var totalCount = 10; // 첨부 가능한 파일 개수
-			var fileNum = 0; //첨부파일 인덱스
-			var inputFileList = new Array(); // insert 파일 배열
-			var deleteList = new Array(); // delete 파일 배열
-			var isSubmitOk = true; //submit 유효성 체크 boolean
-
-			
-			
-		//==============================================================================
-		//📌	 함수 선언부
-		//✅ DOM 함수
-			$(function() {
-				// 첨부파일 change
-				$("#files").on("change", function(e) {
-					$("#fileErrMsg").text("")
-					inputFile(e);
-				});
-				
-				// form submit
-				$("#btnSave").on("click", function() {
-					formSubmit();
-				});
-				
-				// 기존 파일들 화면에 뿌려주기
-				existingFiles();
-			});
-		
-
-		//==============================================================================
-		//✅ 기존 정보들 화면에 뿌리기(카테고리, 사진, 네고여부)
-			function existingFiles(){
-			if(exCnt==0){
-				//2. 사진
-					var atchList = /*[[ ${atchList} ]]*/
-					console.log(atchList.length>0);
-				
-					if(atchList.length>0){
-						for(let idx in atchList){
-							let atchId = atchList[idx].atchId;
-							let atchNo = atchList[idx].atchNo;
-							$('#uploadFileList').append(
-														`<img style=${img_style} src=${atchList[idx].atchPath}
-															   id=exFile${idx} onclick=deleteFile('exFile${idx}',${atchId},${atchNo})
-															   class=m-1>`
-														)
-							fileCount++;
-						}
-					}
-			}
-			}
-		
-		//==============================================================================
-		//✅ 미리보기 div / inputFileList 배열에 insert
-			function inputFile(e) {
-				var files = e.target.files;
-				var filesArr = Array.prototype.slice.call(files);
-				
-				if (fileCount + filesArr.length > totalCount) {
-					alert('파일은 최대 ' + totalCount + '개까지 업로드 할 수 있습니다.');
-					return;
-				} else {
-					fileCount = fileCount + filesArr.length;
-				}
-
-				filesArr.forEach(function(f) {
-					var reader = new FileReader();
-					reader.onload = function(e) {
-									inputFileList.push(f);
-									$('#uploadFileList').append(
-																`<img style=${img_style} src=${e.target.result}
-																	   id=file${fileNum} onclick=fileDelete('file${fileNum}') class=m-1>`
-																)
-									fileNum++;
-								};
-					reader.readAsDataURL(f);
-				});
-				$("#files").val("");
-			}
-
-		//==============================================================================
-		//✅ 미리보기 div / inputFileList 배열에서 delete	
-			function fileDelete(fileNum) {
-				var no = fileNum.replace(/[^0-9]/g, "");
-				
-				inputFileList[no].is_delete = true;
-				$('#' + fileNum).remove();
-				
-				fileCount--;
-				
-				if(fileCount==0){
-					$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
-					isSubmitOk = false;
-				}
-			}
 		
 		//==============================================================================
 		//✅ form submit
@@ -241,28 +134,21 @@
 				if(submitCheck()){
 					var formData = new FormData($("#dFrm")[0]);
 					// formData.append("deleteList", JSON.stringify(deleteList));
-					for (var i = 0; i < inputFileList.length; i++) {
-						if (!inputFileList[i].is_delete) {
-							formData.append("files", inputFileList[i]);
-						}
-					}
-					console.log(formData);
-					// 기존 파일 삭제 ajax
-					
-					// 삭제할 파일 없으면 수정 ajax만 실행
+				
+					// 수정 아작스
 					$.ajax({	
-						url : "/updateTestSubmit",
-						type : "POST",
+						url : "/dealUpdateRsvt",
+						type : "get",
 						data : formData,
 						processData : false,
 						contentType : false,
 						success : function(result) {
 							console.log(result)
-							alert("[수정완료] 게시글 수정이 완료되었습니다 :D");
-							location.href = "/goguma/dealMain";
+							alert("[구매예약] 구매 예약이 완료되었습니다 :D");
+							location.href = "/goguma/dealMain";///goguma/dealdetail/이전게시글번호
 						},
 						error : function(err){
-							alert("[수정실패] 게시글 수정 중 오류가 발생하였습니다. :(");
+							alert("[예약실패] 구매 예약 중 오류가 발생하였습니다. :(");
 						}
 					});
 				}
@@ -271,40 +157,24 @@
 		//==============================================================================
 		//✅ submit 전 유효성 체크
 			function submitCheck(){
-			//1. 파일 업로드 여부
-			if($("#uploadFileList").children().length==0){
-				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
+			//1. 체크박스 클릭
+// 			if($("#check").children().length==0){
+// 				$("#fileErrMsg").text("✅ 예약 내용을 확인하셨나요?")
+// 				isSubmitOk = false;
+// 			}
+			//3. 지역 작성 여부
+			if($("#area").val()==""){
+				$("#area").focus();
 				isSubmitOk = false;
 			}
-
-			//2. 카테고리 선택 여부
-			else if($("#ctgry").val()==""){
-				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
-				isSubmitOk = false;
-			}
-
-			//3. 글제목 작성 여부
-			else if($("#dlTtl").val()==""){
-				$("#dlTtl").focus();
-				isSubmitOk = false;
-			}
-
-			//4. 글내용 작성 여부
-			else if($("#dlCn").val()==""){
-				$("#dlCn").focus();
-				isSubmitOk = false;
-			}
-
-			//5. 상품가격 작성 여부
+			//4. 가격 작성 여부
 			else if($("#dlPrc").val()==""){
-			   $("#dlPrc").focus();
+				$("#dlPrc").focus();
 				isSubmitOk = false;
 			}
-			
 			else{
 				isSubmitOk = true;
 			}
-			
 			return isSubmitOk;			
 		}			
 	</script>

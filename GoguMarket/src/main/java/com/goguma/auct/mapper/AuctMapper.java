@@ -13,7 +13,8 @@ public interface AuctMapper {
 	int insertAuct(AuctVO vo); // 등록
 	int deleteAuct(AuctVO vo); // 삭제
 
-	int auctHitUpdate(int auctNo); // 조회수 증가용도 근데 고장남ㅋㅋㅋ
+	int auctHitUpdate(int auctNo); // 조회수 증가용
+	int auctDday(int auctNo); // 경매Dday
 
 	AuctVO selectAuctNo(int auctNo); // int auctNo를 넣어서 auctVO값 가져오기(삭제용도)
 	List<AuctVO> selectUserId(String userId);// userId를 넣어서 auctVO값(여러개라서 List임)(마이페이지용도)

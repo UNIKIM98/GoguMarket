@@ -82,6 +82,7 @@ function makeDealList(dealList) {
 function makeAuctList(auctList) {
 	console.log(auctList);
 	auctList.forEach((auct) => {
+	console.log((auct.DDLN_YMD).format(auct.ddlnYmd, 'yyyy/MM/dd'));
 		$(".auctTrgt").append(`
 
                         

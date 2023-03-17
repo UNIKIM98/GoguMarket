@@ -31,6 +31,10 @@
 
 <body class="wide-layout">
 	<div layout:fragment="content">
+	
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b">
+		</script>
+		
 		<script th:inline="javascript">
 		
 			// 시세를 담을 데이터. 265줄 스크립트에 넣어줌
@@ -116,15 +120,17 @@
 										<!-- imgs-zoom-area start -->
 										<div class="col-md-5">
 											<div class="imgs-zoom-area">
-												<img id="zoom_03" data-zoom-image="/img/product/6.jpg"
-													alt="">
+												<img id="zoom_03" th:data-zoom-image="${file[0].atchPath}"
+												th:src="${file[0].atchPath}"
+													alt="" style="width:300px; height:300px">
 												<div class="row">
 													<div class="col-lg-12">
 														<div id="gallery_01"
 															class="carousel-btn slick-arrow-3 mt-30">
 															<div th:each="f : ${file}" class="p-c">
-																<a href="#" data-image="/img/product/2.jpg"
-																	data-zoom-image="/img/product/2.jpg"> <img
+																<a href="#" 
+																	th:data-image="${f.atchPath}"
+																	th:data-zoom-image="${f.atchPath}" style="width:300px; height:300px"> <img
 																	th:src="${f.atchPath}" alt="">
 																</a>
 															</div>
@@ -192,9 +198,9 @@
 														</div>
 														
 													</div>
-													<div role="tabpanel" class="tab-pane" id="map2" style="width:100%;height:350px;">
+													<div role="tabpanel" class="tab-pane" id="map2" style="width:100%;height:400px;">
 													<p>추천지도 선으로 연결 기능</p>
-													<div id="map" style="width:100%;height:350px;">
+														<div id="map" style="width:100%;height:350px;">
 													</div>	
 													</div>
 													
@@ -290,7 +296,7 @@
 														
 													<!-- 판매자 + 구매자 둘다 사용할 버튼 -->															
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit" onclick="chat()">채팅하기(구매문의)</button></li>
+															type="submit" onclick="chat()">채팅하기</button></li>
 															
 													<!-- 구매자 -->
 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
@@ -322,7 +328,7 @@
 				</div>
 			</div>
 		    
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b&libraries=services">
+	<script>
 			 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			     mapOption = { 
 			         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -338,20 +344,19 @@
 	 var context = document
      .getElementById('myChart')
      .getContext('2d');
- var myChart = new Chart(context, {
+ 	var myChart = new Chart(context, {
      type: 'bar', // 차트의 형태
      data: { // 차트에 들어갈 데이터
          labels: [
              //x 축
-        	 prc[0].month,prc[1].month,prc[2].month
-             
+        	prc[2].month,prc[1].month,prc[0].month
          ],
          datasets: [
              { //데이터
                  label: '평균값', //차트 제목
                  fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                  data: [
-                	 prc[0].avg, prc[1].avg, prc[2].avg
+                	 prc[2].avg, prc[1].avg, prc[0].avg
 
                  ],
                  backgroundColor: [

@@ -36,4 +36,6 @@ public class AuctVO extends AtchVO{
 	 @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul") //jackson json객체시 날짜 포맷설정
 	 @DateTimeFormat(pattern = "yyyy-MM-dd") //yyyy-MM-dd HH:mm:ss.SSS
 	 private Date prchsYmd;	//낙찰일시
+	 private int count; //입찰자 수
+	 private int dDay;	//마감일 계산
 } 

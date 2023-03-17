@@ -52,22 +52,19 @@ textarea {
 														<p>Introduce me to your town.</p>
 
 													</div>
+													<form id="searchForm" action="#">
 
+														<div class="subcribe clearfix">
+															<input type="text" name="search" id="search"
+																placeholder="Enter your town here..." style="width: 80%" />
+
+															<button class="submit-btn-2 btn-hover-2" type="button"
+																onclick="selectSnsList()">search</button>
+														</div>
+													</form>
 													<div class="newsletter-info text-center">
 														<div class="searchForm mb-30 pstSe"
-															style="text-align: center">
-															<form id="searchForm" action="#">
-
-																<div class="subcribe clearfix">
-																	<input type="text" name="search" id="search"
-																		placeholder="Enter your town here..."
-																		style="width: 80%" />
-
-																	<button class="submit-btn-2 btn-hover-2" type="button"
-																		onclick="selectSnsList()">search</button>
-																</div>
-															</form>
-														</div>
+															style="text-align: center"></div>
 													</div>
 												</div>
 											</div>
@@ -77,19 +74,46 @@ textarea {
 								</div>
 							</div>
 						</div>
-						<form>
-							<div class="by-brand-product">
-								<div class="active-by-brand slick-arrow-2" id="list"></div>
+
+						<!-- 							<div class="by-brand-product"> -->
+						<!-- 								<div class="active-by-brand slick-arrow-2" ></div> -->
+						<!-- 							</div> -->
+						<div class="blog-section mb-50">
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="blog">
+											<div class="active-blog" id="list">
+												<!-- 아작스 돌릴 부분 -->
+												<div class="blog-item">
+													<img src="img/blog/1.jpg" alt="">
+
+
+													<div class="read-more">
+														<a href="single-blog.html">Read more</a>
+													</div>
+												</div>
+											</div>
+
+
+										</div>
+									</div>
+								</div>
 							</div>
-						</form>
+						</div>
 					</div>
+
+
+
 				</div>
 			</div>
+
 			<div th:if="${session.userId != null}">
 				<br> <a class="button medium button-black mb-30 f-right"
-					href="#" style="margin-right: 10%;" id="myBtn" onclick=""><span>글쓰기</span>
-				</a>
+					href="#" style="margin-right: 10%;" id="myBtn"
+					onclick="insertSns()"><span>글쓰기</span> </a>
 			</div>
+
 
 
 
@@ -148,13 +172,13 @@ textarea {
 
 
 		<!-- 개인 Sns -->
-			<div id="mySns" class="Sns">
+		<div id="mySns" class="Sns">
 			<!-- Modal content -->
-			<div class="Sns-content">
+			<div class="Sns-content" style="width: 40%">
 				<button class="f-right" value="수정" onclick="updateSns()">수정</button>
 				<button class="f-right" value="삭제" onclick="deleteSns()">삭제</button>
 				<form id="snsContent" action="#">
-				
+
 					<div class="Sns-body">
 						<div>
 							<span class="ml-10" id="snsYmd"></span> <img alt="" class="ml-5"
@@ -166,7 +190,7 @@ textarea {
 
 					</div>
 					<div class="Sns-Cn">
-					<input type="hidden" id="snsNo" name="snsNo">
+						<input type="hidden" id="snsNo" name="snsNo">
 						<div class="writeCn pb-10" style="width: 100%;">
 
 							<span class="mb-120" id="CN"></span>
@@ -214,7 +238,7 @@ textarea {
 			console.log(formData);
 			
 			$.ajax({
-				url : "/selectSnsList", // 데이터를 가져올 경로 설정
+				url : "/goguma/selectSnsList", // 데이터를 가져올 경로 설정
 				type : "GET", // 데이터를 가져오는 방식
 				data:formData,
 				dataType : 'json',
@@ -223,17 +247,40 @@ textarea {
 						  console.log(result)
 						  $("#list").empty()
 						  for(sns of result){
-							$("#list").append(`<div class="brand-item">
-		                            				<div class="single-brand-product"
-														id="clickSns"
-														onclick="snsModal(${sns.snsNo})">
-		                            						${sns.userId} / ${sns.snsYmd}
-		                            						<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-		                            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-		                         							<img src="${sns.atchPath}" alt=""></a>
-		                         							조회수&nbsp👀:${sns.inqCnt}&nbsp;&nbsp; 좋아요&nbsp;👍🏻: ${sns.likeNocs}
-													</div>
-												</div>`)
+							  
+					
+							$("#list").append(`
+									
+									
+                                <div class="blog-item" style="width:300px ; height:300px" onclick=""">
+								
+									<img src="${sns.atchPath}" alt="" style="width:100% ; height:300px" >
+								<div class="blog-desc">
+									<h5 class="blog-title">
+										<a href="single-blog.html">${sns.userId} / ${sns.snsYmd}</a>
+									</h5>
+									<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+									<h5 class="blog-title">
+									
+									
+								<a href="single-blog.html">${sns.hash}</a>
+								</h5>
+								
+									
+								</div>
+						
+							</div>`)
+											
+							
+					
+							
+							
+							
+							
+							
+							$(".blog-item").attr("onclick","snsModal('+sns.snsNo+')")
+							
 		           							 }
 											},
 						error : function(err) {

@@ -56,7 +56,7 @@
 	<!-- 검색어 단어 수정 -->
 	<update id="updateWord">
 		update search
-		stts = #{stts}
+		set stts = #{stts}
 		where search_ttl = #{searchTtl}
 	</update>
 			

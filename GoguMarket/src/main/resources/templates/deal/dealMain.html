@@ -217,20 +217,14 @@ layout:decorate="~{layouts/layout}">
 	                        <div class="col-lg-10"><input type="hidden"></div>
 	                        <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/my/dealform'"><span>판매글등록</span></a></div>
                         <hr>
-                        <!-- 페이지번호관련  -->
-						<div align="center">
-							<a
-								th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-								th:href="|javascript:gopage(${num})|"
-								th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-						</div>
                         <div class="col-lg-12">
                             <div>
                                 <!-- popular-product start -->
                                 <div id="popular-product">
                                     <div class="row">
                                         <!-- product-item start -->
-                                        <div th:each="deal : ${lists}"  class="col-lg-3 col-md-4">
+                                        <div th:if="${#lists.isEmpty(lists)}" th:text="'검색어와 일치하는 판매글이 없습니다'"></div>
+                                        <div th:each="deal : ${lists}" class="col-lg-3 col-md-4">
                                             <div class="product-item product-item-2"  >
                                                 <div class="product-img">
                                                     <a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}">
@@ -239,35 +233,50 @@ layout:decorate="~{layouts/layout}">
                                                 </div>
                                                 <div class="product-info">
                                                     <h6 class="product-title">
-                                                        <a th:text="${deal.dlTtl}" href="single-product.html">Product Name</a>
+                                                        <a th:text="${deal.dlTtl}">Product Name</a>
                                                     </h6>
-                                                    <h6 th:text="${deal.ctgry}" class="brand-name">Sumsung</h6>
-                                                   
-                                                    <h3 th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" class="pro-price"
+                                                    <h6 th:each="c : ${category}"
+														th:if="${deal.ctgry == c.commonDetailCode}"
+														th:text="'카테고리 : '+${c.commonNm}" class="brand-name">Sumsung</h6>
+                                                    <h3 th:if="${deal.ctgry != 'FR'}"
+                                                    	th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" class="pro-price"
                                                     	>$ 869.00</h3>
-                                                    <h3 th:if="${deal.dlPrc == ''}" th:text="${#numbers.formatInteger(deal.dlPrc, 0, 'COMMA') + '원'}"></h3>
+                                                    <h3 th:if="${deal.dlPrc == 0}">무료나눔</h3>
                                                 </div>
+                                                
+                                                <!-- 마우스 오버시 : 거래지역(판매글의) & 내가 판매중인 글 표시 -->
                                                 <ul class="action-button">
                                                     <li>
-                                                        <a th:text="${deal.dlNo}" th:href="@{/dealdetail/{dlNo}(dlNo=${deal.dlNo})}"><i class="zmdi zmdi-favorite"></i></a>
+                                                        <a th:text="${deal.area}" th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}"><i class="zmdi zmdi-favorite"></i></a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#productModal" title="Quickview"><i
-                                                                class="zmdi zmdi-zoom-in"></i></a>
+                                                    	<p th:if="${session.userId == deal.ntslId}" th:text="'내가 판매중인 게시글입니다'"></p>
                                                     </li>
-                                                    <li>
-                                                        <a href="#" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                    </li>
+                                                   
                                                 </ul>
                                             </div>
                                         </div>
                                         <!-- product-item end -->
                                     </div>
                                 </div>
-                                <!-- new-arrival end -->
+                                  <!-- 페이지번호관련  -->
+<!-- 									<div align="center"> -->
+<!-- 										<a -->
+<!-- 											th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" -->
+<!-- 											th:href="|javascript:gopage(${num})|" -->
+<!-- 											th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a> -->
+<!-- 									</div> -->
+							                                <!-- 가게 목록 페이징 -->
+				                     <ul class="shop-pagination box-shadow text-center ptblr-10-30">
+				                        <li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+				                        <li
+				                           th:each="num: *{#numbers.sequence(paging.startPage, paging.endPage)}"
+				                          th:class="${paging.page}==${num} ? 'active'"><a
+				                           th:href="|javascript:gopage(${num})|">[[${num}]]</a></li>
+				
+				                        <li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
+				                     </ul>
+			                                <!-- new-arrival end -->
                          
                                 <!-- special-offer end -->
                             </div>
@@ -293,12 +302,14 @@ layout:decorate="~{layouts/layout}">
 	console.log(Data);
 	
 	let rollingData = new Array();
-	for(i in Data){
-		console.log(i);
-		console.log(Data[i].searchTtl);
-		rollingData.push(i + Data[i].searchTtl);
-	console.log(rollingData);
-	}
+	for(let i in Data){
+		  const index = parseInt(i) + 1;
+		  console.log(index);
+		  console.log(Data[i].searchTtl);
+		  rollingData.push(index + " " + Data[i].searchTtl);
+		  console.log(rollingData);
+		}
+
 
     let timer = 2000 // 롤링되는 주기 입니다 (1000 => 1초)
 

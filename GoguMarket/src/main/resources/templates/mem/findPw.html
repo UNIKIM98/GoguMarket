@@ -21,29 +21,28 @@
 		<div class="container">
 			<br> <br>
 			<div class="registered-customers" style="width: 40%; margin: 0 auto;">
-				<h4 class="blog-section-title border-left mb-30" id="pageTtl">비밀번호 찾기</h4>
+				<h4 class="blog-section-title border-left mb-30" id="pageTtl">비밀번호
+					찾기</h4>
 				<form id="pwFrm" action="/goguma/updatePw" method="post">
 					<div class="login-account p-30 box-shadow">
 						<table id="frmTbl">
 							<tr>
 								<th><label for="userId">아이디</label></th>
-								<td>
-									<input type="text" id="userId" name="userId" placeholder="아이디를 입력하세요.">
-								</td>
+								<td><input type="text" id="userId" name="userId"
+									placeholder="아이디를 입력하세요."></td>
 							</tr>
 							<tr>
 								<th><label for="eml">이메일주소</label></th>
-								<td>
-									<input type="text" id="eml" name="eml" placeholder="example@email.com">
-								</td>
+								<td><input type="text" id="eml" name="eml"
+									placeholder="example@email.com"></td>
 							</tr>
 						</table>
 						<div class="mb-20">
 							<div style="text-align: center;">
-								<button class="submit-btn-1 btn-hover-1" type="button" id="trgtBtn"
-										onclick="findPw()">인증번호 발송</button>
-								<button class="submit-btn-1 btn-hover-1" type="button" id="findId"
-										onclick="goFindId()">아이디 찾기</button>
+								<button class="submit-btn-1 btn-hover-1" type="button"
+									id="trgtBtn" onclick="findPw()">인증번호 발송</button>
+								<button class="submit-btn-1 btn-hover-1" type="button"
+									id="findId" onclick="goFindId()">아이디 찾기</button>
 							</div>
 						</div>
 					</div>
@@ -184,15 +183,16 @@
 			// ❤️ 일치시 이메일 전송
 			function sendEmlAuth() {
 				let eml = $('#eml').val();
+						appendAuth();
 				$.ajax({
 					url : '/goguma/emlCheckAJax/' + eml,
 					type : 'get',
 					success : function(result) {
 						authNum = result;
 						console.log(result);
-						appendAuth();
 					},
 					error : function(err) {
+						alert("⚠ 이메일 전송 중 오류가 발생했습니다.")
 						console.log(err);
 					}
 				})
