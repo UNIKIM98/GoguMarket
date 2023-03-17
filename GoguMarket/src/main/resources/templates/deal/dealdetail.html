@@ -120,15 +120,17 @@
 										<!-- imgs-zoom-area start -->
 										<div class="col-md-5">
 											<div class="imgs-zoom-area">
-												<img id="zoom_03" data-zoom-image="/img/product/6.jpg"
-													alt="">
+												<img id="zoom_03" th:data-zoom-image="${file[0].atchPath}"
+												th:src="${file[0].atchPath}"
+													alt="" style="width:300px; height:300px">
 												<div class="row">
 													<div class="col-lg-12">
 														<div id="gallery_01"
 															class="carousel-btn slick-arrow-3 mt-30">
 															<div th:each="f : ${file}" class="p-c">
-																<a href="#" data-image="/img/product/2.jpg"
-																	data-zoom-image="/img/product/2.jpg"> <img
+																<a href="#" 
+																	th:data-image="${f.atchPath}"
+																	th:data-zoom-image="${f.atchPath}" style="width:300px; height:300px"> <img
 																	th:src="${f.atchPath}" alt="">
 																</a>
 															</div>

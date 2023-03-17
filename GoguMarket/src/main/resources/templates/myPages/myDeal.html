@@ -104,8 +104,7 @@
 																		<h6 class="media-heading">
 																			<a th:text=${deal.DL_TTL}>타이틀자리</a>
 																		</h6>
-																		<p class="mb-10" th:text="${deal.DL_YMD}">27 Jun,
-																			2022 at 2:30pm</p>
+																		<p class="mb-10" th:text="${#dates.format(deal.DL_YMD, 'yyyy/MM/dd')}"></p>
 																	</div>
 																	<div class="f-right">
 																		<ul class="reply-delate">
@@ -202,6 +201,10 @@
 		var pointInfo; // 전체 포인트 정보
    		var pointTotal = 0; // 전체 총합
    		
+   		$(function(){
+   			
+   		})
+   		
      	// ❤️ 포인트 전체 가져오기 Ajax
 	       function myPointAjax(){
 	    	   $.ajax({
@@ -261,10 +264,12 @@
 				});
 			}
 		}
+		
 		function submitCheck() {
 			// 포인트가 200이상이어야 끌올을 할수있겟쬬? : 200 미만이면 false
+					
 			// 한번 누르고 오분뒤에 누르게할순없낭
-			if ($(".totalPTrgt").text() < "200") {
+			if ($(".totalPTrgt").text() < 200) {
 				$(".totalPTrgt").focus();
 				alert("[실패] 남은 포인트를 확인해보세요 :(");
 				isSubmitOk = false;

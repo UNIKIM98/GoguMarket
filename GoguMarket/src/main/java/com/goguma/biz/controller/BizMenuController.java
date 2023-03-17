@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.goguma.biz.service.BizMemService;
 import com.goguma.biz.vo.BizMemVO;
+import com.goguma.rsvt.service.BizMenuService;
 import com.goguma.rsvt.vo.BizMenuVO;
 
 @Controller
 public class BizMenuController {
 	@Autowired
-	BizMemService bizService;
+	private BizMemService bizService;
+	
+	@Autowired
+	private BizMenuService menuService;
 
 	// ❤ 비즈 메뉴 관리 페이지로 이동
 	@GetMapping("/biz/bizMenu")
@@ -26,13 +30,15 @@ public class BizMenuController {
 		// 지영 언니 슬라이드 > 필수
 		String bizNo = (String) session.getAttribute("bizNo");
 		model.addAttribute("biz", bizService.bizInfo(bizNo));
-
 		return "biz/bizMenu";
 	}
 
 	@PostMapping("/biz/menuTest")
 	public String menuTest(BizMenuVO menuList) {
-		System.out.println(menuList + "=====메뉴정보");
+		System.out.println(menuList.getMenuList());
+		System.out.println(menuList.getNewList());
+		List<BizMenuVO> menu = menuList.getMenuList();
+//		menuService.insertBizMenu();
 		return "/";
 
 	}
