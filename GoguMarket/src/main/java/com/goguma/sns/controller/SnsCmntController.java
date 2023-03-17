@@ -23,7 +23,7 @@ public class SnsCmntController {
 	CmntService service;
 	
 	
-	@PostMapping("/insertReply")
+	@PostMapping("/sns/insertReply")
 	public Map<String,Object> insertReply(@RequestBody SnsCmntVO vo) {
 				
 		Map<String,Object>map = new HashMap<String, Object>();
@@ -39,7 +39,7 @@ public class SnsCmntController {
 	}
 	
 	
-	@GetMapping("/SelectCmntlist")
+	@GetMapping("/sns/SelectCmntlist")
 	public List<SnsCmntVO> SelectCmntlist(int snsNo) {
 		Map<String,Object>map = new HashMap<String, Object>();
 		
@@ -51,7 +51,7 @@ public class SnsCmntController {
 		return reply;
 	}
 	
-	@PostMapping("/deleteRreply")
+	@PostMapping("/sns/deleteRreply")
 	public Map<String,Object> deleteRreply(@RequestBody SnsCmntVO vo) {
 				
 		
@@ -69,7 +69,7 @@ public class SnsCmntController {
 	}
 	
 	
-	@PostMapping("/rreplyEdit")
+	@PostMapping("/sns/rreplyEdit")
 	public int rreplyEdit(SnsCmntVO vo) {
 		System.out.println(vo+"댓글");
 		
