@@ -13,10 +13,12 @@ public interface AlarmMapper {
 	
 	int checkNotifyCount(AlarmVO vo); //알람이 있는지를 확인하는 메소드
 	
+	int countNotify(String userId); //알림의 갯수를 확인
+	
 	List<AlarmVO> selectNotify(AlarmVO vo); //전체 알람을 출력하는 메소드
 	
 	boolean updateNotify(AlarmVO vo); //알람의 상태를 변경하는 메소드
 	
-	int deleteAlm(List<AlarmVO>vo);
+	int deleteAlm(AlarmVO vo); //알람의 삭제
 	
 }

@@ -14,12 +14,14 @@
 		    search_no,
 		    search_ttl,
 		    search_ymd,
-		    pst_se
+		    pst_se,
+		    stts
 			) values (
    			#{searchNo},
    			#{searchTtl},
    			sysdate,
-   			#{pstSe}
+   			#{pstSe},
+   			#{stts}
    			)
 	</insert>
 	
@@ -27,7 +29,8 @@
 			resultType="com.goguma.common.vo.SearchVO">
 	select *
 	from(
-	select nvl(search_ttl,0) as searchTtl, count(search_ttl) as ttlCnt
+	select nvl(search_ttl,0) as searchTtl, 
+			count(search_ttl) as ttlCnt
 	    from search
 	    group by search_ttl
 	    order by ttlcnt desc
@@ -38,17 +41,23 @@
         <if test ="pstSe != null">
         and pst_se = #{pstSe}
         </if>
+        <if test ="stts == '1'">
+        and stts = #{stts}
+        </if>
 	</select>
+	
 	<!-- 중고거래 검색어 삭제 웨얼절 저거되나?if걸어야됨 -->
 	<delete id="deleteWord"
 			parameterType="com.goguma.common.vo.SearchVO">
 		delete from search
-		where pst_se = #{pstSe}
+		where search_ttl = #{searchTtl}
 	</delete>
+	
 	<!-- 검색어 단어 수정 -->
 	<update id="updateWord">
 		update search
-		set search_ttl = #{searchTtl}
+		stts = #{stts}
+		where search_ttl = #{searchTtl}
 	</update>
 			
 </mapper>

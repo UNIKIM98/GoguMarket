@@ -47,7 +47,8 @@
 
 						<!--원래 rooms.html내용-->
 						<div class="col-12">
-							<h3 class="brand-title text-gray">여기는[ [[${room.name}]] ]입니다 </h3>
+							<h3 class="brand-title text-gray">여기는[ [[${room.name}]] ]입니다
+							</h3>
 							<hr>
 						</div>
 						<div>
@@ -60,6 +61,7 @@
 											id="button-send" style="height: 40px;">전송</button>
 									</div>
 								</div>
+								
 							</div>
 						</div>
 						<div class="col-12"></div>
@@ -119,8 +121,11 @@
 
                    //3. send(path, header, message)로 메세지를 보낼 수 있음
                    stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
+                   
+                   
                 });
-
+				
+                //버튼 클릭시 메시지 전송
                 $("#button-send").on("click", function(e){
                     var msg = document.getElementById("msg");
 
@@ -128,6 +133,14 @@
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
                     msg.value = '';
                 });
+                
+                //엔터키로 전송하기
+                $('#msg').keypress(function(event){
+                    if (event.which == 13) {
+                        $('#button-send').click();
+                        return false;
+                    }
+               });
             });
         </script>
 

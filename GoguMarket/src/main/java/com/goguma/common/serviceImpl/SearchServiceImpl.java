@@ -33,12 +33,26 @@ public class SearchServiceImpl implements SearchService{
 		return map.deleteWord(search);
 	}
 
-	@Override
-	public int updateWord(SearchVO search) {
-		// TODO Auto-generated method stub
-		return map.updateWord(search);
-	}
+//	@Override
+//	public int updateWord(SearchVO search) {
+//		// 매퍼에서 단건으로 업데이트한 정보들
+//		// 리스트의 갯수만큼 들고와서 업데이트해줘야된다
+//		return map.updateWord(search);
+//	}
 
+	@Override
+	public int updateWord(List<SearchVO> list) {
+		// 매퍼에서 단건으로 업데이트한 정보들
+		// 리스트의 갯수만큼 들고와서 업데이트해줘야된다
+		int success = 0;
+		for( SearchVO l : list ) {
+			System.out.println(l);
+			map.updateWord(l);
+			success++;
+		}
+		
+		return success;
+	}
 
 
 

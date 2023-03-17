@@ -1,6 +1,7 @@
 package com.goguma.common.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,7 +18,8 @@ public class SearchVO {
 	@DateTimeFormat(pattern = "yyyy-mm-dd HH24:MI:SS")	// 입력할땐 9빼서 들어가짐. 쓰려면 9더해야함..
 	private Date searchYmd;
 	private String pstSe;
+	private String stts; // 실검 상태값
 	private int ttlCnt;
 	
-	
+	List<SearchVO> sList;
 }

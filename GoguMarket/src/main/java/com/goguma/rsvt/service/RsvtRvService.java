@@ -14,5 +14,8 @@ public interface RsvtRvService {
 	
 	//비즈페이지 후기 수 카운팅
 	int selectReviewCnt(String bizNo);
+	
+	//유저 후기
+	List<RsvtRvVO> selectReviewUser(String userId);
 
 }

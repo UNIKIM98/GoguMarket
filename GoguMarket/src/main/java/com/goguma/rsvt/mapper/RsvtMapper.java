@@ -48,7 +48,7 @@ public interface RsvtMapper {
 //	int insertModifyMenu(RsvtUpMenuVO upVo);
 //	List<RsvtUpMenuVO> insertModifyMenu();
 	
-	//rsvt테이블 예약상태 업데이트
+	//rsvt테이블 예약상태 업데이트(->예약변경)
 	int updateRsvtStts(String rsvtNo);
 	
 	//예약신청된거 업데이트
@@ -56,6 +56,10 @@ public interface RsvtMapper {
 	
 	//예약신청 승인여부 업데이트
 	int updateApprove(String rsvtNo);
+	
+	//rsvt테이블 예약상태 업데이트(->예약확정)
+	int updateRsvtSttsCompl(String rsvtNo);
+
 
 	
 

@@ -54,8 +54,6 @@ public class RsvtController {
 	RsvtService rsvtService; // 예약
 	@Autowired
 	MemService memService; // 맴바정보
-	
-	
 
 	// 일반예약
 	@RequestMapping("/my/reservation/{bizNo}")
@@ -87,64 +85,61 @@ public class RsvtController {
 	// 예약완료
 	@GetMapping("/my/rsvtComplete/{rsvtNo}")
 	public String book0604(@PathVariable int rsvtNo, Model model) {
-		//System.out.println(rsvtNo);
+		// System.out.println(rsvtNo);
 		model.addAttribute("info", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
 		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		return "rsvt/book0604";
 	}
-	
 
 	// 예약내역
 	@GetMapping("/my/myReservation")
 	public String mybook01(String userId, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userId = (String) session.getAttribute("userId");
-		
 
-		//List<Map> Lists = rsvtService.selectMyRsvtDetail(userId); =>아작스로 교체
+		// List<Map> Lists = rsvtService.selectMyRsvtDetail(userId); =>아작스로 교체
 		List<Map> simple = rsvtService.selectMyRsvtList(userId);
 
-		//System.out.println("프린트2 : " + Lists.size() + ", " + simple.size());
+		// System.out.println("프린트2 : " + Lists.size() + ", " + simple.size());
 
-		//model.addAttribute("lists", Lists);
+		// model.addAttribute("lists", Lists);
 		model.addAttribute("simple", simple);
 		model.addAttribute("code", codeService.codeList("007"));
-		
+
 		return "myPages/mybook01";
 
 	}
-	
-	//예약상세내역 메뉴부분 ajax(mybook01, 02에서 사용)
+
+	// 예약상세내역 메뉴부분 ajax(mybook01, 02에서 사용)
 	@GetMapping("/my/myRsvtAjax")
 	@ResponseBody
 	public List<Map> myRsvtAjax(RsvtVO vo) {
-		
+
 		int rsvtNo = vo.getRsvtNo();
-		System.out.println("예약번호=="+rsvtNo);
-		System.out.println(rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));		
+		System.out.println("예약번호==" + rsvtNo);
+		System.out.println(rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
 		return rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo));
 	}
-	
-	//예약상세내역 예악자부분 ajax
+
+	// 예약상세내역 예악자부분 ajax
 	@GetMapping("/my/myRsvtInfoAjax")
 	@ResponseBody
 	public RsvtVO myRsvtInfoAjax(RsvtVO vo) {
 		int rsvtNo = vo.getRsvtNo();
 		return rsvtService.selectRsvtOne(Integer.toString(rsvtNo));
 	}
-	
-	
-	//예약수정
+
+	// 예약수정
 	@GetMapping("/my/mybook02/{rsvtNo}")
 	public String mybook02(@PathVariable int rsvtNo, Model model) {
-		//System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
-		
-		model.addAttribute("rsvt",rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
+		// System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
+
+		model.addAttribute("rsvt", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
 		return "myPages/mybook02";
 	}
 
 	@GetMapping("/mybook04")
-	
+
 	public String mybook04() {
 		return "myPages/mybook04";
 	}
@@ -213,33 +208,32 @@ public class RsvtController {
 		return rsvtNo;
 
 	}
-	
+
 	@PostMapping("/my/requestModifyAjax")
 	@ResponseBody
-	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo, @RequestParam("rsvtNo")int rsvtNo, RsvtVO rvo) {
-		System.out.println("수정예약번호===="+rsvtNo);
-		
+	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo, @RequestParam("rsvtNo") int rsvtNo, RsvtVO rvo) {
+		System.out.println("수정예약번호====" + rsvtNo);
+
 		rsvtUpdateVo.setAprvYn("N");
-		
-		//일단 예약번호 param으로 가져옴
+
+		// 일단 예약번호 param으로 가져옴
 		rsvtUpdateVo.setRsvtNo2(rsvtNo);
 		System.out.println(rsvtUpdateVo);
-		
-		//예약수정 테이블에 insert
+
+		// 예약수정 테이블에 insert
 		rsvtService.insertRsvtUpdateTbl(rsvtUpdateVo);
-		//변경신청하면 상태바뀜
+		// 변경신청하면 상태바뀜
 		rsvtService.updateRsvtStts(Integer.toString(rsvtNo));
-		
-		
-		//============
-		
+
+		// ============
+
 //		System.out.println(upVo.get(rsvtNo));
 //		System.out.println("========="+rsvtService.insertModifyMenu(upVo));
-		//System.out.println(rsvtService.insertModifyMenu(upVo));
-		
-		//예약수정 메뉴 insert
+		// System.out.println(rsvtService.insertModifyMenu(upVo));
+
+		// 예약수정 메뉴 insert
 //		System.out.println(rsvtService.insertModifyMenu(menuList)); 
-		
+
 //		RsvtUpMenuVO testVO = new RsvtUpMenuVO();
 //		testVO.setUpMenuNo(9);
 //		testVO.setRsvtUpdateNo(9);
@@ -248,34 +242,23 @@ public class RsvtController {
 //		testVO.setMenuPrc(99999);
 //		menuList.add(testVO);
 //		int cnt = rsvtService.insertModifyMenu(testVO);
-		
+
 		// 무식한 방법 (플랜B)
 		// 메뉴 리스트의 길이만큼 for문 돌면서
 		// VO로 개벌 인서트하는 메서드를 콜한다 ex)rsvtService.insertModifyMenu(rsvtUpMenuVO)
-		
+
 		return rsvtNo;
 	}
-
 
 	@GetMapping("/my/myRsvtDeleteAjax/{rsvtNo}")
-
 	@ResponseBody
 	public int deleteAllByRsvtNo(@PathVariable int rsvtNo) {
-		
-		//삭제 프로시저
-		rsvtService.deleteAllRsvt(rsvtNo);
-	    return 0;
-	}
-	
-	//예약내역 업데이트
-	@PutMapping("/biz/updateRsvtAjax")
-	@ResponseBody
-	public int updateRsvtAjax(@RequestBody RsvtVO rsvtVo) {
-		int rsvtNo = rsvtVo.getRsvtNo();
-		System.out.println("====="+rsvtService.updateRsvtInfo(Integer.toString(rsvtNo)));
-		return rsvtNo;
-		
-	}
-	
-}
 
+		// 삭제 프로시저
+		rsvtService.deleteAllRsvt(rsvtNo);
+		return 0;
+	}
+
+	
+
+}

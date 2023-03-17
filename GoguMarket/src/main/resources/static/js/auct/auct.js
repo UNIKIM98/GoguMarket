@@ -1,11 +1,5 @@
 /**
  * 경매 메인페이지
- * 
- * 
- * 
- * 
- * 
- * var span = document.getElementsByClassName("close1")[0];
  */
 
 var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
@@ -30,8 +24,7 @@ var inputFileList = new Array(); // insert 파일 배열
 var deleteList = new Array(); // delete 파일 배열
 var isSubmitOk = true; //submit 유효성 체크 boolean
 
-var img_style = 'width:100px;height:100px;z-index:none'; // 미리보기 이미지 속성
-var exCnt = 0;
+
 
 
 
