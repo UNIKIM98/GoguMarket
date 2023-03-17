@@ -41,12 +41,14 @@ public class SearchServiceImpl implements SearchService{
 //	}
 
 	@Override
-	public int updateWord(List<String> list) {
+	public int updateWord(List<SearchVO> list) {
 		// 매퍼에서 단건으로 업데이트한 정보들
 		// 리스트의 갯수만큼 들고와서 업데이트해줘야된다
 		int success = 0;
-		for(int i=0; i <list.size(); i++) {
-			System.out.println(i);
+		for( SearchVO l : list ) {
+			System.out.println(l);
+			map.updateWord(l);
+			success++;
 		}
 		
 		return success;
