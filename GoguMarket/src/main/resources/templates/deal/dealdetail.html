@@ -344,20 +344,19 @@
 	 var context = document
      .getElementById('myChart')
      .getContext('2d');
- var myChart = new Chart(context, {
+ 	var myChart = new Chart(context, {
      type: 'bar', // 차트의 형태
      data: { // 차트에 들어갈 데이터
          labels: [
              //x 축
-        	 prc[0].month,prc[1].month,prc[2].month
-             
+        	prc[2].month,prc[1].month,prc[0].month
          ],
          datasets: [
              { //데이터
                  label: '평균값', //차트 제목
                  fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                  data: [
-                	 prc[0].avg, prc[1].avg, prc[2].avg
+                	 prc[2].avg, prc[1].avg, prc[0].avg
 
                  ],
                  backgroundColor: [
