@@ -131,6 +131,7 @@ public class DealServiceImpl implements DealService {
 	//채은추가
 	@Override
 	public List<Map> selectNtslDeal(DealVO vo) {
+		
 		return map.selectNtslDeal(vo);
 	}
 

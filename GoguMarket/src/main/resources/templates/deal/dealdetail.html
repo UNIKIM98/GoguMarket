@@ -342,6 +342,12 @@
 	 var context = document
      .getElementById('myChart')
      .getContext('2d');
+	 
+	/*  function comma(num){
+		 let result = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		 return 
+	 } */
+	 
  	var myChart = new Chart(context, {
      type: 'bar', // 차트의 형태
      data: { // 차트에 들어갈 데이터
@@ -375,12 +381,33 @@
          ]
      },
      options: {
+    	 tooltips: {
+    		 callbacks: {
+    			  label: function(tooltipItem, data) {
+    			    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+    			    if (label) {
+    			      label += ': ';
+    			    }
+    			    label += tooltipItem.yLabel.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+    			    return label;
+    			  }
+    			}
+
+    	  },
          scales: {
              yAxes: [
                  {
-                     ticks: {
-                         beginAtZero: true
+                	 ticks: {
+                		 beginAtZero: true,
+                         callback: function(label, index, labels) {
+                             return label/1000+'k';
+                         }
+                     },
+                     scaleLabel: {
+                         display: true,
+                         labelString: '1k = 1000'
                      }
+                	 
                  }
              ]
          }
