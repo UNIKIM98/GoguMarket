@@ -1,8 +1,4 @@
 
-$(document).ready(function(){
-
-	 keyValue();
-})
 
 var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
@@ -18,6 +14,8 @@ var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
 
 
 var reInput = document.getElementById("reInput");
+
+
 /*const rrpWriteHtml;
 */
 
@@ -41,7 +39,7 @@ reInput.onclick = function() {
 
 //----------------공통코드 출력-------------------------
 
-function keyValue() {
+/*function keyValue() {
 
 	$.ajax({
 		url:"/keyValue",
@@ -69,7 +67,7 @@ function keyValue() {
 		},
 	});
 }
-
+*/
 
 
 //------------------ 개인 게시글-------------------------
@@ -92,6 +90,8 @@ function snsModal(id) {
 		data: { id },
 		dataType: "json",
 	}).then((obj) => {
+		
+		$("#mySns #snsNo").val(obj.sns.snsNo);
 		$("#CN").text(obj.sns.snsCn);
 		$("#snsYmd").text(obj.sns.snsYmd);
 		$("#atchPath").attr("src", obj.atch[0].atchPath);
@@ -104,9 +104,15 @@ function snsModal(id) {
 }
 
 
+function deleteSns(){
+	$("#snsContent").s
+	
+}
+
+
 function checkParReply(item, groupNo) {
 	// 아이템 오브젝트 포리치 돌려서 같은 item.cmntNo가 groupNo인 사람이 있는지 찾아야함
-	//아니면 댓글 삭제할때 db에서 같은 groupNo인거 그냥 다 날리자!
+	// 아니면 댓글 삭제할때 db에서 같은 groupNo인거 그냥 다 날리자!
 
 }
 
@@ -305,6 +311,14 @@ function insertRrp() {
 
 }
 
+function updateSns(){
+	
+}
+
+function deleteSns(){
+	
+}
+
 
 function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo) {
 
@@ -323,6 +337,7 @@ function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo) {
 //=========================답글 수정============================
 
 function rreplyEditForm(rrpCmntNo, rrpSnsNo) { //답글 수정폼 생성
+	
 	/*console.log('넘어옴');
 	$("#rrpContent #rrpCmntCn").remove();
 	$("#editForm").remove();
@@ -369,10 +384,6 @@ function rreplyEdit(rrpSnsNo, rpGroupNo) { //답글 수정
 	}
 
 
-
-
-	console.log
-
 	$.ajax({
 		url: "/rreplyEdit",
 		type: "POST",
@@ -398,6 +409,7 @@ function rreplyEdit(rrpSnsNo, rpGroupNo) { //답글 수정
 
 
 }
+
 function rreplyDel(rrpCmntNo, rrpGroupNo, rrpSnsNo) { //댓글 답글 삭제
 
 
