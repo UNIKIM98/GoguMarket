@@ -29,6 +29,7 @@ textarea {
 <body>
 	<article layout:fragment="content">
 
+
 		<!-- Start page content -->
 		<section id="page-content" class="page-wrapper section">
 
@@ -57,12 +58,8 @@ textarea {
 														<div class="searchForm mb-30 pstSe"
 															style="text-align: center">
 															<form id="searchForm" action="#">
-																<select class="selectpicker mb-30" id="pstSe"
-																	name="pstSe">
-																	<option>전체</option>
-																</select> <br>
-																<div class="subcribe clearfix">
 
+																<div class="subcribe clearfix">
 																	<input type="text" name="search" id="search"
 																		placeholder="Enter your town here..."
 																		style="width: 80%" />
@@ -105,6 +102,8 @@ textarea {
 		<div id="myModal" class="modal">
 			<!-- Modal content -->
 			<div class="modal-content">
+
+
 				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
 					<button class="close1" onclick=""
 						style="color: black; padding: 10px;">x</button>
@@ -150,12 +149,14 @@ textarea {
 
 
 		<!-- 개인 Sns -->
-
-		<div id="mySns" class="Sns">
+			<div id="mySns" class="Sns">
 			<!-- Modal content -->
 			<div class="Sns-content">
-				<div class="Sns-body">
-					<form action="#">
+				<button class="f-right" value="수정" onclick="updateSns()">수정</button>
+				<button class="f-right" value="삭제" onclick="deleteSns()">삭제</button>
+				<form id="snsContent" action="#">
+				
+					<div class="Sns-body">
 						<div>
 							<span class="ml-10" id="snsYmd"></span> <img alt="" class="ml-5"
 								id="atchPath" style="width: 100%;">
@@ -163,41 +164,41 @@ textarea {
 							<h3 class="mt-10 ml-20"></h3>
 
 						</div>
-					</form>
 
-				</div>
-				<div class="Sns-Cn">
-					<div class="writeCn pb-10" style="width: 100%;">
-
-						<span class="mb-120" id="CN"></span>
 					</div>
-				</div>
-				<div class="Sns-commet">
-					<div class="card">
-						<div class="card-header bg-light">
-							<i class="fa fa-comment fa"></i> REPLY <input type="hidden"
-								id="userId" name="userId" th:value="${param.userId}">
+					<div class="Sns-Cn">
+					<input type="hidden" id="snsNo" name="snsNo">
+						<div class="writeCn pb-10" style="width: 100%;">
+
+							<span class="mb-120" id="CN"></span>
 						</div>
-
-						<th:block th:if="${session.userId != null}">
-							<!-- 아이디 check-->
-							<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
-
-							<div class="Sns-reply" id="Sns-reply"></div>
-						</th:block>
-						<th:block th:unless="${session.userId != null}">
-
-							<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
-
-						</th:block>
-						<!--댓글 끝-->
 					</div>
-				</div>
-				<!--Sns-footer-->
-				<div class="Sns-footer" style="background-color: #000000;">
-					<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
-						@gogu.ma</h3>
-				</div>
+					<div class="Sns-commet">
+						<div class="card">
+							<div class="card-header bg-light">
+								<i class="fa fa-comment fa"></i> REPLY <input type="hidden"
+									id="userId" name="userId" th:value="${param.userId}">
+							</div>
+							<th:block th:if="${session.userId != null}">
+								<!-- 아이디 check-->
+								<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
+
+								<div class="Sns-reply" id="Sns-reply"></div>
+							</th:block>
+							<th:block th:unless="${session.userId != null}">
+
+								<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
+
+							</th:block>
+							<!--댓글 끝-->
+						</div>
+					</div>
+					<!--Sns-footer-->
+					<div class="Sns-footer" style="background-color: #000000;">
+						<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
+							@gogu.ma</h3>
+					</div>
+				</form>
 			</div>
 
 		</div>
