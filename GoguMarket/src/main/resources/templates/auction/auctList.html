@@ -63,15 +63,19 @@
 															<a th:text="${auct.auctTtl}"></a>
 														</h6>
 														<h3 class="pro-price" th:if="${nowPrc.nowPrc != 0}"
-															th:text="현재가 + ${nowPrc.nowPrc} +원"></h3>
-
+															th:text="'현재가 ' + ${#numbers.formatInteger(nowPrc.nowPrc, 3, 'COMMA') + '원'}"></h3>
 														<h3 class="pro-price" th:if="${nowPrc.nowPrc == 0}">입찰자가 없습니다</h3>
 														<!--  현재가 자리 -->
-														<h5 class="sin-pro-action f-right">남은기간</h5>
 														<h5 align="left" th:text="${auct.userId}"></h5>
-															<ul class="action-button">
+														<h5 class="sin-pro-action f-right"
+															th:if="${!auct.dDay.equals(0)}"
+															th:text="${'마감'+auct.dDay+'일 전'}"></h5>
+														<h5 class="sin-pro-action f-right"
+															th:if="${auct.dDay.equals(0)}"
+															th:text="${'마지막 경매일입니다'}"></h5>
+															<ul class="sin-pro-action f-left">
 																<li>
-																	<h6>입찰인원 : [[${cntMem}]]</h6>
+																	<h6>입찰인원 : [[${auct.count}]]</h6>
 																</li>
 															</ul>
 														</div>
@@ -129,7 +133,7 @@
 															<h5 align="left" th:text="${auct.userId}"></h5>
 															<ul class="action-button">
 																<li>
-																	<h6>입찰인원 : [[${cntMem}]]</h6>
+																	<h6>입찰인원 자리</h6>
 																</li>
 															</ul>
 														</div>

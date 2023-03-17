@@ -11,6 +11,4 @@ public interface AuctMemService {
 
 	List<AuctMemVO> selectNowPrc(); // 현재 입찰가 + acutNo3
 	List<AuctMemVO> bidAuction(String userId); // 입찰한 경매품
-	
-	AuctMemVO selectMemCount(AuctMemVO auctNo); // 입찰자 수
 }

@@ -68,4 +68,10 @@ public class AuctServiceImpl implements AuctService{
 		// 마이페이지에 쓰는 String auctId
 		return auctMapper.selectUserId(userId);
 	}
+
+	@Override
+	public int auctDday(int auctNo) {
+		// 경매 Dday
+		return auctMapper.auctDday(auctNo);
+	}
 }
