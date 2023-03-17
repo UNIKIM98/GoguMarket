@@ -28,11 +28,17 @@
 						<h2 class="uppercase" id="bizNm" th:text="${biz.bizNm}">(가게이름)</h2>
 						<h6>
 							<ul class="blog-meta">
-								<li><a href="#"><i class="zmdi zmdi-favorite"></i>단골
-										123 </a></li>
-								<li><a href="#"><i class="zmdi zmdi-comments"></i>후기 59
-								</a></li>
-								<li><a href="#">(카테고리)</a></li>
+								<li><a href="#" th:each="cnt: ${dgCnt}"
+										th:if="${cnt.bizNo}==${biz.bizNo}"
+										th:utext="|<i class='zmdi zmdi-favorite'></i>단골  ${cnt.dCount}|"
+									>(단골 수)</a>
+								</li>
+								<li><a href="#" th:each="rcnt: ${rwCnt}"
+										th:if="${rcnt.bizNo} == ${biz.bizNo}"
+										th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|"
+									>(후기 수)</a>
+								</li>
+								<li><a href="#" th:text="${biz.ctgry}">(카테고리이름)</a></li>
 							</ul>
 						</h6>
 					</div>
@@ -62,10 +68,6 @@
 			</div>
 			<hr>
 
-			<div class="f-right mb-30">
-				<button class="btn btn-warning btn-sm" type="button" onclick="moveComRsvt()">함께
-					주문하기</button>
-			</div>
 
 			<!-- 내용 부분 -->
 			<div class="wrapper">
@@ -183,7 +185,7 @@
 																				<div class="col-sm-6">
 																					<div class="cart-plus-minus f-left">
 																						<input type="text" value="0" name="peopleCnt"
-																							class="cart-plus-minus-box" max="10">
+																							class="cart-plus-minus-box">
 																					</div>
 																				</div>
 																			</div>
@@ -192,11 +194,13 @@
 																</div>
 															</div>
 														</div>
-														<div class="mt-30">
-															<button class="btn btn-success btn-sm" type="button"
-																onclick="test()">쿠폰사용</button>
+														<div><br><br><br><br><br><br><br></div>
+														
+														<div class="f-left">
+															<button class="btn btn-light" type="button" onclick="moveMain()">돌아가기</button>			
 														</div>
 													</div>
+
 													<!-- 왼쪽부분 끝 -->
 
 													<!-- 오른쪽부분-->
@@ -277,7 +281,7 @@
 															</div>
 															<div class="f-right">
 
-																<button class="submit-btn-1 mt-30 btn-hover-1"
+																<button class="btn btn-warning"
 																	type="button" onclick="frmSubmit()">결제하기</button>
 															</div>
 														</form>
@@ -285,7 +289,6 @@
 													<!-- 오른쪽부분 끝 -->
 
 												</div>
-
 											</div>
 										</div>
 										<!-- checkout end -->
@@ -304,7 +307,12 @@
 
 		</div>
 		<script th:inline="javascript">
-			
+		
+			//목록으로 돌아가기
+			function moveMain(){
+				window.history.back();
+			}
+		
 			//가게번호 받아오기
 			var url = window.location.href;
 			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
@@ -525,6 +533,14 @@
 							)
 							//$('#tdCnt').text(peopleCnt);
 							selectedDateTimePeople.push(peopleCnt);
+							
+							//만든거 value요소로 삽입
+							$('input[name="peopleCnt"]').attr('value',peopleCnt);
+							//10명이하 test
+							if($('input[name="peopleCnt"]').val() >10){
+								alert("10명 이하로 가능합니다.")
+								return;
+							}
 						});
 				//-될때
 				$($('input[name="peopleCnt"]')[0].previousSibling.previousSibling)
@@ -667,15 +683,6 @@
 				var url = window.location.href;
 				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
 				window.location.href = "/my/book0602/" + urlBizNo;
-			}
-			
-			function test(){
-				$("#menuInfo tr").each(function() {
-					var textValue = $(this).find("td:eq(2)").text();
-					parseInt(textValue).toLocaleString("ko-KR")
-					});
-				console.log("메뉴이름, 가격, 수량 " +$('#menuNm').val(),$('#menuPrc').val(),$('#amount').val());
-				console.log(urlBizNo + "_" + $('#bizNm').text())
 			}
 			
 			//전화번호 알림창

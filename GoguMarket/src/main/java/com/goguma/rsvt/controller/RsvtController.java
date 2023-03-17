@@ -62,6 +62,11 @@ public class RsvtController {
 		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); // 가게정보
 		model.addAttribute("menu", menuService.bizMenu(bizNo)); // 메뉴
 		model.addAttribute("code", codeService.codeList("007")); // 공통코드(시간)
+		// 단골 카운팅
+		model.addAttribute("dgCnt", bizMemService.BizDangolCnt());
+
+		// 리뷰 카운팅
+		model.addAttribute("rwCnt", bizMemService.BizReviewCnt());
 
 		return "rsvt/book0601";
 	}

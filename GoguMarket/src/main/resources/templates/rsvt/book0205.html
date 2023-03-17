@@ -81,7 +81,7 @@
 										<!-- 탭 메뉴 -->
 										<div class="row">
 											<div class="col-lg-6">
-												<ul class="nav mb-20">
+												<ul class="nav mt-15 ml-15">
 													<li><a class="active" href="#description"
 														data-bs-toggle="tab">홈</a></li>
 													<li><a href="#information" data-bs-toggle="tab">소식</a></li>
@@ -89,12 +89,10 @@
 													<li><a href="#page4" data-bs-toggle="tab">후기</a></li>
 												</ul>
 											</div>
-											<div class="col-lg-3"></div>
-											<div class="col-lg-3">
+											<div class="col-lg-4"></div>
+											<div class="col-lg-2">
 												<a class="button extra-small" data-bs-toggle="tab"
 													onclick="moveRsvt()"> <span>예약하기 </span>
-												</a> <a class="button extra-small" href="#" data-bs-toggle="tab"
-													onclick="moveComRsvt()"><span>함께예약 </span>
 												</a>
 											</div>
 										</div>
@@ -152,12 +150,20 @@
 															<tr>
 																<th style="text-align: center;" class="td-title-1">영업시간
 																	:</th>
-																<td class="td-title-1"
-																	th:if="${biz.bgngTm}==${code.commonDetailCode}"
-																	th:each="code: ${code}" th:text="${code.commonNm}"></td>
-																<td class="td-title-1"
-																	th:if="${biz.endTm}==${code.commonDetailCode}"
-																	th:each="code: ${code}" th:text="${code.commonNm}"></td>
+																<td class="td-title-1">
+																	<th:block th:each="code: ${code}" th:if="${biz.bgngTm}==${code.commonDetailCode}">
+																		[[${code.commonNm}]] ~ 
+																	</th:block>
+																	<th:block th:each="code: ${code}" th:if="${biz.endTm}==${code.commonDetailCode}">
+																		[[${code.commonNm}]]
+																	</th:block>
+																</td>
+																
+																
+<!-- 																<td class="td-title-1" th:if="${biz.bgngTm}==${code.commonDetailCode}" th:each="code: ${code}" -->
+<!-- 															        th:text="${code.commonNm}"></td> -->
+<!-- 															    <td class="td-title-1" th:if="${biz.endTm}==${code.commonDetailCode}" th:each="code: ${code}" -->
+<!-- 															        th:text="${code.commonNm}"></td> -->
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">가게소개
@@ -181,7 +187,6 @@
 																		<p class="mb-10" th:text="${news.ntcYmd}">(며칠전)</p>
 																	</div>
 																</div>
-																<hr>
 
 																<p th:text="${news.ntcCn}">(소식내용)</p>
 															</div>
@@ -192,6 +197,7 @@
 																	width="230px" style="padding: 50px 0 0 50px;"></a>
 															</div>
 														</div>
+																<hr>
 													</div>
 													<!-- 소식 1건 끝 -->
 												</div>
@@ -244,13 +250,7 @@
 																		</div>
 																	</div>
 																</div>
-																<div class="col-lg-2 mt-50">
-																	<a class="button extra-small button-white mb-20"
-																		href="#"><span>신고하기</span> </a>
-
-																</div>
 															</div>
-															<hr>
 
 															<p th:text="${rv.rvCn}">(리뷰내용)</p>
 															<div class="mb-20">
@@ -272,6 +272,7 @@
 																	width="150px"></a>
 															</div>
 														</div>
+															<hr>
 													</div>
 													<!-- 후기1건 끝 -->
 												</div>
@@ -286,6 +287,7 @@
 
 								</div>
 							</div>
+								<button class="btn btn-secondary f-right" type="button" onclick="moveMain()">목록으로</button>
 							<!-- 전체범위2 -->
 						</div>
 						<!-- 전체범위  -->
@@ -296,6 +298,11 @@
 		</div>
 		<!-- 큰 덩어리 끝 -->
 		<script type="text/javascript">
+		
+		//목록으로 돌아가기
+		function moveMain(){
+			window.location.href = "/goguma/bookmain";
+		}
 			
 		//예약페이지로 이동
 		function moveRsvt() {
@@ -304,13 +311,6 @@
 			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
 			console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
 			window.location.href = "/../my/reservation/" + urlBizNo;
-		}
-		
-		//함께 예약하기 페이지로 이동
-		function moveComRsvt(){
-			var url = window.location.href;
-			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-			window.location.href = "/../my/book0602/" + urlBizNo;
 		}
 		
 		//전화번호 알림창
