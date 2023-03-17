@@ -23,7 +23,7 @@ public class SnsController {
 	@Autowired
 	AtchService aservice;
 	
-	@GetMapping("/snsMain")
+	@GetMapping("/sns/snsMain")
 	public String SnsMain() {
 
 		return "sns/snsMain";
@@ -40,19 +40,6 @@ public class SnsController {
 		
 		model.addAttribute("list", service.selectPerSns(userId));
 	
-
-		return "myPages/mySns";
-	}
-	
-	@GetMapping("/sns/selectSns")
-	public String selectSns(int userId,Model model) {
-
-		SnsVO vo = service.selectSns(userId);
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("sns", vo);
-		map.put("atch", aservice.selectAtch(vo.getAtchId()));
 
 		return "myPages/mySns";
 	}

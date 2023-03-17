@@ -85,7 +85,7 @@ function snsModal(id) {
 
 	//단건조회
 	$.ajax({
-		url: "/selectSns",
+		url: "/sns/selectSns",
 		type: "GET",
 		data: { id },
 		dataType: "json",
@@ -120,7 +120,7 @@ function checkParReply(item, groupNo) {
 function SelectCmntlist(snsNo) {
 	var forCnt = 0;
 	$.ajax({
-		url: "/SelectCmntlist",
+		url: "/sns/SelectCmntlist",
 		type: "GET",
 		data: { snsNo },
 		dataType: "json",
@@ -236,7 +236,7 @@ function insertReply() {
 	}
 
 	$.ajax({
-		url: "/insertReply",
+		url: "/sns/insertReply",
 		type: "POST",
 		data: JSON.stringify({
 			snsNo: snsNo,
@@ -284,7 +284,7 @@ function insertRrp() {
 
 
 	$.ajax({
-		url: "/insertReply",
+		url: "/sns/insertReply",
 		type: "POST",
 		data: JSON.stringify({
 			snsNo: snsNo,
@@ -385,7 +385,7 @@ function rreplyEdit(rrpSnsNo, rpGroupNo) { //답글 수정
 
 
 	$.ajax({
-		url: "/rreplyEdit",
+		url: "/sns/rreplyEdit",
 		type: "POST",
 		data: formData,
 		processData: false,
@@ -419,7 +419,7 @@ function rreplyDel(rrpCmntNo, rrpGroupNo, rrpSnsNo) { //댓글 답글 삭제
 
 
 		$.ajax({
-			url: "/deleteRreply",
+			url: "/sns/deleteRreply",
 			type: "POST",
 			data: JSON.stringify({
 				cmntNo: rrpCmntNo,

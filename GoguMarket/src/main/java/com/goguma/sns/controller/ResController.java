@@ -57,7 +57,7 @@ public class ResController {
 		return map;
 	}
 
-	@GetMapping("/selectSnsList")
+	@GetMapping("/sns/selectSnsList")
 	public List<SnsVO> getSnsList(SnsVO vo) {
 
 		System.out.println(vo);
@@ -67,7 +67,7 @@ public class ResController {
 
 	}
 
-	@GetMapping("/selectSns")
+	@GetMapping("/sns/selectSns")
 	public Map<String, Object> selectSns(int id) {
 		System.out.println(id);
 
@@ -83,7 +83,7 @@ public class ResController {
 
 	}
 
-	@PostMapping("/insertSns")
+	@PostMapping("/sns/insertSns")
 	public ModelAndView insertSns(SnsVO vo, AtchVO avo, List<MultipartFile> files) {
 
 		ModelAndView mv = new ModelAndView("redirect:snsMain");
