@@ -4,7 +4,22 @@
 	layout:decorate="~{layouts/layout}">
 <body>
 	<div layout:fragment="content">
-
+		<style>
+			#scrollDiv::-webkit-scrollbar {
+			    width: 8px;  /* 스크롤바의 너비 */
+			}
+			
+			#scrollDiv::-webkit-scrollbar-thumb {
+			    height: 30%; /* 스크롤바의 길이 */
+			    background: #BF9742; /* 스크롤바의 색상 */
+			    
+			    border-radius: 10px;
+			}
+			
+			#scrollDiv::-webkit-scrollbar-track {
+			    background: rgb(230, 179, 37, .1);  /*스크롤바 뒷 배경 색상*/
+			}
+		</style>
 		<script type="text/javascript"
 			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5910303ba80aa602d476d406bd428897&libraries=services"></script>
 		<!-- 페이징, 검색 자바스크립트 -->
@@ -40,7 +55,7 @@
 
 					<div class="row">
 						<div class="col-lg-5 order-lg-2 order-1"
-							style="overflow-y: scroll; height: 800px;">
+							style="overflow-y: scroll; height: 800px;" id="scrollDiv">
 							<div class="shop-content">
 
 								<!-- Tab Content start -->

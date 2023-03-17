@@ -152,7 +152,7 @@
 }
 .product-title {
   color: #434343;
-  font-family: "Raleway",sans-serif;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 10px;
@@ -171,7 +171,7 @@
 }
 .pro-price {
   color: #666666;
-  font-family: "Roboto",sans-serif;
+  font-family: 'NanumSquareNeo-Variable';
   font-weight: 400;
   line-height: 20px;
   margin-bottom: 20px;
@@ -242,7 +242,7 @@
   border-radius: 50%;
   color: #999999;
   display: block;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 20px;
   font-weight: 700;
   height: 40px;
@@ -278,7 +278,7 @@
 }
 .ribbon-price span {
   color: #fefefe;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 20px;
   font-weight: 500;
   line-height: 16px;
@@ -637,14 +637,14 @@ transform: scale(1);
   border-bottom: 1px solid #999999;
   color: #999999;
   display: inline-block;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 26px;
   font-weight: 700;
   line-height: 26px;
 }
 .up-comming-time-2 p {
   color: #8a8888;
-  font-family: raleway;
+  font-family: 'NanumSquareNeo-Variable';
   font-weight: 500;
   padding-top: 5px;
   text-transform: uppercase;
@@ -892,7 +892,7 @@ transform: scale(1);
   border: 1px solid #eee;
   color: #999999;
   display: block;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 13px;
   font-weight: 400;
   height: 30px;
@@ -1193,7 +1193,7 @@ transform: scale(1);
 input.cart-plus-minus-box {
   background: transparent none repeat scroll 0 0;
   box-shadow: none;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   height: 100%;
   margin-bottom: 0;
   padding: 0;
@@ -1243,7 +1243,7 @@ input.cart-plus-minus-box {
   border-radius: 50%;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   display: block;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 20px;
   font-weight: 500;
   height: 50px;
@@ -1269,7 +1269,7 @@ input.cart-plus-minus-box {
 table {width: 100%}
 .table-content table thead th {
   color: #666666;
-  font-family: raleway;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
@@ -1309,7 +1309,7 @@ table {width: 100%}
   margin-bottom: 0;
 }
 .product-price, .product-subtotal {
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 16px;
   font-weight: 700;
 }
@@ -1361,7 +1361,7 @@ table {width: 100%}
 }
 .td-title-2 {
   color: #999;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-weight: 500;
   text-align: right;
 }
@@ -1372,7 +1372,7 @@ table {width: 100%}
 }
 .order-total-price {
   color: #ff7f00;
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-weight: 700;
   text-align: right;
 }
@@ -1462,7 +1462,7 @@ table {width: 100%}
   font-weight: 500;
 }
 .order-info-list li p {
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   margin-bottom: 0;
 }
 .bill-address > li {
@@ -1544,7 +1544,7 @@ table {width: 100%}
   display: block;
 }
 .meta-date {
-  font-family: roboto;
+  font-family: 'NanumSquareNeo-Variable';
   font-size: 42px;
   font-weight: 500;
   line-height: 30px;
