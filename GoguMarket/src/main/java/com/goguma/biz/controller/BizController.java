@@ -313,8 +313,10 @@ public class BizController {
 	}
 
 	@GetMapping("/biz/Certification")
-	public String shop07() {
-		
+	public String shop07(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String bizNo = (String) session.getAttribute("bizNo");
+		model.addAttribute("biz", memService.bizInfo(bizNo));
 		return "biz/shop07";
 	}
 
