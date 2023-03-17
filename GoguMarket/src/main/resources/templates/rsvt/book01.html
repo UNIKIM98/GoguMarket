@@ -196,7 +196,9 @@
 						console.log("ajax시작하자마자========"+obj[0].bizNm+""+obj[1].bizNm)
 						// 주소 목록에 대해 반복문을 실행합니다
 						for (var i = 0; i < obj.length; i++) {
-							let bizName = i
+							
+							// 콜백함수 안에선 반복문 변수사용이 안됨. 그래서 따로 변수선언을 해준다.
+							let bizName = i;
 							// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
 							geocoder.addressSearch(obj[bizName].bizAddr, function(result, status) {
 								
@@ -204,7 +206,7 @@
 								if (status === kakao.maps.services.Status.OK) {
 					
 									var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-									console.log(obj[0].bizNm)
+									console.log(obj[bizName].bizNm)
 									
 									// 결과값으로 받은 위치를 마커로 표시합니다
 									var marker = new kakao.maps.Marker({
