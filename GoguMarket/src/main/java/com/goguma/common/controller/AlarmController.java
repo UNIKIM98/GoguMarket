@@ -101,7 +101,7 @@ public class AlarmController {
 	
 	@GetMapping("/my/countNotify")
 	@ResponseBody
-	public Map<String,Object> countNotify(HttpServletRequest request) {
+	public int countNotify(HttpServletRequest request) {
 		System.out.println("gdgd");
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
@@ -109,7 +109,8 @@ public class AlarmController {
 		vo.setUserId(userId);
 		
 		
-		alarm.checkNotifyCount(vo)+"갯수확인";
+		int cnt=0;
+		/* alarm.checkNotifyCount(vo)+"갯수확인"; */
 		return cnt;
 	}
 	

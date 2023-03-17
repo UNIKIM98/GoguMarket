@@ -21,5 +21,5 @@ public class SearchVO {
 	private String stts; // 실검 상태값
 	private int ttlCnt;
 	
-	List<String> sList;
+	List<SearchVO> sList;
 }

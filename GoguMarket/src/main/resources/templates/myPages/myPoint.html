@@ -53,7 +53,7 @@
 									style="display: inline-block;"><span style="color: #fd7e14" id="ttlTrgt">전체</span> 적립 내역</h6>
 									
 								<button class="submit-btn-1 btn-hover-1"
-									style="float: right; border-radius: 20px; height: 30px">포인트
+									style="float: right; border-radius: 20px; height: 30px" id="usePointBtn">포인트
 									사용하기</button>
 								<table class="saveTable">
 								</table>
@@ -87,7 +87,11 @@
    	// ==============================================================
    	// ❤️ DOM 함수
        $(function(){
-    	  myPointAjax(); 
+    	  myPointAjax();
+    	  
+    	  $("#usePointBtn").on("click",function(){
+    		  location = "/my/myDeal";
+    	  })
        })
    		
     // ==============================================================
@@ -96,7 +100,6 @@
    			let criteria = $(event.target).text();
    			$("#ttlTrgt").text(criteria); // 📌 교수님 피드백 : 사용자가 알기 쉽게 타이틀에 표시하기
    			saveCnt = 0;
-   					console.log(criteria+"for문 안쪽")
    			
 			$(".saveTable").children().remove();
 			
@@ -165,8 +168,6 @@
         		   }
     				// ## 화면에 그리기
     			   makeSaveTable(point);
-    		    	
-
     			
   			   // # 포인트 사용 테이블
     		   }else if(usedYmd != null){
@@ -174,7 +175,6 @@
     			   usedTotal -= point.point;
     			   makeUsedTable(point);
     		   }
-    		   
     	   })
     	   
     	   // # 합계 출력

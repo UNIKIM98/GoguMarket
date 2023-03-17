@@ -4,16 +4,18 @@
 	layout:decorate="~{layouts/layout}">
 <body>
 	<div layout:fragment="content">
-	
-	<!-- 페이징, 검색 자바스크립트 -->
+
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5910303ba80aa602d476d406bd428897&libraries=services"></script>
+		<!-- 페이징, 검색 자바스크립트 -->
 		<script>
 			function gopage(page) {
 				frmSearch.page.value = page;
 				frmSearch.submit();
 			}
-			
-			function ctgryId(name){
-				console.log(name)	//치킨 <- 이런식으로 나옴
+
+			function ctgryId(name) {
+				console.log(name) //치킨 <- 이런식으로 나옴
 			}
 		</script>
 
@@ -37,7 +39,8 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-6 order-lg-2 order-1">
+						<div class="col-lg-5 order-lg-2 order-1"
+							style="overflow-y: scroll; height: 800px;">
 							<div class="shop-content">
 
 								<!-- Tab Content start -->
@@ -54,9 +57,8 @@
 										<!-- ▼ input태그(검색용) -->
 										<form name="searchForm" id="searchForm">
 											<input type="hidden" id="searchType" name="searchType"
-												value="bizNm"> 
-											<input type="hidden" name="page" value="1"> 
-											<input type="text" id="keyword"
+												value="bizNm"> <input type="hidden" name="page"
+												value="1"> <input type="text" id="keyword"
 												name="keyword" placeholder="찾아볼 가게 이름을 입력하세요!">
 											<button type="submit" style="height: 55px;">
 												<i class="zmdi zmdi-search"></i>
@@ -65,14 +67,14 @@
 
 										<!-- 검색창 카테고리 목록 -->
 										<div class="mt-20">
-											
-												<ul class="blog-meta">
-													<li th:each="ctgry: ${ctgry}">
-													<a th:href="|javascript:ctgryId('${ctgry.commonNm}')|"
-														th:text="${ctgry.commonNm}"
-														th:name="${ctgry.commonNm}|">(카테고리) </a></li>
-												</ul>
-											
+
+											<ul class="blog-meta">
+												<li th:each="ctgry: ${ctgry}"><a
+													th:href="|javascript:ctgryId('${ctgry.commonNm}')|"
+													th:text="${ctgry.commonNm}" th:name="${ctgry.commonNm}|">(카테고리)
+												</a></li>
+											</ul>
+
 										</div>
 									</aside>
 
@@ -83,9 +85,9 @@
 											<!-- product-item start 이거 for문 돌려서 상점목록 출력하면됨 -->
 											<div class="col-lg-12">
 												<div class="shop-list product-item" th:each="list: ${lists}">
-													<div class="product-img" >
-														<a th:href="@{/book0205/{bizNo}(bizNo=${list.bizNo})}"> 
-														<img th:each="img: ${img}" 
+													<div class="product-img">
+														<a th:href="@{/book0205/{bizNo}(bizNo=${list.bizNo})}">
+															<img th:each="img: ${img}"
 															th:if="${list.bizNo} == ${img.bizNo}"
 															th:src="${img.atchNm}" alt="" />
 														</a>
@@ -93,7 +95,8 @@
 													<div class="product-info">
 														<div class="clearfix">
 															<h6 class="product-title f-left">
-																<a th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}"
+																<a
+																	th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}"
 																	th:data-empid="${list.bizNo}" th:text="${list.bizNm}">
 																	(가게이름) </a>
 															</h6>
@@ -116,9 +119,8 @@
 																th:if="${rcnt.bizNo == list.bizNo}"
 																th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|">(후기
 																	수)</a></li>
-															<li><a href="#" 
-																	th:id="${list.ctgry}"
-																	th:text="${list.ctgry}">카테고리이름</a></li>
+															<li><a href="#" th:id="${list.ctgry}"
+																th:text="${list.ctgry}">카테고리이름</a></li>
 														</ul>
 
 													</div>
@@ -148,18 +150,12 @@
 
 
 						<!-- 오른쪽에 지도를 넣으면 될까..? -->
-						<div class="col-lg-6 order-lg-2 order-1">
+						<div class="col-lg-7 order-lg-2 order-1">
 							<div class="">
-								<h1>지도자리</h1>
-								<!-- GOOGLE MAP SECTION START -->
-								<div class="google-map-section">
-									<div class="container-fluid">
-										<div class="google-map plr-185">
-											<div id="googleMap"></div>
-										</div>
-									</div>
-								</div>
-								<!-- GOOGLE MAP SECTION END -->
+								<!-- 지도 -->
+								<div id="map" style="width: 100%; height: 800px;"></div>
+
+								<!-- 지도 END -->
 							</div>
 						</div>
 
@@ -169,7 +165,9 @@
 						<div class="col-lg-3"></div>
 						<div class="col-lg-3"></div>
 						<div class="col-lg-3">
-							<a class="button" href="/my/shop01" th:if="${session.userSe=='ROLE_USER'}"><span>💥가게 프로필 만들기 </span> </a>
+							<a class="button" href="/my/shop01"
+								th:if="${session.userSe=='ROLE_USER'}"><span>💥가게 프로필
+									만들기 </span> </a>
 						</div>
 					</div>
 				</div>
@@ -177,6 +175,98 @@
 			<!-- SHOP SECTION END -->
 
 		</div>
+
+		<script>
+// 			$(function() {
+// 				callAddress();
+// 			})
+
+// 			//주소 가져오고 싶다
+// 			function callAddress() {
+// 				$.ajax({
+// 					url : "/goguma/mapApiAjax",
+// 					type : "get",
+// 					success : function(result) {
+// 						console.log(result)
+// 						// 주소 목록에 대해 반복문을 실행합니다
+// 						for (var i = 0; i < result.length; i++) {
+// 							// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
+// 							geocoder.addressSearch(result[i].bizAddr, function(
+// 									result, status) {
+
+// 							});
+// 						}
+// 					},
+// 					error : function(error) {
+// 						console.log(error)
+// 					}
+
+// 				});
+// 			}
+
+			//카카오지도 API
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+			mapOption = {
+				center : new kakao.maps.LatLng(35.8690334, 128.5932794), // 지도의 중심좌표(예담)
+				level : 3
+			// 지도의 확대 레벨
+			};
+
+			// 지도를 생성합니다
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+
+			// 주소로 좌표를 검색합니다
+			$.ajax({
+					url : "/goguma/mapApiAjax",
+					type : "get",
+					success : function(obj) {
+						console.log("ajax시작하자마자========"+obj[0].bizNm)
+						// 주소 목록에 대해 반복문을 실행합니다
+						for (var i = 0; i < obj.length; i++) {
+							// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
+							geocoder.addressSearch(obj[i].bizAddr, function(result, status) {
+								console.log("addressSearch함수안에==="+ result[0].y)
+								// 정상적으로 검색이 완료됐으면 
+								if (status === kakao.maps.services.Status.OK) {
+					
+									var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+									console.log(obj[0].bizNm)
+									
+									// 결과값으로 받은 위치를 마커로 표시합니다
+									var marker = new kakao.maps.Marker({
+										map : map,
+										position : coords
+									});
+					
+									// 인포윈도우로 장소에 대한 설명을 표시합니다 --왜 똑같은게 나오는것인가.. i로 하면 왜 undefine이 나오는것인가..
+									var infowindow = new kakao.maps.InfoWindow({
+											content : '<div style="width:150px;text-align:center;padding:6px 0;">'+obj[0].bizNm+'</div>'
+										});
+									infowindow.open(map, marker);
+					
+									// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+									map.setCenter(coords);
+									
+								}
+							});
+						}
+					},
+					error : function(error) {
+						console.log(error)
+					}
+
+				});
+		
+		</script>
+
 	</div>
+	<!-- 타임리프 div끝 -->
 </body>
 </html>

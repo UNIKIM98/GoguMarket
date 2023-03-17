@@ -105,7 +105,7 @@ function snsModal(id) {
 
 
 function deleteSns(){
-	
+	$("#snsContent").s
 	
 }
 
