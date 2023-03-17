@@ -24,7 +24,7 @@
 								<div class="order-info p-30 mb-10">
 									<ul class="order-info-list">
 										<li>
-											<h6>주문번호</h6>
+											<h6>주문번호&nbsp;&nbsp;&nbsp;</h6>
 											<p th:text="|rsvt_no_${info.rsvtNo}|">(주문번호==========)</p>
 										</li>
 										<li>
@@ -37,7 +37,7 @@
 												(예약일시===============)</p>
 										</li>
 										<li>
-											<h6>예약인원</h6>
+											<h6>&nbsp;&nbsp;&nbsp;예약인원</h6>
 											<p th:text="|${info.rsvtNope}명|">(몇명======)</p>
 										</li>
 									</ul>
@@ -84,7 +84,7 @@
 										<div class="bill-details pl-30">
 											<h6 class="widget-title border-left mb-20">결제정보</h6>
 											<ul class="bill-address">
-												<li><span>카드결제 : </span> 카카오페이 (1002-9**-******) | 일시불
+												<li><span>카드결제 : </span>카카오페이(1002-9**-***) | 일시불
 												</li>
 											</ul>
 										</div>
@@ -97,6 +97,9 @@
 						<div class="d-flex justify-content-center mt-30">
 							<a class="button extra-small" data-bs-toggle="tab"
 								onclick="moveMain()"> <span>메인으로</span>
+							</a> &nbsp;&nbsp;&nbsp;
+							<a class="button extra-small" data-bs-toggle="tab"
+								onclick="moveMypage()"> <span>예약내역 확인하기</span>
 							</a>
 						</div>
 						<!-- order-complete end -->
@@ -113,7 +116,10 @@
 
 			function moveMain(){
 				window.location.href = "/"
-					
+			}
+			
+			function moveMypage(){
+				window.location.href="/my/myReservation";
 			}
 		</script>
 

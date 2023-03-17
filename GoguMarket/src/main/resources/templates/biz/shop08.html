@@ -25,7 +25,7 @@
 					<!--달력자리-->
 					<div>
 						<div id="isTodayAttend"></div>
-						<div id='calendar' style="width: 550px"></div>
+						<div id="calendar" style="width: 800px"></div>
 						<div style="text-align: center; margin-right: 40%;">
 							
 						</div>
@@ -44,7 +44,7 @@
 						</tr>
 
 						<!-- tr반복 -->
-						<tr th:each="list:${lists}" th:if="${!#lists.isEmpty(simple)}">
+						<tr th:each="list:${lists}" th:if="${!#lists.isEmpty(lists)}">
 							<td class="td-title-1" th:text="${list.rsvtYmd}">(예약날짜)</td>
 							<td class="td-title-1" th:each="code: ${code}"
 								th:if="${code.commonDetailCode} == ${list.rsvtTm} and ${list.rsvtTm} != null"
@@ -65,7 +65,7 @@
 							</td>
 						</tr>
 						
-						<tr th:if="${#lists.isEmpty(simple)}">
+						<tr th:if="${#lists.isEmpty(lists)}">
 							<td class="td-title-1" colspan="6" style="text-align:center;">접수된 예약이 없습니다 :( </td>
 						</tr>
 
@@ -145,8 +145,6 @@
 									textColor : "black"
 								})
 							}
-							//▷ 오늘 출석여부 체크
-// 							isAttendYn(result);
 						}
 					}) ]
 				});

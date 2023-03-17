@@ -92,7 +92,7 @@
 											&nbsp;
 											<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">예약취소하기</button>
 											&nbsp;
-											<button class="submit-btn-1 mt-30 btn-hover-1" type="button" onclick="goToMain()">메인으로</button>
+											<button class="submit-btn-1 mt-30 btn-hover-1" type="button" onclick="goBack()">뒤로가기</button>
 										</div>
 									</form>
 								</div>
@@ -143,12 +143,8 @@
 								<input type="hidden" id="menuNm" name="menuNm" value="${list.MENU_NM}">
 								<input type="hidden" id="menuNo" name="menuNo" value="${list.MENU_NO}">
 								<input type="hidden" id="menuPrc" name="menuPrc" value="${list.MENU_PRC}">
-							<td class="td-title-1">
-								<div class="cart-plus-minus f-left">
-									<div class="dec qtybutton" onclick="qtyBtnClick(this)">-</div>
-										<input type="text" value="${list.AMOUNT}" id="amount" name="amount" class="cart-plus-minus-box" menuPrice="${list.MENU_PRC}" menuNo="${list.MENU_NO}">
-									<div class="inc qtybutton" onclick="qtyBtnClick(this)">+</div>
-								</div>
+							<td class="td-title-1">${list.AMOUNT}
+
 							</td>
 							<td class="td-title-2" id="tdSum_${list.MENU_NO}">${list.AMOUNT * list.MENU_PRC}
 							</td>
@@ -199,10 +195,11 @@
 								<td class="td-title-1">
 									<select class="custom-select mb-0" id="selectTime">
 										<option value="${list.rsvtTm}">${list.rsvtTime}</option>
-										<option value="${list.bgngTm}">${list.openTime}</option>
 										<option value="31">15시 00분</option>
-										<option value="39">19시 00분</option>
-										<option value="${list.endTm}">${list.closeTime}</option>
+										<option value="34">16시 30분</option>
+										<option value="37">18시 00분</option>
+										<option value="38">18시 30분</option>
+										<option value="43">21시 00분</option>
 									</select>
 								<input type="hidden" name="rsvtTm" id="rsvtTm">
 								</td>
@@ -238,7 +235,12 @@
 			
 		}
 		
-		//메뉴 수량 변경 & 계산
+		//메뉴 수량 변경 & 계산(요소 삭제로 인한 휴지통행..)
+		// 	<div class="cart-plus-minus f-left">
+		// 		<div class="dec qtybutton" onclick="qtyBtnClick(this)">-</div>
+		//			<input type="text" value="${list.AMOUNT}" id="amount" name="amount" class="cart-plus-minus-box" menuPrice="${list.MENU_PRC}" menuNo="${list.MENU_NO}">
+		// 		<div class="inc qtybutton" onclick="qtyBtnClick(this)">+</div>
+		// 	</div>
 		function qtyBtnClick(obj){
 			var $button = $(obj);
 			
@@ -423,9 +425,9 @@
 			$("#modifyRsvtInfo").submit();
 		}
 		
-		//메인으로 가버렷
-		function goToMain(){
-			window.location.href="/";
+		//뒤로 가버렷
+		function goBack(){
+			window.history.back();
 		}
 		
 		</script>

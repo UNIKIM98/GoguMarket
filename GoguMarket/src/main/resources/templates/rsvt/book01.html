@@ -101,11 +101,11 @@
 																	(가게이름) </a>
 															</h6>
 															<div class="pro-rating f-right">
-																<a href="#"><i class="zmdi zmdi-star"></i></a> <a
-																	href="#"><i class="zmdi zmdi-star"></i></a> <a href="#"><i
-																	class="zmdi zmdi-star"></i></a> <a href="#"><i
-																	class="zmdi zmdi-star-half"></i></a> <a href="#"><i
-																	class="zmdi zmdi-star-outline"></i></a>
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
 															</div>
 														</div>
 														<h6 class="brand-name mb-30" th:text="${list.bizAddr}">(주소)</h6>
@@ -160,16 +160,8 @@
 						</div>
 
 					</div>
-					<div class="row">
-						<div class="col-lg-3"></div>
-						<div class="col-lg-3"></div>
-						<div class="col-lg-3"></div>
-						<div class="col-lg-3">
-							<a class="button" href="/my/shop01"
-								th:if="${session.userSe=='ROLE_USER'}"><span>💥가게 프로필
-									만들기 </span> </a>
-						</div>
-					</div>
+						<a class="button f-right mt-10" href="/my/shop01"
+							th:if="${session.userSe=='ROLE_USER'}"><span>💥가게 프로필 만들기 </span> </a>
 				</div>
 			</div>
 			<!-- SHOP SECTION END -->
@@ -177,33 +169,7 @@
 		</div>
 
 		<script>
-// 			$(function() {
-// 				callAddress();
-// 			})
-
-// 			//주소 가져오고 싶다
-// 			function callAddress() {
-// 				$.ajax({
-// 					url : "/goguma/mapApiAjax",
-// 					type : "get",
-// 					success : function(result) {
-// 						console.log(result)
-// 						// 주소 목록에 대해 반복문을 실행합니다
-// 						for (var i = 0; i < result.length; i++) {
-// 							// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
-// 							geocoder.addressSearch(result[i].bizAddr, function(
-// 									result, status) {
-
-// 							});
-// 						}
-// 					},
-// 					error : function(error) {
-// 						console.log(error)
-// 					}
-
-// 				});
-// 			}
-
+		
 			//카카오지도 API
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 			mapOption = {
@@ -227,12 +193,13 @@
 					url : "/goguma/mapApiAjax",
 					type : "get",
 					success : function(obj) {
-						console.log("ajax시작하자마자========"+obj[0].bizNm)
+						console.log("ajax시작하자마자========"+obj[0].bizNm+""+obj[1].bizNm)
 						// 주소 목록에 대해 반복문을 실행합니다
 						for (var i = 0; i < obj.length; i++) {
+							let bizName = i
 							// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
-							geocoder.addressSearch(obj[i].bizAddr, function(result, status) {
-								console.log("addressSearch함수안에==="+ result[0].y)
+							geocoder.addressSearch(obj[bizName].bizAddr, function(result, status) {
+								
 								// 정상적으로 검색이 완료됐으면 
 								if (status === kakao.maps.services.Status.OK) {
 					
@@ -247,7 +214,7 @@
 					
 									// 인포윈도우로 장소에 대한 설명을 표시합니다 --왜 똑같은게 나오는것인가.. i로 하면 왜 undefine이 나오는것인가..
 									var infowindow = new kakao.maps.InfoWindow({
-											content : '<div style="width:150px;text-align:center;padding:6px 0;">'+obj[0].bizNm+'</div>'
+											content : '<div style="width:150px;text-align:center;padding:6px 0;">'+obj[bizName].bizNm+'</div>'
 										});
 									infowindow.open(map, marker);
 					
