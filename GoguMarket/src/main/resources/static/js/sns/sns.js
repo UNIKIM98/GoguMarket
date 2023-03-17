@@ -95,7 +95,9 @@ function snsModal(id) {
 	//단건을 조회하는 ajax를 실행
 	console.log(id);
 	Number(id);
-
+	
+	console.log('gdgdgd')
+	
 	//단건조회
 	$.ajax({
 		url:"/goguma/selectSns",
@@ -197,7 +199,7 @@ function SelectCmntlist(snsNo) {
 			});
 		},
 		error: function() {
-			cosole.log(error)
+			console.log(error)
 		},
 		async: false
 	});
@@ -264,7 +266,7 @@ function insertReply() {
 			}
 		},
 		error: function() {
-			cosole.log(error)
+			console.log(error)
 		}
 	});
 

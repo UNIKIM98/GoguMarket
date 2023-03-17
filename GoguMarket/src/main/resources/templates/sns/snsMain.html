@@ -247,17 +247,20 @@ textarea {
 						  console.log(result)
 						  $("#list").empty()
 						  for(sns of result){
+							  
+					
 							$("#list").append(`
 									
 									
-                                <div class="blog-item"  style="width:300px ; height:300px" >
+                                <div class="blog-item" style="width:300px ; height:300px" onclick=""">
 								
 									<img src="${sns.atchPath}" alt="" style="width:100% ; height:300px" >
 								<div class="blog-desc">
 									<h5 class="blog-title">
 										<a href="single-blog.html">${sns.userId} / ${sns.snsYmd}</a>
 									</h5>
-								
+									<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
 									<h5 class="blog-title">
 									
 									
@@ -267,16 +270,7 @@ textarea {
 									
 								</div>
 						
-							</div>
-							
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                `
+							</div>`)
 											
 							
 					
@@ -285,8 +279,8 @@ textarea {
 							
 							
 							
+							$(".blog-item").attr("onclick","snsModal('+sns.snsNo+')")
 							
-							)
 		           							 }
 											},
 						error : function(err) {

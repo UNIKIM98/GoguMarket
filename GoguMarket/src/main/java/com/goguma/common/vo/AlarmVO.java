@@ -20,6 +20,9 @@ public class AlarmVO {
 	private String pstSe;
 	private String almCn;
 	private int cked;
+	private int cnt;
+	
+	
 	
 
 	private int first;
