@@ -1,22 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{biz/slide/slide}">
 
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="/js/biz/bizMenu.js"></script>
-
-
-</head>
 <body>
-	<div layout:fragment="Bizcontent">비즈프로필 메뉴 등록 화면
-	
-	
-	
-	
-	
+
+	<div layout:fragment="Bizcontent">
+
+		<form id="menuFrm"  action="/biz/menuTest" method="post">
+			<table>
+				<tbody>
+					<tr>
+						<td><input type="text" id="userNm" name="menuList[0].menuNm" value="양념치킨"></td>
+						<td><input type="text" id="userNm" name="menuList[0].menuPrc" value="1000"></td>
+						<td><input type="text" id="userNm" name="menuList[0].menuCn" value="양념내용"></td>
+						<td><input type="text" id="userNm" name="menuList[0].atchId" value="앙냠첨부"></td>
+					</tr>
+					<tr>
+						<td><input type="text" id="userNm" name="menuList[1].menuNm" value="후라이드"></td>
+						<td><input type="text" id="userNm" name="menuList[1].menuPrc" value="2000"></td>
+						<td><input type="text" id="userNm" name="menuList[1].menuCn" value="후라이드내용"></td>
+						<td><input type="text" id="userNm" name="menuList[1].atchId" value="첨부파일후랑리드"></td>
+					</tr>
+					<tr>
+						<td><input type="text" id="userNm" name="menuList[2].menuNm" value="짜장"></td>
+						<td><input type="text" id="userNm" name="menuList[2].menuPrc" value="3000"></td>
+						<td><input type="text" id="userNm" name="menuList[2].menuCn" value="짜장내용"></td>
+						<td><input type="text" id="userNm" name="menuList[2].atchId" value="첨부파일짜장"></td>
+					</tr>
+					<tr>
+						<td><input type="text" id="userNm" name="menuList[3].menuNm" value="짬뽕"></td>
+						<td><input type="text" id="userNm" name="menuList[3].menuPrc" value="4000"></td>
+						<td><input type="text" id="userNm" name="menuList[3].menuCn" value="짬뽕내용"></td>
+						<td><input type="text" id="userNm" name="menuList[3].atchId" value="첨부파일짬뽕"></td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit">저장고</button>
+		</form>
+<script type="text/javascript">
+
+</script>
+
 	</div>
+
+
 </body>
+
 </html>

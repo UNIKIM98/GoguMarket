@@ -1,5 +1,9 @@
 package com.goguma.biz.vo;
 
+import java.util.List;
+
+import com.goguma.rsvt.vo.BizMenuVO;
+
 import lombok.Data;
 
 @Data
@@ -42,6 +46,6 @@ public class BizMemVO extends BizDangolVO {
    
    //후기 카운트
    private int rwCount;
-   
+
 
 }

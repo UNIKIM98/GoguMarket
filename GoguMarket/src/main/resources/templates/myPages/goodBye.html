@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{myPages/sideBar/sideBar}">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#reasonTrgt span, #goodByediv span{
+color: #fd7e14;
+font-weight: bold;
+
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="myContent">
+	<div id="pwCkTrgt">
+	<br>
+		<div class="registered-customers" style="width: 45%;" >
+			<h4 class="blog-section-title border-left mb-30">탈퇴하기</h4>
+			<div id="goodByediv">
+				<h5 style="font-weight: bold;">...[[${session.nickNm}]]님과 이별인가요? 너무 아쉬워요😥</h5>
+				<p>계정을 삭제하면 게시글, 예약내역, 채팅 등 모든 활동 정보가 삭제됩니다. 계정 삭제 후 7일 간 다시 가입할 수 없어요.</p>
+				<br>
+				<br>
+				<h6 style="font-weight: bold;">[[${session.nickNm}]]님이 계정을 삭제하려는 이유가 궁금해요.</h6>
+				<select id="ctgry" style="width: 80%;">
+					<option disabled selected>선택해주세요.</option>
+					<option value="tooMuch">너무 많이 이용해요.</option>
+					<option value="noProduct">사고 싶은 물품이 없어요.</option>
+					<option value="noBuyer">물품이 안 팔려요.</option>
+					<option value="noManer">비매너 사용자를 만났어요.</option>
+					<option value="restriction">억울하게 이용이 제한됐어요.</option>
+					<option value="newUser">새 계정을 만들고 싶어요.</option>
+				</select>
+				<br>
+				<br>
+				<div id="reasonTrgt"></div>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		$(function(){
+			$("#ctgry").on("change",function(){
+				let plz = $(this).val();
+				plzDontGo(plz);
+			})
+		})
+		
+		function plzDontGo(plz){
+			let reason = $("#reasonTrgt")
+			reason.children().remove();
+			
+			switch(plz){
+			case 'tooMuch' :
+				reason.append(
+				`
+				<p>🫣앗, 그렇다면 저와 함께 조금 덜 사용하는 방법을 고민해봐요.이렇게 떠나시면 너무 슬픈걸요. </p>
+				<p>계정삭제 대신 <span>모든 알림을 끄고</span> 잠시 쉬어보는 건 어떠세요?</p>
+				`		
+				)
+				break;
+			case 'noProduct' :
+				reason.append(
+						`
+						<p>🧐혹시 사고 싶은 물품을 검색해보셨나요? </p>
+						<p><span>물품명으로 검색</span>하면 사고 싶은 물품을 찾을 수 있어요.</p>
+						<button type="button" class="submit-btn-1 btn-hover-1" style="height:25px" onclick="searchDeal()">물품 검색하기</button>
+						<br>
+						`		
+						)
+				break;
+			case 'noBuyer' :
+				reason.append(
+						`
+						<p>🤗판매를 잘 할 수 있는 노하우를 몇 가지 알려드릴게요!</p>
+						<p>먼저, 끌어올리기를 하기 전에 <span>가격을 합리적으로 설정</span>해보세요. </p>
+						<p>고구마켓에서 <span>유사한 물건을 검색</span>해보는 것도 도움이 된답니다.</p> 
+						<p>또, <span>제목에 정확한 상품명</span>을 적으면 검색에 더 많이 노출된답니다.</p>
+						<p>마지막으로 <span>끌어올리기</span>를 통해 상품을 상단으로 올려보세요.</p>
+						<button type="button" class="submit-btn-1 btn-hover-1" style="height:25px" onclick="modifyDeal()">내 거래글 수정하기</button>
+						<br>
+						`		
+						)
+				break;
+			case 'noManer' :
+				reason.append(
+						`
+						<p>🥺대신 사과드리고 싶어요. 죄송합니다.</p>
+						<p>좋지 않은 경험은 저희에게도 책임이 있어요. <span>거래후기</span>를 통해서 꼭 알려주세요.</p>
+						<p>반복적으로 다른 사용자에게 불쾌감을 주는 사용자는 서비스 이용이 제한됩니다. 고구마켓은 사용자 여러분들과 함께
+						따뜻한 거래문화를 만들기 위해 노력하고 있어요.</p>
+						`		
+						)
+				break;
+			case 'restriction' :
+				reason.append(
+						`
+						<p>🙏불쾌한 경험을 드려서 죄송해요.
+						탈퇴하지 마시고 조금만 기다려주시면 최대한 빠르게 검토해서 알려드릴게요.</p>
+						`		
+						)
+				break;
+			case 'newUser' :
+				reason.append(
+				`
+				<p>🤓혹시 이사했거나 전화번호가 바뀌었나요? 다시 가입하지 않아도 거래지역과 전화번호를 바꿀 수 있어요.</p>
+				<button type="button" class="submit-btn-1 btn-hover-1" style="height:25px" onclick="changeArea()">우리동네 설정하기</button>
+				<button type="button" class="submit-btn-1 btn-hover-1" style="height:25px" onclick="changeMblTelno()">전화번호 변경하기</button>
+				<br>
+				`		
+				)
+
+			}
+				
+				reason.append(
+				`
+				<br>
+				<div margin="0px auto">
+					<button type="button" onclick="rUSure()" style="color : #fd7e14">그래도 탈퇴하기</button>
+				</div>
+				`	
+				
+				)
+		}
+		function searchDeal(){
+			location="/goguma/dealMain";
+		}
+		function modifyDeal(){
+			location="/my/myDeal";
+		}
+		
+		function changeArea(){
+			location="/my/myArea";
+		}
+		
+		function changeMblTelno(){
+			location="/my/myInfoCheck";
+		}
+		
+		function rUSure(){
+			$("#goodByediv").children().remove()
+			$("#goodByediv").append(
+							`
+							<h5 style="font-weight: bold;">${[[${session.nickNm}]]}님 잠시만요! <br>삭제하기 전에 읽어보세요. 지금 계정을 삭제하면</h5>
+							<p>📍 지금까지 모아왔던 포인트, 거래후기 등 모든 활동 정보가 삭제됩니다.</p>
+							<p>📍 계정이 삭제된 후에는 계정을 다시 살리거나 채팅 등의 데이터를 복구할 수 없습니다.</p>
+							<p>📍 현재 계정으로 다시는 로그인할 수 없습니다.</p>
+							<p>📍 다른 사용자에게 보낸 채팅 메세지, 거래후기 등 일부 정보는 계속 남아있을 수 있습니다.</p>
+							<p>📍 7일동안 재가입할 수 없습니다.</p>
+							<p>아래의 탈퇴하기 버튼을 누르면 ${[[${session.nickNm}]]}님의 활동이 <span>영구히 삭제되며 다시 가입할 수 없어요.</span></p>
+							<br>
+							<button class="submit-btn-1 btn-hover-1"style="border-radius: 10px; height: 30px" onclick="realEnd()">탈퇴하기</button>							`
+							)
+			
+		}
+		
+		function realEnd(){
+			if(confirm("정말로 탈퇴하시겠습니까?")){
+				goodByeAjax();
+			}
+		}
+		
+		function goodByeAjax(){
+			$.ajax({
+				url:'/my/goodByeAjax',
+				type:'get',
+				success:function(){
+					alert('[탈퇴완료] 정상적으로 탈퇴가 완료되었습니다. 안녕히 가세요👋 ')
+					location="/";
+				},
+				error:function(err){
+					alert("[탈퇴실패] 탈퇴 중 오류가 발생하였습니다.");
+				}
+			})
+		}
+	</script>
+	</div>
+</body>
+</html>

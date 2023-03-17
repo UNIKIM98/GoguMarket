@@ -39,7 +39,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("dealArea", memVO.getDealArea()); // 거래지역
 		session.setAttribute("atchPath", memVO.getAtchPath()); // 프로필사진 경로(img src에서 사용)
 		session.setAttribute("mblTelno", memVO.getMblTelno()); // 전화번호
-		session.setAttribute("userNm", memVO.getUserNm()); // 전화번호
+		session.setAttribute("userNm", memVO.getUserNm()); // 이름
 		session.setAttribute("eml", memVO.getEml()); // 이메일
 
 		if (memVO.getUserSe().equals("ROLE_BIZ")) {
