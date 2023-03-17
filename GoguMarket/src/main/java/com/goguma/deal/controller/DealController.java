@@ -139,7 +139,7 @@ public class DealController {
 		}
 	// ===========================
 	// ▷ 중고거래 메인
-	@RequestMapping("/goguma/dealMain") // 중고거래 메인 페이지
+	@RequestMapping("/goguma/dealMain") // 중고거래 메인 페이지 : 판매중인 물건만 보임
 	public String dealMain(Paging paging, Model model, SearchVO scvo, @ModelAttribute("dsvo") DealSearchVO svo) {
 		paging.setPageUnit(8); // 한 페이지에 출력할 글 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
@@ -335,7 +335,7 @@ public class DealController {
 	}
 	// ===========================
 	// 중고거래 구매예약폼
-	@RequestMapping("/my/dealUpdateRsvt/{dlNo}")
+	@GetMapping("/my/dealUpdateRsvt/{dlNo}")
 	public String updateRsvt(Model model,HttpServletRequest request,@PathVariable int dlNo) {
 		HttpSession session = request.getSession();  
 		MemVO mVO = new MemVO();
@@ -343,6 +343,9 @@ public class DealController {
 		mVO.setUserId((String) session.getAttribute("userId"));
 		mVO = memService.selectUser(mVO);
 
+		DealVO dvo = new DealVO();
+		dealService.updateDeal(dvo);
+		
 		// 게시글 정보 담기
 		model.addAttribute("dealInfo", testService.selectDealTest(dlNo)); // 7번 게시글 정보
 		model.addAttribute("atchList", testService.selectDealAtchTest(dlNo)); // 7번 게시글 첨부파일 목록
@@ -435,8 +438,19 @@ public class DealController {
 		
 		model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
 		
+		
+		
+		svo.setNtslId(ntslId);
+		
+		paging.setPageUnit(1); // 한 페이지에 출력할 레코드 건수
+		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
+		svo.setFirst(paging.getFirst());
+		svo.setLast(paging.getLast());
+		System.out.println(svo+"svooooo"); // 이건또왜 시발 퍼스트1 라스트1이냐?
+		paging.setTotalRecord(dealService.getcountTotal(svo)); 
+		System.out.println(dealService.getcountTotal(svo)+"갯수나오냐?"); // 이건되는데
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
-		System.out.println(dealService.selectNtslDeal(svo));
+		System.out.println(dealService.selectNtslDeal(svo)+"svooo");
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!

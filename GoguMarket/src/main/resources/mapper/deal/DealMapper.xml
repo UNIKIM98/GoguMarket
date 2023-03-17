@@ -6,30 +6,49 @@
 	<select id="selectCashNtsl"
 			parameterType="String"
 					resultType="map">
-	     SELECT extract(month from dl_ymd) AS month, 
-           TO_CHAR(SUM(NVL(dl_prc,0)), 'FM999,999,999') AS totalprc,
-           count(extract(month from dl_ymd)) AS cnt,
-           count(CASE WHEN nego_yn = 'Y' THEN 1 ELSE NULL END) AS ncnt
-	    FROM deal
-	    WHERE dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')
-	      AND ntsl_id = #{ntslId}
-	    GROUP BY extract(month from dl_ymd)
-	    ORDER BY month DESC
+	    SELECT c.month, 
+                TO_CHAR(SUM(NVL(dl_prc,0)), 'FM999,999,999') AS totalprc,
+               count(extract(month from dl_ymd)) AS cnt,
+               count(CASE WHEN nego_yn = 'Y' THEN 1 ELSE NULL END) AS ncnt
+            FROM ( select f.*,
+                     extract(month from dl_ymd) AS month
+                     from deal f 
+                        WHERE ntsl_id = #{ntslId}
+                        AND dl_ymd >= ADD_MONTHS(TRUNC(CURRENT_DATE), -3)) d
+            
+            RIGHT JOIN (select extract(month from ADD_MONTHS(CURRENT_DATE, -1*(level-1))) month
+            from dual
+            <![CDATA[
+            connect by level <= 3) c
+            ]]>
+            ON d.month = c.month
+            GROUP BY c.month
+            ORDER BY c.month DESC
+         
 	</select>
 	
 	<!-- 구매자일때의 월별 가계부 조회 -->
 	<select id="selectCashPrchs"
 			parameterType="String"
 					resultType="map">
-	SELECT extract(month from dl_ymd) AS month, 
-           TO_CHAR(SUM(NVL(dl_prc,0)), 'FM999,999,999') AS totalprc,
-           count(extract(month from dl_ymd)) AS cnt,
-           count(CASE WHEN nego_yn = 'Y' THEN 1 ELSE NULL END) AS ncnt
-	    FROM deal
-	    WHERE dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')
-	      AND prchs_id = #{prchsId}
-	    GROUP BY extract(month from dl_ymd)
-	    ORDER BY month DESC
+	 SELECT c.month, 
+                TO_CHAR(SUM(NVL(dl_prc,0)), 'FM999,999,999') AS totalprc,
+               count(extract(month from dl_ymd)) AS cnt,
+               count(CASE WHEN nego_yn = 'Y' THEN 1 ELSE NULL END) AS ncnt
+            FROM ( select f.*,
+                     extract(month from dl_ymd) AS month
+                     from deal f 
+                        WHERE prchs_id = #{prchsId}
+                        AND dl_ymd >= ADD_MONTHS(TRUNC(CURRENT_DATE), -3)) d
+            
+            RIGHT JOIN (select extract(month from ADD_MONTHS(CURRENT_DATE, -1*(level-1))) month
+            from dual
+            <![CDATA[
+            connect by level <= 3) c
+            ]]>
+            ON d.month = c.month
+            GROUP BY c.month
+            ORDER BY c.month DESC
     </select>
     
 	<!-- 페이징을 하려면 파라미터를 보로.. -->
@@ -164,6 +183,7 @@
 	       		FROM ATCH
 	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
 			FROM DEAL d
+			
 			<include refid="creiteria"></include>
 		<if test="orderby != null and orderby != ''" >
 			order by ${orderby} desc
@@ -174,6 +194,7 @@
 	<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>	
+		
 	</select>
 	 
 	<sql id="creiteria">
@@ -209,6 +230,9 @@
                     )
                 </otherwise>
             </choose>
+        </if>
+        <if test="stts != null and stts != ''">
+            AND stts != '판매완료'
         </if>
 		</where>
 	</sql>
