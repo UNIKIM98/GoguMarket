@@ -9,15 +9,14 @@
 		=1)atch_path
 		FROM SNS s
 		<where>
-			<if test="pstSe ==''">snsCn LIKE '%'||#{searchKey}||'%' OR user_Id LIKE
-				'%'||#{searchKey}||'%' OR nick_Nm LIKE '%'||#{searchKey}||'%' OR
-				user_Nm LIKE '%'||#{searchKey}||'%' OR snsCn LIKE
-				'%'||#{searchKey}||'%'</if>
-			<if test="pstSe =='EM'">snsCn LIKE '%'||#{searchKey}||'%'</if>
-			<if test="pstSe =='ID'">user_Id LIKE '%'||#{searchKey}||'%'</if>
-			<if test="pstSe =='NK'">nick_Nm LIKE '%'||#{searchKey}||'%'</if>
-			<if test="pstSe =='NM'">user_Nm LIKE '%'||#{searchKey}||'%'</if>
-			<if test="pstSe =='PH'">snsCn LIKE '%'||#{searchKey}||'%'</if>
+			<if test="search !=null and search !=''">
+			
+			sns_Cn LIKE '%'||#{search}||'%'
+			 OR user_Id LIKE '%'||#{search}||'%' 
+			 OR area LIKE '%'||#{search}||'%'
+		     OR hash LIKE '%'||#{search}||'%'
+		   
+			</if>
 		</where>
 	</select>
 

@@ -26,11 +26,11 @@
 	</select>
 
 	<select id="countNotify"
-		parameterType="String" resultType="int">
+		parameterType="String" resultType="com.goguma.common.vo.AlarmVO">
 		SELECT PST_SE,
-		COUNT(*) FROM ALARM
+		COUNT(*) as cnt FROM ALARM
 		WHERE USER_ID = #{userId}
-		GROUP BY PST_SE;
+		GROUP BY PST_SE
 
 	</select>
 
