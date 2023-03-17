@@ -117,7 +117,7 @@
 										</div>
 										<div class="col-lg-10">
 											<label for="area">거래지역</label> <input type="text" name="area"
-												id="area" placeholder="거래지역" />
+												id="area" th:value="${session.addr}" readonly="readonly"/>
 										</div>
 										<div class="col-lg-10">
 											<label for="negoYn">가격 제안받기</label> <input type="checkbox"
@@ -153,7 +153,7 @@
 					$("#ctgryErrMsg").text("");
 					if($("#cate").val() == "FR"){
 						//의 밸류가 무나면 가격 dlprc disabled한당
-						$("#dlPrc").attr("disabled",true).val("0");
+						$("#dlPrc").attr("readonly",true).val("0");
 						
 					}
 				})
@@ -162,8 +162,7 @@
 					submitForm();
 				});
 				
-				console.log(sessionStorage.getItem('dealArea')+"거래지역")
-				$("#area").val()
+				
 			});
 		
 		//==============================================================================
