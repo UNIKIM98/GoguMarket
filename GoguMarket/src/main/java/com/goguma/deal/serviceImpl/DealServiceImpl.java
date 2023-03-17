@@ -54,7 +54,7 @@ public class DealServiceImpl implements DealService {
 		pvo.setPoint(-200);
 		pvo.setUserId(userId); // 세션의 현재 유저아이디 불러와야되는데 유유
 		pvo.setPointMthd("끌어올리기");
-		pmap.insertPoint(pvo);
+		pmap.insertUsedPoint(pvo);
 		
 		return map.updateYmd(dVO);
 	}
