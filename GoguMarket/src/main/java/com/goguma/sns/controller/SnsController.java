@@ -23,7 +23,7 @@ public class SnsController {
 	@Autowired
 	AtchService aservice;
 	
-	@GetMapping("/sns/snsMain")
+	@GetMapping("/goguma/snsMain")
 	public String SnsMain() {
 
 		return "sns/snsMain";

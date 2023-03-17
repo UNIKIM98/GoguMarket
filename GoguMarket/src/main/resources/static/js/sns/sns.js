@@ -4,6 +4,8 @@ var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
 var btn = document.getElementById("myBtn"); // 글쓰기 활성화
 
+
+
 var span = document.getElementsByClassName("close1")[0]; //글쓰기 비활성화 위한 x버튼
 
 var Sns = document.getElementById("mySns");
@@ -11,7 +13,6 @@ var Sns = document.getElementById("mySns");
 var Snsbtn = document.getElementById("clickSns");
 
 var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
-
 
 var reInput = document.getElementById("reInput");
 
@@ -34,6 +35,12 @@ var reInput = document.getElementById("reInput");
 
 reInput.onclick = function() {
 	reInput.style.display = "block";
+
+};
+
+
+btn.onclick = function() {
+	modal.style.display = "block";
 
 };
 
@@ -72,6 +79,12 @@ reInput.onclick = function() {
 
 //------------------ 개인 게시글-------------------------
 
+
+function insertSns(){
+	modal.style.display = "block"; //개인 게시글 창 활성화
+
+}
+
 function snsModal(id) {
 	//활상화
 	Sns.style.display = "block"; //개인 게시글 창 활성화
@@ -85,7 +98,7 @@ function snsModal(id) {
 
 	//단건조회
 	$.ajax({
-		url: "/sns/selectSns",
+		url:"/goguma/selectSns",
 		type: "GET",
 		data: { id },
 		dataType: "json",
@@ -104,11 +117,6 @@ function snsModal(id) {
 }
 
 
-function deleteSns(){
-	$("#snsContent").s
-	
-}
-
 
 function checkParReply(item, groupNo) {
 	// 아이템 오브젝트 포리치 돌려서 같은 item.cmntNo가 groupNo인 사람이 있는지 찾아야함
@@ -120,15 +128,16 @@ function checkParReply(item, groupNo) {
 function SelectCmntlist(snsNo) {
 	var forCnt = 0;
 	$.ajax({
-		url: "/sns/SelectCmntlist",
+		url: "/goguma/SelectCmntlist",
 		type: "GET",
 		data: { snsNo },
 		dataType: "json",
 		success: function(data) {
 			console.log(data);
+						$("#Sns-reply").empty();
 			$(data).each(function(index, item) {
 				if (item.groupNo > 0) {
-					$("#loadDiv").load("sns/rrpView.html", function(result) {
+					$("#loadDiv").load("/sns/rrpView.html", function(result) {
 						var addedDiv = $("#rrplyGroup_" + item.groupNo).append(result);
 						$(addedDiv).find(".rrpBox").each(function(index, obj) {
 							console.log("넘어옴 : " + index);
@@ -153,7 +162,8 @@ function SelectCmntlist(snsNo) {
 				} else {
 					console.log("cmntCn : " + item.cmntCn);
 					forCnt++;
-					$("#loadDiv").load("sns/replyView.html", function(result) {
+			
+					$("#loadDiv").load("/sns/replyView.html", function(result) {
 						var addedDiv = $("#Sns-reply").append(result);
 						$(addedDiv).find(".replyGroup").each(function(index, obj) {
 							if ($(obj).hasClass("set") == false) {
@@ -197,10 +207,9 @@ function SelectCmntlist(snsNo) {
 
 function ShowRrpInput(cmntNo, replySnsNo) {
 	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
-	var sessionID = "user1"; //아작스로 받아 올것
-	$("#loadDiv").load("sns/rrpWrite.html", function(result) {
+	
+	$("#loadDiv").load("/sns/rrpWrite.html", function(result) {
 		var addedDiv = $("#rrplyGroup_" + cmntNo).append(result);
-		$(addedDiv).find("#replyUserId").val(sessionID);
 		$(addedDiv).find("#groupNo").val(cmntNo);
 		$(addedDiv).find("#replySnsNo").val(replySnsNo);
 		console.log("생성된 div ID : " + sessionID);
@@ -236,7 +245,7 @@ function insertReply() {
 	}
 
 	$.ajax({
-		url: "/sns/insertReply",
+		url: "/goguma/insertReply",
 		type: "POST",
 		data: JSON.stringify({
 			snsNo: snsNo,
@@ -266,14 +275,11 @@ function insertReply() {
 
 function insertRrp() {
 	let snsNo = $(".rrpBox #replySnsNo").val();
-	let cmntMem = $(".rrpBox #replyUserId").val();
 	let cmntCn = $(".rrpBox #replyCmntCn").val();
-
 	let groupNo = $(".rrpBox #groupNo").val();
 
 	console.log("groupNo : " + groupNo);
 	console.log("snsNo : " + snsNo);
-	console.log("cmntMem : " + cmntMem);
 	console.log("cmntCn : " + cmntCn);
 
 
@@ -284,11 +290,10 @@ function insertRrp() {
 
 
 	$.ajax({
-		url: "/sns/insertReply",
+		url: "/goguma/insertReply",
 		type: "POST",
 		data: JSON.stringify({
 			snsNo: snsNo,
-			cmntMem: cmntMem,
 			cmntCn: cmntCn,
 			groupNo: groupNo,
 		}),
@@ -385,7 +390,7 @@ function rreplyEdit(rrpSnsNo, rpGroupNo) { //답글 수정
 
 
 	$.ajax({
-		url: "/sns/rreplyEdit",
+		url: "/goguma/rreplyEdit",
 		type: "POST",
 		data: formData,
 		processData: false,
@@ -419,7 +424,7 @@ function rreplyDel(rrpCmntNo, rrpGroupNo, rrpSnsNo) { //댓글 답글 삭제
 
 
 		$.ajax({
-			url: "/sns/deleteRreply",
+			url: "/goguma/deleteRreply",
 			type: "POST",
 			data: JSON.stringify({
 				cmntNo: rrpCmntNo,
