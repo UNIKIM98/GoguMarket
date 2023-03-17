@@ -142,7 +142,7 @@
 													<!-- reviews-tab-desc -->
 													<div class="featured-product" >
 														<div class="active-featured-product slick-arrow-2" >
-															<div  th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
+															<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
 															<div class="product-item" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
 																<div class="product-img" style="height:150px">
 																	<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
