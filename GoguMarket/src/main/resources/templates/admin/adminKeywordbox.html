@@ -175,7 +175,7 @@
 											
 											<td th:text=${i.index+1}></td>
 											<td th:text="${word.searchTtl}"></td>
-											<td><input type="hidden" name="searchTtl" id="searchTtl" th:value="${word.searchTtl}">
+											<td><input type="hidden" name="sList[i].searchTtl" id="searchTtl" th:value="${word.searchTtl}">
 											<button class="btn btn-primary"
 													style="height: 25px; line-height: 15px"
 													onclick="deletekeyword(event)" th:id="${word.searchTtl}">삭제</button></td>

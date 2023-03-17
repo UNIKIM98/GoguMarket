@@ -50,7 +50,6 @@ public class SearchServiceImpl implements SearchService{
 			map.updateWord(l);
 			success++;
 		}
-		
 		return success;
 	}
 
