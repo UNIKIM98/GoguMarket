@@ -31,6 +31,10 @@
 
 <body class="wide-layout">
 	<div layout:fragment="content">
+	
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b">
+		</script>
+		
 		<script th:inline="javascript">
 		
 			// 시세를 담을 데이터. 265줄 스크립트에 넣어줌
@@ -192,9 +196,9 @@
 														</div>
 														
 													</div>
-													<div role="tabpanel" class="tab-pane" id="map2" style="width:100%;height:350px;">
+													<div role="tabpanel" class="tab-pane" id="map2" style="width:100%;height:400px;">
 													<p>추천지도 선으로 연결 기능</p>
-													<div id="map" style="width:100%;height:350px;">
+														<div id="map" style="width:100%;height:350px;">
 													</div>	
 													</div>
 													
@@ -322,7 +326,7 @@
 				</div>
 			</div>
 		    
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=92ef13260c35124bc9d51f2c5e63044b&libraries=services">
+	<script>
 			 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			     mapOption = { 
 			         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표

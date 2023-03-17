@@ -111,8 +111,8 @@
            <if test="dlTtl != null and dlTtl != ''">
           WHERE  dl_ttl like '%'||#{dlTtl}||'%' 
           </if>
-            and  dl_ymd >= TO_CHAR(ADD_MONTHS(SYSDATE, -3), 'YYYYMMDD')) d
-    		RIGHT JOIN (select extract(month from ADD_MONTHS(SYSDATE, -1*(level-1))) month
+            and  dl_ymd >= ADD_MONTHS(TRUNC(CURRENT_DATE), -3) d
+    		RIGHT JOIN (select extract(month from ADD_MONTHS(CURRENT_DATE, -1*(level-1))) month
             from dual
              <![CDATA[
             connect by level <= 3) c
