@@ -59,55 +59,62 @@
 										<!-- single-product-info start -->
 										<div class="col-lg-7">
 											<div class="single-product-info">
-												<h3 class="text-black-1" th:text="${auct.auctTtl}">[[
-													]]</h3>
-												<h5 class="pro-rating sin-pro-rating f-right">조회수</h5>
+												<h3 class="text-black-1" th:text="${auct.auctTtl}"></h3>
+												<h5 class="pro-rating sin-pro-rating f-right" th:text="'조회수 : '+${auct.inqCnt}"></h5>
 												<h6 class="brand-name-2" th:text="${auct.userId}"></h6>
 												<!--  hr -->
 												<hr>
 												<!-- single-pro-color-rating -->
 												<div class="single-pro-color-rating clearfix">
-													<h3 class="pro-rating sin-pro-rating f-right">
-														경매마감일 : <span th:text="${auct.ddlnYmd}"></span>
+													<h3 class="pro-rating sin-pro-rating f-left"
+														th:if="${auct.quickPrc != null}"
+														th:text="'즉시구매가 : '+${auct.quickPrc}">
 													</h3>
-													<h3 th:if="${auct.quickPrc != null}"
-														th:text="${auct.quickPrc}">
-														즉시구매가 : <span th:text="${auct.ddlnYmd}"></span>
-													</h3>
+													<div class="pro-rating sin-pro-rating f-right">
+														<p class="color-title f-left"></p>
+														<h5 th:if="${Dday.equals(0)}" th:text="${'마지막 경매일입니다.'}"></h5>
+														<h5 th:if="${!Dday.equals(0)}" th:text="${'경매 마감까지'+Dday+'일'}"></h5>
+													</div>
 												</div>
-												<!-- hr -->
 												<hr>
 												<!-- plus-minus-pro-action -->
 												<div class="plus-minus-pro-action clearfix">
 													<div class="sin-plus-minus f-left clearfix">
 														<p class="color-title f-left">등록일</p>
-														<h5 th:text="${auct.regYmd}"></h5>
+														<h5 th:text="${#dates.format(auct.regYmd, 'yyyy/MM/dd')}"></h5>
 													</div>
-													<span th:if="${auct.stts.equals(1)}"
-														th:text="----------경매중입니다----------"></span> <span
-														th:if="${auct.stts.equals(2)}"
-														th:text="----------마감되었습니다----------"></span>
-													<div class="pro-rating sin-pro-rating f-right">
+														<span th:if="${auct.stts.equals(1)}"
+															th:text="----------------경매중입니다----------------"></span>
+														<span th:if="${auct.stts.equals(2)}"
+															th:text="----------------마감되었습니다----------------"></span>
+													<div class="sin-plus-minus f-right clearfix">
 														<p class="color-title f-left">마감일</p>
-														<h5 th:text="${auct.ddlnYmd}"></h5>
+														<h5 th:text="${#dates.format(auct.ddlnYmd, 'yyyy/MM/dd')}"></h5>
 													</div>
+
 												</div>
 												<hr>
 												<h2 class="pro-price" th:if="${auctMem!='nothing'}"
-													th:text="${auctMem[0].nowPrc}">현재최고가 없음</h2>
-												<!-- 												<h2 class="pro-price" th:if="${auctMem=='nothing'}"> </h2> -->
+													th:text="${auctMem[0].nowPrc}+'원'"></h2>
+												<h2 class="pro-price" th:if="${auctMem=='nothing'}">현재최고가 없음</h2>
 												<hr>
 												<a th:if="${session.userId!=null}" href="/my/auctInsertForm"
 													id="addAuct"
 													style="position: fixed; bottom: 100px; right: 100px; border: none; border-radius: 16px; background: royalblue; color: white; padding: 12px; font-weight: bold; box-shadow: 0px 5px 15px gray; cursor: pointer;">
 													상품 등록 </a>
 												<div>
+													<a onclick="auctDelete()"
+														th:if="${session.userId == auct.userId}"
+														class="button extra-small button-black"> <span>삭제하기</span>
+													</a>
 													<a class="button extra-small button-black" tabindex="-1"
-														id="myBtn"> <span>Bid now</span>
-													</a> <a href="/goguma/auctList"
+														th:if="${session.userId != auct.userId}"
+														id="myBtn"> <span>입찰하기</span>
+													</a>
+													
+													<a href="/goguma/auctList"
 														class="button extra-small button-black"> <span>목록으로</span>
-													</a> <input type="button" value="삭제하기" onclick="auctDelete()"
-														th:if="${session.userId == auct.userId}">
+													</a>
 												</div>
 
 											</div>
@@ -150,15 +157,14 @@
 															<tbody>
 																<tr th:if="${auctMem!='nothing'}"
 																	th:each="auctMem : ${auctMem}">
-																	<td th:text="${auctMem.userId}">입찰자 없음</td>
-																	<td th:text="${auctMem.auctYmd}">입찰자 없음</td>
-																	<td th:text="${auctMem.nowPrc}">입찰자 없음</td>
+																	<td th:text="${auctMem.userId}"></td>
+																	<td th:text="${auctMem.auctYmd}"></td>
+																	<td th:text="${auctMem.nowPrc}"></td>
 																</tr>
-																<!-- 																<tr th:if="${auctMem=='nothing'}"> -->
-																<!-- 																	<td>입찰자ㄴ</td> -->
-																<!-- 																	<td>입찰자ㄴ</td> -->
-																<!-- 																	<td>입찰자ㄴ</td> -->
-																<!-- 																</tr> -->
+																<tr th:if="${auctMem=='nothing'}"
+																th:each="auctMem : ${auctMem}">
+																	<td>입찰자 없음</td>
+																</tr>
 														</table>
 														<!-- 테이블 부분 -->
 													</div>

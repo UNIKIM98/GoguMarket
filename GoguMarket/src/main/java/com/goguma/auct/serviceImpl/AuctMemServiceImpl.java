@@ -40,10 +40,4 @@ public class AuctMemServiceImpl implements AuctMemService{
 		return auctMemMapper.bidAuction(userId);
 	}
 
-	@Override
-	public AuctMemVO selectMemCount(AuctMemVO auctNo) {
-		// 입찰자 수
-		return auctMemMapper.selectMemCount(auctNo);
-	}
-
 }

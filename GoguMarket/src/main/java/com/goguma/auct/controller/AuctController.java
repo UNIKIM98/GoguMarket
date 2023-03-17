@@ -42,14 +42,10 @@ public class AuctController {
 	@GetMapping("/goguma/auctList")
 	public String getauctList(Model model, AuctVO vo, AuctMemVO mvo) {
 		// 전체품목 리스트
-
+		
 		// 아래는 auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
 		model.addAttribute("lists", auctService.getAuctList());
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
-		model.addAttribute("cntMem", auctMemService.selectMemCount(mvo));
-//		int cnt = auctService.auctHitUpdate(auctNo); // 조회수 증가 (근데 고장남ㅋㅋ 나중에 고침~)
-//		model.addAttribute(cnt); 리스트에서 뭐 클릭시 증가시켜주면? 근데 셀렉트 안에서 새로고침한다면?
-		// 클릭수가 새로고침 조회수 조작은 의미없는 듯 그냥 리스트에서 클릭 고고
 
 		System.out.println(model); // 모델 확인
 
@@ -65,10 +61,13 @@ public class AuctController {
 
 		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
 
+		int auctDday = auctService.auctDday(auctNo);
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
 		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
+		
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
+		model.addAttribute("Dday", auctDday); // Dday계산기 담아줌
 		
 		System.out.println("auctSelect 왔음"+vo);
 		
