@@ -21,9 +21,16 @@ public class HomeController {
 	@GetMapping("/")
 	public String home(Model model) {
 		model.addAttribute("deal", service.selectHomeDeal());
-		model.addAttribute("auct", service.selectHomeAuct());
-//		model.addAttribute("biz", service.selectHomeBiz(ctgry));
+		
+		List<Map> auctList = service.selectHomeAuct();
+		System.out.println(auctList);
+		System.out.println(auctList.get(0).get("AUCT_NO"));
+		model.addAttribute("auct", auctList);
+		
+		model.addAttribute("biz", service.selectHomeBiz());
 		model.addAttribute("sns", service.selectHomeSns());
+		
+		
 		return "home/home";
 	}
 
@@ -34,7 +41,7 @@ public class HomeController {
 
 		list.put("deal", service.selectHomeDeal());
 		list.put("auct", service.selectHomeAuct());
-		list.put("biz", service.selectHomeBiz(ctgry));
+		list.put("biz", service.selectHomeBiz());
 		list.put("sns", service.selectHomeSns());
 		System.out.println(list.get("deal"));
 
