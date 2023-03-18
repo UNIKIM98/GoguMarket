@@ -161,11 +161,7 @@ public class DealController {
 		} // 검색어저장
 		return "deal/dealMain";
 	}
-	// 지도 테스트 잘나온다 w h y?
-	@GetMapping("/goguma/testmap")
-	public String testtest() {
-		return "common/testtest";
-	}
+
 	// ===========================
 	// ▶ 관리자 실검 관리
 	@RequestMapping("/admin/adminKeywordbox") //
@@ -307,7 +303,7 @@ public class DealController {
 			vo.setAtchId(atchId);
 		}
 		dealService.insertDeal(vo, userId); // pointVO에 userId담아줄라공~
-		return "redirect:dealList";
+		return vo.getDlTtl(); // 작성후에 타이틀명 보이도록 리턴값으로 받아주기
 	}
 	// ===========================
 	// ▷ 중고거래 리뷰 작성 폼 : 단건 게시글에 대한 리뷰
