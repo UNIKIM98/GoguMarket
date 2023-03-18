@@ -46,7 +46,7 @@
 						<div class="col-lg-12">
 							<div class="section-title text-start ">
 								<h2 class="uppercase">동네 이웃들이 자주 가는 동네 가게</h2>
-								<h6 class="mb-40">우리동네 사람들이 자주 이용하는 가게를 찾아보세요호우</h6>
+								<h6 class="mb-40">우리동네 사람들이 자주 이용하는 가게를 찾아보세요</h6>
 							</div>
 						</div>
 						<!-- hr -->
@@ -97,16 +97,20 @@
 									<div id="list-view" class="tab-pane active show"
 										role="tabpanel">
 										<div class="row">
-											<!-- product-item start 이거 for문 돌려서 상점목록 출력하면됨 -->
+										
+											<!-- 상점목록 1건 -->
 											<div class="col-lg-12">
-												<div class="shop-list product-item" th:each="list: ${lists}">
-													<div class="product-img">
-														<a th:href="@{/book0205/{bizNo}(bizNo=${list.bizNo})}">
+												<div class="shop-list product-item" th:each="list,i: ${lists}">
+												<div class="row">
+													
+													<div class="product-img" style="padding-right:0px; margin:auto;">
+														<a th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}">
 															<img th:each="img: ${img}"
 															th:if="${list.bizNo} == ${img.bizNo}"
 															th:src="${img.atchNm}" alt="" />
 														</a>
 													</div>
+													
 													<div class="product-info">
 														<div class="clearfix">
 															<h6 class="product-title f-left">
@@ -115,6 +119,27 @@
 																	th:data-empid="${list.bizNo}" th:text="${list.bizNm}">
 																	(가게이름) </a>
 															</h6>
+															
+															<!-- 별점 노가다 -->
+															<th:block th:if="${i.index} == 0">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 1">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 2">
 															<div class="pro-rating f-right">
 																<a href="#"><i class="zmdi zmdi-star"></i></a> 
 																<a href="#"><i class="zmdi zmdi-star"></i></a> 
@@ -122,6 +147,71 @@
 																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
 																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
 															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 3">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 4">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 5">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 6">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 7">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} == 8">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+																<a href="#"><i class="zmdi zmdi-star-outline"></i></a>
+															</div>
+															</th:block>
+															<th:block th:if="${i.index} > 8">
+															<div class="pro-rating f-right">
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+																<a href="#"><i class="zmdi zmdi-star"></i></a> 
+															</div>
+															</th:block>
+															
 														</div>
 														<h6 class="brand-name mb-30" th:text="${list.bizAddr}">(주소)</h6>
 														<p th:text="${list.cn}">(가게 설명)</p>
@@ -139,10 +229,12 @@
 														</ul>
 
 													</div>
+													
+													</div>
 												</div>
 
 											</div>
-											<!-- product-item end -->
+											<!-- 상점목록 1건 끝 -->
 
 										</div>
 									</div>

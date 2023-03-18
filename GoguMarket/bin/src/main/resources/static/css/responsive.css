@@ -955,7 +955,7 @@ p {
   margin-bottom: 20px;
 }
 .shop-list .product-img {
-  padding-right: 0;
+  padding: 0px;
   width: 100%;
 }
 .shop-list .product-info {

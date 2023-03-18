@@ -8,11 +8,13 @@
 		WHERE user_id = #{userId}
 	</select>
 
-	<!-- 개별조회(가게상세페이지) -->
+	<!-- 개별조회(가게상세페이지) : 비즈 프로필사진 join 완-->
 	<select id="bizInfo" parameterType="String"
 		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT * FROM biz_mem
-		WHERE biz_no = #{bizNo}
+		SELECT bm.*, a.atch_path
+		FROM biz_mem bm LEFT JOIN atch a 
+						ON bm.prof_atch_id = a.atch_id
+		WHERE bm.biz_no = #{bizNo}
 	</select>
 
 	<!-- 가게목록 전체조회 -->
