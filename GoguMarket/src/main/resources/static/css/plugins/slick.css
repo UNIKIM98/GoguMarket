@@ -28,6 +28,8 @@
     margin: 0;
     padding: 0;
 }
+
+
 .slick-list:focus
 {
     outline: none;
@@ -46,6 +48,12 @@
         -ms-transform: translate3d(0, 0, 0);
          -o-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
+}
+
+.slick-slider {
+display: table;
+table-layout: fixed;
+width: 100%;
 }
 
 .slick-track

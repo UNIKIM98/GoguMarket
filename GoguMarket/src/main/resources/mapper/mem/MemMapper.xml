@@ -17,7 +17,7 @@
 			<if test="searchKey =='NK'">nick_Nm LIKE '%'||#{search}||'%'</if>
 			<if test="searchKey =='NM'">user_Nm LIKE '%'||#{search}||'%'</if>
 			<if test="searchKey =='PH'">mbl_Telno LIKE '%'||#{search}||'%'</if>
-			<if test="searchKey != null and searchKey !=''">
+			<if test="search != null and search !=''">
 				eml LIKE '%'||#{search}||'%'
 				OR user_Id LIKE '%'||#{search}||'%'
 				OR nick_Nm LIKE '%'||#{search}||'%'

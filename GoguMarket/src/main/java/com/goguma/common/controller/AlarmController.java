@@ -112,11 +112,17 @@ public class AlarmController {
 		AlarmVO vo = new AlarmVO();
 		vo.setUserId(userId);
 		
+		List<AlarmVO> list = alarm.countNotify(userId);
+		
+		System.out.println(list);
+		
 		Map<String,Object> map = new HashMap<String, Object>();
 		
+		map.put("count",list);
 		
 		
-		System.out.println("결과는"+alarm.checkNotifyCount(vo));
+		
+
 		return map;
 	}
 	
