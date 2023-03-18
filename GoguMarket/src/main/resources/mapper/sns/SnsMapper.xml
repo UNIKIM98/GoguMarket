@@ -18,6 +18,8 @@
 		   
 			</if>
 		</where>
+			<if test="current != null and current != ''">order  by inq_Cnt</if>
+			<if test="view != null and view != ''">order by sns_ymd</if>
 	</select>
 
 	<select id="selectSns" resultType="com.goguma.sns.vo.SnsVO">
