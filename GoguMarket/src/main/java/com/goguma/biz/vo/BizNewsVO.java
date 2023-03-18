@@ -21,4 +21,6 @@ public class BizNewsVO {
 	private Date ntcYmd;	//소식등록일자
 	private int inqCnt;		//조회수
 	
+	private String atchPath;
+	
 }

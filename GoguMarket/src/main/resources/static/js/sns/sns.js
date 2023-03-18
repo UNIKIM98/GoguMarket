@@ -1,5 +1,3 @@
-
-
 var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
 var btn = document.getElementById("myBtn"); // 글쓰기 활성화
@@ -47,14 +45,12 @@ btn.onclick = function() {
 //----------------공통코드 출력-------------------------
 
 /*function keyValue() {
-
 	$.ajax({
 		url:"/keyValue",
 		type: "GET",
 		async: false,
 		dataType: "JSON",
 		contentType: "application/json; charset = utf-8",
-
 		success: function(data) {
 			console.log(data);
 			$(".pstSe").find("#pstSe").append(
@@ -67,7 +63,6 @@ btn.onclick = function() {
 							.append(
 								`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
 					});
-
 		},
 		error: function(data) {
 			console.log(error);
@@ -123,7 +118,6 @@ function snsModal(id) {
 /*function checkParReply(item, groupNo) {
 	// 아이템 오브젝트 포리치 돌려서 같은 item.cmntNo가 groupNo인 사람이 있는지 찾아야함
 	// 아니면 댓글 삭제할때 db에서 같은 groupNo인거 그냥 다 날리자!
-
 }
 */
 
@@ -469,9 +463,6 @@ window.onclick = function(event) {
 span.onclick = function() {
 	modal.style.display = "none";
 };
-
-
-
 
 
 

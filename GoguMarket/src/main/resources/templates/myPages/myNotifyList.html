@@ -80,11 +80,34 @@
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
+					
+					let cnt=0;
+					
+					
+					
+					$(data.count).each(function (index, data) {
+						
+						cnt+=data.cnt;
+						if (data.pstSe == 'AD') {
+							$("#AD").text(data.cnt).css('color','#edb347')
+						}
+						if (data.pstSe == 'AU') {
+							$("#AU").text(data.cnt).css('color','#edb347')
+						}
+						if (data.pstSe == 'SN') {
+							$("#SN").text(data.cnt).css('color','#edb347')
+						}
+						if (data.pstSe == 'BI') {
+							$("#BI").text(data.cnt).css('color','#edb347')
+						}
+						if (data.pstSe == 'DE') {
+							$("#DE").text(data.cnt).css('color','#edb347')
+						}
+						
+					})
+					$("#all").text(cnt).css('color','#edb347')
+					
 
-					if (data > 0) {
-						loadNotify();
-					} else {
-					}
 				},
 				error: function (error) {
 					console.log(error);
@@ -99,7 +122,7 @@
 
 
 			$("input[name=almNo]:checked").each(function () {
-				almNo.push({ 'almNo': $(this).val() }); // push: 배열에 값 삽입
+				almNo.push({'almNo': $(this).val() }); // push: 배열에 값 삽입
 			});
 
 			console.log(JSON.stringify(almNo))
@@ -290,36 +313,38 @@
 							<div class="order-info p-5 mb-10">
 								<ul class="order-info-list">
 									<li><a class="totalP" href='javascript:void(0);'
-										onclick="loadNotify();" value="AD">전체</a>
+										onclick="loadNotify();" value=""  name="pstSe">전체</a>
 										<p>
 											총 <span class="totalPTrgt"
-												style="color: #fd7e14; font-weight: bold;">0</span>포인트
+												style="font-weight: bold;" id="all"
+												name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="totalP" href='javascript:void(0);'
 										onclick="loadNotify('AD');" value="AD">관리자</a>
 										<p>
 											총 <span class="totalPTrgt"
-												style="color: #fd7e14; font-weight: bold;">0</span>포인트
+												style="font-weight: bold;" id="AD"
+												name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="attendP" href='javascript:void(0);'
 										onclick="loadNotify('DE');" value="DE">중고거래</a>
 										<p>
-											<span class="attendPTrgt">0</span>포인트
+											<span class="attendPTrgt" id="DE" name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="dealP" href='javascript:void(0);'
 										onclick="loadNotify('AU');" value="AU">경매</a>
 										<p>
-											<span class="dealPTrgt">0</span>포인트
+											<span class="dealPTrgt" id="AU" name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="freeP" href='javascript:void(0);'
-										onclick="loadNotify('SN');" value="AD">동네생활</a>
+										onclick="loadNotify('SN');" value="">동네생활</a>
 										<p>
-											<span class="freePTrgt">0</span>포인트
+											<span class="freePTrgt" id="SN" name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="freeP" href='javascript:void(0);'
-										onclick="loadNotify('BI');" value="AD">동네가게</a>
+										onclick="loadNotify('BI');" value="">동네가게</a>
 										<p>
-											<span class="freePTrgt">0</span>포인트
+											<span class="freePTrgt" id="BI" name="pstSe">0</span> 개
 										</p></li>
 								</ul>
 							</div>

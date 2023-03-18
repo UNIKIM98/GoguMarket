@@ -321,7 +321,7 @@ textarea {
   3. button
 *************************/
 a.button {
-  background: #ff7f00;
+  background: #C04A82;
   border: 0 none;
   border-radius: 3px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03) inset;
@@ -667,7 +667,7 @@ textarea:focus {
     font-size: 13px;
 }
 .submit-btn-1 {
-  background: rgb(255, 127, 0) none repeat scroll 0 0;
+  background: rgb(252, 208, 82) none repeat scroll 0 0;
   border: medium none;
   color: rgb(255, 255, 255);
   font-size: 13px;
@@ -1295,7 +1295,7 @@ textarea:focus {
   16. Background variation set 
  **************************************/
 /*colored background*/
-.theme-bg { background: #ff7f00; }
+.theme-bg { background: #FCD052; }
 .black-bg { background: #222222; }
 .white-bg { background: #fff; }
 .gray-bg { background: #f6f6f6; }

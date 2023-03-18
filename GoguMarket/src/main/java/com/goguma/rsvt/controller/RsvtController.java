@@ -136,7 +136,7 @@ public class RsvtController {
 	}
 
 	// 예약수정
-	@GetMapping("/my/mybook02/{rsvtNo}")
+	@GetMapping("/my/modifyRsvt/{rsvtNo}")
 	public String mybook02(@PathVariable int rsvtNo, Model model) {
 		// System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
 

@@ -17,8 +17,8 @@
 				<!-- 가게프사 -->
 				<div class="col-lg-1">
 					<div class="media-left">
-						<a href="#"><img class="media-object" src="img/author/1.jpg"
-							alt="#"></a>
+						<a href="#"><img class="media-object" th:src="${biz.atchPath}"
+								alt="#" width="80px" style="border-radius: 50px;"></a>
 					</div>
 				</div>
 
@@ -56,10 +56,6 @@
 							<li><a onclick="chatRoomOpen()" class="active" href="#" style="cursor:pointer;" data-bs-toggle="tab"> <i
 									class="zmdi zmdi-email"></i>
 									<h6>채팅문의</h6>
-							</a></li>
-							<li><a href="#" data-bs-toggle="tab"> <i
-									class="zmdi zmdi-email"></i>
-									<h6>후기작성</h6>
 							</a></li>
 
 						</ul>
@@ -194,11 +190,7 @@
 																</div>
 															</div>
 														</div>
-														<div><br><br><br><br><br><br><br></div>
 														
-														<div class="f-left">
-															<button class="btn btn-light" type="button" onclick="moveMain()">돌아가기</button>			
-														</div>
 													</div>
 
 													<!-- 왼쪽부분 끝 -->
@@ -280,9 +272,10 @@
 																<hr>
 															</div>
 															<div class="f-right">
-
+																<button class="btn btn-light" type="button" onclick="moveMain()" style="border-radius:5px">돌아가기</button>	&nbsp;&nbsp;&nbsp;		
 																<button class="btn btn-warning"
-																	type="button" onclick="frmSubmit()">결제하기</button>
+																	type="button" onclick="frmSubmit()" style="border-radius:5px">결제하기</button>
+																
 															</div>
 														</form>
 													</div>
@@ -492,7 +485,7 @@
 					    
 					// 오늘 이전의 날짜가 선택되지 않도록 조건문 추가
 					if (selected < today) {
-						alert('오늘 이전의 날짜는 선택할 수 없습니다.');
+						alert('오늘 이후 날짜를 선택해주세요');
 						$(this).val('');
 						return false;
 					}
@@ -539,7 +532,8 @@
 							//10명이하 test
 							if($('input[name="peopleCnt"]').val() >10){
 								alert("10명 이하로 가능합니다.")
-								return;
+								false;
+								$('input[name="peopleCnt"]').attr('value',10);
 							}
 						});
 				//-될때
@@ -606,7 +600,7 @@
 				}, function (rsp) {		
 					//결제성공시 로직
 					if (rsp.success) {
-						console.log(rsp)
+						//console.log(rsp)
 						var payMthd = rsp.pay_method
 						
 						//2️⃣번째 : 예약정보 DB에 담기 위한 함수(form데이터 submit) - 결제방법(payMthd)을 가지고 넘어감
@@ -615,7 +609,7 @@
 					//결제실패시 로직
 					} else {			
 						var msg = '결제에 실패하였습니다.';
-						msg += '에러내용 : ' + rsp.error_msg;
+						msg += ' : ' + rsp.error_msg;
 					}
 					alert(msg);
 				});
@@ -640,7 +634,7 @@
                     },
                     error : function(err){
                     	//수정
-                       alert("db에 저장안됨");
+                       alert("결제정보를 저장하지 못했습니다.");
                     }
                  });
 				//form데이터 submit
@@ -672,7 +666,7 @@
 							location.href="/my/rsvtComplete/"+rsvtNo;
 						}
 					,error : function(err){
-						alert("ajax error db저장안됨")
+						alert("결제 실패")
 					}
 					
 				})

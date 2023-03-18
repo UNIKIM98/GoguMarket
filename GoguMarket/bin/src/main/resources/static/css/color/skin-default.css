@@ -7,7 +7,7 @@
   Design and Developed by: SubasTeam
 
 -----------------------------------------------------------------------------------*/
-.theme-bg {background: #ff7f00;}
+.theme-bg {background: #C04A82;}
 .blog-item .blog-desc {
   background: rgba(255, 127, 0, 0.95) none repeat scroll 0 0;
 }
@@ -156,7 +156,7 @@ a:hover {
   color: #ff7f00;
 }
 .ui-slider .ui-slider-range {
-  background: #ff7f00 none repeat scroll 0 0;
+  background: #C04A82 none repeat scroll 0 0;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
   background: #ff7f00 none repeat scroll 0 0;

@@ -2,14 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.rsvt.mapper.RsvtRvMapper">
 
-	<!-- 가게 후기(가게기준) -->
+	<!-- 가게 후기(가게기준) : 후기 첨부파일 join 완 -->
 	<select id="rsvtReview" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtRvVO">
-		SELECT review.*, rsv.user_id, mem.nick_nm
-		FROM rsvt_rv review JOIN rsvt rsv
-							ON review.rsvt_no = rsv.rsvt_no
-							JOIN mem mem
-							ON rsv.user_id = mem.user_id
-		AND rsv.biz_no = #{bizNo}
+		SELECT rv.*, rsv.user_id, mem.nick_nm, mem.atch_path pfPath, a.atch_path as rvPath
+		FROM rsvt_rv rv JOIN rsvt rsv 
+						ON rv.rsvt_no = rsv.rsvt_no
+						JOIN mem mem 
+						ON rsv.user_id = mem.user_id
+						LEFT JOIN atch a 
+						ON rv.atch_id = a.atch_id
+		WHERE rsv.biz_no = #{bizNo}
 			
 	</select>
 	

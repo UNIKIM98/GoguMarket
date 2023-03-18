@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.biz.mapper.BizNewsMapper">
 
-	<!-- 나의 가게 전체 소식 -->
+	<!-- 나의 가게 전체 소식 : 첨부파일 join 완 -->
 	<select id="selectBizNews" parameterType="string" resultType="com.goguma.biz.vo.BizNewsVO">
-		SELECT *
-		FROM BIZ_NEWS
-		WHERE BIZ_NO = #{bizNo}
-		ORDER BY NTC_YMD DESC
+		SELECT bn.*, a.*
+		FROM BIZ_NEWS bn LEFT JOIN atch a 
+							ON bn.atch_id = a.atch_id
+		WHERE bn.BIZ_NO = #{bizNo}
+		  AND (a.atch_id IS NULL OR a.atch_id IS NOT NULL)
+		ORDER BY bn.NTC_YMD DESC
 	</select>
 	
 	<!-- 나의 가게 단건 소식 -->
