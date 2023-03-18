@@ -175,7 +175,8 @@
 												</div>
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 소식 -->
-												<div role="tabpanel" class="tab-pane" id="information">
+												<!-- 소식이 있을때 -->
+												<div role="tabpanel" class="tab-pane" id="information"  th:if="${!#lists.isEmpty(news)}">
 
 													<!-- 소식 1건 : for문 -->
 													<div class="row" th:each="news: ${news}">
@@ -197,13 +198,17 @@
 																	width="230px" style="padding: 50px 0 0 50px;"></a>
 															</div>
 														</div>
-																<hr>
+														<hr>
 													</div>
 													<!-- 소식 1건 끝 -->
 												</div>
+												<!-- 소식이 없을때 -->
+												<div role="tabpanel" class="tab-pane" id="information"  th:if="${#lists.isEmpty(news)}">
+													<p style="text-align: center;">소식이 없습니다 :(</p>
+												</div>
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 메뉴 -->
-												<div role="tabpanel" class="tab-pane" id="reviews">
+												<div role="tabpanel" class="tab-pane" id="reviews" th:if="${!#lists.isEmpty(menu)}">
 													<div class="reviews-tab-desc">
 
 														<!-- 메뉴 1건 : 상세 for문-->
@@ -228,9 +233,13 @@
 
 													</div>
 												</div>
+												<!-- 메뉴가 없을때 -->
+												<div role="tabpanel" class="tab-pane" id="reviews"  th:if="${#lists.isEmpty(menu)}">
+													<p style="text-align: center;">등록된 메뉴가 없습니다 :( <br>전화로 문의해주세요!</p>
+												</div>
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 후기 -->
-												<div role="tabpanel" class="tab-pane" id="page4">
+												<div role="tabpanel" class="tab-pane" id="page4" th:if="${!#lists.isEmpty(rv)}">
 
 													<!-- 후기 1건 : for문 -->
 													<div class="row" th:each="rv: ${rv}">
@@ -275,6 +284,11 @@
 															<hr>
 													</div>
 													<!-- 후기1건 끝 -->
+												</div>
+												
+												<!-- 후기가 없을때 -->
+												<div role="tabpanel" class="tab-pane" id="page4"  th:if="${#lists.isEmpty(rv)}">
+													<p style="text-align: center;">등록된 후기가 없습니다 :( <br>첫 후기를 남겨보세요!</p>
 												</div>
 												<!-- 후기파트 끝 -->
 
