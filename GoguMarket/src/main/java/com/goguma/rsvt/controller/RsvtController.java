@@ -89,10 +89,11 @@ public class RsvtController {
 
 	// 예약완료
 	@GetMapping("/my/rsvtComplete/{rsvtNo}")
-	public String book0604(@PathVariable int rsvtNo, Model model) {
-		// System.out.println(rsvtNo);
-		model.addAttribute("info", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
-		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
+	public String book0604(@PathVariable String rsvtNo, Model model) {
+		System.out.println("===="+rsvtNo);
+		model.addAttribute("info", rsvtService.selectRsvtOne(rsvtNo));
+		System.out.println("왜 안나올까"+rsvtService.selectMyRsvtDetail(rsvtNo));
+		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(rsvtNo));
 		return "rsvt/book0604";
 	}
 
