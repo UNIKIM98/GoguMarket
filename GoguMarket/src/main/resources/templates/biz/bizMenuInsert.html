@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{biz/slide/slide}">
+
+<body>
+	<div layout:fragment="Bizcontent">
+		<div class="container">
+			<div class="message-box box-shadow white-bg">
+				<div class="row">
+					<div class="col-lg-12 mb-30"
+						style="display: flex; align-items: center;">
+						<h4 class="blog-section-title border-left"
+							style="margin-right: 10px;">메뉴 등록</h4>
+					</div>
+					<div class="message-box box-shadow white-bg p-4">
+						<form id="menuInsertFrm" method="post" action="/biz/menuInsertSubmit">
+							<table>
+								<tr>
+									<td rowspan="4">
+										<div id ="trgt">
+											<img class="mb-20"
+												style="height: 100px; border: 2px solid #FCD052"
+												src="/img/logo/001.png" id="imgBox">
+										</div>
+											<input type="file" style="width: 80px; margin-left: 10px;" id="atchId" name="atchId"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><label for="menuNm">메뉴명 <input
+											type="text" id="menuNm" name="menuNm"></label></td>
+									<td rowspan="4">
+									</td>
+								</tr>
+								<tr>
+									<td><label for="menuPrc">가격 <input
+											type="text" id="menuPrc"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*)\\./g, '$1');"
+											name="menuPrc"></label></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><label for="menuCn">한 줄 설명 <input
+											type="text" id="menuCn"
+											name="menuCn"></label></td>
+									<td></td>
+								</tr>
+							</table>
+							<button type="button" onclick="checkMenuInfo()">등록하기</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		
+		$(function(){
+			$("#atchId").on("onchange",function(){
+				inputMenuImg(e);
+			})
+		})
+		
+		function checkMenuInfo(){
+			if($("#menuNm").val()==""){
+				alert("메뉴 이름을 입력해주세요🙂");
+				$("#menuNm").focus();
+				return false;
+			}
+			
+			else if($("#atchId").val()==""){
+				alert("메뉴 사진을 등록해주세요🙂");
+				return false;
+			}
+			
+			else if ($("#menuPrc").val()==""){
+				alert("메뉴 가격을 입력해주세요🙂");
+				$("#menuPrc").focus();
+				return false;
+			}
+			
+			else if ($("#menuCn").val()==""){
+				alert("한 줄 설명을 입력해주세요🙂");
+				$("#menuCn").focus();
+				return false;
+			}
+			$("#menuInsertFrm").submit();
+		}
+		function inputMenuImg(e){
+			var inputFile = e.target.files;
+			var filesArr = Array.prototype.slice.call(inputFile);
+		}
+		</script>
+	</div>
+</body>

@@ -188,7 +188,7 @@
 	/* ********************************************
 		5. Countdown
 	******************************************** */
-    $('[data-countdown]').countdown('2023/12/20', function(event) {
+    $('[data-countdown]').countdown('2023/03/27', function(event) {
         $(this).html(
 			event.strftime(
 				'<span class="cdown days"><span class="time-count">%-D</span> <p>Days</p></span> <span class="cdown hour"><span class="time-count">%-H</span> <p>Hour</p></span> <span class="cdown minutes"><span class="time-count">%M</span> <p>Mint</p></span> <span class="cdown second"> <span><span class="time-count">%S</span> <p>Sec</p></span>'

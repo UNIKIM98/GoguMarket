@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goguma.common.mapper.HomeMapper">
-<!-- 채은 main에서 쓸 메퍼들 -->
-<!-- deal -->
-<select id="selectHomeDeal" resultType="map">
+		<!-- 채은 main에서 쓸 메퍼들 -->
+		<!-- deal -->
+		<select id="selectHomeDeal" resultType="map">
 		SELECT ROWNUM RN, c.*
 		FROM (
 		    SELECT a.*, (
@@ -15,30 +15,37 @@
 		    ORDER BY dl_ymd DESC
 		) c
 		<![CDATA[
-		WHERE ROWNUM < 5
+		WHERE ROWNUM < 10
 		]]>
-</select>
+		</select>
 
-<!-- auct -->
-<select id="selectHomeAuct" resultType="map">
+		<!-- auct -->
+		<select id="selectHomeAuct" resultType="map">
 		SELECT ROWNUM RN, c.*
 		FROM (
 		    SELECT a.*, (
 		        SELECT ATCH_PATH
 		        FROM ATCH
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
-		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM, (SELECT COUNT(*) FROM AUCT_MEM where auct_no = a.auct_no) COUNT
 		    FROM AUCT a
 		    WHERE STTS = 1
-		    ORDER BY reg_ymd DESC
+		    ORDER BY COUNT DESC
 		) c
 		<![CDATA[
-		WHERE ROWNUM < 4
+		WHERE ROWNUM < 2
 		]]>
-</select>
+		</select>
+		
+		<select id="selectHomeAuctMem" parameterType="String" resultType="com.goguma.auct.vo.AuctMemVO">
+		SELECT * FROM AUCT_MEM
+        WHERE AUCT_NO = #{auctNo}
+        ORDER BY NOW_PRC DESC
+		</select>
+	
 
-<!-- biz -->
-<select id="selectHomeBiz" resultType="map" parameterType="String">
+		<!-- biz -->
+		<select id="selectHomeBiz" resultType="map" parameterType="String">
 		SELECT ROWNUM RN, c.*
 		FROM (
 		    SELECT a.*, (
@@ -47,16 +54,15 @@
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1 -->
 		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
 		    FROM BIZ_MEM a
-		    WHERE ctgry = #{ctgry}
 		    ORDER BY bIZ_no DESC
 		) c
 		<![CDATA[
 		WHERE ROWNUM < 5
 		]]>
-</select>
-
-<!-- sns -->
-<select id="selectHomeSns" resultType="map">
+		</select>
+	
+		<!-- sns -->
+		<select id="selectHomeSns" resultType="map">
 		SELECT ROWNUM RN, c.*
 		FROM (
 		    SELECT a.*, (
@@ -70,7 +76,7 @@
 		<![CDATA[
 		WHERE ROWNUM < 5
 		]]>
-</select>
+		</select>
 
 
 </mapper>

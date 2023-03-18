@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goguma.auct.vo.AuctMemVO;
 import com.goguma.common.mapper.HomeMapper;
 import com.goguma.common.service.HomeService;
 
@@ -25,13 +26,18 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public List<Map> selectHomeBiz(String ctgry) {
-		return homeMapper.selectHomeBiz(ctgry);
+	public List<Map> selectHomeBiz() {
+		return homeMapper.selectHomeBiz();
 	}
 
 	@Override
 	public List<Map> selectHomeSns() {
 		return homeMapper.selectHomeSns();
+	}
+
+	@Override
+	public List<AuctMemVO> selectHomeAuctMem(String auctNo) {
+		return homeMapper.selectHomeAuctMem(auctNo);
 	}
 
 }
