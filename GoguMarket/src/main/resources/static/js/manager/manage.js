@@ -107,8 +107,13 @@ function selectMemberList(dis, pageNum) {
 		data: formData,
 		//contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		success: function(data) {
-			console.log(data);
-
+			console.log(data['list'].length);
+			
+			if(data['list'].length == 0) {
+				$("#memberTable tbody").load("/admin/noMember.html")
+			}
+			
+				
 			$("#memberTable tbody").empty();
 			$(".pageArrow").empty();
 			$(data.list).each(function(index, mem) {
@@ -198,6 +203,7 @@ function showInFo() {
 function updataStts(userId) {
 	console.log(userId);
 	let edit = event.currentTarget.parentNode;
+	
 	let userStts = $(edit).prev().find("select").val();
 
 	console.log(userStts);
@@ -207,6 +213,13 @@ function updataStts(userId) {
 
 		if (confirmMessage) deleteMember(userId, userStts);
 	} else {
+		
+		confirmMessage = confirm("정말 수정하시겠습니까?");
+		
+		if(confirmMessage) 
+		
+		
+		
 		$.ajax({
 			url: "/admin/updateStts",
 			type: "POST",

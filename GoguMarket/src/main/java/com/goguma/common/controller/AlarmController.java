@@ -49,6 +49,10 @@ public class AlarmController {
 
 		switch (categori) {
 
+		
+		case "":
+			content = "[전체 전송 알림]";
+			break;
 		case "AD":
 			content = "[관리자 전송 알림]";
 			break;

@@ -120,12 +120,12 @@ function snsModal(id) {
 
 
 
-function checkParReply(item, groupNo) {
+/*function checkParReply(item, groupNo) {
 	// 아이템 오브젝트 포리치 돌려서 같은 item.cmntNo가 groupNo인 사람이 있는지 찾아야함
 	// 아니면 댓글 삭제할때 db에서 같은 groupNo인거 그냥 다 날리자!
 
 }
-
+*/
 
 function SelectCmntlist(snsNo) {
 	var forCnt = 0;
