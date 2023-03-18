@@ -4,77 +4,197 @@
 	layout:decorate="~{biz/slide/slide}">
 
 <body>
-
 	<div layout:fragment="Bizcontent">
-
-		<form id="menuFrm" action="/biz/menuTest" method="post">
-			<table>
-				<tbody>
-					<tr>
-						<td><input type="text" id="userNm" name="menuList[0].menuNm"
-							value="양념치킨"></td>
-						<td><input type="text" id="userNm" name="menuList[0].menuPrc"
-							value="1000"></td>
-						<td><input type="text" id="userNm" name="menuList[0].menuCn"
-							value="양념내용"></td>
-						<td><input type="text" id="userNm" name="menuList[0].atchId"
-							value="앙냠첨부"></td>
-					</tr>
-										<tr>
-						<td><input type="text" id="userNm" name="menuList[1].menuNm"
-							value="양념치킨"></td>
-						<td><input type="text" id="userNm" name="menuList[1].menuPrc"
-							value="1000"></td>
-						<td><input type="text" id="userNm" name="menuList[1].menuCn"
-							value="양념내용"></td>
-						<td><input type="text" id="userNm" name="menuList[1].atchId"
-							value="앙냠첨부"></td>
-					</tr>
-					
-										<tr>
-						<td><input type="text" id="userNm" name="newList[0].menuNm"
-							value="후라이듭"></td>
-						<td><input type="text" id="userNm" name="newList[0].menuPrc"
-							value="2000"></td>
-						<td><input type="text" id="userNm" name="newList[0].menuCn"
-							value="후라내용"></td>
-						<td><input type="text" id="userNm" name="newList[0].atchId"
-							value="후라첨부"></td>
-					</tr>
-<!-- 					<tr> -->
-<!-- 						<th><label for="profile">프로필사진</label></th> -->
-<!-- 						<td> -->
-<!-- 							<div id="pfTrgt"> -->
-<!-- 								<img src="attech/222.jpg" alt="" -->
-<!-- 									style="width: 60px; height: 60px; border-radius: 70%;"> -->
-<!-- 							</div> -->
-<!-- 						</td> -->
-<!-- 						<td><input type="file" id="profile"></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 					<th><label for="profile">메뉴명</label></th> -->
-<!-- 						<td> -->
-<!-- 							<div id="pfTrgt"> -->
-<!-- 								<img src="attech/222.jpg" alt="" -->
-<!-- 									style="width: 60px; height: 60px; border-radius: 70%;"> -->
-<!-- 							</div> -->
-<!-- 						</td> -->
-<!-- 						<td><input type="file" id="profile"></td> -->
-<!-- 					</tr> -->
-
-
-
-				</tbody>
-			</table>
-			<button type="submit">저장고</button>
-		</form>
+		<div class="container">
+			<div class="message-box box-shadow white-bg">
+					<div class="row">
+						<div class="col-lg-12 mb-30" style="display: flex; align-items: center;">
+						  <h4 class="blog-section-title border-left" style="margin-right: 10px;">메뉴 관리</h4>
+						  <p style="margin: 0;">메뉴는 10개까지 등록할 수 있습니다</p>
+						  <div id="inputBtnDiv"></div>
+						</div>
+					    <div  id="menuTrgt">
+					    </div>
+					</div>
+			</div>
+		</div>
+		
+		
 		<script type="text/javascript">
+		//=================================
+		//❤️ 전역변수 선언부
+		var menuCnt = 0;
+		
+		//=================================
+		//❤️ DOM 함수
+		$(function(){
+			getMenuAjax();
+		})
+		
+		//=================================
+		//❤️ 기존메뉴 정보 가져오기 ajax
+		function getMenuAjax(){
+			$.ajax({
+				url:'/biz/getMenuAjax',
+				type:'get',
+				contentType: 'application/json',
+				dataType: 'json',
+				success:function(result){
+					result.forEach((menu)=>{
+						setExistMenu(menu);
+					})
+						isInsertOk();
+				},
+				error:function(err){
+					alert("[기존메뉴 로드 실패] 기존메뉴 로딩 중 오류가 발생하였습니다. ("+err+")")
+				}
+			})
+		}
+		
+		//=================================
+		//❤️ 기존메뉴 그리기
+		function setExistMenu(menu){
+			menuCnt++;
+			console.log(menu);
+			let atchId = menu.atchId
+			$("#menuTrgt").append(`
+					
+					<div  class="message-box box-shadow white-bg p-4" id="deltrgt${menu.menuNo}">
+					<h6 class="blog-section-title mb-30">메뉴${menuCnt}</h6>
+					<form id="menuFrm${menu.menuNo}" method="post" onsubmit="return false">
+					<table id="${menuCnt}tbl">
+				        <tr>
+				            <td rowspan="4">
+				               <label for="menuImg${menu.menuNo}"><img class="mb-20" style="height: 100px; border:2px solid #FCD052" src="${menu.atchId}" id="imgBox${menu.menuNo}"></label>
+				               <input type="file" style="width: 80px; margin-left: 10px;" id="menuImg${menu.menuNo}" disabled="true">
+				            </td>
+				            <td></td>
+				        </tr>
+				        <tr>
+				            <td>
+				               <label for="menuNm${menu.menuNo}">메뉴명
+				               <input type="text" id="menuNm${menu.menuNo}" value="${menu.menuNm}" readonly="true" name="menuNm"></label>
+				            </td>
+				            <td rowspan="4">
+				               <button class="submit-btn-1 mt-30 btn-hover-1" type="button" id="editBtn${menu.menuNo}" onclick="editMenu(${menu.menuNo},menuCnt)">수정</button>
+				               <button class="submit-btn-1 mt-30 btn-hover-1" type="button" id="delBtn${menu.menuNo}" onclick="delMenu(${menu.menuNo})">삭제</button>
+				            </td>
+				        </tr>
+				        <tr>
+				            <td>
+				                <label for="menuPrc${menu.menuNo}">가격
+				                <input type="text" id="menuPrc${menu.menuNo}" value="${menu.menuPrc}" readonly="true" 
+				                		oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*)\\./g, '$1');" name="menuPrc"></label>
+				            </td>
+				            <td></td>
+				        </tr>
+				        <tr>
+				            <td>
+				                <label for="menuCn${menuCnt}">한줄설명
+				                <input type="text" id="menuCn${menuCnt}" value="${menu.menuCn}" readonly="true" name="menuCn"></label>
+				            </td>
+				            <td></td>
+				        </tr>
+				    </table>
+				    <input type="hidden" name="menuNo" value="${menu.menuNo}">
+				    </form>
+			    </div>	
+					
+					`)
+		}
+		
+		//=================================
+		//❤️ 메뉴 수정하기
+		function editMenu(menuNo, idInfo){
+			$("#editBtn"+menuNo).removeAttr("onclick").attr("onclick","menuEdixAjax("+menuNo+")").text("저장");
 			
+			$("#menuNm"+menuNo).attr("readonly",false).focus();
+			$("#menuPrc"+menuNo).attr("readonly",false);
+			$("#menuCn"+menuNo).attr("readonly",false);
+			$("#menuImg"+menuNo).attr("disabled",false);
+			console.log(menuNo);
+		}
+		
+		//=================================
+		//❤️ 메뉴 수정 ajax
+		function menuEdixAjax(menuNo){
+			if(editChk(menuNo)){
+				if(confirm("입력하신 정보로 메뉴를 수정하시겠습니까?")){
+					
+					if(fileUploadAjax())
+					var formData = new FormData($("#menuFrm"+menuNo)[0]);
+					$.ajax({	
+						url : "/biz/menuEdixAjax",
+						type : "POST",
+						data : formData,
+						processData : false,
+						contentType : false,
+						success : function(result) {
+							console.log(result)
+							alert("[수정완료] 메뉴 수정이 완료되었습니다 :D");
+						},
+						error : function(err){
+							alert("[수정실패] 메뉴 수정 중 오류가 발생하였습니다. :(");
+						}
+					});	
+				}
+				
+			}
+		}
+		
+		//=================================
+		//❤️ 메뉴 수정 전 유효성 검사
+		function editChk(menuNo){
+			if($("#menuNm"+menuNo).val()==""){
+				alert("메뉴이름을 입력해주세요🙂");
+				$("#menuNm"+menuNo).focus();
+				return false;
+			}else if($("#menuPrc"+menuNo).val()==""){
+				alert("메뉴 가격을 입력해주세요🙂");
+				$("#menuPrc"+menuNo).focus();
+				return false;
+			}else if($("#menuCn"+menuNo).val()==""){
+				alert("메뉴 한줄설명을 입력해주세요🙂");
+				$("#menuCn"+menuNo).focus();
+				return false;
+			}else if($("#menuImg"+menuNo).val()==""){
+				return (confirm("사진은 변경하지 않으시는 건가요🤔?"));
+			}else if($("#menuImg"+menuNo).val()!=""){
+				return true;				
+			}
+		}
+		
+		function delMenu(menuNo){			
+			if(confirm("메뉴 삭제 시 복구할 수 없습니다. 계속하시겠습니까?")){
+				$.ajax({
+					url:'/biz/menuDelAjax/'+menuNo,
+					type:'get',
+					success:function(result){
+						alert("삭제성공");
+						$("#deltrgt"+menuNo).remove();
+						menuCnt--;
+						isInsertOk();
+					},error:function(err){
+						alert("삭제실패")
+					}
+				})
+			}
+		}
+		
+		function isInsertOk(){
+			console.log(menuCnt);
+			if(menuCnt<=10 && $("#inputBtnDiv").children().length==0){
+				$("#inputBtnDiv").append(`
+						<button type="button" onclick="insertMenu()" class="submit-btn-1 ml-30 btn-hover-1">메뉴추가</button>
+						`)
+			}
+		}
+		
+		function insertMenu(){
+			location='/biz/insertMenu';
+		}
 		</script>
-
 	</div>
-
-
 </body>
 
 </html>

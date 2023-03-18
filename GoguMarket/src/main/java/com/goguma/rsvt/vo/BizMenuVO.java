@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class BizMenuVO { // 가게메뉴 테이블
-	private String menuNo; // 메뉴번호
+	private int menuNo; // 메뉴번호
 	private String bizNo; // 가게id
 	private String menuNm; // 메뉴이름
 	private int menuPrc; // 메뉴정가(가격)

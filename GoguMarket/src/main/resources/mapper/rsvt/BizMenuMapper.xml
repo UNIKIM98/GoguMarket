@@ -7,4 +7,15 @@
 		from biz_menu
 		where biz_no = #{bizNo}
 	</select>
+	<!-- 메뉴 하나 선택 -->
+	<select id="selectBizMenuOne" parameterType="int" resultType="com.goguma.rsvt.vo.BizMenuVO">
+	SELECT * FROM BIZ_MENU
+	WHERE MENU_NO = #{menuNo}
+	</select>
+	
+	<!-- 메뉴 하나 삭제 -->
+	<delete id="deleteMenu">
+	DELETE BIZ_MENU
+	WHERE MENU_NO = #{menuNo}
+	</delete>
 </mapper>

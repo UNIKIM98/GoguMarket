@@ -4,7 +4,6 @@
 	layout:decorate="~{myPages/sideBar/sideBar}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <script src="js/vendor/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style type="text/css">
@@ -352,8 +351,8 @@
 					if(atchList.atchPath!=null){
 							$("#pfTrgt").children().remove();
 							$('#pfTrgt').append(
-														`<img style=${img_style} src=${atchList.atchPath}
-															   id=exFile onclick=deleteFile('exFile')>`
+														`<img style="${img_style}" src="${atchList.atchPath}"
+															   id="exFile" onclick=deleteFile('exFile')>`
 														)
 
 					}
