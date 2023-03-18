@@ -49,6 +49,10 @@ public class AlarmController {
 
 		switch (categori) {
 
+		
+		case "":
+			content = "[전체 전송 알림]";
+			break;
 		case "AD":
 			content = "[관리자 전송 알림]";
 			break;
@@ -101,17 +105,19 @@ public class AlarmController {
 	
 	@GetMapping("/my/countNotify")
 	@ResponseBody
-	public int countNotify(HttpServletRequest request) {
+	public Map<String,Object> countNotify(HttpServletRequest request) {
 		System.out.println("gdgd");
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		AlarmVO vo = new AlarmVO();
 		vo.setUserId(userId);
 		
+		Map<String,Object> map = new HashMap<String, Object>();
 		
-		int cnt=0;
-		/* alarm.checkNotifyCount(vo)+"갯수확인"; */
-		return cnt;
+		
+		
+		System.out.println("결과는"+alarm.checkNotifyCount(vo));
+		return map;
 	}
 	
 	

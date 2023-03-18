@@ -22,7 +22,7 @@ public class AlarmServiceImpl implements AlarmService {
 	}
 
 	@Override
-	public int countNotify(String userId) {
+	public List<AlarmVO> countNotify(String userId) {
 		// TODO Auto-generated method stub
 		return alarm.countNotify(userId);
 	}

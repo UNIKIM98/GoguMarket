@@ -23,21 +23,24 @@
 							</div>
 						</div>
 					</div>
-					<input type="hidden" id="rpCmntNo" name="cmntNo"> 
-					<input type="hidden" id="rpGroupNo" name="groupNo">
-					<input type="hidden" id="rpSnsNo" name="snsNo"> 
-					<input type="hidden" id="rpCmntMem" name="cmntMem">
+					<input type="hidden" id="rpCmntNo" name="cmntNo"> <input
+						type="hidden" id="rpGroupNo" name="groupNo"> <input
+						type="hidden" id="rpSnsNo" name="snsNo"> <input
+						type="hidden" id="rpCmntMem" name="cmntMem">
 				</form>
 			</div>
-			<div class="buttonDiv" style="padding: 10px">
-				<button type="button" class="btn btn-dark mt-3 f-left"
-					onclick="rreplyDel()" id="replydel">삭제</button>
-				&nbsp;&nbsp;&nbsp;
-				<button type="button" id="editbutton"
-					class="btn btn-dark mt-3 f-ledft">수정</button>
-				<input type="button" class="btn btn-dark mt-3 f-right" id="reInput"
-					onClick="replyEditForm()" value="reply" />
-			</div>
+			<th:block th:if="${session.userId != cmntMem}">
+				<div class="buttonDiv" style="padding: 10px">
+					<button type="button" class="btn btn-dark mt-3 f-left"
+						onclick="rreplyDel()" id="replydel">삭제</button>
+					&nbsp;&nbsp;&nbsp;
+					<button type="button" id="editbutton"
+						class="btn btn-dark mt-3 f-ledft">수정</button>
+					<input type="button" class="btn btn-dark mt-3 f-right" id="reInput"
+						onClick="replyEditForm()" value="reply" />
+				</div>
+			</th:block>
+
 		</div>
 	</div>
 	<!--Insert form-->
