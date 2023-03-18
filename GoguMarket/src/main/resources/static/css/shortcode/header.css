@@ -27,7 +27,7 @@ NOTE: This is Header style file. All Header related style included in this file.
    position: relative; 
 }
 .main-menu > li > a::before, .dropdwn li a:before, .single-mega-item li a:before {
-  background: #ffbf7f none repeat scroll 0 0;
+  background: #FCD052 none repeat scroll 0 0;
   bottom: 0;
   content: "";
   height: 1px;
@@ -51,7 +51,7 @@ NOTE: This is Header style file. All Header related style included in this file.
   transition: all 0.3s ease 0s;
 }
 .main-menu > li:hover > a{
-  color: #FF7F00;
+  color: #FCD052;
 } 
 .dropdwn > li:hover > a{
   color: #ff7f00;

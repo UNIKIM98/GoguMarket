@@ -166,7 +166,7 @@
   margin-bottom: 10px;
 }
 .pro-rating a {
-  color: #ff7f00;
+  color: #FCD052;
   font-size: 14px;
 }
 .pro-price {
@@ -323,7 +323,7 @@
   font-weight: 500;
 }
 .pro-tab-menu ul li a.active {
-  border-bottom: 1px solid #ffbf7f;
+  border-bottom: 1px solid #EF8BBA;
   color: #666666;
 }
 /* -------------------------------------
@@ -399,7 +399,7 @@
 }
 .blog-item .blog-desc {
   backface-visibility: hidden;
-  background: rgba(255, 127, 0, 0.95) none repeat scroll 0 0;
+  background: rgba(186, 127, 155, 0.9) none repeat scroll 0 0;
   height: 100%;
   left: 0;
   padding: 40px;
@@ -600,7 +600,7 @@ transform: scale(1);
   position: relative;
 }
 .pro-tab-menu-2 ul li a.active::before{
-  background: #ff7f00 none repeat scroll 0 0;
+  background: #C04A82 none repeat scroll 0 0;
   content: "";
   height: 11px;
   left: 0;
@@ -905,8 +905,8 @@ transform: scale(1);
 }
 .shop-pagination > li.active a,
 .shop-pagination > li:hover a {
-  border-color: #ff7f00;
-  color: #ff7f00;
+  border-color: #FCD052;
+  color: #FCD052;
 }
 /* -------------------------------------
     9.5 Sidebar Widget
@@ -942,7 +942,7 @@ transform: scale(1);
   width: 50px;
 }
 .widget-search button:hover {
-  color: #ff7f00;
+  color: #C04A82;
 }
 /* -------------------------------------
     9.7 Widget categories
@@ -1005,10 +1005,10 @@ transform: scale(1);
   height: 3px;
 }
 .ui-slider .ui-slider-range {
-  background: #ff7f00 none repeat scroll 0 0;
+  background: #C04A82 none repeat scroll 0 0;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-  background: #ff7f00 none repeat scroll 0 0;
+  background: #C04A82 none repeat scroll 0 0;
   border: medium none;
   border-radius: 0;
   height: 12px;
@@ -1366,12 +1366,12 @@ table {width: 100%}
   text-align: right;
 }
 .order-total {
-  color: #ff7f00;
+  color: #C04A82;
   font-weight: 500;
   text-align: left;
 }
 .order-total-price {
-  color: #ff7f00;
+  color: #C04A82;
   font-family: 'NanumSquareNeo-Variable';
   font-weight: 700;
   text-align: right;
@@ -1573,7 +1573,7 @@ table {width: 100%}
   line-height: 14px;
 }
 .blog-like-share li a:hover {
-  color: #ff7f00;
+  color: #C04A82;
 }
 .blog-like-share li a i {
   margin-right: 10px;
@@ -1763,7 +1763,7 @@ table {width: 100%}
   transition: all 0.3s ease 0s;
 }
 .contact-address:hover i {
-  background: #ff7f00 none repeat scroll 0 0;
+  background: #C04A82 none repeat scroll 0 0;
   color: #fff;
 }
 .contact-address h6 {

@@ -13,28 +13,27 @@
 
 				<!-- 가게이름 부분(미니헤더)-->
 				<div class="row">
+<!-- <h3 th:text="${biz}"></h3> -->
 					<div class="col-lg-1">
 						<div class="media-left">
-							<a href="#"><img class="media-object" src="img/author/1.jpg"
-								alt="#"></a>
+							<a href="#"><img class="media-object" th:src="${biz.atchPath}"
+								alt="#" width="80px" style="border-radius: 50px;"></a>
 						</div>
 					</div>
-					
+
 					<div class="col-lg-8">
 						<div class="section-title text-start mt-15">
 							<h2 class="uppercase" th:text="${biz.bizNm}">(가게이름)</h2>
 
 							<ul class="blog-meta">
 								<li><a href="#" th:each="cnt: ${dgCnt}"
-										th:if="${cnt.bizNo}==${biz.bizNo}"
-										th:utext="|<i class='zmdi zmdi-favorite'></i>단골  ${cnt.dCount}|"
-									>(단골 수)</a>
-								</li>
+									th:if="${cnt.bizNo}==${biz.bizNo}"
+									th:utext="|<i class='zmdi zmdi-favorite'></i>단골  ${cnt.dCount}|">(단골
+										수)</a></li>
 								<li><a href="#" th:each="rcnt: ${rwCnt}"
-										th:if="${rcnt.bizNo} == ${biz.bizNo}"
-										th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|"
-									>(후기 수)</a>
-								</li>
+									th:if="${rcnt.bizNo} == ${biz.bizNo}"
+									th:utext="|<i class='zmdi zmdi-comments'></i>후기  ${rcnt.rwCount}|">(후기
+										수)</a></li>
 								<li><a href="#" th:text="${biz.ctgry}">(카테고리이름)</a></li>
 							</ul>
 
@@ -45,16 +44,14 @@
 							<!-- Nav tabs -->
 							<ul class="nav">
 
-								<li><a th:onclick="alertTelno([[${biz.bizTel}]])" style="cursor:pointer;" data-bs-toggle="tab"> <i
+								<li><a th:onclick="alertTelno([[${biz.bizTel}]])"
+									style="cursor: pointer;" data-bs-toggle="tab"> <i
 										class="zmdi zmdi-phone"></i>
 										<h6>전화문의</h6></a></li>
-								<li><a onclick="chatRoomOpen()" class="active" href="#" style="cursor:pointer;" data-bs-toggle="tab"> <i
+								<li><a onclick="chatRoomOpen()" class="active" href="#"
+									style="cursor: pointer;" data-bs-toggle="tab"> <i
 										class="zmdi zmdi-email"></i>
 										<h6>채팅문의</h6>
-								</a></li>
-								<li><a href="#" data-bs-toggle="tab"> <i
-										class="zmdi zmdi-email"></i>
-										<h6>후기작성</h6>
 								</a></li>
 
 							</ul>
@@ -90,7 +87,7 @@
 												</ul>
 											</div>
 											<div class="col-lg-4"></div>
-											<div class="col-lg-2">
+											<div class="col-lg-2 pl-50">
 												<a class="button extra-small" data-bs-toggle="tab"
 													onclick="moveRsvt()"> <span>예약하기 </span>
 												</a>
@@ -150,20 +147,15 @@
 															<tr>
 																<th style="text-align: center;" class="td-title-1">영업시간
 																	:</th>
-																<td class="td-title-1">
-																	<th:block th:each="code: ${code}" th:if="${biz.bgngTm}==${code.commonDetailCode}">
+																<td class="td-title-1"><th:block
+																		th:each="code: ${code}"
+																		th:if="${biz.bgngTm}==${code.commonDetailCode}">
 																		[[${code.commonNm}]] ~ 
-																	</th:block>
-																	<th:block th:each="code: ${code}" th:if="${biz.endTm}==${code.commonDetailCode}">
+																	</th:block> <th:block th:each="code: ${code}"
+																		th:if="${biz.endTm}==${code.commonDetailCode}">
 																		[[${code.commonNm}]]
-																	</th:block>
-																</td>
-																
-																
-<!-- 																<td class="td-title-1" th:if="${biz.bgngTm}==${code.commonDetailCode}" th:each="code: ${code}" -->
-<!-- 															        th:text="${code.commonNm}"></td> -->
-<!-- 															    <td class="td-title-1" th:if="${biz.endTm}==${code.commonDetailCode}" th:each="code: ${code}" -->
-<!-- 															        th:text="${code.commonNm}"></td> -->
+																	</th:block></td>
+
 															</tr>
 															<tr>
 																<th style="text-align: center;" class="td-title-1">가게소개
@@ -176,10 +168,12 @@
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 소식 -->
 												<!-- 소식이 있을때 -->
-												<div role="tabpanel" class="tab-pane" id="information"  th:if="${!#lists.isEmpty(news)}">
+												<div role="tabpanel" class="tab-pane" id="information"
+													th:if="${!#lists.isEmpty(news)}">
 
 													<!-- 소식 1건 : for문 -->
 													<div class="row" th:each="news: ${news}">
+
 														<div class="col-lg-9">
 															<div class="reviews-tab-desc">
 																<div class="blog-desc">
@@ -194,28 +188,31 @@
 														</div>
 														<div class="col-lg-3">
 															<div class="blog-image">
-																<a href="#"><img src="img/product-2/1.jpg" alt=""
-																	width="230px" style="padding: 50px 0 0 50px;"></a>
+																<a href="#"><img th:src="${news.atchPath}" alt=""
+																	width="230px" style="padding: 0 0 10px 0;"></a>
 															</div>
 														</div>
-														<hr>
+														<hr class="mt-20">
 													</div>
 													<!-- 소식 1건 끝 -->
 												</div>
 												<!-- 소식이 없을때 -->
-												<div role="tabpanel" class="tab-pane" id="information"  th:if="${#lists.isEmpty(news)}">
+												<div role="tabpanel" class="tab-pane" id="information"
+													th:if="${#lists.isEmpty(news)}">
 													<p style="text-align: center;">소식이 없습니다 :(</p>
 												</div>
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 메뉴 -->
-												<div role="tabpanel" class="tab-pane" id="reviews" th:if="${!#lists.isEmpty(menu)}">
+												<div role="tabpanel" class="tab-pane" id="reviews"
+													th:if="${!#lists.isEmpty(menu)}">
 													<div class="reviews-tab-desc">
 
 														<!-- 메뉴 1건 : 상세 for문-->
 														<div class="media mt-30" th:each="menu: ${menu}">
+															<!-- <h2 th:text="${menu}"></h2> -->
 															<div class="media-left">
 																<a href="#"><img class="media-object"
-																	th:src="${menu.atchId}" alt="#" style="height:70px;"></a>
+																	th:src="${menu.atchId}" alt="#" style="height: 70px;"></a>
 															</div>
 															<div class="media-body">
 																<div class="clearfix">
@@ -234,23 +231,28 @@
 													</div>
 												</div>
 												<!-- 메뉴가 없을때 -->
-												<div role="tabpanel" class="tab-pane" id="reviews"  th:if="${#lists.isEmpty(menu)}">
-													<p style="text-align: center;">등록된 메뉴가 없습니다 :( <br>전화로 문의해주세요!</p>
+												<div role="tabpanel" class="tab-pane" id="reviews"
+													th:if="${#lists.isEmpty(menu)}">
+													<p style="text-align: center;">
+														등록된 메뉴가 없습니다 :( <br>전화로 문의해주세요!
+													</p>
 												</div>
 
 												<!-- ♣♣♣♣♣♣♣♣♣상세내용 - 후기 -->
-												<div role="tabpanel" class="tab-pane" id="page4" th:if="${!#lists.isEmpty(rv)}">
+												<div role="tabpanel" class="tab-pane" id="page4"
+													th:if="${!#lists.isEmpty(rv)}">
 
 													<!-- 후기 1건 : for문 -->
-													<div class="row" th:each="rv: ${rv}">
+													<div class="row" th:each="rv,i: ${rv}">
+<!-- <h2 th:text="${rv}"></h2> -->
 														<div class="blog-desc">
 															<div class="row">
-																<div class="col-lg-10">
+																<div class="col-lg-9">
 																	<div class="reviews-tab-desc">
 																		<div class="media mt-30">
-																			<div class="media-left">
+																			<div class="media-left mt-10">
 																				<a href="#"><img class="media-object"
-																					src="img/author/1.jpg" alt="#"></a>
+																					th:src="${rv.pfPath}" alt="#" width="60px;" style="border-radius:50px"></a>
 																			</div>
 																			<div class="media-body mt-15">
 																				<h5 th:text="${rv.nickNm}">(유저닉네임)</h5>
@@ -258,37 +260,64 @@
 																			</div>
 																		</div>
 																	</div>
-																</div>
-															</div>
 
-															<p th:text="${rv.rvCn}">(리뷰내용)</p>
-															<div class="mb-20">
-																<div class="pull-right">
-																	<ul class="reply-delate">
-																		<li><a href="#">(해쉬태그)</a></li>
-																		<li>/</li>
-																		<li><a href="#">(해쉬태그)</a></li>
-																		<li>/</li>
-																		<li><a href="#">(해쉬태그)</a></li>
-																	</ul>
+																	<p th:text="${rv.rvCn}">(리뷰내용)</p>
+																	
+																	<!-- 해쉬태그 노가다 -->
+																	<div class="mb-20">
+<!-- <h2 th:if="${i.index} == 0" th:text="|인덱스번호 : ${i.index}, 첫번째위치|"></h2> -->
+																		<th:block th:if="${i.index} == 0">
+																			<div class="pull-right">
+																				<ul class="reply-delate">
+																					<li><a href="#">#친절해요&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#맛있어요&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#다음에또올래요&nbsp;&nbsp;</a></li>
+																				</ul>
+																			</div>
+																		</th:block>
+																		<th:block th:if="${i.index} == 1">
+																			<div class="pull-right">
+																				<ul class="reply-delate">
+																					<li><a href="#">#숨겨진맛집&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#나만알고싶음&nbsp;&nbsp;</a></li>
+
+																				</ul>
+																			</div>
+																		</th:block>
+																		<th:block th:if="${i.index} == 2">
+																			<div class="pull-right">
+																				<ul class="reply-delate">
+																					<li><a href="#">#이집잘하네&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#단골각&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#존맛탱&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#또올래요&nbsp;&nbsp;</a></li>
+
+																				</ul>
+																			</div>
+																		</th:block>
+																	</div>
 																</div>
+																<!-- 후기 사진부분 -->
+																<div class="col-lg-3">
+																	<div class="blog-image">
+																		<a href="#"><img th:src="${rv.rvPath}" alt=""
+																			width="230px" style="padding: 20px 0 0 0;"></a>
+																			
+																	</div>
+																</div>
+																<hr>
 															</div>
 														</div>
-														<!-- 후기 사진부분 -->
-														<div class="col-md-3">
-															<div class="blog-image">
-																<a href="#"><img src="img/product-2/1.jpg" alt=""
-																	width="150px"></a>
-															</div>
-														</div>
-															<hr>
 													</div>
 													<!-- 후기1건 끝 -->
 												</div>
-												
+
 												<!-- 후기가 없을때 -->
-												<div role="tabpanel" class="tab-pane" id="page4"  th:if="${#lists.isEmpty(rv)}">
-													<p style="text-align: center;">등록된 후기가 없습니다 :( <br>첫 후기를 남겨보세요!</p>
+												<div role="tabpanel" class="tab-pane" id="page4"
+													th:if="${#lists.isEmpty(rv)}">
+													<p style="text-align: center;">
+														등록된 후기가 없습니다 :( <br>첫 후기를 남겨보세요!
+													</p>
 												</div>
 												<!-- 후기파트 끝 -->
 
@@ -297,11 +326,12 @@
 
 									</div>
 									<!-- 전체범위 3 -->
-									<hr>
+<!-- 									<hr class="mb-20"> -->
 
 								</div>
 							</div>
-								<button class="btn btn-secondary f-right" type="button" onclick="moveMain()">목록으로</button>
+							<button class="btn f-right" type="button"
+								onclick="moveMain()" style="border-radius:5px;background-color:#BA7F9B;color:white;margin-right:20px;">목록으로</button>
 							<!-- 전체범위2 -->
 						</div>
 						<!-- 전체범위  -->
@@ -312,31 +342,31 @@
 		</div>
 		<!-- 큰 덩어리 끝 -->
 		<script type="text/javascript">
-		
-		//목록으로 돌아가기
-		function moveMain(){
-			window.location.href = "/goguma/bookmain";
-		}
-			
-		//예약페이지로 이동
-		function moveRsvt() {
-			console.log(sessionStorage.getItem("userId"))
-			var url = window.location.href;
-			var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
-			console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
-			window.location.href = "/../my/reservation/" + urlBizNo;
-		}
-		
-		//전화번호 알림창
-		function alertTelno(tel){
-			console.log(tel)
-			alert("가게 전화번호는 [ "+ tel + " ] 입니다.");
-		}
-		
-		//채팅방 이동
-		function chatRoomOpen(){
-			window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
-		}
+			//목록으로 돌아가기
+			function moveMain() {
+				window.location.href = "/goguma/bookmain";
+			}
+
+			//예약페이지로 이동
+			function moveRsvt() {
+				console.log(sessionStorage.getItem("userId"))
+				var url = window.location.href;
+				var urlBizNo = url.substring(url.lastIndexOf('/') + 1);
+				console.log("가게번호넘겨벌이기-=-----" + urlBizNo)
+				window.location.href = "/../my/reservation/" + urlBizNo;
+			}
+
+			//전화번호 알림창
+			function alertTelno(tel) {
+				console.log(tel)
+				alert("가게 전화번호는 [ " + tel + " ] 입니다.");
+			}
+
+			//채팅방 이동
+			function chatRoomOpen() {
+				window.open("/chat/rooms", "채팅창",
+						'width=500px,height=700px,scrollbars=yes')
+			}
 		</script>
 	</div>
 	<!-- 타임리프 div끝 -->

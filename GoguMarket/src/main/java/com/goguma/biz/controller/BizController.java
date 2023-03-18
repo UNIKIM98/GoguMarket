@@ -363,12 +363,14 @@ public class BizController {
 	public String bizMain(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String bizNo = (String) session.getAttribute("bizNo");
+//		System.out.println("비즈넘버" + bizNo);
 		model.addAttribute("biz", memService.bizInfo(bizNo));
+//		System.out.println("아니 이거 왜안나옴?"+memService.bizInfo("bn002"));
 		// 공통코드 시간
 		model.addAttribute("code", codeService.codeList("007"));
 		model.addAttribute("imgDetail", memService.bizDetailImg(bizNo));
 		model.addAttribute("news", newsService.selectBizNews(bizNo));
-		return "/biz/shopMain";
+		return "biz/shopMain";
 	}
 
 }

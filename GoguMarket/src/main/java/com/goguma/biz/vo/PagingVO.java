@@ -2,7 +2,7 @@ package com.goguma.biz.vo;
 
 
 public class PagingVO {
-	int pageUnit=1 ; 		//한페이지 출력할 레코드 건수
+	int pageUnit=5 ; 		//한페이지 출력할 레코드 건수
 	int pageSize=5 ; 		//페이지번호 수 (5) 1~ 5까지
 	int lastPage;     		//마지막 페이지번호
 	int totalRecord = 126;		//전체 레코드건수
@@ -13,14 +13,15 @@ public class PagingVO {
 	int last;
 	
 	public int getFirst() {
-		first = (getPage() - 1) * getPageUnit() + 1;
-		return first;
+	    first = (getPage() - 1) * getPageUnit() + 1;
+	    return first;
 	}
 
 	public int getLast() {
-		last = getPage() * getPageUnit();
-		return last;
+	    last = Math.min(getPage() * getPageUnit(), getTotalRecord());
+	    return last;
 	}
+
 
 	public int getPageUnit() {
 		return pageUnit;
@@ -39,9 +40,11 @@ public class PagingVO {
 	}
 
 	public int getLastPage() {
-		lastPage = totalRecord / pageUnit + 
-				   ( totalRecord % pageUnit>0 ? 1 : 0 );
-		return lastPage;
+	    if (totalRecord <= 0) {
+	        return 0;
+	    }
+	    lastPage = totalRecord / pageUnit + (totalRecord % pageUnit > 0 ? 1 : 0);
+	    return lastPage;
 	}
 
 	public void setLastPage(int lastPage) {
@@ -74,10 +77,11 @@ public class PagingVO {
 	}
 
 	public int getEndPage() {
-		endPage = (page-1)/pageSize  * pageSize  + pageSize ;
-		if ( endPage > getLastPage() )
-			endPage = getLastPage() ;
-		return endPage;
+	    endPage = (page - 1) / pageSize * pageSize + pageSize;
+	    if (endPage > getLastPage()) {
+	        endPage = getLastPage();
+	    }
+	    return Math.max(endPage, 1);
 	}
 
 	public void setEndPage(int endPage) {

@@ -86,14 +86,14 @@
   font-weight: 500;
 }
 .footer-menu li:hover a, .footer-menu li:hover a i {
-  color: #ff7f00;
+  color: #C04A82;
 }
 .border-left {
   position: relative;
   padding-left: 10px;
 }
 .border-left::before {
-  background: #ff7f00 none repeat scroll 0 0;
+  background: #C04A82 none repeat scroll 0 0;
   content: "";
   height: 12px;
   left: 0;
