@@ -449,6 +449,7 @@ public class DealController {
 		System.out.println(svo+"svooooo"); // 이건또왜 시발 퍼스트1 라스트1이냐?
 		paging.setTotalRecord(dealService.getcountTotal(svo)); 
 		System.out.println(dealService.getcountTotal(svo)+"갯수나오냐?"); // 이건되는데
+		
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
 		System.out.println(dealService.selectNtslDeal(svo)+"svooo");
 
