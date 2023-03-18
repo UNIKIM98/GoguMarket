@@ -64,7 +64,7 @@ public class WebSecurityConfig {
 				.oauth2Login((oauthLogin) -> oauthLogin.permitAll().successHandler(new KakaoLoginSuccessHandler())
 						.userInfoEndpoint().userService(customOAuth2UserService))
 
-				.logout((logout) -> logout.permitAll().logoutSuccessUrl("/goguma/dealMain").invalidateHttpSession(true))
+				.logout((logout) -> logout.permitAll().logoutSuccessUrl("/").invalidateHttpSession(true))
 				.csrf().disable();
 
 		return http.build();

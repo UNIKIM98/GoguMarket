@@ -35,7 +35,7 @@
 											<th><label for="profile">프로필사진</label></th>
 											<td>
 												<div id="pfTrgt">
-													<img src="attech/222.jpg" alt="" style="width: 60px; height: 60px; border-radius: 70%;">
+													<img src="/img/logo/002.png" alt="" style="width: 60px; height: 60px; border-radius: 70%; border:2px solid #C04A82">
 												</div>
 											</td>
 											<td>
@@ -153,7 +153,7 @@
 		/*<![CDATA[*/
 		var inputFileList = new Array();
 		var deleteList = new Array();
-		var img_style = 'width:60px;height:60px;border-radius:70%';
+		var img_style = 'width: 60px; height: 60px; border-radius: 70%; border:2px solid #C04A82';
 		
 		var userId = /*[[ ${userInfo.userId} ]]*/
 		console.log(userId);
@@ -316,7 +316,7 @@
 					$("#pfTrgt").children().remove();
 					$("#pfTrgt").append(
 								`
-								<img style=${img_style} src=${e.target.result}
+								<img style="${img_style}" src=${e.target.result}
 																	   id=file${fileNum} onclick=fileDelete('file${fileNum}')>
 								`		
 					)
