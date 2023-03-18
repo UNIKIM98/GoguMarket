@@ -5,7 +5,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>내가 주최한 경매</title>
 </head>
 
 <body>
@@ -15,9 +14,12 @@
 
     </script>
 	<div layout:fragment="myContent">
-        <h1 style="text-align: center;">경매 전체조회 페이지입니다.</h1>
+		<div class="section-title text-start mb-20" >
+        <h2 class="uppercase">경매 전체조회 페이지</h2>
+        <div>
+            <h4 class="blog-section-title border-left mb-30">내가 등록한 경매품</h4>
+        </div>
         <table class="table" border="1">
-
             <thead>
                 <tr style="text-align: center;">
                     <th>번호</th>
@@ -41,8 +43,8 @@
 					onmouseleave='this.style.background="#FFFFFF";'
                     >
                     <td th:text="${myAuctList.auctNo}"></td>
-                    <td th:text="${myAuctList.regYmd}"></td>
-                    <td th:text="${myAuctList.ddlnYmd}"></td>
+                    <td th:text="${#dates.format(myAuctList.regYmd, 'yyyy/MM/dd')}"></td>
+                    <td th:text="${#dates.format(myAuctList.ddlnYmd, 'yyyy/MM/dd')}"></td>
                     <td th:text="${myAuctList.auctTtl}"></td>
                     <td th:text="${myAuctList.ctgry}"></td>
                     <th:block th:switch="${myAuctList.stts}">
@@ -71,6 +73,7 @@
 		<script src="js/plugins.js"></script>
 		<!-- Main js file that contents all jQuery plugins activation. -->
 		<script src="js/main.js"></script>
+    </div>
     </div>
 </body>
 

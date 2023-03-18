@@ -5,7 +5,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>내가 입찰한 경매</title>
 </head>
 
 <body>
@@ -15,14 +14,18 @@
 
     </script>
 	<div layout:fragment="myContent">
-        <h1 style="text-align: center;">입찰하신 상품 페이지입니다.</h1>
+		<div class="section-title text-start mb-20" >
+            <h2 class="uppercase">입찰 전체조회 페이지</h2>
+                <div>
+                    <h4 class="blog-section-title border-left mb-30">입찰하신 상품 목록</h4>
+                </div>
         <table class="table" border="1">
 
             <thead>
                 <tr style="text-align: center;">
                     <th>입찰번호</th>
                     <th>입찰자</th>
-                    <th>경매품 번호</th>
+                    <th>상품명</th>
                     <th>입찰날짜</th>
                     <th>입찰가</th>
                     <th>이동</th>
@@ -37,7 +40,7 @@
                     <td th:text="${mybidList.auctMemNo}"></td>
                     <td th:text="${mybidList.userId}"></td>
                     <td th:text="${mybidList.auctNo}"></td>
-                    <td th:text="${mybidList.auctYmd}"></td>
+                    <td th:text="${#dates.format(mybidList.auctYmd, 'yyyy/MM/dd')}"></td>
                     <td th:text="${mybidList.nowPrc}"></td>
                     <td><a th:href="@{/goguma/auctSelect/{mybidList}(mybidList = ${mybidList.auctNo})}">이동</a></td>
                 </tr>
@@ -54,6 +57,7 @@
 		<script src="js/plugins.js"></script>
 		<!-- Main js file that contents all jQuery plugins activation. -->
 		<script src="js/main.js"></script>
+        </div>
     </div>
 </body>
 
