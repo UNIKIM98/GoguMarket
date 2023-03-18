@@ -8,22 +8,39 @@
 </head>
 <body>
 	<div layout:fragment="myContent">
-
+	<style>
+		#scrollDiv::-webkit-scrollbar {
+		    width: 8px;  /* 스크롤바의 너비 */
+		}
+		
+		#scrollDiv::-webkit-scrollbar-thumb {
+		    height: 30%; /* 스크롤바의 길이 */
+		    background: #FCD052; /* 스크롤바의 색상 */
+		    
+		    border-radius: 10px;
+		}
+		
+		#scrollDiv::-webkit-scrollbar-track {
+		    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
+		}
+	</style>	
 		<div class="col-lg-12">
 			<form action="#">
 
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="section-title text-start mb-20">
-							<h2 class="uppercase">나의 예약 리스트</h2>
-							<h6>예약 상세내역을 확인하려면 목록을 클릭하세요</h6>
+							<div>
+								<h4 class="blog-section-title border-left mb-20">나의 예약</h4>
+								<h6>예약 상세내역을 확인하려면 목록을 클릭하세요</h6>
+							</div>
 						</div>
 					</div>
 				</div>
 
 
 				<!-- 내용 윗쪽 -->
-				<div class="row">
+				<div class="row" style="overflow-y: scroll; height: 200px;" id="scrollDiv">
 
 					<div class="col-lg-12">
 						<table class="table">

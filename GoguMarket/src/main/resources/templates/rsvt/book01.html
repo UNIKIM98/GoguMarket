@@ -107,7 +107,7 @@
 														<a th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}">
 															<img th:each="img: ${img}"
 															th:if="${list.bizNo} == ${img.bizNo}"
-															th:src="${img.atchNm}" alt="" />
+															th:src="${img.atchNm}" alt="" onerror="this.onerror=null; this.src='/img/logo/001.png'"/>
 														</a>
 													</div>
 													

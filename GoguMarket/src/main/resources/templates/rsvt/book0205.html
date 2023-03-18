@@ -17,7 +17,7 @@
 					<div class="col-lg-1">
 						<div class="media-left">
 							<a href="#"><img class="media-object" th:src="${biz.atchPath}"
-								alt="#" width="80px" style="border-radius: 50px;"></a>
+								alt="#" width="80px" style="border-radius: 50px;" onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
 						</div>
 					</div>
 
@@ -189,7 +189,7 @@
 														<div class="col-lg-3">
 															<div class="blog-image">
 																<a href="#"><img th:src="${news.atchPath}" alt=""
-																	width="230px" style="padding: 0 0 10px 0;"></a>
+																	width="230px" style="padding: 0 0 10px 0;" onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
 															</div>
 														</div>
 														<hr class="mt-20">
@@ -212,7 +212,7 @@
 															<!-- <h2 th:text="${menu}"></h2> -->
 															<div class="media-left">
 																<a href="#"><img class="media-object"
-																	th:src="${menu.atchId}" alt="#" style="height: 70px;"></a>
+																	th:src="${menu.atchId}" alt="#" style="height: 70px;" onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
 															</div>
 															<div class="media-body">
 																<div class="clearfix">
@@ -252,7 +252,8 @@
 																		<div class="media mt-30">
 																			<div class="media-left mt-10">
 																				<a href="#"><img class="media-object"
-																					th:src="${rv.pfPath}" alt="#" width="60px;" style="border-radius:50px"></a>
+																					th:src="${rv.pfPath}" alt="#" width="60px;" style="border-radius:50px"
+																					onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
 																			</div>
 																			<div class="media-body mt-15">
 																				<h5 th:text="${rv.nickNm}">(유저닉네임)</h5>
