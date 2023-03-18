@@ -21,6 +21,8 @@ public class SnsVO{
 	//검색 정렬을 위해서 있는것
 	private String search;
 	private String pstSe;
+	private String current;
+	private String view;
 	//
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")

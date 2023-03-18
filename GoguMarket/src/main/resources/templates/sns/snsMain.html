@@ -72,14 +72,21 @@ textarea {
 										</div>
 									</div>
 								</div>
+								<form id="sortFrm">
+									<ul class="nav f-right mt-10" style="padding: 10px">
+										<li><a class="active" href="#popular-product"
+											data-bs-toggle="tab" name="sort"
+											onclick="selectSnsList('current')">최근순 </a>/</li>
+										<li><a href="#special-offer" data-bs-toggle="tab"
+											name="sort" onclick="selectSnsList('view')"> 조회순 </a></li>
+									</ul>
+								</form>
 							</div>
 						</div>
-
-						<!-- 							<div class="by-brand-product"> -->
-						<!-- 								<div class="active-by-brand slick-arrow-2" ></div> -->
-						<!-- 							</div> -->
 						<div class="blog-section mb-50">
+
 							<div class="container">
+
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="blog">
@@ -174,15 +181,14 @@ textarea {
 		<!-- 개인 Sns -->
 		<div id="mySns" class="Sns">
 			<!-- Modal content -->
-			<div class="Sns-content" style="width: 40%">
-				<button class="f-right" value="수정" onclick="updateSns()">수정</button>
-				<button class="f-right" value="삭제" onclick="deleteSns()">삭제</button>
+			<div class="Sns-content" style="width: 40%;">
+
 				<form id="snsContent" action="#">
 
 					<div class="Sns-body">
 						<div>
-							<span class="ml-10" id="snsYmd"></span> <img alt="" class="ml-5"
-								id="atchPath" style="width: 100%;">
+							<img alt="" class="ml-5" id="atchPath" style="width: 100%;">
+							<span class="ml-10" id="snsYmd"></span>
 
 							<h3 class="mt-10 ml-20"></h3>
 
@@ -232,10 +238,23 @@ textarea {
 		
 		});
 		
-		function selectSnsList(){
+		function selectSnsList(sort){
+			console.log('gdgd'+sort)
+				formData=[];
+		
+				formData = $("#searchForm").serialize();
 			
-			formData = $("#searchForm").serialize();
-			console.log(formData);
+				console.log(formData);
+				
+				if(sort == 'current'){
+					
+					formData += "&current=" + sort;
+				}else{
+					formData += "&view=" + sort;
+				}
+			
+				console.log(formData)
+				
 			
 			$.ajax({
 				url : "/goguma/selectSnsList", // 데이터를 가져올 경로 설정
@@ -247,40 +266,25 @@ textarea {
 						  console.log(result)
 						  $("#list").empty()
 						  for(sns of result){
-							  
-					
-							$("#list").append(`
-									
-									
-                                <div class="blog-item" style="width:300px ; height:300px" onclick=""">
-								
-									<img src="${sns.atchPath}" alt="" style="width:100% ; height:300px" >
-								<div class="blog-desc">
-									<h5 class="blog-title">
-										<a href="single-blog.html">${sns.userId} / ${sns.snsYmd}</a>
-									</h5>
-									<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-            						<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-									<h5 class="blog-title">
-									
-									
-								<a href="single-blog.html">${sns.hash}</a>
-								</h5>
-								
-									
-								</div>
-						
-							</div>`)
-											
-							
-					
-							
-							
-							
-							
-							
-							$(".blog-item").attr("onclick","snsModal('+sns.snsNo+')")
-							
+							  $("#list").append(`
+									  <div style="padding:10px">
+									<div class="blog-item" style="width:300px ; height:300px" onclick="snsModal(${sns.snsNo})">
+										<img src="${sns.atchPath}" alt="" style="width:100% ; height:300px" >
+									<div class="blog-desc">
+										<h5 class="blog-title">
+											<a href="single-blog.html">${sns.userId} / ${sns.snsYmd}</a>
+										</h5>
+										<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+            							<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+										<h5 class="blog-title">
+											<a href="single-blog.html">${sns.hash}</a>
+										</h5>
+									</div>
+									</div>
+									<p class="ml-20" style="paddinf:20px;">조회수 :${sns.inqCnt}</p>
+									<div>
+							`)
+
 		           							 }
 											},
 						error : function(err) {

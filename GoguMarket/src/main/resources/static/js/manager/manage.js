@@ -208,7 +208,7 @@ function updataStts(userId) {
 		if (confirmMessage) deleteMember(userId, userStts);
 	} else {
 		$.ajax({
-			url: "/updateStts",
+			url: "/admin/updateStts",
 			type: "POST",
 			data: {
 				userStts: userStts,

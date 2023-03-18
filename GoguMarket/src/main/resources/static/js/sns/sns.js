@@ -145,7 +145,7 @@ function SelectCmntlist(snsNo) {
 							console.log("넘어옴 : " + index);
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
-								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem + ')');
+								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem );
 								$(obj).find("#rrpContent").attr("id", "rrpContent" + item.cmntNo);
 								$(obj).find("#rrpGroupNo").val(item.groupNo);
 								$(obj).find("#rrpCmntNo").val(item.cmntNo);
@@ -153,7 +153,7 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#rrpCmntMem").text(item.cmntMem);
 								$(obj).find("#rrpCmntYmd").text(item.cmntYmd);
 								$(obj).find("#cmntCn").text(item.cmntCn);
-								$(obj).find("#delbutton").attr("onclick", "rreplyDel(" + item.cmntNo + ", " + item.groupNo + "," + item.snsNo + ")")
+								$(obj).find("#delbutton").attr("onclick",)
 								$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + "," + item.snsNo + ")")
 
 
@@ -183,7 +183,7 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#reInput").attr('onclick', 'ShowRrpInput(' + item.cmntNo + ',' + item.snsNo + ')');
 								$(obj).find(".replyGroup").attr('id', 'replyGroup' + item.cmntNo);
 								$(obj).find(".rrplyGroup").attr('id', 'rrplyGroup_' + item.cmntNo);
-								$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + ", " + item.groupNo + ")")
+								$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + "," + item.groupNo +  "," +"'"+ item.cmntCn+"'"+")")
 								return true;
 							}
 
@@ -224,6 +224,7 @@ function ShowRrpInput(cmntNo, replySnsNo) {
 
 //---------------------------------reply(insert)-----------------------------------
 function insertReply() {
+	console.log("댓긋 입")
 	let snsNo = $("#replySnsNo").val();
 	let cmntMem = $("#replyUserId").val();
 	let cmntCn = $("#replyCmntCn").val();
@@ -327,13 +328,13 @@ function deleteSns(){
 }
 
 
-function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo) {
+function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo,rpCmntCn) {
 
 	let button = event.currentTarget.parentNode;
 
 
 	$('#cmntCn' + rpCmntNo).remove();
-	$("#replyGroup" + rpCmntNo).append(`<textarea class="form-control" id="cmntCn" name="cmntCn" required></textarea>`);
+	$("#replyGroup" + rpCmntNo).append(`<textarea class="form-control" id="cmntCn" name="cmntCn">${rpCmntCn}</textarea>`);
 
 	event.currentTarget.remove();
 	$(button).append(`<input type="submit" class="btn btn-dark mt-3 f-left"
@@ -354,10 +355,11 @@ function rreplyEditForm(rrpCmntNo, rrpSnsNo) { //답글 수정폼 생성
 	$("#rrpContent").append(
 		'<textarea id="innerdiv" class="form-inline" id="rrpCmntCn" style="word-break: break-all; ""width:200px">Hi there!</textarea>'	
 	)*/
-
+	
+	let cn = $('#rrpContent' + rrpCmntNo + ' #cmntCn').text()
 	$('#rrpContent' + rrpCmntNo + ' #cmntCn').remove();
 
-	$("#rrpContent" + rrpCmntNo).append(`<textarea class="form-control" id="cmntCn1" name="cmntCn" required></textarea>`);
+	$("#rrpContent" + rrpCmntNo).append(`<textarea class="form-control" id="cmntCn1" name="cmntCn">${cn}</textarea>`);
 
 	let button = event.currentTarget.parentNode;
 

@@ -74,7 +74,7 @@ public class RestMemManController {
 	}
 
 	
-	@PostMapping("/updateStts")
+	@PostMapping("/admin/updateStts")
 	public int updateStts(MemVO vo) {
 		
 	
@@ -104,7 +104,7 @@ public class RestMemManController {
 		
 		avo.setPstSe("AD");
 		avo.setUserId(vo.getUserId());
-		avo.setAlmCn("[관리자 알림] 귀하의 아이디가 "+SttsCn+" 변경되었습니다./.");
+		avo.setAlmCn("[관리자 알림] 귀하의 아이디가 "+SttsCn+" 변경되었습니다.");
 		
 		int cnt = member.updateStts(vo);
 		if(cnt > 0) {
