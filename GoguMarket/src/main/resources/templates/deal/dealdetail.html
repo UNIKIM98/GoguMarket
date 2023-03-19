@@ -14,18 +14,8 @@
 
 
 <style>
-@font-face {
-	font-family: 'S-CoreDream-3Light';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
 
-* {
-	font-family: 'S-CoreDream-3Light';
-}
+
 </style>
 </head>
 
@@ -104,7 +94,7 @@
 // 			});
 
 		</script>
-
+		
 		<hr>
 		<!-- Body main wrapper start -->
 		<div class="wrapper">
@@ -139,32 +129,86 @@
 												</div>
 											</div>
 										</div>
+										
 										<!-- imgs-zoom-area end -->
-										<div class="section-title text-start mb-40"  th:each="deal : ${dealList}" >
-														<div class="profile" >
-															<div class="leftProfile">
-																<img th:src="${dealList[0].PROFILE}" alt=""
-																	style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;">
-															</div>
-															<div class="rightProfile">
-																<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2>
-																<h6 th:text="${dealList[0].ADDR}">주소</h6>
-															</div>
-														</div>
+										<div th:each="d : ${deal}">
+										<div class="section-title text-start mb-40" th:each="p : ${profile}" >
+<!-- 														<p th:text="${p}"></p> -->
+											<img th:src="${p.PROFILE}">
+											<h4 th:if="${p.DL_NO == d.dlNo}" th:text="${p.NICK_NM}"></h4>
+											<p th:if="${p.DL_NO == d.dlNo}" th:text="${p.ADDR}"></p>
 										</div>
+<!-- 														<div class="profile" > -->
+<!-- 															<div class="leftProfile"> -->
+<!-- 																<img th:src="${deal.PROFILE}" alt="" -->
+<!-- 																	style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;"> -->
+<!-- 															</div> -->
+<!-- 															<div class="rightProfile"> -->
+<!-- 																<h2 class="uppercase" th:text="${deal.NICK_NM}">닉네임</h2> -->
+<!-- 																<h6 th:text="${deal.ADDR}">주소</h6> -->
+<!-- 															</div> -->
+<!-- 														</div> -->
+										</div></div>
 										<!-- single-product-info start -->
 										<div class="col-md-7">
 											<div class="single-product-info" th:each="deal : ${deal}">
 													<!-- 게시글번호  -->
-													<a th:text="'게시글번호 : '+${deal.dlNo}"></a>
-													<h4 th:text="'판매자id : '+${deal.ntslId}">판매자아이디</h4>
 													
-													<h6 class="brand-name-2">
-														<a th:text="${deal.area}">거래지역</a>
-													</h6>
+<!-- 													<h4 th:text="'판매자id : '+${deal.ntslId}">판매자아이디</h4> -->
+													
+<!-- 													<h6 class="brand-name-2"> -->
+<!-- 														<a th:text="${deal.area}">거래지역</a> -->
+<!-- 													</h6> -->
 													<button type="button" class="btnInfo" onClick="seller()">판매자의정보더보기</button>
 													<div class="f-right"></div>
 													<!-- hr -->
+													<div class="sin-pro-action f-right">
+												<ul th:each="d : ${deal}" class="action-button">
+													<!-- 판매자입장에서 -->
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															type="button"
+															th:onclick="|location.href='@{/my/dealupdate/{dlNo}(dlNo=${d.dlNo})}'|"
+															th:if="${session.userId == deal.ntslId}">수정하기</button></li>
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															type="submit" th:if="${session.userId == deal.ntslId}"
+															th:onclick="|location.href='@{/my/deleteDeal/{dlNo}(dlNo=${d.dlNo})}'|">삭제하기</button></li>
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															th:if="${d.stts == '예약중' && d.ntslId == session.userId}"
+															type="submit" 
+															onclick="cancel()">예약취소</button></li>
+													<!-- 아작스로. 누르면 판매상태=판매중 구매자=null 으로 수정  -->		
+															<!--  아 걍 구매예약 테이블이 잇어야될거같은데 시뱌 한테이블로하니까 불편한듯 -->
+				
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															th:if="${d.stts == '예약완료' && d.ntslId == session.userId}"
+															type="submit" 
+															onclick="soldout()">판매완료</button></li>
+													<!--  판완은 버튼누르면 걍 바로 stts="판완" 으로 바꾸게 하면안되냐 아작스?로? 아 제안받은 가격처리는 흠.. -->		
+															
+														
+													<!-- 판매자 + 구매자 둘다 사용할 버튼 -->															
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															type="submit" onclick="chat()">채팅하기</button></li>
+															
+													<!-- 구매자 -->
+													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+															type="submit"
+															th:if="${session.userId != deal.ntslId}"
+															th:onclick="|location.href='@{/my/dealUpdateRsvt/{dlNo}(dlNo=${d.dlNo})}'|"
+															>구매예약</button></li>
+													<!-- <li><button class="submit-btn-1 mt-30 btn-hover-1"
+														type="submit" 
+														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
+														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
+															>리뷰쓰기</button></li> -->
+															<li><button class="submit-btn-1 mt-30 btn-hover-1"
+														type="submit" 
+														th:if="${session.userId != deal.ntslId}" 
+														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
+															>리뷰쓰기</button></li>
+												
+												</ul>
+											</div>
 													<hr>
 													<h3 th:text="${deal.dlTtl}" class="text-black-1">글제목이랍니다</h3>
 													<h6 th:text="${deal.dlYmd}" class="brand-name-2">날짜보여주는곳</h6>
@@ -224,13 +268,13 @@
 																				<a th:text="${l.dlTtl}" 
 																					th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${l.dlNo})}">타이틀자리</a>
 																			</h6>
+																			<p class="mb-10" th:text="'조회수 '+${l.inqCnt}">조회수</p>
 																			<p class="mb-10" th:text="${l.dlYmd}">27 Jun,
 																				2022 at 2:30pm</p>
 																		</div>
 																		<div class="f-right">
 																			<ul class="reply-delate">
 																				<li><a th:text="${l.stts}">판매상태</a></li>
-
 																			</ul>
 																		</div>
 																	</div>
@@ -255,67 +299,58 @@
 										<!--  hr -->
 										<hr>
 										<!-- single-pro-color-rating 찜 , 채팅 , 조회수 -->
-										<div class="single-pro-color-rating clearfix">
-											<div class="sin-pro-color">
-												<ul class="nav mb-20" th:each="deal : ${deal}">
-													<li><h6 class="brand-name-2 f-right" th:text="'조회수 '+${deal.inqCnt}">조회수</h6></li>
-												</ul>
-											</div>
-											</tr>
-										</div>
-										<!-- hr -->
-										<hr>
+										
 										<!-- plus-minus-pro-action -->
-										<div class="plus-minus-pro-action">
+<!-- 										<div class="plus-minus-pro-action"> -->
 
-											<div class="sin-pro-action f-right">
-												<ul th:each="d : ${deal}" class="action-button">
-													<!-- 판매자입장에서 -->
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="button"
-															th:onclick="|location.href='@{/my/dealupdate/{dlNo}(dlNo=${d.dlNo})}'|"
-															th:if="${session.userId == deal.ntslId}">수정하기</button></li>
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit" th:if="${session.userId == deal.ntslId}"
-															th:onclick="|location.href='@{/my/deleteDeal/{dlNo}(dlNo=${d.dlNo})}'|">삭제하기</button></li>
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															th:if="${d.stts == '예약중' && d.ntslId == session.userId}"
-															type="submit" 
-															onclick="cancel()">예약취소</button></li>
-													<!-- 아작스로. 누르면 판매상태=판매중 구매자=null 으로 수정  -->		
-															<!--  아 걍 구매예약 테이블이 잇어야될거같은데 시뱌 한테이블로하니까 불편한듯 -->
+<!-- 											<div class="sin-pro-action f-right"> -->
+<!-- 												<ul th:each="d : ${deal}" class="action-button"> -->
+<!-- 													판매자입장에서 -->
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 															type="button" -->
+<!-- 															th:onclick="|location.href='@{/my/dealupdate/{dlNo}(dlNo=${d.dlNo})}'|" -->
+<!-- 															th:if="${session.userId == deal.ntslId}">수정하기</button></li> -->
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 															type="submit" th:if="${session.userId == deal.ntslId}" -->
+<!-- 															th:onclick="|location.href='@{/my/deleteDeal/{dlNo}(dlNo=${d.dlNo})}'|">삭제하기</button></li> -->
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 															th:if="${d.stts == '예약중' && d.ntslId == session.userId}" -->
+<!-- 															type="submit"  -->
+<!-- 															onclick="cancel()">예약취소</button></li> -->
+<!-- 													아작스로. 누르면 판매상태=판매중 구매자=null 으로 수정 		 -->
+<!-- 															 아 걍 구매예약 테이블이 잇어야될거같은데 시뱌 한테이블로하니까 불편한듯 -->
 				
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															th:if="${d.stts == '예약완료' && d.ntslId == session.userId}"
-															type="submit" 
-															onclick="soldout()">판매완료</button></li>
-													<!--  판완은 버튼누르면 걍 바로 stts="판완" 으로 바꾸게 하면안되냐 아작스?로? 아 제안받은 가격처리는 흠.. -->		
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 															th:if="${d.stts == '예약완료' && d.ntslId == session.userId}" -->
+<!-- 															type="submit"  -->
+<!-- 															onclick="soldout()">판매완료</button></li> -->
+<!-- 													 판완은 버튼누르면 걍 바로 stts="판완" 으로 바꾸게 하면안되냐 아작스?로? 아 제안받은 가격처리는 흠..		 -->
 															
 														
-													<!-- 판매자 + 구매자 둘다 사용할 버튼 -->															
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit" onclick="chat()">채팅하기</button></li>
+<!-- 													판매자 + 구매자 둘다 사용할 버튼															 -->
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 															type="submit" onclick="chat()">채팅하기</button></li> -->
 															
-													<!-- 구매자 -->
-													<li><button class="submit-btn-1 mt-30 btn-hover-1"
-															type="submit"
-															th:if="${session.userId != deal.ntslId}"
-															th:onclick="|location.href='@{/my/dealUpdateRsvt/{dlNo}(dlNo=${d.dlNo})}'|"
-															>구매예약</button></li>
-													<!-- <li><button class="submit-btn-1 mt-30 btn-hover-1"
-														type="submit" 
-														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
-														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
-															>리뷰쓰기</button></li> -->
-															<li><button class="submit-btn-1 mt-30 btn-hover-1"
-														type="submit" 
-														th:if="${session.userId != deal.ntslId}" 
-														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
-															>리뷰쓰기</button></li>
+<!-- 													구매자 -->
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 															type="submit" -->
+<!-- 															th:if="${session.userId != deal.ntslId}" -->
+<!-- 															th:onclick="|location.href='@{/my/dealUpdateRsvt/{dlNo}(dlNo=${d.dlNo})}'|" -->
+<!-- 															>구매예약</button></li> -->
+<!-- 													<li><button class="submit-btn-1 mt-30 btn-hover-1"
+<!-- 														type="submit"  -->
+<!-- 														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}"  -->
+<!-- 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|" -->
+<!-- 															>리뷰쓰기</button></li> --> -->
+<!-- 															<li><button class="submit-btn-1 mt-30 btn-hover-1" -->
+<!-- 														type="submit"  -->
+<!-- 														th:if="${session.userId != deal.ntslId}"  -->
+<!-- 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|" -->
+<!-- 															>리뷰쓰기</button></li> -->
 												
-												</ul>
-											</div>
-										</div>
+<!-- 												</ul> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
 									</div>
 								</div>
 								<!-- single-product-info end -->

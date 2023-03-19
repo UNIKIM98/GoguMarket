@@ -30,20 +30,18 @@
 		
 	})
 	</script>
-	<div class="col-lg-12">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="section-title text-start mb-20" >
-							<h2 class="uppercase">중고거래마이페이지</h2>
-							
-								<!-- 포인트 정보 -->
-								<div class="container">
-										<div class="tab-pane active" id="order-complete">
-											<br>
-											<div>
-												<h4 class="blog-section-title border-left mb-30">나의 포인트</h4>
-											</div>
-											<div class="order-complete-content box-shadow">
+	
+	<div class="wrapper">
+			<section id="page-content" class="page-wrapper section">
+				<div class="about-section mb-80">
+				<div class="container">
+					<div class="message-box box-shadow white-bg"
+						style="height: 1000px; width: 80%">
+						<!--▶ 우리동네 select -->
+						<div class="row" id="myAreaNow">
+							<div class="section-title text-start ">
+								<h4 class="blog-section-title border-left mb-30">나의 포인트</h4>
+								<div class="order-complete-content box-shadow">
 												<div class="order-info p-30 mb-10">
 													<ul class="order-info-list">
 														<li><a class="totalP" href='javascript:void(0);'
@@ -69,13 +67,20 @@
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
+<!-- 								<h4 th:if="${userInfo.dealArea!=null}"> -->
+<!-- 									지금 우리 동네는 <span style="font-weight: bold;" class="myArea" -->
+<!-- 										th:text="${userInfo.dealArea}"></span> 입니다. -->
+<!-- 								</h4> -->
+<!-- 								<h4 th:if="${userInfo.dealArea == null}">우리동네를 설정해주세요 :D</h4> -->
+							</div>
+							<div class="mt-20"></div>
 						</div>
-					</div>
-				</div>
-				<hr>
-								<!-- 판매중 / 판매완료 / 구매내역 탭 시작 -->
+						<hr>
+						<div class="row mb-80" id="setMyArea">
+							<div class="section-title text-start ">
+								<h4 class="blog-section-title border-left mb-30">중고거래내역</h4>
+								<p>📌 우리동네 설정시 주소도 함께 변경됩니다.</p>
+								<br>
 								<div class="single-product-tab reviews-tab">
 									<ul class="nav nav-tabs mb-20">
 										<li class="nav-item"><a class="nav-link active" href="#description" data-bs-toggle="tab" role="tab" data-bs-target="#description">판매중</a></li>
@@ -186,9 +191,14 @@
 											</div>
 										</div>
 									</div>
-								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
 	
-
 		
 		<script th:inline="javascript">
 		// 마이포인트 페이지로 가는 버튼 함수

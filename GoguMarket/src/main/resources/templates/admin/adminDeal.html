@@ -97,14 +97,7 @@
 						<form id="searchForm" name="searchForm" method="get"
 							onsubmit="return false" style="margin-left: 30px">
 							<h6 class="m-0 font-weight-bold text-primary pl-100">
-								<select class="mr-10" name="searchKey" id="sort">
-
-
-								</select> <input type="text" placeholder=" search.." id="searchCn"
-									name="search">
-								<button id="searchButton" class="btn btn-primary"
-									onclick="selectMemberList(2)"
-									style="height: 25px; line-height: 15px">SEARCH</button>
+								
 							</h6>
 						</form>
 
@@ -149,13 +142,10 @@
 									<td>
 										<button 
 										th:onclick="|location.href='@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}'|"
-										type="button" class="btnInfo">조회</button>
+										type="button" class="btn btn-primary"
+								style="height: 25px; line-height: 15px">조회</button>
+										
 									</td>
-<!-- 									<td> -->
-<!-- 										<button  -->
-<!-- 										type="button" class="btnDel">삭제</button> -->
-<!-- <!-- 										th:onclick="|location.href='@{/my/deleteDeal/{dlNo}(dlNo=${d.dlNo})}'|" --> -->
-<!-- 									</td> -->
 								</tr>
 							</tbody>
 						</table>
