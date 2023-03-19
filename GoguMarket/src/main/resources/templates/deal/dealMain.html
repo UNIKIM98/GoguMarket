@@ -12,6 +12,9 @@ layout:decorate="~{layouts/layout}">
 	crossorigin="anonymous"></script>
     <style>
 	
+		.col-lg-3 span{
+		color: #C04A82;
+		}
    		 .action-button span {
 			color: #C04A82;
 		}
@@ -104,7 +107,7 @@ layout:decorate="~{layouts/layout}">
                             <div class="breadcrumbs-inner">
                                 <h1 class="breadcrumbs-title">중고거래</h1>
                                 <ul class="breadcrumb-list">
-                                    <li><a href="index.html">홈으로가기</a></li>
+                                    <li><a href="/">홈으로가기</a></li>
                                     <li>중고거래메인</li>
                                 </ul>
                             </div>
@@ -118,25 +121,31 @@ layout:decorate="~{layouts/layout}">
 									
         <div class="newsletter-section section-bg-tb pt-60 pb-80">
             <div class="container">
+	            <div center="align">
+		            <h2 class="newsletter-title">중고거래 통합검색</h2>
+	                    <p>1. 카테고리와 글유형을 선택하세요</p>
+	                    <p>2. 선택하지 않을 시 전체글에서 조회됩니다</p>
+	            </div>
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
+                    <div class="col-lg-8 lg-2">
                        <!-- 카테고리&검색&페이징 삼위일체로 한큐에 : form 태그로 감싼다 -->
                         <div class="newsletter"> 
                         	<div class="newsletter-info text-center">
 		                        <form name="frmSearch" align="center">
-				                    <h2 class="newsletter-title">중고거래 통합검색</h2>
-				                    <p>1. 카테고리와 글유형을 선택하세요</p>
-				                    <p>2. 선택하지 않을 시 전체글에서 조회됩니다</p>
+				                    
 		                                <div class="subcribe clearfix">
 		                                        <input type="hidden" name="page" value="1"> 
 		                                        <input type="hidden" name="orderby" value="dl_ymd"> 
+		                                        <div class="row">
+		                                        <div class="col-2" style="padding: 15px 15px 0 15px;">
 		                                            <select name="ctgry">
+		                                            
 		                                                <!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
 		                                                <option value="">전체 카테고리
 		                                                <option th:each="ct : ${category}" th:text="${ct.commonNm}"
 		                                                    th:value="${ct.commonDetailCode}"
 		                                                    th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
-		                                            </select>
+		                                            </select> 
 		                                             <!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
 			                                        <select id="searchType" name="searchType" title="검색 유형 선택">
 			                                            <option value="">전체 글 유형</option>
@@ -144,32 +153,44 @@ layout:decorate="~{layouts/layout}">
 			                                            <option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
 			                                            <option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
 			                                        </select> 
-			                                    <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
-			                                            placeholder="검색어를 입력하세요" title="키워드 입력"/>
-		                                    <button class="submit-btn-2 btn-hover-2" type="submit">검 색</button>
-		                                     <input  type="text" disabled>
-			                                <button class="submit-btn-2 btn-hover-2" onclick="resetSearch()" type="button">초기화</button>
+			                                        </div>
+			                                <div class="col-8">
+			                                <div class="row">
+			                                <div class="col-6">
+			                                	<input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
+			                                           placeholder="검색어를 입력하세요" title="키워드 입력"/>
+			                               </div>
+			                                <div class="col-4">
+			                                    <button class="submit-btn-2 btn-hover-2" type="submit">검색</button>
+				                                <button class="submit-btn-2 btn-hover-2" onclick="resetSearch()" type="button">리셋</button>
+			                                </div>
+			                                </div>
+			                                </div>
+			                                </div>
 		                             </div>
 		                        </form>
 	                        </div>
                         </div>
                     </div>
+                    
+                    <div class="col-lg-3" style="margin-top:0px;">
+                <!-- 인기검색어 롤링박스 -->
+		              <h3><span>인기검색어</span></h3>
+		                <div class="rolling_box">
+		                    <ul id ="rolling_box">
+		                    <li class="card_sliding" id ="first"><p></p></li>
+		                    <li class="" id ="second"><p></p></li>
+		                    <li class="" id ="third"><p></p></li>
+		                    </ul>
+		                </div>
+		                
+		            </div>
+                    
                 </div>
             </div>
         </div>
          
-            <div class="col-lg-8 offset-lg-8">
-                <!-- 인기검색어 롤링박스 -->
-                <h3>인기검색어</h3>
-                <div class="rolling_box">
-                    <ul id ="rolling_box">
-                    <li class="card_sliding" id ="first"><p></p></li>
-                    <li class="" id ="second"><p></p></li>
-                    <li class="" id ="third"><p></p></li>
-                    </ul>
-                </div>
-                
-            </div>
+            
         </div>
 
 		

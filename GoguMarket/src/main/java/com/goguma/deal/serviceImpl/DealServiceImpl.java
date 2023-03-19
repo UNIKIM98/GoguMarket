@@ -136,9 +136,9 @@ public class DealServiceImpl implements DealService {
 	}
 
 	@Override
-	public List<Map> selectPrchsDeal(String prchsId) {
+	public String selectPrchsDeal(int dlNo) {
 		// TODO Auto-generated method stub
-		return map.selectPrchsDeal(prchsId);
+		return map.selectPrchsDeal(dlNo);
 	}
 
 	@Override
