@@ -15,5 +15,5 @@ public interface HomeService {
 
 	List<Map> selectHomeSns();
 	
-	List<AuctMemVO> selectHomeAuctMem(String auctNo);
+	List<AuctMemVO> selectHomeAuctMem(int auctNo);
 }

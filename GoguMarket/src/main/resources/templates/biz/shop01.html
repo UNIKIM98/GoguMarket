@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
-	layout:decorate="~{biz/slide/slide}">
-
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
-	<meta charset="UTF-8">
-	<title>나의 가게 등록</title>
-	<script src="js/vendor/jquery-3.6.0.min.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<style type="text/css">
 		.userTable span {
@@ -20,7 +17,7 @@
 </head>
 
 <body>
-	<div layout:fragment="Bizcontent">
+	<div layout:fragment="content">
 		<div class="message-box-section mb-80">
 			<div class="container">
 				<div class="message-box box-shadow white-bg">
@@ -71,10 +68,10 @@
 													style="width: 70%;">
 											</td>
 										</tr>
-										<input type="hidden" id="stts" name="stts" value="BIZ">
 									</tbody>
 								</table>
 							</div>
+							<input type="hidden" id="stts" name="stts" value="BIZ">
 							<div class="col-lg-12">
 
 								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button"
@@ -179,36 +176,6 @@
 						}
 					});
 				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 				// ==================================================
 				// 사업자번호 인증하기

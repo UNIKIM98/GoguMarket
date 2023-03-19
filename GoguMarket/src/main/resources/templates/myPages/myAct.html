@@ -124,34 +124,36 @@
 	// ==============================================================
 	// ❤️ 전체 계좌 중 하나 삭제 (+Ajax)
 		function deleteActListOne(event){
-			let actNo = $(event.target).parent().parent().attr('id');
-			let memActNoYn = 'N';
-			console.log(memActNo+"memActNo ")
-			if(actNo == memActNo){
-				memActNoYn = "Y"
-			}
-
-			$.ajax({
-				url: "/my/deleteActListOne/"+actNo+"/"+memActNoYn,
-				type: 'get',
-				dataType: 'json',
-				contentType: 'application/json; charset = utf-8',
-				success: function (result) {
-					deleteActListOneAfter(result, actNo, memActNoYn);
-				},
-				error: function (err) {
-					console.log(err);
+			if(confirm("정말로 계좌를 삭제하시겠습니까?")){
+				let actNo = $(event.target).parent().parent().attr('id');
+				let memActNoYn = 'N';
+				console.log(memActNo+"memActNo ")
+				if(actNo == memActNo){
+					memActNoYn = "Y"
 				}
-			})
+				
+				$.ajax({
+					url: "/my/deleteActListOne/"+actNo+"/"+memActNoYn,
+					type: 'get',
+					dataType: 'json',
+					contentType: 'application/json; charset = utf-8',
+					success: function (result) {
+						deleteActListOneAfter(result, actNo, memActNoYn);
+					},
+					error: function (err) {
+						console.log(err);
+					}
+				})
+			}
 		}
 	
 	// ==============================================================
 	// ❤️ 전체계좌 중 하나 삭제 Ajax 이후
 		function deleteActListOneAfter(result, actNo, memActNoYn){
 			if(result.result != 1){
-				alert("[계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다. :()")
+				alert("[계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다.🥺)")
 			}else{
-				alert("[계좌 삭제 성공] 계좌를 성공적으로 삭제하였습니다. :D)")
+				alert("[계좌 삭제 성공] 계좌가 정상적으로 삭제되었습니다.🙂)")
 				$("#"+actNo).remove();
 				$("#actListTable").children().eq(1).append(
 				`
@@ -169,7 +171,7 @@
 
 					// # 대표계좌 등록하라는 문구 출력하기
 					$("#memActSection").children().eq(1).append(
-						$("<p>").text("대표계좌를 등록해주세요 :D").css('font-size', 'medium'));
+						$("<p>").text("대표계좌를 등록해주세요 🙂").css('font-size', 'medium'));
 				}
 
 			}
@@ -181,21 +183,23 @@
 			let actNo = $(event.target).parent().parent().attr('id');
 
 			if(actNo == memActNo){
-				alert("이미 대표계좌로 등록되어있는 계좌번호입니다 :D");
+				alert("이미 대표계좌로 등록되어있는 계좌번호입니다🙂");
 			}
 			else{
-				$.ajax({
-				url: "/my/updateMemActAjax/"+actNo,
-				type: 'get',
-				dataType: 'json',
-				contentType: 'application/json; charset = utf-8',
-				success: function (result) {
-					updateMemActAjaxAfter(result.result);
-				},
-				error: function (err) {
-					console.log(err);
+				if(confirm("대표계좌를 변경하시겠습니까?")){
+					$.ajax({
+						url: "/my/updateMemActAjax/"+actNo,
+						type: 'get',
+						dataType: 'json',
+						contentType: 'application/json; charset = utf-8',
+						success: function (result) {
+							updateMemActAjaxAfter(result.result);
+						},
+						error: function (err) {
+							console.log(err);
+						}
+					})
 				}
-			})
 			}
 			
 		}
@@ -204,9 +208,9 @@
 	// ❤️ 대표계좌 설정 Ajax 이후
 		function updateMemActAjaxAfter(result){
 			if(result=="fail"){
-				alert("[대표계좌 변경 실패] 대표계좌 변경 중 오류가 발생하였습니다. :()")
+				alert("[대표계좌 변경 실패] 대표계좌 변경 중 오류가 발생하였습니다.🥺)")
 			}else{
-				alert("[대표계좌 변경 성공] 대표계좌를 성공적으로 변경하였습니다 :D");
+				alert("[대표계좌 변경 성공] 대표계좌를 성공적으로 변경하였습니다🤗");
 				memActNo = result.actNo;
 				switch (result.bankNm) {
 				  case '국민':
@@ -260,7 +264,7 @@
 			// # 대표계좌 없을 때(== BankNm이 Nothing일 때) : 대표계좌 등록하라는 문구 출력
 			if (result == "Nothing") {
 				$("#memActSection").children().eq(1).append(
-					$("<p>").text("대표계좌를 등록해주세요 :D").css('font-size', 'medium'))
+					$("<p>").text("대표계좌를 등록해주세요 🙂").css('font-size', 'medium'))
 
 				//# 대표계좌 있을 때 : 대표계좌 정보 출력
 			} else {
@@ -360,7 +364,7 @@
 
 				// # 대표계좌 등록하라는 문구 출력하기
 				$("#memActSection").children().eq(1).append(
-					$("<p>").text("대표계좌를 등록해주세요 :D").css('font-size', 'medium'));
+					$("<p>").text("대표계좌를 등록해주세요 🙂").css('font-size', 'medium'));
 			} else {
 				//# 대표계좌 삭제 실패시
 				alert("[대표계좌 삭제 실패] 계좌 삭제 중 오류가 발생하였습니다.")
@@ -376,7 +380,7 @@
 			<section id="page-content" class="page-wrapper section">
 				<div class="about-section mb-80">
 					<div class="container">
-					<br>
+						<div class="message-box box-shadow white-bg" style="height: 700px; width: 80%">
 						<!-- 대표계좌 -->
 						<div class="row mb-100" id="memActSection">
 							<div class="section-title text-start ">
@@ -409,6 +413,7 @@
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</section>
 		</div>

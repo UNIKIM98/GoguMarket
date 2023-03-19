@@ -19,11 +19,13 @@
 </head>
 <body>
 	<div layout:fragment="myContent">
+			<div class="container">
+			<div class="message-box box-shadow white-bg" style="height: 700px; width: 80%">
 						<div class="row" id="memActSection">
 							<div class="section-title text-start ">
-								<h2 class="uppercase">나의 계좌</h2>
+								<h4 class="blog-section-title border-left mb-30">나의계좌</h4>
 								<hr>
-								<h3 style="font-weight: bold;">계좌 등록</h3>
+								<h4 style="font-weight: bold;">계좌등록</h4>
 							</div>
 						</div>
 						<div class="row" id="newAct">
@@ -31,7 +33,7 @@
 									<p>로고를 클릭해주세요 :)</p>
 								</div>
 								<div>
-									<table class="table bankTbl">
+									<table class="table bankTbl" style="width: 70%">
 										<tbody>
 											<tr>
 												<td><img src="img/act/01 국민.png" class="bankLogo"><p>국민</p></td>
@@ -51,6 +53,8 @@
 								<br>
 							<div class="col-lg-12" id="actZone">
 							</div>
+						</div>
+						</div>
 						</div>
 						
 		<script th:inline="javascript">

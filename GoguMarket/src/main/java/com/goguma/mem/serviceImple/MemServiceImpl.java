@@ -84,5 +84,11 @@ public class MemServiceImpl implements MemService {
 		return mapper.updateUserPw(mVO);
 	}
 
+	@Override
+	public int updateUserSe(MemVO mVO) {
+		// TODO Auto-generated method stub
+		return mapper.updateUserSe(mVO);
+	}
+
 
 }

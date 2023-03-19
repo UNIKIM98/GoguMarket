@@ -4,18 +4,22 @@
 	layout:decorate="~{layouts/layout}">
 <head>
 <style type="text/css">
-span{
-color: #C04A82;
-font-weight: bold;
+.whiteH3{
+	color:white;
+	font-weight: bold;
+}
+.spanStrong span {
+	color: #C04A82;
+	font-weight: bold;
 }
 </style>
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="wrapper">
+		<div class="wrapper spanStrong">
 			<section id="page-content" class="page-wrapper section">
 				<!-- 고굼화켓 -->
-				<div class="featured-product-section section-bg-tb pb-55">
+				<div class="featured-product-section section-bg-tb pb-50">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-12">
@@ -27,23 +31,31 @@ font-weight: bold;
 									<h6>고구마켓과 함께 일상의 기쁨을 누리세요.</h6>
 								</div>
 								<div class="featured-product">
-									<div class="active-featured-product slick-arrow-2">
+									<div class="active-featured-product slick-arrow-2"
+										data-slick='{"autoplay": true, "autoplaySpeed": 2000}'>
 										<!--중고마켓게시글1-->
 										<div class="product-item product-item-2" th:each="d : ${deal}">
 											<div class="product-img">
-												<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo = ${d.DL_NO})}"> <img src="${d.ATCH_PATH}"
-													alt="중고사진"
+												<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo = ${d.DL_NO})}">
+													<img th:src="${d.ATCH_PATH}" alt="중고사진"
 													onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 												</a>
 											</div>
 											<div class="product-info">
 												<h6 class="product-title">
-													<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo = ${d.DL_NO})}"
-													  th:text="${d.DL_TTL}"></a>
+													<a
+														th:href="@{/goguma/dealdetail/{dlNo}(dlNo = ${d.DL_NO})}"
+														th:text="${d.DL_TTL}"></a>
 												</h6>
 												<h6 class="brand-name" th:text="${d.AREA}">Sumsung</h6>
 												<h3 class="pro-price"
+													th:if="${d.DL_PRC != 0}"
 													th:text="${#numbers.formatInteger(d.DL_PRC, 3, 'COMMA') + '원'}"></h3>
+												<h4 class="pro-price"
+													th:if="${d.DL_PRC == 0}"
+													th:text="무료나눔"
+													th:style="${'color: #C04A82; font-weight: bold;'}"
+													></h4>
 											</div>
 											<ul class="action-button">
 												<li><a title="Wishlist"><i
@@ -59,36 +71,38 @@ font-weight: bold;
 					</div>
 				</div>
 				<!-- 고구마켓 끝 -->
-
 				<!-- 경매 -->
-				<div class="up-comming-product-section ptb-60">
+				<div class="up-comming-product-section pb-50">
 					<div class="container">
 						<div class="row">
 							<!-- 경매 -->
 							<div class="section-title text-start mb-20">
 								<h2 class="uppercase">경매</h2>
 								<h6>
-									고구마켓과 함께 <span>짜릿한 경매</span>에 참여해 보세요.
+									고구마켓과 함께 <span class="whiteSpan">짜릿한 경매</span>에 참여해 보세요.
 								</h6>
 							</div>
 							<div class="col-lg-8">
 								<div class="up-comming-pro gray-bg up-comming-pro-2 clearfix">
 									<div class="up-comming-pro-img f-left">
-										<a href="#"> <img src="/img/up-comming/2.jpg" alt="">
+										<a href="#"> <img th:src="${auct[0].ATCH_PATH}" alt=""
+											onerror="this.onerror=null; this.src='/img/logo/003.png'">
 										</a>
 									</div>
 									<div class="up-comming-pro-info f-left">
 										<h3>
-											<a href="#">경매타이틀(a태그걸기)</a>
+											<a href="#" th:text="${auct[0].AUCT_TTL}">경매타이틀(a태그걸기)</a>
 										</h3>
 										<h4>
-											<span>현재가격 </span>10,000원
+											<span>현재가격 </span> [[${#numbers.formatInteger(auct[0].MAX, 3,
+											'COMMA') + '원'}]]
 										</h4>
 										<h3>
 											<span>경매마감까지</span>
 										</h3>
 										<div class="up-comming-time-2">
-											<div data-countdown="2023/07/15"></div>
+											<div
+												data-countdown="${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')}"></div>
 										</div>
 									</div>
 								</div>
@@ -96,7 +110,7 @@ font-weight: bold;
 							<div class="col-lg-4 d-block d-md-none d-lg-block">
 								<div class="banner-item banner-1">
 									<div class="ribbon-price">
-										<span>참여현황</span>
+										<h3 class="whiteH3">참여현황</h3>
 									</div>
 									<div class="banner-img">
 										<a href="#"><img src="/img/logo/경매배경.png" alt=""></a>
@@ -105,13 +119,10 @@ font-weight: bold;
 										<h3>
 											<a href="#">낙찰유력</a>
 										</h3>
-										<ul class="banner-featured-list">
-											<li><i class="zmdi zmdi-check"></i><span>adipisicing
-													elitest,</span></li>
-											<li><i class="zmdi zmdi-check"></i><span>eiusmod
-													tempor</span></li>
-											<li><i class="zmdi zmdi-check"></i><span>labore
-													et dolore.</span></li>
+										<ul class="banner-featured-list" th:each="mem : ${auctMem}">
+											<li><i class="zmdi zmdi-check"></i>[[${#dates.format(auct[0].DDLN_YMD,
+												'yyyy/MM/dd')}]] [[${#numbers.formatInteger(mem.nowPrc, 3,
+												'COMMA') + '원'}]]</li>
 										</ul>
 									</div>
 								</div>
@@ -119,10 +130,8 @@ font-weight: bold;
 						</div>
 					</div>
 				</div>
-				<!-- UP COMMING PRODUCT SECTION END -->
-
-				<!-- PRODUCT TAB SECTION START -->
-				<div class="product-tab-section section-bg-tb pt-80 pb-55">
+				<!-- BIZ -->
+				<div class="product-tab-section section-bg-tb pb-50">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-6">
@@ -147,65 +156,75 @@ font-weight: bold;
 							<div class="col-lg-12">
 								<!-- Tab panes -->
 								<div class="tab-content">
-									<!-- popular-product start -->
+									<!-- 치킨 -->
 									<div id="chicken-biz" class="tab-pane active show">
 										<div class="row">
 											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4">
+											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
+												th:if="${b.CTGRY}=='치킨'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
-														<a href="single-product.html"> <img
-															src="img/product-2/7.jpg" alt="" />
+														<a
+															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
+															<img alt="" th:src="${b.ATCH_PATH}"
+															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 														</a>
 													</div>
 													<div class="product-info">
 														<h5 class="product-title">
-															<a href="single-product.html">치킨집이름</a>
+															<a
+																th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}"
+																th:text="${b.BIZ_NM}">치킨집이름</a>
 														</h5>
-														<h6 class="brand-name">가게위치</h6>
-														<h6 class="pro-price">전화번호</h6>
+														<h6 class="brand-name" th:text="${b.BIZ_ADDR}">가게위치</h6>
+														<h6 class="pro-price" th:text="${b.BIZ_TEL}">전화번호</h6>
 													</div>
 													<ul class="action-button">
 														<li>
 															<!--단골--> <a href="#" title="Wishlist"><i
-																class="zmdi zmdi-favorite"></i> 11</a>
+																class="zmdi zmdi-favorite"></i></a>
 														</li>
 														<li>
 															<!--후기--> <a href="#" title="Add to cart"><i
-																class="zmdi zmdi-shopping-cart-plus"></i> 12</a>
+																class="zmdi zmdi-shopping-cart-plus"></i></a>
 														</li>
 													</ul>
 												</div>
 											</div>
+											<!-- popular-product end -->
 										</div>
 									</div>
-									<!-- popular-product end -->
 									<!-- new-arrival start -->
 									<div id="korean-biz" class="tab-pane" role="tabpanel">
 										<div class="row">
 											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4">
+											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
+												th:if="${b.CTGRY}=='한식'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
-														<a href="single-product.html"> <img
-															src="img/product-2/7.jpg" alt="" />
+														<a
+															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
+															<img alt="" th:src="${b.ATCH_PATH}"
+															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 														</a>
 													</div>
 													<div class="product-info">
 														<h5 class="product-title">
-															<a href="single-product.html">한식집이름</a>
+															<a
+																th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}"
+																th:text="${b.BIZ_NM}">치킨집이름</a>
 														</h5>
-														<h6 class="brand-name">가게위치</h6>
-														<h6 class="pro-price">전화번호</h6>
+														<h6 class="brand-name" th:text="${b.BIZ_ADDR}">가게위치</h6>
+														<h6 class="pro-price" th:text="${b.BIZ_TEL}">전화번호</h6>
 													</div>
 													<ul class="action-button">
 														<li>
 															<!--단골--> <a href="#" title="Wishlist"><i
-																class="zmdi zmdi-favorite"></i> 11</a>
+																class="zmdi zmdi-favorite"></i></a>
 														</li>
 														<li>
 															<!--후기--> <a href="#" title="Add to cart"><i
-																class="zmdi zmdi-shopping-cart-plus"></i> 12</a>
+																class="zmdi zmdi-shopping-cart-plus"></i></a>
 														</li>
 													</ul>
 												</div>
@@ -216,29 +235,33 @@ font-weight: bold;
 									<!-- best-seller start -->
 									<div id="western-biz" class="tab-pane" role="tabpanel">
 										<div class="row">
-											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4">
+											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
+												th:if="${b.CTGRY}=='양식'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
-														<a href="single-product.html"> <img
-															src="img/product-2/7.jpg" alt="" />
+														<a
+															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
+															<img alt="" th:src="${b.ATCH_PATH}"
+															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 														</a>
 													</div>
 													<div class="product-info">
 														<h5 class="product-title">
-															<a href="single-product.html">양식집이름</a>
+															<a
+																th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}"
+																th:text="${b.BIZ_NM}">치킨집이름</a>
 														</h5>
-														<h6 class="brand-name">가게위치</h6>
-														<h6 class="pro-price">전화번호</h6>
+														<h6 class="brand-name" th:text="${b.BIZ_ADDR}">가게위치</h6>
+														<h6 class="pro-price" th:text="${b.BIZ_TEL}">전화번호</h6>
 													</div>
 													<ul class="action-button">
 														<li>
 															<!--단골--> <a href="#" title="Wishlist"><i
-																class="zmdi zmdi-favorite"></i> 11</a>
+																class="zmdi zmdi-favorite"></i></a>
 														</li>
 														<li>
 															<!--후기--> <a href="#" title="Add to cart"><i
-																class="zmdi zmdi-shopping-cart-plus"></i> 12</a>
+																class="zmdi zmdi-shopping-cart-plus"></i></a>
 														</li>
 													</ul>
 												</div>
@@ -249,62 +272,69 @@ font-weight: bold;
 									<!-- special-offer start -->
 									<div id="chinese-biz" class="tab-pane" role="tabpanel">
 										<div class="row">
-											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4">
+											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
+												th:if="${b.CTGRY}=='중식'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
-														<a href="single-product.html"> <img
-															src="img/product-2/7.jpg" alt="" />
+														<a
+															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
+															<img alt="" th:src="${b.ATCH_PATH}"
+															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 														</a>
 													</div>
 													<div class="product-info">
 														<h5 class="product-title">
-															<a href="single-product.html">중식집이름</a>
+															<a
+																th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}"
+																th:text="${b.BIZ_NM}">치킨집이름</a>
 														</h5>
-														<h6 class="brand-name">가게위치</h6>
-														<h6 class="pro-price">전화번호</h6>
+														<h6 class="brand-name" th:text="${b.BIZ_ADDR}">가게위치</h6>
+														<h6 class="pro-price" th:text="${b.BIZ_TEL}">전화번호</h6>
 													</div>
 													<ul class="action-button">
 														<li>
 															<!--단골--> <a href="#" title="Wishlist"><i
-																class="zmdi zmdi-favorite"></i> 11</a>
+																class="zmdi zmdi-favorite"></i></a>
 														</li>
 														<li>
 															<!--후기--> <a href="#" title="Add to cart"><i
-																class="zmdi zmdi-shopping-cart-plus"></i> 12</a>
+																class="zmdi zmdi-shopping-cart-plus"></i></a>
 														</li>
 													</ul>
 												</div>
 											</div>
 										</div>
 									</div>
-
 									<!-- special-offer end -->
 									<div id="cafe-biz" class="tab-pane" role="tabpanel">
 										<div class="row">
-											<!-- product-item start -->
-											<div class="col-lg-3 col-md-4">
+											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
+												th:if="${b.CTGRY}=='카페'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
-														<a href="single-product.html"> <img
-															src="img/product-2/7.jpg" alt="" />
+														<a
+															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
+															<img alt="" th:src="${b.ATCH_PATH}"
+															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 														</a>
 													</div>
 													<div class="product-info">
 														<h5 class="product-title">
-															<a href="single-product.html">카페이름</a>
+															<a
+																th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}"
+																th:text="${b.BIZ_NM}">치킨집이름</a>
 														</h5>
-														<h6 class="brand-name">가게위치</h6>
-														<h6 class="pro-price">전화번호</h6>
+														<h6 class="brand-name" th:text="${b.BIZ_ADDR}">가게위치</h6>
+														<h6 class="pro-price" th:text="${b.BIZ_TEL}">전화번호</h6>
 													</div>
 													<ul class="action-button">
 														<li>
 															<!--단골--> <a href="#" title="Wishlist"><i
-																class="zmdi zmdi-favorite"></i> 11</a>
+																class="zmdi zmdi-favorite"></i></a>
 														</li>
 														<li>
 															<!--후기--> <a href="#" title="Add to cart"><i
-																class="zmdi zmdi-shopping-cart-plus"></i> 12</a>
+																class="zmdi zmdi-shopping-cart-plus"></i></a>
 														</li>
 													</ul>
 												</div>
@@ -316,10 +346,8 @@ font-weight: bold;
 						</div>
 					</div>
 				</div>
-				<!-- PRODUCT TAB SECTION END -->
-
-				<!-- BLOG SECTION START -->
-				<div class="blog-section-2 pt-60 pb-30">
+				<!--SNS -->
+				<div class="blog-section-2 pb-50">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-12">
@@ -329,68 +357,27 @@ font-weight: bold;
 								</div>
 								<div class="blog">
 									<div class="active-blog-2">
-										<div class="blog-item-2">
+										<!-- sns 회전초밥 -->
+										<div class="blog-item-2" th:each="s : ${sns}">
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="blog-image">
-														<a href="single-blog.html"><img src="img/blog/4.jpg"
+														<a href="/goguma/snsMain"><img th:src="${s.ATCH_PATH}"
+															onerror="this.onerror=null; this.src='/img/logo/003.png'"
 															alt=""></a>
 													</div>
 												</div>
 												<div class="col-lg-6">
 													<div class="blog-desc">
 														<h5 class="blog-title-2">
-															<a href="#">게시글이름</a>
+															<a href="/goguma/snsMain" th:text="${s.HASH}">해시태그</a>
 														</h5>
-														<p>작성자</p>
+														<p th:text="${#dates.format(s.SNS_YMD, 'yyyy/MM/dd')}">날짜</p>
+														<p th:text="${s.USER_ID}">작성자</p>
+														<p th:utext="${s.SNS_CN}"
+															style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></p>
 														<div class="read-more">
-															<a href="#">Read more</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="blog-item-2">
-											<div class="row">
-												<div class="col-lg-6">
-													<div class="blog-image">
-														<a href="single-blog.html"><img src="img/blog/5.jpg"
-															alt=""></a>
-													</div>
-												</div>
-												<div class="col-lg-6">
-													<div class="blog-desc">
-														<h5 class="blog-title-2">
-															<a href="#">dummy Blog name</a>
-														</h5>
-														<p>There are many variations of passages of in psum
-															available, but the majority have sufe ered on in some
-															form...</p>
-														<div class="read-more">
-															<a href="#">Read more</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="blog-item-2">
-											<div class="row">
-												<div class="col-lg-6">
-													<div class="blog-image">
-														<a href="single-blog.html"><img src="img/blog/4.jpg"
-															alt=""></a>
-													</div>
-												</div>
-												<div class="col-lg-6">
-													<div class="blog-desc">
-														<h5 class="blog-title-2">
-															<a href="#">dummy Blog name</a>
-														</h5>
-														<p>There are many variations of passages of in psum
-															available, but the majority have sufe ered on in some
-															form...</p>
-														<div class="read-more">
-															<a href="#">Read more</a>
+															<a href="/goguma/snsMain">더보기</a>
 														</div>
 													</div>
 												</div>

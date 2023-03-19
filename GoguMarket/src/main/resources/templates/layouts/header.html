@@ -12,31 +12,32 @@
 						<!-- logo -->
 						<div class="col-lg-2 col-md-4">
 							<div class="logo">
-								<a href="/"> <img src="/img/logo/new2.png" alt="main logo" style="width:200px">
+								<a href="/"> <img src="/img/logo/new2.png" alt="main logo" style="width:250px">
 								</a>
 							</div>
 						</div>
 						<!-- primary-menu -->
-						<div class="col-lg-7 d-none d-lg-block">
+						<div class="col-lg-8 d-none d-lg-block">
 							<nav id="primary-menu">
 								<ul class="main-menu text-center">
-									<li class="pr-20"><a href="/goguma/dealMain">중고마켓</a>
-									<li class="pr-20"><a href="/goguma/auctList">경매</a>
-									<li class="pr-20"><a href="/goguma/bookmain">동네가게</a>
-									<li class="pr-20"><a href="/goguma/snsMain">동네생활</a></li>
+									<li class="pr-20" style="font-size: large;"><a href="/goguma/dealMain">중고마켓</a>
+									<li class="pr-20" style="font-size: large;"><a href="/goguma/auctList">경매</a>
+									<li class="pr-20" style="font-size: large;"><a href="/goguma/bookmain">동네가게</a>
+									<li class="pr-20" style="font-size: large;"><a href="/goguma/snsMain">동네생활</a></li>
 								</ul>
 							</nav>
 						</div>
-						<div class="col-lg-3 col-md-8">
+						<div class="col-lg-2 col-md-8">
 						<nav id="primary-menu">
 							<ul class="main-menu text-center">
 								<li class="pr-20 f-right" th:if="${session.userId != null}">
 								<a href="/my/myInfoCheck">
 									<img alt="" th:if="${session.atchPath != null}" th:src="${session.atchPath}"
-										style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #C04A82"> 
+										style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
+										onerror="this.onerror=null; this.src='/img/logo/002.png'"> 
 									<img alt="" th:if="${session.atchPath == null}"
 										src="/img/logo/001.png"
-										style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #C04A82">
+										style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052">
 									<span th:text="${session.nickNm}" th:style="'margin-left: 5px;'"></span></a></li>
 								<li class="pr-20 f-right" th:if="${session.userId==null}">
 									<a href="/goguma/memberJoinForm"> <i class="zmdi zmdi-favorite"></i> 회원가입 </a></li>
