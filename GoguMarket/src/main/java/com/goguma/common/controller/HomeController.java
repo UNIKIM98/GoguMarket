@@ -24,8 +24,6 @@ public class HomeController {
 		model.addAttribute("deal", service.selectHomeDeal());
 		
 		List<Map> auctList = service.selectHomeAuct();
-		System.out.println(auctList);
-		System.out.println(auctList.get(0).get("AUCT_NO"));
 		
 		BigDecimal auctNoBigDecimal = (BigDecimal) auctList.get(0).get("AUCT_NO");
 		int auctNo = auctNoBigDecimal.intValue();
@@ -35,7 +33,6 @@ public class HomeController {
 		
 		model.addAttribute("biz", service.selectHomeBiz());
 		model.addAttribute("sns", service.selectHomeSns());
-		
 		
 		return "home/home";
 	}

@@ -55,13 +55,7 @@ public class OAuthAttributes {
 	private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
 		Map<String, Object> kakao_account = (Map<String, Object>) attributes.get("kakao_account"); 
 		Map<String, Object> profile = (Map<String, Object>) kakao_account.get("profile"); 
-		
-		System.out.println("카카오 어카운트(attributes)");
-		System.out.println(kakao_account);
-		
-		System.out.println("카카오 프로필");
-		System.out.println(profile);
-		
+				
 		String email = (String) kakao_account.get("email");
 		String userId = "kakao"+"_"+email.split("@")[0];
 		String uuid = UUID.randomUUID().toString().substring(0, 6);

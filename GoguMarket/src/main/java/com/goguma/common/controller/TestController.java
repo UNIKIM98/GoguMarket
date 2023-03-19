@@ -52,9 +52,9 @@ public class TestController {
 
 	@GetMapping("/goguma/emailTest")
 	@ResponseBody
-	public int emailTest(String eml) {
+	public String emailTest(String eml) {
 
-		int token = 0;
+		String token = "되는거니..";
 		String emailTtl = "[고구마켓] 이메일 인증번호 확인 후 회원가입을 완료해주세요 :D";
 		// 이메일 전송
 		try {
@@ -67,9 +67,9 @@ public class TestController {
 		return token;
 	}
 
-	@GetMapping("/admin/test")
+	@GetMapping("/goguma/test")
 	public String adminTest() {
-		return "myPages/myAct";
+		return "myPages/test";
 	}
 
 	@GetMapping("/biz/test")

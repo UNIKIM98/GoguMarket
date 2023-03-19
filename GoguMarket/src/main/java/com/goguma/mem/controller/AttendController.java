@@ -43,7 +43,6 @@ public class AttendController {
 		String userId = (String) session.getAttribute("userId");
 
 		map.put("aList", aService.selectAttendList(userId));
-		System.out.println(aService.selectAttendList(userId));
 		return map;
 	}
 

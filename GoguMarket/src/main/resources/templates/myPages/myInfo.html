@@ -228,7 +228,7 @@
                                  placeholder="인증번호를 입력해주세요." 
                                  >
                         <button class="submit-btn-1 btn-hover-1" type="button" 
-                        		 onclick="isAuthNumOk()" 
+                        		 onclick="issecureRandomOk()" 
                         		 id="emlAuthBtn"
                         		 value="1">인증하기</button>
                         </td>
@@ -278,7 +278,7 @@
 			  		  url:'/goguma/emlCheckAJax/'+eml,
 			  		  type:'get',
 			  		  success: function(result){
-			  			authNum = result;
+			  			secureRandom = result;
 			  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
 			  			  console.log(result);
 			  		  },
@@ -290,9 +290,9 @@
 		    
 		// ==============================================================
 		// ❤️ 이메일 인증번호 일치여부 확인
-		     function isAuthNumOk(){
-				  console.log(authNum);
-				  if(authNum == $("#emlCk").val()){
+		     function issecureRandomOk(){
+				  console.log(secureRandom);
+				  if(secureRandom == $("#emlCk").val()){
 					  alert("이메일 인증이 완료되었습니다.");
 					  $("#emlAuthBtn").val("0");
 				  }else{

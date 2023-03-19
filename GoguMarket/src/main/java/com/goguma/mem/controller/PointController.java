@@ -23,7 +23,6 @@ public class PointController {
 	// ❤️ 나의 포인트
 	@GetMapping("/my/myPoint")
 	public String myCouponNPoint() {
-		System.out.println("포인트--------------------------------");
 		return "myPages/myPoint";
 	}
 	
@@ -36,7 +35,6 @@ public class PointController {
 		String userId = (String) session.getAttribute("userId");
 		
 		List<PointVO> pointInfo = pointService.selectPointListForUser(userId);
-		System.out.println(pointInfo);
 		
 		return pointInfo;
 	}

@@ -2,6 +2,7 @@ package com.goguma.mem.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.AccessDeniedException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,6 +45,20 @@ public class MemController {
 	public String login() {
 		return "mem/login";
 	}
+	
+	// ===========================================================
+	// ❤️ 회원 로그아웃
+	@GetMapping("/goguma/logout")
+	public void logout(HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		out.println("<script language='javascript'>");
+		out.println("alert('👋 정상적으로 로그아웃되었습니다.'); location.href='/';");
+		out.println("</script>");
+
+		out.flush();
+	}
 
 	// ===========================================================
 	// ❤️ 일반 회원가입
@@ -54,11 +70,9 @@ public class MemController {
 
 	// 회원가입 폼 submit
 	@PostMapping("/goguma/memberJoin")
-	public String memberJoin(MemVO mVO, HttpServletResponse response) {
+	public void memberJoin(MemVO mVO, HttpServletResponse response) {
 		mVO.setUserSe("USER"); // ※ 일반회원 > 공통코드 사용해야하는 거 아닌감
-		mVO.setUserStts("0"); // ※ 정상 > 공통코드 사용해야하는 거 아닌감
-		System.out.println(mVO);
-
+		mVO.setUserStts("0"); // ※ 정상 > 공통코드 
 		// 비밀번호 암호화하기
 		String userPw = mVO.getUserPw();
 		userPw = bCryptPasswordEncoder.encode(userPw);
@@ -73,9 +87,7 @@ public class MemController {
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
-				out.println("alert('[회원가입성공] " + mVO.getUserNm() + "님 환영합니다 :D '); location.href='/goguma/dealMain';");
-				// ※ 메인페이지로 가게 고쳐야함!!
-
+				out.println("alert('[회원가입성공] " + mVO.getUserNm() + "님 환영합니다 :D '); location.href='/';");
 				out.println("</script>");
 
 				out.flush();
@@ -85,7 +97,7 @@ public class MemController {
 
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
-				out.println("alert('[회원가입실패] 다시 시도해주세요 :(');location.href='/goguma/memberJoinForm';"); // ※ 메인페이지로 가게
+				out.println("alert('[회원가입실패] 다시 시도해주세요 :(');location.href='redirect:/goguma/memberJoinForm';"); // ※ 메인페이지로 가게
 																										// 고쳐야함!!
 				out.println("</script>");
 
@@ -94,8 +106,6 @@ public class MemController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return "mem/memberJoinForm"; // ※ 메인페이지로 가게 고쳐야함!!
 	}
 
 	// ===========================================================
@@ -109,23 +119,25 @@ public class MemController {
 	// ===========================================================
 	// ❤️ 우리동네 설정
 	@GetMapping("/my/myArea")
-	public String myArea(HttpServletRequest request, MemVO mVO, Model model) {
+	public String myArea(HttpServletRequest request, MemVO mVO, Model model){
 		HttpSession session = request.getSession();
 		mVO.setUserId((String) session.getAttribute("userId"));
 
 		model.addAttribute("userInfo", memService.selectUser(mVO));
-		System.out.println(memService.selectUser(mVO));
 
 		return "myPages/myArea";
 	}
 
 	// ===========================================================
 	// ❤️ 회원정보 수정
-	@GetMapping("/my/myInfoCheck")
-	public String myInfoCheck() {
+	@GetMapping("/my/myInfoCheck/{value}")
+	public String myInfoCheck(@PathVariable String value, Model model) {
+		model.addAttribute("pwCkPage", value);
 		return "myPages/myInfoCheck";
 	}
-
+	
+	// ===========================================================
+	// ❤️ 회원정보 수정 Ajax
 	@PostMapping("/my/myPwCh")
 	public String myPwCh(HttpServletRequest request, MemVO checkVO, Model model, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -149,8 +161,11 @@ public class MemController {
 				PrintWriter out = response.getWriter();
 
 				out.flush();
-				page = "myPages/myInfo";
-
+				if(checkVO.getPwCkPage().equals("info")) {
+					page = "myPages/myInfo";					
+				}else if(checkVO.getPwCkPage().equals("goodBye")) {
+					page = "myPages/goodBye";					
+				}
 			} else {
 				response.setContentType("text/html; charset=UTF-8");
 
@@ -178,7 +193,6 @@ public class MemController {
 	// ❤️ 비밀번호 수정
 	@PostMapping("/goguma/updatePw")
 	public String updatePw(MemVO mVO, HttpServletResponse response) {
-		System.out.println("넘어온 vo > " + mVO);
 
 		String userPw = mVO.getUserPw();
 		userPw = bCryptPasswordEncoder.encode(userPw);
@@ -221,12 +235,15 @@ public class MemController {
 	public String findId() {
 		return "mem/findId";
 	}
-
+	
+	// ===========================================================
+	// ❤️ 회원 탈퇴
 	@GetMapping("/my/goodbye")
 	public String goodBye() {
 		return "myPages/goodBye";
 	}
-
+	// ===========================================================
+	// ❤️ 회원 탈퇴 Ajax
 	@GetMapping("/my/goodByeAjax")
 	public void goodByeAjax(HttpSession session, MemVO vo) {
 		String userId = (String)session.getAttribute("userId");
