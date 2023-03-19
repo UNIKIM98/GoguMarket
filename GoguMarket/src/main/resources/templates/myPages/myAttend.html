@@ -5,7 +5,7 @@
 <head>
 <style type="text/css">
 #isTodayAttend span {
-	color: #fd7e14;
+	color: #C04A82;
 	font-weight: bold;
 }
 </style>
@@ -21,24 +21,26 @@
 		<section id="page-content" class="page-wrapper section">
 			<div class="about-section mb-80">
 				<div class="container">
-					<br>
-					<div>
-						<h4 class="blog-section-title border-left mb-30">출석하기</h4>
-					</div>
-					<div id="isTodayAttend"></div>
-					<div id='calendar' style="width: 550px"></div>
-					<div style="text-align: center; margin-right: 40%;">
-						<button onclick="makeAttend()" id="attendBtn"
-							class="submit-btn-1 mt-30 btn-hover-1"
-							style="display: inline-block;">출석하기</button>
-						<button onclick="goPoint()" id="attendBtn"
-							class="submit-btn-1 mt-30 btn-hover-1">내 포인트 확인하기</button>
+					<div class="message-box box-shadow white-bg"
+						style="height: 750px; width: 80%">
+						<div>
+							<h4 class="blog-section-title border-left mb-30">출석하기</h4>
+						</div>
+						<div id="isTodayAttend"></div>
+						<div id='calendar' style="width: 550px"></div>
+						<div style="text-align: center; margin-right: 40%;">
+							<button onclick="makeAttend()" id="attendBtn"
+								class="submit-btn-1 mt-30 btn-hover-1"
+								style="display: inline-block;">출석하기</button>
+							<button onclick="goPoint()" id="attendBtn"
+								class="submit-btn-1 mt-30 btn-hover-1">내 포인트 확인하기</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		
-<script>
+
+		<script>
 
 	// ==============================================================
 	// ❤️ 변수 선언
@@ -166,7 +168,7 @@
 			location="/my/myPoint"
 		}
 	</script>
-		
+
 	</div>
 </body>
 

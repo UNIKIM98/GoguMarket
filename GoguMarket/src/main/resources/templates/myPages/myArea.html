@@ -14,7 +14,6 @@
 .errPlaceHolder::placeholder {
 	color: red;
 }
-$primary: #ff0000
 </style>
 </head>
 
@@ -23,11 +22,12 @@ $primary: #ff0000
 		<div class="wrapper">
 			<section id="page-content" class="page-wrapper section">
 				<div class="about-section mb-80">
-					<div class="container">
+				<div class="container">
+					<div class="message-box box-shadow white-bg"
+						style="height: 750px; width: 80%">
 						<!--▶ 우리동네 select -->
 						<div class="row" id="myAreaNow">
 							<div class="section-title text-start ">
-							<br>
 								<h4 class="blog-section-title border-left mb-30">우리 동네</h4>
 								<h4 th:if="${userInfo.dealArea!=null}">
 									지금 우리 동네는 <span style="font-weight: bold;" class="myArea"
@@ -66,6 +66,7 @@ $primary: #ff0000
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</section>
 		</div>

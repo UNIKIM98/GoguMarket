@@ -155,7 +155,9 @@ public class BizController {
 ///////////////////////////////////////////▼효근▼///////////////////////////////////////////
 	// 동네가게 등록(shop01)
 	@GetMapping("/my/shop01")
-	public String shop01() {
+	public String shop01(Model model, HttpSession session) {
+		String bizNo = (String) session.getAttribute("bizNo");
+		model.addAttribute("biz", memService.bizInfo(bizNo));
 		return "/biz/shop01";
 	}
 

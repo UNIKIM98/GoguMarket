@@ -31,14 +31,14 @@
 				<div class="row">
 				<div class="col-lg-4 order-complete-content box-shadow" th:each="cs : ${cashSell}">
 				<br>
-				<h3 style="color: #fd7e14; font-weight: bold;" class="blog-section-title border-left mb-30">2023년 <span th:text="${cs.MONTH}+'월'"></span> 거래판매내역</h3>
+				<h3 style="color: #C04A82; font-weight: bold;" class="blog-section-title border-left mb-30">2023년 <span th:text="${cs.MONTH}+'월'"></span> 거래판매내역</h3>
 					<div class="order-info p-30 mb-10">
 						<ul class="order-info-list">
 							<li><a class="totalP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">판매 건수</a>
 								<p>
 									총 <span th:text="${cs.CNT}" class="totalPTrgt"
-										style="color: #fd7e14; font-weight: bold;"></span>건
+										style="color: #C04A82; font-weight: bold;"></span>건
 								</p></li>
 							
 								<br>
@@ -46,14 +46,14 @@
 								onclick="criteriaPoint(event);">나눔 해준 횟수</a>
 								<p>
 									<span th:text="${cs.NCNT}" class="attendPTrgt"
-									style="color: #fd7e14; font-weight: bold;">0</span>건
+									style="color: #C04A82; font-weight: bold;">0</span>건
 								</p></li>
 								<br>
 								<li><a class="attendP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">판매액</a>
 								<p>
 									<span th:text="${cs.TOTALPRC}" class="attendPTrgt"
-									style="color: #fd7e14; font-weight: bold;">0</span>원
+									style="color: #C04A82; font-weight: bold;">0</span>원
 								</p></li>
 								
 							

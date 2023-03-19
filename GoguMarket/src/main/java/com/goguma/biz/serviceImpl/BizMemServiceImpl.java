@@ -20,6 +20,7 @@ import com.goguma.biz.vo.BizDangolVO;
 import com.goguma.biz.vo.BizMemVO;
 import com.goguma.biz.vo.BizSearchVO;
 import com.goguma.mem.mapper.MemMapper;
+import com.goguma.mem.vo.MemVO;
 
 @Service
 public class BizMemServiceImpl implements BizMemService {
@@ -101,6 +102,12 @@ public class BizMemServiceImpl implements BizMemService {
 		System.out.println("새로운 권한"+newAuth);
 		
 		session.setAttribute("userSe","ROLE_BIZ");
+		
+		MemVO memVO = new MemVO();
+		memVO.setUserSe("BIZ");
+		memVO.setUserId(vo.getUserId());
+		
+		memMap.updateUserSe(memVO);
 		
 		return map.bizInsert(vo);
 

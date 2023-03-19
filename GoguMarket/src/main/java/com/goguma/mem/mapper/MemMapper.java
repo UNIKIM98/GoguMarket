@@ -36,8 +36,11 @@ public interface MemMapper {
 
 	// ❤️ 우리동네 수정(회원 주소도 같이 변경됨)
 	int updateDealArea(MemVO mVO);
-	
+
 	// ❤️ 비밀번호 수정
 	int updateUserPw(MemVO mVO);
+
+	// ❤️ 권한변경(일반 > 비즈)
+	int updateUserSe(MemVO mVO);
 
 }
