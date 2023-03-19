@@ -16,7 +16,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="section-title text-start mb-20">
-								<h2 class="uppercase">예약 일정</h2>
+								<h4 class="blog-section-title border-left mb-15">예약 일정</h4>
 								<h6>예약 일정을 확인하고 준비해주세요</h6>
 							</div>
 						</div>
@@ -37,15 +37,15 @@
 					<table class="table">
 						<tr>
 							<th class="td-title-1" colspan="2" style="text-align:center;">예약일시</th>
-							<th class="td-title-1">예약자명</th>
-							<th class="td-title-1">요청사항</th>
-							<th class="td-title-1">주문정보</th>
-							<th class="td-title-1">예약상태</th>
+							<th class="td-title-1" style="text-align:center;">예약자명</th>
+							<th class="td-title-1" style="text-align:center;">요청사항</th>
+							<th class="td-title-1" style="text-align:center;">주문정보</th>
+							<th class="td-title-1" style="text-align:center;">예약상태</th>
 						</tr>
 
 						<!-- tr반복 -->
 						<tr th:each="list:${lists}" th:if="${!#lists.isEmpty(lists)}">
-							<td class="td-title-1" th:text="${list.rsvtYmd}">(예약날짜)</td>
+							<td class="td-title-1" th:text="${list.rsvtYmd}" width="120px;" style="text-align:right;">(예약날짜)</td>
 							<td class="td-title-1" th:each="code: ${code}"
 								th:if="${code.commonDetailCode} == ${list.rsvtTm} and ${list.rsvtTm} != null"
 								th:text="${code.commonNm}">(시간)
@@ -53,12 +53,12 @@
 							<td class="td-title-1" th:if="${list.rsvtTm} == null">
 								없음
 							</td>
-							<td class="td-title-1" th:text="${list.nickNm}">(이름)</td>
-							<td class="td-title-1" th:text="${list.rsvtWant}">(요청사항)</td>
-							<td class="td-title-1">
+							<td class="td-title-1" th:text="${list.nickNm}" width="90px" style="word-break:break-all">(이름)</td>
+							<td class="td-title-1" th:text="${list.rsvtWant}" width="240px" style="word-break:break-all">(요청사항)</td>
+							<td class="td-title-1" style="text-align:center;">
 								<button class="btn btn-warning btn-sm" type="button" th:onclick="rsvtInfo([[${list.rsvtNo}]])">상세보기</button>
 							</td>
-							<td class="td-title-1">
+							<td class="td-title-1" style="text-align:center;">
 								<button class="btn btn-success btn-sm" type="button" th:if="${list.rsvtStts}=='예약확정'">예약확정</button>
 								<button class="btn btn-secondary btn-sm" type="button" th:if="${list.rsvtStts}=='예약변경'" th:onclick="updateRsvt([[${list.rsvtNo}]])">예약변경</button>
 								<button class="btn btn-light btn-sm" type="button" th:if="${list.rsvtStts}=='예약완료'">예약완료</button>

@@ -14,7 +14,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="section-title text-start mb-20">
-								<h2 class="uppercase">내 가게 정보</h2>
+								<h4 class="blog-section-title border-left mb-15">내 가게 정보</h4>
 								<h6>가게에 대한 정보를 관리해보세요</h6>
 							</div>
 						</div>
@@ -28,7 +28,7 @@
 									<div class="col-lg-8">
 										<h6 class="widget-title mb-20">
 											가게 소개
-											<button class="btn btn-light f-right" type="button">수정</button>
+<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
 										</h6>
 
 										<div class="media author-post box-shadow mb-30">
@@ -39,7 +39,7 @@
 
 										<h6 class="widget-title mb-20">
 											가게주소
-											<button class="btn btn-light f-right" type="button">수정</button>
+<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
 										</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
@@ -49,7 +49,7 @@
 
 										<h6 class="widget-title mb-20">
 											전화번호
-											<button class="btn btn-light f-right" type="button">수정</button>
+<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
 										</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
@@ -59,7 +59,7 @@
 
 										<h6 class="widget-title mb-20">
 											운영시간
-											<button class="btn btn-light f-right" type="button">수정</button>
+<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
 										</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
@@ -71,31 +71,31 @@
 										</div>
 									</div>
 
-									<!-- 오른쪽 소식, 지도 -->
+									<!-- 오른쪽 소식-->
 									<div class="col-lg-4">
-										<div class="column">
-											<div>
-												<div class="product-item">
-													<div class="product-info">
-														<h6 class="product-title">
-															<a href="#">🔆 최신 가게소식</a>
-														</h6>
-														<p th:text="${news[0].ntcCn}">(소식)</p>
-														<!-- 가게소식 -->
-														<div class="product-img">
-															<a href="single-product.html"> <img
-																th:src="${imgDetail[0].atchPath}" alt=""/>
-															</a>
-														</div>
-													</div>
-												</div>
-												<!-- 지도 -->
-												<div>
-													<h6 class="widget-title">가게 위치</h6>
-													<div id="map" style="width: 100%; height: 330px;"></div>
+										
+											
+										<div class="product-item">
+											<div class="product-info">
+												<h6 class="product-title">
+													<a href="#">🔆 최신 가게소식</a>
+												</h6>
+												<p th:text="${news[0].ntcCn}">(소식)</p>
+												<!-- 가게소식 -->
+												<div class="product-img">
+													<a href="single-product.html"> <img
+														th:src="${imgDetail[0].atchPath}" alt=""/>
+													</a>
 												</div>
 											</div>
 										</div>
+									</div>
+								</div>
+								<!-- 지도 -->
+								<div class="row">
+									<h6 class="widget-title">가게 위치</h6>
+									<div class="col-12 d-flex justify-content-center">
+										<div id="map" style="width: 100%; height: 330px;"></div>
 									</div>
 								</div>
 							</div>
