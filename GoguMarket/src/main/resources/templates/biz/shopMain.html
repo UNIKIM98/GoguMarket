@@ -66,11 +66,12 @@
 												<h6 class="product-title">
 													<a href="#">🔆 최신 가게소식</a>
 												</h6>
-												<p th:text="${news[0].ntcCn}">(소식)</p>
+												<p th:if="${!#lists.isEmpty(news)}" th:text="${news[0].ntcCn}">(소식)</p>
+												<p th:if="${#lists.isEmpty(news)}">새로운 소식이 없어요 :(</p>
 												<!-- 가게소식 -->
 												<div class="product-img">
 													<a href="single-product.html"> <img
-														th:src="${imgDetail[0].atchPath}" alt=""/>
+														th:src="${imgDetail[0].atchPath}" onerror="this.onerror=null; this.src='/img/logo/001.png'" alt=""/>
 													</a>
 												</div>
 											</div>
