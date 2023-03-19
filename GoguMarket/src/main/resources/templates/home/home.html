@@ -101,8 +101,7 @@
 											<span>경매마감까지</span>
 										</h3>
 										<div class="up-comming-time-2">
-											<div
-												data-countdown="${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')}"></div>
+											<div data-countdown="${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')}"></div>
 										</div>
 									</div>
 								</div>
@@ -393,6 +392,25 @@
 			</section>
 
 		</div>
+		      <script th:inline="javascript">
+
+   /*<![CDATA[*/   
+   var auctDdln = /*[[ ${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')} ]]*/
+   console.log(auctDdln);
+   /*]]*/
+   
+   $(function(){
+      
+       $('[data-countdown]').countdown(auctDdln, function(event) {
+           $(this).html(
+            event.strftime(
+               '<span class="cdown days"><span class="time-count">%-D</span> <p>Days</p></span> <span class="cdown hour"><span class="time-count">%-H</span> <p>Hour</p></span> <span class="cdown minutes"><span class="time-count">%M</span> <p>Mint</p></span> <span class="cdown second"> <span><span class="time-count">%S</span> <p>Sec</p></span>'
+            )
+         );
+       }); 
+   })
+
+</script>
 	</div>
 </body>
 </html>

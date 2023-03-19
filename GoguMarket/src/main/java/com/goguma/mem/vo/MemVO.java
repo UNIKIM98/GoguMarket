@@ -16,7 +16,6 @@ import lombok.Data;
 @Data
 public class MemVO implements UserDetails {
 	
-	private String userId;
 
 	// => 관리자 사용
 	private String userSe;
@@ -28,6 +27,7 @@ public class MemVO implements UserDetails {
 	private int first;
 	private int last; // 페이징 사용 - 마지막페이지
 
+	private String userId;
 	private String userPw;
 	private String userNm;
 	private String gender;
@@ -35,6 +35,7 @@ public class MemVO implements UserDetails {
 	private String addr;
 	private String dealArea;
 	private String eml;
+	private String pwCkPage; //비밀번호 확인할 때 사용할 페이지
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -55,44 +56,37 @@ public class MemVO implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return Collections.singletonList(new SimpleGrantedAuthority(this.userSe));
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.userPw;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.userId;
 	}
 
-	@Override
+	@Override 
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
-	@Override
+	@Override 
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
-	@Override
+	@Override // 접근금지 회원 (userSe > 1(정지))
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		return this.userStts.equals("1") ? false : true;
 	}
 
 }

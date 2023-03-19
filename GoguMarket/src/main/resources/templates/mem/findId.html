@@ -44,7 +44,7 @@
 		<script type="text/javascript">
 		var eml = null;
 		var userId = null;
-		var authNum = 0;
+		var secureRandom = "";
 		// ==============================================================
 		// ❤️ DOM 실행
 		$(function() {
@@ -80,7 +80,7 @@
 		// ==============================================================
 		// ❤️ 인증하기
 		function checkAuth(){
-			if($("#emlCk").val()==authNum){
+			if($("#emlCk").val()==secureRandom){
 				alert("인증이 완료되었습니다.");
 				showId();
 			}else{
@@ -114,8 +114,8 @@
 				url : '/goguma/emlCheckAJax/' + eml,
 				type : 'get',
 				success : function(result) {
-					authNum = result;
-					console.log(authNum);
+					secureRandom = result;
+					console.log(secureRandom);
 				},
 				error : function(err) {
 					console.log(err);

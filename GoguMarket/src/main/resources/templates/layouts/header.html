@@ -1,58 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <th:block th:fragment="headerFragment">
-	<!-- START HEADER AREA -->
-	<header class="header-area header-wrapper" style="background-color: #ffffff;">
-		<!-- header-middle-area -->
-		<div id="sticky-header" class="header-middle-area plr-185 ">
-			<div class="container-fluid">
-				<div class="full-width-mega-dropdown">
-					<div class="row">
-						<!-- logo -->
-						<div class="col-lg-2 col-md-4">
-							<div class="logo">
-								<a href="/"> <img src="/img/logo/new2.png" alt="main logo" style="width:250px">
-								</a>
-							</div>
-						</div>
-						<!-- primary-menu -->
-						<div class="col-lg-8 d-none d-lg-block">
-							<nav id="primary-menu">
-								<ul class="main-menu text-center">
-									<li class="pr-20" style="font-size: large;"><a href="/goguma/dealMain">중고마켓</a>
-									<li class="pr-20" style="font-size: large;"><a href="/goguma/auctList">경매</a>
-									<li class="pr-20" style="font-size: large;"><a href="/goguma/bookmain">동네가게</a>
-									<li class="pr-20" style="font-size: large;"><a href="/goguma/snsMain">동네생활</a></li>
-								</ul>
-							</nav>
-						</div>
-						<div class="col-lg-2 col-md-8">
-						<nav id="primary-menu">
-							<ul class="main-menu text-center">
-								<li class="pr-20 f-right" th:if="${session.userId != null}">
-								<a href="/my/myInfoCheck">
-									<img alt="" th:if="${session.atchPath != null}" th:src="${session.atchPath}"
-										style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
-										onerror="this.onerror=null; this.src='/img/logo/002.png'"> 
-									<img alt="" th:if="${session.atchPath == null}"
-										src="/img/logo/001.png"
-										style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052">
-									<span th:text="${session.nickNm}" th:style="'margin-left: 5px;'"></span></a></li>
-								<li class="pr-20 f-right" th:if="${session.userId==null}">
-									<a href="/goguma/memberJoinForm"> <i class="zmdi zmdi-favorite"></i> 회원가입 </a></li>
-								<li class="pr-20 f-right" th:if="${session.userId==null}"><a href="/goguma/login">
-									<i class="zmdi zmdi-lock"></i> 로그인</a></li>
-								<li class="pr-20 f-right" th:if="${session.userId!=null}"><a href="/logout">
-									<i class="zmdi zmdi-lock"></i> 로그아웃</a></li>								
-							</ul>
-						</nav>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- END HEADER AREA -->
+   <!-- START HEADER AREA -->
+   <header class="header-area header-wrapper" style="background-color: #ffffff;">
+      <!-- header-middle-area -->
+      <div id="sticky-header" class="header-middle-area plr-185 ">
+         <div class="container-fluid">
+            <div class="full-width-mega-dropdown">
+               <div class="row">
+                  <!-- logo -->
+                  <div class="col-lg-3 col-md-4">
+                     <div class="logo">
+                        <a href="/"> <img src="/img/logo/new2.png" alt="main logo" style="width:250px">
+                        </a>
+                     </div>
+                  </div>
+                  <!-- primary-menu -->
+                  <div class="col-lg-6 d-none d-lg-block">
+                     <nav id="primary-menu">
+                        <ul class="main-menu text-center">
+                           <li class="pr-20" style="font-size: large;"><a href="/goguma/dealMain">중고마켓</a>
+                           <li class="pr-20" style="font-size: large;"><a href="/goguma/auctList">경매</a>
+                           <li class="pr-20" style="font-size: large;"><a href="/goguma/bookmain">동네가게</a>
+                           <li class="pr-20" style="font-size: large;"><a href="/goguma/snsMain">동네생활</a></li>
+                        </ul>
+                     </nav>
+                  </div>
+                  <div class="col-lg-3 col-md-8">
+                  <nav id="primary-menu">
+                     <ul class="main-menu text-center">
+                     
+                        <!-- ❤️ 로그인 성공 시 프로필 -->
+                        <li class="pr-20 f-right" th:if="${session.userId != null}">
+                           <a href="/my/myInfoCheck/info">
+                           
+                              <!-- 프로필사진(설정시) -->
+                                    <div style="position:relative; display:inline-block;"  th:if="${session.atchPath != null}">
+                                      <!-- 사진 -->
+                                      <img th:if="${session.atchPath != null}" th:src="${session.atchPath}"
+                                           style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
+                                           onerror="this.onerror=null; this.src='/img/logo/002.png'">
+                                      <!-- 알림 -->
+                                      <span th:if="${session.alarm != 0 and session.alarm != null}"
+                                            style="position: absolute; top: -5px; right: -5px; background-color: red; 
+                                        	border-radius: 50%; width: 18px; height: 18px; text-align: center; 
+                                        	line-height: 20px; font-size: 10px;font-weight : border; color: white;"
+                                         	th:text="${session.alarm}"></span>
+                                    </div>
+
+
+
+                              <!-- 프로필사진(미설정시) -->   
+                                 <div style="position:relative; display:inline-block;" th:if="${session.atchPath == null}">
+                                      <!-- 사진 -->
+                                      <img  th:src="${session.atchPath}"
+                                           	style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
+                                          	 onerror="this.onerror=null; this.src='/img/logo/002.png'">
+                                      <!-- 알림 -->
+                                      <span th:if="${session.alarm != 0 and session.alarm != null}"
+                                        style="position: absolute; top: -5px; right: -5px; background-color: red; 
+                                        		border-radius: 50%; width: 18px; height: 18px; text-align: center; 
+                                        		line-height: 20px; font-size: 10px;font-weight : border; color: white;"
+                                        		th:text="${session.alarm}"></span>
+                                 </div>
+                                 
+                              <!-- 닉네임 -->
+                              <span th:text="${session.nickNm}" th:style="'margin-left: 5px;'"></span>
+                           </a>
+                        </li>
+                              
+                        <!-- ❤️ 회원가입 -->
+                        <li class="pr-20 f-right" th:if="${session.userId==null}">
+                           <a href="/goguma/memberJoinForm"> 
+                           <i class="zmdi zmdi-favorite"></i> 회원가입 </a>
+                        </li>
+                        
+                        <!-- ❤️ 로그인/로그아웃 -->
+                        <li class="pr-20 f-right" th:if="${session.userId==null}">
+                           <a href="/goguma/login">
+                           <i class="zmdi zmdi-lock"></i> 로그인</a>
+                        </li>
+                        
+                        <li class="pr-20 f-right" th:if="${session.userId!=null}">
+                           <a href="/logout">
+                           <i class="zmdi zmdi-lock"></i> 로그아웃</a>
+                        </li>                        
+                     </ul>
+                  </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </header>
+   <!-- END HEADER AREA -->
 </th:block>
 </html>

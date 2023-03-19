@@ -42,7 +42,6 @@ public class ActController {
 	// ❤️ 계좌 등록 submit
 	@PostMapping("/my/makeNewActSubmit")
 	public void makeNewActSubmit(ActVO actVO, HttpServletResponse response) {
-		System.out.println("actVO ==> "+ actVO);
 		int cnt = actServie.insertAct(actVO);
 		
 		

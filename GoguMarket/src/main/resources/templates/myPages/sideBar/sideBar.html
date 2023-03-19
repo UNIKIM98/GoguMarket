@@ -93,7 +93,7 @@
 									<ul>
 										<li class="open"><a href="/my/myInfoCheck">내정보</a>
 											<ul>
-												<li><a href="/my/myInfoCheck">내 정보 수정</a></li>
+												<li><a href="/my/myInfoCheck/info">내 정보 수정</a></li>
 												<li><a href="/my/myNotifyList">쪽지함</a></li>
 												<li><a href="/my/myArea">우리 동네 설정</a></li>
 												<li><a href="/my/myPoint">나의 포인트</a></li>
@@ -111,29 +111,21 @@
 														<li><a href="/my/allAuction">주최경매</a></li>
 														<li><a href="/my/bidAuction">참여경매</a></li>
 													</ul></li>
-										<li class="closed"><a href="#">동네생활</a>
+										<li class="closed"><a href="/my/mySns">동네생활</a>
 											<ul>
 												<li><a href="/my/mySns">나의 글/댓글</a></li>
-												<li><a href="#">내가 좋아요한 글</a></li>
 											</ul></li>
 										<li class="closed"><a href="/my/myReservation">동네가게</a>
 											<ul>
 												<li><a href="/my/myReservation">나의예약</a></li>
 												<li><a href="/chat/rooms">채팅하기</a></li>
-												<li><a href="#">나의 예약 후기</a></li>
-												<li><a href="#">단골가게</a></li>
 											</ul></li>
 										<li class="closed"><a href="/biz/bizMain">나의 비즈니스</a>
 											<ul>
-												<li><a href="/biz/bizMain">비즈니스 관리</a></li>
+												<li th:if="${session.bizNo}!=null"><a href="/biz/bizMain">비즈니스 관리</a></li>
+												<li th:if="${session.bizNo}==null"><a href="/my/shop01">비즈니스 등록</a></li>
 											</ul></li>
-										<li class="closed"><a href="#">기타</a>
-											<ul>
-												<li><a href="#">고객센터</a></li>
-												<li><a href="#">나의 문의사항</a></li>
-												<li><a href="#">친구초대</a></li>
-											</ul></li>
-										<li class="closed"><a href="/my/goodbye">회원탈퇴</a>	
+										<li class="closed"><a href="/my/myInfoCheck/goodBye">회원탈퇴</a>	
 									</ul>
 								</div>
 							</aside>

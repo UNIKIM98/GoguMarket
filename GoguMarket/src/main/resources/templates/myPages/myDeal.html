@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="myContent">
-	<script th:inline="javascript">
+		<script th:inline="javascript">
 	function gopage(page) {
 		updateFrm.page.value = page;
 		updateFrm.submit();
@@ -30,167 +30,181 @@
 		
 	})
 	</script>
-	<div class="col-lg-12">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="section-title text-start mb-20" >
-							<h2 class="uppercase">중고거래마이페이지</h2>
-							
-								<!-- 포인트 정보 -->
-								<div class="container">
-										<div class="tab-pane active" id="order-complete">
-											<br>
-											<div>
-												<h4 class="blog-section-title border-left mb-30">나의 포인트</h4>
-											</div>
-											<div class="order-complete-content box-shadow">
-												<div class="order-info p-30 mb-10">
-													<ul class="order-info-list">
-														<li><a class="totalP" href='javascript:void(0);'
-															onclick="criteriaPoint(event);">현재 포인트</a>
-															<p>
-																총 <span class="totalPTrgt"
-																	style="color: #C04A82; font-weight: bold;">0</span>포인트
-															</p></li>
-													</ul>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="payment-details p-30">
-															<h6 class="widget-title border-left mb-20"
-																style="display: inline-block;">포인트상세정보</h6>
-																<h6>마이포인트 페이지로 이동합니다</h6>
-															<button class="submit-btn-1 btn-hover-1"
-																style="float: right; border-radius: 20px; height: 30px"
-																onclick="point()">마이포인트</button>
-															<table class="saveTable">
-															</table>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section-title text-start mb-20">
+						<h2 class="uppercase">중고거래마이페이지</h2>
+						<!-- 포인트 정보 -->
+						<div class="container">
+							<div class="tab-pane active" id="order-complete">
+								<br>
+								<div>
+									<h4 class="blog-section-title border-left mb-30">나의 포인트</h4>
+								</div>
+								<div class="order-complete-content box-shadow">
+									<div class="order-info p-30 mb-10">
+										<ul class="order-info-list">
+											<li><a class="totalP" href='javascript:void(0);'
+												onclick="criteriaPoint(event);">현재 포인트</a>
+												<p>
+													총 <span class="totalPTrgt"
+														style="color: #C04A82; font-weight: bold;">0</span>포인트
+												</p></li>
+										</ul>
 									</div>
-						</div>
-					</div>
-				</div>
-				<hr>
-								<!-- 판매중 / 판매완료 / 구매내역 탭 시작 -->
-								<div class="single-product-tab reviews-tab">
-									<ul class="nav nav-tabs mb-20">
-										<li class="nav-item"><a class="nav-link active" href="#description" data-bs-toggle="tab" role="tab" data-bs-target="#description">판매중</a></li>
-										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#soldout">판매완료</a></li>
-										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#prchs">구매내역</a></li>
-									</ul>
-					
-									<div class="tab-content">
-										<div th:each="deal : ${dealList}" role="tabpanel" class="tab-pane active show" id="description">
-											<p th:text="${deal.NTSL_ID}+'님이 판매중인 물품 내역이랍니다'"></p>
-											<!-- ■■■■■■끌올하려고 폼으로 감싸기 -->
-											<form id="updateFrm" method="post">
-												<input type="hidden" name="page" value="1">
-												<input type="hidden" name="tabName" value="description">
-												<div class="featured-product" >
-													<div class="active-featured-product slick-arrow-2" >
-														<div class="media mt-30" th:if="${dealList}!=null" >
-															<div class="media-left">
-																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" style="width: 80px; height: 75px;"/></a>
-																
-															</div>
-															<div class="media-body">
-																<div class="clearfix">
-																	<div class="name-commenter f-left">
-																		<h6 class="media-heading">
-																			<a th:text=${deal.DL_TTL}>타이틀자리</a>
-																		</h6>
-																		<p class="mb-10" th:text="${#dates.format(deal.DL_YMD, 'yyyy/MM/dd')}"></p>
-																	</div>
-																	<div class="f-right">
-																		<ul class="reply-delate">
-																			<li><a th:text=${deal.DL_PRC}>가격</a></li>
-									
-																		</ul>
-																	</div>
-																</div>
-																<ul class="action-button">
-																	<input type="hidden" name="ntslId" id="ntslId" th:value="${session.userId}">
-																	<input type="hidden" name="dlNo" id="dlNo" th:value="${deal.DL_NO}">
-																		<input
-																				class="submit-btn-1 mt-30 btn-hover-1" type="submit"
-																				id="btnSave" role="button" value="끌어올리기">
-																</ul>
-															</div>
-														</div>
-													</div>
-												</div>
-																<!-- 페이지번호관련 -->
-																<div align="center">
-																	<a
-																		th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-																		th:href="|javascript:gopage(${num})|"
-																		th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-																</div>
-											</form>
-										</div>
-											<div role="tabpanel" class="tab-pane" id="soldout">
-												<form id="" method="post">
-													<input type="hidden" name="page" value="1">
-													<input type="hidden" name="tabName" value="soldout">
-													<p>판매 완료 리스트가 들어갈 자리입니다</p>
-													<!-- reviews-tab-desc -->
-													<div class="featured-product" >
-														<div class="active-featured-product slick-arrow-2" >
-															<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
-															<div class="product-item" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
-																<div class="product-img" style="height:150px">
-																	<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																		<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
-																</div>
-																<div class="product-info">
-																	<h6 class="product-title"
-																		th:text="${deal.DL_TTL}">상품명</h6>
-																	<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
-																</div>
-															</div>
-														</div>
-													</div>
-													<!-- 페이지번호관련 -->
-																<div align="center">
-																	<a
-																		th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-																		th:href="|javascript:gopage(${num})|"
-																		th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-																</div>
-												</form>
-											</div>
-											<div role="tabpanel" class="tab-pane" id="prchs">
-												<p>구매 완료 리스트가 들어갈 자리입니다</p>
-												<!-- reviews-tab-desc -->
-												<div class="featured-product" >
-													<div class="active-featured-product slick-arrow-2" >
-														<div  th:if="${#lists.isEmpty(buyList)}" th:text="'구매완료 내역이 없습니다'"></div>
-														<div class="product-item" th:if="${buyList}!=null" th:each="deal : ${buyList}">
-															<div class="product-img" style="height:150px">
-																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																	<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
-															</div>
-															<div class="product-info">
-																<h6 class="product-title"
-																	th:text="${deal.DL_TTL}">상품명</h6>
-																<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
-															</div>
-														</div>
-													</div>
-												</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="payment-details p-30">
+												<h6 class="widget-title border-left mb-20"
+													style="display: inline-block;">포인트상세정보</h6>
+												<h6>마이포인트 페이지로 이동합니다</h6>
+												<button class="submit-btn-1 btn-hover-1"
+													style="float: right; border-radius: 20px; height: 30px"
+													onclick="point()">마이포인트</button>
+												<table class="saveTable">
+												</table>
 											</div>
 										</div>
 									</div>
 								</div>
-	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<!-- 판매중 / 판매완료 / 구매내역 탭 시작 -->
+			<div class="single-product-tab reviews-tab">
+				<ul class="nav nav-tabs mb-20">
+					<li class="nav-item"><a class="nav-link active"
+						href="#description" data-bs-toggle="tab" role="tab"
+						data-bs-target="#description">판매중</a></li>
+					<li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+						role="tab" data-bs-target="#soldout">판매완료</a></li>
+					<li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+						role="tab" data-bs-target="#prchs">구매내역</a></li>
+				</ul>
 
-		
-		<script th:inline="javascript">
+				<div class="tab-content">
+					<div th:each="deal : ${dealList}" role="tabpanel"
+						class="tab-pane active show" id="description">
+						<!-- 채은 수정중 : 끌올 날짜 설정 -->
+
+						<p th:text="${deal.NTSL_ID}+'님이 판매중인 물품 내역이랍니다'"></p>
+						<!-- ■■■■■■끌올하려고 폼으로 감싸기 -->
+						<form id="updateFrm" method="post">
+							<input type="hidden" name="page" value="1"> <input
+								type="hidden" name="tabName" value="description">
+							<div class="featured-product">
+								<div class="active-featured-product slick-arrow-2">
+									<div class="media mt-30" th:if="${dealList}!=null">
+										<div class="media-left">
+											<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+												<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"
+												style="width: 80px; height: 75px;" />
+											</a>
+
+										</div>
+										<div class="media-body">
+											<div class="clearfix">
+												<div class="name-commenter f-left">
+													<h6 class="media-heading">
+														<a th:text=${deal.DL_TTL}>타이틀자리</a>
+													</h6>
+													<p class="mb-10"
+														th:text="${#dates.format(deal.DL_YMD, 'yyyy/MM/dd')}"></p>
+												</div>
+												<div class="f-right">
+													<ul class="reply-delate">
+														<li><a th:text=${deal.DL_PRC}>가격</a></li>
+													</ul>
+												</div>
+											</div>
+											<ul class="action-button">
+												<li><input type="hidden" name="ntslId" id="ntslId"
+													th:value="${session.userId}"></li>
+												<li><input type="hidden" name="dlNo" id="dlNo"
+													th:value="${deal.DL_NO}"></li>
+												<li th:if="${#dates.parse(#dates.format(deal.DL_YMD, 'yyyy/MM/dd'), 'yyyy/MM/dd') &lt; #dates.createNow()}"><input class="submit-btn-1 mt-30 btn-hover-1"
+													type="submit" id="btnSave" role="button" value="끌어올리기" ></li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<!-- 페이지번호관련 -->
+							<div align="center">
+								<a
+									th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+									th:href="|javascript:gopage(${num})|"
+									th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="soldout">
+					<form id="" method="post">
+						<input type="hidden" name="page" value="1"> <input
+							type="hidden" name="tabName" value="soldout">
+						<p>판매 완료 리스트가 들어갈 자리입니다</p>
+						<!-- reviews-tab-desc -->
+						<div class="featured-product">
+							<div class="active-featured-product slick-arrow-2">
+								<div th:if="${#lists.isEmpty(dealsold)}"
+									th:text="'판매완료 내역이 없습니다'"></div>
+								<div class="product-item" th:if="${dealsold}!=null"
+									th:each="deal : ${dealsold}">
+									<div class="product-img" style="height: 150px">
+										<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+											<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" />
+										</a>
+									</div>
+									<div class="product-info">
+										<h6 class="product-title" th:text="${deal.DL_TTL}">상품명</h6>
+										<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 페이지번호관련 -->
+						<div align="center">
+							<a
+								th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+								th:href="|javascript:gopage(${num})|"
+								th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
+						</div>
+					</form>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="prchs">
+					<p>구매 완료 리스트가 들어갈 자리입니다</p>
+					<!-- reviews-tab-desc -->
+					<div class="featured-product">
+						<div class="active-featured-product slick-arrow-2">
+							<div th:if="${#lists.isEmpty(buyList)}" th:text="'구매완료 내역이 없습니다'"></div>
+							<div class="product-item" th:if="${buyList}!=null"
+								th:each="deal : ${buyList}">
+								<div class="product-img" style="height: 150px">
+									<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+										<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" />
+									</a>
+								</div>
+								<div class="product-info">
+									<h6 class="product-title" th:text="${deal.DL_TTL}">상품명</h6>
+									<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script th:inline="javascript">
 		// 마이포인트 페이지로 가는 버튼 함수
 		function point() {
 			location.href = `/my/myPoint`
@@ -278,7 +292,7 @@
 		}
 		
 		</script>
-			</div>
-	
+	</div>
+
 </body>
 </html>

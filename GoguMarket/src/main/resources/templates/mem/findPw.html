@@ -149,7 +149,7 @@
 			// ==============================================================
 			// ❤️ 인증하기
 			function checkAuth(){
-				if($("#emlCk").val()==authNum){
+				if($("#emlCk").val()==secureRandom){
 					alert("인증이 완료되었습니다.");
 					changePw();
 				}else{
@@ -188,7 +188,7 @@
 					url : '/goguma/emlCheckAJax/' + eml,
 					type : 'get',
 					success : function(result) {
-						authNum = result;
+						secureRandom = result;
 						console.log(result);
 					},
 					error : function(err) {
