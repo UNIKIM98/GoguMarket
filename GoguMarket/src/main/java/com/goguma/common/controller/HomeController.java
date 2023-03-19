@@ -46,7 +46,6 @@ public class HomeController {
 		list.put("auct", service.selectHomeAuct());
 		list.put("biz", service.selectHomeBiz());
 		list.put("sns", service.selectHomeSns());
-		System.out.println(list.get("deal"));
 
 		return list;
 	}
