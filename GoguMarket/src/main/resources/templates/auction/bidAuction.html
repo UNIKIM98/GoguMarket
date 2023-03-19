@@ -14,50 +14,45 @@
 
     </script>
 	<div layout:fragment="myContent">
-		<div class="section-title text-start mb-20" >
-            <h2 class="uppercase">입찰 전체조회 페이지</h2>
-                <div>
-                    <h4 class="blog-section-title border-left mb-30">입찰하신 상품 목록</h4>
+        <section id="page-content" class="page-wrapper section">
+            <div class="message-box box-shadow white-bg">
+                <div class="container">
+                    <div class="section-title text-start mb-20" >
+                        <h2 class="uppercase">입찰 전체조회 페이지</h2>
+                    <div>
+                        <h4 class="blog-section-title border-left mb-30">입찰하신 상품 목록</h4>
+                    </div>
+                        <table class="table" border="1">
+
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th>입찰번호</th>
+                                    <th>입찰자</th>
+                                    <th>상품명</th>
+                                    <th>입찰날짜</th>
+                                    <th>입찰가</th>
+                                    <th>이동</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="mybidList:${mybidList}"
+                                    onmouseover='this.style.background="#fcecae";'
+                                    onmouseleave='this.style.background="#FFFFFF";'
+                                    >
+                                    <td th:text="${mybidList.auctMemNo}"></td>
+                                    <td th:text="${mybidList.userId}"></td>
+                                    <td th:text="${mybidList.auctNo}"></td>
+                                    <td th:text="${#dates.format(mybidList.auctYmd, 'yyyy/MM/dd')}"></td>
+                                    <td th:text="${mybidList.nowPrc}"></td>
+                                    <td><a th:href="@{/goguma/auctSelect/{mybidList}(mybidList = ${mybidList.auctNo})}">이동</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-        <table class="table" border="1">
-
-            <thead>
-                <tr style="text-align: center;">
-                    <th>입찰번호</th>
-                    <th>입찰자</th>
-                    <th>상품명</th>
-                    <th>입찰날짜</th>
-                    <th>입찰가</th>
-                    <th>이동</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr th:each="mybidList:${mybidList}"
-					onmouseover='this.style.background="#fcecae";'
-					onmouseleave='this.style.background="#FFFFFF";'
-                    >
-                    <td th:text="${mybidList.auctMemNo}"></td>
-                    <td th:text="${mybidList.userId}"></td>
-                    <td th:text="${mybidList.auctNo}"></td>
-                    <td th:text="${#dates.format(mybidList.auctYmd, 'yyyy/MM/dd')}"></td>
-                    <td th:text="${mybidList.nowPrc}"></td>
-                    <td><a th:href="@{/goguma/auctSelect/{mybidList}(mybidList = ${mybidList.auctNo})}">이동</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <script src="js/vendor/jquery-3.6.0.min.js"></script>
-		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-		<!-- Bootstrap framework js -->
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<!-- jquery.nivo.slider js -->
-		<script src="lib/js/jquery.nivo.slider.js"></script>
-		<!-- All js plugins included in this file. -->
-		<script src="js/plugins.js"></script>
-		<!-- Main js file that contents all jQuery plugins activation. -->
-		<script src="js/main.js"></script>
-        </div>
+            </div>
+        </section>
     </div>
 </body>
 

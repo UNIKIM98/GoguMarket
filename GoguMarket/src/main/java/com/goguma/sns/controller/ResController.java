@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,8 @@ import com.goguma.common.service.AtchService;
 import com.goguma.common.service.CommonCodeService;
 import com.goguma.common.vo.AtchVO;
 import com.goguma.common.vo.CommonCodeVO;
+import com.goguma.mem.service.MemService;
+import com.goguma.mem.vo.MemVO;
 import com.goguma.sns.service.SnsService;
 import com.goguma.sns.vo.SnsVO;
 
@@ -27,6 +31,9 @@ import com.goguma.sns.vo.SnsVO;
 public class ResController {
 	@Autowired
 	SnsService service;
+	
+	@Autowired
+	MemService member;
 
 	@Autowired
 	AtchService aservice;
@@ -82,13 +89,43 @@ public class ResController {
 		return map;
 
 	}
+	
+	@GetMapping("/goguma/getUser")
+	public Map<String,Object> getUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+
+
+		String userId = (String) session.getAttribute("userId");
+		
+		MemVO vo = new MemVO();
+		
+		vo.setUserId(userId);
+		
+		
+		
+		System.out.println(vo);
+		
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		
+		map.put("mem",member.selectUser(vo));
+		
+		return map;
+
+	}
+	
+	
+	
+	
 
 	@PostMapping("/goguma/insertSns")
 	public ModelAndView insertSns(SnsVO vo, AtchVO avo, List<MultipartFile> files) {
 
+		System.out.println("여기까지 옴");
 		ModelAndView mv = new ModelAndView("redirect:snsMain");
 
-		System.out.println(vo);
+		System.out.println(vo+"1");
 		int atchId = aservice.insertFile(files);
 		System.out.println(vo);
 

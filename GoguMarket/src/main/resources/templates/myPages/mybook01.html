@@ -8,25 +8,27 @@
 </head>
 <body>
 	<div layout:fragment="myContent">
+	<!-- 스크롤바 스타일지정 -->
 	<style>
-		#scrollDiv::-webkit-scrollbar {
-		    width: 8px;  /* 스크롤바의 너비 */
-		}
-		
-		#scrollDiv::-webkit-scrollbar-thumb {
-		    height: 30%; /* 스크롤바의 길이 */
-		    background: #FCD052; /* 스크롤바의 색상 */
-		    
-		    border-radius: 10px;
-		}
-		
-		#scrollDiv::-webkit-scrollbar-track {
-		    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
-		}
-	</style>	
+	#scrollDiv::-webkit-scrollbar {
+	    width: 8px;  /* 스크롤바의 너비 */
+	}
+	
+	#scrollDiv::-webkit-scrollbar-thumb {
+	    height: 30%; /* 스크롤바의 길이 */
+	    background: #FCD052; /* 스크롤바의 색상 */
+	    
+	    border-radius: 10px;
+	}
+	
+	#scrollDiv::-webkit-scrollbar-track {
+	    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
+	}
+	</style>
+	<div class="message-box box-shadow white-bg" style="height: 750px; width: 100%">	
 		<div class="col-lg-12">
 			<form action="#">
-
+				<!-- 제목 -->
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="section-title text-start mb-20">
@@ -37,11 +39,8 @@
 						</div>
 					</div>
 				</div>
-
-
 				<!-- 내용 윗쪽 -->
 				<div class="row" style="overflow-y: scroll; height: 200px;" id="scrollDiv">
-
 					<div class="col-lg-12">
 						<table class="table">
 							<tr>
@@ -67,16 +66,14 @@
 								<td class="td-title-1" colspan="4" style="text-align: center;">예약
 									내역이 없습니다.</td>
 							</tr>
-
 						</table>
 					</div>
-
 				</div>
 				<hr>
 
 				<!--내용 아랫쪽-->
 				<div class="row">
-					<div class="col-lg-6 offset-lg-1">
+					<div class="col-lg-6 offset-lg-1" style="margin-left:80px;">
 
 						<!--테이블1 : 주문메뉴-->
 						<div class="myRsvtDetail">
@@ -94,36 +91,27 @@
 										</thead>
 										<!-- 메뉴 1건 -->
 										<tbody>
-											<!-- <tr> -->
-											<!-- <td class="td-title-1">(메뉴이름)</td> -->
-											<!-- <td class="td-title-1">(수량)</td> -->
-											<!-- <td class="td-title-1">(수량*각 가격)</td> -->
-											<!-- </tr> -->
+											<!-- ajax로 호출 -->
 										</tbody>
-
 									</table>
 
 									<table id="totalTbl">
-										<!-- <tr> -->
-										<!-- <th class="order-total">합계</th> -->
-										<!-- <td class="order-total"></td> -->
-										<!-- <td class="order-total-price" id="totalSum">(합계)</td> -->
-										<!-- </tr> -->
+										<!-- ajax로 호출 -->
 									</table>
 									<hr>
 
 									<!--테이블2 : 시간, 인원, 요청사항-->
 									<table id="rsvtInfo">
-
-
+										<!-- ajax로 호출 -->
 									</table>
 
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-lg-4">
+					
+					<!-- 버튼 -->
+					<div class="col-lg-4" style="padding:0 0 0 30px;">
 						<div class="tab-pane active pt-30" id="order-complete"
 							th:if="${!#lists.isEmpty(simple)}">
 							<a class="button extra-small mb-20" onclick="chatRoomOpen()">
@@ -139,109 +127,109 @@
 							<a class="button extra-small mb-20" onclick="goToRsvt()"> <span>예약하러가기</span>
 							</a>
 						</div>
-
 					</div>
+					
 				</div>
 			</form>
 		</div>
+	</div>
 
-
-		<script th:inline="javascript">
-
-		var getRsvtNo = 0; 
-		 
-		//예약변경 페이지로 이동
-		function rsvtModify(){
-			
-			if(getRsvtNo == 0 || getRsvtNo == null){
-				alert("변경할 예약을 먼저 선택해주세요")
-			}else{
-				window.location.href = "/my/modifyRsvt/" + getRsvtNo	//예약번호 받아서 넘기기				
-			}
+	<script th:inline="javascript">
+	
+	//전역변수로 지정
+	var getRsvtNo = 0; 
+	 
+	//예약변경 페이지로 이동
+	function rsvtModify(){
+		if(getRsvtNo == 0 || getRsvtNo == null){
+			alert("변경할 예약을 먼저 선택해주세요")
+		}else{
+			window.location.href = "/my/modifyRsvt/" + getRsvtNo	//예약번호 받아서 넘기기				
 		}
-		
-		//세션에 담긴 정보 변수에 담아주기
-		/*<![CDATA[*/
-			var userId = /*[[ ${session.userId} ]]*/
-			let userNm = /*[[ ${session.userNm} ]]*/
-			let nickNm = /*[[ ${session.nickNm} ]]*/
-			let mblTelno = /*[[ ${session.mblTelno} ]]*/
-			let email = /*[[ ${session.eml} ]]*/
-		/*]]*/
-		console.log("유저아이디="+userId, "전화번호="+mblTelno, "닉넴="+nickNm);
+	}
+	
+	//세션에 담긴 정보 변수에 담아주기
+	/*<![CDATA[*/
+		var userId = /*[[ ${session.userId} ]]*/
+		let userNm = /*[[ ${session.userNm} ]]*/
+		let nickNm = /*[[ ${session.nickNm} ]]*/
+		let mblTelno = /*[[ ${session.mblTelno} ]]*/
+		let email = /*[[ ${session.eml} ]]*/
+	/*]]*/
 
-		//세션으로 받아온거 화면에 출력, value에 값넣기
-		$("#tdNick").text(nickNm);
-		$("#tdTel").text(mblTelno);
-		$("#nickNm").val(nickNm);
-		$("#mblTelno").val(mblTelno);
-		
-		//처음 페이지 진입시 상세정보 안보이게
-		$(function(){
-			$('.myRsvtDetail').attr('style','display:none;');
-			$("#testing").on('click',function(){
-				$("#menuTbl").children().remove();
-				$("#rsvtInfo").children().remove();
-			})
-		});
-		
-		//tr클릭시 예약 상세정보 보이게
-		function trClick(rsvtNo){
-			console.log("tr클릭")
-			//클릭시 상세정보 보이게
-			$('.myRsvtDetail').attr('style','display:block;');
-		
-			//메뉴부분 ajax호출
-			$.ajax({
-				url:"/my/myRsvtAjax",
-				type:"get",
-				data: {rsvtNo},
+	//세션으로 받아온거 화면에 출력, value에 값넣기
+	$("#tdNick").text(nickNm);
+	$("#tdTel").text(mblTelno);
+	$("#nickNm").val(nickNm);
+	$("#mblTelno").val(mblTelno);
 	
-				success: function(lists){
-					//누를때마다 지워지고 append하기 위함 
-					$('#menuTbl tbody').empty()	
-					$('#totalTbl').empty()		
+	//처음 페이지 진입시 상세정보 안보이게
+	$(function(){
+		$('.myRsvtDetail').attr('style','display:none;');
+		$("#testing").on('click',function(){
+			$("#menuTbl").children().remove();
+			$("#rsvtInfo").children().remove();
+		})
+	});
 	
-					// 총 결제금액을 저장할 변수
-					let totalPrice = 0; 
-					
-					for(list of lists){
-						$('#menuTbl tbody').append(
-						`<tr>
-							<td class="td-title-1">${list.MENU_NM}</td>
-							<td class="td-title-1">${list.AMOUNT}</td>
-							<td class="td-title-2">${list.AMOUNT * list.MENU_PRC}</td>
-						</tr>`
-						)
-						 totalPrice += list.AMOUNT * list.MENU_PRC;
-					
-					getRsvtNo = list.RSVT_NO
-					}
-						$('#totalTbl').append(
-								`
-								<tr>
-									<th class="order-total">합계</th>
-									<td class="order-total"></td>
-									<td class="order-total-price">${totalPrice}</td>
-								</tr>
-								`		
-							)
-					
-				},error : function(err){
-					console.log("error")
-				}
-			})
-		
-		//상세내역 예약자부분 ajax
+	//tr클릭시 예약 상세정보 보이게
+	function trClick(rsvtNo){
+		console.log("tr클릭")
+		//클릭시 상세정보 보이게
+		$('.myRsvtDetail').attr('style','display:block;');
+	
+		//메뉴부분 ajax호출
 		$.ajax({
-			url:"/my/myRsvtInfoAjax",
+			url:"/my/myRsvtAjax",
 			type:"get",
 			data: {rsvtNo},
 
-			success: function(list){
-				console.log("여깁니다" + list.rsvtStts)
-				$('#rsvtInfo').empty()
-				$('#rsvtInfo').append(
+			success: function(lists){
+				//누를때마다 지워지고 append하기 위함 
+				$('#menuTbl tbody').empty()	
+				$('#totalTbl').empty()		
+
+				// 총 결제금액을 저장할 변수
+				let totalPrice = 0; 
+				
+				//메뉴 반복해서 붙이기
+				for(list of lists){
+					$('#menuTbl tbody').append(
+					`<tr>
+						<td class="td-title-1">${list.MENU_NM}</td>
+						<td class="td-title-1">${list.AMOUNT}</td>
+						<td class="td-title-2">${list.AMOUNT * list.MENU_PRC}</td>
+					</tr>`
+					)
+					 totalPrice += list.AMOUNT * list.MENU_PRC;
+				
+				getRsvtNo = list.RSVT_NO;
+				}
+				//합계 출력
+				$('#totalTbl').append(
+					`
+					<tr>
+						<th class="order-total">합계</th>
+						<td class="order-total"></td>
+						<td class="order-total-price">${totalPrice}</td>
+					</tr>
+					`		
+				)
+				
+			},error : function(err){
+				console.log("error")
+			}
+		})
+	
+	//상세내역 예약자부분 ajax
+	$.ajax({
+		url:"/my/myRsvtInfoAjax",
+		type:"get",
+		data: {rsvtNo},
+
+		success: function(list){
+			$('#rsvtInfo').empty()
+			$('#rsvtInfo').append(
 				`<tr>
 					<th class="td-title-1">예약일자</th>
 					<td class="td-title-1">${list.rsvtYmd}</td>
@@ -262,51 +250,47 @@
 				</tr>
 				<input type="hidden" id="rsvtStts" value="${list.rsvtStts}">
 				`
-				)
+			)
 
-			},error : function(err){
-				console.log("error")
-			}
-		})
-
+		},error : function(err){
+			console.log("error")
 		}
+	})
 
-		//채팅창 오픈
-		function chatRoomOpen(){
-			window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
-		}
-		
-		//예약취소하기
-		$('#rsvtDelete').attr("onclick","rsvtDelete(getRsvtNo)");
-		function rsvtDelete(rsvtNo){
-			console.log("아래는 예약번호입니다.")
-			console.log(rsvtNo)
-			if(getRsvtNo == 0 || getRsvtNo == null){
-				alert("취소할 예약을 먼저 선택해주세요")
-			}else{
-				if(confirm("정말로 예약을 취소하시겠습니까?")){
+	}
+
+	//채팅창 오픈
+	function chatRoomOpen(){
+		window.open("/chat/rooms", "채팅창", 'width=500px,height=700px,scrollbars=yes')
+	}
+	
+	//예약취소하기
+	$('#rsvtDelete').attr("onclick","rsvtDelete(getRsvtNo)");
+	function rsvtDelete(rsvtNo){
+		console.log("아래는 예약번호입니다.")
+		console.log(rsvtNo)
+		if(getRsvtNo == 0 || getRsvtNo == null){
+			alert("취소할 예약을 먼저 선택해주세요")
+		}else{
+			if(confirm("정말로 예약을 취소하시겠습니까?")){
 				$.ajax({
 					url:"/my/myRsvtDeleteAjax/"+rsvtNo,
 					success: function(){
 						alert("[예약 취소 완료] 예약이 정상적으로 취소되었습니다.");
-						history.go(0);					},error: function(error){
+						history.go(0);					
+					},error: function(error){
 						console.log(error);
 						alert("[예약 취소 실패] 예약 취소가 실패되었습니다.")
 					}
 				})	
-				}
 			}
 		}
-		
-		//예약하러가기
-		function goToRsvt(){
-			window.location.href = "/goguma/bookmain";
-		}
-		
-		
-		
-		
-
+	}
+	
+	//예약하러가기
+	function goToRsvt(){
+		window.location.href = "/goguma/bookmain";
+	}
 	</script>
 
 	</div>

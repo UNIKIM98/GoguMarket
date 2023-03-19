@@ -36,8 +36,8 @@
 		resultType="com.goguma.common.vo.AtchVO">
 		SELECT * FROM ATCH
 		WHERE ATCH_ID = (SELECT atch_id
-		FROM AUCT
-		WHERE auct_no = #{auctNo})
+						FROM AUCT
+						WHERE auct_no = #{auctNo})
 	</select>
 
 	<!-- 등록 -->

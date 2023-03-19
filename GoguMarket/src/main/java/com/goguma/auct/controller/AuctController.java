@@ -68,6 +68,7 @@ public class AuctController {
 		model.addAttribute("auct", vo); // 모델에 경매관련 내용 담아줌 이름은 auct
 		model.addAttribute("atch", atchList); // 경매관련 첨부파일 담아줌 이름은 atch
 		model.addAttribute("Dday", auctDday); // Dday계산기 담아줌
+		model.addAttribute("file", auctService.selectAuctAtch(auctNo)); // 게시글 모든 이미지
 		
 		System.out.println("auctSelect 왔음"+vo);
 		
@@ -185,28 +186,5 @@ public class AuctController {
 
 	}
 
-	@GetMapping("/my/takePartAuction")
-	public String takePartAuction(Model model, HttpServletRequest request) {
-		// 마이페이지 낙찰자에게 이름, 계좌번호 보내기
-//		HttpSession session = request.getSession();
-//		String userId = (String)session.getAttribute("userId");
-//		List<AuctVO> myAuctList = auctService.selectUserId(userId);
-//		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
-
-		return "auction/takePartAuction";
-
-	}
-
-	@GetMapping("/my/hostedAuction")
-	public String hostedAuction(Model model) {
-		// 마이페이지 내가 참여한 경매 이동
-
-		List<CommonCodeVO> codeList = codeService.codeList("002");
-		codeList.remove(0);
-
-		model.addAttribute("category", codeList);
-		return "auction/hostedAuction";
-
-	}
 
 }

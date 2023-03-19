@@ -2,8 +2,6 @@ var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
 var btn = document.getElementById("myBtn"); // 글쓰기 활성화
 
-
-
 var span = document.getElementsByClassName("close1")[0]; //글쓰기 비활성화 위한 x버튼
 
 var Sns = document.getElementById("mySns");
@@ -13,6 +11,16 @@ var Snsbtn = document.getElementById("clickSns");
 var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
 
 var reInput = document.getElementById("reInput");
+
+
+$(document).ready(function() {
+	alert('실행')
+	getUser();
+
+
+});
+
+let user = new Array();
 
 
 /*const rrpWriteHtml;
@@ -33,6 +41,8 @@ var reInput = document.getElementById("reInput");
 
 reInput.onclick = function() {
 	reInput.style.display = "block";
+
+
 
 };
 
@@ -75,14 +85,18 @@ btn.onclick = function() {
 //------------------ 개인 게시글-------------------------
 
 
-function insertSns(){
-	modal.style.display = "block"; //개인 게시글 창 활성화
+
+
+function insertSns() {
+	modal.style.display = "block"; //글쓰기 창 활성화
 
 }
 
 function snsModal(id) {
 	//활상화
 	Sns.style.display = "block"; //개인 게시글 창 활성화
+	
+	
 
 
 	$("#replyUserId").val("[[${session.userId}]]")
@@ -90,17 +104,17 @@ function snsModal(id) {
 	//단건을 조회하는 ajax를 실행
 	console.log(id);
 	Number(id);
-	
+
 	console.log('gdgdgd')
-	
+
 	//단건조회
 	$.ajax({
-		url:"/goguma/selectSns",
+		url: "/goguma/selectSns",
 		type: "GET",
 		data: { id },
 		dataType: "json",
 	}).then((obj) => {
-		
+
 		$("#mySns #snsNo").val(obj.sns.snsNo);
 		$("#CN").text(obj.sns.snsCn);
 		$("#snsYmd").text(obj.sns.snsYmd);
@@ -121,7 +135,32 @@ function snsModal(id) {
 }
 */
 
+function getUser() {
+	console.log('실행')
+
+	$.ajax({
+		url: "/goguma/getUser",
+		type: "get",
+		dataType: "json",
+		success: function(data) {
+			console.log(data)
+			$(data).each(function(i, item) {
+				
+				user[i] =item.mem;
+			})
+		},error:function(error){
+			console.log(error)
+		}
+	})
+		
+}
+
+
+
+
 function SelectCmntlist(snsNo) {
+	
+	console.log(user[0].userId);
 	var forCnt = 0;
 	$.ajax({
 		url: "/goguma/SelectCmntlist",
@@ -129,8 +168,10 @@ function SelectCmntlist(snsNo) {
 		data: { snsNo },
 		dataType: "json",
 		success: function(data) {
+
+
 			console.log(data);
-						$("#Sns-reply").empty();
+			$("#Sns-reply").empty();
 			$(data).each(function(index, item) {
 				if (item.groupNo > 0) {
 					$("#loadDiv").load("/sns/rrpView.html", function(result) {
@@ -139,7 +180,7 @@ function SelectCmntlist(snsNo) {
 							console.log("넘어옴 : " + index);
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
-								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem );
+								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem);
 								$(obj).find("#rrpContent").attr("id", "rrpContent" + item.cmntNo);
 								$(obj).find("#rrpGroupNo").val(item.groupNo);
 								$(obj).find("#rrpCmntNo").val(item.cmntNo);
@@ -158,7 +199,7 @@ function SelectCmntlist(snsNo) {
 				} else {
 					console.log("cmntCn : " + item.cmntCn);
 					forCnt++;
-			
+
 					$("#loadDiv").load("/sns/replyView.html", function(result) {
 						var addedDiv = $("#Sns-reply").append(result);
 						$(addedDiv).find(".replyGroup").each(function(index, obj) {
@@ -177,7 +218,7 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#reInput").attr('onclick', 'ShowRrpInput(' + item.cmntNo + ',' + item.snsNo + ')');
 								$(obj).find(".replyGroup").attr('id', 'replyGroup' + item.cmntNo);
 								$(obj).find(".rrplyGroup").attr('id', 'rrplyGroup_' + item.cmntNo);
-								$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + "," + item.groupNo +  "," +"'"+ item.cmntCn+"'"+")")
+								$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + "," + item.groupNo + "," + "'" + item.cmntCn + "'" + ")")
 								return true;
 							}
 
@@ -203,7 +244,7 @@ function SelectCmntlist(snsNo) {
 
 function ShowRrpInput(cmntNo, replySnsNo) {
 	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
-	
+
 	$("#loadDiv").load("/sns/rrpWrite.html", function(result) {
 		var addedDiv = $("#rrplyGroup_" + cmntNo).append(result);
 		$(addedDiv).find("#groupNo").val(cmntNo);
@@ -313,16 +354,16 @@ function insertRrp() {
 
 }
 
-function updateSns(){
-	
+function updateSns() {
+
 }
 
-function deleteSns(){
-	
+function deleteSns() {
+
 }
 
 
-function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo,rpCmntCn) {
+function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo, rpCmntCn) {
 
 	let button = event.currentTarget.parentNode;
 
@@ -339,7 +380,7 @@ function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo,rpCmntCn) {
 //=========================답글 수정============================
 
 function rreplyEditForm(rrpCmntNo, rrpSnsNo) { //답글 수정폼 생성
-	
+
 	/*console.log('넘어옴');
 	$("#rrpContent #rrpCmntCn").remove();
 	$("#editForm").remove();
@@ -349,7 +390,7 @@ function rreplyEditForm(rrpCmntNo, rrpSnsNo) { //답글 수정폼 생성
 	$("#rrpContent").append(
 		'<textarea id="innerdiv" class="form-inline" id="rrpCmntCn" style="word-break: break-all; ""width:200px">Hi there!</textarea>'	
 	)*/
-	
+
 	let cn = $('#rrpContent' + rrpCmntNo + ' #cmntCn').text()
 	$('#rrpContent' + rrpCmntNo + ' #cmntCn').remove();
 

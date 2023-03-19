@@ -6,7 +6,6 @@
 <head>
 <meta charset="utf-8">
 </head>
-<script src="/../js/auct/auct.js"></script>
 
 <body>
 
@@ -26,7 +25,7 @@
 								<div class="breadcrumbs-inner">
 									<h1 class="breadcrumbs-title">경매상품 상세보기</h1>
 									<ul class="breadcrumb-list">
-										<li><a href="index.html">Home</a></li>
+										<li><a href="/">Home</a></li>
 										<li>Product Detail</li>
 									</ul>
 								</div>
@@ -50,10 +49,27 @@
 									<div class="row">
 										<!-- imgs-zoom-area start -->
 										<div class="col-lg-5">
-											<a href="#"> <img class="zoom_03"
-												th:src="${atch[0].atchPath}" alt=""
-												style="width: 100%; height: 100%;">
-											</a>
+											<div class="imgs-zoom-area">
+												<a href="#">
+													<img id="zoom_03" th:data-zoom-image="${atch[0].atchPath}"
+														th:src="${atch[0].atchPath}" alt=""
+														onerror="this.onerror=null; this.src='/img/logo/001.png'"
+														style="width: 300px; height: 300px;">
+													<div class="row">
+														<div class="col-lg-12">
+															<div id="gallery_01"
+																class="carousel-btn slick-arrow-3 mt-30">
+																<div th:each="f:${file}" class="p-c">
+																	<a  th:data-image="${f.atchPath}"
+																		th:data-zoom-image="${f.atchPath}" style="width:300px; height:300px">
+																		<img th:src="${f.atchPath}" alt="">
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</a>
+											</div>
 										</div>
 										<!-- imgs-zoom-area end -->
 										<!-- single-product-info start -->
@@ -83,10 +99,6 @@
 														<p class="color-title f-left">등록일</p>
 														<h5 th:text="${#dates.format(auct.regYmd, 'yyyy/MM/dd')}"></h5>
 													</div>
-														<span th:if="${auct.stts.equals(1)}"
-															th:text="----------------경매중입니다----------------"></span>
-														<span th:if="${auct.stts.equals(2)}"
-															th:text="----------------마감되었습니다----------------"></span>
 													<div class="sin-plus-minus f-right clearfix">
 														<p class="color-title f-left">마감일</p>
 														<h5 th:text="${#dates.format(auct.ddlnYmd, 'yyyy/MM/dd')}"></h5>
@@ -113,7 +125,7 @@
 													</a>
 													
 													<a href="/goguma/auctList"
-														class="button extra-small button-black"> <span>목록으로</span>
+														class="button extra-small button-black"> <span class="disappear">목록으로</span>
 													</a>
 												</div>
 
@@ -131,7 +143,7 @@
 													<li><a class="active" href="#description"
 														data-bs-toggle="tab">상품설명</a></li>
 													<li><a href="#information" data-bs-toggle="tab">상품이미지</a></li>
-													<li><a href="#reviews" data-bs-toggle="tab">현재 입찰자</a></li>
+													<li><a href="#biding" data-bs-toggle="tab">현재 입찰자</a></li>
 												</ul>
 												<div class="tab-content">
 													<div role="tabpanel" class="tab-pane active show"
@@ -140,12 +152,15 @@
 														<!-- 상품 설명 부분 -->
 													</div>
 													<div role="tabpanel" class="tab-pane" id="information"
-														th:each="atch : ${atch}">
-														<img th:src="${atch.atchPath}" class="zoom_03" alt=""
-															style="width: 100%; height: 100%;">
+														th:each="file : ${file}">
+														<img th:src="${file.atchPath}"
+															class="zoom_03" alt=""
+															onerror="this.onerror=null; this.src='/img/logo/001.png'"
+															style="width: 268px; height: 280px;"
+															>
 														<!-- 이미지 부분 -->
 													</div>
-													<div role="tabpanel" class="tab-pane" id="reviews">
+													<div role="tabpanel" class="tab-pane" id="biding">
 														<table border="1">
 															<thead>
 																<tr>
@@ -179,14 +194,14 @@
 
 								<!-- AJAX 경매 등록 -->
 
-								<div id="myModal" class="modal">
+								<div id="myModal" class="modal" style="top: 100px;">
 									<!-- Modal content -->
 									<div class="modal-content" style="width: 25%">
 										<form action="/my/insertAuctMem" method="post">
 											<div class="modal-body"
 												style="padding: 20px; margin-bottom: 5px;">
-												<button class="close1" onclick=""
-													style="color: black; padding: 10px;">x</button>
+												<span class="close1" onclick=""
+													style="color: black; padding: 10px;">x</span>
 												<div class="login-account p-30 box-shadow mtb-15">
 													<div style="margin: 0px auto">
 														<div class="banner-item banner-3" style="width: 100%;">
@@ -196,7 +211,10 @@
 																<a href="#">
 																	<div>
 																		<!-- <div style="float: left;">이거하면 이미지가 너무 작아짐...ㅠㅠ -->
-																		<img th:src="${atch[0].atchPath}" alt="">
+																		<img class="zoom_03"
+																			th:src="${atch[0].atchPath}" alt=""
+																			onerror="this.onerror=null; this.src='/img/logo/001.png'"
+																			style="width: 268px; height: 280px;">
 																	</div>
 
 																	<div>
@@ -212,7 +230,7 @@
 																			</tr>
 																			<tr>
 																				<th>경매 마감일</th>
-																				<td th:text="${auct.ddlnYmd}"></td>
+																				<td th:text="${#dates.format(auct.ddlnYmd, 'yyyy/MM/dd')}"></td>
 																			</tr>
 																			<tr>
 																				<th>경매 참여인원</th>

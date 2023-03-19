@@ -4,14 +4,12 @@
 	layout:decorate="~{biz/slide/slide}">
 
 <body>
-
 	<div layout:fragment="Bizcontent">
 
 		<div class="container">
 			<div class="single-product-area mb-80">
 				<div class="row">
 
-					<!-- single-product-info start -->
 					<div class="single-product-info">
 						<div class="row">
 							<div class="col-lg-12">
@@ -24,6 +22,7 @@
 						<hr>
 <!-- <h1 th:text="${dgInfo}"></h1> -->
 <!-- <h1 th:text="#{dangol}"></h1> -->
+						<!-- 제목부분 -->
 						<div class="row">
 							<div class="col-sm-1">
 								<img style="height: 70px; border-radius: 50px;"
@@ -42,9 +41,9 @@
 						<br>
 						<textarea class="custom-textarea" placeholder="고객에 대한 메모를 입력해보세요"
 							rows="3">[[${dangol.dangolMemo}]]</textarea>
-						<!-- hr -->
 						<hr>
-						<!-- single-product-tab -->
+						
+						<!-- 밑에 부분 -->
 						<div class="single-product-tab reviews-tab">
 							<ul class="nav mb-20">
 								<li><a class="active" href="#reviews" data-bs-toggle="tab">후기</a></li>
@@ -148,12 +147,10 @@
 																	<td class="order-total-price">20,000원</td>
 																</tr>
 															</table>
-
 														</div>
 													</div>
 												</div>
 											</div>
-
 										</div>
 									</div>
 									<!-- 아코디언 목록 끝 -->
@@ -164,22 +161,17 @@
 								</div>
 							</div>
 							<!-- 예약내역 파트 끝-->
-
 						</div>
 					</div>
-					<!--  hr -->
 					<hr>
-
 				</div>
 			</div>
 		</div>
-	</div>
-
+	
 	<script th:inline="javascript">
 		//유저번호 받아오기
 		var url = window.location.href;
 		var urlUserId = url.substring(url.lastIndexOf('/') + 1);
-		console.log("-----" + urlUserId)
 
 		//채팅방 이동
 		function chatRoomOpen() {

@@ -39,7 +39,7 @@ public interface DealService {
 	// 특정 판매자 게시글 전부 가져오기
 	List<Map> selectNtslDeal(DealVO vo);
 	
-	List<Map> selectPrchsDeal(String prchsId);
+	String selectPrchsDeal(int dlNo);
 	
 	// test 에서 가져온 거
 	// Deal 게시글 정보 가져오기

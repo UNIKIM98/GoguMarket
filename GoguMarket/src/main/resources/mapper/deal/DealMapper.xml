@@ -82,10 +82,10 @@
 							]]>
 	</select>
 	
-	<!-- 구매내역입장에서의 셀렉트 : 이거안씀 관련된거 다 없애자-->
+	<!-- 프로필할려공 -->
 	<select id="selectPrchsDeal" 
-			parameterType="String"
-			resultType="map">
+			parameterType="int"
+			resultType="String">
 	SELECT d.* ,
 		       (SELECT ATCH_PATH
 	       		FROM ATCH
@@ -93,7 +93,7 @@
                 , m.atch_path profile, m.nick_nm nick_Nm, m.addr addr 
 	FROM deal d JOIN MEM m 
     ON d.ntsl_Id = m.user_id
-	WHERE prchs_id = #{prchsId}
+	WHERE dl_no=#{dlNo}
 	</select>
 	
 	
