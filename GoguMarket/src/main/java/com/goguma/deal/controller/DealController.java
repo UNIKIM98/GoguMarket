@@ -127,13 +127,25 @@ public class DealController {
 	// ===========================
 	// ▷ 마이페이지 / 중고거래 거래후기   : 저거 모델 쓰면 스트링?하면안된다고뜸 | 페이징하려면 리뷰테이블의 서치보가 따로 있어야하는데 없음
 		@RequestMapping("/my/myReview")
-		public String myreview(String userId, Model model, HttpServletRequest request,DealRvSearchVO rvo) {
+		public String myreview(String userId, Model model, HttpServletRequest request,DealRvSearchVO rvo, Paging paging) {
 			HttpSession session = request.getSession();
 			userId = (String) session.getAttribute("userId");
 			
 			rvo.setUserId(userId);
 
-			//model.addAttribute("get",rvService.selectGetRv(userId));
+			System.out.println("왔슈...." + userId);
+			paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
+			paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
+
+			rvo.setFirst(paging.getFirst()); // 
+			rvo.setLast(paging.getLast());	// 
+			
+			rvo.setUserId(userId);
+			paging.setTotalRecord(rvService.getcountTotal(rvo));
+			System.out.println(rvService.getcountTotal(rvo)+"rvoooo잘나오냐?");// ㅇㅇ4건잘나옴
+			System.out.println(rvo+"rvoooooo");
+			
+			model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
 
 			return "myPages/myReview";
 		}

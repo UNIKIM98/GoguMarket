@@ -126,8 +126,8 @@
 									<th>거래상태</th>
 									<th>조회수</th>
 									<th>첨부파일아이디</th>
-									<th>단건조회</th>
-									<th>삭제</th>
+									<th>상세조회</th>
+<!-- 									<th>삭제</th> -->
 								</tr>
 							</thead>
 
@@ -147,11 +147,15 @@
 									<td th:text="${deal.inqCnt}"></td>
 									<td th:text="${deal.atchId}"></td>
 									<td>
-										<button type="button" class="btnInfo">조회</button>
+										<button 
+										th:onclick="|location.href='@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}'|"
+										type="button" class="btnInfo">조회</button>
 									</td>
-									<td>
-										<button type="button" class="btnDel" onClick="del()">삭제</button>
-									</td>
+<!-- 									<td> -->
+<!-- 										<button  -->
+<!-- 										type="button" class="btnDel">삭제</button> -->
+<!-- <!-- 										th:onclick="|location.href='@{/my/deleteDeal/{dlNo}(dlNo=${d.dlNo})}'|" --> -->
+<!-- 									</td> -->
 								</tr>
 							</tbody>
 						</table>
