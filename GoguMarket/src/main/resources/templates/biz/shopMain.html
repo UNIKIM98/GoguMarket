@@ -5,7 +5,8 @@
 
 <body>
 	<div layout:fragment="Bizcontent">
-		<script type="text/javascript"
+	<!-- 카카오지도API 링크 -->
+	<script type="text/javascript"
 			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5910303ba80aa602d476d406bd428897&libraries=services"></script>
 
 		<div class="row">
@@ -24,43 +25,30 @@
 						<div class="col-lg-12">
 							<div class="coupon-discount box-shadow p-30 mb-50">
 								<div class="row">
+								
 									<!-- 왼쪽 정보 -->
 									<div class="col-lg-8">
-										<h6 class="widget-title mb-20">
-											가게 소개
-<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
-										</h6>
-
+										<h6 class="widget-title mb-20">가게 소개</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
 												<p class="mb-0" th:text="${biz.cn}">(소개멘트)</p>
 											</div>
 										</div>
 
-										<h6 class="widget-title mb-20">
-											가게주소
-<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
-										</h6>
+										<h6 class="widget-title mb-20">가게주소</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
 												<p class="mb-0" th:text="${biz.bizAddr}">(주소)</p>
 											</div>
 										</div>
 
-										<h6 class="widget-title mb-20">
-											전화번호
-<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
-										</h6>
+										<h6 class="widget-title mb-20">전화번호</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
 												<p class="mb-0" th:text="${biz.bizTel}">(전화번호)</p>
 											</div>
 										</div>
-
-										<h6 class="widget-title mb-20">
-											운영시간
-<!-- <button class="btn btn-light f-right" type="button">수정</button> -->
-										</h6>
+										<h6 class="widget-title mb-20">운영시간</h6>
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
 												<p class="mb-0" th:if="${biz.bgngTm}==${code.commonDetailCode}"
@@ -73,8 +61,6 @@
 
 									<!-- 오른쪽 소식-->
 									<div class="col-lg-4">
-										
-											
 										<div class="product-item">
 											<div class="product-info">
 												<h6 class="product-title">
@@ -91,7 +77,7 @@
 										</div>
 									</div>
 								</div>
-								<!-- 지도 -->
+								<!-- 아래 지도 -->
 								<div class="row">
 									<h6 class="widget-title">가게 위치</h6>
 									<div class="col-12 d-flex justify-content-center">
@@ -105,69 +91,55 @@
 			</div>
 		</div>
 
-		<script>
-			//카카오지도 API
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-			mapOption = {
-				center : new kakao.maps.LatLng(35.8690334, 128.5932794), // 지도의 중심좌표(예담)
-				// 지도의 확대 레벨
-				level : 5
-			};
+	<script>
+		//카카오지도 API
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+		mapOption = {
+			center : new kakao.maps.LatLng(35.8690334, 128.5932794), // 지도의 중심좌표(예담)
+			// 지도의 확대 레벨
+			level : 4
+		};
 
-			// 지도를 생성합니다    
-			var map = new kakao.maps.Map(mapContainer, mapOption);
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption);
 
-			// 주소-좌표 변환 객체를 생성합니다
-			var geocoder = new kakao.maps.services.Geocoder();
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
 
-			// DB에서 값 불러오기
-			$
-					.ajax({
-						url : "/goguma/mapOneApiAjax",
-						type : "get",
-						success : function(obj) {
-							console.log(obj)
-							// 주소로 좌표를 검색합니다
-							geocoder
-									.addressSearch(
-											obj.bizAddr,
-											function(result, status) {
-												// 정상적으로 검색이 완료됐으면 
-												if (status === kakao.maps.services.Status.OK) {
+		// DB에서 값 불러오기
+		$.ajax({
+			url : "/goguma/mapOneApiAjax",
+			type : "get",
+			success : function(obj) {
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch(obj.bizAddr,function(result, status) {
+					// 정상적으로 검색이 완료됐으면 
+					if (status === kakao.maps.services.Status.OK) {
+						var coords = new kakao.maps.LatLng(result[0].y,result[0].x);
 
-													var coords = new kakao.maps.LatLng(
-															result[0].y,
-															result[0].x);
+						// 결과값으로 받은 위치를 마커로 표시합니다
+						var marker = new kakao.maps.Marker({map : map, position : coords});
 
-													// 결과값으로 받은 위치를 마커로 표시합니다
-													var marker = new kakao.maps.Marker(
-															{
-																map : map,
-																position : coords
-															});
+						// 인포윈도우로 장소에 대한 설명을 표시합니다
+						var infowindow = new kakao.maps.InfoWindow(
+							{
+								content : '<div style="width:150px;text-align:center;padding:6px 0;">내 가게</div>'
+							});
+						infowindow.open(map, marker);
 
-													// 인포윈도우로 장소에 대한 설명을 표시합니다
-													var infowindow = new kakao.maps.InfoWindow(
-															{
-																content : '<div style="width:150px;text-align:center;padding:6px 0;">내 가게</div>'
-															});
-													infowindow
-															.open(map, marker);
-
-													// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-													map.setCenter(coords);
-												}
-											});
-						},
-						error : function(error) {
-							console.log(error)
-						}
-					});
-		</script>
+						// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						map.setCenter(coords);
+					}
+				});
+			},
+			error : function(error) {
+				console.log(error)
+			}
+		});
+	</script>
 
 	</div>
 	<!-- 타임리프 div끝 -->
-
 </body>
 
 </html>

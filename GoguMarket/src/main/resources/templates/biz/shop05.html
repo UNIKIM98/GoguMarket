@@ -4,18 +4,17 @@
 	layout:decorate="~{biz/slide/slide}">
 
 <body>
-
 	<div layout:fragment="Bizcontent">
-		<script>
-			function gopage(page) {
-				frmSearch.page.value = page;
-				frmSearch.submit();
-			}
+	<script>
+		function gopage(page) {
+			frmSearch.page.value = page;
+			frmSearch.submit();
+		}
 
-			function ctgryId(name) {
-				console.log(name) //치킨 <- 이런식으로 나옴
-			}
-		</script>
+		function ctgryId(name) {
+			console.log(name) //치킨 <- 이런식으로 나옴
+		}
+	</script>
 		<!-- 본문 -->
 		<div class="row">
 
@@ -50,24 +49,20 @@
 										</tr>
 									</thead>
 									<tbody>
-
 										<!-- 후기 1건 -->
 										<tr id="modalTr" th:each="rv: ${rv}" th:if="${!#lists.isEmpty(rv)}">
 											<td th:text="${rv.rownum}">(번호)</td>
 											<td th:text="${rv.nickNm}">(닉네임)</td>
 											<td th:text="${rv.rvCn}">(내용)</td>
 										</tr>
-										
 										<tr>
 											<td colspan="3" th:if="${#lists.isEmpty(rv)}">
 												작성된 후기가 없습니다 :(
 											</td>
 										</tr>
-
 									</tbody>
 								</table>
 							</div>
-
 						</div>
 					</div>
 
@@ -89,70 +84,11 @@
 					</div>
 
 				</div>
-
 			</div>
-
 		</div>
 		<!-- 본문 끝 -->
-
-		<!-- shop 05 모달창 -->
-<!-- 		<div id="shopModal" class="shopmodal"> -->
-<!-- 			<div class="shopmodal-content"> -->
-<!-- 				<span class="close">&times;</span> -->
-
-<!-- 				<div class="row"> -->
-<!-- 					<div class="blog-desc"> -->
-<!-- 						<th:block> -->
-<!-- 							<div class="row"> -->
-<!-- 								<div class="col-lg-9"> -->
-<!-- 									<div class="reviews-tab-desc"> -->
-<!-- 										<div class="media mt-30"> -->
-<!-- 											<div class="media-left"> -->
-<!-- 												<a href="#"><img class="media-object" -->
-<!-- 													src="img/author/1.jpg" alt="#"></a> -->
-<!-- 											</div> -->
-<!-- 											<div class="media-body mt-15"> -->
-<!-- 												<h5 th:text="${rv[0].nickNm}">(닉네임)</h5> -->
-<!-- 												<p class="mb-10 f-right" th:text="${rv[0].rvYmd}">(날짜)</p> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-lg-3 mt-50"> -->
-<!-- 									<a class="button extra-small button-white mb-20" href="#"><span>신고하기</span> -->
-<!-- 									</a> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<hr> -->
-
-<!-- 							<p th:text="${rv[0].rvCn}">(리뷰내용)</p> -->
-<!-- 							<div class="mb-20"> -->
-<!-- 								<div class="pull-right"> -->
-<!-- 									<ul class="reply-delate"> -->
-<!-- 										<li><a href="#">친절해요</a></li> -->
-<!-- 										<li>/</li> -->
-<!-- 										<li><a href="#">가격이싸요</a></li> -->
-<!-- 										<li>/</li> -->
-<!-- 										<li><a href="#">만족스</a></li> -->
-<!-- 									</ul> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</th:block> -->
-<!-- 					</div> -->
-
-<!-- 					<div class="col-md-3"> -->
-<!-- 						<div class="blog-image"> -->
-<!-- 							<a href="#"><img src="img/product-2/1.jpg" alt="" -->
-<!-- 								width="150px"></a> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-
-<!-- 			</div> -->
-<!-- 		</div> -->
-		<!-- 모달 끝 -->
-
 	</div>
+	<!-- 타임리프 div끝 -->
 </body>
 
 </html>
