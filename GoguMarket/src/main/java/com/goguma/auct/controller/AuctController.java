@@ -70,6 +70,7 @@ public class AuctController {
 		model.addAttribute("Dday", auctDday); // Dday계산기 담아줌
 		model.addAttribute("file", auctService.selectAuctAtch(auctNo)); // 게시글 모든 이미지
 		
+		System.out.println(auctService.selectAuctAtch(auctNo));
 		System.out.println("auctSelect 왔음"+vo);
 		
 		if (avoList.size() == 0) {
