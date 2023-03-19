@@ -38,13 +38,13 @@ textarea {
 						<div class="container mt-20">
 							<div class="section-title text-start mb-20">
 								<h2 class="uppercase">동네 생활</h2>
-					
+
 								<h6>당신의 마을을 나에게 소개해주세요</h6>
 
 								<form id="searchForm" action="#" style="margin-left: 30%;">
 									<div class="subcribe clearfix f-left" style="width: 60%">
 										<input type="text" name="search" id="search"
-											placeholder="Enter your town here..." style="width:80%" />
+											placeholder="Enter your town here..." style="width: 80%" />
 
 										<button class="submit-btn-2 btn-hover-2" type="button"
 											onclick="selectSnsList()">search</button>
@@ -76,7 +76,7 @@ textarea {
 						<div class="mt-100">
 							<div class="row" id="list"
 								style="margin-bottom: 10%; padding: 8%;"></div>
-						
+
 						</div>
 
 					</div>
@@ -176,7 +176,7 @@ textarea {
 						</div>
 					</div>
 					<!--Sns-footer-->
-					
+
 				</form>
 			</div>
 
@@ -186,6 +186,10 @@ textarea {
 		
 			$(document).ready(function () {
 			selectSnsList()
+		
+			
+		
+		
 		
 		});
 		
@@ -201,8 +205,12 @@ textarea {
 			    document.getElementById('preview').src = "";
 			  }
 			}
+			
+		
 		
 		function selectSnsList(sort){
+			
+			
 			console.log('gdgd'+sort)
 				formData=[];
 		
