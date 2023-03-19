@@ -5,7 +5,7 @@
             /* Stay in place */
             z-index: 1;
             /* Sit on top */
-            padding-top: 100px;
+            padding-top: 270px;
             /* Location of the box */
             left: 0;
             top: 0;
@@ -51,7 +51,7 @@
 
         @keyframes animatetop {
             from {
-                top: -300px;
+                top: -400px;
                 opacity: 0
             }
 
@@ -101,7 +101,7 @@ position: fixed;
 /* Stay in place */
 z-index: 1;
 /* Sit on top */
-padding-top: 100px;
+padding-top: 270px;
 /* Location of the box */
 left: 0;
 top: 0;

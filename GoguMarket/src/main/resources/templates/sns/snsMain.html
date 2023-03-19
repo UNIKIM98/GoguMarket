@@ -22,260 +22,178 @@ textarea {
 	width: 80%;
 	resize: none;
 }
-
-#editMenu, edit {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-#editMenu>ul {
-	float: right
-}
-
-#editMenu>li {
-	border: 1px solid red;
-	margin-right: 10px
-}
-
-#editMenu>li>a {
-	display: block;
-	padding: 8px 16px;
-	text-align: center;
-}
-
-#edit {
-	position: absolute;
-	/*opacity:0;
-	visibility: hidden;*/
-}
-
-#edit>a {
-	float: left;
-}
-
-#edit>li {
-	
-}
-
-#editMenu>li:hover #edit {
-	opacity: 1;
-	visibility: visible;
-}
 </style>
 </head>
 
 
 <body>
 	<article layout:fragment="content">
+		<div class="wrapper">
 
-		<!-- Start page content -->
-		<section id="page-content" class="page-wrapper section">
+			<div id="page-content" class="page-wrapper section">
+				<div class="blog-section mb-50" style="color: black;">
 
-			<!-- BY BRAND SECTION START-->
-			<div class="by-brand-section mb-80">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="section-title text-start mb-40">
-								<h2 class="uppercase mt-15">MY TOWN LIFE</h2>
-								<h6>너의 동네를 나에게 소개 시켜줘 !</h6>
-								<hr>
-								<div class="newsletter-section gray-bg pt-60 pb-80 mt-80">
-									<div class="container">
-										<div class="row">
-											<div class="col-lg-8 offset-lg-2">
-												<div class="newsletter">
+					<div class="featured-product-section section-bg-tb pb-50"
+						style="width: 100%; color: black;">
+						<div class="container mt-20">
+							<div class="section-title text-start mb-20">
+								<h2 class="uppercase">동네 생활</h2>
 
-													<div class="newsletter-info text-center">
-														<h2 class="newsletter-title">My TOWN</h2>
-														<p>Introduce me to your town.</p>
+								<h6>당신의 마을을 나에게 소개해주세요</h6>
 
-													</div>
-													<form id="searchForm" action="#">
+								<form id="searchForm" action="#" style="margin-left: 30%;">
+									<div class="subcribe clearfix f-left" style="width: 60%">
+										<input type="text" name="search" id="search"
+											placeholder="Enter your town here..." style="width: 80%" />
 
-														<div class="subcribe clearfix">
-															<input type="text" name="search" id="search"
-																placeholder="Enter your town here..." style="width: 80%" />
-
-															<button class="submit-btn-2 btn-hover-2" type="button"
-																onclick="selectSnsList()">search</button>
-														</div>
-													</form>
-													<div class="newsletter-info text-center">
-														<div class="searchForm mb-30 pstSe"
-															style="text-align: center"></div>
-													</div>
-												</div>
-											</div>
-
-										</div>
+										<button class="submit-btn-2 btn-hover-2" type="button"
+											onclick="selectSnsList()">search</button>
 									</div>
-								</div>
-								<form id="sortFrm">
-									<ul class="nav f-right mt-10" style="padding: 10px">
-										<li><a class="active" href="#popular-product"
-											data-bs-toggle="tab" name="sort"
-											onclick="selectSnsList('current')">최근순 </a>/</li>
-										<li><a href="#special-offer" data-bs-toggle="tab"
-											name="sort" onclick="selectSnsList('view')"> 조회순 </a></li>
-									</ul>
 								</form>
-							</div>
-						</div>
-						<div class="blog-section mb-50">
-
-							<div class="container">
-
-								<div class="row">
-									<div class="col-lg-12" style="width: 100%">
-										<div class="blog">
-											<div class="active-blog w-100 p-3" id="list">
-												<!-- 아작스 돌릴 부분 -->
-												<div class="blog-item">
-													<img src="img/blog/1.jpg" alt="">
-
-
-													<div class="read-more">
-														<a href="single-blog.html">Read more</a>
-													</div>
-												</div>
-											</div>
-											<div th:if="${session.userId != null}">
-												<br> <a class="button medium button-black  f-right"
-													href="#" id="myBtn" onclick="insertSns()"><span>글쓰기</span>
-												</a>
-											</div>
-
-
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-			<!-- writeFormModal -->
-			<div id="myModal" class="modal">
-				<!-- Modal content -->
-				<div class="modal-content">
-					<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
-						<button class="close1" onclick=""
-							style="color: black; padding: 10px;">x</button>
-				
-							<img id="preview" style="width: 60%; margin-left: 20%;" />
-			
-						
-						<div th:unless="files != null">
-						<div>
-							<p>이미가 없습니다</p>
-						</div>
-						
-						</div>
-
-						<form action="insertSns" method="post"
-							enctype="multipart/form-data">
-							<div class="login-account p-30 box-shadow mtb-15">
-								<div class="col-lg-4 col-md-6 pb-10">
-									<div class="banner-item banner-3">
-
-										<input type="file" name="files" id="files" placeholder="첨부파일"
-											multiple="multiple" onchange="readURL(this);">
-										<!-- atch -->
-
-									</div>
-								</div>
 								<div th:if="${session.userId != null}">
-									<!-- userId -->
-									<input th:value="${session.userId}" type="hidden" name="userId"
-										id="userId">
+									<br> <a class="btn btn-outline-dark f-right mb-20"
+										href="#" id="myBtn" onclick="insertSns()"><span>글쓰기</span>
+									</a>
 								</div>
-								<!-- 게시물 -->
-								<textarea name="snsCn" id="snsCn" class="form-control-lg mb-15"
-									placeholder="게시글 내용 300자 이하." rows="3" cols="300" style="width:100%"></textarea>
-								<input type="text" name="hash" id="hash" value="#Tag" clase="form-control form-control-lg">
-								<!--  -->
-								<input type="hidden" name="area" id="area"
-									th:value="${session.dealArea}">
+
+
+								<br> <br>
+								<hr>
+								<div>
+									<form id="sortFrm">
+										<ul class="nav f-right mt-10">
+											<li><a class="active" href="#popular-product"
+												data-bs-toggle="tab" name="sort"
+												onclick="selectSnsList('current')">최근순 </a>||</li>
+											<li><a href="#special-offer" data-bs-toggle="tab"
+												name="sort" onclick="selectSnsList('view')"> &nbsp;조회순 </a></li>
+										</ul>
+									</form>
+								</div>
 							</div>
-							<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
-						</form>
+						</div>
+
+						<div class="mt-100">
+							<div class="row" id="list"
+								style="margin-bottom: 10%; padding: 8%;"></div>
+
+						</div>
+
 					</div>
-					<div class="modal-footer" style="background-color: #000000;">
-						&nbsp;</div>
 				</div>
 			</div>
-			<!-- writeForm -->
-			<!-- 개인 Sns -->
-			<div id="mySns" class="Sns">
-				<!-- Modal content -->
-				<div class="Sns-content" style="width: 40%;">
-					<!--  <div class="buttonDiv f-right">
-					<ul id="editMenu">
-						<li>⋮⋮
-							<ul id="edit">
-								<li style="float: right"><a href="javascript:deleteSns();">삭제</a></li>
-								<li><a href="#">수정</a></li>
-							</ul>
-						</li>
+		</div>
 
-					</ul>
-				</div>-->
-					<form id="snsContent" action="#">
+		<!-- writeFormModal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
+					<button class="close1" onclick=""
+						style="color: black; padding: 10px;">x</button>
 
-						<div class="Sns-body">
-							<div>
-								<img alt="" class="ml-5" id="atchPath" style="width: 100%;">
-								<span class="ml-10" id="snsYmd"></span>
-								<h3 class="mt-10 ml-20"></h3>
-							</div>
+					<img id="preview" style="width: 60%; margin-left: 20%;" />
+
+
+					<div th:unless="files != null">
+						<div>
+							<p>이미지가 없습니다</p>
 						</div>
-						<div class="Sns-Cn">
-							<input type="hidden" id="snsNo" name="snsNo">
-							<div class="writeCn pb-10" style="width: 100%;">
-								<span class="mb-120" id="CN"></span>
-							</div>
-						</div>
-						<div class="Sns-commet">
-							<div class="card">
-								<div class="card-header bg-light">
-									<i class="fa fa-comment fa"></i> REPLY <input type="hidden"
-										id="userId" name="userId" th:value="${param.userId}">
+
+					</div>
+
+					<form action="insertSns" method="post"
+						enctype="multipart/form-data">
+						<div class="login-account p-30 box-shadow mtb-15">
+							<div class="col-lg-4 col-md-6 pb-10">
+								<div class="banner-item banner-3">
+
+									<input type="file" name="files" id="files" placeholder="첨부파일"
+										multiple="multiple" onchange="readURL(this);">
+									<!-- atch -->
+
 								</div>
-								<th:block th:if="${session.userId != null}">
-									<!-- 아이디 check-->
-									<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
-
-									<div class="Sns-reply" id="Sns-reply"></div>
-								</th:block>
-								<th:block th:unless="${session.userId != null}">
-									<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
-								</th:block>
-								<!--댓글 끝-->
 							</div>
+							<div th:if="${session.userId != null}">
+								<!-- userId -->
+								<input th:value="${session.userId}" type="hidden" name="userId"
+									id="userId">
+							</div>
+							<!-- 게시물 -->
+							<textarea name="snsCn" id="snsCn" class="form-control-lg mb-15"
+								placeholder="게시글 내용 300자 이하." rows="3" cols="300"
+								style="width: 100%"></textarea>
+							<input type="text" name="hash" id="hash" value="#Tag"
+								class="form-control form-control-lg">
+							<!--  -->
+							<input type="hidden" name="area" id="area"
+								th:value="${session.dealArea}">
 						</div>
-						<!--Sns-footer-->
-						<div class="Sns-footer" style="background-color: #000000;">
-							<h3 class="text-white mb-0" style="opacity: 70%;" id="miniId">${id}
-								@gogu.ma</h3>
-						</div>
+						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
 					</form>
 				</div>
-
+				<div class="modal-footer" style="background-color: #000000;">
+					&nbsp;</div>
 			</div>
-			<div id="loadDiv" style="display: none"></div>
-			<script th:inline="javascript">
+		</div>
+		<!-- writeForm -->
+		<!-- 개인 Sns -->
+		<div id="mySns" class="Sns">
+			<!-- Modal content -->
+			<div class="Sns-content" style="width: 40%;">
+
+				<form id="snsContent" action="#">
+
+					<div class="Sns-body">
+						<div>
+							<img alt="" class="ml-5" id="atchPath" style="width: 100%;">
+							<span class="ml-10" id="snsYmd"></span>
+							<h3 class="mt-10 ml-20"></h3>
+						</div>
+					</div>
+					<div class="Sns-Cn">
+						<input type="hidden" id="snsNo" name="snsNo">
+						<div class="writeCn pb-10" style="width: 100%;">
+							<span class="mb-120" id="CN"></span>
+						</div>
+					</div>
+					<div class="Sns-commet">
+						<div class="card">
+							<div class="card-header bg-light">
+								<i class="fa fa-comment fa"></i> REPLY <input type="hidden"
+									id="userId" name="userId" th:value="${param.userId}">
+							</div>
+							<th:block th:if="${session.userId != null}">
+								<!-- 아이디 check-->
+								<div th:insert="~{sns/replyWrite :: replyWrite}"></div>
+
+								<div class="Sns-reply" id="Sns-reply"></div>
+							</th:block>
+							<th:block th:unless="${session.userId != null}">
+								<div th:insert="~{sns/replyNoLogin :: replyNoLogin}"></div>
+							</th:block>
+							<!--댓글 끝-->
+						</div>
+					</div>
+					<!--Sns-footer-->
+
+				</form>
+			</div>
+
+		</div>
+		<div id="loadDiv" style="display: none"></div>
+		<script th:inline="javascript">
 		
 			$(document).ready(function () {
 			selectSnsList()
 		
+			
+		
+		
+		
 		});
 		
-			function readURL(input) {
+			function readURL(input) { // 게시글 입력시 사진 미리보기
 				console.log('함수 입장')
 			  if (input.files && input.files[0]) {
 			    var reader = new FileReader();
@@ -287,8 +205,12 @@ textarea {
 			    document.getElementById('preview').src = "";
 			  }
 			}
+			
+		
 		
 		function selectSnsList(sort){
+			
+			
 			console.log('gdgd'+sort)
 				formData=[];
 		
@@ -304,8 +226,6 @@ textarea {
 				}
 			
 				console.log(formData)
-				
-			
 			$.ajax({
 				url : "/goguma/selectSnsList", // 데이터를 가져올 경로 설정
 				type : "GET", // 데이터를 가져오는 방식
@@ -314,27 +234,39 @@ textarea {
 				contentType : 'application/json; charset = utf-8',
 				success : function(result) {
 						  console.log(result)
+						  
+						  if(result == 0) {
+							  $("#list").load("/sns/noSns.html")
+						}
+						  
+						
+						  
 						  $("#list").empty()
+						  
 						  for(sns of result){
 							  $("#list").append(`
-									  <div style="padding:10px">
-									<div class="blog-item" style="width:300px ; height:300px" onclick="snsModal(${sns.snsNo})">
-										<img src="${sns.atchPath}" alt="" style="width:100% ; height:300px" >
-									<div class="blog-desc">
-										<h5 class="blog-title">
-											<a href="single-blog.html">${sns.userId} / ${sns.snsYmd}</a>
-										</h5>
-										<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-            							<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-										<h5 class="blog-title">
-											<a href="single-blog.html">${sns.hash}</a>
-										</h5>
-									</div>
-									</div>
-									<p class="ml-20" style="paddinf:20px;">조회수 :${sns.inqCnt}</p>
-									<div>
+									  <div class="col-lg-4 col-md-6">
+			                            <div class="blog-item" onclick="snsModal(${sns.snsNo})">
+			                                <img src="${sns.atchPath}" alt="" onerror="this.onerror=null; this.src='/img/logo/003.png'">
+			                                <div class="blog-desc">
+											<h5 class="blog-title">
+												<a href="#">${sns.userId} / ${sns.snsYmd} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수:${sns.inqCnt}</a>
+												
+											</h5>
+											<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+	            							<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+											<h5 class="blog-title">
+												<a href="single-blog.html">${sns.hash}</a>
+											
+											</h5>
+											<br>
+											<h5 class="blog-title">${sns.snsCn}</h5>
+										</div>
+										</div>
+										
+			                            </div>
+			                        </div>
 							`)
-
 		           							 }
 											},
 						error : function(err) {
