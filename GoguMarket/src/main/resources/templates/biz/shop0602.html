@@ -16,26 +16,26 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="section-title text-start mb-20">
-									<h2 class="uppercase">단골 프로필</h2>
+									<h4 class="blog-section-title border-left mb-15">단골 프로필</h4>
 									<h6>단골들의 프로필</h6>
 								</div>
 							</div>
 						</div>
 						<hr>
-						<h1 th:text="${dgInfo}"></h1>
-						<h1 th:text="#{dangol}"></h1>
+<!-- <h1 th:text="${dgInfo}"></h1> -->
+<!-- <h1 th:text="#{dangol}"></h1> -->
 						<div class="row">
-							<div class="col-sm-2">
+							<div class="col-sm-1">
 								<img style="height: 70px; border-radius: 50px;"
-									class="media-object" th:src="${dangol.atchPath}" alt="#">
+									class="media-object" th:src="${dangol.atchPath}" alt="#" onerror="this.onerror=null; this.src='/img/logo/001.png'">
 							</div>
-							<div class="col-sm-7 mt-10">
+							<div class="col-sm-8 mt-10">
 								<h3 class="text-black-1" th:text="${dangol.nickNm}">김또치</h3>
 								<h6 class="brand-name-2"
 									th:text="|단골 등록일 : ${dangol.dangolYmd}|">단골 20일째</h6>
 							</div>
 							<div class="col-sm-3 mt-10">
-								<a class="button small button mb-20" onclick="chatRoomOpen()"
+								<a class="button small button mb-20 f-right" onclick="chatRoomOpen()"
 									style="cursor: pointer;"><span>1:1 채팅</span> </a>
 							</div>
 						</div>
@@ -61,21 +61,20 @@
 										</div>
 										<div
 											class="col-8 pro-rating sin-pro-rating d-flex justify-content-end">
-											<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> <a
-												href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> <a
-												href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> <a
-												href="#" tabindex="0"><i class="zmdi zmdi-star-half"></i></a>
-											<a href="#" tabindex="0"><i
-												class="zmdi zmdi-star-outline"></i></a> &nbsp; <span
-												class="text-black-5">( 3.9점 / [[${#lists.size(userRv)}]] 개 )</span>
+											<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> 
+											<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> 
+											<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a> 
+											<a href="#" tabindex="0"><i class="zmdi zmdi-star"></i></a>
+											<a href="#" tabindex="0"><i class="zmdi zmdi-star-outline"></i></a> &nbsp; 
+											<span class="text-black-5">( 4.2점 / [[${#lists.size(userRv)}]] 개 )</span>
 										</div>
 									</div>
 									<br>
 
 									<!-- 후기 1건 -->
 									<div class="tab-pane active" id="order-complete"
-										th:each="rv:${userRv}">
-										<h1 th:text="${rv}"></h1>
+										th:each="rv:${userRv}" th:if="${!#lists.isEmpty(rv)}">
+<!-- <h1 th:text="${rv}"></h1> -->
 										<div class="order-complete-content box-shadow"
 											style="padding: 20px;">
 											<div class="blog-desc">
@@ -102,12 +101,15 @@
 											</div>
 										</div>
 									</div>
+									<div class="tab-pane active" id="order-complete" th:if="${#lists.isEmpty(rv)}">
+										<p style="text-align:center;">작성한 후기가 없습니다 :(</p>
+									</div>
 
 								</div>
 								<!-- 후기/댓글 파트 끝-->
 
 								<!-- 주문내역 파트 시작 -->
-								<div role="tabpanel" class="tab-pane" id="order">
+								<div role="tabpanel" class="tab-pane" id="order" th:if="${!#lists.isEmpty(rv)}">
 									<!-- 아코디언 목록 div-->
 									<div class="payment-method">
 										<div id="accordion">
@@ -157,7 +159,9 @@
 									<!-- 아코디언 목록 끝 -->
 								</div>
 								<!-- 주문내역 파트 끝-->
-
+								<div role="tabpanel" class="tab-pane" id="order" th:if="${#lists.isEmpty(rv)}">
+									<p style="text-align:center;">주문한 내역이 없습니다 :(</p>
+								</div>
 							</div>
 							<!-- 예약내역 파트 끝-->
 

@@ -749,7 +749,7 @@ transform: scale(1);
 ------------------------------------- */
 .breadcrumbs-section {}
 .breadcrumbs {
-  background: #f6f6f6 url("img/breadcrumb/경매짤.png") no-repeat scroll center center; 
+  background: #f6f6f6 url("img/breadcrumb/길쭉한고구마.jpg") no-repeat scroll center center; 
 }
 .overlay-bg { 
   position: relative;
@@ -759,7 +759,7 @@ transform: scale(1);
   content: "";
   height: 100%;
   left: 0;
-  opacity: 0.6;
+  opacity: 0.5;
   position: absolute;
   top: 0;
   transition: all 0.3s ease 0s;
