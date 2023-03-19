@@ -11,16 +11,7 @@ layout:decorate="~{layouts/layout}">
 	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
 	crossorigin="anonymous"></script>
     <style>
-	@font-face {
-	     font-family: 'S-CoreDream-3Light';
-	     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-	     font-weight: normal;
-	     font-style: normal;
-		}
-		* {
-	        font-family : 'S-CoreDream-3Light'; 
-	    }
-    
+	
    		 .action-button span {
 			color: #C04A82;
 		}
@@ -156,7 +147,7 @@ layout:decorate="~{layouts/layout}">
 			                                    <input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
 			                                            placeholder="검색어를 입력하세요" title="키워드 입력"/>
 		                                    <button class="submit-btn-2 btn-hover-2" type="submit">검 색</button>
-		                                     <input  type="text">
+		                                     <input  type="text" disabled>
 			                                <button class="submit-btn-2 btn-hover-2" onclick="resetSearch()" type="button">초기화</button>
 		                             </div>
 		                        </form>

@@ -179,7 +179,7 @@
 												<ul class="nav nav-tabs mb-20">
 													<li class="nav-item"><a class="nav-link active" href="#description" data-bs-toggle="tab" role="tab" data-bs-target="#description">상품설명</a></li>
 													<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#information">시세</a></li>
-													<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#map2">추천거리</a></li>
+													<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#map2">판매지역</a></li>
 													<li class="nav-item"><a  class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#reviews" >
 															판매자의 다른 판매상품</a></li>
 												</ul>
@@ -257,10 +257,8 @@
 										<!-- single-pro-color-rating 찜 , 채팅 , 조회수 -->
 										<div class="single-pro-color-rating clearfix">
 											<div class="sin-pro-color">
-												<ul class="nav mb-20">
-													<li><h6 class="brand-name-2">찜 3</h6></li>&nbsp;&nbsp;
-													<li><h6 class="brand-name-2">채팅 4</h6></li>&nbsp;&nbsp;
-													<li><h6 class="brand-name-2 f-right">조회수</h6></li>
+												<ul class="nav mb-20" th:each="deal : ${deal}">
+													<li><h6 class="brand-name-2 f-right" th:text="'조회수 '+${deal.inqCnt}">조회수</h6></li>
 												</ul>
 											</div>
 											</tr>

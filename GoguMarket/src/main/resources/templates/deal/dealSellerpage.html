@@ -125,16 +125,14 @@
 										</div>
 									
 										<div role="tabpanel" class="tab-pane" id="reviews">
-											<p>거래 후기 리스트가 들어갈 자리입니다</p>
+											<p>판매자님에게 남긴 거래 후기들의 리스트입니다.</p>
 											<div class="reviews-tab-desc">
 												<form name="frmSearch" align="center">
-												 <!-- 페이지번호관련  -->
-													<div align="center">
-														<a
-															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-															th:href="|javascript:gopage(${num})|"
-															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-													</div>
+													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
+	                                       			</div>  
+													<div align="center" th:if="${#lists.isEmpty(reviews)}" th:text="'판매자님에게 남긴 후기가 없습니다'"></div>
+													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
+	                                       			</div>  
 													<input type="hidden" name="page" value="1">
 													<input type="hidden" name="tabName" value="reviews">
 													<div class="media mt-30" th:each="r: ${review}">
@@ -151,15 +149,18 @@
 																</div>
 																&nbsp;&nbsp;&nbsp;
 																<div class="f-right">
-																	<ul class="reply-delate">
-																		<li><a href="#">수정</a></li>
-																		<li>/</li>
-																		<li><a href="#">삭제</a></li>
-																	</ul>
+																	
 																</div>
 															</div>
 															<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p>
 														</div>
+													</div>
+													 <!-- 페이지번호관련  -->
+													<div align="center">
+														<a
+															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+															th:href="|javascript:gopage(${num})|"
+															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
 													</div>
 												</form>
 												<hr>
@@ -181,6 +182,7 @@
 									                        <td th:text=${i.index+1}></td>
 									                        <td th:text=${vote.commonCn}></td>
 									                        <td th:text="${vote.ccn}"></td>
+									                        
 									                    </tr>
 									                </tbody> 
 								                </table>
