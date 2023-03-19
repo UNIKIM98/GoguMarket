@@ -30,9 +30,12 @@ public class SnsCmntController {
 		HttpSession session = request.getSession();
 
 		String userId = (String) session.getAttribute("userId");
+		String atchPath = (String) session.getAttribute("atchPath");
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		vo.setCmntMem(userId);
+		vo.setAtchPath(atchPath);
+		
 		int success = service.insertReply(vo);
 
 		map.put("result", success);
