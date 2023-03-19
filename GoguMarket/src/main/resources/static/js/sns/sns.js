@@ -14,7 +14,6 @@ var reInput = document.getElementById("reInput");
 
 
 $(document).ready(function() {
-	alert('실행')
 	getUser();
 
 
@@ -95,8 +94,8 @@ function insertSns() {
 function snsModal(id) {
 	//활상화
 	Sns.style.display = "block"; //개인 게시글 창 활성화
-	
-	
+
+
 
 
 	$("#replyUserId").val("[[${session.userId}]]")
@@ -135,8 +134,7 @@ function snsModal(id) {
 }
 */
 
-function getUser() {
-	console.log('실행')
+function getUser() {// 세션에 담긴 회원 정보를 가져옴
 
 	$.ajax({
 		url: "/goguma/getUser",
@@ -145,22 +143,22 @@ function getUser() {
 		success: function(data) {
 			console.log(data)
 			$(data).each(function(i, item) {
-				
-				user[i] =item.mem;
+
+				user[i] = item.mem;
 			})
-		},error:function(error){
+		}, error: function(error) {
 			console.log(error)
 		}
 	})
-		
+
 }
 
 
 
 
 function SelectCmntlist(snsNo) {
-	
-	console.log(user[0].userId);
+
+
 	var forCnt = 0;
 	$.ajax({
 		url: "/goguma/SelectCmntlist",
@@ -177,7 +175,6 @@ function SelectCmntlist(snsNo) {
 					$("#loadDiv").load("/sns/rrpView.html", function(result) {
 						var addedDiv = $("#rrplyGroup_" + item.groupNo).append(result);
 						$(addedDiv).find(".rrpBox").each(function(index, obj) {
-							console.log("넘어옴 : " + index);
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
 								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem);
@@ -188,8 +185,16 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#rrpCmntMem").text(item.cmntMem);
 								$(obj).find("#rrpCmntYmd").text(item.cmntYmd);
 								$(obj).find("#cmntCn").text(item.cmntCn);
-								$(obj).find("#delbutton").attr("onclick",)
-								$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + "," + item.snsNo + ")")
+								if ((user[0].userId == item.cmntMem) == true) {
+									$(obj).find("#delbutton").attr("onclick",)
+									$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + "," + item.snsNo + ")")
+								} else {
+									$(obj).find("#delbutton").remove();
+									$(obj).find("#editbutton").remove();
+								}
+
+
+
 
 
 								return true;
@@ -214,11 +219,21 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#cmntCn").text(item.cmntCn);
 								$(obj).find("#cmntCn").attr('id', 'cmntCn' + item.cmntNo);
 								$(obj).find(".name-commenter").attr('id', 'replyGroup' + item.cmntNo);
-								$(obj).find("#replydel").attr('onclick', "rreplyDel(" + item.cmntNo + ", " + item.groupNo + "," + item.snsNo + ")");
 								$(obj).find("#reInput").attr('onclick', 'ShowRrpInput(' + item.cmntNo + ',' + item.snsNo + ')');
 								$(obj).find(".replyGroup").attr('id', 'replyGroup' + item.cmntNo);
 								$(obj).find(".rrplyGroup").attr('id', 'rrplyGroup_' + item.cmntNo);
-								$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + "," + item.groupNo + "," + "'" + item.cmntCn + "'" + ")")
+
+								if ((user[0].userId == item.cmntMem) == true) {
+									$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + "," + item.groupNo + "," + "'" + item.cmntCn + "'" + ")")
+									$(obj).find("#replydel").attr('onclick', "rreplyDel(" + item.cmntNo + ", " + item.groupNo + "," + item.snsNo + ")");
+								} else {
+							
+									$(obj).find("#editbutton").remove();
+									$(obj).find("#replydel").remove();
+								}
+
+
+
 								return true;
 							}
 

@@ -114,11 +114,12 @@ textarea {
 
 								</div>
 							</div>
-							<div th:if="${session.userId != null}">
-								<!-- userId -->
-								<input th:value="${session.userId}" type="hidden" name="userId"
-									id="userId">
-							</div>
+
+							<!-- userId -->
+							<input th:value="${session.userId}" type="hidden" name="userId"
+								id="userId"> 
+								
+
 							<!-- 게시물 -->
 							<textarea name="snsCn" id="snsCn" class="form-control-lg mb-15"
 								placeholder="게시글 내용 300자 이하." rows="3" cols="300"
