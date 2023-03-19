@@ -11,13 +11,12 @@
 		<div class="shop-section mb-80">
 			<div class="container">
 				<div class="d-flex justify-content-center">
-					<!-- Tab panes -->
 					<div class="tab-content">
 
-						<!-- order-complete start 예약완료 안내 폼-->
+						<!-- 예약완료 안내 폼-->
 						<div class="tab-pane active" id="order-complete">
 							<div class="order-complete-content box-shadow">
-
+								<!-- 윗부분 -->
 								<div class="thank-you p-30 text-center">
 									<h3 class="text-black-5 mb-0">예약이 완료되었습니다. 감사합니다</h3>
 								</div>
@@ -26,26 +25,25 @@
 									<ul class="order-info-list">
 										<li>
 											<h6>주문번호&nbsp;&nbsp;&nbsp;</h6>
-											<p th:text="|rsvt_no_${info.rsvtNo}|">(주문번호==========)</p>
+											<p th:text="|rsvt_no_${info.rsvtNo}|">(주문번호)</p>
 										</li>
 										<li>
 											<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상호명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
-											<p th:text="${info.bizNm}">(상호명=========)</p>
+											<p th:text="${info.bizNm}">(상호명)</p>
 										</li>
 										<li>
 											<h6>예약일시</h6>
-											<p th:text="|${info.rsvtYmd} 15시00분|">
-												(예약일시===============)</p>
+											<p th:text="|${info.rsvtYmd} 15시00분|">(예약일시)</p>
 										</li>
 										<li>
 											<h6>&nbsp;&nbsp;&nbsp;예약인원</h6>
-											<p th:text="|${info.rsvtNope}명|">(몇명======)</p>
+											<p th:text="|${info.rsvtNope}명|">(몇명)</p>
 										</li>
 									</ul>
 								</div>
-
+								
+								<!-- 아랫부분 -->
 								<div class="row" style="padding-bottom: 30px;">
-
 									<!-- 주문내역 -->
 									<div class="col-md-6">
 										<div class="payment-details p-30">
@@ -94,7 +92,7 @@
 
 							</div>
 						</div>
-						
+						<!-- 버튼 -->
 						<div class="d-flex justify-content-center mt-30">
 							<a class="button extra-small" data-bs-toggle="tab"
 								onclick="moveMain()"> <span>메인으로</span>
@@ -103,32 +101,27 @@
 								onclick="moveMypage()"> <span>예약내역 확인하기</span>
 							</a>
 						</div>
-						<!-- order-complete end -->
+
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<script th:inline="javascript">
-			var url = window.location.href;
-			console.log(url)
-			var urlRsvtNo = url.substring(url.lastIndexOf('/') + 1);
-			console.log("예약번호=-----" + urlRsvtNo)
-
-			function moveMain(){
-				window.location.href = "/"
-			}
-			
-			function moveMypage(){
-				window.location.href="/my/myReservation";
-			}
-		</script>
-
-
-
+	<script th:inline="javascript">
+	
+	//메인으로 이동
+	function moveMain(){
+		window.location.href = "/"
+	}
+	
+	//마이페이지로 이동
+	function moveMypage(){
+		window.location.href="/my/myReservation";
+	}
+	</script>
+	
 	</div>
 	<!-- 타임리프 div끝 -->
-
 </body>
 
 </html>

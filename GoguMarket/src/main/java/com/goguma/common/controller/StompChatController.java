@@ -27,4 +27,5 @@ public class StompChatController {
     public void message(ChatMessageDTO message){
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
+    
 }

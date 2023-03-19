@@ -264,6 +264,7 @@ public class RsvtController {
 		rsvtService.deleteAllRsvt(rsvtNo);
 		return 0;
 	}
+	
 
 	
 
