@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{biz/slide/slide}">
+
+<body>
+	<div layout:fragment="Bizcontent">
+		<div class="message-box-section mb-80">
+			<div class="container">
+				<div class="message-box box-shadow white-bg">
+					<form id="memUpdateForm" class="memUpdateForm"
+						action="/my/memUpdateFormSubmit" method="post"
+						onsubmit="return false">
+						<div class="row">
+							<div class="col-lg-12">
+								<h4 class="blog-section-title border-left mb-30">회원정보수정</h4>
+							</div>
+							<div class="userTable">
+								<table style="border-spacing: 10px; border-collapse: separate;"
+									id="frmTbl">
+									<tbody>
+										<tr>
+											<th><label for="profile">프로필사진</label></th>
+											<td>
+												<div id="pfTrgt">
+													<img src="/img/logo/002.png" alt=""
+														style="width: 60px; height: 60px; border-radius: 70%; border: 2px solid #C04A82">
+												</div>
+											</td>
+											<td><input type="file" id="profile"></td>
+										</tr>
+										<tr>
+											<th><label for="userId">아이디</label></th>
+											<td colspan="2"><input type="text" id="userId"
+												name="userId" readonly="readonly" style="width: 70%;"
+												th:value="${userInfo.userId}"></td>
+										</tr>
+										<tr>
+											<th><label for="userPw">비밀번호<span> *</span></label></th>
+											<td colspan="2"><input type="password" id="userPw"
+												name="userPw" placeholder="영문/숫자/특수문자 포함 9~20자리 입력해주세요."
+												required="required" style="width: 70%;"> <br></td>
+										</tr>
+										<tr>
+											<th><label for="userPwCk">비밀번호 확인<span> *</span></label></th>
+											<td colspan="2"><input type="password" id="userPwCk"
+												name="userPwCk" required="required"
+												placeholder="비밀번호를 한 번 더 입력해주세요." style="width: 70%;">
+											</td>
+										</tr>
+										<tr>
+											<th><label for="userNm">이름</label></th>
+											<td colspan="2"><input type="text" id="userNm"
+												name="userNm" readonly="readonly" style="width: 70%;"
+												th:value="${userInfo.userNm}"></td>
+										</tr>
+										<tr>
+											<th><label for="nickNm">닉네임<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="nickNm"
+												name="nickNm" required="required"
+												style="width: 40%; margin-right: 50px;"
+												th:value="${userInfo.NickNm}">
+												<button class="submit-btn-1 btn-hover-1"
+													onclick="nickNmCkAjax()" id="nickNmBtn" value="0"
+													type="button">중복확인</button></td>
+										</tr>
+										<tr>
+											<th><label for="addr">주소<span> *</span></label></th>
+											<td colspan="2"><input type="text" id="addr" name="addr"
+												placeholder="주소 입력을 위해 클릭해주세요." readonly="readonly"
+												onclick="findAddr()" style="width: 70%;"
+												th:value="${userInfo.addr}"></td>
+										</tr>
+										<tr>
+											<th><label for="dealArea">거래지역</label></th>
+											<td colspan="2"><input type="text" id="dealArea"
+												name="dealArea" placeholder="입력한 주소의 구로 자동 설정"
+												style="width: 70%;" readonly="readonly"
+												th:value="${userInfo.dealArea}"></td>
+										</tr>
+										<tr>
+											<th><label for="brthYmd">생년월일</label></th>
+											<td colspan="2"><input type="date" id="brthYmd"
+												name="brthYmd"
+												style="width: 40%; margin-right: 50px; border: white solid 1px">
+											</td>
+										</tr>
+										<tr>
+											<th class="mblTelno"><label for="mblTelno">휴대폰
+													번호 <span>*</span>
+											</label></th>
+											<td colspan="2"><input type="text" id="mblTelno"
+												name="mblTelno" placeholder="-/공백 없이 입력" style="width: 70%;"
+												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+												th:value="${userInfo.mblTelno}"></td>
+										</tr>
+										<tr>
+											<th><label for="eml">이메일주소 <span>*</span></label></th>
+											<td colspan="2"><input type="text" id="eml" name="eml"
+												placeholder="EX) email@naver.com"
+												style="width: 40%; margin-right: 50px;"
+												th:value="${userInfo.eml}" readonly="readonly">
+												<button class="submit-btn-1 btn-hover-1" type="button"
+													onclick="letChangeEml(event)" id="emlBtn" value="1">변경하기</button>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+							<div class="col-lg-12">
+
+								<input class="submit-btn-1 mt-30 btn-hover-1" type="submit"
+									id="btnSave" role="button" value="수정하기"> &nbsp;&nbsp;
+								<button class="submit-btn-1 mt-30 btn-hover-1" type="reset">취소</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+		var inputFileList = new Array();
+		var deleteList = new Array();
+		var img_style = 'width: 60px; height: 60px; border-radius: 70%; border:2px solid #C04A82';
+		
+		var userId = /*[[ ${userInfo.userId} ]]*/
+		console.log(userId);
+		/*]]*/
+		// ==============================================================
+		// ❤️ DOM 실행 함수
+			var fileNum = 0;
+
+			$(function(){
+				//# 닉네임 중복 체크 초기화
+				$("#nickNm").on("change", function() {
+					$("#nickNmBtn").val("1");
+				});
+
+				// # 비밀번호 유효성 체크
+				$("#userPw").on("change",function(){
+					pwRegExpCk();
+				})
+					
+				// # 비밀번호 일치 확인
+				$('#userPwCk').on("change", function(){
+					isSamePw();
+				})
+				
+				// # 휴대번호 유효성 체크
+				$("#mblTelno").on("change",function(){
+					ismblTelnoOk();
+				})
+				
+				// # 이메일주소 유효성 체크
+				$("#eml").on("change",function(){
+					isEmlOk();
+				})
+				
+				//# 이메일 중복 체크 초기화
+	            $("#eml").on("change", function() {
+	               $("#emlBtn").val("1");
+	            });
+	            
+	            //# 이메일 인증번호 체크 초기화
+	            $("#eml").on("change", function() {
+	               $("#emlAuthBtn").val("1");
+	            });
+				
+				// # 기존 프로필 사진
+				extistingProfile();
+				
+				// # 프로필사진 변경/삭제
+				$("#profile").on("change",function(e){
+					inputProfile(e);
+				})
+				
+				// # form submit
+				$("#btnSave").on("click", function() {
+					frmChk();
+				});
+				
+
+			})
+
+	function letChangeEml(event){
+				console.log("ddddddd")
+				$(event.target)
+							.removeAttr("onclick")
+							.attr("onclick","emlDupCkAjax()").text("인증번호 발송")
+							.prev().attr("readonly",false);
+								
+				$("#frmTbl").append(`
+						<tr>
+                        <th><label for="emlCk">인증확인 <span>*</span></label></th>
+                        <td colspan="2"><input type="text" id="emlCk" name="emlCk"
+							style="width: 40%; margin-right: 50px;"
+                                 placeholder="인증번호를 입력해주세요." 
+                                 >
+                        <button class="submit-btn-1 btn-hover-1" type="button" 
+                        		 onclick="issecureRandomOk()" 
+                        		 id="emlAuthBtn"
+                        		 value="1">인증하기</button>
+                        </td>
+                     </tr>
+						`)
+				
+			}
+	// ==============================================================
+	// ❤️ 이메일 중복체크 Ajax
+	   function emlDupCkAjax(){
+		console.log("lllllllllllll")
+	        	let eml = $("#eml").val();
+	        	
+	        	if(isEmlOk()){
+	        		$.ajax({
+	        			url:'/goguma/emlDupCkAjax/'+eml,
+	        			type:'get',
+	        			success:function(result){
+	        				console.log(result);
+	        				if(result==0){
+	        					emlConfirm(eml);
+	        				}else{
+	        					alert("이미 등록되어 있는 이메일입니다.");
+	        		               $('#eml').val("").focus();
+	        				}
+	        			}
+	        		})
+	        	}
+	      	}
+			
+		// ==============================================================
+		// ❤️ 이메일 confirm
+		    function emlConfirm(eml){
+			    	  if(confirm(eml+"로 인증번호를 전송하시겠습니까?")){
+			    		  emlCheckAJax(eml);
+			    		  $("#emlBtn").val("0");
+			    		  $("#emlCk").val("");
+			    	  }
+		    	  console.log(eml);
+		      }
+
+		// ==============================================================
+		// ❤️ 이메일 인증 Ajax
+			function  emlCheckAJax(eml){
+		    	  console.log(eml)
+			   	 $.ajax({
+			  		  url:'/goguma/emlCheckAJax/'+eml,
+			  		  type:'get',
+			  		  success: function(result){
+			  			secureRandom = result;
+			  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
+			  			  console.log(result);
+			  		  },
+			  		  error: function(err){
+			  			  console.log(err);
+			  		  }
+		       	  }) 
+		      	}
+		    
+		// ==============================================================
+		// ❤️ 이메일 인증번호 일치여부 확인
+		     function issecureRandomOk(){
+				  console.log(secureRandom);
+				  if(secureRandom == $("#emlCk").val()){
+					  alert("이메일 인증이 완료되었습니다.");
+					  $("#emlAuthBtn").val("0");
+				  }else{
+					  alert("인증번호가 일치하지 않습니다.");
+				  }
+			  }
+		// ==============================================================
+		// ❤️ 프로필사진 변경/삭제
+			function inputProfile(e){
+				var inputFile = e.target.files;
+				var filesArr = Array.prototype.slice.call(inputFile);
+
+
+				filesArr.forEach(function(f) {
+					console.log("filesArr foreach문")
+					console.log(f)
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					inputFileList.push(f);
+					$("#pfTrgt").children().remove();
+					$("#pfTrgt").append(
+								`
+								<img style="${img_style}" src=${e.target.result}
+																	   id=file${fileNum} onclick=fileDelete('file${fileNum}')>
+								`		
+					)
+					fileNum++;
+				}
+				reader.readAsDataURL(f);
+			});
+			$("#profile").val("");
+		}
+		
+		// ==============================================================
+		// ❤️ 프로필 삭제
+			function fileDelete(fileNum){
+				var no = fileNum.replace(/[^0-9]/g, "");
+
+				inputFileList[no].is_delete = true;
+				$("#"+fileNum).remove();
+				$("#pfTrgt").append(
+						`
+						<img src="/img/logo/002.png" style="${img_style}">	
+						`		
+				)
+				
+		}
+		
+		// ==================================================
+		// ❤️ 기존 프로필 사진
+			function extistingProfile(){
+				/*<![CDATA[*/
+					var atchList = /*[[ ${userInfo} ]]*/
+						console.log(atchList);
+						
+					if(atchList.atchPath!=null){
+							$("#pfTrgt").children().remove();
+							$('#pfTrgt').append(
+														`<img style="${img_style}" src="${atchList.atchPath}"
+															   id="exFile" onclick=deleteFile('exFile')>`
+														)
+
+					}
+				/*]]*/	
+		}
+		
+		//==============================================================================
+		//✅ exFile 중에서 삭제할 파일 정보 
+			function deleteFile(id, atchId, atchNo) {
+				$("#"+id).remove();
+				$("#pfTrgt").append(
+						`
+						<img src="/img/logo/001.png" style="${img_style}">	
+						`		
+				)
+		}
+		
+		// ==============================================================
+		// ❤️ 이메일주소 유효성 체크
+			function isEmlOk(){
+			console.log("ssssss")
+			let emlChck = false;
+			const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if(emlRegExp.test($("#eml").val())){
+				emlChck = true;
+			}else{
+				emlChck = false;
+				$("#eml").val("").addClass("errPlaceHolder").focus();
+			}
+			return emlChck;
+		}
+		
+		// ==============================================================
+		// ❤️ 비밀번호 유효성 체크
+			function pwRegExpCk(){
+				$('#userPwCk').attr("placeholder","비밀번호를 한 번 더 입력해주세요.").val("");
+				if($('#userPwCk').hasClass('errPlaceHolder') == true){
+					$('#userPwCk').removeClass("errPlaceHolder");
+				}
+				
+				let isPwOk = false;
+				
+				// 비밀번호 정규식
+				const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{9,20}$/;
+				
+				if(pwRegExp.test($("#userPw").val())){
+					isPwOk = true;
+				}else{
+					isPwOk = false;
+					$('#userPw').val("").addClass("errPlaceHolder").focus();
+				}
+		}
+		
+		// ==============================================================
+		// ❤️ 비밀번호 일치 확인
+			function isSamePw(){
+				if($('#userPw').val()!= $('#userPwCk').val()){
+					$('#userPwCk').attr("placeholder","비밀번호가 일치하지 않습니다.")
+								  .addClass("errPlaceHolder").val("")
+								  .focus();
+				}
+		}
+
+		// ==============================================================
+		// ❤️ 휴대번호 유효성 체크 
+			function ismblTelnoOk(){
+			if($("#mblTelno").val().length > 11){
+				$("#mblTelno").attr("placeholder","휴대번호는 11자리 까지만 입력 가능합니다.")
+							  .val("").addClass("errPlaceHolder")
+							  .focus();
+			}
+		}
+
+		// ==============================================================
+		// ❤️ 닉네임 중복 체크 아작스
+			function nickNmCkAjax() {
+				$.ajax({
+					url : '/goguma/nickNmChk/' + $('#nickNm').val(),
+					dataType : 'json',
+					type : 'get',
+					contentType : 'application/json; charset = utf-8',
+					success : function(result) {
+						nickNmCk(result);
+					},
+					error : function(err) {
+						console.log(err);
+					}
+				})
+			}
+
+		// ❤️ 닉네임 중복 체크 결과 출력
+			function nickNmCk(str) {
+				if (str == "0") {
+					alert("사용가능한 닉네임입니다.");
+					$('#nickNmBtn').val("0");
+				} else {
+					alert("이미 사용 중인 닉네임입니다.");
+					$('#nickNm').val("").focus();
+				}
+			}	
+
+		// ==============================================================
+		// ❤️ 주소/거래지역 설정
+			function findAddr() {
+				new daum.Postcode(
+						{
+							oncomplete : function(data) {
+								let road = data.roadAddress; // 도로명 주소
+								let jibun = data.jibunAddress; // 지번 주소
+
+								if ((road.substring(0, 2) || jibun.substring(0,2)) != '대구') {
+									$('#addr').attr("placeholder","대구광역시 소재의 주소지를 입력해주세요 :D")
+											  .addClass("errPlaceHolder")
+											  .val("").focus();
+								} else {
+									if ((road !== '') || (jibun !== '')) {
+										$("#addr").val(
+												data.sido + " " + data.sigungu + " " + data.bname);
+										$("#dealArea").val(data.sigungu);
+									}
+								}
+							}
+						}).open();
+			}
+
+		// ==============================================================
+		// ❤️ submit 전 정보 유효성 체크
+			function frmChk() {
+				if ($('#nickNmBtn').val() == '1') {
+					alert("닉네임 중복체크를 해주세요.");
+					return false;
+				} else if ($('#addr').val() == "") {
+					alert("주소를 입력해주세요.");
+					return false;
+				} else if ($('#userPw').val() == "") {
+					alert("새로운 비밀번호를 입력해주세요.");
+					$('#userPw').focus();
+					return false;
+				} else if ($('#userPwCk').val() == "") {
+					alert("비밀번호확인을 해주세요");
+					$('#userPwCk').focus();
+					return false;
+				}else{
+					formSubmit();
+				}
+			}
+		
+		// ==============================================================
+		// ❤️ 프로필 아작스
+			function formSubmit(){
+				var formData = new FormData($("#memUpdateForm")[0]);
+				console.log("왔니..")
+				console.log(inputFileList)
+				for (var i = 0; i < inputFileList.length; i++) {
+						if (!inputFileList[i].is_delete) {
+							formData.append("files", inputFileList[i]);
+						}
+					}
+				
+				if(deleteList.length!=0){
+					exFileDeleteAjax();
+				}
+				
+				$.ajax({	
+					url : "/my/memUpdateFormSubmit",
+					type : "POST",
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						console.log(result)
+						alert("[수정완료] 회원정보 수정이 완료되었습니다 :D");
+						location.href = "/my/myInfoCheck";
+					},
+					error : function(err){
+						alert("[수정실패] 수정 중 오류가 발생하였습니다. :(");
+					}
+				});
+				
+			}
+		
+		//==============================================================================
+		//✅ 파일 삭제 ajax
+			function exFileDeleteAjax(){
+				$.ajax({	
+					url : "/my/deleteProfile",
+					type : "post",
+					data :  userId,
+					success : function(delCnt) {
+							console.log(delCnt)
+					},
+					error : function(err){
+						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");
+					}
+				});	
+			}
+		</script>
+	</div>
+</body>
+</html>

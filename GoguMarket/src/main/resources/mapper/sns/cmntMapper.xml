@@ -25,9 +25,11 @@
 		cmnt_cn,
 		cmnt_mem,
 		cmnt_ymd,
+		atch_path,
 		group_no,
 		recmnt_order,
-		step
+		step,
+		
 
 		)
 		VALUES (
@@ -36,6 +38,7 @@
 		#{cmntCn},
 		#{cmntMem},
 		CURRENT_Date,
+		#{atchPath},
 		<choose>
 			<when test="groupNo != null">#{groupNo}</when>
 			<otherwise>0</otherwise>
@@ -50,6 +53,7 @@
 			<when test="step != null">#{step}+1</when>
 			<otherwise>#{step}</otherwise>
 		</choose>
+		
 		)
 	</insert>
 
