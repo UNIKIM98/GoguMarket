@@ -25,8 +25,16 @@ var deleteList = new Array(); // delete 파일 배열
 var isSubmitOk = true; //submit 유효성 체크 boolean
 
 
+btn.onclick = function() {
+	modal.style.display = "block";
+    disappear.style.display = "none";
 
+};
+//------------------ 개인 게시글-------------------------
+function insertSns(){
+	modal.style.display = "block"; //개인 게시글 창 활성화
 
+}
 $.ajax({
     url: "/auctSelect/{auctNo}",
     type: "Post",
