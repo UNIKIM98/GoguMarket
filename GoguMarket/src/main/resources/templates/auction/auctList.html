@@ -24,15 +24,7 @@
 
 				<div class="col-lg-3 order-lg-1 order-2" style="margin: auto;">
 					<!-- widget-search -->
-					<aside class="widget-search mb-30">
-						<form action="#">
-							<input type="text" placeholder="Search here...">
-							<button type="submit">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-						</form>
-						<span style="float: right;">실검들어갈 자리입니당~</span>
-					</aside>
+					
 				</div>
 				<!-- FEATURED PRODUCT SECTION START -->
 				<div class="featured-product-section mb-50">
@@ -44,7 +36,7 @@
 							<div class="col-lg-12">
 								<div class="section-title text-center mb-50">
 									<h2 class="uppercase">Recommend Product</h2>
-									<h6>현재 인기있는 경매 상품들입니다</h6>
+									<h6>가장 최근에 게시된 경매품목입니다</h6>
 								</div>
 								<div class="featured-product">
 									<div class="active-featured-product slick-arrow-2">
@@ -55,9 +47,10 @@
 													th:if="${auct.auctNo == nowPrc.auctNo}">
 													<div class="product-img">
 														<img th:src="${auct.atchNm}" alt=""
+															onerror="this.onerror=null; this.src='/img/logo/001.png'"
 															style="width: 268px; height: 280px;" />
 													</div>
-													<div class="product-info">
+													<div class="product-info" style="padding: 20px; padding-bottom: 40px;">
 
 														<h6 class="product-title">
 															<a th:text="${auct.auctTtl}"></a>
@@ -100,12 +93,12 @@
 								<!-- 정렬 -->
 								<div class="product-tab pro-tab-menu pro-tab-menu-2 text-center">
 									<!-- Nav tabs -->
-									<ul class="nav">
+									<!-- <ul class="nav">
 										<li><a class="active" href="#popular-product" data-bs-toggle="tab">최근순</a></li>
 										<li><a href="#new-arrival" data-bs-toggle="tab">최저가순</a></li>
 										<li><a href="#best-seller" data-bs-toggle="tab">최고가순</a></li>
 										<li><a href="#special-offer" data-bs-toggle="tab">조회순</a></li>
-									</ul>
+									</ul> -->
 								</div>
 								<!-- Tab panes -->
 								<div class="tab-content">
@@ -121,19 +114,27 @@
 												<a th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
 													<div class="product-item" th:if="${auct.auctNo == nowPrc.auctNo}" th:each="nowPrc : ${nowPrcs}" >
 														<div class="product-img" >
-														<img th:src="${auct.atchNm}" alt="" style="width: 268px; height: 280px;"/>
-													</div>
-														<div class="product-info">
+															<img th:src="${auct.atchNm}" alt=""
+																onerror="this.onerror=null; this.src='/img/logo/001.png'"
+																style="width: 268px; height: 280px;" />
+														</div>
+														<div class="product-info" style="padding: 20px; padding-bottom: 40px;">
 															<h6 class="product-title">
 																<a th:text="${auct.auctTtl}"></a>
 															</h6>
 															<h3 class="pro-price" th:if="${nowPrc.nowPrc != 0}"
-															th:text="현재가 + ${nowPrc.nowPrc} +원"></h3>
+																th:text="'현재가 ' + ${#numbers.formatInteger(nowPrc.nowPrc, 3, 'COMMA') + '원'}"></h3>
 															<h3 class="pro-price" th:if="${nowPrc.nowPrc == 0}">입찰자가 없습니다</h3>
 															<h5 align="left" th:text="${auct.userId}"></h5>
-															<ul class="action-button">
+															<h5 class="sin-pro-action f-right"
+																th:if="${!auct.dDay.equals(0)}"
+																th:text="${'마감'+auct.dDay+'일 전'}"></h5>
+															<h5 class="sin-pro-action f-right"
+																th:if="${auct.dDay.equals(0)}"
+																th:text="${'마지막 경매일입니다'}"></h5>
+															<ul class="sin-pro-action f-left">
 																<li>
-																	<h6>입찰인원 자리</h6>
+																	<h6>입찰인원 : [[${auct.count}]]</h6>
 																</li>
 															</ul>
 														</div>
