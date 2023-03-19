@@ -84,7 +84,7 @@
 											<ul class="blog-meta">
 												<li th:each="ctgry: ${ctgry}"><a
 													th:href="|javascript:ctgryId('${ctgry.commonNm}')|"
-													th:text="${ctgry.commonNm}" th:name="${ctgry.commonNm}|">(카테고리)
+													th:text="${ctgry.commonNm}" th:id="${ctgry.commonNm}|">(카테고리)
 												</a></li>
 											</ul>
 										</div>
