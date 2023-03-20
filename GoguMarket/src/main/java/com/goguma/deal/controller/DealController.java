@@ -460,7 +460,12 @@ public class DealController {
 	// ❤❤ 판매자 페이지
 
 	@RequestMapping("/goguma/dealSellerpage/{ntslId}/{dlNo}")
-	public String getDealSeller(Paging paging,DealSearchVO svo, DealRvSearchVO rvo, @PathVariable String ntslId,@PathVariable int dlNo, Model model) {
+	public String getDealSeller(@PathVariable String ntslId,
+								@PathVariable int dlNo, 
+			                    Paging paging,
+			                    DealSearchVO svo, 
+			                    DealRvSearchVO rvo, 
+			                    Model model) {
 		// 판매자가 남긴 리뷰 가져오는거
 
 		System.out.println("왔슈...." + ntslId);
@@ -489,12 +494,16 @@ public class DealController {
 
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		svo.setFirst(paging.getFirst());
-		svo.setLast(paging.getLast());
-		System.out.println(svo + "svooooo"); // 이건또왜 퍼스트1 라스트1이냐?
-		paging.setTotalRecord(dealService.getcountTotal(svo));
-		System.out.println(dealService.getcountTotal(svo) + "갯수나오냐?"); // 이건되는데
-
-		System.out.println(svo.getNtslId() + "idddd");
+		svo.setLast(10);
+		svo.setNtslId(ntslId);
+		
+		paging.setTotalRecord(dealService.getcountTotal(svo)); 
+		System.out.println(paging.getLast()+"paginggggg");
+		System.out.println(svo+"svooooo"); // 이건또왜  퍼스트1 라스트1이냐?
+		System.out.println(dealService.getcountTotal(svo)+"갯수나오냐?"); // 이건되는데
+	
+		System.out.println(svo.getNtslId()+"idddd");
+		
 
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
 		System.out.println(dealService.selectNtslDeal(svo) + "svooo");
