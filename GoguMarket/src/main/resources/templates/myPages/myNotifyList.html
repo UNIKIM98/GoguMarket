@@ -44,7 +44,7 @@
 		
 			loadNotifyAjax();
 			countNotify()
-			setInterval(() => checkNotify(), 300000);
+			setInterval(() => checkNotify(), 2000);
 			checkAlm();
 			
 		});
@@ -160,8 +160,6 @@
 				type: 'GET',
 				success: function (data) {
 					console.log(data);
-
-					$("")
 
 					if (data > 0) {
 						loadNotify();
@@ -299,31 +297,27 @@
 				th:value="${param.pstSe}"> <input type="hidden" name="page"
 				id="page" value="1">
 		</form>
-
 		<div class="container">
-
-			<div class="tab-pane active" id="order-complete">
+			<div class="message-box box-shadow white-bg"
+				style="width: 100%">
 				<div class="tab-pane active" id="order-complete">
-					<br>
 					<div>
 						<h4 class="blog-section-title border-left mb-30">나의 쪽지함</h4>
 					</div>
-					<div class="order-complete-content box-shadow">
+					<div class="order-complete-content box-shadow" style="width: 100%; height:50%;" >
 						<form>
 							<div class="order-info p-5 mb-10">
-								<ul class="order-info-list">
+								<ul class="order-info-list" style="font-size:10px;">
 									<li><a class="totalP" href='javascript:void(0);'
-										onclick="loadNotify();" value=""  name="pstSe">전체</a>
+										onclick="loadNotify();" value="" name="pstSe">전체</a>
 										<p>
-											총 <span class="totalPTrgt"
-												style="font-weight: bold;" id="all"
-												name="pstSe">0</span> 개
+											총 <span class="totalPTrgt" style="font-weight: bold;"
+												id="all" name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="totalP" href='javascript:void(0);'
 										onclick="loadNotify('AD');" value="AD">관리자</a>
 										<p>
-											총 <span class="totalPTrgt"
-												style="font-weight: bold;" id="AD"
+											총 <span class="totalPTrgt" style="font-weight: bold;" id="AD"
 												name="pstSe">0</span> 개
 										</p></li>
 									<li><a class="attendP" href='javascript:void(0);'
@@ -350,7 +344,7 @@
 							</div>
 							<div class="row">
 								<div>
-									<table class="table" style="text-align: center">
+									<table class="table" style="text-align: center; width: 100%;">
 										<thead style="border: 1px">
 											<tr>
 												<th><input type="checkbox" name="select"

@@ -34,9 +34,6 @@
 
 	</select>
 
-
-
-
 	<select id="selectNotify"
 		parameterType="com.goguma.common.vo.AlarmVO"
 		resultType="com.goguma.common.vo.AlarmVO">

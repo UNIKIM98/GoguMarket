@@ -49,7 +49,6 @@ public class AlarmController {
 
 		switch (categori) {
 
-		
 		case "":
 			content = "[전체 전송 알림]";
 			break;
@@ -99,34 +98,34 @@ public class AlarmController {
 		AlarmVO vo = new AlarmVO();
 		vo.setUserId(userId);
 		int cnt = 99;
+
 		cnt = alarm.checkNotifyCount(vo);
+
+		// 시도하는 중 >> 카운트 세션에 담기
+		session.setAttribute("alarm", cnt);
 		return cnt;
 	}
-	
+
 	@GetMapping("/my/countNotify")
 	@ResponseBody
-	public Map<String,Object> countNotify(HttpServletRequest request) {
+	public Map<String, Object> countNotify(HttpServletRequest request) {
 		System.out.println("gdgd");
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		AlarmVO vo = new AlarmVO();
 		vo.setUserId(userId);
-		
+
 		List<AlarmVO> list = alarm.countNotify(userId);
-		
+
 		System.out.println(list);
-		
-		Map<String,Object> map = new HashMap<String, Object>();
-		
-		map.put("count",list);
-		
-		
-		
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("count", list);
 
 		return map;
 	}
-	
-	
+
 	@GetMapping("/my/selectNotify")
 	@ResponseBody
 	public Map<String, Object> selectNotify(HttpServletRequest request, String pstSe, CommonPaging page) {
@@ -172,20 +171,20 @@ public class AlarmController {
 	public int deleteAlm(@RequestBody List<AlarmVO> almNo) {
 		System.out.println(almNo);
 
-		int cnt=0;
-		
+		int cnt = 0;
+
 		for (AlarmVO vo : almNo) {
 			System.out.println(vo);
 			int success = alarm.deleteAlm(vo);
-			
-			if(success == 0) {
-				cnt=0;
-			}else {
-				cnt+=1;
+
+			if (success == 0) {
+				cnt = 0;
+			} else {
+				cnt += 1;
 			}
 
 		}
-		System.out.println("count :"+cnt);
+		System.out.println("count :" + cnt);
 
 		return cnt;
 	}

@@ -13,13 +13,6 @@ var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
 var reInput = document.getElementById("reInput");
 
 
-$(document).ready(function() {
-	getUser();
-
-
-});
-
-let user = new Array();
 
 
 /*const rrpWriteHtml;
@@ -179,7 +172,7 @@ function SelectCmntlist(snsNo) {
 								$(obj).addClass("set");
 								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem);
 								$(obj).find("#rrpContent").attr("id", "rrpContent" + item.cmntNo);
-								$(obj).find("#rrpAtchPath").attr("src",item.atchPath);
+								$(obj).find("#rrpAtchPath").attr("src", item.atchPath);
 								$(obj).find("#rrpGroupNo").val(item.groupNo);
 								$(obj).find("#rrpCmntNo").val(item.cmntNo);
 								$(obj).find("#rrpSnsNo").val(item.snsNo);
@@ -193,11 +186,6 @@ function SelectCmntlist(snsNo) {
 									$(obj).find("#delbutton").remove();
 									$(obj).find("#editbutton").remove();
 								}
-
-
-
-
-
 								return true;
 							}
 						});
@@ -212,7 +200,7 @@ function SelectCmntlist(snsNo) {
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
 								$(obj).addClass("numbering" + forCnt);
-								$(obj).find("#rpAtchPath").attr("src",item.atchPath);
+								$(obj).find("#rpAtchPath").attr("src", item.atchPath);
 								$(obj).find("#rpGroupNo").val(item.groupNo);
 								$(obj).find("#rpCmntNo").val(item.cmntNo);
 								$(obj).find("#rpSnsNo").val(item.snsNo);
@@ -229,13 +217,10 @@ function SelectCmntlist(snsNo) {
 									$(obj).find("#editbutton").attr("onclick", "replyEditForm(" + item.cmntNo + "," + item.snsNo + "," + item.groupNo + "," + "'" + item.cmntCn + "'" + ")")
 									$(obj).find("#replydel").attr('onclick', "rreplyDel(" + item.cmntNo + ", " + item.groupNo + "," + item.snsNo + ")");
 								} else {
-							
+
 									$(obj).find("#editbutton").remove();
 									$(obj).find("#replydel").remove();
 								}
-
-
-
 								return true;
 							}
 
@@ -243,10 +228,6 @@ function SelectCmntlist(snsNo) {
 
 					});
 				}
-
-
-
-
 				return true;
 			});
 		},
