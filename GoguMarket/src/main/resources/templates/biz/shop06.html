@@ -4,50 +4,47 @@
 	layout:decorate="~{biz/slide/slide}">
 
 <body>
-
 	<div layout:fragment="Bizcontent">
-		<script>
-			function gopage(page) {
-				frmSearch.page.value = page;
-				frmSearch.submit();
-			}
+	<script>
+		function gopage(page) {
+			frmSearch.page.value = page;
+			frmSearch.submit();
+		}
 
-			function ctgryId(name) {
-				console.log(name) //치킨 <- 이런식으로 나옴
-			}
-		</script>
+		function ctgryId(name) {
+			console.log(name) //치킨 <- 이런식으로 나옴
+		}
+	</script>
 		<div class="row">
-
 			<div class="col-lg-12">
 				<!-- 제목부분 -->
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="section-title text-start mb-20">
-							<h2 class="uppercase">단골 관리</h2>
+							<h4 class="blog-section-title border-left mb-15">단골 관리</h4>
 							<h6>단골들에게 관심을 더해보세요</h6>
 						</div>
 					</div>
 				</div>
 				<hr>
-
+				
+				<!-- 내용부분 -->
 				<div class="d-flex justify-content-center">
 					<table>
 						<tr>
 							<td class="td-title-1" style="text-align: center;">총 단골 수는</td>
 							<td class="td-title-1" style="text-align: center;" id="pd">10월1일
 								~ 11월 11일 기간동안</td>
-							<td class="td-title-1" style="text-align: center;">페이지를 방문한
-								단골은</td>
-							<td class="td-title-1" style="text-align: center;">소식을 읽은
-								단골은</td>
+							<td class="td-title-1" style="text-align: center;">페이지를 방문한 단골은</td>
+							<td class="td-title-1" style="text-align: center;">소식을 읽은 단골은</td>
 						</tr>
 						<tr>
 							<th class="td-title-1" style="text-align: center;"
 								th:text="|${cnt}명|">(몇명)</th>
 							<th class="td-title-1" style="text-align: center;"
 								th:text="|${prd}명|">(몇명)</th>
-							<th class="td-title-1" style="text-align: center;">21명</th>
-							<th class="td-title-1" style="text-align: center;">58명</th>
+							<th class="td-title-1" style="text-align: center;">7명</th>
+							<th class="td-title-1" style="text-align: center;">13명</th>
 						</tr>
 						<tr>
 							<td class="td-title-1" style="text-align: center;">이에요</td>
@@ -60,7 +57,7 @@
 				<hr>
 
 				<!-- 단골목록 : 반복 -->
-				<div class="reviews-tab-desc">
+				<div class="reviews-tab-desc" th:if="${!#lists.isEmpty(dg)}">
 					<div class="row mb-30">
 
 						<!-- 페이징을 위해 form태그에 name추가, hidden타입 input태그 추가 -->
@@ -69,33 +66,32 @@
 							<input type="hidden" name="page" value="1">
 						</form>
 						<!-- 단골목록 반복 -->
-						 
-							<div class="col-lg-3" th:each="dg:${dg}">
-								<div class="media mt-30">
-									<div class="media-left">
-										<a href="#"><img class="media-object"
-											src="" alt="#"></a>
-									</div>
-									<div class="media-body">
-										<div class="clearfix">
-											<div class="name-commenter f-left">
-												<h6 class="media-heading">
-													<a th:href="@{/biz/dangolDetailPage/{userId}(userId=${dg.userId})}" th:text="${dg.nickNm}">(닉네임)</a>
-												</h6>
-												<p class="mb-10" th:text="|등록일 : ${dg.dangolYmd}|">(단골등록날짜)</p>
-											</div>
-
-											<br>
+						<div class="col-lg-4" th:each="dg:${dg}">
+							<div class="media mt-30">
+								<div class="media-left">
+									<a href="#"><img class="media-object"
+										src="" alt="#" width="50px" onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
+								</div>
+								<div class="media-body">
+									<div class="clearfix">
+										<div class="name-commenter f-left">
+											<h6 class="media-heading">
+												<a th:href="@{/biz/dangolDetailPage/{userId}(userId=${dg.userId})}" th:text="${dg.nickNm}">(닉네임)</a>
+											</h6>
+											<p class="mb-10" th:text="|등록일 : ${dg.dangolYmd}|">(단골등록날짜)</p>
 										</div>
-										<p class="mb-0" th:text="${dg.dangolMemo}">(메모내용)</p>
+										<br>
 									</div>
+									<p class="mb-0" th:text="${dg.dangolMemo}">(메모내용)</p>
 								</div>
 							</div>
-
-
-
+						</div>
 					</div>
 
+				</div>
+				<!-- 단골이 없을경우 -->
+				<div class="reviews-tab-desc" th:if="${#lists.isEmpty(dg)}">
+					<p style="text-align:center;">등록된 단골이 없습니다 :(</p>
 				</div>
 
 				<!-- 페이지번호 -->
@@ -115,33 +111,27 @@
 					</div>
 				</div>
 
-
-
 			</div>
-
 		</div>
 
-		<script th:inline="javascript">
-			// 현재 날짜 가져오기
-			var today = new Date();
+	<script th:inline="javascript">
+	// 단골 추가 집계 기간 설정
+	// 현재 날짜 가져오기
+	var today = new Date();
 
-			// 날짜를 10일 전으로 설정
-			var tenDaysAgo = new Date(today.getFullYear(), today.getMonth(),
-					today.getDate() - 10);
+	// 날짜를 10일 전으로 설정
+	var tenDaysAgo = new Date(today.getFullYear(), today.getMonth(),
+			today.getDate() - 10);
 
-			// 출력할 날짜 형식 설정
-			var dateFormat = {
-				month : 'long',
-				day : 'numeric'
-			};
+	// 출력할 날짜 형식 설정
+	var dateFormat = {
+		month : 'long',
+		day : 'numeric'
+	};
 
-			var today = today.toLocaleDateString('ko-KR', dateFormat)
-			var tenDaysAgo = tenDaysAgo.toLocaleDateString('ko-KR', dateFormat)
-			console.log(today)
-			console.log(tenDaysAgo)
-
-			console.log($('#pd').text(tenDaysAgo + " ~ " + today + " 기간동안"));
-		</script>
+	var today = today.toLocaleDateString('ko-KR', dateFormat)
+	var tenDaysAgo = tenDaysAgo.toLocaleDateString('ko-KR', dateFormat)
+	</script>
 	</div>
 	<!-- 타임리프 div 끝 -->
 </body>

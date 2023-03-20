@@ -14,7 +14,6 @@
 .errPlaceHolder::placeholder {
 	color: red;
 }
-$primary: #ff0000
 </style>
 </head>
 
@@ -24,48 +23,49 @@ $primary: #ff0000
 			<section id="page-content" class="page-wrapper section">
 				<div class="about-section mb-80">
 					<div class="container">
-						<!--▶ 우리동네 select -->
-						<div class="row" id="myAreaNow">
-							<div class="section-title text-start ">
-							<br>
-								<h4 class="blog-section-title border-left mb-30">우리 동네</h4>
-								<h4 th:if="${userInfo.dealArea!=null}">
-									지금 우리 동네는 <span style="font-weight: bold;" class="myArea"
-										th:text="${userInfo.dealArea}"></span> 입니다.
-								</h4>
-								<h4 th:if="${userInfo.dealArea == null}">우리동네를 설정해주세요 :D</h4>
+						<div class="message-box box-shadow white-bg" style="height: 750px; width: 100%">
+							<!--▶ 우리동네 select -->
+							<div class="row" id="myAreaNow">
+								<div class="section-title text-start ">
+									<h4 class="blog-section-title border-left mb-30">우리 동네</h4>
+									<h4 th:if="${userInfo.dealArea!=null}">
+										지금 우리 동네는 <span style="font-weight: bold;" class="myArea"
+											th:text="${userInfo.dealArea}"></span> 입니다.
+									</h4>
+									<h4 th:if="${userInfo.dealArea == null}">우리동네를 설정해주세요 :D</h4>
+								</div>
+								<div class="mt-20"></div>
 							</div>
-							<div class="mt-20"></div>
+							<hr>
+							<div class="row mb-80" id="setMyArea">
+								<div class="section-title text-start ">
+									<h4 class="blog-section-title border-left mb-30">우리 동네 설정하기</h4>
+									<p>📌 우리동네 설정시 주소도 함께 변경됩니다.</p>
+									<br>
+									<table>
+										<tbody>
+											<tr>
+												<th><label for="addr">주소</label></th>
+												<td><input type="text" id="addr" name="addr"
+													placeholder="주소 입력을 위해 클릭해주세요." readonly="readonly"
+													onclick="findAddr()"></td>
+											</tr>
+											<tr>
+												<th><label for="dealArea">우리동네</label></th>
+												<td><input type="text" id="dealArea" name="dealArea"
+													placeholder="입력하신 주소의 구로 자동 설정됩니다." readonly="readonly">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="mt-20">
+									<button class="submit-btn-1 btn-hover-1" type="button"
+										onclick="checkInfo()">설정하기</button>
+								</div>
+							</div>
 						</div>
-						<hr>
-						<div class="row mb-80" id="setMyArea">
-							<div class="section-title text-start ">
-								<h4 class="blog-section-title border-left mb-30">우리 동네 설정하기</h4>
-								<p>📌 우리동네 설정시 주소도 함께 변경됩니다.</p>
-								<br>
-								<table>
-									<tbody>
-										<tr>
-											<th><label for="addr">주소</label></th>
-											<td><input type="text" id="addr" name="addr"
-												placeholder="주소 입력을 위해 클릭해주세요." readonly="readonly"
-												onclick="findAddr()"></td>
-										</tr>
-										<tr>
-											<th><label for="dealArea">우리동네</label></th>
-											<td><input type="text" id="dealArea" name="dealArea"
-												placeholder="입력하신 주소의 구로 자동 설정됩니다." readonly="readonly">
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="mt-20">
-								<button class="submit-btn-1 btn-hover-1" type="button"
-									onclick="checkInfo()">설정하기</button>
-							</div>
-						</div>
-					</div>
+				</div>
 				</div>
 			</section>
 		</div>

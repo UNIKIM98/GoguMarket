@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.goguma.auct.service.AuctMemService;
+import com.goguma.auct.service.AuctService;
 import com.goguma.auct.vo.AuctMemVO;
+import com.goguma.auct.vo.AuctVO;
 
 @Controller
 public class AuctMemController {
 	@Autowired
 	AuctMemService auctMemService;
+	@Autowired
+	AuctService auctService;
 	
 	@PostMapping("/my/insertAuctMem")
 	private String insertAuctMem(AuctMemVO vo,HttpServletRequest request) {
@@ -43,8 +47,10 @@ public class AuctMemController {
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
 		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
+		List<AuctVO> myAuctList = auctService.selectUserId(userId); // userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
 		
 		model.addAttribute("mybidList",mybidList);
+		model.addAttribute("myAuctList",myAuctList);
 		return "auction/bidAuction";
 		
 	}

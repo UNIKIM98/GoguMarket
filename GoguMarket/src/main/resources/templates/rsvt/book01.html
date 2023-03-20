@@ -4,40 +4,40 @@
 	layout:decorate="~{layouts/layout}">
 <body>
 	<div layout:fragment="content">
-		<style>
-			#scrollDiv::-webkit-scrollbar {
-			    width: 8px;  /* 스크롤바의 너비 */
-			}
-			
-			#scrollDiv::-webkit-scrollbar-thumb {
-			    height: 30%; /* 스크롤바의 길이 */
-			    background: #FCD052; /* 스크롤바의 색상 */
-			    
-			    border-radius: 10px;
-			}
-			
-			#scrollDiv::-webkit-scrollbar-track {
-			    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
-			}
-		</style>
-		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5910303ba80aa602d476d406bd428897&libraries=services"></script>
-		<!-- 페이징, 검색 자바스크립트 -->
-		<script>
-			function gopage(page) {
-				frmSearch.page.value = page;
-				frmSearch.submit();
-			}
+	<!-- 스크롤바 스타일지정 -->
+	<style>
+	#scrollDiv::-webkit-scrollbar {
+	    width: 8px;  /* 스크롤바의 너비 */
+	}
+	
+	#scrollDiv::-webkit-scrollbar-thumb {
+	    height: 30%; /* 스크롤바의 길이 */
+	    background: #FCD052; /* 스크롤바의 색상 */
+	    
+	    border-radius: 10px;
+	}
+	
+	#scrollDiv::-webkit-scrollbar-track {
+	    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
+	}
+	</style>
+	<!-- 카카오지도API 링크 -->
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5910303ba80aa602d476d406bd428897&libraries=services"></script>
+		
+	<!-- 페이징, 검색 자바스크립트 -->
+	<script>
+	function gopage(page) {
+		frmSearch.page.value = page;
+		frmSearch.submit();
+	}
 
-			function ctgryId(name) {
-				console.log(name) //치킨 <- 이런식으로 나옴
-			}
-		</script>
+	function ctgryId(name) {
+		console.log(name) //치킨 <- 이런식으로 나옴
+	}
+	</script>
 
-		<!-- Start page content -->
 		<div id="page-content" class="page-wrapper section">
-
-			<!-- SHOP SECTION START -->
 			<div class="shop-section mb-80">
 				<div class="container">
 
@@ -52,15 +52,14 @@
 						<!-- hr -->
 						<hr>
 					</div>
-
+					
+					<!-- 왼쪽 가게목록 -->
 					<div class="row">
 						<div class="col-lg-5 order-lg-2 order-1"
 							style="overflow-y: scroll; height: 800px;" id="scrollDiv">
 							<div class="shop-content">
-
-								<!-- Tab Content start -->
 								<div class="tab-content">
-									<!-- 검색창 -->
+									<!-- 검색창 및 카테고리 -->
 									<aside class="widget-search mb-30">
 
 										<!-- 페이징을 위해 form태그에 name추가, hidden타입 input태그 추가 -->
@@ -82,18 +81,16 @@
 
 										<!-- 검색창 카테고리 목록 -->
 										<div class="mt-20">
-
 											<ul class="blog-meta">
 												<li th:each="ctgry: ${ctgry}"><a
 													th:href="|javascript:ctgryId('${ctgry.commonNm}')|"
-													th:text="${ctgry.commonNm}" th:name="${ctgry.commonNm}|">(카테고리)
+													th:text="${ctgry.commonNm}" th:id="${ctgry.commonNm}|">(카테고리)
 												</a></li>
 											</ul>
-
 										</div>
 									</aside>
 
-									<!-- list-view -->
+									<!-- 상점목록 -->
 									<div id="list-view" class="tab-pane active show"
 										role="tabpanel">
 										<div class="row">
@@ -107,15 +104,14 @@
 														<a th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}">
 															<img th:each="img: ${img}"
 															th:if="${list.bizNo} == ${img.bizNo}"
-															th:src="${img.atchNm}" alt="" />
+															th:src="${img.atchNm}" alt="" onerror="this.onerror=null; this.src='/img/logo/001.png'"/>
 														</a>
 													</div>
 													
 													<div class="product-info">
 														<div class="clearfix">
 															<h6 class="product-title f-left">
-																<a
-																	th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}"
+																<a th:href="@{/goguma/bookmain/{bizNo}(bizNo=${list.bizNo})}"
 																	th:data-empid="${list.bizNo}" th:text="${list.bizNm}">
 																	(가게이름) </a>
 															</h6>
@@ -227,19 +223,15 @@
 															<li><a href="#" th:id="${list.ctgry}"
 																th:text="${list.ctgry}">카테고리이름</a></li>
 														</ul>
-
-													</div>
-													
 													</div>
 												</div>
-
 											</div>
-											<!-- 상점목록 1건 끝 -->
+										</div>
+										<!-- 상점목록 1건 끝 -->
 
 										</div>
 									</div>
 								</div>
-								<!-- Tab Content end -->
 							</div>
 
 							<!-- 가게 목록 페이징 -->
@@ -252,17 +244,14 @@
 
 								<li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
 							</ul>
-
 						</div>
 
-
-						<!-- 오른쪽에 지도를 넣으면 될까..? -->
+						<!-- 오른쪽 지도 -->
 						<div class="col-lg-7 order-lg-2 order-1">
 							<div class="">
 								<!-- 지도 -->
 								<div id="map" style="width: 100%; height: 800px;"></div>
-
-								<!-- 지도 END -->
+	
 							</div>
 						</div>
 
@@ -271,76 +260,69 @@
 							th:if="${session.userSe=='ROLE_USER'}"><span>💥가게 프로필 만들기 </span> </a>
 				</div>
 			</div>
-			<!-- SHOP SECTION END -->
-
 		</div>
 
-		<script>
-		
-			//카카오지도 API
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-			mapOption = {
-				center : new kakao.maps.LatLng(35.8690334, 128.5932794), // 지도의 중심좌표(예담)
-				level : 3
-			// 지도의 확대 레벨
-			};
+	<script>
+	
+	//카카오지도 API
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	mapOption = {
+		center : new kakao.maps.LatLng(35.8690334, 128.5932794), // 지도의 중심좌표(예담)
+		level : 3
+	// 지도의 확대 레벨
+	};
 
-			// 지도를 생성합니다
-			var map = new kakao.maps.Map(mapContainer, mapOption);
+	// 지도를 생성합니다
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+	
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	var zoomControl = new kakao.maps.ZoomControl();
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
 
-			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-			var zoomControl = new kakao.maps.ZoomControl();
-			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-			// 주소-좌표 변환 객체를 생성합니다
-			var geocoder = new kakao.maps.services.Geocoder();
-
-			// 주소로 좌표를 검색합니다
-			$.ajax({
-					url : "/goguma/mapApiAjax",
-					type : "get",
-					success : function(obj) {
-						console.log("ajax시작하자마자========"+obj[0].bizNm+""+obj[1].bizNm)
-						// 주소 목록에 대해 반복문을 실행합니다
-						for (var i = 0; i < obj.length; i++) {
+	// 주소로 좌표를 검색합니다
+	$.ajax({
+			url : "/goguma/mapApiAjax",
+			type : "get",
+			success : function(obj) {
+				console.log("ajax시작하자마자========"+obj[0].bizNm+""+obj[1].bizNm)
+				// 주소 목록에 대해 반복문을 실행합니다
+				for (var i = 0; i < obj.length; i++) {
+					
+					// 콜백함수 안에선 반복문 변수사용이 안됨. 그래서 따로 변수선언을 해준다.
+					let bizName = i;
+					// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
+					geocoder.addressSearch(obj[bizName].bizAddr, function(result, status) {
+						
+						// 정상적으로 검색이 완료됐으면 
+						if (status === kakao.maps.services.Status.OK) {
+			
+							var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+							console.log(obj[bizName].bizNm)
 							
-							// 콜백함수 안에선 반복문 변수사용이 안됨. 그래서 따로 변수선언을 해준다.
-							let bizName = i;
-							// 각 주소에 대해 geocoder.addressSearch 함수를 호출합니다
-							geocoder.addressSearch(obj[bizName].bizAddr, function(result, status) {
-								
-								// 정상적으로 검색이 완료됐으면 
-								if (status === kakao.maps.services.Status.OK) {
-					
-									var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-									console.log(obj[bizName].bizNm)
-									
-									// 결과값으로 받은 위치를 마커로 표시합니다
-									var marker = new kakao.maps.Marker({
-										map : map,
-										position : coords
-									});
-					
-									// 인포윈도우로 장소에 대한 설명을 표시합니다 --왜 똑같은게 나오는것인가.. i로 하면 왜 undefine이 나오는것인가..
-									var infowindow = new kakao.maps.InfoWindow({
-											content : '<div style="width:150px;text-align:center;padding:6px 0;">'+obj[bizName].bizNm+'</div>'
-										});
-									infowindow.open(map, marker);
-					
-									// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-									map.setCenter(coords);
-									
-								}
-							});
+							// 결과값으로 받은 위치를 마커로 표시합니다
+							var marker = new kakao.maps.Marker({map : map, position : coords});
+			
+							// 인포윈도우로 장소에 대한 설명을 표시합니다 --왜 똑같은게 나오는것인가.. i로 하면 왜 undefine이 나오는것인가..
+							var infowindow = new kakao.maps.InfoWindow({
+									content : '<div style="width:150px;text-align:center;padding:6px 0;">'+obj[bizName].bizNm+'</div>'
+								});
+							infowindow.open(map, marker);
+			
+							// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+							map.setCenter(coords);
 						}
-					},
-					error : function(error) {
-						console.log(error)
-					}
+					});
+				}
+			},
+			error : function(error) {
+				console.log(error)
+			}
+		});
 
-				});
-		
-		</script>
+	</script>
 
 	</div>
 	<!-- 타임리프 div끝 -->

@@ -17,6 +17,7 @@ public class SnsCmntVO {
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date cmntYmd;
+	private String atchPath; //프로필
 			
 	private int recmntOrder;
 	private int groupNo;

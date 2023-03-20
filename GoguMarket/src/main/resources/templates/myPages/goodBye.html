@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <style type="text/css">
 #reasonTrgt span, #goodByediv span{
-color: #fd7e14;
+color: #C04A82;
 font-weight: bold;
 
 }
@@ -15,31 +15,35 @@ font-weight: bold;
 </head>
 <body>
 	<div layout:fragment="myContent">
-	<div id="pwCkTrgt">
-	<br>
-		<div class="registered-customers" style="width: 45%;" >
-			<h4 class="blog-section-title border-left mb-30">탈퇴하기</h4>
-			<div id="goodByediv">
-				<h5 style="font-weight: bold;">...[[${session.nickNm}]]님과 이별인가요? 너무 아쉬워요😥</h5>
-				<p>계정을 삭제하면 게시글, 예약내역, 채팅 등 모든 활동 정보가 삭제됩니다. 계정 삭제 후 7일 간 다시 가입할 수 없어요.</p>
+		<div class="container">
+			<div class="message-box box-shadow white-bg" style="height: 700px; width: 80%">
+				<div id="pwCkTrgt">
 				<br>
-				<br>
-				<h6 style="font-weight: bold;">[[${session.nickNm}]]님이 계정을 삭제하려는 이유가 궁금해요.</h6>
-				<select id="ctgry" style="width: 80%;">
-					<option disabled selected>선택해주세요.</option>
-					<option value="tooMuch">너무 많이 이용해요.</option>
-					<option value="noProduct">사고 싶은 물품이 없어요.</option>
-					<option value="noBuyer">물품이 안 팔려요.</option>
-					<option value="noManer">비매너 사용자를 만났어요.</option>
-					<option value="restriction">억울하게 이용이 제한됐어요.</option>
-					<option value="newUser">새 계정을 만들고 싶어요.</option>
-				</select>
-				<br>
-				<br>
-				<div id="reasonTrgt"></div>
+					<div class="registered-customers"  >
+						<h4 class="blog-section-title border-left mb-30">탈퇴하기</h4>
+						<div id="goodByediv">
+							<h5 style="font-weight: bold;">... [[${session.nickNm}]]님과 이별인가요? 너무 아쉬워요😥</h5>
+							<p>계정을 삭제하면 게시글, 예약내역, 채팅 등 모든 활동 정보가 삭제됩니다. <br> 계정 삭제 후 7일 간 다시 가입할 수 없어요.</p>
+							<br>
+							<br>
+							<h6 style="font-weight: bold;">[[${session.nickNm}]]님이 계정을 삭제하려는 이유가 궁금해요.</h6>
+							<select id="ctgry" style="width: 80%;">
+								<option disabled selected>선택해주세요.</option>
+								<option value="tooMuch">너무 많이 이용해요.</option>
+								<option value="noProduct">사고 싶은 물품이 없어요.</option>
+								<option value="noBuyer">물품이 안 팔려요.</option>
+								<option value="noManer">비매너 사용자를 만났어요.</option>
+								<option value="restriction">억울하게 이용이 제한됐어요.</option>
+								<option value="newUser">새 계정을 만들고 싶어요.</option>
+							</select>
+							<br>
+							<br>
+							<div id="reasonTrgt"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
 	<script th:inline="javascript">
 		$(function(){
 			$("#ctgry").on("change",function(){
@@ -105,7 +109,8 @@ font-weight: bold;
 			case 'newUser' :
 				reason.append(
 				`
-				<p>🤓혹시 이사했거나 전화번호가 바뀌었나요? 다시 가입하지 않아도 거래지역과 전화번호를 바꿀 수 있어요.</p>
+				<p>🤓혹시 이사했거나 전화번호가 바뀌었나요? </p>
+				<p>다시 가입하지 않아도 거래지역과 전화번호를 바꿀 수 있어요.</p>
 				<button type="button" class="submit-btn-1 btn-hover-1" style="height:25px" onclick="changeArea()">우리동네 설정하기</button>
 				<button type="button" class="submit-btn-1 btn-hover-1" style="height:25px" onclick="changeMblTelno()">전화번호 변경하기</button>
 				<br>
@@ -118,7 +123,7 @@ font-weight: bold;
 				`
 				<br>
 				<div margin="0px auto">
-					<button type="button" onclick="rUSure()" style="color : #fd7e14">그래도 탈퇴하기</button>
+					<button type="button" onclick="rUSure()" style="color : #C04A82">그래도 탈퇴하기</button>
 				</div>
 				`	
 				

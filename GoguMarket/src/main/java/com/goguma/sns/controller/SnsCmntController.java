@@ -1,6 +1,7 @@
 
 package com.goguma.sns.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.goguma.mem.vo.MemVO;
 import com.goguma.sns.service.CmntService;
 import com.goguma.sns.vo.SnsCmntVO;
 
@@ -28,9 +30,14 @@ public class SnsCmntController {
 		HttpSession session = request.getSession();
 
 		String userId = (String) session.getAttribute("userId");
+		String atchPath = (String) session.getAttribute("atchPath");
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		vo.setCmntMem(userId);
+		vo.setAtchPath(atchPath);
+		
+		System.out.println(vo +"확인");
+		
 		int success = service.insertReply(vo);
 
 		map.put("result", success);
@@ -45,7 +52,16 @@ public class SnsCmntController {
 		System.out.println(snsNo + "전체");
 
 		List<SnsCmntVO> reply = service.SelectCmntlist(snsNo);
+		return reply;
+	}
+	
+	@GetMapping("/goguma/SelectUserCmnt")
+	public List<SnsCmntVO> SelectUserCmnt(SnsCmntVO vo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 
+		System.out.println(vo);
+
+		List<SnsCmntVO> reply = service.SelectUserCmnt(vo);
 		return reply;
 	}
 

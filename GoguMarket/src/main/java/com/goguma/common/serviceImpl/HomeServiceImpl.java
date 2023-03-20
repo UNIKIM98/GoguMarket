@@ -36,7 +36,7 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public List<AuctMemVO> selectHomeAuctMem(String auctNo) {
+	public List<AuctMemVO> selectHomeAuctMem(int auctNo) {
 		return homeMapper.selectHomeAuctMem(auctNo);
 	}
 

@@ -4,9 +4,9 @@
 	<div class="card mb-1">
 		<div class="card-body bg-light">
 			<div class="media" style="margin: 10px">
-				<div class="media-left">
-					<a href="#"><img class="media-object" src="img/author/1.jpg"
-						alt="#"></a>
+				<div class="media-left"  style="width:50px; height:50px; ">
+					<a href="#"><img class="media-object" id="rpAtchPath" src=""
+								alt="#" onerror="this.onerror=null; this.src='/img/logo/003.png'" style="width:50px; height:50px; "></a>
 				</div>
 				<form id="editForm" name="editForm" method="post"
 					onsubmit="return false">
@@ -18,10 +18,10 @@
 									<a href="#" id="cmntMem">작성자</a> <br> <a href="#"
 										style="opacity: 50%" id="cmntYmd">게시날짜</a>
 								</h6>
-								<div class="form-inline" id="cmntCn"
-									style="word-break: break-all;">댓글내용</div>
 							</div>
 						</div>
+						<div class="form-inline" id="cmntCn"
+							style="word-break: break-all;">댓글내용</div>
 					</div>
 					<input type="hidden" id="rpCmntNo" name="cmntNo"> <input
 						type="hidden" id="rpGroupNo" name="groupNo"> <input

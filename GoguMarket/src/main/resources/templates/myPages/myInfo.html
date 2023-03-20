@@ -214,7 +214,6 @@
 			})
 
 	function letChangeEml(event){
-				console.log("ddddddd")
 				$(event.target)
 							.removeAttr("onclick")
 							.attr("onclick","emlDupCkAjax()").text("인증번호 발송")
@@ -228,7 +227,7 @@
                                  placeholder="인증번호를 입력해주세요." 
                                  >
                         <button class="submit-btn-1 btn-hover-1" type="button" 
-                        		 onclick="isAuthNumOk()" 
+                        		 onclick="issecureRandomOk()" 
                         		 id="emlAuthBtn"
                         		 value="1">인증하기</button>
                         </td>
@@ -239,7 +238,6 @@
 	// ==============================================================
 	// ❤️ 이메일 중복체크 Ajax
 	   function emlDupCkAjax(){
-		console.log("lllllllllllll")
 	        	let eml = $("#eml").val();
 	        	
 	        	if(isEmlOk()){
@@ -247,7 +245,6 @@
 	        			url:'/goguma/emlDupCkAjax/'+eml,
 	        			type:'get',
 	        			success:function(result){
-	        				console.log(result);
 	        				if(result==0){
 	        					emlConfirm(eml);
 	        				}else{
@@ -273,12 +270,11 @@
 		// ==============================================================
 		// ❤️ 이메일 인증 Ajax
 			function  emlCheckAJax(eml){
-		    	  console.log(eml)
 			   	 $.ajax({
 			  		  url:'/goguma/emlCheckAJax/'+eml,
 			  		  type:'get',
 			  		  success: function(result){
-			  			authNum = result;
+			  			secureRandom = result;
 			  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
 			  			  console.log(result);
 			  		  },
@@ -290,9 +286,8 @@
 		    
 		// ==============================================================
 		// ❤️ 이메일 인증번호 일치여부 확인
-		     function isAuthNumOk(){
-				  console.log(authNum);
-				  if(authNum == $("#emlCk").val()){
+		     function issecureRandomOk(){
+				  if(secureRandom == $("#emlCk").val()){
 					  alert("이메일 인증이 완료되었습니다.");
 					  $("#emlAuthBtn").val("0");
 				  }else{
@@ -307,16 +302,14 @@
 
 
 				filesArr.forEach(function(f) {
-					console.log("filesArr foreach문")
-					console.log(f)
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					inputFileList.push(f);
 					$("#pfTrgt").children().remove();
 					$("#pfTrgt").append(
 								`
-								<img style="${img_style}" src=${e.target.result}
-																	   id=file${fileNum} onclick=fileDelete('file${fileNum}')>
+								<img style="${img_style}" src="${e.target.result}" onerror="this.onerror=null; this.src='/img/logo/003.png'"
+																	   id="file${fileNum}" onclick="fileDelete('file${fileNum}"')>
 								`		
 					)
 					fileNum++;
@@ -338,7 +331,6 @@
 						<img src="/img/logo/002.png" style="${img_style}">	
 						`		
 				)
-				
 		}
 		
 		// ==================================================
@@ -351,7 +343,7 @@
 					if(atchList.atchPath!=null){
 							$("#pfTrgt").children().remove();
 							$('#pfTrgt').append(
-														`<img style="${img_style}" src="${atchList.atchPath}"
+														`<img style="${img_style}" src="${atchList.atchPath}" onerror="this.onerror=null; this.src='/img/logo/003.png'"
 															   id="exFile" onclick=deleteFile('exFile')>`
 														)
 
@@ -373,7 +365,6 @@
 		// ==============================================================
 		// ❤️ 이메일주소 유효성 체크
 			function isEmlOk(){
-			console.log("ssssss")
 			let emlChck = false;
 			const emlRegExp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			if(emlRegExp.test($("#eml").val())){
@@ -504,8 +495,6 @@
 		// ❤️ 프로필 아작스
 			function formSubmit(){
 				var formData = new FormData($("#memUpdateForm")[0]);
-				console.log("왔니..")
-				console.log(inputFileList)
 				for (var i = 0; i < inputFileList.length; i++) {
 						if (!inputFileList[i].is_delete) {
 							formData.append("files", inputFileList[i]);
@@ -523,7 +512,6 @@
 					processData : false,
 					contentType : false,
 					success : function(result) {
-						console.log(result)
 						alert("[수정완료] 회원정보 수정이 완료되었습니다 :D");
 						location.href = "/my/myInfoCheck";
 					},

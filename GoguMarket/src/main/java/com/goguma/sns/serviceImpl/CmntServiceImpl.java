@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.goguma.sns.mapper.SnsCmntMapper;
 import com.goguma.sns.service.CmntService;
 import com.goguma.sns.vo.SnsCmntVO;
+import com.goguma.sns.vo.SnsVO;
 
 @Service
 public class CmntServiceImpl implements CmntService {
@@ -20,6 +21,13 @@ public class CmntServiceImpl implements CmntService {
 		// TODO Auto-generated method stub
 		return map.updateCmnt(vo);
 	}
+	
+	@Override
+	public List<SnsCmntVO> SelectUserCmnt(SnsCmntVO vo) {
+		// TODO Auto-generated method stub
+		return map.SelectUserCmnt(vo);
+	}
+
 
 	@Override
 	public List<SnsCmntVO> SelectCmntlist(int snsNo) {

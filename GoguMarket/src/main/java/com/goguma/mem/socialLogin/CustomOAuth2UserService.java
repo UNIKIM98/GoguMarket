@@ -77,7 +77,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		}
 		mVO.setEml(attributes.getEml());
 		
-		System.out.println(mVO);
 		return mVO;
 	}
 }

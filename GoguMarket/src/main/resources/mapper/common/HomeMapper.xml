@@ -27,7 +27,7 @@
 		        SELECT ATCH_PATH
 		        FROM ATCH
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
-		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM, (SELECT COUNT(*) FROM AUCT_MEM where auct_no = a.auct_no) COUNT
+		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM, (SELECT COUNT(*) FROM AUCT_MEM where auct_no = a.auct_no) COUNT, (SELECT MAX(NOW_PRC) FROM AUCT_MEM WHERE auct_no = a.auct_no) MAX
 		    FROM AUCT a
 		    WHERE STTS = 1
 		    ORDER BY COUNT DESC
@@ -37,7 +37,7 @@
 		]]>
 		</select>
 		
-		<select id="selectHomeAuctMem" parameterType="String" resultType="com.goguma.auct.vo.AuctMemVO">
+		<select id="selectHomeAuctMem" parameterType="int" resultType="com.goguma.auct.vo.AuctMemVO">
 		SELECT * FROM AUCT_MEM
         WHERE AUCT_NO = #{auctNo}
         ORDER BY NOW_PRC DESC
@@ -57,7 +57,7 @@
 		    ORDER BY bIZ_no DESC
 		) c
 		<![CDATA[
-		WHERE ROWNUM < 5
+		WHERE ROWNUM < 50
 		]]>
 		</select>
 	

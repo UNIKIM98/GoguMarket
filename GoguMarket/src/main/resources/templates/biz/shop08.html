@@ -3,20 +3,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{biz/slide/slide}">
 
-<body>
-
+<body>=
 	<div layout:fragment="Bizcontent">
-		<script
-			src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+		<!-- 캘린더API 링크 -->
+		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
 		<div class="row">
-
 			<div class="col-lg-12">
-
 				<form action="#">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="section-title text-start mb-20">
-								<h2 class="uppercase">예약 일정</h2>
+								<h4 class="blog-section-title border-left mb-15">예약 일정</h4>
 								<h6>예약 일정을 확인하고 준비해주세요</h6>
 							</div>
 						</div>
@@ -26,10 +23,7 @@
 					<div>
 						<div id="isTodayAttend"></div>
 						<div id="calendar" style="width: 800px"></div>
-						<div style="text-align: center; margin-right: 40%;">
-							
-						</div>
-
+						<div style="text-align: center; margin-right: 40%;"> </div>
 					</div>
 					<hr>
 
@@ -37,15 +31,15 @@
 					<table class="table">
 						<tr>
 							<th class="td-title-1" colspan="2" style="text-align:center;">예약일시</th>
-							<th class="td-title-1">예약자명</th>
-							<th class="td-title-1">요청사항</th>
-							<th class="td-title-1">주문정보</th>
-							<th class="td-title-1">예약상태</th>
+							<th class="td-title-1" style="text-align:center;">예약자명</th>
+							<th class="td-title-1" style="text-align:center;">요청사항</th>
+							<th class="td-title-1" style="text-align:center;">주문정보</th>
+							<th class="td-title-1" style="text-align:center;">예약상태</th>
 						</tr>
 
 						<!-- tr반복 -->
 						<tr th:each="list:${lists}" th:if="${!#lists.isEmpty(lists)}">
-							<td class="td-title-1" th:text="${list.rsvtYmd}">(예약날짜)</td>
+							<td class="td-title-1" th:text="${list.rsvtYmd}" width="120px;" style="text-align:right;">(예약날짜)</td>
 							<td class="td-title-1" th:each="code: ${code}"
 								th:if="${code.commonDetailCode} == ${list.rsvtTm} and ${list.rsvtTm} != null"
 								th:text="${code.commonNm}">(시간)
@@ -53,53 +47,45 @@
 							<td class="td-title-1" th:if="${list.rsvtTm} == null">
 								없음
 							</td>
-							<td class="td-title-1" th:text="${list.nickNm}">(이름)</td>
-							<td class="td-title-1" th:text="${list.rsvtWant}">(요청사항)</td>
-							<td class="td-title-1">
-								<button class="btn btn-warning btn-sm" type="button" th:onclick="rsvtInfo([[${list.rsvtNo}]])">상세보기</button>
+							<td class="td-title-1" th:text="${list.nickNm}" width="90px" style="word-break:break-all">(이름)</td>
+							<td class="td-title-1" th:text="${list.rsvtWant}" width="240px" style="word-break:break-all">(요청사항)</td>
+							<td class="td-title-1" style="text-align:center;">
+								<button class="btn btn-warning btn-sm" type="button" th:onclick="rsvtInfo([[${list.rsvtNo}]])" style="border-radius:5px;">상세보기</button>
 							</td>
-							<td class="td-title-1">
-								<button class="btn btn-success btn-sm" type="button" th:if="${list.rsvtStts}=='예약확정'">예약확정</button>
-								<button class="btn btn-secondary btn-sm" type="button" th:if="${list.rsvtStts}=='예약변경'" th:onclick="updateRsvt([[${list.rsvtNo}]])">예약변경</button>
-								<button class="btn btn-light btn-sm" type="button" th:if="${list.rsvtStts}=='예약완료'">예약완료</button>
+							<td class="td-title-1" style="text-align:center;">
+								<button class="btn btn-success btn-sm" type="button" th:if="${list.rsvtStts}=='예약확정'"  style="border-radius:5px;">예약확정</button>
+								<button class="btn btn-secondary btn-sm" type="button" th:if="${list.rsvtStts}=='예약변경'" th:onclick="updateRsvt([[${list.rsvtNo}]])" style="border-radius:5px;">예약변경</button>
+								<button class="btn btn-light btn-sm" type="button" th:if="${list.rsvtStts}=='예약완료'" style="border-radius:5px;">예약완료</button>
 							</td>
 						</tr>
-						
+						<!-- 예약 없을경우 -->
 						<tr th:if="${#lists.isEmpty(lists)}">
 							<td class="td-title-1" colspan="6" style="text-align:center;">접수된 예약이 없습니다 :( </td>
 						</tr>
-
 					</table>
-
-
 				</form>
 			</div>
 		</div>
-		<script>
-			//주문내역 버튼누르면 예약정보 보여줌
-			function rsvtInfo(rsvtNo){
-				window.location.href ="/my/rsvtComplete/"+rsvtNo;
-			}
-			
-			//변경들어온거 해주기
-			function updateRsvt(rsvtNo){
-				console.log("변경버튼"+rsvtNo)
-				$.ajax({
-					url:"/biz/updateRsvtAjax/" + rsvtNo,
-					type:"get",
-					success: function(result){
-						console.log(result)
-						alert("예약변경이 정상적으로 처리되었습니다.")
-						location.reload();
-						
-					},error:function(error){
-						console.log(error)
-					}
-					
-				})
-			}
+	<script>
+		//주문내역 버튼누르면 예약정보 보여줌
+		function rsvtInfo(rsvtNo){
+			window.location.href ="/my/rsvtComplete/"+rsvtNo;
+		}
 		
-		
+		//변경들어온거 해주기
+		function updateRsvt(rsvtNo){
+			console.log("변경버튼"+rsvtNo)
+			$.ajax({
+				url:"/biz/updateRsvtAjax/" + rsvtNo,
+				type:"get",
+				success: function(result){
+					alert("예약변경이 정상적으로 처리되었습니다.")
+					location.reload();
+				},error:function(error){
+					console.log(error)
+				}
+			});
+		};
 		// ==============================================================
 		// ❤️ 변수 선언
 			let date = new Date();
@@ -109,16 +95,11 @@
 			let day = ('0' + date.getDate()).slice(-2);
 
 			var today = year + '-' + month + '-' + day;
-			
-// 			var attendYn = false;
-// 			var todayPoint = null;
-			
 		// ==============================================================
 		// ❤️ fullCalendar 그리기
 			document.addEventListener('DOMContentLoaded', function() {
 				let eventList = [];
 				makeCal();
-
 			});
 			function makeCal() {
 				var calendarEl = document.getElementById('calendar');
@@ -137,9 +118,6 @@
 
 							for ( let i in aList) {
 								calendar.addEvent({
-// 									title : aList[i].point,
-// 									start : aList[i].attendYmd,
-// 									end : aList[i].attendYmd,
 									display : 'background',
 									backgroundColor : "#00b9ba",
 									textColor : "black"
@@ -149,7 +127,6 @@
 					}) ]
 				});
 				calendar.render();
-
 			}
 		</script>
 	</div>

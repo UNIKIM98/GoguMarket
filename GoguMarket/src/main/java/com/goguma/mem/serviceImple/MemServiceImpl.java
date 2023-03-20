@@ -52,7 +52,6 @@ public class MemServiceImpl implements MemService {
 	@Override
 	public int deleteMember(MemVO vo) {
 		// TODO Auto-generated method stub
-		System.out.println("나 impl");
 		return mapper.deleteMember(vo);
 	}
 
@@ -82,6 +81,12 @@ public class MemServiceImpl implements MemService {
 	public int updateUserPw(MemVO mVO) {
 		// TODO Auto-generated method stub
 		return mapper.updateUserPw(mVO);
+	}
+
+	@Override
+	public int updateUserSe(MemVO mVO) {
+		// TODO Auto-generated method stub
+		return mapper.updateUserSe(mVO);
 	}
 
 

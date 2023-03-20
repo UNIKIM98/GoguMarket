@@ -5,7 +5,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>내가 주최한 경매</title>
 </head>
 
 <body>
@@ -15,62 +14,58 @@
 
     </script>
 	<div layout:fragment="myContent">
-        <h1 style="text-align: center;">경매 전체조회 페이지입니다.</h1>
-        <table class="table" border="1">
+        <section id="page-content" class="page-wrapper section">
+            <div class="message-box box-shadow white-bg">
+                    <div class="section-title text-start mb-20" >
+                        <h2 class="uppercase">경매 전체조회 페이지</h2>
+                        <div>
+                            <h4 class="blog-section-title border-left mb-30">내가 등록한 경매품</h4>
+                        </div>
 
-            <thead>
-                <tr style="text-align: center;">
-                    <th>번호</th>
-                    <th>등록일</th>
-                    <th>마감일</th>
-                    <th>상품명</th>
-                    <th>카테고리</th>
-                    <th>경매상태</th>
-                    <th>조회수</th>
-                    <th>낙찰자</th>
-                    <th>낙찰가</th>
-                    <th>낙찰일시</th>
-                    <th>이동</th>
-                    <th>삭제</th>
-                </tr>
-            </thead>
+                        <table class="table" border="1" style="width: 900px;">
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th style="width: 50px;">번호</th>
+                                    <th>마감일</th>
+                                    <th>상품명</th>
+                                    <th style="width: 180px;">경매상태</th>
+                                    <th style="width: 50px;">조회수</th>
+                                    <th>낙찰자</th>
+                                    <th>낙찰가</th>
+                                    <th>낙찰일시</th>
+                                    <th style="width: 50px;">이동</th>
+                                    <th style="width: 50px;">삭제</th>
+                                </tr>
+                            </thead>
 
-            <tbody>
-                <tr th:each="myAuctList:${myAuctList}"
-					onmouseover='this.style.background="#fcecae";'
-					onmouseleave='this.style.background="#FFFFFF";'
-                    >
-                    <td th:text="${myAuctList.auctNo}"></td>
-                    <td th:text="${myAuctList.regYmd}"></td>
-                    <td th:text="${myAuctList.ddlnYmd}"></td>
-                    <td th:text="${myAuctList.auctTtl}"></td>
-                    <td th:text="${myAuctList.ctgry}"></td>
-                    <th:block th:switch="${myAuctList.stts}">
-                        <td th:case="1">경매가 진행중입니다.</td>
-                        <td th:case="2">경매가 종료되었습니다.</td>
-                        <td th:case="3">유찰되었습니다.</td>
-                        <td th:case="*">경매가 진행중입니다.</td>
-                    </th:block>
-                    <td th:text="${myAuctList.inqCnt}"></td>
-                    <td th:text="${myAuctList.prchsId}"></td>
-                    <td th:text="${myAuctList.prchsPrc}"></td>
-                    <td th:text="${myAuctList.prchsYmd}"></td>
-                    <td><a th:href="@{/goguma/auctSelect/{myAuctList}(myAuctList = ${myAuctList.auctNo})}">이동</a></td>
-                    <td><a href="#">삭제</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <script src="js/vendor/jquery-3.6.0.min.js"></script>
-		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-		<!-- Bootstrap framework js -->
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<!-- jquery.nivo.slider js -->
-		<script src="lib/js/jquery.nivo.slider.js"></script>
-		<!-- All js plugins included in this file. -->
-		<script src="js/plugins.js"></script>
-		<!-- Main js file that contents all jQuery plugins activation. -->
-		<script src="js/main.js"></script>
+                            <tbody>
+                                <tr th:each="myAuctList:${myAuctList}"
+                                    onmouseover='this.style.background="#fcecae";'
+                                    onmouseleave='this.style.background="#FFFFFF";'
+                                    >
+                                    <td th:text="${myAuctList.auctNo}" style="width: auto;;"></td>
+                                    <td th:text="${#dates.format(myAuctList.ddlnYmd, 'yyyy/MM/dd')}"></td>
+                                    <td th:text="${myAuctList.auctTtl}"></td>
+                                    <th:block th:switch="${myAuctList.stts}">
+                                        <td th:case="1">경매가 진행중입니다.</td>
+                                        <td th:case="2">경매가 종료되었습니다.</td>
+                                        <td th:case="3">유찰되었습니다.</td>
+                                        <td th:case="*">경매가 진행중입니다.</td>
+                                    </th:block>
+                                    <td th:text="${myAuctList.inqCnt}"></td>
+                                    <td th:text="${myAuctList.prchsId}"></td>
+                                    <td th:if="${myAuctList.prchsPrc != 0}"
+                                        th:text="${myAuctList.prchsPrc}"></td>
+                                    <td th:if="${myAuctList.prchsPrc == 0}"></td>
+                                    <td th:text="${#dates.format(myAuctList.prchsYmd, 'yyyy/MM/dd')}"></td>
+                                    <td><a th:href="@{/goguma/auctSelect/{myAuctList}(myAuctList = ${myAuctList.auctNo})}">이동</a></td>
+                                    <td><a href="#">삭제</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </section>
     </div>
 </body>
 

@@ -9,59 +9,64 @@
 <body>
 	<div layout:fragment="myContent">
 		<div class="container">
-			<div class="tab-pane active" id="order-complete">
-				<br>
-				<div>
-					<h4 class="blog-section-title border-left mb-30">나의 포인트</h4>
-				</div>
-				<div class="order-complete-content box-shadow">
-					<div class="order-info p-30 mb-10">
-						<ul class="order-info-list">
-							<li><a class="totalP" href='javascript:void(0);'
-								onclick="criteriaPoint(event);">현재 포인트</a>
-								<p>
-									총 <span class="totalPTrgt"
-										style="color: #fd7e14; font-weight: bold;">0</span>포인트
-								</p></li>
-							<li><a class="attendP" href='javascript:void(0);'
-								onclick="criteriaPoint(event);">출석하기</a>
-								<p>
-									<span class="attendPTrgt">0</span>포인트
-								</p></li>
-							<li><a class="dealP" href='javascript:void(0);'
-								onclick="criteriaPoint(event);">거래후기</a>
-								<p>
-									<span class="dealPTrgt">0</span>포인트
-								</p></li>
-							<li><a class="freeP" href='javascript:void(0);'
-								onclick="criteriaPoint(event);">무료나눔</a>
-								<p>
-									<span class="freePTrgt">0</span>포인트
-								</p></li>
-							<li><a class="usedP">사용완료</a>
-								<p>
-									<span class="usedPTrgt">0</span>포인트
-								</p></li>
-						</ul>
+			<div class="message-box box-shadow white-bg"
+				style="height: 750px; width: 100%">
+				<div class="tab-pane active" id="order-complete">
+					<div>
+						<h4 class="blog-section-title border-left mb-30">나의 포인트</h4>
 					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="payment-details p-30">
-								<h6 class="widget-title border-left mb-20"
-									style="display: inline-block;"><span style="color: #fd7e14" id="ttlTrgt">전체</span> 적립 내역</h6>
-									
-								<button class="submit-btn-1 btn-hover-1"
-									style="float: right; border-radius: 20px; height: 30px" id="usePointBtn">포인트
-									사용하기</button>
-								<table class="saveTable">
-								</table>
-							</div>
+					<div class="order-complete-content box-shadow">
+						<div class="order-info p-30 mb-10">
+							<ul class="order-info-list">
+								<li><a class="totalP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">현재 포인트</a>
+									<p>
+										총 <span class="totalPTrgt"
+											style="color: #C04A82; font-weight: bold;">0</span>포인트
+									</p></li>
+								<li><a class="attendP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">출석하기</a>
+									<p>
+										<span class="attendPTrgt">0</span>포인트
+									</p></li>
+								<li><a class="dealP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">거래후기</a>
+									<p>
+										<span class="dealPTrgt">0</span>포인트
+									</p></li>
+								<li><a class="freeP" href='javascript:void(0);'
+									onclick="criteriaPoint(event);">무료나눔</a>
+									<p>
+										<span class="freePTrgt">0</span>포인트
+									</p></li>
+								<li><a class="usedP">사용완료</a>
+									<p>
+										<span class="usedPTrgt">0</span>포인트
+									</p></li>
+							</ul>
 						</div>
-						<div class="col-md-6">
-							<div class="payment-details p-30">
-								<h6 class="widget-title border-left mb-20" style="display: inline-block;">포인트 사용 내역</h6>
-								<table class="usedTable">
-								</table>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="payment-details p-30">
+									<h6 class="widget-title border-left mb-20"
+										style="display: inline-block;">
+										<span style="color: #C04A82" id="ttlTrgt">전체</span> 적립 내역
+									</h6>
+
+									<button class="submit-btn-1 btn-hover-1"
+										style="float: right; border-radius: 20px; height: 30px"
+										id="usePointBtn">포인트 사용하기</button>
+									<table class="saveTable">
+									</table>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="payment-details p-30">
+									<h6 class="widget-title border-left mb-20"
+										style="display: inline-block;">포인트 사용 내역</h6>
+									<table class="usedTable">
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>

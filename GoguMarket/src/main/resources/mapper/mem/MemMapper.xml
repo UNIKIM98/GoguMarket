@@ -152,4 +152,12 @@
 		WHERE user_id =
 		#{userId}
 	</update>
+	
+		<!-- ❤️ 권한변경 -->
+	<update id="updateUserSe" parameterType="com.goguma.mem.vo.MemVO">
+		UPDATE MEM
+		SET user_se = #{userSe}
+		WHERE user_id =
+		#{userId}
+	</update>
 </mapper>

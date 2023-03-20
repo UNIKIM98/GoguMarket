@@ -1,6 +1,8 @@
 package com.goguma.mem.controller;
 
 import java.io.File;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -74,22 +76,23 @@ public class MemRestController {
 	// ======================================
 	// ❤️ 이메일 인증 메일 전송
 	@GetMapping("/goguma/emlCheckAJax/{eml}")
-	public int emlCheckAJax(@PathVariable String eml) {
+	public String emlCheckAJax(@PathVariable String eml) {
 		// # 인증번호 난수 생성
-		Random random = new Random();
-		int checkNum = random.nextInt(888888) + 111111;
-
+		 SecureRandom secureRandom = new SecureRandom();
+		    byte[] bytes = new byte[8];
+		    secureRandom.nextBytes(bytes);
+		    String checkInfo = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+		
 		String emailTtl = "[고구마켓] 이메일 인증번호가 도착했습니다.";
 		// 이메일 전송
 		try {
-			emailService.sendVerificationMail(eml, checkNum, emailTtl);
+			emailService.sendVerificationMail(eml, checkInfo, emailTtl);
 
 		} catch (MessagingException e) {
 			// 이메일 전송 실패 시
-			System.out.println("[이메일 발송 실패] 에러발생 :( ");
-			checkNum = 0;
+			checkInfo = "0";
 		}
-		return checkNum;
+		return checkInfo;
 	}
 
 	// ======================================
@@ -130,7 +133,6 @@ public class MemRestController {
 	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		System.out.println(memVO+"넘어온vo==============");
 		// 프로필사진 있으면 실행
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
@@ -158,7 +160,6 @@ public class MemRestController {
 			memVO.setAtchNm(null);
 			memVO.setAtchPath(null);
 		}
-		System.out.println("바꾼 VO => " + memVO);
 		String userPw = memVO.getUserPw();
 		userPw = bCryptPasswordEncoder.encode(userPw);
 		memVO.setUserPw(userPw);
@@ -199,7 +200,6 @@ public class MemRestController {
 		if (result) {
 			cnt = 1;
 		}
-		System.out.println(cnt + "삭제했으면1");
 		return cnt;
 	}
 
@@ -208,8 +208,6 @@ public class MemRestController {
 	@GetMapping("/goguma/checkIdEmlAjax/{userId}/{eml}")
 	public boolean checkIdEmlAjax(@PathVariable String userId, @PathVariable String eml) {
 		boolean result = false;
-		System.out.println("넘어온 id > " + userId);
-		System.out.println("넘어온 이메일 > " + eml);
 
 		MemVO memVO = new MemVO();
 		memVO.setUserId(userId);
@@ -226,7 +224,6 @@ public class MemRestController {
 	//
 	@GetMapping("/goguma/isEmlExistAjax/{eml}")
 	public String isEmlExistAjax(@PathVariable String eml) {
-		System.out.println("넘어온  eml > " + eml);
 
 		String result = "no";
 
@@ -235,11 +232,9 @@ public class MemRestController {
 
 		memVO = memService.selectUser(memVO);
 
-		System.out.println("찾아온 vo" + memVO);
 		if (memVO != null && memVO.getEml() != null && memVO.getEml().equals(eml)) {
 			result = memVO.getUserId();
 		}
-		System.out.println(result);
 		return result;
 	}
 }

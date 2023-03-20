@@ -97,14 +97,7 @@
 						<form id="searchForm" name="searchForm" method="get"
 							onsubmit="return false" style="margin-left: 30px">
 							<h6 class="m-0 font-weight-bold text-primary pl-100">
-								<select class="mr-10" name="searchKey" id="sort">
-
-
-								</select> <input type="text" placeholder=" search.." id="searchCn"
-									name="search">
-								<button id="searchButton" class="btn btn-primary"
-									onclick="selectMemberList(2)"
-									style="height: 25px; line-height: 15px">SEARCH</button>
+								
 							</h6>
 						</form>
 
@@ -126,8 +119,8 @@
 									<th>거래상태</th>
 									<th>조회수</th>
 									<th>첨부파일아이디</th>
-									<th>단건조회</th>
-									<th>삭제</th>
+									<th>상세조회</th>
+<!-- 									<th>삭제</th> -->
 								</tr>
 							</thead>
 
@@ -147,10 +140,11 @@
 									<td th:text="${deal.inqCnt}"></td>
 									<td th:text="${deal.atchId}"></td>
 									<td>
-										<button type="button" class="btnInfo">조회</button>
-									</td>
-									<td>
-										<button type="button" class="btnDel" onClick="del()">삭제</button>
+										<button 
+										th:onclick="|location.href='@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}'|"
+										type="button" class="btn btn-primary"
+								style="height: 25px; line-height: 15px">조회</button>
+										
 									</td>
 								</tr>
 							</tbody>

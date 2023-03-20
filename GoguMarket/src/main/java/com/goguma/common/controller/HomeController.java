@@ -1,5 +1,6 @@
 package com.goguma.common.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +24,15 @@ public class HomeController {
 		model.addAttribute("deal", service.selectHomeDeal());
 		
 		List<Map> auctList = service.selectHomeAuct();
-		System.out.println(auctList);
-		System.out.println(auctList.get(0).get("AUCT_NO"));
+		
+		BigDecimal auctNoBigDecimal = (BigDecimal) auctList.get(0).get("AUCT_NO");
+		int auctNo = auctNoBigDecimal.intValue();
+		
 		model.addAttribute("auct", auctList);
+		model.addAttribute("auctMem", service.selectHomeAuctMem(auctNo));
 		
 		model.addAttribute("biz", service.selectHomeBiz());
 		model.addAttribute("sns", service.selectHomeSns());
-		
 		
 		return "home/home";
 	}
@@ -43,7 +46,6 @@ public class HomeController {
 		list.put("auct", service.selectHomeAuct());
 		list.put("biz", service.selectHomeBiz());
 		list.put("sns", service.selectHomeSns());
-		System.out.println(list.get("deal"));
 
 		return list;
 	}

@@ -4,8 +4,9 @@
 	layout:decorate="~{admin/adminLayout}">
 
 <head>
+
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
 
 <style>
 .sendAdd {
@@ -18,61 +19,68 @@
 	margin-left: 30px;
 }
 </style>
+<link type="text/css" rel="stylesheet" href="/css/WriteCss/css.css" />
 </head>
 
 <body>
 	<div layout:fragment="adminContent">
-		<h1 class="h3 mb-2 text-gray-800 mt-15">회원 알림 보내기</h1>
-		<p class="mb-4">관리자 전용 알림 페이지 입니다.</p>
-		<!-- DataTales Example -->
-
-		<hr class="sidebar-divider">
-		<div class="card" style="width: 60%; margin: 0 auto; margin-top: 5%;">
-			<div class="card-body pstSe" style="text-align: center">
-				<form name="alarmForm" id="alarmForm" method="post"
+		<div class="card-body pstSe" style="text-align: center">
+			<form name="alarmForm" id="alarmForm" method="post"
 					action="location.href='admin/adminMember'" onsubmit="return false">
-					<div class="newsletter-info text-center ">
-						<h5 class="card-title">SEND MESSAGE</h5>
-						<h6 class="card-subtitle mb-2 text-muted">
-							<input type="hidden" name="userId" id="userId"
-								th:value="${userId}">
-						</h6>
+				<div class="board_wrap">
+					<div class="board_title">
+						<strong>회원 알람 보내기</strong>
+						<p>관리자 전용 페이지입니다.</p>
 					</div>
+					<div class="board_write_wrap">
+						<div class="board_write">
+							<div class="title">
+								<dl>
+									<dt>제목</dt>
+									<dd>
+										<input type="text" placeholder="제목 입력"> <select
+											class=" mr-10 ml-10" name="pstSe" id="pstSe">
+										</select>
+									</dd>
+								</dl>
+							</div>
+							<div class="info">
+								<dl>
+									<dt>글쓴이</dt>
+									<dd>[[${session.userId}]]</dd>
+								</dl>
+								<dl>
+									<dt>받는사람</dt>
+									<dd>[[${userId}]]</dd>
+								</dl>
+								<dl>
+									<dt>보낸일자</dt>
+									<dd	th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd / HH:mm:ss')}"></dd>
+								</dl>
+							</div>
+							<div class="cont">
+								<textarea id="almCn" name="almCn" rows="5" cols="80"></textarea>
+							</div>
+						</div>
+						<div class="bt_wrap">
+							<button class="btn btn-primary " onclick="sendAlarm()"
+								style="height: 30px; width: 100px; line-height: 15px; margin-right: 10px; margin-bottom: 30px;">전송</button>
 
-					<br>
-
-					<ul class="sendAdd">
-						<li><select class=" mr-10 ml-10" name="pstSe" id="pstSe">
-						</select></li>
-						<li>보내는 사람: [[${session.userId}]]</li>
-						<li>받는 사람: [[${userId}]]</li>
-						<li style="margin-left: 350px"><span
-							th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd / HH:mm:ss')}"></span></li>
-					</ul>
-					<br>
-					<hr style="margin: 0;">
-					<br>
 
 
-
-					<div style="word-break:break-all;">
-						<textarea id="almCn" name="almCn" rows="5" cols="80"></textarea>
+							<button class="btn btn-primary" onclick="exitAlarm()"
+								style="height: 30px; width: 100px; line-height: 15px; margin-right: 10px; margin-bottom: 30px;">취소</button>
+						</div>
 					</div>
-				</form>
-			</div>
-			<div style="float: left; margin: 0 auto;">
-				<button class="btn btn-primary" onclick="sendAlarm()"
-					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">전송</button>
-				<button class="btn btn-primary" onclick="exitAlarm()"
-					style="height: 30px; width: 100px; line-height: 15px; margin: 0 auto; margin-bottom: 30px;">취소</button>
-			</div>
+				</div>
+			</form>
 		</div>
+
 		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 		<script th:inline="javascript">
 			var link = '/admin/adminMember';
 
 			$(document).ready(function() {
-				alert("ready 함수 작동")
 				keyValue();
 
 			});
