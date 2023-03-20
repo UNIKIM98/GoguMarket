@@ -75,7 +75,7 @@ td {
 										</tbody>
 									</table>
 									<button class="btn btn-primary" onclick="goMySns()"
-										style="margin-left: 41%;">나의 동내 생활</button>
+										type="button" style="margin-left: 41%;">나의 동내 생활</button>
 								</div>
 							</div>
 						</div>
@@ -91,20 +91,8 @@ td {
 		<script th:inline="javascript">
 			var link ='/goguma/snsMain';
 		
-		function goMySns(){ //sns page로 이동
-			alert('여기까진옴')
-			
-			 confirmMessage = confirm("당신의 동내생활로 가겠습니까?");
-			 if (confirmMessage) {
-					location.href = link;
-				}
-			    
-			}
 	
-		
-		
-		btn = $("<button>").attr({
-			class:"btn btn-primary"
+		btnn = $("<button>").attr({
 		}); // 테이블에 변경항목 추가하기위한 태그 생성
 			$(document).ready(function() {
 				selectMySns();
@@ -127,7 +115,7 @@ td {
 						.append($("<td>").text(obj.snsCn).css("width","60%").css("text-overflow", "ellipsis;"))
 						.append($("<td>").text(obj.snsYmd))
 						.append($("<td>").text(obj.inqCnt))
-						 .append($("<td>").html(btn.clone().text("삭제").attr("onclick","deleteSns("+ obj.snsNo +")")))
+						.append($("<td>").html(btnn.clone().text("삭제").attr("onclick","deleteSns("+ obj.snsNo +")")))
 														
 									
 							
@@ -135,7 +123,15 @@ td {
 						
 						}
 					})
-}
+			}
+			
+			function goMySns(){ //sns page로 이동				
+				 if (confirm("당신의 동네생활로 가겠습니까?")) {
+						location= '/goguma/snsMain';
+					}
+				    
+				}
+			
 
 			function deleteSns(snsNo) {
 			
@@ -149,15 +145,9 @@ td {
 						console.log(data)
 						
 						
-						
 						selectMySns(snsNo)
 						}
-					
-					
-				})
-				
-				
-
+									})
 			}
 
 			function editSns() {

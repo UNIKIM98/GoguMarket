@@ -92,9 +92,13 @@ textarea {
 		<div id="myModal" class="modal">
 			<!-- Modal content -->
 			<div class="modal-content" style="width: 500px;">
-				<div class="modal-body" style="padding: 20px; height: 350px; margin-bottom: 5px;">
-					<button class="close1" onclick="" style="color: black; padding: 10px;">x</button>
-					 <img id="preview" style="width: 100%;"
+			<div style="margin-left:450px;">
+					<button style="color: black; padding: 10px; width: 50px;">x</button>
+				</div>
+				<div class="modal-body"
+					style="padding: 5px; height: 350px; margin-bottom: 5px;">
+
+					<img id="preview" style="width: 100%; height: 100%;"
 						onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 
 
@@ -107,7 +111,8 @@ textarea {
 							<div class="banner-item banner-3">
 
 								<input type="file" name="files" id="files" placeholder="첨부파일"
-									multiple="multiple" onchange="readURL(this);" style="width:100%;">
+									multiple="multiple" onchange="readURL(this);"
+									style="width: 100%;">
 								<!-- atch -->
 
 							</div>
@@ -127,11 +132,15 @@ textarea {
 						<!--  -->
 						<input type="hidden" name="area" id="area"
 							th:value="${session.dealArea}">
+							
+
+							<button class="submit-btn-1 btn-hover-1 f-right mb-10"
+								type="submit">complete</button>
+					
 					</div>
-					<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
 				</form>
 			</div>
-			
+
 		</div>
 		<!-- writeForm -->
 		<!-- 개인 Sns -->
