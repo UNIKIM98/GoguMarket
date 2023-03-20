@@ -159,6 +159,12 @@ public class DealServiceImpl implements DealService {
 		return map.selectPrice(vo);
 	}
 
+	@Override
+	public int updatePrchsStts(DealVO dVO) {
+		// TODO Auto-generated method stub
+		return map.updatePrchsStts(dVO);
+	}
+
 
 
 

@@ -329,6 +329,12 @@
 		]]>
 	</select>
 	
-
-
+	<!-- ❤ 판매완료로 업데이트-->
+	<update id="updatePrchsStts" parameterType="com.goguma.deal.vo.DealVO">
+	UPDATE DEAL SET PRCHS_ID=#{prchsId},
+					PRCHS_YMD=CURRENT_DATE,
+					STTS='판매완료'
+					<if test="dlPrc != null">,DL_PRC = #{dlPrc}</if>
+	WHERE DL_NO = #{dlNo}
+	</update>
 </mapper>

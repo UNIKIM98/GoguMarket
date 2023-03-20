@@ -48,19 +48,20 @@
 	width: 25%;
 }
 
-#dFrm span{
-	color : red;
+#dFrm span {
+	font-weight: bold;
+	color: #C04A82;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.3.js"
-		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-		crossorigin="anonymous"></script>
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<!-- Body main wrapper start -->
-		<div class="wrapper" >
+		<div class="wrapper">
 			<!-- Start page content -->
 			<section id="page-content" class="page-wrapper section">
 
@@ -68,24 +69,31 @@
 				<div class="message-box-section mb-80">
 					<div class="container">
 						<div class="row">
-							<div class="col-lg-12" style="width: 70%">
-								<div class="message-box box-shadow white-bg">
-									<form id="dFrm" method="post" enctype="multipart/form-data" onsubmit="return false" th:each="d : ${dealInfo}">
+							<div class="col-lg-12" style="width: 70%; margin: 0px auto">
+								<div class="message-box box-shadow white-bg" style="margin: 0px auto">
+									<form id="dFrm" method="post" th:each="d : ${dealInfo}" action="/my/dealUpdateSubmit">
 										<div class="row">
 											<div class="col-lg-12">
-												<h4 class="blog-section-title border-left mb-30">구매예약</h4>
-												<h5>구매자에게 보여질 페이지입니다</h5>
-												<h5>업데이트페이지임. 직거래장소/희망가격/prchs_id/stts="예약중" 으로 업뎃하샘</h5>
+												<h4 class="blog-section-title border-left mb-30">거래 예약</h4>
+												<h5>
+													<span>🐶[[${ntslInfo.nickNm}]]</span>님과의 거래를 예약하려면 아래의 폼을
+													작성해주세요.
+												</h5>
+												<h6>
+													<span>⚠잠깐!</span> 판매자와 거래를 약속하셨나요? <span>반드시</span> 판매자와 채팅
+													후 진행 바랍니다.
+												</h6>
 											</div>
 										</div>
 										<div>
-											<table class="table">
+											<table class="table" style="width: 100%;">
+												<tbody>
 													<tr>
 														<th>카테고리</th>
 														<td th:text="${d.ctgry}"></td>
 													</tr>
 													<tr>
-														<th>글제목</th>
+														<th>상품명</th>
 														<td th:text="${d.dlTtl}"></td>
 													</tr>
 													<tr>
@@ -95,90 +103,57 @@
 													<tr>
 														<th>상품가격</th>
 														<td th:text="${d.dlPrc}"></td>
+													</tr>
+												</tbody>
 											</table>
 										</div>
-										
+
 										<div class="col-lg-10">
-											<label for="area">직거래장소</label>
-											<input type="text" name="area" id="area" placeholder="직거래장소" th:value=${session.dealArea}>
+											<label for="area">직거래장소</label> <input type="text"
+													name="area" id="area" placeholder="직거래장소"
+													th:value=${session.dealArea} readonly="readonly">
 										</div>
-										<div class="col-lg-10">
-											<!-- 네고 y 인 사람은 가격 제안할 수 있또록.. -->
-											<label for="negoYn">가격 제안</label>
-											<input type="text" name="dlPrc" id="dlPrc" placeholder="희망가격" th:value=${d.dlPrc}>
+										<!-- 네고 오케이 한 사람만 보이게 설정 -->
+										<div class="col-lg-10" th:if="${d.negoYn == 'Y'}">
+											<label for="negoYn">가격 제안</label> <input type="text"
+													name="dlPrc" id="dlPrc" placeholder="희망가격"
+													th:value=${d.dlPrc}>
 										</div>
 										<div class="col-lg-12">
 											<!-- 예약이니까 함더 확인하라꼬 걍 적어봄 -->
-											<label for="check">예약 내용을 확인하셨습니까?</label>
-											<input type="checkbox" name="check" id="check" style="margin:0px">
+											<label for="check" style="width: 250px">예약 내용을
+												확인하셨습니까?</label> <input type="checkbox" id="check"
+												style="margin: 0px">
 										</div>
 										<input type="hidden" name="dlNo" id="dlNo" th:value=${dealInfo.dlNo}>
-										<input type="hidden" name="atchId" id="atchId" th:value=${atchList[0].atchId}>
-										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="구매예약하기">
+										<input type="hidden" name="prchsId" th:value="${session.userId}">
+										<input class="submit-btn-1 mt-30 btn-hover-1" type="button" id="btnSave" role="button" onclick="formSubmit()" value="구매예약하기">
 									</form>
 								</div>
-								<!-- </form> -->
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 		</div>
-	
-	<script th:inline="javascript">
-		
-		//==============================================================================
-		//✅ form submit
-			function formSubmit() {
-				// form submit 전 유효성 체크
-				if(submitCheck()){
-					var formData = new FormData($("#dFrm")[0]);
-					// formData.append("deleteList", JSON.stringify(deleteList));
-				
-					// 수정 아작스
-					$.ajax({	
-						url : "/dealUpdateRsvt",
-						type : "get",
-						data : formData,
-						processData : false,
-						contentType : false,
-						success : function(result) {
-							console.log(result)
-							alert("[구매예약] 구매 예약이 완료되었습니다 :D");
-							location.href = "/goguma/dealMain";///goguma/dealdetail/이전게시글번호
-						},
-						error : function(err){
-							alert("[예약실패] 구매 예약 중 오류가 발생하였습니다. :(");
-						}
-					});
-				}
-			}
 
-		//==============================================================================
-		//✅ submit 전 유효성 체크
-			function submitCheck(){
-			//1. 체크박스 클릭
-// 			if($("#check").children().length==0){
-// 				$("#fileErrMsg").text("✅ 예약 내용을 확인하셨나요?")
-// 				isSubmitOk = false;
-// 			}
-			//3. 지역 작성 여부
-			if($("#area").val()==""){
-				$("#area").focus();
-				isSubmitOk = false;
+		<script th:inline="javascript">
+			//==============================================================================
+			//✅ form submit
+			function formSubmit() {
+
+				if($('#check').is(':checked')){
+					alert("오키")
+					$("#dFrm").submit();
+				}else{
+					alert("예약내용 확인 체크를 해주세요.");
+					return false;
+				}
+
 			}
-			//4. 가격 작성 여부
-			else if($("#dlPrc").val()==""){
-				$("#dlPrc").focus();
-				isSubmitOk = false;
-			}
-			else{
-				isSubmitOk = true;
-			}
-			return isSubmitOk;			
-		}			
-	</script>
-</div>
+		</script>
+	</div>
 
 
 </body>

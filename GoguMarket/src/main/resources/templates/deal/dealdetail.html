@@ -195,12 +195,11 @@
 														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>리뷰쓰기</button></li> -->
-															<li th:if="${session.userId != deal.ntslId}" ><button class="submit-btn-1 mt-30 btn-hover-1"
+															<li th:if="${session.userId != deal.ntslId and session.userId == d.prchsId}" ><button class="submit-btn-1 mt-30 btn-hover-1"
 														type="submit" 
 														style="background-color:#C04A82"
 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>리뷰쓰기</button></li>
-												
 												</ul>
 											</div>
 										</div>
