@@ -93,63 +93,24 @@
 								<!-- 정렬 -->
 								<div class="product-tab pro-tab-menu pro-tab-menu-2 text-center">
 									<!-- Nav tabs -->
-									<ul class="nav">
-										<li><a class="active" href="#recently-product" data-bs-toggle="tab">최근순</a></li>
-										<li><a href="#low-price" data-bs-toggle="tab">최저가순</a></li>
-										<li><a href="#higher-price" data-bs-toggle="tab">최고가순</a></li>
-										<li><a href="#many-view" data-bs-toggle="tab">조회순</a></li>
-									</ul>
+									<form id="listTabFrm">
+										<!-- <ul class="nav">
+											<li><a class="active" href="#recently-product" data-bs-toggle="tab"
+												name="listTab" onclick="auctListTab('recently')">최근순</a></li>
+											<li><a href="#dday" data-bs-toggle="tab"
+												name="listTab" onclick="auctListTab('dday')">마감순</a></li>
+											<li><a href="#manyBid" data-bs-toggle="tab"
+												name="listTab" onclick="auctListTab('manyBid')">인기순</a></li>
+											<li><a href="#manyView" data-bs-toggle="tab"
+												name="listTab" onclick="auctListTab('manyView')">조회순</a></li>
+										</ul> -->
+									</form>
 								</div>
 								<!-- Tab panes -->
 								<div class="tab-content">
 
 									<!-- recently-product 시작부분 -->
 									<div id="recently-product" class="tab-pane active show"
-										role="tabpanel">
-										<div class="row">
-
-											<!-- product-item start -->
-
-											<div class="col-lg-3 col-md-4" th:each="auct : ${lists}" th:if="${auct.stts==1}">
-												<a th:href="@{/goguma/auctSelect/{auctNo}(auctNo = ${auct.auctNo})}">
-													<div class="product-item" th:if="${auct.auctNo == nowPrc.auctNo}" th:each="nowPrc : ${nowPrcs}" >
-														<div class="product-img" >
-															<img th:src="${auct.atchNm}" alt=""
-																onerror="this.onerror=null; this.src='/img/logo/001.png'"
-																style="width: 268px; height: 280px;" />
-														</div>
-														<div class="product-info" style="padding: 20px; padding-bottom: 40px;">
-															<h6 class="product-title">
-																<a th:text="${auct.auctTtl}"></a>
-															</h6>
-															<h3 class="pro-price" th:if="${nowPrc.nowPrc != 0}"
-																th:text="'현재가 ' + ${#numbers.formatInteger(nowPrc.nowPrc, 3, 'COMMA') + '원'}"></h3>
-															<h3 class="pro-price" th:if="${nowPrc.nowPrc == 0}">입찰자가 없습니다</h3>
-															<h5 align="left" th:text="${auct.userId}"></h5>
-															<h5 class="sin-pro-action f-right"
-																th:if="${!auct.dDay.equals(0)}"
-																th:text="${'마감'+auct.dDay+'일 전'}"></h5>
-															<h5 class="sin-pro-action f-right"
-																th:if="${auct.dDay.equals(0)}"
-																th:text="${'마지막 경매일입니다'}"></h5>
-															<ul class="sin-pro-action f-left">
-																<li>
-																	<h6>입찰인원 : [[${auct.count}]]</h6>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</a>
-
-											</div>
-											<!-- product-item end -->
-
-										</div>
-									</div>
-									<!-- recently-product 끝 -->
-
-									<!-- recently-product 시작부분 -->
-									<div id="low-price" class="tab-pane active show"
 										role="tabpanel">
 										<div class="row">
 
@@ -208,7 +169,30 @@
 				</div>
 			</section>
 		</div>
-		<script>
+		<script th:inline="javascript">
+			function auctListTab(listTab){
+				// console.log('gdgd'+listTab) --OK
+				formData=[];
+
+				formData = $("#listTabFrm").serialize();
+
+				console.log(formData);
+
+				if(listTab == 'recently'){
+					formData += "$recently=" + listTab;
+				} else if (listTab == 'dday'){
+					formData += "$dday=" + listTab;
+				} else if (listTab == 'manyBid'){
+					formData += "$manyBid=" + listTab;
+				} else {
+					formData += "$manyView=" + listTab;
+				}
+				console.log(listTab);
+			}
+			
+			$(function(){
+				auctListAjax();
+			})
 			
 
 		</script>

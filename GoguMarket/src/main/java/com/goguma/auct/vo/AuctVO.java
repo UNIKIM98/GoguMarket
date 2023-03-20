@@ -38,4 +38,6 @@ public class AuctVO extends AtchVO{
 	 private Date prchsYmd;	//낙찰일시
 	 private int count; //입찰자 수
 	 private int dDay;	//마감일 계산
+
+	 private String listTab;
 } 

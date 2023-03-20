@@ -2,7 +2,7 @@
  * 경매 메인페이지
  */
 
-var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
+var auctModal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
 var btn = document.getElementById("myBtn"); // 글쓰기 활성화
 
@@ -26,13 +26,13 @@ var isSubmitOk = true; //submit 유효성 체크 boolean
 
 
 btn.onclick = function() {
-	modal.style.display = "block";
+	auctModal.style.display = "block";
     disappear.style.display = "none";
 
 };
 //------------------ 개인 게시글-------------------------
 function insertSns(){
-	modal.style.display = "block"; //개인 게시글 창 활성화
+	auctModal.style.display = "block"; //개인 게시글 창 활성화
 
 }
 $.ajax({
@@ -92,8 +92,8 @@ function exFileDeleteAjax() {
 
 // 모달 나가기 - 모달 외에 화면을 누르면 모달창 상태를 none 으로 바꿈
 window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == auctModal) {
+        auctModal.style.display = "none";
     }
 
     if (event.target == Sns) {
@@ -103,5 +103,5 @@ window.onclick = function (event) {
 
 // 글쓰기 창 나가기
 span.onclick = function () {
-    modal.style.display = "none";
+    auctModal.style.display = "none";
 };

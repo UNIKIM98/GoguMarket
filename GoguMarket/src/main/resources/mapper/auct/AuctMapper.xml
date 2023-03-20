@@ -18,7 +18,7 @@
 		             WHERE AUCT_NO = a.auct_no) AS D_DAY
 		             
 		FROM AUCT a
-		ORDER BY AUCT_NO DESC
+		ORDER BY D_DAY
 	</select>
 
 	<!-- 단건조회 -->
