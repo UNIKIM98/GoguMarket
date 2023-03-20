@@ -38,6 +38,7 @@
 		WHERE ATCH_ID = (SELECT atch_id
 						FROM AUCT
 						WHERE auct_no = #{auctNo})
+        <!-- AND ATCH_SIZE != 0 -->
 	</select>
 
 	<!-- 등록 -->
