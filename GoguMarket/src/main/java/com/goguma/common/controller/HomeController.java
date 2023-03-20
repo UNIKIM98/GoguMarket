@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("biz", service.selectHomeBiz());
 		model.addAttribute("sns", service.selectHomeSns());
-		
+		System.out.println(service.selectHomeBiz());
 		return "home/home";
 	}
 

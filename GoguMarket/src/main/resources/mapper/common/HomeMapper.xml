@@ -4,13 +4,13 @@
 		<!-- 채은 main에서 쓸 메퍼들 -->
 		<!-- deal -->
 		<select id="selectHomeDeal" resultType="map">
-		SELECT ROWNUM RN, c.*
+SELECT ROWNUM RN, c.*
 		FROM (
-		    SELECT a.*, (
+		    SELECT a.*, NVL((
 		        SELECT ATCH_PATH
 		        FROM ATCH
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
-		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    ),0) AS ATCH_PATH, ROWNUM AS ROW_NUM
 		    FROM DEAL a
 		    ORDER BY dl_ymd DESC
 		) c
@@ -23,11 +23,11 @@
 		<select id="selectHomeAuct" resultType="map">
 		SELECT ROWNUM RN, c.*
 		FROM (
-		    SELECT a.*, (
+		    SELECT a.*, NVL((
 		        SELECT ATCH_PATH
 		        FROM ATCH
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
-		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM, (SELECT COUNT(*) FROM AUCT_MEM where auct_no = a.auct_no) COUNT, (SELECT MAX(NOW_PRC) FROM AUCT_MEM WHERE auct_no = a.auct_no) MAX
+		    ),0) AS ATCH_PATH, ROWNUM AS ROW_NUM, (SELECT COUNT(*) FROM AUCT_MEM where auct_no = a.auct_no) COUNT, (SELECT MAX(NOW_PRC) FROM AUCT_MEM WHERE auct_no = a.auct_no) MAX
 		    FROM AUCT a
 		    WHERE STTS = 1
 		    ORDER BY COUNT DESC
@@ -48,11 +48,11 @@
 		<select id="selectHomeBiz" resultType="map" parameterType="String">
 		SELECT ROWNUM RN, c.*
 		FROM (
-		    SELECT a.*, (
+		    SELECT a.*, NVL((
 		        SELECT ATCH_PATH
 		        FROM ATCH
-		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1 -->
-		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
+		    ),0) AS ATCH_PATH, ROWNUM AS ROW_NUM
 		    FROM BIZ_MEM a
 		    ORDER BY bIZ_no DESC
 		) c
@@ -65,11 +65,11 @@
 		<select id="selectHomeSns" resultType="map">
 		SELECT ROWNUM RN, c.*
 		FROM (
-		    SELECT a.*, (
+		    SELECT a.*, NVL((
 		        SELECT ATCH_PATH
 		        FROM ATCH
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
-		    ) AS ATCH_PATH, ROWNUM AS ROW_NUM
+		    ),0) AS ATCH_PATH, ROWNUM AS ROW_NUM
 		    FROM SNS a
 		    ORDER BY SNS_YMD DESC
 		) c
