@@ -158,11 +158,12 @@ layout:decorate="~{layouts/layout}">
 			                                <div class="row">
 			                                <div class="col-6">
 			                                	<input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
-			                                           placeholder="검색어를 입력하세요" title="키워드 입력"/>
+			                                           placeholder="검색어를 입력하세요" title="키워드 입력"
+			                                           style="margin-top:20px;"/>
 			                               </div>
 			                                <div class="col-4">
-			                                    <button class="submit-btn-2 btn-hover-2" type="submit">검색</button>
-				                                <button class="submit-btn-2 btn-hover-2" onclick="resetSearch()" type="button">리셋</button>
+			                                    <button class="submit-btn-2 btn-hover-2" type="submit" style="width:95px; margin-top:20px;" >검색</button>
+				                                <button class="submit-btn-2 btn-hover-2" style="width:95px; margin-top:20px;" onclick="resetSearch()" type="button">리셋</button>
 			                                </div>
 			                                </div>
 			                                </div>
@@ -212,10 +213,12 @@ layout:decorate="~{layouts/layout}">
                         <div class="col-lg-6">
                             <div class=" text-end f-right">
                                 <!-- Nav tabs -->
-                                <ul>
-                                    <li><a th:class="'dl_ymd'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_ymd')">최신순</a></li>
-                                    <li><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
-                                    <li><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
+                                <ul >
+                                    <li style="display: inline-block;"><a th:class="'dl_ymd'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_ymd')">최신순</a></li>
+                                    &nbsp; &nbsp;
+                                    <li style="display: inline-block;"><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
+                                     &nbsp; &nbsp;
+                                    <li style="display: inline-block;"><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
                                    
                                 </ul>
                             </div>
@@ -242,7 +245,8 @@ layout:decorate="~{layouts/layout}">
                                             <div class="product-item product-item-2"  >
                                                 <div class="product-img">
                                                     <a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}">
-                                                        <img th:src="${deal.atchNm}"style="width:270px; height:270px;" />
+                                                        <img th:src="${deal.atchNm}"style="width:270px; height:270px;" 
+                                                        onerror="this.onerror=null; this.src='/img/logo/001.png'"/>
                                                     </a>
                                                 </div>
                                                 <div class="product-info">
