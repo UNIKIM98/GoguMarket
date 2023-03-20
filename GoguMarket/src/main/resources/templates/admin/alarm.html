@@ -26,7 +26,7 @@
 	<div layout:fragment="adminContent">
 		<div class="card-body pstSe" style="text-align: center">
 			<form name="alarmForm" id="alarmForm" method="post"
-					action="location.href='admin/adminMember'" onsubmit="return false">
+				action="location.href='admin/adminMember'" onsubmit="return false">
 				<div class="board_wrap">
 					<div class="board_title">
 						<strong>회원 알람 보내기</strong>
@@ -55,7 +55,8 @@
 								</dl>
 								<dl>
 									<dt>보낸일자</dt>
-									<dd	th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd / HH:mm:ss')}"></dd>
+									<dd
+										th:text="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd / HH:mm:ss')}"></dd>
 								</dl>
 							</div>
 							<div class="cont">
@@ -70,6 +71,8 @@
 
 							<button class="btn btn-primary" onclick="exitAlarm()"
 								style="height: 30px; width: 100px; line-height: 15px; margin-right: 10px; margin-bottom: 30px;">취소</button>
+
+							<input type="hidden" id="userId" name="userId" th:value="${userId}"> 
 						</div>
 					</div>
 				</div>
