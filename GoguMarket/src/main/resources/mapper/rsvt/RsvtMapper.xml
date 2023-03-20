@@ -97,6 +97,7 @@
 		                ON c.common_code = '007' 
 		WHERE c.common_detail_code = r.rsvt_tm
 		AND r.user_id = #{userId}
+		order by r.rsvt_no
 	</select>
 	
 	<!-- 예약상세내역 가져오기 -->
