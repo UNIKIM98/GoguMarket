@@ -76,6 +76,7 @@
 				             <if test ="prchsId != null">
 				             and prchs_id = #{prchsId}
 				             </if>
+				            
 				        </where>
 				        <![CDATA[
 				    	) a WHERE ROWNUM <= #{last}) b WHERE rn >= #{first}
