@@ -33,39 +33,54 @@
                                     <th>낙찰가</th>
                                     <th>낙찰일시</th>
                                     <th style="width: 50px;">이동</th>
-                                    <th style="width: 50px;">삭제</th>
+                                    <!-- <th style="width: 50px;">삭제</th> -->
                                 </tr>
                             </thead>
 
+                            
+
+
                             <tbody>
-                                <tr th:each="myAuctList:${myAuctList}"
-                                    onmouseover='this.style.background="#fcecae";'
-                                    onmouseleave='this.style.background="#FFFFFF";'
-                                    >
-                                    <td th:text="${myAuctList.auctNo}" style="width: auto;;"></td>
-                                    <td th:text="${#dates.format(myAuctList.ddlnYmd, 'yyyy/MM/dd')}"></td>
-                                    <td th:text="${myAuctList.auctTtl}"></td>
-                                    <th:block th:switch="${myAuctList.stts}">
-                                        <td th:case="1">경매가 진행중입니다.</td>
-                                        <td th:case="2">경매가 종료되었습니다.</td>
-                                        <td th:case="3">유찰되었습니다.</td>
-                                        <td th:case="*">경매가 진행중입니다.</td>
-                                    </th:block>
-                                    <td th:text="${myAuctList.inqCnt}"></td>
-                                    <td th:text="${myAuctList.prchsId}"></td>
-                                    <td th:if="${myAuctList.prchsPrc != 0}"
-                                        th:text="${myAuctList.prchsPrc}"></td>
-                                    <td th:if="${myAuctList.prchsPrc == 0}"></td>
-                                    <td th:text="${#dates.format(myAuctList.prchsYmd, 'yyyy/MM/dd')}"></td>
-                                    <td><a th:href="@{/goguma/auctSelect/{myAuctList}(myAuctList = ${myAuctList.auctNo})}">이동</a></td>
-                                    <td><a href="#">삭제</a></td>
-                                </tr>
+                                <th:block th:if="${#lists.isEmpty(myAuctList)}">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center;">입찰하신 상품이 없습니다.</td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${not #lists.isEmpty(myAuctList)}">
+                                    <tr th:each="myAuctList:${myAuctList}"
+                                        onmouseover='this.style.background="#fcecae";'
+                                        onmouseleave='this.style.background="#FFFFFF";'
+                                        >
+                                        <td th:text="${myAuctList.auctNo}" style="width: auto;;"></td>
+                                        <td th:text="${#dates.format(myAuctList.ddlnYmd, 'yyyy/MM/dd')}"></td>
+                                        <td th:text="${myAuctList.auctTtl}"></td>
+                                        <th:block th:switch="${myAuctList.stts}">
+                                            <td th:case="1">경매가 진행중입니다.</td>
+                                            <td th:case="2">경매가 종료되었습니다.</td>
+                                            <td th:case="3">유찰되었습니다.</td>
+                                            <td th:case="*">경매가 진행중입니다.</td>
+                                        </th:block>
+                                        <td th:text="${myAuctList.inqCnt}"></td>
+                                        <td th:text="${myAuctList.prchsId}"></td>
+                                        <td th:if="${myAuctList.prchsPrc != 0}"
+                                            th:text="${myAuctList.prchsPrc}"></td>
+                                        <td th:if="${myAuctList.prchsPrc == 0}"></td>
+                                        <td th:text="${#dates.format(myAuctList.prchsYmd, 'yyyy/MM/dd')}"></td>
+                                        <td><a th:href="@{/goguma/auctSelect/{myAuctList}(myAuctList = ${myAuctList.auctNo})}">이동</a></td>
+                                        <!-- <td><a th:href="@{/my/auctDelete/{myAuctList}(myAuctList = ${myAuctList.auctNo})}">삭제</a></td> -->
+                                    </tr>
+                                </th:block>
                             </tbody>
                         </table>
                     </div>
             </div>
         </section>
     </div>
+
+    <script th:inline="javascript">
+        
+        
+    </script>
 </body>
 
 </html>

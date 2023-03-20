@@ -212,7 +212,8 @@
 																		<h6 class="media-heading">
 																			<a href="#" th:text="${menu.menuNm}">(메뉴명)</a>
 																		</h6>
-																		<p class="mb-10" th:text="${menu.menuPrc}">(가격)</p>
+																		<p class="mb-10" th:text="${#numbers.formatInteger(menu.menuPrc, 3, 'COMMA') + '원'}">(가격)</p>
+																		
 																	</div>
 																</div>
 																<p class="mb-0" th:text="${menu.menuCn}">(메뉴설명)</p>

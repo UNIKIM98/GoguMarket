@@ -6,6 +6,7 @@
 		select * 
 		from biz_menu
 		where biz_no = #{bizNo}
+		order by menu_prc
 	</select>
 	<!-- 메뉴 하나 선택 -->
 	<select id="selectBizMenuOne" parameterType="int" resultType="com.goguma.rsvt.vo.BizMenuVO">
