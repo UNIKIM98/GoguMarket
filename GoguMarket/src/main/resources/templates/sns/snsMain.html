@@ -91,13 +91,12 @@ textarea {
 		<!-- writeFormModal -->
 		<div id="myModal" class="modal">
 			<!-- Modal content -->
-			<div class="modal-content" style="width: 350px;">
-				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
-					<button class="close1" onclick=""
-						style="color: black; padding: 10px;">x</button>
+			<div class="modal-content" style="width: 500px;">
+				<div class="modal-body" style="padding: 20px; height: 350px; margin-bottom: 5px;">
+					<button class="close1" onclick="" style="color: black; padding: 10px;">x</button>
+					 <img id="preview" style="width: 100%;"
+						onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 
-					<img id="preview" style="width: 100%; height: 350px; margin-left: 20%;" /> <label
-						for="files"> <img src="/img/logo/003.png" style="width: 100%; height: 350px;" /></label>
 
 
 				</div>
@@ -108,7 +107,7 @@ textarea {
 							<div class="banner-item banner-3">
 
 								<input type="file" name="files" id="files" placeholder="첨부파일"
-									multiple="multiple" onchange="readURL(this);">
+									multiple="multiple" onchange="readURL(this);" style="width:100%;">
 								<!-- atch -->
 
 							</div>
@@ -132,9 +131,7 @@ textarea {
 					<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
 				</form>
 			</div>
-			<div class="modal-footer" style="background-color: #000000;">
-				&nbsp;</div>
-		</div>
+			
 		</div>
 		<!-- writeForm -->
 		<!-- 개인 Sns -->
