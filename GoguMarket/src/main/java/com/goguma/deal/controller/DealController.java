@@ -255,7 +255,7 @@ public class DealController {
 	// ===========================
 	// ▷ 판매상품 단건조회
 	@RequestMapping("/goguma/dealdetail/{dlNo}")
-	public String getDeal(@PathVariable int dlNo, Model model, Paging paging, DealSearchVO svo) {
+	public String getDeal(@PathVariable int dlNo, Model model, Paging paging, DealSearchVO svo,MemVO mvo) {
 		// 페이징 하기위한 재료들 svo에 담는다
 		DealVO vo = dealService.selectDeal(dlNo);
 		
@@ -274,6 +274,8 @@ public class DealController {
 		
 		model.addAttribute("profile", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
 		System.out.println(dealService.selectNtslDeal(svo)+"vmfhvlffff");
+//		model.addAttribute("prof", dealService.selectPrchsDeal(dlNo));
+//		System.out.println(dealService.selectPrchsDeal(dlNo)+"프로필정보");
 		
 		model.addAttribute("category", codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는
 		// common_detail_code만 들고오면됨
@@ -445,8 +447,6 @@ public class DealController {
 		System.out.println(rvo+"rvoooooo");
 		
 		model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
-		
-		
 		
 		svo.setNtslId(ntslId);
 		
