@@ -87,7 +87,20 @@ td {
 
 			</div>
 		</div>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 		<script th:inline="javascript">
+			var link ='/goguma/snsMain';
+		
+		function goMySns(){ //sns page로 이동
+			alert('여기까진옴')
+			
+			 confirmMessage = confirm("당신의 동내생활로 가겠습니까?");
+			 if (confirmMessage) {
+					location.href = link;
+				}
+			    
+			}
+	
 		
 		
 		btn = $("<button>").attr({
@@ -155,22 +168,7 @@ td {
 			}
 			
 			
-			function goMySns(){ //sns page로 이동
-				
-				var link ='/goguma/snsMain';
-				
-				 confirmMessage = confirm("당신의 동내생활로 가겠습니까?");
-				if(result){
-					location.href = link;
-				}else{
-				    
-				}
-				
-				
-				
-				
-				
-			}
+			
 		</script>
 	</div>
 
