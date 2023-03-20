@@ -36,7 +36,7 @@
 				<div class="about-section mb-80">
 				<div class="container">
 					<div class="message-box box-shadow white-bg"
-						style="height: 1000px; width: 80%">
+						style="height: auto; width: 100%">
 						<!--▶ 우리동네 select -->
 						<div class="row" id="myAreaNow">
 							<div class="section-title text-start ">
@@ -53,14 +53,16 @@
 													</ul>
 												</div>
 												<div class="row">
-													<div class="col-md-6">
+													<div class="col-md-12">
 														<div class="payment-details p-30">
 															<h6 class="widget-title border-left mb-20"
 																style="display: inline-block;">포인트상세정보</h6>
 																<h6>마이포인트 페이지로 이동합니다</h6>
+																<div class="d-flex justify-content-center">
 															<button class="submit-btn-1 btn-hover-1"
-																style="float: right; border-radius: 20px; height: 30px"
+																style="border-radius: 20px; height: 30px"
 																onclick="point()">마이포인트</button>
+																</div>
 															<table class="saveTable">
 															</table>
 														</div>
@@ -90,7 +92,6 @@
 					
 									<div class="tab-content">
 										<div th:each="deal : ${dealList}" role="tabpanel" class="tab-pane active show" id="description">
-											<p th:text="${deal.NTSL_ID}+'님이 판매중인 물품 내역이랍니다'"></p>
 											<!-- ■■■■■■끌올하려고 폼으로 감싸기 -->
 											<form id="updateFrm" method="post">
 												<input type="hidden" name="page" value="1">
@@ -100,7 +101,7 @@
 														<div class="media mt-30" th:if="${dealList}!=null" >
 															<div class="media-left">
 																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" style="width: 80px; height: 75px;"/></a>
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" style="width: 80px; height: 75px;" onerror="this.onerror=null; this.src='/img/logo/001.png'" /></a>
 																
 															</div>
 															<div class="media-body">
@@ -113,7 +114,8 @@
 																	</div>
 																	<div class="f-right">
 																		<ul class="reply-delate">
-																			<li><a th:text=${deal.DL_PRC}>가격</a></li>
+																			<li><a th:text="${#numbers.formatInteger(deal.DL_PRC, 3, 'COMMA') + '원'}" th:if="${deal.DL_PRC} != 0">가격</a></li>
+																			<li style="color:#C04A82;"><a th:if="${deal.DL_PRC} == 0">무료나눔</a></li>
 									
 																		</ul>
 																	</div>
@@ -123,7 +125,7 @@
 																	<input type="hidden" name="dlNo" id="dlNo" th:value="${deal.DL_NO}">
 																		<input
 																				class="submit-btn-1 mt-30 btn-hover-1" type="submit"
-																				id="btnSave" role="button" value="끌어올리기">
+																				id="btnSave" role="button" value="끌어올리기" style="border-radius: 20px;">
 																</ul>
 															</div>
 														</div>
@@ -142,20 +144,22 @@
 												<form id="" method="post">
 													<input type="hidden" name="page" value="1">
 													<input type="hidden" name="tabName" value="soldout">
-													<p>판매 완료 리스트가 들어갈 자리입니다</p>
 													<!-- reviews-tab-desc -->
 													<div class="featured-product" >
 														<div class="active-featured-product slick-arrow-2" >
-															<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'"></div>
+															<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'" style="text-align:center;"></div>
 															<div class="product-item" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
-																<div class="product-img" style="height:150px">
+																<div class="product-img">
+																	<div style="text-align : center;">
 																	<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																		<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/></a>
+																		<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" onerror="this.onerror=null; this.src='/img/logo/001.png'" style="width:50%;"/></a>
+																		</div>
 																</div>
 																<div class="product-info">
 																	<h6 class="product-title"
 																		th:text="${deal.DL_TTL}">상품명</h6>
-																	<h3 class="pro-price" th:text="${deal.DL_PRC}">가격</h3>
+																	<h3 class="pro-price" th:text="${#numbers.formatInteger(deal.DL_PRC, 3, 'COMMA') + '원'}" th:if="${deal.DL_PRC} != 0">가격</h3>
+																	<h3 style="color:#C04A82;" class="pro-price"th:if="${deal.DL_PRC} == 0">무료나눔</h3>
 																</div>
 															</div>
 														</div>
@@ -170,11 +174,10 @@
 												</form>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="prchs">
-												<p>구매 완료 리스트가 들어갈 자리입니다</p>
 												<!-- reviews-tab-desc -->
 												<div class="featured-product" >
 													<div class="active-featured-product slick-arrow-2" >
-														<div  th:if="${#lists.isEmpty(buyList)}" th:text="'구매완료 내역이 없습니다'"></div>
+														<div  th:if="${#lists.isEmpty(buyList)}" th:text="'구매완료 내역이 없습니다'"  style="text-align:center;"></div>
 														<div class="product-item" th:if="${buyList}!=null" th:each="deal : ${buyList}">
 															<div class="product-img" style="height:150px">
 																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">

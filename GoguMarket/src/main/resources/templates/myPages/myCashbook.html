@@ -22,9 +22,9 @@
 				<div class="col-lg-4 order-complete-content box-shadow" th:each="cs : ${cashSell}">
 				<br>
 				<h3 style="color: #C04A82; font-weight: bold;" class="blog-section-title border-left mb-30">2023년 <span th:text="${cs.MONTH}+'월'"></span> 거래판매내역</h3>
-					<div class="order-info p-30 mb-10">
+					<div class="order-info p-30 mb-10" style="border:0;">
 						<ul class="order-info-list">
-							<li><a class="totalP" href='javascript:void(0);'
+							<li style="border:0;"><a class="totalP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">판매 건수</a>
 								<p>
 									총 <span th:text="${cs.CNT}" class="totalPTrgt"
@@ -32,14 +32,14 @@
 								</p></li>
 							
 								<br>
-								<li><a class="attendP" href='javascript:void(0);'
+								<li style="border:0;"><a class="attendP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">나눔 해준 횟수</a>
 								<p>
 									<span th:text="${cs.NCNT}" class="attendPTrgt"
 									style="color: #C04A82; font-weight: bold;">0</span>건
 								</p></li>
 								<br>
-								<li><a class="attendP" href='javascript:void(0);'
+								<li style="border:0;"><a class="attendP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">판매액</a>
 								<p>
 									<span th:text="${cs.TOTALPRC}" class="attendPTrgt"
@@ -64,24 +64,24 @@
 				<div class="col-lg-4 order-complete-content box-shadow" th:each="cb : ${cashBuy}">
 				<br>
 				<h3 style="color: #FCD052; font-weight: bold;" class="blog-section-title border-left mb-30">2023년 <span th:text="${cb.MONTH}+'월'"></span> 거래구매내역</h3>
-					<div class="order-info p-30 mb-10">
+					<div class="order-info p-30 mb-10" style="border:0;">
 						<ul class="order-info-list">
 							
-							<li><a class="attendP" href='javascript:void(0);'
+							<li style="border:0;"><a class="attendP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">구매 건수</a>
 								<p>
 									총<span th:text="${cb.CNT}" class="attendPTrgt"
 										style="color: #FCD052; font-weight: bold;">0</span>건
 								</p></li>
 								<br>
-								<li><a class="attendP" href='javascript:void(0);'
+								<li style="border:0;"><a class="attendP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">나눔 받은 횟수</a>
 								<p>
 									<span th:text="${cb.NCNT}"class="attendPTrgt"
 									style="color: #FCD052; font-weight: bold;">0</span>건
 								</p></li>
 							
-								<li><a class="attendP" href='javascript:void(0);'
+								<li style="border:0;"><a class="attendP" href='javascript:void(0);'
 								onclick="criteriaPoint(event);">구매액</a>
 								<p>
 									<span th:text="${cb.TOTALPRC}" class="attendPTrgt"

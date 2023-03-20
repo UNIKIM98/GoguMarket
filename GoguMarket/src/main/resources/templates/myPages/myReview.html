@@ -54,7 +54,6 @@
 									<hr>
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active show" id="description">
-											<p>받은리뷰리스트</p>
 											<form name="frmSearch" align="center">
 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
 	                                       			</div>  
@@ -93,7 +92,6 @@
 												</form>
 										</div>
 											<div role="tabpanel" class="tab-pane" id="soldout">
-												<p>보낸 리뷰</p>
 												<!-- reviews-tab-desc -->
 												<form name="frmSearch" align="center">
 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
@@ -133,7 +131,6 @@
 												</form>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="prchs">
-												<p>안쓴리뷰</p>
 												<!-- reviews-tab-desc -->
 												<form name="frmSearch" align="center">
 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
