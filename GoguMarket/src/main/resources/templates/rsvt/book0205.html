@@ -113,7 +113,7 @@
 																			<a th:if="${biz.bizNo} == ${imgDetail.bizNo}"
 																				th:data-image="${imgDetail.atchPath}"
 																				th:data-zoom-image="${imgDetail.atchPath}"> <img
-																				class="zoom_03" th:src="${imgDetail.atchPath}"
+																				class="zoom_03" th:src="${imgDetail.atchPath}" onerror="this.onerror=null; this.src='/img/logo/001.png'" 
 																				alt="">
 																			</a>
 																		</div>
