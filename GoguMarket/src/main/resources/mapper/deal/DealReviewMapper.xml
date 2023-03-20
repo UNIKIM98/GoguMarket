@@ -29,7 +29,14 @@
 			        WHERE dl_no IN (
 			            SELECT dl_no
 			            FROM deal
-			            WHERE ntsl_id = #{ntslId}
+			           <where>
+				            <if test ="userId != null">
+				             user_id = #{userId}
+				             </if>
+				             <if test ="prchsId != null">
+				             prchs_id = #{prchsId}
+				             </if>
+		               </where>
 			        )
 			<![CDATA[
 			    ) a WHERE ROWNUM <= #{last}) b WHERE rn >= #{first}

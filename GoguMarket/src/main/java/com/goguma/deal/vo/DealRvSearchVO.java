@@ -15,6 +15,6 @@ public class DealRvSearchVO extends DealReviewVO{
 	String searchType;
 
 	String ntslId;
-
+	String prchsId;
 
 }

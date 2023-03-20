@@ -47,30 +47,27 @@
 								<!-- 받은리뷰 / 보낸리뷰 / 구매내역 탭 시작 -->
 								<div class="single-product-tab reviews-tab">
 									<ul class="nav nav-tabs mb-20">
-										<li class="nav-item"><a class="nav-link active" href="#description" data-bs-toggle="tab" role="tab" data-bs-target="#description">받은리뷰</a></li>
-										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#soldout">보낸리뷰</a></li>
+										<li class="nav-item"><a class="nav-link active" href="#description" data-bs-toggle="tab" role="tab" data-bs-target="#description">보낸리뷰</a></li>
+										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#soldout">받은리뷰</a></li>
 										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#prchs">안쓴리뷰</a></li>
 									</ul>
 									<hr>
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active show" id="description">
 											<form name="frmSearch" align="center">
-													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
-	                                       			</div>  
-													<div align="center" th:if="${#lists.isEmpty(reviews)}" th:text="'판매자님에게 남긴 후기가 없습니다'"></div>
-													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
-	                                       			</div>  
 													<input type="hidden" name="page" value="1">
 													<input type="hidden" name="tabName" value="reviews">
 													<div class="media mt-30" th:each="r: ${review}">
 														<div class="media-left">
 															<a href="#"><img class="media-object" src="img/author/1.jpg"
-																	alt="#"></a>
+																	alt="#"
+																	onerror="this.onerror=null; this.src='/img/logo/001.png'" 
+																	style="height:50px; width:50px;"></a>
 														</div>
 														<div class="media-body">
 															<div class="clearfix">
 																<div class="name-commenter f-left">
-																	<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리
+																	<h6 class="media-heading" th:text="${r.USER_ID}">판매자아이디자리
 																	</h6>
 																	<p class="mb-10" th:text="${r.RV_YMD}"></p>
 																</div>
@@ -91,84 +88,84 @@
 													</div>
 												</form>
 										</div>
-											<div role="tabpanel" class="tab-pane" id="soldout">
-												<!-- reviews-tab-desc -->
-												<form name="frmSearch" align="center">
-													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
-	                                       			</div>  
-													<div align="center" th:if="${#lists.isEmpty(reviews)}" th:text="'판매자님에게 남긴 후기가 없습니다'"></div>
-													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
-	                                       			</div>  
-													<input type="hidden" name="page" value="1">
-													<input type="hidden" name="tabName" value="reviews">
-													<div class="media mt-30" th:each="r: ${review}">
-														<div class="media-left">
-															<a href="#"><img class="media-object" src="img/author/1.jpg"
-																	alt="#"></a>
-														</div>
-														<div class="media-body">
-															<div class="clearfix">
-																<div class="name-commenter f-left">
-																	<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리
-																	</h6>
-																	<p class="mb-10" th:text="${r.RV_YMD}"></p>
-																</div>
-																&nbsp;&nbsp;&nbsp;
-																<div class="f-right">
+<!-- 											<div role="tabpanel" class="tab-pane" id="soldout"> -->
+<!-- 												reviews-tab-desc -->
+<!-- 												<form name="frmSearch" align="center"> -->
+<!-- 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center"> -->
+<!-- 	                                       			</div>   -->
+<!-- 													<div align="center" th:if="${#lists.isEmpty(reviews)}" th:text="'판매자님에게 남긴 후기가 없습니다'"></div> -->
+<!-- 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center"> -->
+<!-- 	                                       			</div>   -->
+<!-- 													<input type="hidden" name="page" value="1"> -->
+<!-- 													<input type="hidden" name="tabName" value="reviews"> -->
+<!-- 													<div class="media mt-30" th:each="r: ${review}"> -->
+<!-- 														<div class="media-left"> -->
+<!-- 															<a href="#"><img class="media-object" src="img/author/1.jpg" -->
+<!-- 																	alt="#"></a> -->
+<!-- 														</div> -->
+<!-- 														<div class="media-body"> -->
+<!-- 															<div class="clearfix"> -->
+<!-- 																<div class="name-commenter f-left"> -->
+<!-- 																	<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리 -->
+<!-- 																	</h6> -->
+<!-- 																	<p class="mb-10" th:text="${r.RV_YMD}"></p> -->
+<!-- 																</div> -->
+<!-- 																&nbsp;&nbsp;&nbsp; -->
+<!-- 																<div class="f-right"> -->
 																	
-																</div>
-															</div>
-															<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p>
-														</div>
-													</div>
-													 <!-- 페이지번호관련  -->
-													<div align="center">
-														<a
-															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-															th:href="|javascript:gopage(${num})|"
-															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-													</div>
-												</form>
-											</div>
-											<div role="tabpanel" class="tab-pane" id="prchs">
-												<!-- reviews-tab-desc -->
-												<form name="frmSearch" align="center">
-													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
-	                                       			</div>  
-													<div align="center" th:if="${#lists.isEmpty(reviews)}" th:text="'판매자님에게 남긴 후기가 없습니다'"></div>
-													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center">
-	                                       			</div>  
-													<input type="hidden" name="page" value="1">
-													<input type="hidden" name="tabName" value="reviews">
-													<div class="media mt-30" th:each="r: ${review}">
-														<div class="media-left">
-															<a href="#"><img class="media-object" src="img/author/1.jpg"
-																	alt="#"></a>
-														</div>
-														<div class="media-body">
-															<div class="clearfix">
-																<div class="name-commenter f-left">
-																	<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리
-																	</h6>
-																	<p class="mb-10" th:text="${r.RV_YMD}"></p>
-																</div>
-																&nbsp;&nbsp;&nbsp;
-																<div class="f-right">
+<!-- 																</div> -->
+<!-- 															</div> -->
+<!-- 															<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 													 페이지번호관련  -->
+<!-- 													<div align="center"> -->
+<!-- 														<a -->
+<!-- 															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" -->
+<!-- 															th:href="|javascript:gopage(${num})|" -->
+<!-- 															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a> -->
+<!-- 													</div> -->
+<!-- 												</form> -->
+<!-- 											</div> -->
+<!-- 											<div role="tabpanel" class="tab-pane" id="prchs"> -->
+<!-- 												reviews-tab-desc -->
+<!-- 												<form name="frmSearch" align="center"> -->
+<!-- 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center"> -->
+<!-- 	                                       			</div>   -->
+<!-- 													<div align="center" th:if="${#lists.isEmpty(reviews)}" th:text="'판매자님에게 남긴 후기가 없습니다'"></div> -->
+<!-- 													<div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:100px;" align="center"> -->
+<!-- 	                                       			</div>   -->
+<!-- 													<input type="hidden" name="page" value="1"> -->
+<!-- 													<input type="hidden" name="tabName" value="reviews"> -->
+<!-- 													<div class="media mt-30" th:each="r: ${review}"> -->
+<!-- 														<div class="media-left"> -->
+<!-- 															<a href="#"><img class="media-object" src="img/author/1.jpg" -->
+<!-- 																	alt="#"></a> -->
+<!-- 														</div> -->
+<!-- 														<div class="media-body"> -->
+<!-- 															<div class="clearfix"> -->
+<!-- 																<div class="name-commenter f-left"> -->
+<!-- 																	<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리 -->
+<!-- 																	</h6> -->
+<!-- 																	<p class="mb-10" th:text="${r.RV_YMD}"></p> -->
+<!-- 																</div> -->
+<!-- 																&nbsp;&nbsp;&nbsp; -->
+<!-- 																<div class="f-right"> -->
 																	
-																</div>
-															</div>
-															<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p>
-														</div>
-													</div>
-													 <!-- 페이지번호관련  -->
-													<div align="center">
-														<a
-															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-															th:href="|javascript:gopage(${num})|"
-															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-													</div>
-												</form>
-											</div>
+<!-- 																</div> -->
+<!-- 															</div> -->
+<!-- 															<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 													 페이지번호관련  -->
+<!-- 													<div align="center"> -->
+<!-- 														<a -->
+<!-- 															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" -->
+<!-- 															th:href="|javascript:gopage(${num})|" -->
+<!-- 															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a> -->
+<!-- 													</div> -->
+<!-- 												</form> -->
+<!-- 											</div> -->
 									</div>
 
 									 	
