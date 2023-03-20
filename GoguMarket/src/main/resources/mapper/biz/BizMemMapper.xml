@@ -38,11 +38,11 @@
 
 	<insert id="bizInsert" parameterType="com.goguma.biz.vo.BizMemVO">
 			<selectKey keyProperty="bizNo" resultType="String" order="BEFORE">
-				SELECT CONCAT('BN',LPAD(NVL(MAX(SUBSTR(BIZ_NO,3)),0)+1,3,0)) AS BIZ_NO
+				SELECT CONCAT('bn',LPAD(NVL(MAX(SUBSTR(BIZ_NO,3)),0)+1,3,0)) AS BIZ_NO
 				FROM BIZ_MEM
 			</selectKey>
-		INSERT INTO BIZ_MEM (BIZ_NO,USER_ID,BIZ_NM,BIZ_ADDR,BIZ_ADDR_DETAIL,BIZ_TEL,BR_NO,PROF_ATCH_ID)
-		VALUES (#{bizNo},#{userId},#{bizNm},#{bizAddr},#{bizAddrDetail},#{bizTel},#{brNo},#{profAtchId})
+		INSERT INTO BIZ_MEM (BIZ_NO,USER_ID,BIZ_NM,BIZ_ADDR,BIZ_ADDR_DETAIL,BIZ_TEL,BR_NO,PROF_ATCH_ID, CTGRY)
+		VALUES (#{bizNo},#{userId},#{bizNm},#{bizAddr},#{bizAddrDetail},#{bizTel},#{brNo},#{profAtchId}, '한식')
 	</insert>
 
 	<update id="updateBizMem">

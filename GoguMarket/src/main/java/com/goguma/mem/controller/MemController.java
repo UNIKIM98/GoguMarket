@@ -34,10 +34,10 @@ public class MemController {
 	@Autowired
 	AtchService atchService;
 
-	@GetMapping("/myPageTest")
-	public String myPageTest() {
-		return "myPages/test";
-	}
+//	@GetMapping("/myPageTest")
+//	public String myPageTest() {
+//		return "myPages/test";
+//	}
 
 	// ===========================================================
 	// ❤️ 회원 로그인
