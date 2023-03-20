@@ -9,8 +9,8 @@
 				     FROM ATCH
 				     WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1) AS ATCH_NM,
 		             
-				    (SELECT COUNT(AUCT_NO) AS COUNT
-				     FROM AUCT_MEM
+				    (SELECT COUNT(DISTINCT user_id) as COUNT
+                     FROM auct_mem
 				     WHERE AUCT_NO = a.auct_no) AS COUNT,
 		             
 		            (SELECT (TRUNC(DDLN_YMD) - TRUNC(SYSDATE))

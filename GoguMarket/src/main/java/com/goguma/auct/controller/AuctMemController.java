@@ -47,10 +47,12 @@ public class AuctMemController {
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
 		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
-		List<AuctVO> myAuctList = auctService.selectUserId(userId); // userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
 		
 		model.addAttribute("mybidList",mybidList);
-		model.addAttribute("myAuctList",myAuctList);
+		
+		
+//		List<AuctVO> myAuctList = auctService.selectUserId(userId); // userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
+//		model.addAttribute("myAuctList",myAuctList);
 		return "auction/bidAuction";
 		
 	}

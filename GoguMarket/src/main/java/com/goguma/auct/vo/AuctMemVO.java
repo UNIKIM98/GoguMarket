@@ -18,6 +18,7 @@ public class AuctMemVO {
 	private Date auctYmd;		// 입찰일자
 	private int nowPrc;			// 현재입찰가
 	private int pntCnt;			// 패널티
+	private String auctTtl;		// 경매품이름
 }
 //CREATE TABLE `AUCT_MEM` (
 //		`AUCT_MEM_NO`	VARCHAR2(25)	NOT NULL,

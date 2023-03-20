@@ -17,9 +17,6 @@
         <section id="page-content" class="page-wrapper section">
             <div class="message-box box-shadow white-bg">
                 <div class="container">
-                    <div class="section-title text-start mb-20" >
-                        <h2 class="uppercase">입찰 전체조회 페이지</h2>
-                    <div>
                         <h4 class="blog-section-title border-left mb-30">입찰하신 상품 목록</h4>
                     </div>
                         <table class="table" border="1">
@@ -39,10 +36,11 @@
                                 <tr th:each="mybidList:${mybidList}"
                                     onmouseover='this.style.background="#fcecae";'
                                     onmouseleave='this.style.background="#FFFFFF";'
+                                    style="text-align: center;"
                                     >
                                     <td th:text="${mybidList.auctMemNo}"></td>
                                     <td th:text="${mybidList.userId}"></td>
-                                    <td th:text="${mybidList.auctNo}"></td>
+                                    <td th:text="${mybidList.auctTtl}"></td>
                                     <td th:text="${#dates.format(mybidList.auctYmd, 'yyyy/MM/dd')}"></td>
                                     <td th:text="${mybidList.nowPrc}"></td>
                                     <td><a th:href="@{/goguma/auctSelect/{mybidList}(mybidList = ${mybidList.auctNo})}">이동</a></td>
