@@ -120,7 +120,7 @@
 	<!-- 가게 상세 파일 -->
 	<select id="bizDetailImg"
 		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT b.biz_no, b.atch_id, a.*
+		SELECT b.biz_no, a.*
 		FROM biz_mem b RIGHT JOIN atch a
 		ON b.atch_id = a.atch_id
 		WHERE b.biz_no = #{bizNo}

@@ -150,11 +150,11 @@
 									<!-- Nav tabs -->
 									<ul class="nav">
 										<li><a class="active" href="#chicken-biz"
-											data-bs-toggle="tab">치킨</a></li>
+											data-bs-toggle="tab">카페</a></li>
 										<li><a href="#korean-biz" data-bs-toggle="tab">한식</a></li>
 										<li><a href="#western-biz" data-bs-toggle="tab">양식</a></li>
 										<li><a href="#chinese-biz" data-bs-toggle="tab">중식</a></li>
-										<li><a href="#cafe-biz" data-bs-toggle="tab">카페</a></li>
+										<li><a href="#cafe-biz" data-bs-toggle="tab">치킨</a></li>
 									</ul>
 								</div>
 							</div>
@@ -166,7 +166,7 @@
 										<div class="row">
 											<!-- product-item start -->
 											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
-												th:if="${b.CTGRY}=='치킨'">
+												th:if="${b.CTGRY}=='카페'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
 														<a
@@ -328,7 +328,7 @@
 									<div id="cafe-biz" class="tab-pane" role="tabpanel">
 										<div class="row">
 											<div class="col-lg-3 col-md-4" th:each="b : ${biz}"
-												th:if="${b.CTGRY}=='카페'">
+												th:if="${b.CTGRY}=='치킨'">
 												<div class="product-item product-item-2">
 													<div class="product-img">
 														<a
