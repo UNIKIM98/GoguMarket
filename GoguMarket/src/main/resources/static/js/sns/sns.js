@@ -179,6 +179,7 @@ function SelectCmntlist(snsNo) {
 								$(obj).addClass("set");
 								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem);
 								$(obj).find("#rrpContent").attr("id", "rrpContent" + item.cmntNo);
+								$(obj).find("#rrpAtchPath").attr("src",item.atchPath);
 								$(obj).find("#rrpGroupNo").val(item.groupNo);
 								$(obj).find("#rrpCmntNo").val(item.cmntNo);
 								$(obj).find("#rrpSnsNo").val(item.snsNo);
@@ -211,6 +212,7 @@ function SelectCmntlist(snsNo) {
 							if ($(obj).hasClass("set") == false) {
 								$(obj).addClass("set");
 								$(obj).addClass("numbering" + forCnt);
+								$(obj).find("#rpAtchPath").attr("src",item.atchPath);
 								$(obj).find("#rpGroupNo").val(item.groupNo);
 								$(obj).find("#rpCmntNo").val(item.cmntNo);
 								$(obj).find("#rpSnsNo").val(item.snsNo);
@@ -384,7 +386,7 @@ function replyEditForm(rpCmntNo, rpSnsNo, rpGroupNo, rpCmntCn) {
 
 
 	$('#cmntCn' + rpCmntNo).remove();
-	$("#replyGroup" + rpCmntNo).append(`<textarea class="form-control" id="cmntCn" name="cmntCn">${rpCmntCn}</textarea>`);
+	$("#replyGroup" + rpCmntNo).append(`<textarea class="custom-textarea" id="cmntCn" name="cmntCn">${rpCmntCn}</textarea>`);
 
 	event.currentTarget.remove();
 	$(button).append(`<input type="submit" class="btn btn-dark mt-3 f-left"
@@ -409,7 +411,7 @@ function rreplyEditForm(rrpCmntNo, rrpSnsNo) { //답글 수정폼 생성
 	let cn = $('#rrpContent' + rrpCmntNo + ' #cmntCn').text()
 	$('#rrpContent' + rrpCmntNo + ' #cmntCn').remove();
 
-	$("#rrpContent" + rrpCmntNo).append(`<textarea class="form-control" id="cmntCn1" name="cmntCn">${cn}</textarea>`);
+	$("#rrpContent" + rrpCmntNo).append(`<textarea class="custom-textarea" id="cmntCn1" name="cmntCn">${cn}</textarea>`);
 
 	let button = event.currentTarget.parentNode;
 

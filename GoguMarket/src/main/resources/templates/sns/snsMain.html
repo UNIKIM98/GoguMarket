@@ -39,7 +39,7 @@ textarea {
 							<div class="section-title text-start mb-20">
 								<h2 class="uppercase">동네 생활</h2>
 
-								<h6>당신의 마을을 나에게 소개해주세요</h6>
+								<h6>당신의 <strong style="color: #c04a86;">마을</strong>을 나에게 소개해주세요</h6>
 
 								<form id="searchForm" action="#" style="margin-left: 30%;">
 									<div class="subcribe clearfix f-left" style="width: 60%">
@@ -247,7 +247,7 @@ textarea {
 						  for(sns of result){
 							  $("#list").append(`
 									  <div class="col-lg-4 col-md-6">
-			                            <div class="blog-item" onclick="snsModal(${sns.snsNo})">
+			                            <div class="blog-item" onclick="snsModal(${sns.snsNo})" style="height:350px; width:350px;">
 			                                <img src="${sns.atchPath}" alt="" onerror="this.onerror=null; this.src='/img/logo/003.png'">
 			                                <div class="blog-desc">
 											<h5 class="blog-title">

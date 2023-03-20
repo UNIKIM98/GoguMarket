@@ -28,21 +28,20 @@ public class SnsController {
 
 		return "sns/snsMain";
 	}
-
-	@GetMapping("/my/mySns")
-	public String mySns(Model model,HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		
-		String userId = (String)session.getAttribute("userId");
-		
-		System.out.println(userId);
-		
-		model.addAttribute("list", service.selectPerSns(userId));
 	
+	@GetMapping("/my/mySns")
+	public String mySns() {
 
 		return "myPages/mySns";
 	}
+	
+	@GetMapping("/my/myReply")
+	public String myReply() {
+
+		return "myPages/myReply";
+	}
+
+	
 	
 	
 	
