@@ -105,21 +105,21 @@
 					<div class="table-responsive">
 					<div id="alarm"></div>
 						<table class="table table-bordered" id="" width="100%"
-							cellspacing="0" style="text-align: center">
+							cellspacing="0" style="text-align: center; font-size:small;">
 							<thead>
 								<tr>
-									<th>글번호</th>
-									<th>판매자</th>
-									<th>구매자</th>
-									<th>카테고리코드</th>
-									<th>등록일</th>
+									<th width="63px;">글번호</th>
+									<th width="88px;">판매자</th>
+									<th width="88px;">구매자</th>
+									<th width="75px;" style="word-break:break-all;">카테고리 코드</th>
+									<th width="110px;">등록일</th>
 									<th>제목</th>
 									<th>내용</th>
 									<th>가격</th>
-									<th>거래상태</th>
+									<th style="word-break:break-all;">거래상태</th>
 									<th>조회수</th>
-									<th>첨부파일아이디</th>
-									<th>상세조회</th>
+									<th width="80px;" style="word-break:break-all;">첨부파일아이디</th>
+									<th width="80px;">상세조회</th>
 <!-- 									<th>삭제</th> -->
 								</tr>
 							</thead>
@@ -129,13 +129,15 @@
 									onmouseover='this.style.background="#fcecae";'
 									onmouseleave='this.style.background="#FFFFFF";'>
 									<td th:text="${deal.dlNo}"></td>
-									<td th:text="${deal.ntslId}"></td>
-									<td th:text="${deal.prchsId}"></td>
+									<td th:text="${deal.ntslId}"  style="word-break:break-all;"></td>
+									<td th:text="${deal.prchsId}"  style="word-break:break-all;"></td>
 									<td th:text="${deal.ctgry}"></td>
-									<td th:text="${#dates.format(deal.dlYmd)}"></td>
-									<td th:text="${deal.dlTtl}"></td>
-									<td th:text="${deal.dlCn}"></td>
-									<td th:text="${deal.dlPrc}"></td>
+									<td th:text="${#dates.format(deal.dlYmd, 'yyyy-MM-dd')}"></td>
+<!-- 									th:text="${#dates.format(sim.RSVT_YMD, 'yyyy-MM-dd')}" -->
+									<td th:text="${deal.dlTtl}" style="word-break:break-all;"></td>
+									<td th:text="${deal.dlCn}"  style="word-break:break-all;"></td>
+									<td th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" th:if="${deal.dlPrc} !=0"></td>
+									<td th:if="${deal.dlPrc} ==0">무료나눔</td>
 									<td th:text="${deal.stts}"></td>
 									<td th:text="${deal.inqCnt}"></td>
 									<td th:text="${deal.atchId}"></td>
@@ -143,7 +145,7 @@
 										<button 
 										th:onclick="|location.href='@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}'|"
 										type="button" class="btn btn-primary"
-								style="height: 25px; line-height: 15px">조회</button>
+								style="height: 25px; line-height: 15px; font-size:small;">조회</button>
 										
 									</td>
 								</tr>
