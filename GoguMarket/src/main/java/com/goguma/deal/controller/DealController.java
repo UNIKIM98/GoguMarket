@@ -93,8 +93,6 @@ public class DealController {
 		svo.setStts("판매완료");
 		model.addAttribute("dealsold", dealService.selectNtslDeal(svo)); // 판매완료 내역
 
-		System.out.println(dealService.selectNtslDeal(svo)+"판완내역");
-
 		svo.setPrchsId(userId);
 		svo.setNtslId(null);
 
@@ -146,8 +144,6 @@ public class DealController {
 		rvo.setLast(paging.getLast()); //
 
 		paging.setTotalRecord(rvService.getcountTotal(rvo));
-		System.out.println(rvService.getcountTotal(rvo) + "rvoooo잘나오냐?");// ㅇㅇ4건잘나옴
-		System.out.println(rvo + "rvoooooo");
 
 		model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
 
@@ -208,9 +204,7 @@ public class DealController {
 		// 매퍼에 보낼 서치보생성
 		SearchVO sVO = new SearchVO();
 		sVO.setSearchTtl(keyword);
-		System.out.println("매퍼에 보내는 sVO=====" + sVO);
 		int cnt = searchService.deleteWord(sVO);
-		System.out.println(cnt);
 		return cnt;
 	}
 	// ▶ 관리자 완료용 실검 인서트?업데이트?
@@ -267,16 +261,11 @@ public class DealController {
 		svo.setLast(paging.getLast());
 
 		svo.setNtslId(vo.getNtslId());
-		System.out.println(svo);
 		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 dlno를 이용한 ntsl_id가 가진 총 데이터건수
 
-		// 이ㅏ렇게하는거엿구만!
 		model.addAttribute("list", dealService.getDealSeller(svo));// 판매자의 다른 상품들
 
 		model.addAttribute("profile", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
-		System.out.println(dealService.selectNtslDeal(svo) + "vmfhvlffff");
-//		model.addAttribute("prof", dealService.selectPrchsDeal(dlNo));
-//		System.out.println(dealService.selectPrchsDeal(dlNo)+"프로필정보");
 
 		model.addAttribute("category", codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는
 		// common_detail_code만 들고오면됨
@@ -290,7 +279,6 @@ public class DealController {
 		dsvo.setDlTtl(vo.getDlTtl());
 		// 시세를 담는 모델 : 새로운 생성자를 만들어서 제목을 담고 시세를 조회한다.
 		model.addAttribute("prc", dealService.selectPrice(dsvo));
-		System.out.println(dealService.selectPrice(dsvo) + "시세=====");
 
 		return "deal/dealdetail";
 	}
@@ -412,23 +400,14 @@ public class DealController {
 	// ▷ 중고거래 게시글 삭제
 	@RequestMapping("/my/deleteDeal/{dlNo}")
 	public void deleteDeal(@PathVariable int dlNo, HttpServletResponse response) {
-		System.out.println(dlNo + " => 삭제할 글 번호");
 
 		DealVO dVO = testService.selectDealTest(dlNo);
-		System.out.println(dVO + " => 삭제할 글 정보");
-
 		List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
-		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
-
 		int delDeal = testService.deleteDealTest(dVO);
-		System.out.println("게시글 삭제했으면 1 => " + delDeal);
-
 		int delAtch = atchService.deleteFile(atchList);
-		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
 
 		try {
 			if (delDeal > 0) {
-				System.out.println("왔니..delAcut 안쪽임");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
@@ -452,8 +431,6 @@ public class DealController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		/* return Collections.singletonMap("result", "success delete"); */
 	}
 
 	// ===========================
@@ -467,9 +444,6 @@ public class DealController {
 			                    DealRvSearchVO rvo, 
 			                    Model model) {
 		// 판매자가 남긴 리뷰 가져오는거
-
-		System.out.println("왔슈...." + ntslId);
-		// DealReviewVO drvo = new DealRvSearchVO();
 		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 
@@ -478,15 +452,12 @@ public class DealController {
 
 		rvo.setUserId(ntslId);
 		paging.setTotalRecord(rvService.getcountTotal(rvo));
-		System.out.println(rvService.getcountTotal(rvo) + "rvoooo잘나오냐?");// ㅇㅇ4건잘나옴
-		System.out.println(rvo + "rvoooooo");
 
 		model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
 
 		
 		
 	// 판매중인 물품 first last 이상하다
-		System.out.println("dlno"+ dlNo);
 		DealVO vo = dealService.selectDeal(dlNo);
 		svo.setDlNo(dlNo);
 		
@@ -498,18 +469,10 @@ public class DealController {
 		svo.setNtslId(ntslId);
 		
 		paging.setTotalRecord(dealService.getcountTotal(svo)); 
-		System.out.println(paging.getLast()+"paginggggg");
-		System.out.println(svo+"svooooo"); // 이건또왜  퍼스트1 라스트1이냐?
-		System.out.println(dealService.getcountTotal(svo)+"갯수나오냐?"); // 이건되는데
-	
-		System.out.println(svo.getNtslId()+"idddd");
-		
 
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
-		System.out.println(dealService.selectNtslDeal(svo) + "svooo");
 
 		// 판매자 후기 정보
-		// ❤❤ 넣어야함!!!
 		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
 		return "deal/dealSellerpage";
 

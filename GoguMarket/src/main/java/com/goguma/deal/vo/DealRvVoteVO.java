@@ -17,6 +17,6 @@ public class DealRvVoteVO extends CommonCodeVO{
 	private String cn;
 	private String ccn;
 	
-	private String commonCn; // 투표상세내용 공통코드시발
+	private String commonCn; // 투표상세내용 
 	List<String> vtList;
 }

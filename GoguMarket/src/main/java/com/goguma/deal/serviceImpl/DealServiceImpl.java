@@ -100,31 +100,26 @@ public class DealServiceImpl implements DealService {
 
 	@Override
 	public String getId(int dlNo) {
-		// TODO Auto-generated method stub
 		return map.getId(dlNo);
 	}
 
 	@Override
 	public DealVO getDeal(int dlNo) {
-		// TODO Auto-generated method stub
 		return map.getDeal(dlNo);
 	}
 
 	@Override
 	public int dealHitUpdate(int dlNo) {
-		// TODO Auto-generated method stub
 		return map.dealHitUpdate(dlNo);
 	}
 
 	@Override
 	public DealVO selectDeal(int dlNo) {
-		// TODO Auto-generated method stub
 		return map.selectDeal(dlNo);
 	}
 
 	@Override
 	public List<AtchVO> selectDealAtch(int dlNo) {
-		// TODO Auto-generated method stub
 		return map.selectDealAtch(dlNo);
 	}
 
@@ -137,7 +132,7 @@ public class DealServiceImpl implements DealService {
 
 	@Override
 	public String selectPrchsDeal(int dlNo) {
-		// TODO Auto-generated method stub
+		// 
 		return map.selectPrchsDeal(dlNo);
 	}
 
@@ -155,13 +150,13 @@ public class DealServiceImpl implements DealService {
 
 	@Override
 	public List<Map> selectPrice(DealSearchVO vo) {
-		// TODO Auto-generated method stub
+		//
 		return map.selectPrice(vo);
 	}
 
 	@Override
 	public int updatePrchsStts(DealVO dVO) {
-		// TODO Auto-generated method stub
+		//
 		return map.updatePrchsStts(dVO);
 	}
 
