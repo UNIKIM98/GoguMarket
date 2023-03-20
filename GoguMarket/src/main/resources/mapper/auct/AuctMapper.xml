@@ -18,9 +18,41 @@
 		             WHERE AUCT_NO = a.auct_no) AS D_DAY
 		             
 		FROM AUCT a
-		ORDER BY D_DAY
+		ORDER BY AUCT_NO DESC
 	</select>
-
+	<!-- Dday쿼리 -->
+	<select id="getAuctListDday" resultType="com.goguma.auct.vo.AuctVO">
+			SELECT a.*,
+					    (SELECT ATCH_PATH
+					     FROM ATCH
+					     WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1) AS ATCH_NM,
+			             
+					    (SELECT COUNT(DISTINCT user_id) as COUNT
+	                     FROM auct_mem
+					     WHERE AUCT_NO = a.auct_no) AS COUNT,
+			             
+			            (SELECT (TRUNC(DDLN_YMD) - TRUNC(SYSDATE))
+			             FROM AUCT
+			             WHERE AUCT_NO = a.auct_no) AS D_DAY
+			             
+			FROM AUCT a
+			ORDER BY AUCT_NO DESC		SELECT a.*,
+					    (SELECT ATCH_PATH
+					     FROM ATCH
+					     WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1) AS ATCH_NM,
+			             
+					    (SELECT COUNT(DISTINCT user_id) as COUNT
+	                     FROM auct_mem
+					     WHERE AUCT_NO = a.auct_no) AS COUNT,
+			             
+			            (SELECT (TRUNC(DDLN_YMD) - TRUNC(SYSDATE))
+			             FROM AUCT
+			             WHERE AUCT_NO = a.auct_no) AS D_DAY
+			             
+			FROM AUCT a
+			ORDER BY D_DAY
+	</select>
+	
 	<!-- 단건조회 -->
 	<select id="getAuct" parameterType="com.goguma.auct.vo.AuctVO"
 		resultType="com.goguma.auct.vo.AuctVO">
