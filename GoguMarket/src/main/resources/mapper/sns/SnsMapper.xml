@@ -44,8 +44,8 @@
 	</select>
 
 	<select id="selectSnsAtch" parameterType="int"
-		resultType="com.goguma.sns.vo.SnsVO">
-		SELECT * FROM sns
+		resultType="com.goguma.common.vo.AtchVO">
+		SELECT * FROM atch
 		WHERE ATCH_ID = (SELECT atch_id
 		FROM sns
 		WHERE sns_no = #{snsNo})
