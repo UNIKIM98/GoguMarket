@@ -156,7 +156,7 @@ public class BizController {
 	public String shop01(Model model, HttpSession session) {
 		String bizNo = (String) session.getAttribute("bizNo");
 		model.addAttribute("biz", memService.bizInfo(bizNo));
-		return "/biz/shop01";
+		return "biz/shop01";
 	}
 
 	// ==============================
