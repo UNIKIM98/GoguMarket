@@ -48,8 +48,19 @@ public class AuctController {
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
 
 		System.out.println(model); // 모델 확인
-
 		return "auction/auctList";
+	}
+	@GetMapping("/goguma/auctListAjax") // 메인화면 AJAX
+	@ResponseBody
+	public List<AuctVO> getauctListAjax(Model model, AuctVO vo, AuctMemVO mvo) {
+		// 전체품목 리스트
+		
+		List<AuctVO> lists = auctService.getAuctList();
+		
+		System.out.println(lists);
+		
+		
+		return lists;
 	}
 
 	@GetMapping("/goguma/auctSelect/{auctNo}") // 경매 번호에 따른 단일페이지 번호 변경
