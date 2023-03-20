@@ -41,7 +41,7 @@
                                            style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
                                            onerror="this.onerror=null; this.src='/img/logo/002.png'">
                                       <!-- 알림 -->
-                                      <span th:if="${session.alarm != 0 and session.alarm != null}"
+                                      <span id="alarmId" th:if="${session.alarm != 0 and session.alarm != null}"
                                             style="position: absolute; top: -5px; right: -5px; background-color: red; 
                                         	border-radius: 50%; width: 18px; height: 18px; text-align: center; 
                                         	line-height: 20px; font-size: 10px;font-weight : border; color: white;"
@@ -57,7 +57,7 @@
                                            	style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
                                           	 onerror="this.onerror=null; this.src='/img/logo/002.png'">
                                       <!-- 알림 -->
-                                      <span th:if="${session.alarm != 0 and session.alarm != null}"
+                                      <span id="alarmId" th:if="${session.alarm != 0 and session.alarm != null}"
                                         style="position: absolute; top: -5px; right: -5px; background-color: red; 
                                         		border-radius: 50%; width: 18px; height: 18px; text-align: center; 
                                         		line-height: 20px; font-size: 10px;font-weight : border; color: white;"

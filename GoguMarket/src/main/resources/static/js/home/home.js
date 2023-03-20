@@ -1,8 +1,47 @@
+
+$(document).ready(function() {
+
+	setInterval(() => checkNotifyHome(), 2000);
+
+});
+
+
+function checkNotifyHome() {
+	console.log("새로고침");
+	$.ajax({
+		url: "/my/checkNotifyCount",
+		async: false,
+		type: 'GET',
+		success: function(data) {
+			
+			console.log(data);
+			
+			if (data > 0) {
+//			$("#alarmId").text(data); //실시간 알림
+				loadNotifyHome(data);
+
+			}
+		},
+		error: function(error) {
+			console.log(error);
+		},
+	});
+}
+
+
+		function loadNotifyHome(data) {
+			$("#alarmId").text(data);
+
+		}
+
+
+
+
 /**
  * 
  */
 
-console.log("home오ㅑㅏㅆ니..........?")
+/*console.log("home오ㅑㅏㅆ니..........?")
 //===========================================================
 // ❤️ 전역변수 선언부
 var auctList;
@@ -82,7 +121,7 @@ function makeDealList(dealList) {
 function makeAuctList(auctList) {
 	console.log(auctList);
 	auctList.forEach((auct) => {
-	console.log((auct.DDLN_YMD).format(auct.ddlnYmd, 'yyyy/MM/dd'));
+		console.log((auct.DDLN_YMD).format(auct.ddlnYmd, 'yyyy/MM/dd'));
 		$(".auctTrgt").append(`
 
                         
@@ -109,12 +148,12 @@ function makeAuctList(auctList) {
                         </div>
                         
 	`)
-	// 데드라인 설정하기(집에서 고)
-//		let dDay = new Date(auct.DDLN_YMD).format("YYYY-MM-DD");
-//		console.log(dDay + "데드라인와엠디");
-//		let timeDiff = dDay.getTime() - today.getTime();
-//		let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-//		console.log(daysDiff+'일 남았습니다!')
+		// 데드라인 설정하기(집에서 고)
+		//		let dDay = new Date(auct.DDLN_YMD).format("YYYY-MM-DD");
+		//		console.log(dDay + "데드라인와엠디");
+		//		let timeDiff = dDay.getTime() - today.getTime();
+		//		let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+		//		console.log(daysDiff+'일 남았습니다!')
 	})
 
 }
@@ -133,4 +172,4 @@ function makeSnsList(snsList) {
 function makeBizList(bizList) {
 	console.log(bizList);
 
-}
+}*/

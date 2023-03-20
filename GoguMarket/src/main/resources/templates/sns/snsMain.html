@@ -4,10 +4,10 @@
 	layout:decorate="~{layouts/layout}">
 
 <head>
+<script src="/js/sns/sns.js"></script>
 
 <meta charset="UTF-8">
 
-<title>Insert title here</title>
 
 <style>
 ul {
@@ -39,7 +39,9 @@ textarea {
 							<div class="section-title text-start mb-20">
 								<h2 class="uppercase">동네 생활</h2>
 
-								<h6>당신의 <strong style="color: #c04a86;">마을</strong>을 나에게 소개해주세요</h6>
+								<h6>
+									당신의 <strong style="color: #c04a86;">마을</strong>을 나에게 소개해주세요
+								</h6>
 
 								<form id="searchForm" action="#" style="margin-left: 30%;">
 									<div class="subcribe clearfix f-left" style="width: 60%">
@@ -75,7 +77,7 @@ textarea {
 
 						<div class="mt-100">
 							<div class="row" id="list"
-								style="margin-bottom: 10%; padding: 8%;"></div>
+								style="margin-bottom: 30%; padding: 20%;"></div>
 
 						</div>
 
@@ -117,8 +119,8 @@ textarea {
 
 							<!-- userId -->
 							<input th:value="${session.userId}" type="hidden" name="userId"
-								id="userId"> 
-								
+								id="userId">
+
 
 							<!-- 게시물 -->
 							<textarea name="snsCn" id="snsCn" class="form-control-lg mb-15"
@@ -185,6 +187,9 @@ textarea {
 		<div id="loadDiv" style="display: none"></div>
 		<script th:inline="javascript">
 		
+
+		let user = new Array();
+		
 			$(document).ready(function () {
 			selectSnsList()
 		
@@ -211,8 +216,9 @@ textarea {
 		
 		function selectSnsList(sort){
 			
+			getUser();
 			
-			console.log('gdgd'+sort)
+			console.log(user)
 				formData=[];
 		
 				formData = $("#searchForm").serialize();
