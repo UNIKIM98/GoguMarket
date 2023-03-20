@@ -95,22 +95,6 @@ public class RsvtServiceImpl implements RsvtService{
 	public int updateApprove(String rsvtNo) {
 		return map.updateApprove(rsvtNo);
 	}
-
-	//메뉴변경 insert
-//	@Override
-//	public int insertModifyMenu(RsvtUpMenuVO upVo) {
-//		return map.insertModifyMenu(upVo);
-//	}
-//
-//	@Override
-//	public void insertModifyMenu(List<RsvtUpMenuVO> menuList) {
-//		map.insertModifyMenu(menuList);
-//	}
-	
-//	@Override
-//	public List<RsvtUpMenuVO> insertModifyMenu(List<RsvtUpMenuVO> menuList) {
-//		return map.insertModifyMenu();
-//	}
 	
 	// ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저
 	@Override

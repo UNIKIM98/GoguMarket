@@ -30,7 +30,6 @@ public interface BizMemService {
 	
 	//상세사진
 	List<BizMemVO> bizDetailImg(String bizNo);
-	
 
 	// ❤ 비즈번호 가져오기
 	String selectBizNo(String userId);

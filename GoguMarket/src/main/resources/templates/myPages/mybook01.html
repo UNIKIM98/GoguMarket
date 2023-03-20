@@ -4,7 +4,7 @@
 	layout:decorate="~{myPages/sideBar/sideBar}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Gogumarket::myPage</title>
 </head>
 <body>
 	<div layout:fragment="myContent">
@@ -25,6 +25,9 @@
 	    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
 	}
 	</style>
+	<!-- 얼럿창 커스텀  -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<div class="message-box box-shadow white-bg" style="height: 750px; width: 100%">	
 		<div class="col-lg-12">
 			<form action="#">
@@ -142,7 +145,7 @@
 	//예약변경 페이지로 이동
 	function rsvtModify(){
 		if(getRsvtNo == 0 || getRsvtNo == null){
-			alert("변경할 예약을 먼저 선택해주세요")
+			swal('앗!', "변경할 예약을 먼저 선택해주세요", 'warning');
 		}else{
 			window.location.href = "/my/modifyRsvt/" + getRsvtNo	//예약번호 받아서 넘기기				
 		}
@@ -174,7 +177,6 @@
 	
 	//tr클릭시 예약 상세정보 보이게
 	function trClick(rsvtNo){
-		console.log("tr클릭")
 		//클릭시 상세정보 보이게
 		$('.myRsvtDetail').attr('style','display:block;');
 	
@@ -267,26 +269,48 @@
 	//예약취소하기
 	$('#rsvtDelete').attr("onclick","rsvtDelete(getRsvtNo)");
 	function rsvtDelete(rsvtNo){
-		console.log("아래는 예약번호입니다.")
-		console.log(rsvtNo)
 		if(getRsvtNo == 0 || getRsvtNo == null){
-			alert("취소할 예약을 먼저 선택해주세요")
+			swal('앗!', "취소할 예약을 먼저 선택해주세요", 'warning');
 		}else{
-			if(confirm("정말로 예약을 취소하시겠습니까?")){
+			
+			swal({
+				title: "정말로요?",
+				text: "정말로 예약을 취소하시겠습니까?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
 				$.ajax({
 					url:"/my/myRsvtDeleteAjax/"+rsvtNo,
 					success: function(){
-						alert("[예약 취소 완료] 예약이 정상적으로 취소되었습니다.");
-						history.go(0);					
+						if (willDelete) {
+							swal("예약 취소 완료","예약이 정상적으로 취소되었습니다.", {icon: "success"});
+							history.go(0);
+						} else {
+							return;
+						}
 					},error: function(error){
 						console.log(error);
-						alert("[예약 취소 실패] 예약 취소가 실패되었습니다.")
+						swal("예약 취소 실패","예약 취소가 실패되었습니다.", {icon: "error"});
 					}
-				})	
-			}
+				});
+			})
 		}
-	}
-	
+	};
+			
+// 			if(confirm("정말로 예약을 취소하시겠습니까?")){
+// 				$.ajax({
+// 					url:"/my/myRsvtDeleteAjax/"+rsvtNo,
+// 					success: function(){
+// 						alert("[예약 취소 완료] 예약이 정상적으로 취소되었습니다.");
+// 						history.go(0);					
+// 					},error: function(error){
+// 						console.log(error);
+// 						alert("[예약 취소 실패] 예약 취소가 실패되었습니다.")
+// 					}
+// 				})	
+// 			}
+			
 	//예약하러가기
 	function goToRsvt(){
 		window.location.href = "/goguma/bookmain";
