@@ -259,10 +259,7 @@ public class MemController {
 		session.removeAttribute("mblTelno"); // 전화번호
 		session.removeAttribute("userNm"); // 전화번호
 		session.removeAttribute("eml"); // 이메일
-		
-		
-		
-		
+
 	}
 
 }

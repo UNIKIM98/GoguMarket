@@ -46,7 +46,7 @@ public class KakaoLoginSuccessHandler implements AuthenticationSuccessHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// response.sendRedirect("/"); // location 걸어주기 때문에 필요 없음!
+//		 response.sendRedirect("/");
 	}
 
 }
