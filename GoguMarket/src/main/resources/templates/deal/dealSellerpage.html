@@ -1,208 +1,233 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 
 <head>
-	<meta charset="utf-8">
-	<title>판매자페이지</title>
-	<script src="https://code.jquery.com/jquery-3.6.3.js"
-		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<meta charset="utf-8">
+<title>판매자페이지</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+	crossorigin="anonymous"></script>
 
-	<style>
-		.profile {
-			width: 13%;
-			height: 80px
-		}
+<style>
+.profile {
+	width: 13%;
+	height: 80px
+}
 
-		.leftProfile {
-			float: left;
-			text-align: left;
-			width: 10px;
-		}
+.leftProfile {
+	float: left;
+	text-align: left;
+	width: 10px;
+}
 
-		.rightProfile {
-			float: right;
-			text-align: left;
-		}
-	</style>
+.rightProfile {
+	float: right;
+	text-align: left;
+}
+</style>
 </head>
 
 <body>
 	<div layout:fragment="content">
-	
-	<script>
-		// 함수로받아서
-		function gopage(page) {
-			frmSearch.page.value = page;
-			frmSearch.submit();
-		}
-		$(function(){
 
-			const url = new URL(location.href);
+		<script>
+			// 함수로받아서
+			function gopage(page) {
+				frmSearch.page.value = page;
+				frmSearch.submit();
+			}
+			function gopage(page) {
+				frm.page.value = page;
+				frm.submit();
+			}
+			$(function() {
 
-			// URLSearchParams 객체
-			const urlParams = url.searchParams;
+				const url = new URL(location.href);
 
-			// URLSearchParams.get()
-			let tabName = urlParams.get('tabName'); 	
-			
-		  var firstTabEl = document.querySelector(`[data-bs-target="#${tabName}"]`)
-		  var firstTab = new bootstrap.Tab(firstTabEl)
+				// URLSearchParams 객체
+				const urlParams = url.searchParams;
 
-		  firstTab.show();
-			
-		})
-	
-	</script>
+				// URLSearchParams.get()
+				let tabName = urlParams.get('tabName');
+
+				var firstTabEl = document
+						.querySelector(`[data-bs-target="#${tabName}"]`)
+				var firstTab = new bootstrap.Tab(firstTabEl)
+
+				firstTab.show();
+
+			})
+		</script>
 		<div class="wrapper">
 			<!-- Start page content -->
 			<section id="page-content" class="page-wrapper section">
 
 				<!-- FEATURED PRODUCT SECTION START -->
-				<div class="featured-product-section mb-50" >
+				<div class="featured-product-section mb-50">
 					<div class="container">
 						<div class="row">
-							  <div class="col-lg-12">
-								<div class=" section-title text-start mb-40" th:each="deal:${dealList}">
+							<div class="col-lg-12">
+								<div class=" section-title text-start mb-40">
 									<div class="profile">
-										<div class="leftProfile">
-											<img th:src="${dealList[0].PROFILE}" 
-											alt="" style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;"
-											onerror="this.onerror=null; this.src='/img/logo/001.png'">
-										</div>
-										<div class="rightProfile">
-											<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2>
-											<h6 th:text="${dealList[0].ADDR}">주소</h6>
-										</div>
+									<h1 th:text="${dealList}"></h1>
+<!-- 										<div class="leftProfile"> -->
+<!-- 											<img th:if="${dealList[0].PROFILE} != null" th:src="${dealList[0].PROFILE}" alt="" -->
+<!-- 												style="width: 50px; height: 50px; border-radius: 70%; overflow: hidden;" -->
+<!-- 												onerror="this.onerror=null; this.src='/img/logo/001.png'"> -->
+<!-- 										</div> -->
+<!-- 										<div class="rightProfile"> -->
+<!-- 											<h2 class="uppercase" th:text="${dealList[0].NICK_NM}">닉네임</h2> -->
+<!-- 											<h6 th:text="${dealList[0].ADDR}">주소</h6> -->
+<!-- 										</div> -->
 									</div>
-								</div>  
-								<div class="single-product-tab reviews-tab">
-									<ul class="nav nav-tabs mb-20">
-										<li class="nav-item"><a class="nav-link active" href="#description" data-bs-toggle="tab" role="tab" data-bs-target="#description">판매물품</a></li>
-										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#reviews">거래 후기</a></li>
-										<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#mannor">매너 칭찬</a></li>
-									</ul>
-									
-									<div class="tab-content">
-										<div role="tabpanel"  class="tab-pane active show" id="description" style="width:100%;">
-											<p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
-											<div class="featured-product">
-												<div class="active-featured-product slick-arrow-2" >
-													<div class="product-item"   th:each="deal:${dealList}">
-															<div class="product-img">
-																<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"/
-																onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
-															</div>
-															<div class="product-info">
-																<h6 class="product-title"
-																	th:text=${deal.DL_TTL}>상품명</h6>
-																<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
-																<ul class="action-button">
-																	<li><a href="#" title="Wishlist"><i
-																				class="zmdi zmdi-favorite"></i></a></li>
-																	<li><a href="#" data-bs-toggle="modal"
-																			data-bs-target="#productModal"
-																			title="Quickview"><i
-																				class="zmdi zmdi-zoom-in"></i></a></li>
-																	<li><a href="#" title="Compare"><i
-																				class="zmdi zmdi-refresh"></i></a></li>
-																</ul>
-															</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									
-										<div role="tabpanel" class="tab-pane" id="reviews">
-											<p>판매자님이 보낸 거래 후기들의 리스트입니다.</p>
-											<div class="reviews-tab-desc">
-												<form name="frmSearch" align="center">
-													 
-													<input type="hidden" name="page" value="1">
-													<input type="hidden" name="tabName" value="reviews">
-													<div class="media mt-30" th:each="r: ${review}">
-														<div class="media-left">
-															<a href="#"><img class="media-object" src="img/author/1.jpg"
-																	alt="#"></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="single-product-tab reviews-tab">
+							<ul class="nav nav-tabs mb-20">
+								<li class="nav-item"><a class="nav-link active"
+									href="#description" data-bs-toggle="tab" role="tab"
+									data-bs-target="#description">판매물품</a></li>
+								<li class="nav-item"><a class="nav-link"
+									data-bs-toggle="tab" role="tab" data-bs-target="#reviews">거래
+										후기</a></li>
+								<li class="nav-item"><a class="nav-link"
+									data-bs-toggle="tab" role="tab" data-bs-target="#mannor">매너
+										칭찬</a></li>
+							</ul>
+<!-- 안에 시작 -->
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane active show"
+									id="description" style="width: 100%;">
+									<p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
+
+								
+										<div class="featured-product">
+												<form name="frm" align="center">
+													<input type="hidden" name="page" value="1"> <input
+														type="hidden" name="tabName" value="description">
+														<div class="row">
+														<div class="col-lg-12">
+													<div class="col-3 product-item mr-30" th:each="deal:${dealList}">
+														<div class="product-img">
+															<a
+																th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"
+																
+																		onerror="this.onerror=null; this.src='/img/logo/001.png'" />
+															</a>
 														</div>
-														<div class="media-body">
-															<div class="clearfix">
-																<div class="name-commenter f-left">
-																	<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리
-																	</h6>
-																	<p class="mb-10" th:text="${r.RV_YMD}"></p>
-																</div>
-																&nbsp;&nbsp;&nbsp;
-																<div class="f-right">
-																	
-																</div>
-															</div>
-															<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p>
+														<div class="product-info">
+															<h6 class="product-title" th:text=${deal.DL_TTL}>상품명</h6>
+															<h3 class="pro-price" th:text=${deal.DL_PRC}>가격</h3>
+															
 														</div>
 													</div>
-													 <!-- 페이지번호관련  -->
-													<div align="center">
-														<a
-															th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-															th:href="|javascript:gopage(${num})|"
-															th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
+													</div>
 													</div>
 												</form>
-												<hr>
+											
+										</div>
+									<div align="center">
+										<a
+											th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+											th:href="|javascript:gopage(${num})|"
+											th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
+									</div>
+								</div>
+
+								<div role="tabpanel" class="tab-pane" id="reviews">
+									<p>판매자님이 보낸 거래 후기들의 리스트입니다.</p>
+									<div class="reviews-tab-desc">
+										<form name="frmSearch" align="center">
+
+											<input type="hidden" name="page" value="1"> <input
+												type="hidden" name="tabName" value="reviews">
+											<div class="media mt-30" th:each="r: ${review}">
+												<div class="media-left">
+													<a href="#"><img class="media-object"
+														src="img/author/1.jpg" alt="#"></a>
+												</div>
+												<div class="media-body">
+													<div class="clearfix">
+														<div class="name-commenter f-left">
+															<h6 class="media-heading" th:text="${r.USER_ID}">구매자아이디자리
+															</h6>
+															<p class="mb-10" th:text="${r.RV_YMD}"></p>
+														</div>
+														&nbsp;&nbsp;&nbsp;
+														<div class="f-right"></div>
+													</div>
+													<p class="mb-0" th:text="${r.RV_CN}">구매후기내용</p>
+												</div>
 											</div>
-										</div>
-									 	<div role="tabpanel" class="tab-pane" id="mannor" th:each="v: ${vote}" style="width:100%;height:320px;"> 
-											<p>매너 칭찬 리스트가 들어갈 자리입니다</p>
-											<div class="mannor-tab-desc" >
-												<table>
-									                <thead>
-									                    <tr>
-									                        <th>순위</th>
-									                        <th>투표내용</th>
-									                        <th>투표수</th>
-									                    </tr>
-									                </thead>
-									                 <tbody id="vote">
-									                    <tr th:each="vote, i : ${vote}">
-									                        <td th:text=${i.index+1}></td>
-									                        <td th:text=${vote.commonCn}></td>
-									                        <td th:text="${vote.ccn}"></td>
-									                        
-									                    </tr>
-									                </tbody> 
-								                </table>
-							                </div>
-										</div>
+											<!-- 페이지번호관련  -->
+											<div align="center">
+												<a
+													th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
+													th:href="|javascript:gopage(${num})|"
+													th:class="${paging.page}==${num} ? 'active'">
+													[[${num}]]</a>
+											</div>
+										</form>
+										<hr>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane" id="mannor"
+									th:each="v: ${vote}" style="width: 100%; height: 320px;">
+									<p>매너 칭찬 리스트가 들어갈 자리입니다</p>
+									<div class="mannor-tab-desc">
+										<table>
+											<thead>
+												<tr>
+													<th>순위</th>
+													<th>투표내용</th>
+													<th>투표수</th>
+												</tr>
+											</thead>
+											<tbody id="vote">
+												<tr th:each="vote, i : ${vote}">
+													<td th:text=${i.index+1}></td>
+													<td th:text=${vote.commonCn}></td>
+													<td th:text="${vote.ccn}"></td>
+
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- FEATURED PRODUCT SECTION END -->
-			</section>
-			<!-- End page content -->
-
-
-			
 		</div>
-		<!-- Body main wrapper end -->
+
+		<!-- FEATURED PRODUCT SECTION END -->
+
+		<!-- End page content -->
 
 
-		<!-- Placed JS at the end of the document so the pages load faster -->
 
-		<!-- jquery latest version -->
-		<script src="js/vendor/jquery-3.6.0.min.js"></script>
-		<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-		<!-- Bootstrap framework js -->
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<!-- jquery.nivo.slider js -->
-		<script src="lib/js/jquery.nivo.slider.js"></script>
-		<!-- All js plugins included in this file. -->
-		<script src="js/plugins.js"></script>
-		<!-- Main js file that contents all jQuery plugins activation. -->
-		<script src="js/main.js"></script>
+	</div>
+	<!-- Body main wrapper end -->
+
+
+	<!-- Placed JS at the end of the document so the pages load faster -->
+
+	<!-- jquery latest version -->
+	<script src="js/vendor/jquery-3.6.0.min.js"></script>
+	<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+	<!-- Bootstrap framework js -->
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<!-- jquery.nivo.slider js -->
+	<script src="lib/js/jquery.nivo.slider.js"></script>
+	<!-- All js plugins included in this file. -->
+	<script src="js/plugins.js"></script>
+	<!-- Main js file that contents all jQuery plugins activation. -->
+	<script src="js/main.js"></script>
 	</div>
 </body>
 

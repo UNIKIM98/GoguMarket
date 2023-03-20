@@ -93,7 +93,8 @@ public class DealController {
 		svo.setStts("판매완료");
 		model.addAttribute("dealsold", dealService.selectNtslDeal(svo)); // 판매완료 내역
 
-		// 구매내역
+		System.out.println(dealService.selectNtslDeal(svo)+"판완내역");
+
 		svo.setPrchsId(userId);
 		svo.setNtslId(null);
 
@@ -457,10 +458,11 @@ public class DealController {
 
 	// ===========================
 	// ❤❤ 판매자 페이지
-	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
-	public String getDealSeller(Paging paging, DealSearchVO svo, DealRvSearchVO rvo, @PathVariable String ntslId,
-			Model model) {
-		// 판매자에 대한 리뷰 가져오는거
+
+	@RequestMapping("/goguma/dealSellerpage/{ntslId}/{dlNo}")
+	public String getDealSeller(Paging paging,DealSearchVO svo, DealRvSearchVO rvo, @PathVariable String ntslId,@PathVariable int dlNo, Model model) {
+		// 판매자가 남긴 리뷰 가져오는거
+
 		System.out.println("왔슈...." + ntslId);
 		// DealReviewVO drvo = new DealRvSearchVO();
 		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
@@ -476,10 +478,15 @@ public class DealController {
 
 		model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
 
-		// DealVO vo = new DealVO();
-		svo.setNtslId(ntslId);
+		
+		
+	// 판매중인 물품 first last 이상하다
+		System.out.println("dlno"+ dlNo);
+		DealVO vo = dealService.selectDeal(dlNo);
+		svo.setDlNo(dlNo);
+		
+		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
 
-		paging.setPageUnit(1); // 한 페이지에 출력할 레코드 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
@@ -494,8 +501,9 @@ public class DealController {
 
 		// 판매자 후기 정보
 		// ❤❤ 넣어야함!!!
-		model.addAttribute("vote", voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
-		return "deal/dealSellerPage";
+		model.addAttribute("vote",voteService.getDealRvVote(ntslId)); // 여러건의 후기 투표 조회
+		return "deal/dealSellerpage";
+
 	}
 
 }
