@@ -99,6 +99,7 @@ public class DealController {
 		svo.setNtslId(null);
 
 		model.addAttribute("buyList", dealService.selectNtslDeal(svo)); // 구매내역
+		System.out.println(dealService.selectNtslDeal(svo)+"구매내역");
 
 		return "myPages/myDeal";
 	}
@@ -164,6 +165,7 @@ public class DealController {
 		svo.setLast(paging.getLast());
 		paging.setTotalRecord(dealService.getcountTotal(svo));
 
+		svo.setStts("판매중"); // 판매중인 애들만 보이도록
 		model.addAttribute("lists", dealService.dealListSelect(svo));
 		model.addAttribute("category", codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는
 																		// common_detail_code만 들고오면됨

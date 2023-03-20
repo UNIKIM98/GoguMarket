@@ -105,10 +105,10 @@ layout:decorate="~{layouts/layout}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="breadcrumbs-inner">
-                                <h1 class="breadcrumbs-title">중고거래</h1>
+                                <h1 class="breadcrumbs-title">중고마켓</h1>
                                 <ul class="breadcrumb-list">
                                     <li><a href="/">홈으로가기</a></li>
-                                    <li>중고거래메인</li>
+                                    <li>중고마켓메인</li>
                                 </ul>
                             </div>
                         </div>
@@ -122,9 +122,9 @@ layout:decorate="~{layouts/layout}">
         <div class="newsletter-section section-bg-tb pt-60 pb-80">
             <div class="container">
 	            <div center="align">
-		            <h2 class="newsletter-title">중고거래 통합검색</h2>
-	                    <p>1. 카테고리와 글유형을 선택하세요</p>
-	                    <p>2. 선택하지 않을 시 전체글에서 조회됩니다</p>
+		            <h2 class="newsletter-title" style="color:#C04A82; margin-left:30px;">🍠중고마켓 통합검색</h2>
+	                    <p style="margin-left:30px;">1. 카테고리와 글유형을 선택하세요</p>
+	                    <p style="margin-left:30px;">2. 선택하지 않을 시 전체글에서 조회됩니다</p>
 	            </div>
                 <div class="row">
                     <div class="col-lg-8 lg-2">
@@ -176,7 +176,7 @@ layout:decorate="~{layouts/layout}">
                     
                     <div class="col-lg-3" style="margin-top:0px;">
                 <!-- 인기검색어 롤링박스 -->
-		              <h3><span>인기검색어</span></h3>
+		              <h3><span>🍠인기검색어</span></h3>
 		                <div class="rolling_box">
 		                    <ul id ="rolling_box">
 		                    <li class="card_sliding" id ="first"><p></p></li>
@@ -236,7 +236,8 @@ layout:decorate="~{layouts/layout}">
                                         	 <div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:200px;" align="center">
 	                                       	</div>  
                                         </div>
-                                        
+                                        <!-- 판매완료가 아닌 상태인 물품만 보여줍니다.  -->
+                                        <!--  th:if="${deal.stts != '판매완료'}" 이거쓰면 빵꾸나서 컨트롤러로제어해야.. -->
                                         <div th:each="deal : ${lists}" class="col-lg-3 col-md-4">
                                             <div class="product-item product-item-2"  >
                                                 <div class="product-img">
@@ -246,16 +247,17 @@ layout:decorate="~{layouts/layout}">
                                                     </a>
                                                 </div>
                                                 <div class="product-info">
-                                                    <h6 class="product-title">
-                                                        <a th:text="${deal.dlTtl}">Product Name</a>
-                                                    </h6>
-                                                    <h6 th:each="c : ${category}"
-														th:if="${deal.ctgry == c.commonDetailCode}"
-														th:text="'카테고리 : '+${c.commonNm}" class="brand-name">Sumsung</h6>
-                                                    <h3 th:if="${deal.ctgry != 'FR'}"
+                                                    
+                                                    <h4 th:text="${deal.dlTtl}">Product Name</h4>
+                                                    <!-- 카테고리 버튼이쁘길래 모양 저걸로함  -->
+													<a class="button small"
+														th:each="c : ${category}"
+														th:if="${deal.ctgry == c.commonDetailCode && deal.ctgry != 'FR'}"
+														th:text="${c.commonNm}" ></a>
+                                                    <h4 style="color:#C04A82;" th:if="${deal.ctgry != 'FR'}"
                                                     	th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" class="pro-price"
-                                                    	>$ 869.00</h3>
-                                                    <h3 th:if="${deal.dlPrc == 0}">무료나눔</h3>
+                                                    	>$ 869.00</h4>
+                                                    <h4 style="color:#FCD052; margin-top:22px;" th:if="${deal.dlPrc == 0}">무료나눔</h4>
                                                 </div>
                                                 
                                                 <!-- 마우스 오버시 : 거래지역(판매글의) & 내가 판매중인 글 표시 -->
