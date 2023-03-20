@@ -254,7 +254,6 @@
         			url:'/goguma/emlDupCkAjax/'+eml,
         			type:'get',
         			success:function(result){
-        				console.log(result);
         				if(result==0){
         					emlConfirm(eml);
         				}else{
@@ -274,20 +273,17 @@
 	    		  $("#emlBtn").val("0");
 	    		  $("#emlCk").val("");
 	    	  }
-    	  console.log(eml);
       }
 
     // ==============================================================
     // ❤️ 이메일 인증 Ajax
     	function  emlCheckAJax(eml){
-    	  console.log(eml)
 	   	 $.ajax({
 	  		  url:'/goguma/emlCheckAJax/'+eml,
 	  		  type:'get',
 	  		  success: function(result){
 	  			secureRandom = result;
 	  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
-	  			  console.log(result);
 	  		  },
 	  		  error: function(err){
 	  			  console.log(err);
@@ -298,7 +294,6 @@
 	  // ==============================================================
       // ❤️ 이메일 인증번호 일치여부 확인
       function issecureRandomOk(){
-		  console.log(secureRandom);
 		  if(secureRandom == $("#emlCk").val()){
 			  alert("이메일 인증이 완료되었습니다.");
 			  $("#emlAuthBtn").val("0");
@@ -365,19 +360,52 @@
       // ==============================================================
       // ❤️ 아이디 중복 체크 아작스 
          function userIdCkAjax() {
-            $.ajax({
-               url : '/goguma/userIdChk/' + $('#userId').val(),
-               type : 'get',
-               dataType : 'json',
-               contentType : 'application/json; charset = utf-8',
-               success : function(data) {
-                  userIdCk(data);
-               },
-               error : function(error) {
-                  console.log(error)
-               }
-            })
+    	  	if(isUserIdOk()){
+    	  		$.ajax({
+    	               url : '/goguma/userIdChk/' + $('#userId').val(),
+    	               type : 'get',
+    	               dataType : 'json',
+    	               contentType : 'application/json; charset = utf-8',
+    	               success : function(data) {
+    	                  userIdCk(data);
+    	               },
+    	               error : function(error) {
+    	                  console.log(error)
+    	               }
+    	            })
+    	  	}
          }
+      // ==============================================================
+      // ❤️ 아이디 유효성 체크
+      function isUserIdOk(){
+    	  let userId = $("#userId").val();
+    	  var rule = /[`~!@#$%^&*|\\\'";:\/?]/gi;
+    	  var korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    	  var capital = /[A-Z]/;
+    	  
+    	  if(rule.test(userId)){
+    		  alert("특수문자는 입력할 수 없습니다.");
+    		  $("#userId").val("");
+    		  $("#userId").focus();
+    		  return false;
+    	  }
+    	  
+    	  else if(korean.test(userId)){
+    		  alert("한글은 입력할 수 없습니다.");
+    		  $("#userId").val("");
+    		  $("#userId").focus();
+    		  return false;
+    	  }
+    	  
+    	  else if(capital.test(userId)){
+    		  alert("소문자만 입력할 수 있습니다.");
+    		  $("#userId").val("");
+    		  $("#userId").focus();
+    		  return false;
+    	  }
+    	  
+    	  return true;
+      }
       
       // ==============================================================
       // ❤️ 아이디 중복 체크 결과 출력
@@ -443,7 +471,6 @@
                      }
                   }).open();
          }
-      
       
 	// ==============================================================
 	// ❤️ 약관 동의 전체 체크
