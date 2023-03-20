@@ -36,6 +36,8 @@ public class SnsCmntController {
 		vo.setCmntMem(userId);
 		vo.setAtchPath(atchPath);
 		
+		System.out.println(vo +"확인");
+		
 		int success = service.insertReply(vo);
 
 		map.put("result", success);
@@ -50,11 +52,16 @@ public class SnsCmntController {
 		System.out.println(snsNo + "전체");
 
 		List<SnsCmntVO> reply = service.SelectCmntlist(snsNo);
-		
+		return reply;
+	}
+	
+	@GetMapping("/goguma/SelectUserCmnt")
+	public List<SnsCmntVO> SelectUserCmnt(SnsCmntVO vo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 
-		
-		
+		System.out.println(vo);
 
+		List<SnsCmntVO> reply = service.SelectUserCmnt(vo);
 		return reply;
 	}
 

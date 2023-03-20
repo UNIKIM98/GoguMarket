@@ -9,6 +9,19 @@
 		ORDER BY
 		cmnt_no
 	</select>
+	
+	<select id="SelectUserCmnt" parameterType="int"
+		resultType="com.goguma.sns.vo.SnsCmntVO">
+		SELECT * FROM sns_cmnt
+		WHERE cmnt_mem =#{cmntMem}
+		<if test="groupNo != null and groupNo != ''">
+		AND group_no = {groupNo};
+		</if>
+	</select>
+
+
+
+	
 
 
 	<insert id="insertReply"
@@ -28,8 +41,8 @@
 		atch_path,
 		group_no,
 		recmnt_order,
-		step,
-		
+		step
+
 
 		)
 		VALUES (
@@ -53,18 +66,19 @@
 			<when test="step != null">#{step}+1</when>
 			<otherwise>#{step}</otherwise>
 		</choose>
-		
+
 		)
 	</insert>
 
-	<delete id="deleteRreply" parameterType="com.goguma.sns.vo.SnsCmntVO">
+	<delete id="deleteRreply"
+		parameterType="com.goguma.sns.vo.SnsCmntVO">
 		delete from sns_cmnt
 		where cmnt_no = #{cmntNo}
-		
-		
-		
-		
-		
+
+
+
+
+
 	</delete>
 
 	<update id="updateCmnt"

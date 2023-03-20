@@ -2,9 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://ultraq.net/thymeleaf/layout"
 	layout:decorate="~{myPages/sideBar/sideBar}">
+<link rel="stylesheet" href="/css/myPages/myPoint.css">
+
 <style>
-.snsList tr :hover {
-	background-color: yellow;
+.snsGroup {
+	width: 100%;
+	min-height: 60%;
+}
+
+.notifyView {
+	width: 90%;
+	min-height: 70px;
+	margin: 3px auto;
 }
 </style>
 
@@ -17,47 +26,102 @@
 
 		<div class="container">
 
-			<br>
-			<div>
-				<h4 class="blog-section-title border-left mb-30">나의 동네생활</h4>
+			<div class="tab-pane active" id="order-complete">
+				<div class="tab-pane active" id="order-complete">
+					<br>
+					<div>
+						<h4 class="blog-section-title border-left mb-30">나의 동네생활</h4>
+					</div>
+					<div class="order-complete-content box-shadow">
+						<form>
+							
+							<div class="row">
+								<div>
+									<table class="table table-hover" style="text-align: center">
+										<thead style="border: 1px">
+											<tr>
+												<th scope="col">SNS_NO</th>
+												<th scope="col">USER_ID</th>
+												<th scope="col">SNS_CN</th>
+												<th scope="col">SNS_YMD</th>
+												<th scope="col">SNS_CNT</th>
+											
+
+											</tr>
+										</thead>
+										<tbody class="snsGroup" id="snsList" style="text-align:center;  word-break:break-all; ">
+										
+										</tbody >
+									</table>
+								</div>
+							</div>
+						</form>
+					</div>
+				<button class="btn btn-primary" onclick="" style="margin-left:41%;">나의 동내 생활</button>
+				
+				</div>
+
+
 			</div>
-			<form id="info">
-				<table class="table" style="text-align: center;">
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">SNS_NO</th>
-							<th scope="col">USER_ID</th>
-							<th scope="col">SNS_CN</th>
-							<th scope="col">SNS_YMD</th>
-							<th scope="col">SNS_CNT</th>
-							<th scope="col">DELETE</th>
-							<th scope="col">EDIT</th>
-
-						</tr>
-					</thead>
-					<tbody th:each="list : ${list}" id="snsList" class="snsList">
-						<tr th:id="${list.snsNo}" th:value="${list.snsNo}"
-							th:onclick="|location.href='@{/sns/selectperSns/{snsNo}(snsNo=${list.snsNo})}'|">
-							<td id="snsNo" th:text="${list.snsNo}"></td>
-							<td th:text="${list.snsNo}" th:value="${list.snsNo}"></td>
-							<td th:text="${list.userId}"></td>
-							<td th:text="${list.snsCn}"></td>
-							<td th:text="${list.snsYmd}"></td>
-							<td th:text="${list.inqCnt}"></td>
-							<td><button id="delButton" onclick="deleteSns(event)" th:value="${list.snsNo}">삭제</button></td>
-							<td><button id="editButton"
-									th:onclick="|location.href='@{/sns/UpdateSns/{snsNo}(snsNo=${list.snsNo})}'|">수정</button></td>
-						</tr>
-
-					</tbody>
-				</table>
-			</form>
 		</div>
 		<script th:inline="javascript">
-			function deleteSns(event) {
-					console.log($(event.target).val())
+		btn = $("<button>").attr({
+			class:"btn btn-primary"
+		}); // 테이블에 변경항목 추가하기위한 태그 생성
+			$(document).ready(function() {
+				selectMySns();
+
+			});
+
+			function selectMySns() {
+
+				$.ajax({
+					url : "/my/selectMySns",
+					type : "GET",
+					success : function(data) {
+						
+						console.log(data)
+						$("#snsList").empty();
+						$(data).each(function(index, obj) {
+							$("#snsList").append($("<tr>"))
+						.append($("<td>").text(obj.snsNo))
+						.append($("<td>").text(obj.userId))
+						.append($("<td>").text(obj.snsCn))
+						.append($("<td>").text(obj.snsYmd))
+						.append($("<td>").text(obj.inqCnt))
+						/* .append($("<td>").html(btn.clone().text("삭제").attr("onclick","deleteSns("+ obj.snsNo +")")))
+						.append($("<td>").html(btn.clone().text("수정"))) */
+									
+									
+							
+						})
+						
+						}
+					
+					
+				})
+
+			}
+
+			function deleteSns(snsNo) {
+			
 				let confirmMessage = confirm("정말 삭제 하시겠습니까??");
+				
+				$.ajax({
+					url : "/goguma/deleteSns",
+					type : "GET",
+					data:{snsNo},
+					success : function(data) {
+						console.log(data)
+						
+						
+						
+						selectMySns(snsNo)
+						}
+					
+					
+				})
+				
 				
 
 			}

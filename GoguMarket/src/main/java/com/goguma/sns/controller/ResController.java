@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -138,56 +139,47 @@ public class ResController {
 
 		return mv;
 	}
+	
+	
+	@GetMapping("/my/selectMySns")
+	public List<SnsVO> mySns(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		
+		String userId = (String)session.getAttribute("userId");
+		
+		System.out.println(userId);
+		
+		List<SnsVO> list = service.selectPerSns(userId);
+	
+		
 
-	@GetMapping("/goguma/deleteSns/{snsNo}")
-	public String deleteSns(SnsVO vo, AtchVO avo, List<MultipartFile> files,HttpServletResponse response) {
+		return list;
+	}
+	
 
+
+	@GetMapping("/goguma/deleteSns")
+	public int deleteSns(SnsVO vo, AtchVO avo, List<MultipartFile> files,HttpServletResponse response) {
+		System.out.println(vo);
+		
 		vo = service.selectSns(vo.getSnsNo());
 		System.out.println(vo + " => 삭제할 글 정보");
 
-		int snsNO = vo.getSnsNo();
-
-		List<AtchVO> snsList = service.selectSnsAtch(snsNO);
+		List<AtchVO> snsList = service.selectSnsAtch(vo.getSnsNo());
 
 		System.out.println(snsList + " => 삭제할 첨부파일들 정보");
 
+		int delAtch = aservice.deleteFile(snsList);
+		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
+		
 		int delSns = service.deleteSns(vo);
-
 		System.out.println("게시글 삭제했으면 1 => " + delSns);
 
-		int delAtch = aservice.deleteFile(snsList);
-
-		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
-
-		try {
-			if (delSns > 0) {
-				System.out.println("왔니..delAcut 안쪽임");
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
-
-				out.println("<script language='javascript'>");
-				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/goguma/auctList';");
-
-				out.println("</script>");
-
-				out.flush();
-
-			} else {
-				response.setContentType("text/html; charset=UTF-8");
-
-				PrintWriter out = response.getWriter();
-				out.println("<script language='javascript'>");
-				out.println("alert('[삭제실패] 게시글 삭제 중 오류가 발생하였습니다 :( '); location.href='/auctList';");
-				out.println("</script>");
-
-				out.flush();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 
 		
-		return "myPages/mySns";
+		return delSns;
 	}
 
 }
