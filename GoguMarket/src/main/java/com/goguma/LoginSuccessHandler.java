@@ -54,7 +54,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		int alarmCount = alarmService.checkNotifyCount(aVO);
 		session.setAttribute("alarm", alarmCount);
-		
+		System.out.println(alarmCount);
 		//비즈회원 > 비즈번호 담기
 		if (memVO.getUserSe().equals("ROLE_BIZ")) {
 			String bizId = memVO.getUserId();
