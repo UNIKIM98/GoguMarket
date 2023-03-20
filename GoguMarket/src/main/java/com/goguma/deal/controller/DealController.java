@@ -131,6 +131,7 @@ public class DealController {
 			HttpSession session = request.getSession();
 			userId = (String) session.getAttribute("userId");
 			
+			// 보낸 리뷰
 			rvo.setUserId(userId);
 
 			System.out.println("왔슈...." + userId);
@@ -140,7 +141,6 @@ public class DealController {
 			rvo.setFirst(paging.getFirst()); // 
 			rvo.setLast(paging.getLast());	// 
 			
-			rvo.setUserId(userId);
 			paging.setTotalRecord(rvService.getcountTotal(rvo));
 			System.out.println(rvService.getcountTotal(rvo)+"rvoooo잘나오냐?");// ㅇㅇ4건잘나옴
 			System.out.println(rvo+"rvoooooo");
@@ -255,7 +255,7 @@ public class DealController {
 	// ===========================
 	// ▷ 판매상품 단건조회
 	@RequestMapping("/goguma/dealdetail/{dlNo}")
-	public String getDeal(@PathVariable int dlNo, Model model, Paging paging, DealSearchVO svo,MemVO mvo) {
+	public String getDeal(@PathVariable int dlNo, Model model, Paging paging, DealSearchVO svo) {
 		// 페이징 하기위한 재료들 svo에 담는다
 		DealVO vo = dealService.selectDeal(dlNo);
 		
@@ -433,13 +433,14 @@ public class DealController {
 	// ❤❤ 판매자 페이지
 	@RequestMapping("/goguma/dealSellerpage/{ntslId}")
 	public String getDealSeller(Paging paging,DealSearchVO svo, DealRvSearchVO rvo, @PathVariable String ntslId, Model model) {
-
+		// 판매자에 대한 리뷰 가져오는거
 		System.out.println("왔슈...." + ntslId);
+		//DealReviewVO drvo = new DealRvSearchVO();
 		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 
-		rvo.setFirst(paging.getFirst()); // 
-		rvo.setLast(paging.getLast());	// 
+		rvo.setFirst(paging.getFirst());  
+		rvo.setLast(paging.getLast());	
 		
 		rvo.setUserId(ntslId);
 		paging.setTotalRecord(rvService.getcountTotal(rvo));
@@ -448,15 +449,19 @@ public class DealController {
 		
 		model.addAttribute("review", rvService.getDealRv(rvo));// 여러건의 후기 조회 rvo로 담아야 페이징가능하다.
 		
+		
+		//DealVO vo = new DealVO();
 		svo.setNtslId(ntslId);
 		
 		paging.setPageUnit(1); // 한 페이지에 출력할 레코드 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
-		System.out.println(svo+"svooooo"); // 이건또왜 시발 퍼스트1 라스트1이냐?
+		System.out.println(svo+"svooooo"); // 이건또왜  퍼스트1 라스트1이냐?
 		paging.setTotalRecord(dealService.getcountTotal(svo)); 
 		System.out.println(dealService.getcountTotal(svo)+"갯수나오냐?"); // 이건되는데
+	
+		System.out.println(svo.getNtslId()+"idddd");
 		
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
 		System.out.println(dealService.selectNtslDeal(svo)+"svooo");

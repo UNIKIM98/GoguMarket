@@ -204,27 +204,23 @@ layout:decorate="~{layouts/layout}">
             <div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="section-title text-start mb-40">
-                                <h2 class="uppercase">상품리스트</h2>
-                                <h6>고구마켓에서 중고거래를 해보세요</h6>
-                            </div>
-                        </div>
+                       
                         <div class="col-lg-6">
                             <div class=" text-end f-right">
-                                <!-- Nav tabs -->
-                                <ul >
+                               
+                            </div>
+                        </div>
+                       <!-- Nav tabs -->
+                        <div class="col-lg-10">
+                                <ul>
                                     <li style="display: inline-block;"><a th:class="'dl_ymd'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_ymd')">최신순</a></li>
                                     &nbsp; &nbsp;
                                     <li style="display: inline-block;"><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
                                      &nbsp; &nbsp;
                                     <li style="display: inline-block;"><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
                                    
-                                </ul>
-                            </div>
-                        </div>
-                        
-	                        <div class="col-lg-10"><input type="hidden"></div>
+                                </ul>  
+	                       </div>
 	                        <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/my/dealform'"><span>판매글등록</span></a></div>
                         <hr>
                         <div class="col-lg-12">
