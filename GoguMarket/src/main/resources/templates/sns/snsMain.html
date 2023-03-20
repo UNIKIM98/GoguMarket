@@ -75,10 +75,12 @@ textarea {
 							</div>
 						</div>
 
-						<div class="mt-100">
-							<div class="row" id="list"
-								style="margin-bottom: 30%; padding: 20%;"></div>
+						<div class="container">
+							<div class="mt-100">
 
+								<div class="row" id="list"></div>
+
+							</div>
 						</div>
 
 					</div>
@@ -89,67 +91,64 @@ textarea {
 		<!-- writeFormModal -->
 		<div id="myModal" class="modal">
 			<!-- Modal content -->
-			<div class="modal-content">
+			<div class="modal-content" style="width: 350px;">
 				<div class="modal-body" style="padding: 20px; margin-bottom: 5px;">
 					<button class="close1" onclick=""
 						style="color: black; padding: 10px;">x</button>
 
-					<img id="preview" style="width: 60%; margin-left: 20%;" />
+					<img id="preview" style="width: 100%; height: 350px; margin-left: 20%;" /> <label
+						for="files"> <img src="/img/logo/003.png" style="width: 100%; height: 350px;" /></label>
 
 
-					<div th:unless="files != null">
-						<div>
-							<p>이미지가 없습니다</p>
-						</div>
-
-					</div>
-
-					<form action="insertSns" method="post"
-						enctype="multipart/form-data">
-						<div class="login-account p-30 box-shadow mtb-15">
-							<div class="col-lg-4 col-md-6 pb-10">
-								<div class="banner-item banner-3">
-
-									<input type="file" name="files" id="files" placeholder="첨부파일"
-										multiple="multiple" onchange="readURL(this);">
-									<!-- atch -->
-
-								</div>
-							</div>
-
-							<!-- userId -->
-							<input th:value="${session.userId}" type="hidden" name="userId"
-								id="userId">
-
-
-							<!-- 게시물 -->
-							<textarea name="snsCn" id="snsCn" class="form-control-lg mb-15"
-								placeholder="게시글 내용 300자 이하." rows="3" cols="300"
-								style="width: 100%"></textarea>
-							<input type="text" name="hash" id="hash" value="#Tag"
-								class="form-control form-control-lg">
-							<!--  -->
-							<input type="hidden" name="area" id="area"
-								th:value="${session.dealArea}">
-						</div>
-						<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
-					</form>
 				</div>
-				<div class="modal-footer" style="background-color: #000000;">
-					&nbsp;</div>
+
+				<form action="insertSns" method="post" enctype="multipart/form-data">
+					<div class="login-account p-30 box-shadow mtb-15">
+						<div class="col-lg-4 col-md-6 pb-10">
+							<div class="banner-item banner-3">
+
+								<input type="file" name="files" id="files" placeholder="첨부파일"
+									multiple="multiple" onchange="readURL(this);">
+								<!-- atch -->
+
+							</div>
+						</div>
+
+						<!-- userId -->
+						<input th:value="${session.userId}" type="hidden" name="userId"
+							id="userId">
+
+
+						<!-- 게시물 -->
+						<textarea name="snsCn" id="snsCn" class="form-control-lg mb-15"
+							placeholder="게시글 내용 300자 이하." rows="3" cols="300"
+							style="width: 100%"></textarea>
+						<input type="text" name="hash" id="hash" value="#Tag"
+							class="form-control form-control-lg">
+						<!--  -->
+						<input type="hidden" name="area" id="area"
+							th:value="${session.dealArea}">
+					</div>
+					<button class="submit-btn-1 btn-hover-1 f-right" type="submit">complete</button>
+				</form>
 			</div>
+			<div class="modal-footer" style="background-color: #000000;">
+				&nbsp;</div>
+		</div>
 		</div>
 		<!-- writeForm -->
 		<!-- 개인 Sns -->
 		<div id="mySns" class="Sns">
 			<!-- Modal content -->
-			<div class="Sns-content" style="width: 40%;">
+			<div class="Sns-content" style="width: 350px;">
 
 				<form id="snsContent" action="#">
 
 					<div class="Sns-body">
 						<div>
-							<img alt="" class="ml-5" id="atchPath" style="width: 100%;">
+							<img alt="" class="ml-5" id="atchPath"
+								style="width: 100%; height: 350px;"
+								onerror="this.onerror=null; this.src='/img/logo/003.png'">
 							<span class="ml-10" id="snsYmd"></span>
 							<h3 class="mt-10 ml-20"></h3>
 						</div>
@@ -254,7 +253,7 @@ textarea {
 							  $("#list").append(`
 									  <div class="col-lg-4 col-md-6">
 			                            <div class="blog-item" onclick="snsModal(${sns.snsNo})" style="height:350px; width:350px;">
-			                                <img src="${sns.atchPath}" alt="" onerror="this.onerror=null; this.src='/img/logo/003.png'">
+			                                <img src="${sns.atchPath}" alt="" onerror="this.onerror=null; this.src='/img/logo/003.png'" style="height:350px; width:100%;">
 			                                <div class="blog-desc">
 											<h5 class="blog-title">
 												<a href="#">${sns.userId} / ${sns.snsYmd} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수:${sns.inqCnt}</a>

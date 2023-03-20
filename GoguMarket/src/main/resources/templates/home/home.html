@@ -4,10 +4,11 @@
 	layout:decorate="~{layouts/layout}">
 <head>
 <style type="text/css">
-.whiteH3{
-	color:white;
+.whiteH3 {
+	color: white;
 	font-weight: bold;
 }
+
 .spanStrong span {
 	color: #C04A82;
 	font-weight: bold;
@@ -37,8 +38,11 @@
 										<div class="product-item product-item-2" th:each="d : ${deal}">
 											<div class="product-img">
 												<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo = ${d.DL_NO})}">
-													<img th:src="${d.ATCH_PATH}" alt="중고사진"
+													<img th:if="${d.ATCH_PATH!=0}" th:src="${d.ATCH_PATH}"
+													alt="중고사진"
 													onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+													<img th:if="${d.ATCH_PATH==0}"
+													th:src="/img/logo/003.png" alt="중고사진" />
 												</a>
 											</div>
 											<div class="product-info">
@@ -48,14 +52,11 @@
 														th:text="${d.DL_TTL}"></a>
 												</h6>
 												<h6 class="brand-name" th:text="${d.AREA}">Sumsung</h6>
-												<h3 class="pro-price"
-													th:if="${d.DL_PRC != 0}"
+												<h3 class="pro-price" th:if="${d.DL_PRC != 0}"
 													th:text="${#numbers.formatInteger(d.DL_PRC, 3, 'COMMA') + '원'}"></h3>
-												<h4 class="pro-price"
-													th:if="${d.DL_PRC == 0}"
+												<h4 class="pro-price" th:if="${d.DL_PRC == 0}"
 													th:text="무료나눔"
-													th:style="${'color: #C04A82; font-weight: bold;'}"
-													></h4>
+													th:style="${'color: #C04A82; font-weight: bold;'}"></h4>
 											</div>
 											<ul class="action-button">
 												<li><a title="Wishlist"><i
@@ -85,8 +86,12 @@
 							<div class="col-lg-8">
 								<div class="up-comming-pro gray-bg up-comming-pro-2 clearfix">
 									<div class="up-comming-pro-img f-left">
-										<a href="#"> <img th:src="${auct[0].ATCH_PATH}" alt=""
-											onerror="this.onerror=null; this.src='/img/logo/003.png'">
+										<a href="#"> <img th:if="${auct[0].ATCH_PATH!=0}"
+											th:src="${auct[0].ATCH_PATH}" alt="경매사진"
+											onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+											<img th:if="${auct[0].ATCH_PATH==0}"
+											th:src="/img/logo/003.png" alt="경매사진" />
+
 										</a>
 									</div>
 									<div class="up-comming-pro-info f-left">
@@ -101,7 +106,8 @@
 											<span>경매마감까지</span>
 										</h3>
 										<div class="up-comming-time-2">
-											<div data-countdown="${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')}"></div>
+											<div
+												data-countdown="${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')}"></div>
 										</div>
 									</div>
 								</div>
@@ -165,8 +171,12 @@
 													<div class="product-img">
 														<a
 															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
-															<img alt="" th:src="${b.ATCH_PATH}"
+															<img th:if="${b.ATCH_PATH !=0}"
+															th:src="${b.ATCH_PATH}" alt=""
 															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+															<img th:if="${b.ATCH_PATH==0}"
+															th:src="/img/logo/003.png" alt="" />
+
 														</a>
 													</div>
 													<div class="product-info">
@@ -203,8 +213,12 @@
 													<div class="product-img">
 														<a
 															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
-															<img alt="" th:src="${b.ATCH_PATH}"
+															<img th:if="${b.ATCH_PATH !=0}"
+															th:src="${b.ATCH_PATH}" alt=""
 															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+															<img th:if="${b.ATCH_PATH ==0}"
+															th:src="/img/logo/003.png" alt="" />
+
 														</a>
 													</div>
 													<div class="product-info">
@@ -240,8 +254,11 @@
 													<div class="product-img">
 														<a
 															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
-															<img alt="" th:src="${b.ATCH_PATH}"
+															<img th:if="${b.ATCH_PATH!=0}" th:src="${b.ATCH_PATH}"
+															alt=""
 															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+															<img th:if="${b.ATCH_PATH==0}"
+															th:src="/img/logo/003.png" alt="" />
 														</a>
 													</div>
 													<div class="product-info">
@@ -277,8 +294,11 @@
 													<div class="product-img">
 														<a
 															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
-															<img alt="" th:src="${b.ATCH_PATH}"
+															<img th:if="${b.ATCH_PATH!=0}" th:src="${b.ATCH_PATH}"
+															alt=""
 															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+															<img th:if="${b.ATCH_PATH==0}"
+															th:src="/img/logo/003.png" alt="" />
 														</a>
 													</div>
 													<div class="product-info">
@@ -313,8 +333,11 @@
 													<div class="product-img">
 														<a
 															th:href="@{/goguma/bookmain/{bizNo}(bizNo = ${b.BIZ_NO})}">
-															<img alt="" th:src="${b.ATCH_PATH}"
+															<img th:if="${b.ATCH_PATH!=0}" th:src="${b.ATCH_PATH}"
+															alt=""
 															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+															<img th:if="${b.ATCH_PATH==0}"
+															th:src="/img/logo/003.png" alt="" />
 														</a>
 													</div>
 													<div class="product-info">
@@ -361,9 +384,13 @@
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="blog-image">
-														<a href="/goguma/snsMain"><img th:src="${s.ATCH_PATH}"
-															onerror="this.onerror=null; this.src='/img/logo/003.png'"
-															alt=""></a>
+														<a href="/goguma/snsMain"> <img
+															th:if="${s.ATCH_PATH!=0}" th:src="${s.ATCH_PATH}"
+															alt=""
+															onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+															<img th:if="${s.ATCH_PATH==0}"
+															th:src="/img/logo/003.png" alt="" />
+														</a>
 													</div>
 												</div>
 												<div class="col-lg-6">
@@ -392,25 +419,25 @@
 			</section>
 
 		</div>
-		      <script th:inline="javascript">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var auctDdln = /*[[ ${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')} ]]*/
+			console.log(auctDdln);
+			/*]]*/
 
-   /*<![CDATA[*/   
-   var auctDdln = /*[[ ${#dates.format(auct[0].DDLN_YMD, 'yyyy/MM/dd')} ]]*/
-   console.log(auctDdln);
-   /*]]*/
-   
-   $(function(){
-      
-       $('[data-countdown]').countdown(auctDdln, function(event) {
-           $(this).html(
-            event.strftime(
-               '<span class="cdown days"><span class="time-count">%-D</span> <p>Days</p></span> <span class="cdown hour"><span class="time-count">%-H</span> <p>Hour</p></span> <span class="cdown minutes"><span class="time-count">%M</span> <p>Mint</p></span> <span class="cdown second"> <span><span class="time-count">%S</span> <p>Sec</p></span>'
-            )
-         );
-       }); 
-   })
+			$(function() {
 
-</script>
+				$('[data-countdown]')
+						.countdown(
+								auctDdln,
+								function(event) {
+									$(this)
+											.html(
+													event
+															.strftime('<span class="cdown days"><span class="time-count">%-D</span> <p>Days</p></span> <span class="cdown hour"><span class="time-count">%-H</span> <p>Hour</p></span> <span class="cdown minutes"><span class="time-count">%M</span> <p>Mint</p></span> <span class="cdown second"> <span><span class="time-count">%S</span> <p>Sec</p></span>'));
+								});
+			})
+		</script>
 	</div>
 </body>
 </html>

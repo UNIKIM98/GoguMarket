@@ -15,11 +15,27 @@
 	min-height: 70px;
 	margin: 3px auto;
 }
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	table-layout: fixed;
+}
+
+td {
+	vertical-align: middle;
+	padding: 5px;
+	border: 1px solid #000;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
 </style>
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body>
 	<div layout:fragment="myContent">
@@ -32,39 +48,48 @@
 					<div>
 						<h4 class="blog-section-title border-left mb-30">나의 동네생활</h4>
 					</div>
-					<div class="order-complete-content box-shadow">
-						<form>
-							
-							<div class="row">
-								<div>
-									<table class="table" style="text-align: center">
-										<thead style="border: 1px">
+
+					<form>
+
+						<div class="row">
+							<div>
+								<div class="payment-details box-shadow p-30 mb-50"
+									style="height: 750px; width: 100%; padding: 5%;">
+									<table class="table"
+										style="text-align: center; font-size: 10px;">
+										<thead style="border: 1px; table-layout: fixed;">
 											<tr>
 												<th scope="col">SNS_NO</th>
 												<th scope="col">USER_ID</th>
 												<th scope="col">SNS_CN</th>
 												<th scope="col">SNS_YMD</th>
 												<th scope="col">SNS_CNT</th>
-											
+												<th scope="col">DELETE</th>
+
 
 											</tr>
 										</thead>
-										<tbody class="snsGroup" id="snsList" style="text-align:center;  word-break:break-all; ">
-										
-										</tbody >
+										<tbody class="snsGroup" id="snsList"
+											style="text-align: center; word-break: break-all;">
+
+										</tbody>
 									</table>
+									<button class="btn btn-primary" onclick="goMySns()"
+										style="margin-left: 41%;">나의 동내 생활</button>
 								</div>
 							</div>
-						</form>
-					</div>
-				<button class="btn btn-primary" onclick="" style="margin-left:41%;">나의 동내 생활</button>
-				
+						</div>
+					</form>
+
+
 				</div>
 
 
 			</div>
 		</div>
 		<script th:inline="javascript">
+		
+		
 		btn = $("<button>").attr({
 			class:"btn btn-primary"
 		}); // 테이블에 변경항목 추가하기위한 태그 생성
@@ -84,24 +109,20 @@
 						$("#snsList").empty();
 						$(data).each(function(index, obj) {
 							$("#snsList").append($("<tr>"))
-						.append($("<td>").text(obj.snsNo))
+						.append($("<td>").text(index+1))
 						.append($("<td>").text(obj.userId))
-						.append($("<td>").text(obj.snsCn))
+						.append($("<td>").text(obj.snsCn).css("width","60%").css("text-overflow", "ellipsis;"))
 						.append($("<td>").text(obj.snsYmd))
 						.append($("<td>").text(obj.inqCnt))
-						/* .append($("<td>").html(btn.clone().text("삭제").attr("onclick","deleteSns("+ obj.snsNo +")")))
-						.append($("<td>").html(btn.clone().text("수정"))) */
-									
+						 .append($("<td>").html(btn.clone().text("삭제").attr("onclick","deleteSns("+ obj.snsNo +")")))
+														
 									
 							
 						})
 						
 						}
-					
-					
-				})
-
-			}
+					})
+}
 
 			function deleteSns(snsNo) {
 			
@@ -131,6 +152,24 @@
 
 				let confirmMessage = confirm("정말 삭제 하시겠습니까??");
 
+			}
+			
+			
+			function goMySns(){ //sns page로 이동
+				
+				var link ='/goguma/snsMain';
+				
+				 confirmMessage = confirm("당신의 동내생활로 가겠습니까?");
+				if(result){
+					location.href = link;
+				}else{
+				    
+				}
+				
+				
+				
+				
+				
 			}
 		</script>
 	</div>
