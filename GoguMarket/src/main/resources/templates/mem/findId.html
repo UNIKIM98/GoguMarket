@@ -108,14 +108,12 @@
 		// ==============================================================
 		// ❤️ 존재시 이메일 인증번호 전송
 		function sendEmlAuth(eml) {
-			console.log(eml);
 					appendAuth();
 			$.ajax({
 				url : '/goguma/emlCheckAJax/' + eml,
 				type : 'get',
 				success : function(result) {
 					secureRandom = result;
-					console.log(secureRandom);
 				},
 				error : function(err) {
 					console.log(err);
@@ -131,7 +129,6 @@
 				url : '/goguma/isEmlExistAjax/' + eml,
 				type : 'get',
 				success : function(result) {
-					console.log(result);
 					if(result=="no"){
 						alert("입력하신 이메일과 일치하는 회원이 없습니다.");
 						$('#eml').val("").focus();
@@ -140,7 +137,6 @@
 						alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
 						sendEmlAuth(eml);
 						userId = result;
-						console.log(userId);
 					}
 				},
 				error : function(err) {

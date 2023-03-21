@@ -12,6 +12,7 @@ import lombok.Data;
 public class SnsCmntVO {
 	private int cmntNo;
 	private int snsNo;
+	private int groupNo;
 	private String cmntCn;
 	private String cmntMem;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -20,8 +21,7 @@ public class SnsCmntVO {
 	private String atchPath; //프로필
 			
 	private int recmntOrder;
-	private int groupNo;
-	private int step;
+	
 	
 	
 }

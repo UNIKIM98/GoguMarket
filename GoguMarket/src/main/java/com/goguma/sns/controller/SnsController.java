@@ -17,6 +17,8 @@ import com.goguma.sns.vo.SnsVO;
 
 @Controller
 public class SnsController {
+	// 단순 동네 생활 페이지 이동 관련 컨트롤러
+	
 	@Autowired
 	SnsService service;
 
@@ -27,19 +29,19 @@ public class SnsController {
 	public String SnsMain() {
 
 		return "sns/snsMain";
-	}
+	} // > 메인 페이지 > 동네 생활 
 	
 	@GetMapping("/my/mySns")
 	public String mySns() {
 
 		return "myPages/mySns";
-	}
+	} // > 마이페이지 > 동네 생활  
 	
-	@GetMapping("/my/myReply")
-	public String myReply() {
-
-		return "myPages/myReply";
-	}
+	/*
+	 * @GetMapping("/my/myReply") public String myReply() {
+	 * 
+	 * return "myPages/myReply"; }
+	 */
 
 	
 	

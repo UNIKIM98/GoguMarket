@@ -139,6 +139,8 @@ public class AlarmController {
 		page.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 		vo.setFirst(page.getFirst());
 		vo.setLast(page.getLast());
+		
+		System.out.println("시작페이지 : " + vo.getFirst() + "시작페이지 : " + vo.getLast());
 
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");

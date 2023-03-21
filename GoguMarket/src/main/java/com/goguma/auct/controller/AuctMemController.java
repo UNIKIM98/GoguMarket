@@ -23,36 +23,25 @@ public class AuctMemController {
 	AuctMemService auctMemService;
 	@Autowired
 	AuctService auctService;
-	
+	// ▼경매물품 입찰
 	@PostMapping("/my/insertAuctMem")
 	private String insertAuctMem(AuctMemVO vo,HttpServletRequest request) {
-		// 입찰 등록
-		
-		HttpSession session = request.getSession(); //세션값 받아옴
-		String myId = (String) session.getAttribute("userId"); //세션값 중 아이디만 받아옴
-		
+		HttpSession session = request.getSession();
+		String myId = (String) session.getAttribute("userId"); //세션값중 userId를 받음
 		vo.setUserId(myId); //세션값으로 아이디 설정
-		System.out.println(vo); //AuctMemVO 출력
 		
+		auctMemService.insertAuctMem(vo); // 입찰서비스
 		
-		auctMemService.insertAuctMem(vo); //vo값 그대로 서비스의 insertAuctMem실행
-		
-		return "redirect:/goguma/auctSelect/"+vo.getAuctNo(); //단건조회페이지로 완료되면 단건조회페이지로~
+		return "redirect:/goguma/auctSelect/"+vo.getAuctNo(); //완료시 단건조회페이지로
 	}
-	
+	// ▼입찰한 경매품 조회
 	@GetMapping("/my/bidAuction")
 	private String bidAuction(Model model, HttpServletRequest request) {
-		// 마이페이지 내가 입찰한 경매 이동
-
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
-		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId);
+		List<AuctMemVO> mybidList= auctMemService.bidAuction(userId); //세션값 중 userId로 입찰내역 서비스 실행
 		
-		model.addAttribute("mybidList",mybidList);
-		
-		
-//		List<AuctVO> myAuctList = auctService.selectUserId(userId); // userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
-//		model.addAttribute("myAuctList",myAuctList);
+		model.addAttribute("mybidList",mybidList); //모델에 담기
 		return "auction/bidAuction";
 		
 	}

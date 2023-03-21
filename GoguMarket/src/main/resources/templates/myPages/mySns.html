@@ -74,7 +74,8 @@ td {
 
 										</tbody>
 									</table>
-									<button class="btn btn-primary" onclick="goMySns()"
+									<input type="hidden" id="userId" value="">
+									<button class="btn btn-primary"  id ="goSns" onclick="goMySns()"
 										type="button" style="margin-left: 41%;">나의 동내 생활</button>
 								</div>
 							</div>
@@ -90,6 +91,7 @@ td {
 		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 		<script th:inline="javascript">
 			var link ='/goguma/snsMain';
+			var userId
 		
 	
 		btnn = $("<button>").attr({
@@ -121,13 +123,24 @@ td {
 							
 						})
 						
+						$("#userId").val(data[0].userId);
+						
 						}
 					})
 			}
 			
-			function goMySns(){ //sns page로 이동				
+			
+			function goMySns(){ //sns page로 이동	
+				
+				
+				 let userId = $("#userId").val()
+				 
+				 console.log(userId)
+				
 				 if (confirm("당신의 동네생활로 가겠습니까?")) {
-						location= '/goguma/snsMain';
+					 
+					 	var data = "idx=1&userId="+userId;
+						location= '/goguma/snsMain?'+data;
 					}
 				    
 				}
@@ -150,12 +163,12 @@ td {
 									})
 			}
 
-			function editSns() {
+			/* function editSns() {
 				console.log(event.target);
 
 				let confirmMessage = confirm("정말 삭제 하시겠습니까??");
 
-			}
+			} */
 			
 			
 			

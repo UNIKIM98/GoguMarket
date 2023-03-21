@@ -122,7 +122,7 @@
 															<div th:each="f : ${file}" class="p-c">
 																<a href="#" 
 																	th:data-image="${f.atchPath}"
-																	th:data-zoom-image="${f.atchPath}" style="width:300px; height:300px"> <img
+																	th:data-zoom-image="${f.atchPath}" style="width:3000px; height:300px"> <img
 																	th:src="${f.atchPath}" 
 																	onerror="this.onerror=null; this.src='/img/logo/001.png'"
 																	alt="">
@@ -188,7 +188,7 @@
 															onclick="soldout()">판매완료</button></li>
 													<!--  판완은 버튼누르면 걍 바로 stts="판완" 으로 바꾸게 하면안되냐 아작스?로? 아 제안받은 가격처리는 흠.. -->	
 													<!-- 구매자 -->
-													<li th:if="${session.userId != deal.ntslId}"><button class="submit-btn-1 mt-30 btn-hover-1"
+													<li th:if="${session.userId != deal.prchsId}"><button class="submit-btn-1 mt-30 btn-hover-1"
 															type="submit"
 															style="background-color:#C04A82"
 															th:onclick="|location.href='@{/my/dealUpdateRsvt/{dlNo}(dlNo=${d.dlNo})}'|"
@@ -198,7 +198,7 @@
 														th:if="${session.userId != deal.ntslId && d.stts == '판매완료'}" 
 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"
 															>리뷰쓰기</button></li> -->
-															<li th:if="${session.userId != deal.ntslId and session.userId == d.prchsId}" ><button class="submit-btn-1 mt-30 btn-hover-1"
+															<li th:if="${session.userId != deal.ntslId && session.userId == d.prchsId}" ><button class="submit-btn-1 mt-30 btn-hover-1"
 														type="submit" 
 														style="background-color:#C04A82"
 														th:onclick="|location.href='@{/my/dealReview/{dlNo}(dlNo=${d.dlNo})}'|"

@@ -108,6 +108,7 @@
 												<hr>
 												<h2 class="pro-price" th:if="${auctMem!='nothing'}"
 													th:text="${auctMem[0].nowPrc}+'원'"></h2>
+													<h2 class="sin-plus-minus f-right" th:text="'최저가 '+${auct.lowPrc}+'원'"></h2>
 												<h2 class="pro-price" th:if="${auctMem=='nothing'}">현재최고가 없음</h2>
 												<hr>
 												<a th:if="${session.userId!=null}" href="/my/auctInsertForm"
