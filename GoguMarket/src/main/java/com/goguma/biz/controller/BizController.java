@@ -195,12 +195,14 @@ public class BizController {
 
 	// 가게 후기리스트 페이지
 	@GetMapping("/biz/reviewList")
-	public String shop05(HttpServletRequest request, Model model, @ModelAttribute("bobo") BizSearchVO bvo, PagingVO pvo,
-			RsvtRvVO rvo) {
-		HttpSession session = request.getSession();						//세션에서 정보 가져오기
+	public String shop05(HttpSession session, 
+			             Model model, 
+			             @ModelAttribute("bobo") BizSearchVO bvo, 
+			             PagingVO pvo,
+			             RsvtRvVO rvo) {
+		//세션에서 정보 가져오기
 		String bizNo = (String) session.getAttribute("bizNo");
 
-		model.addAttribute("rv", rvService.selectReviewList(bizNo));	// 리뷰 목록
 		model.addAttribute("biz", memService.bizInfo(bizNo));			// 가게 정보
 
 		// 페이징
@@ -209,6 +211,8 @@ public class BizController {
 
 		bvo.setFirst(pvo.getFirst());
 		bvo.setLast(pvo.getLast());
+		bvo.setBizNo(bizNo);
+		model.addAttribute("rv", rvService.selectReviewList(bvo));	// 리뷰 목록
 
 		pvo.setTotalRecord(rvService.selectReviewCnt(bizNo));
 
