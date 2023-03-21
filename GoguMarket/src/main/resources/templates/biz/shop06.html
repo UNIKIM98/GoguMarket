@@ -33,8 +33,7 @@
 					<table>
 						<tr>
 							<td class="td-title-1" style="text-align: center;">총 단골 수는</td>
-							<td class="td-title-1" style="text-align: center;" id="pd">10월1일
-								~ 11월 11일 기간동안</td>
+							<td class="td-title-1" style="text-align: center;" id="pd">(기간동안)</td>
 							<td class="td-title-1" style="text-align: center;">페이지를 방문한 단골은</td>
 							<td class="td-title-1" style="text-align: center;">소식을 읽은 단골은</td>
 						</tr>
@@ -70,7 +69,7 @@
 							<div class="media mt-30">
 								<div class="media-left">
 									<a href="#"><img class="media-object"
-										src="" alt="#" width="50px" onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
+										th:src="${dg.atchPath}" alt="#" width="50px" onerror="this.onerror=null; this.src='/img/logo/001.png'"></a>
 								</div>
 								<div class="media-body">
 									<div class="clearfix">
@@ -131,6 +130,8 @@
 
 	var today = today.toLocaleDateString('ko-KR', dateFormat)
 	var tenDaysAgo = tenDaysAgo.toLocaleDateString('ko-KR', dateFormat)
+	
+	$('#pd').text(tenDaysAgo + " ~ " + today + " 기간동안");
 	</script>
 	</div>
 	<!-- 타임리프 div 끝 -->
