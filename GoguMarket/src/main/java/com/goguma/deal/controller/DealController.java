@@ -108,7 +108,7 @@ public class DealController {
 
 	// ===========================
 	// ▷ 중고마켓 게시글 작성 submit
-	@RequestMapping("/my/dealformsubmit") // 딜폼창확인
+	@RequestMapping("/my/dealformsubmit") 
 	@ResponseBody
 	public String dealform( HttpSession session, 
 			                String userId, 
