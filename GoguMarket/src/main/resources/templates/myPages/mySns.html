@@ -97,6 +97,16 @@ td {
 		btnn = $("<button>").attr({
 		}); // 테이블에 변경항목 추가하기위한 태그 생성
 			$(document).ready(function() {
+				var url = location;
+		         console.log("넘어온 url:"+url);
+		         console.log(url.indexOf('?'));
+		         if( idx >= 0){ //파라미터가 존재하는 경우
+		             idx = idx + 1;
+		             var data = url.substring(idx, url.length);
+		         }
+		         
+		         var data = url.substr(5);
+				
 				selectMySns();
 
 			});

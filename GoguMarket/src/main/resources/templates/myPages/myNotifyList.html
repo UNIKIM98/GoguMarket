@@ -139,7 +139,7 @@
 
 
 
-		function checkNotify() {
+		function checkNotify() { // 1.알림이 왔는지 확인하는 함수
 			console.log("새로고침");
 			$.ajax({
 				url: "/my/checkNotifyCount",
@@ -148,7 +148,7 @@
 				success: function (data) {
 					console.log(data);
 
-					if (data > 0) {
+					if (data > 0) { 
 						loadNotify();
 					} else {
 					}
@@ -162,18 +162,19 @@
 
 
 
-		function loadNotify(pstSe) {
+		function loadNotify(pstSe) { // 2 - 1  알림의 카테고리를 선택하고 입력하기위한 함수 
 			$("#pstSe").val(pstSe);
 			$("#page").val(1);
 			loadNotifyAjax()
 		}
-		function gopage(page) {
+		
+		function gopage(page) { // 2 - 2  페이지 정보를 저장하고 해당 페이지를 출력하기 위한 함수
 			$("#page").val(page);
 			loadNotifyAjax()
 		}
 
 
-		function loadNotifyAjax() {
+		function loadNotifyAjax() { // 2. 모든 알림을 출력하는 함수
 
 
 			$.ajax({
@@ -188,10 +189,7 @@
 					$(".notifyGroup").empty();
 					$(".pagination").empty();
 					
-
-					let pstSed = '';
-
-					console.log(pstSe)
+					let pstSed = ''; // 코드에 맞는 헤더를 넣기 위한 함수
 
 					$(result.data).each(function (index, data) {
 
@@ -213,27 +211,26 @@
 						}
 						
 						$(".notifyGroup").append($("<tr class=" + 'ml-30' + ">").attr({
-																					   "id"   : "check",
-																					   "value":data.cked,	
+																						   "id"   : "check",
+																						   "value":data.cked,	
 																					  })
-							.append(
-								$("<td>").html(radio.clone().attr({
-									"value": data.almNo,
-									"class": "check_" + data.almNo,
-									"name": "almNo"
-								})
-								)
-
-							)
+										 .append(
+												$("<td>").html(radio.clone().attr({
+													"value": data.almNo,
+													"class": "check_" + data.almNo,
+													"name": "almNo"
+												})
+												)
+				
+											)
 						
+											
 							.append($("<td>").text(index + 1))
 							.append($("<td>").text(pstSed))
 							.append($("<td>").text(data.almCn))
 							.append($("<td>").text(data.almYmd))
 							
-							
-
-)
+							)
 						//==================================================================================
 					});
 					 $('.notifyGroup').find("tr[value=0]").css("opacity","50%")
@@ -252,17 +249,15 @@
 							);
 						}
 					})
-					updateNotify();
+						updateNotify(); // 알림 상태를 읽음 상태로 변경 하는 함수실행
+							},
+							error: function (error) {
+								console.log(error);
+							},
+						});
+					}
 
-
-				},
-				error: function (error) {
-					console.log(error);
-				},
-			});
-		}
-
-		function updateNotify() {
+		function updateNotify() { //알림의 상태를 (1)안읽음 > (2)읽음 처리로 변경하는 함수 
 
 			$.ajax({
 				url: "/my/updateNotify",

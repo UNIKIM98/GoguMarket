@@ -15,7 +15,7 @@ $(document).ready(function() { //페이지 로딩후 초기 코드,리스트 출
 	selectMemberList();
 });
 
-function keyValue() { //공통코드 가져오기
+function keyValue() { // 1. 공통코드 가져오기
 	$.ajax({
 		url: "/admin/keyValue",
 		type: "GET",
@@ -64,15 +64,16 @@ function keyValue() { //공통코드 가져오기
 	});
 }
 
-$(document).on("click", ".pageShiftIcon", function() {
+$(document).on("click", ".pageShiftIcon", function() { //2-1
 	setPageJs($(this).attr("shiftType"));
 });
 
-var finalDis = 1;
-var finalPage = 0;
-var maxPage = 1;
+var finalDis = 1; //최초 회원 상태
+var finalPage = 0; //마지막 페이지
+var maxPage = 1; //최대 페이지
 
-function setPageJs(pageNum) { // 페이징 prev,next 함수
+function setPageJs(pageNum) { // 페이징 prev,next 함수 // 2-2
+	
 	if (pageNum == "prev") pageNum = finalPage - 1;
 	if (pageNum == "next") pageNum = finalPage + 1;
 	if (pageNum < 1) { // 첫번쨰 페이자 되면 break;
@@ -86,7 +87,7 @@ function setPageJs(pageNum) { // 페이징 prev,next 함수
 	selectMemberList(finalDis, pageNum);
 }
 
-function selectMemberList(dis, pageNum) {
+function selectMemberList(dis, pageNum) { //2.
 	finalDis = dis;
 	if (!pageNum) {
 		pageNum = 1; // 초기값 지정
@@ -101,6 +102,7 @@ function selectMemberList(dis, pageNum) {
 		formData = $("#searchForm").serialize(); //검색 출력 form
 	}
 	formData += "&userNowPage=" + pageNum; //url에 현재 페이지 정보를 추가
+	
 	$.ajax({
 		url: "/admin/selectMemberList",
 		//method:""
@@ -113,7 +115,6 @@ function selectMemberList(dis, pageNum) {
 				$("#memberTable tbody").load("/admin/noMember.html")
 			}
 			
-				
 			$("#memberTable tbody").empty(); // 기존 리스트를 지우고 재출력
 			$(".pageArrow").empty(); //페이징 번호도 새로 출력
 			$(data.list).each(function(index, mem) {
@@ -123,16 +124,15 @@ function selectMemberList(dis, pageNum) {
 				$("#memberTable tbody")
 					.append("<tr>")
 					.append($("<td>").text(index + 1))
-					.append(
-						$("<td>").attr("class", "dropdown event-dropdown")
-							.append(` <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-										      ${mem.userId}
-										      <span class="caret"></span>
-										    </a>
-										    <ul class="dropdown-menu">
-										      <li><a href="/admin/alarm/${mem.userId}">알림 보내기</a></li>
-										    </ul>
-										 		`)
+					.append($("<td>").attr("class", "dropdown event-dropdown")
+					.append(` <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+							      ${mem.userId}
+							      <span class="caret"></span>
+							    </a>
+							    <ul class="dropdown-menu">
+							      <li><a href="/admin/alarm/${mem.userId}">알림 보내기</a></li>
+							    </ul>
+							 		`)
 					)
 					.append($("<td>").text(mem.userNm))
 					.append($("<td>").text(mem.nickNm))
@@ -184,7 +184,7 @@ function selectMemberList(dis, pageNum) {
 
 
 
-function updataStts(userId) { //삭제 선택및 상태 수정 함수
+function updataStts(userId) { //삭제 선택및 상태 수정 함수 // 3)
 	console.log(userId);
 	let edit = event.currentTarget.parentNode;
 	

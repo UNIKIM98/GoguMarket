@@ -1,6 +1,5 @@
 
 $(document).ready(function() {
-	$("#alarmId").hide(); // 알람 표시를 감추고 있다가
 
 	setInterval(() => checkNotifyHome(), 2000); // 업데이할 시간초 / 실행 함수
 
