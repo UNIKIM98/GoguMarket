@@ -102,7 +102,9 @@
 			</tr>
 			`		
 			)
-			$("#trgtBtn").removeAttr("onclick").attr("onclick","checkAuth()").text("인증하기");
+			$("#trgtBtn").removeAttr("onclick")
+						 .attr("onclick","checkAuth()")
+						 .text("인증하기");
 		}
 		
 		// ==============================================================

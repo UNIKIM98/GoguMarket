@@ -130,10 +130,9 @@ public class MemRestController {
 	// ======================================
 	// ❤️ 회원 정보 수정
 	@PostMapping("/my/memUpdateFormSubmit")
-	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public int memUpdateFormSubmit(MemVO memVO, List<MultipartFile> files, HttpSession session) {
 		
-		// 프로필사진 있으면 실행
+		// ① 프로필사진 있는 경우
 		if (files != null && !files.isEmpty()) {
 			for (MultipartFile file : files) {
 				if (file.getSize() == 0)
@@ -155,7 +154,7 @@ public class MemRestController {
 				session.setAttribute("atchPath", session);
 			}
 
-			// 없으면
+		// ② 프로필사진 없는 경우
 		} else {
 			memVO.setAtchNm(null);
 			memVO.setAtchPath(null);
@@ -221,7 +220,8 @@ public class MemRestController {
 		return result;
 	}
 
-	//
+	// ======================================
+	// ❤️ 이메일 존재 여부 확인
 	@GetMapping("/goguma/isEmlExistAjax/{eml}")
 	public String isEmlExistAjax(@PathVariable String eml) {
 

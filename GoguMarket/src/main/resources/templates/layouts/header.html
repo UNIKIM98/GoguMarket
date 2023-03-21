@@ -25,6 +25,7 @@
                            <li class="pr-20" style="font-size: large;"><a href="/goguma/auctList">경매</a>
                            <li class="pr-20" style="font-size: large;"><a href="/goguma/bookmain">동네가게</a>
                            <li class="pr-20" style="font-size: large;"><a href="/goguma/snsMain">동네생활</a></li>
+                           <li class="pr-20" style="font-size: large;" th:if="${session.userSe == 'ROLE_ADMIN'}"><a href="/admin/adminMember">관리자</a></li>
                         </ul>
                      </nav>
                   </div>
