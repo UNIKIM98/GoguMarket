@@ -32,7 +32,7 @@
 										<div class="media author-post box-shadow mb-30">
 											<div class="media-body">
 												<p class="mb-0" th:if="${!#lists.isEmpty(biz)}" th:text="${biz.cn}">(소개멘트)</p>
-												<p class="mb-0" th:if="${!#lists.isEmpty(biz)}">소개글이 없습니다.</p>
+												<p class="mb-0" th:if="${#lists.isEmpty(biz)}">소개글이 없습니다.</p>
 											</div>
 										</div>
 

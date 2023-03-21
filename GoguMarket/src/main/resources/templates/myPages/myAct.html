@@ -67,7 +67,6 @@
 			dataType: 'json',
 			contentType: 'application/json; charset = utf-8',
 			success: function (result) {
-				console.log(result)
 				memActMake(result.memAct); //→ 대표계좌
 				actListMake(result.actList); //→ 계좌 전체 목록 
 			},
@@ -127,7 +126,6 @@
 			if(confirm("정말로 계좌를 삭제하시겠습니까?")){
 				let actNo = $(event.target).parent().parent().attr('id');
 				let memActNoYn = 'N';
-				console.log(memActNo+"memActNo ")
 				if(actNo == memActNo){
 					memActNoYn = "Y"
 				}
@@ -214,29 +212,21 @@
 				memActNo = result.actNo;
 				switch (result.bankNm) {
 				  case '국민':
-					  	console.log("국민")
 				   		imgSrc = 'img/act/01 국민.png';
 				    	break;
 				  case '기업':
-					  	console.log("겹")
-
 					   	imgSrc = 'img/act/02 기업.png';
 					    break;
 				  case '농협':
-					  	console.log("농협")
-
 					   	imgSrc = 'img/act/03 농협.jpg';
 					    break;
 				  case '신한':
-					  	console.log("샨")
 					   	imgSrc = 'img/act/04 신한.png';
 					    break;
 				  case '대구':
-					  	console.log("머구")
 					   	imgSrc = 'img/act/05 대구.png';
 					    break;
 				  case '우리':
-					  	console.log("위")
 					   	imgSrc = 'img/act/06 우리.png';
 					    break;
 				  case '하나':
@@ -273,29 +263,21 @@
 				
 				switch (memBankNmImg) {
 				  case '국민':
-					  	console.log("국민")
 				   		imgSrc = 'img/act/01 국민.png';
 				    	break;
 				  case '기업':
-					  	console.log("겹")
-
 					   	imgSrc = 'img/act/02 기업.png';
 					    break;
 				  case '농협':
-					  	console.log("농협")
-
 					   	imgSrc = 'img/act/03 농협.jpg';
 					    break;
 				  case '신한':
-					  	console.log("샨")
 					   	imgSrc = 'img/act/04 신한.png';
 					    break;
 				  case '대구':
-					  	console.log("머구")
 					   	imgSrc = 'img/act/05 대구.png';
 					    break;
 				  case '우리':
-					  	console.log("위")
 					   	imgSrc = 'img/act/06 우리.png';
 					    break;
 				  case '하나':

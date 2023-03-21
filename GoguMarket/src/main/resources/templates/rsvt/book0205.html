@@ -6,6 +6,8 @@
 <body>
 	<!-- 타임리프 포함 시작 div -->
 	<div layout:fragment="content">
+	<!-- 얼럿창 커스텀 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 		<!-- 큰덩어리 시작 -->
 		<div class="shop-section mb-80">
@@ -259,7 +261,7 @@
 																	<!-- 해쉬태그 노가다 -->
 																	<div class="mb-20">
 <!-- <h2 th:if="${i.index} == 0" th:text="|인덱스번호 : ${i.index}, 첫번째위치|"></h2> -->
-																		<th:block th:if="${i.index} == 0">
+																		<th:block th:if="${i.index % 4 == 0}">
 																			<div class="pull-right">
 																				<ul class="reply-delate">
 																					<li><a href="#">#친절해요&nbsp;&nbsp;</a></li>
@@ -268,7 +270,7 @@
 																				</ul>
 																			</div>
 																		</th:block>
-																		<th:block th:if="${i.index} == 1">
+																		<th:block th:if="${i.index % 4 == 1}">
 																			<div class="pull-right">
 																				<ul class="reply-delate">
 																					<li><a href="#">#숨겨진맛집&nbsp;&nbsp;</a></li>
@@ -277,7 +279,7 @@
 																				</ul>
 																			</div>
 																		</th:block>
-																		<th:block th:if="${i.index} == 2">
+																		<th:block th:if="${i.index % 4 == 2}">
 																			<div class="pull-right">
 																				<ul class="reply-delate">
 																					<li><a href="#">#이집잘하네&nbsp;&nbsp;</a></li>
@@ -287,13 +289,14 @@
 																				</ul>
 																			</div>
 																		</th:block>
-																		<th:block th:if="${i.index} > 2">
+																		<th:block th:if="${i.index % 4 == 3}">
 																			<div class="pull-right">
 																				<ul class="reply-delate">
 																					<li><a href="#">#인스타갬성&nbsp;&nbsp;</a></li>
 																					<li><a href="#">#사장님친절&nbsp;&nbsp;</a></li>
 																					<li><a href="#">#리뷰맛집&nbsp;&nbsp;</a></li>
-																					<li><a href="#">#여친이랑또올게요&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#남는거있나요&nbsp;&nbsp;</a></li>
+																					<li><a href="#">#개꿀&nbsp;&nbsp;</a></li>
 																				</ul>
 																			</div>
 																		</th:block>
@@ -303,7 +306,7 @@
 																<div class="col-lg-3">
 																	<div class="blog-image">
 																		<a href="#"><img th:src="${rv.rvPath}" alt=""
-																			width="230px" style="padding: 30px 0 0 0;"></a>
+																			width="230px" style="padding: 30px 0 0 0;" onerror="this.onerror=null; this.src='/img/logo/002.png'; this.style='width:70%'"></a>
 																	</div>
 																</div>
 																<hr>
@@ -356,7 +359,8 @@
 
 		//전화번호 알림창
 		function alertTelno(tel) {
-			alert("가게 전화번호는 [ " + tel + " ] 입니다.");
+			swal('가게 전화번호',tel,'info');
+		
 		}
 
 		//채팅방 이동

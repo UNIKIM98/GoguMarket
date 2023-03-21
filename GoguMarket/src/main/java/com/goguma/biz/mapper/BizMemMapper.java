@@ -31,7 +31,6 @@ public interface BizMemMapper {
 	
 	// ❤ 비즈번호 가져오기 
 	String selectBizNo(String userId);
-	
 
 	//가게등록
 	int bizInsert(BizMemVO vo);

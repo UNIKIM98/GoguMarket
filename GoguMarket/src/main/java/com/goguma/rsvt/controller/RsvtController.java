@@ -39,34 +39,20 @@ public class RsvtController {
 	 * book01~05 => 어떤건 biz에 있고 어떤건 rsvt에 있어서 다 모아놈 BizController에 있음.
 	 */
 
-//	@GetMapping("/book0601")
-//	public String book0601() {
-//		return "rsvt/book0601";
-//	}
-
-	@Autowired
-	BizMemService bizMemService; // 가게정보
-	@Autowired
-	BizMenuService menuService; // 메뉴 들고오기 위함
-	@Autowired
-	CommonCodeService codeService; // 공통코드
-	@Autowired
-	RsvtService rsvtService; // 예약
-	@Autowired
-	MemService memService; // 맴바정보
+	@Autowired BizMemService bizMemService; 	// 가게정보
+	@Autowired BizMenuService menuService; 		// 메뉴 들고오기 위함
+	@Autowired CommonCodeService codeService; 	// 공통코드
+	@Autowired RsvtService rsvtService; 		// 예약
+	@Autowired MemService memService; 			// 맴바정보
 
 	// 일반예약
 	@RequestMapping("/my/reservation/{bizNo}")
 	public String bizInfo(@PathVariable String bizNo, Model model) {
-
-		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); // 가게정보
-		model.addAttribute("menu", menuService.bizMenu(bizNo)); // 메뉴
-		model.addAttribute("code", codeService.codeList("007")); // 공통코드(시간)
-		// 단골 카운팅
-		model.addAttribute("dgCnt", bizMemService.BizDangolCnt());
-
-		// 리뷰 카운팅
-		model.addAttribute("rwCnt", bizMemService.BizReviewCnt());
+		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); 	// 가게정보
+		model.addAttribute("menu", menuService.bizMenu(bizNo)); 	// 메뉴
+		model.addAttribute("code", codeService.codeList("007")); 	// 공통코드(시간)
+		model.addAttribute("dgCnt", bizMemService.BizDangolCnt());	// 단골 카운팅
+		model.addAttribute("rwCnt", bizMemService.BizReviewCnt());	// 리뷰 카운팅
 
 		return "rsvt/book0601";
 	}
@@ -74,56 +60,42 @@ public class RsvtController {
 	// 함께예약
 	@GetMapping("/my/book0602/{bizNo}")
 	public String bizComInfo(@PathVariable String bizNo, Model model) {
-
-		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); // 가게정보
-		model.addAttribute("menu", menuService.bizMenu(bizNo)); // 메뉴
-		model.addAttribute("code", codeService.codeList("007")); // 공통코드(시간)
+		model.addAttribute("biz", bizMemService.bizInfo(bizNo)); 	// 가게정보
+		model.addAttribute("menu", menuService.bizMenu(bizNo)); 	// 메뉴
+		model.addAttribute("code", codeService.codeList("007")); 	// 공통코드(시간)
 
 		return "rsvt/book0602";
-	}
-
-	@GetMapping("/book0603")
-	public String book0603() {
-		return "rsvt/book0603";
 	}
 
 	// 예약완료
 	@GetMapping("/my/rsvtComplete/{rsvtNo}")
 	public String book0604(@PathVariable String rsvtNo, Model model) {
-		System.out.println("===="+rsvtNo);
-		model.addAttribute("info", rsvtService.selectRsvtOne(rsvtNo));
-		System.out.println("왜 안나올까"+rsvtService.selectMyRsvtDetail(rsvtNo));
-		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(rsvtNo));
+		model.addAttribute("info", rsvtService.selectRsvtOne(rsvtNo));		// 예약정보 단건조회
+		model.addAttribute("mn", rsvtService.selectMyRsvtDetail(rsvtNo));	// 예약 상세정보
+		
 		return "rsvt/book0604";
 	}
 
 	// 예약내역
 	@GetMapping("/my/myReservation")
 	public String mybook01(String userId, Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();					// 세션에서 정보 불러오기
 		userId = (String) session.getAttribute("userId");
 
-		// List<Map> Lists = rsvtService.selectMyRsvtDetail(userId); =>아작스로 교체
-		List<Map> simple = rsvtService.selectMyRsvtList(userId);
+		List<Map> simple = rsvtService.selectMyRsvtList(userId);	// 예약목록 map타입
 
-		// System.out.println("프린트2 : " + Lists.size() + ", " + simple.size());
-
-		// model.addAttribute("lists", Lists);
-		model.addAttribute("simple", simple);
-		model.addAttribute("code", codeService.codeList("007"));
+		model.addAttribute("simple", simple);						// model에 담기
+		model.addAttribute("code", codeService.codeList("007"));	// 공통코드
 
 		return "myPages/mybook01";
-
 	}
 
 	// 예약상세내역 메뉴부분 ajax(mybook01, 02에서 사용)
 	@GetMapping("/my/myRsvtAjax")
 	@ResponseBody
 	public List<Map> myRsvtAjax(RsvtVO vo) {
-
-		int rsvtNo = vo.getRsvtNo();
-		System.out.println("예약번호==" + rsvtNo);
-		System.out.println(rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo)));
+		int rsvtNo = vo.getRsvtNo();		// 예약번호 가져오기
+		
 		return rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo));
 	}
 
@@ -132,39 +104,30 @@ public class RsvtController {
 	@ResponseBody
 	public RsvtVO myRsvtInfoAjax(RsvtVO vo) {
 		int rsvtNo = vo.getRsvtNo();
+		
 		return rsvtService.selectRsvtOne(Integer.toString(rsvtNo));
 	}
 
 	// 예약수정
 	@GetMapping("/my/modifyRsvt/{rsvtNo}")
 	public String mybook02(@PathVariable int rsvtNo, Model model) {
-		// System.out.println("mybook02페이지 예약번호 출력===" + rsvtNo);
-
 		model.addAttribute("rsvt", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
+		
 		return "myPages/mybook02";
-	}
-
-	@GetMapping("/mybook04")
-
-	public String mybook04() {
-		return "myPages/mybook04";
 	}
 
 	// 예약페이지 form submit - js gotoOrder()함수에서 ajax 호출한거 받아옴
 	@PostMapping("/my/orderFormSubmit")
 	@ResponseBody
 	public int orderFormSubmit(RsvtVO rsvtInfo, RsvtMenuVO menuInfo, HttpServletRequest request) {
-		// 세션에서 로그인한 아이디 불러오기
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();					// 세션에서 로그인한 아이디 불러오기
 		String userId = (String) session.getAttribute("userId");
 
 		// 예약테이블 insert
-		rsvtInfo.setUserId(userId); // 아이디
-		rsvtInfo.setRsvtStts("예약완료"); // 예약상태
-		rsvtInfo.setComOrderYn("N"); // 함께주문여부
-		rsvtInfo.setAlarmYn("Y"); // 알림여부
-
-		System.out.println("====" + rsvtInfo);
+		rsvtInfo.setUserId(userId); 	// 아이디
+		rsvtInfo.setRsvtStts("예약완료"); 	// 예약상태
+		rsvtInfo.setComOrderYn("N"); 	// 함께주문여부
+		rsvtInfo.setAlarmYn("Y"); 		// 알림여부
 
 		// 예약정보 insert
 		rsvtService.insertRsvtInfo(rsvtInfo);
@@ -172,27 +135,13 @@ public class RsvtController {
 		// 예약메뉴 불러오기 위한 list
 		List<RsvtMenuVO> lists = menuInfo.getMenuInfo();
 		for (int i = 0; i < lists.size(); i++) {
-			System.out.println(i + "번째 메뉴.");
-			System.out.println(lists.get(i).getMenuNm()); // 각 예약메뉴 확인
-			System.out.println(lists.get(i).getAmount());
-			System.out.println(lists.get(i).getMenuNo());
-
-			// 예약메뉴 정보에 userId 넣어주기
-			lists.get(i).setUserId(userId);
-			// RsvtVO에서 가져온 예약번호를 RsvtMenuVO로 넘겨주기
-			lists.get(i).setRsvtNo(rsvtInfo.getRsvtNo());
-
-			System.out.println("=======" + lists.get(i));
-
-			// 예약메뉴테이블 insert
-			rsvtService.insertRsvtMenu(lists.get(i));
-
+			lists.get(i).setUserId(userId);					// 예약메뉴 정보에 userId 넣어주기
+			lists.get(i).setRsvtNo(rsvtInfo.getRsvtNo());	// RsvtVO에서 가져온 예약번호를 RsvtMenuVO로 넘겨주기
+			rsvtService.insertRsvtMenu(lists.get(i));		// 예약메뉴테이블 insert
 		}
 		int rsvtNo = rsvtInfo.getRsvtNo();
-		System.out.println(rsvtNo + "====================제발");
-
-		// 예약번호를 ajax의 리턴값으로 돌려줌 -> js gotoOrder()함수에서 result값으로 확인가능
-		return rsvtNo;
+		
+		return rsvtNo;		// 예약번호를 ajax의 리턴값으로 돌려줌 -> js gotoOrder()함수에서 result값으로 확인가능
 	}
 
 	// 결제정보 저장 - js saveRsvtPay()함수에서 ajax 호출한거 받아옴
@@ -203,65 +152,34 @@ public class RsvtController {
 		 * @RequestBody : HTTP 요청 본문에 담긴 값들을 자바객체로 변환시켜 객체에 저장. 즉, ajax로 보낸 데이터를 payVo에
 		 * 저장하겠다 이말이야 => 금액, 결제방법, 예약번호 가져옴
 		 */
-		System.out.println(payVo);
 
 		int cnt = rsvtService.insertRsvtPayment(payVo); // 결제번호 카운팅 확인
-		int rsvtNo = payVo.getRsvtNo(); // 예약번호
-		System.out.println(rsvtNo + "예약번ㅎ======");
-		System.out.println(cnt + "건 결제 완료");
+		int rsvtNo = payVo.getRsvtNo(); 				// 예약번호
 
-		// 예약번호를 예약완료 페이지로 넘기기 위해 리턴값으로 넘겨줌 => ajaxㄱㄱ
-		return rsvtNo;
+		return rsvtNo;		// 예약번호를 예약완료 페이지로 넘기기 위해 리턴값으로 넘겨줌 => ajaxㄱㄱ
 
 	}
 
+	//수정요청 승인(업데이트)
 	@PostMapping("/my/requestModifyAjax")
 	@ResponseBody
 	public int insertRsvtUpdateTbl(RsvtUpdateVO rsvtUpdateVo, @RequestParam("rsvtNo") int rsvtNo, RsvtVO rvo) {
-		System.out.println("수정예약번호====" + rsvtNo);
-
-		rsvtUpdateVo.setAprvYn("N");
-
-		// 일단 예약번호 param으로 가져옴
-		rsvtUpdateVo.setRsvtNo2(rsvtNo);
-		System.out.println(rsvtUpdateVo);
-
-		// 예약수정 테이블에 insert
-		rsvtService.insertRsvtUpdateTbl(rsvtUpdateVo);
-		// 변경신청하면 상태바뀜
-		rsvtService.updateRsvtStts(Integer.toString(rsvtNo));
-
-		// ============
-
-//		System.out.println(upVo.get(rsvtNo));
-//		System.out.println("========="+rsvtService.insertModifyMenu(upVo));
-		// System.out.println(rsvtService.insertModifyMenu(upVo));
-
-		// 예약수정 메뉴 insert
-//		System.out.println(rsvtService.insertModifyMenu(menuList)); 
-
-//		RsvtUpMenuVO testVO = new RsvtUpMenuVO();
-//		testVO.setUpMenuNo(9);
-//		testVO.setRsvtUpdateNo(9);
-//		testVO.setMenuNO("99");
-//		testVO.setAmount(99999);
-//		testVO.setMenuPrc(99999);
-//		menuList.add(testVO);
-//		int cnt = rsvtService.insertModifyMenu(testVO);
-
-		// 무식한 방법 (플랜B)
-		// 메뉴 리스트의 길이만큼 for문 돌면서
-		// VO로 개벌 인서트하는 메서드를 콜한다 ex)rsvtService.insertModifyMenu(rsvtUpMenuVO)
-
+		rsvtUpdateVo.setAprvYn("N");		//	승인여부 설정
+		rsvtUpdateVo.setRsvtNo2(rsvtNo);	// 일단 예약번호 param으로 가져옴
+		
+		rsvtService.insertRsvtUpdateTbl(rsvtUpdateVo);			// 예약수정 테이블에 insert
+		rsvtService.updateRsvtStts(Integer.toString(rsvtNo));	// 변경신청하면 상태바뀜
+		
 		return rsvtNo;
 	}
 
+	//예약 삭제하기
 	@GetMapping("/my/myRsvtDeleteAjax/{rsvtNo}")
 	@ResponseBody
 	public int deleteAllByRsvtNo(@PathVariable int rsvtNo) {
-
 		// 삭제 프로시저
 		rsvtService.deleteAllRsvt(rsvtNo);
+		
 		return 0;
 	}
 	

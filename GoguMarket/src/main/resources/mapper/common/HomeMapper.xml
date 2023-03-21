@@ -4,7 +4,7 @@
 		<!-- 채은 main에서 쓸 메퍼들 -->
 		<!-- deal -->
 		<select id="selectHomeDeal" resultType="map">
-SELECT ROWNUM RN, c.*
+		SELECT ROWNUM RN, c.*
 		FROM (
 		    SELECT a.*, NVL((
 		        SELECT ATCH_PATH
@@ -22,15 +22,23 @@ SELECT ROWNUM RN, c.*
 		<!-- auct -->
 		<select id="selectHomeAuct" resultType="map">
 		SELECT ROWNUM RN, c.*
-		FROM (
-		    SELECT a.*, NVL((
-		        SELECT ATCH_PATH
-		        FROM ATCH
-		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
-		    ),0) AS ATCH_PATH, ROWNUM AS ROW_NUM, (SELECT COUNT(*) FROM AUCT_MEM where auct_no = a.auct_no) COUNT, (SELECT MAX(NOW_PRC) FROM AUCT_MEM WHERE auct_no = a.auct_no) MAX
-		    FROM AUCT a
-		    WHERE STTS = 1
-		    ORDER BY COUNT DESC
+		FROM ( SELECT a.*,
+					 NVL((
+					 		SELECT ATCH_PATH
+						    FROM ATCH
+						    WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1),0) as ATCH_PATH, 
+					 ROWNUM AS ROW_NUM, 
+					 (
+					 	SELECT COUNT(*)
+					    FROM AUCT_MEM 
+					    WHERE AUCT_NO = a.AUCT_NO) as COUNT, 
+					 (
+					 	SELECT MAX(NOW_PRC) 
+					 	FROM AUCT_MEM 
+					 	WHERE AUCT_NO = a.AUCT_NO) as MAX
+			   FROM AUCT a
+			   WHERE STTS = 1
+		       ORDER BY COUNT DESC
 		) c
 		<![CDATA[
 		WHERE ROWNUM < 2
@@ -38,7 +46,8 @@ SELECT ROWNUM RN, c.*
 		</select>
 		
 		<select id="selectHomeAuctMem" parameterType="int" resultType="com.goguma.auct.vo.AuctMemVO">
-		SELECT * FROM AUCT_MEM
+		SELECT * 
+		FROM AUCT_MEM
         WHERE AUCT_NO = #{auctNo}
         ORDER BY NOW_PRC DESC
 		</select>
@@ -54,7 +63,7 @@ SELECT ROWNUM RN, c.*
 		        WHERE ATCH_ID = a.ATCH_ID AND ROWNUM=1
 		    ),0) AS ATCH_PATH, ROWNUM AS ROW_NUM
 		    FROM BIZ_MEM a
-		    ORDER BY bIZ_no DESC
+		    ORDER BY biz_no ASC
 		) c
 		<![CDATA[
 		WHERE ROWNUM < 50

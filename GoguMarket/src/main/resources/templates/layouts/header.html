@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <th:block th:fragment="headerFragment">
    <!-- START HEADER AREA -->
    <header class="header-area header-wrapper" style="background-color: #ffffff;">
+   	<script src="../../js/home/home.js"></script>
       <!-- header-middle-area -->
       <div id="sticky-header" class="header-middle-area plr-185 ">
          <div class="container-fluid">
@@ -39,13 +41,12 @@
                                       <!-- 사진 -->
                                       <img th:if="${session.atchPath != null}" th:src="${session.atchPath}"
                                            style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
-                                           onerror="this.onerror=null; this.src='/img/logo/002.png'">
+                                           onerror="this.onerror=null; this.src='/img/logo/002.png'" />
                                       <!-- 알림 -->
-                                      <span id="alarmId" th:if="${session.alarm != 0 and session.alarm != null}"
+                                       <span id="alarmId"
                                             style="position: absolute; top: -5px; right: -5px; background-color: red; 
                                         	border-radius: 50%; width: 18px; height: 18px; text-align: center; 
-                                        	line-height: 20px; font-size: 10px;font-weight : border; color: white;"
-                                         	th:text="${session.alarm}"></span>
+                                        	line-height: 20px; font-size: 10px;font-weight : border; color: white;" >NEW</span>
                                     </div>
 
 
@@ -57,11 +58,10 @@
                                            	style="width: 30px; height: 30px; border-radius: 70%; border:2px solid #FCD052"
                                           	 onerror="this.onerror=null; this.src='/img/logo/002.png'">
                                       <!-- 알림 -->
-                                      <span id="alarmId" th:if="${session.alarm != 0 and session.alarm != null}"
-                                        style="position: absolute; top: -5px; right: -5px; background-color: red; 
-                                        		border-radius: 50%; width: 18px; height: 18px; text-align: center; 
-                                        		line-height: 20px; font-size: 10px;font-weight : border; color: white;"
-                                        		th:text="${session.alarm}"></span>
+                                      <span id="alarmId"
+                                            style="position: absolute; top: -5px; right: -5px; background-color: red; 
+                                        	border-radius: 50%; width: 18px; height: 18px; text-align: center; 
+                                        	line-height: 20px; font-size: 10px;font-weight : border; color: white;" >NEW</span>
                                  </div>
                                  
                               <!-- 닉네임 -->

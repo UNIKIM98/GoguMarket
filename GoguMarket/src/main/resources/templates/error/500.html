@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://ultraq.net/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+</body>
+<div layout:fragment="content">
+	<script type="text/javascript">
+		$(function() {
+			console.log("500 에러 발생")
+			alert("⚠사이트 내부 오류가 발생하였습니다. 이용에 불편을 드려 죄송합니다.")
+			location.href = "/"
+		})
+	</script>
+</div>
+</html>

@@ -39,9 +39,8 @@
 		cmnt_mem,
 		cmnt_ymd,
 		atch_path,
-		group_no,
-		recmnt_order,
-		step
+		group_no
+	
 
 
 		)
@@ -56,16 +55,8 @@
 			<when test="groupNo != null">#{groupNo}</when>
 			<otherwise>0</otherwise>
 		</choose>
-		,
-		<choose>
-			<when test="recmntOrder != null">#{recmntOrder}+1</when>
-			<otherwise>#{recmntOrder}</otherwise>
-		</choose>
-		,
-		<choose>
-			<when test="step != null">#{step}+1</when>
-			<otherwise>#{step}</otherwise>
-		</choose>
+		
+		
 
 		)
 	</insert>

@@ -8,6 +8,8 @@
 	
 	<!-- 결제 api -->
 	<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js" type="text/javascript"></script>
+	<!-- 얼럿창 커스텀 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 			
 		<div class="container">
 			<!-- 가게이름 부분 -->
@@ -363,7 +365,7 @@
 
 				//수량이 0일경우 빠꾸, 1이상일때만 추가
 				if (amount.text() == 0) {
-					alert('수량을 선택해 주세요')
+					swal('앗!', '수량을 선택해 주세요', 'warning');
 					return;
 				} else {
 					newRow.append(menuNm, amount, menuPrc);
@@ -427,7 +429,7 @@
 				    
 				// 오늘 이전의 날짜가 선택되지 않도록 조건문 추가
 				if (selected < today) {
-					alert('오늘 이후 날짜를 선택해주세요');
+					swal('앗!', '오늘 이후 날짜를 선택해주세요', 'warning');
 					$(this).val('');
 					return false;
 				}
@@ -469,7 +471,7 @@
 				
 				//10명이하 test
 				if($('input[name="peopleCnt"]').val() >10){
-					alert("10명 이하로 가능합니다.")
+					swal('앗!', "10명 이하로 가능합니다.", 'warning');
 					false;
 					$('input[name="peopleCnt"]').attr('value',10);
 				}
@@ -492,19 +494,19 @@
 				
 			//항목이 비어있을때 예외처리
 			if($(".order-total-price").text() == 0){
-				alert("메뉴를 담아주세요")
+				swal('앗!', "메뉴를 담아주세요", 'warning');
 				return;
 			}
 			if($("#tdDate").text().trim() === "") {
-				alert("예약 날짜를 선택해주세요.");
+				swal('앗!', "예약 날짜를 선택해주세요.", 'warning');
 				return;
 			}
 			if($("#tdTime").text().trim() === "") {
-				alert("예약 시간을 선택해주세요.");
+				swal('앗!', "예약 시간을 선택해주세요.", 'warning');
 				return;
 			}
 			if($("#tdCnt").text().trim() === "") {
-				alert("예약 인원을 선택해주세요.");
+				swal('앗!', "예약 인원을 선택해주세요.", 'warning');
 				return;
 			}
 			if($("#rsvtWant").val() === ""){
@@ -543,7 +545,6 @@
 					var msg = '결제에 실패하였습니다.';
 					msg += ' : ' + rsp.error_msg;
 				}
-				//alert(msg);
 			});
 		}
 			
@@ -562,7 +563,7 @@
 				saveRsvtPay(result, payMthd);
 				},error : function(err){
 					//수정
-					alert("결제정보를 저장하지 못했습니다.");
+					swal('앗!', "결제정보를 저장하지 못했습니다.", 'error');
 				}
 			});
 			//form데이터 submit
@@ -584,13 +585,13 @@
 				data: JSON.stringify(payment),
 				contentType: "application/json; charset=utf-8",
 				success: function(rsvtNo){
-						alert("예약이 정상적으로 완료되었습니다.");
+						swal('성공!', "예약이 정상적으로 완료되었습니다.", 'success');
 						
 						//예약완료 페이지로 이동(예약번호 파라미터)
 						location.href="/my/rsvtComplete/"+rsvtNo;
 					}
 				,error : function(err){
-					alert("결제 실패")
+					swal('앗!', "결제 실패..", 'error');
 				}
 			});
 		};
@@ -605,7 +606,7 @@
 		//전화번호 알림창
 		function alertTelno(tel){
 			console.log(tel)
-			alert("가게 전화번호는 [ "+ tel + " ] 입니다.");
+			swal('가게 전화번호',tel,'info');
 		}
 			
 		//채팅방 이동

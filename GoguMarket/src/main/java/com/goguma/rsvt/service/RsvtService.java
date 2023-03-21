@@ -43,12 +43,6 @@ public interface RsvtService {
 
 	// ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저
 	void deleteAllRsvt(int rsvtNo);
-
-	
-	//메뉴변경 insert
-//	int insertModifyMenu(RsvtUpMenuVO upVo);
-
-//	List<RsvtUpMenuVO> insertModifyMenu(List<RsvtUpMenuVO> menuList);
 	
 	//예약상태 업데이트
 	int updateRsvtStts(String rsvtNo);

@@ -34,29 +34,32 @@ public class SnsResController {
 	SnsService service;
 
 	@Autowired
-	MemService member;
+	AtchService aservice;
 
 	@Autowired
-	AtchService aservice;
+	MemService member;
 
 	@Autowired
 	CommonCodeService common;
 
-	@GetMapping("/keyValue")
+	@GetMapping("/keyValue") // > 공통코드 조희
 	public Map<String, Object> keyValue() {
-//		System.out.println("gdgd");
+
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		List<CommonCodeVO> pstSe = new ArrayList();
-		List<CommonCodeVO> selist = new ArrayList();
-		List<CommonCodeVO> codelist = new ArrayList();
-		List<CommonCodeVO> searchlist = new ArrayList();
+		
+		// > LIST 선언
+		List<CommonCodeVO> pstSe = new ArrayList(); 		 
+		List<CommonCodeVO> selist = new ArrayList(); 		
+		List<CommonCodeVO> codelist = new ArrayList(); 		 
+		List<CommonCodeVO> searchlist = new ArrayList();	
 
-		pstSe = common.codeList("001");
-		selist = common.codeList("003");
-		codelist = common.codeList("004");
-		searchlist = common.codeList("009");
+		pstSe = common.codeList("001");						// > 거래 카테고리
+		selist = common.codeList("003");					// > 회원 구분
+		codelist = common.codeList("004");					// > 회원 상태
+		searchlist = common.codeList("009");				// > 검색 구분
 
+		// > MAP 에 담음 
 		map.put("pstSe", pstSe);
 		map.put("selist", selist);
 		map.put("codelist", codelist);
@@ -65,7 +68,8 @@ public class SnsResController {
 		return map;
 	}
 
-	@GetMapping("/goguma/selectSnsList")
+	
+	@GetMapping("/goguma/selectSnsList") // > 동네생활 전체 게시글 출력
 	public List<SnsVO> getSnsList(SnsVO vo) {
 
 		System.out.println(vo);
@@ -75,13 +79,13 @@ public class SnsResController {
 
 	}
 
-	@GetMapping("/goguma/selectSns")
+	@GetMapping("/goguma/selectSns") // > 동네생활 게시글 단건 조회
 	public Map<String, Object> selectSns(int id) {
-		System.out.println(id);
 
-		service.snsHitUpdate(id);
-		SnsVO vo = service.selectSns(id);
+		service.snsHitUpdate(id);   		// > 게시글 조화수 증가 METHOD
+		SnsVO vo = service.selectSns(id);   // > 게시글 단건 조회에서 VO 에 담음
 
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("sns", vo);
@@ -91,76 +95,68 @@ public class SnsResController {
 
 	}
 
-	@GetMapping("/goguma/getUser")
+	@GetMapping("/goguma/getUser")   // > 동네생활 페이지 입장시 현재 세션 유저 정보를 조회하는 메소드
 	public Map<String, Object> getUser(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();	// > 세션 요청
 
-		String userId = (String) session.getAttribute("userId");
+		String userId = (String) session.getAttribute("userId"); // > 새션정보에 담긴 유저 아이디 를 자져옴
 
 		MemVO vo = new MemVO();
 
-		vo.setUserId(userId);
-
-		System.out.println(vo);
+		vo.setUserId(userId); // > 회원관련 VO에 유저 아이디를 담음
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("mem", member.selectUser(vo));
+		map.put("mem", member.selectUser(vo)); // > 유저 정보 조회
 
 		return map;
 
 	}
 
-	@PostMapping("/goguma/insertSns")
+	@PostMapping("/goguma/insertSns") // > 동네생활 게시글 등록 메소드
 	public ModelAndView insertSns(SnsVO vo, AtchVO avo, List<MultipartFile> files) {
 
-		System.out.println("여기까지 옴");
-		ModelAndView mv = new ModelAndView("redirect:snsMain");
+		ModelAndView mv = new ModelAndView("redirect:snsMain"); // > 돌아갈 좌표
 
-		System.out.println(vo + "1");
-		int atchId = aservice.insertFile(files);
-		System.out.println(vo);
+		int atchId = aservice.insertFile(files); // > 첨부 파일 등록
 
-		if (atchId > 0) {
+		if (atchId > 0) { // > 첨부파일 등록 성공하면 동네생활 VO에 ATCH_ID를 저장
 			vo.setAtchId(atchId);
 		}
 
-		service.insertSns(vo);
-//		aservice.fileUpload(null);
+		service.insertSns(vo); // > 게시물 등록 
 
 		return mv;
 	}
 
-	@GetMapping("/my/selectMySns")
+	@GetMapping("/my/selectMySns") // > 마이페지 > 내글 > 개인 동네생활 조회 
 	public List<SnsVO> mySns(HttpServletRequest request) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); // > 세션 요청
 
-		String userId = (String) session.getAttribute("userId");
+		String userId = (String) session.getAttribute("userId"); // > 세션 아이디 저장
 
-		System.out.println(userId);
-
-		List<SnsVO> list = service.selectPerSns(userId);
+		List<SnsVO> list = service.selectPerSns(userId); // > 해당 유저의 SNS 조회후 리스트 반환
 
 		return list;
 	}
 
-	@GetMapping("/goguma/deleteSns")
+	@GetMapping("/goguma/deleteSns") // > 동네생활 게시글 삭제
 	public int deleteSns(SnsVO vo, AtchVO avo, List<MultipartFile> files, HttpServletResponse response) {
-		System.out.println(vo);
 
-		vo = service.selectSns(vo.getSnsNo());
-		System.out.println(vo + " => 삭제할 글 정보");
+		vo = service.selectSns(vo.getSnsNo()); 							// > 게시글 번호를 가지고 해당 게시글 정보를 조회
+		
+		/* System.out.println(vo + " => 삭제할 글 정보"); */
 
-		List<AtchVO> snsList = service.selectSnsAtch(vo.getSnsNo());
+		List<AtchVO> snsList = service.selectSnsAtch(vo.getSnsNo()); 	// > 해당 게시글의 이미지 정보를 조회
 
-		System.out.println(snsList + " => 삭제할 첨부파일들 정보");
+		/* System.out.println(snsList + " => 삭제할 첨부파일들 정보"); */
+		
+		int delAtch = aservice.deleteFile(snsList); 				 	// > 해당 게시글의 파일 삭제
+		/* System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch); */	
 
-		int delAtch = aservice.deleteFile(snsList);
-		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
-
-		int delSns = service.deleteSns(vo);
-		System.out.println("게시글 삭제했으면 1 => " + delSns);
+		int delSns = service.deleteSns(vo);								// > 해당 게시글 삭제
+		/* System.out.println("게시글 삭제했으면 1 => " + delSns); */
 
 		return delSns;
 	}
