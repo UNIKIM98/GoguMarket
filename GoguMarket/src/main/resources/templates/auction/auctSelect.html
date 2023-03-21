@@ -86,7 +86,7 @@
 												<div class="single-pro-color-rating clearfix">
 													<h3 class="pro-rating sin-pro-rating f-left"
 														th:if="${auct.quickPrc != null}"
-														th:text="'즉시구매가 : '+${auct.quickPrc}">
+														th:text="'즉시구매가 : '+${#numbers.formatInteger(auct.quickPrc, 3, 'COMMA') + '원'}">
 													</h3>
 													<div class="pro-rating sin-pro-rating f-right">
 														<p class="color-title f-left"></p>
@@ -108,9 +108,10 @@
 
 												</div>
 												<hr>
-												<h2 class="sin-plus-minus f-right" th:text="'최저가 '+${auct.lowPrc}+'원'"></h2>
+												<h2 class="sin-plus-minus f-right"
+													th:text="'최저가 '+${#numbers.formatInteger(auct.lowPrc, 3, 'COMMA') + '원'}"></h2>
 												<h2 class="pro-price" th:if="${auctMem!='nothing'}"
-													th:text="${auctMem[0].nowPrc}+'원'"></h2>
+													th:text="'현재가 ' + ${#numbers.formatInteger(auctMem[0].nowPrc, 3, 'COMMA') + '원'}"></h2>
 												<h2 class="pro-price" th:if="${auctMem=='nothing'}">현재최고가 없음</h2>
 												<hr>
 												<a th:if="${session.userId!=null}" href="/my/auctInsertForm"
@@ -177,7 +178,7 @@
 																	th:each="auctMem : ${auctMem}">
 																	<td th:text="${auctMem.userId}"></td>
 																	<td th:text="${auctMem.auctYmd}"></td>
-																	<td th:text="${auctMem.nowPrc}"></td>
+																	<td th:text="'현재가 ' + ${#numbers.formatInteger(auctMem.nowPrc, 3, 'COMMA') + '원'}"></td>
 																</tr>
 																<tr th:if="${auctMem=='nothing'}"
 																th:each="auctMem : ${auctMem}">
@@ -240,12 +241,12 @@
 																			<tr>
 																				<th>현재가</th>
 																				<td th:if="${auctMem!='nothing'}"
-																					th:text="${auctMem[0].nowPrc}"></td>
+																					th:text="'현재가 ' + ${#numbers.formatInteger(auctMem[0].nowPrc, 3, 'COMMA') + '원'}"></td>
 																				<td th:if="${auctMem=='nothing'}">입찰자가없습니다 :)</td>
 
 																				<th>즉구가</th>
 																				<td th:if="${auct.quickPrc != null}"
-																					th:text="${auct.quickPrc}"></td>
+																					th:text="'현재가 ' + ${#numbers.formatInteger(auct.quickPrc, 3, 'COMMA') + '원'}"></td>
 																				<!-- 																				<td th:if="${auct.quickPrc == null}"></td> -->
 																			</tr>
 																		</table>
