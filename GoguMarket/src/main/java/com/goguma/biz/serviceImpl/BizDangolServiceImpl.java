@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.goguma.biz.mapper.BizDangolMapper;
 import com.goguma.biz.service.BizDangolService;
 import com.goguma.biz.vo.BizDangolVO;
+import com.goguma.biz.vo.BizSearchVO;
 
 @Service
 public class BizDangolServiceImpl implements BizDangolService {
@@ -35,8 +36,8 @@ public class BizDangolServiceImpl implements BizDangolService {
 	
 	//단골 리스트
 	@Override
-	public List<Map> selectDangolList(String bizNo) {
-		return bMapper.selectDangolList(bizNo);
+	public List<Map> selectDangolList(BizSearchVO bvo) {
+		return bMapper.selectDangolList(bvo);
 	}
 
 	//단골 한명

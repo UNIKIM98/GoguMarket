@@ -34,11 +34,23 @@
 	</select>
 	
 	<!-- 단골리스트 출력 -->
-	<select id="selectDangolList" parameterType="String" resultType="com.goguma.biz.vo.BizDangolVO">
-		SELECT b.*, m.*
+	<select id="selectDangolList" parameterType="com.goguma.biz.vo.BizSearchVO" resultType="com.goguma.biz.vo.BizDangolVO">
+	SELECT * FROM(SELECT rownum rn, a.* FROM(
+		SELECT m.user_id,
+		       m.user_nm,
+		       m.nick_nm,
+		       m.addr, 
+		       m.atch_path,
+		       b.dg_no,
+		       b.biz_no,
+		       b.dangol_memo,
+		       b.dangol_ymd
 		FROM biz_dangol b, mem m
 		WHERE b.user_id = m.user_id
 		AND b.biz_no = #{bizNo}
+		<![CDATA[
+		) a WHERE rownum <= #{last} ) b WHERE rn >= #{first}
+		]]>
 	</select>
 	
 	<!-- 단골 개인 출력 -->
