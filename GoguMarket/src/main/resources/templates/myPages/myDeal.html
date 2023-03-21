@@ -123,38 +123,33 @@
 											</form>
 										</div>
 											<div role="tabpanel" class="tab-pane" id="soldout">
-												<form id="" method="post">
-													<input type="hidden" name="page" value="1">
-													<input type="hidden" name="tabName" value="soldout">
 													<!-- reviews-tab-desc -->
 													<div class="featured-product" >
-															<div th:if="${#lists.isEmpty(dealsold)}" style="margin-top:50px;">
-															<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'" style="text-align:center;"></div>
-															<div class="product-item" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
-																<div class="product-img">
-																	<div style="text-align : center;">
-																	<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
-																		<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진" onerror="this.onerror=null; this.src='/img/logo/001.png'" style="width:50%;"/></a>
+														<form name="frm" align="center">
+															<div class="row">
+																<div class="col-lg-12" style="text-align:center;">
+																	<div class="col-3 product-item mr-30" th:if="${dealsold}!=null" th:each="deal : ${dealsold}">
+																		<div class="product-img" style="height:150px">
+																			<div th:if="${#lists.isEmpty(dealsold)}" th:text="'판매완료 내역이 없습니다'" ></div>
+																			<a
+																				th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.DL_NO})}">
+																				<img th:src="${deal.ATCH_NM}" alt="중고 대표 사진"
+																							style="width:50%;"
+																						onerror="this.onerror=null; this.src='/img/logo/001.png'" />
+																			</a>
 																		</div>
-																</div>
-																<div class="product-info">
-																	<h6 class="product-title"
-																		th:text="${deal.DL_TTL}">상품명</h6>
-																	<h3 class="pro-price" th:text="${#numbers.formatInteger(deal.DL_PRC, 3, 'COMMA') + '원'}" th:if="${deal.DL_PRC} != 0">가격</h3>
-																	<h3 style="color:#C04A82;" class="pro-price"th:if="${deal.DL_PRC} == 0">무료나눔</h3>
+																		<div class="product-info">
+																			<h6 class="product-title"
+																				th:text="${deal.DL_TTL}">상품명</h6>
+																			<h3 class="pro-price" th:text="${#numbers.formatInteger(deal.DL_PRC, 3, 'COMMA') + '원'}" th:if="${deal.DL_PRC} != 0">가격</h3>
+																			<h3 style="color:#C04A82;" class="pro-price"th:if="${deal.DL_PRC} == 0">무료나눔</h3>
+																		</div>
+																	</div>
 																</div>
 															</div>
-														</div>
+														</form>
 													</div>
-													<!-- 페이지번호관련 -->
-																<div align="center">
-																	<a
-																		th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-																		th:href="|javascript:gopage(${num})|"
-																		th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-																</div>
-												</form>
-											</div>
+												</div>
 											<div role="tabpanel" class="tab-pane" id="prchs">
 												<!-- 구매하면 단건으로 최신거 한번만 조회가능 -->
 												

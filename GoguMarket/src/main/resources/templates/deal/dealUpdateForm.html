@@ -77,7 +77,7 @@
 											</div>
 										</div>
 										<div class="col-lg-10" id="inputFile">
-											<label for="files">상품사진<span> *</span></label> 
+											<label style="color:#C04A82; font-weight:bold;" for="files">상품사진<span> *</span></label> 
 											<input type="file" id="files" placeholder="첨부파일" multiple="multiple">
 											<br>
 											<span id="fileErrMsg"></span>
@@ -87,7 +87,7 @@
 											</div>
 										</div>
 										<div class="col-lg-10 mb-10">
-											<label for="cate">카테고리<span> *</span></label> 
+											<label style="color:#C04A82; font-weight:bold;" for="cate">카테고리<span> *</span></label> 
 											<select name="cate" id="cate">
 												<option value="" disabled selected>선택</option>
 												<option th:each="ct : ${category}" 
@@ -99,33 +99,38 @@
 											<input type="hidden" name="ctgry" id="ctgry" placeholder="카테고리"> 
 										</div>
 										<div class="col-lg-10 ">
-											<label for="dlTtl">글제목<span> *</span></label>
+											<label style="color:#C04A82; font-weight:bold;" for="dlTtl">글제목<span> *</span></label>
 											<input type="text" name="dlTtl" id="dlTtl" placeholder="글 제목을 입력하세요." th:value = ${dealInfo.dlTtl}>
 										</div>
 										<div class="col-lg-10">
-											<label for="dlCn">상품설명<span> *</span></label>
+											<label style="color:#C04A82; font-weight:bold;" for="dlCn">상품설명<span> *</span></label>
 											<textarea class="custom-textarea" name="dlCn" id="dlCn" 
 													  placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)" th:text=${dealInfo.dlCn}></textarea>
 										</div>
 										
 										<div class="col-lg-10">
-											<label for="dlPrc">상품가격<span> *</span></label>
+											<label style="color:#C04A82; font-weight:bold;" for="dlPrc">상품가격<span> *</span></label>
 											<input type="text" name="dlPrc" id="dlPrc" 
 												   placeholder="상품가격" 
 												   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
 												   th:value=${dealInfo.dlPrc}>
 										</div>
 										<div class="col-lg-10">
-											<label for="area">직거래장소</label>
+											<label style="color:#C04A82; font-weight:bold;" for="area">직거래장소</label>
 											<input type="text" name="area" id="area" placeholder="직거래장소" th:value=${dealInfo.area}>
 										</div>
 										<div class="col-lg-10">
-											<label for="negoYn">가격 제안받기</label>
+											<label style="color:#C04A82; font-weight:bold;" for="negoYn">가격 제안받기</label>
 											<input type="checkbox" name="negoYn" id="negoYn" style="margin:0px">
 										</div>
 										<input type="hidden" name="dlNo" id="dlNo" th:value=${dealInfo.dlNo}>
 										<input type="hidden" name="atchId" id="atchId" th:value=${atchList[0].atchId}>
-										<input class="submit-btn-1 mt-30 btn-hover-1" type="submit" id="btnSave" role="button" value="수정하기">
+										<input 
+										style="
+										margin-left:550px;
+										color:#fff; background-color:#C04A82; font-weight:bold;"
+										class="submit-btn-1 mt-30 btn-hover-1" 
+										type="submit" id="btnSave" role="button" value="수정하기">
 									</form>
 								</div>
 								<!-- </form> -->
@@ -299,7 +304,7 @@
 					
 					// 삭제할 파일 없으면 수정 ajax만 실행
 					$.ajax({	
-						url : "/updateTestSubmit",
+						url : "/my/updateTestSubmit",
 						type : "POST",
 						data : formData,
 						processData : false,
@@ -321,7 +326,7 @@
 		//✅ 파일 삭제 ajax
 			function exFileDeleteAjax(){
 				$.ajax({	
-					url : "/deleteTest",
+					url : "/my/deleteTest",
 					type : "post",
 					data :  JSON.stringify(deleteList),
 					contentType: "application/json; charset=utf-8",

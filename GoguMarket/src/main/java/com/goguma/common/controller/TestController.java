@@ -29,159 +29,159 @@ import com.goguma.mem.vo.MemVO;
 
 @Controller
 public class TestController {
-	// ■ Services ==========================================
-	@Autowired
-	MemService memService;
+   // ■ Services ==========================================
+   @Autowired
+   MemService memService;
 
-	@Autowired
-	AtchService atchService;
+   @Autowired
+   AtchService atchService;
 
-	@Autowired
-	CommonCodeService codeService;
+   @Autowired
+   CommonCodeService codeService;
 
-	@Autowired
-	DealService dealService;
+   @Autowired
+   DealService dealService;
 
-	@Autowired
-	TestService testService;
+   @Autowired
+   TestService testService;
 
-	@Autowired
-	private EmailService emailService;
+   @Autowired
+   private EmailService emailService;
 
-	// ■ Controllers =======================================
+   // ■ Controllers =======================================
 
-	@GetMapping("/goguma/emailTest")
-	@ResponseBody
-	public String emailTest(String eml) {
+   @GetMapping("/goguma/emailTest")
+   @ResponseBody
+   public String emailTest(String eml) {
 
-		String token = "되는거니..";
-		String emailTtl = "[고구마켓] 이메일 인증번호 확인 후 회원가입을 완료해주세요 :D";
-		// 이메일 전송
-		try {
-			emailService.sendVerificationMail(eml, token, emailTtl);
+      String token = "되는거니..";
+      String emailTtl = "[고구마켓] 이메일 인증번호 확인 후 회원가입을 완료해주세요 :D";
+      // 이메일 전송
+      try {
+         emailService.sendVerificationMail(eml, token, emailTtl);
 
-		} catch (MessagingException e) {
-			// 이메일 전송 실패 시
-			System.out.println("[이메일 발송 실패] 에러발생 :( ");
-		}
-		return token;
-	}
+      } catch (MessagingException e) {
+         // 이메일 전송 실패 시
+         System.out.println("[이메일 발송 실패] 에러발생 :( ");
+      }
+      return token;
+   }
 
-	@GetMapping("/goguma/test")
-	public String adminTest() {
-		return "myPages/test";
-	}
+   @GetMapping("/goguma/test")
+   public String adminTest() {
+      return "myPages/test";
+   }
 
-	@GetMapping("/biz/test")
-	public String buzTest() {
-		return "myPages/myAct";
-	}
+   @GetMapping("/biz/test")
+   public String buzTest() {
+      return "myPages/myAct";
+   }
 
-	@GetMapping("/my/test")
-	public String myTest() {
-		return "myPages/myAct";
-	}
+   @GetMapping("/my/test")
+   public String myTest() {
+      return "myPages/myAct";
+   }
 
-	// ▷ 첨부파일 삭제 ajax 테스트 -------------------------------
-	@GetMapping("/delteFileTest")
-	public String delteFileTest() {
-		// 파일삭제 테스트용 list
-		List<AtchVO> files = new ArrayList<AtchVO>();
+   // ▷ 첨부파일 삭제 ajax 테스트 -------------------------------
+   @GetMapping("/delteFileTest")
+   public String delteFileTest() {
+      // 파일삭제 테스트용 list
+      List<AtchVO> files = new ArrayList<AtchVO>();
 
-		// list에 임시로 하나 세팅
-		AtchVO atchVO = new AtchVO();
-		atchVO.setAtchId(13);
-		atchVO.setAtchNo(98);
-		files.add(atchVO);
+      // list에 임시로 하나 세팅
+      AtchVO atchVO = new AtchVO();
+      atchVO.setAtchId(13);
+      atchVO.setAtchNo(98);
+      files.add(atchVO);
 
-		int delCnt = atchService.deleteFile(files);
-		if (delCnt > 0) {
-			System.out.println(delCnt + "건 삭제완료");
-		}
-		return "myPages/myAttend";
-	}
+      int delCnt = atchService.deleteFile(files);
+      if (delCnt > 0) {
+         System.out.println(delCnt + "건 삭제완료");
+      }
+      return "myPages/myAttend";
+   }
 
-	// ▷ insertForm 테스트 -----------------------------------
-	@GetMapping("/biz/insertTest")
-	public String testForm(Model model) {
-		model.addAttribute("category", codeService.codeList("002"));
-		return "common/cmInsertForm";
-	}
+   // ▷ insertForm 테스트 -----------------------------------
+   @GetMapping("/biz/insertTest")
+   public String testForm(Model model) {
+      model.addAttribute("category", codeService.codeList("002"));
+      return "common/cmInsertForm";
+   }
 
-//	@RequestMapping("/testFormSubmit")
-//	@ResponseBody
-//	public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
-//		int atchId = atchService.insertFile(files);
+//   @RequestMapping("/testFormSubmit")
+//   @ResponseBody
+//   public DealVO testFormSubmit(DealVO vo, List<MultipartFile> files) {
+//      int atchId = atchService.insertFile(files);
 //
-//		System.out.println("==============================" + vo);
-//		System.out.println(vo.getNegoYn() != "Y");
-//		if (atchId > 0) {
-//			vo.setAtchId(atchId);
-//		}
-//		dealService.insertDeal(vo);
+//      System.out.println("==============================" + vo);
+//      System.out.println(vo.getNegoYn() != "Y");
+//      if (atchId > 0) {
+//         vo.setAtchId(atchId);
+//      }
+//      dealService.insertDeal(vo);
 //
-//		return vo;
-//	}
+//      return vo;
+//   }
 
-	// ▷ updateForm 테스트 -----------------------------------
-	@GetMapping("/my/updateTest")
-	public String updateTest(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemVO mVO = new MemVO();
+   // ▷ updateForm 테스트 -----------------------------------
+   @GetMapping("/my/updateTest")
+   public String updateTest(Model model, HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      MemVO mVO = new MemVO();
 
-		mVO.setUserId((String) session.getAttribute("userId"));
-		mVO = memService.selectUser(mVO);
+      mVO.setUserId((String) session.getAttribute("userId"));
+      mVO = memService.selectUser(mVO);
 
-		// 게시글 정보 담기
-		model.addAttribute("dealInfo", testService.selectDealTest(7)); // 12번 게시글 정보
+      // 게시글 정보 담기
+      model.addAttribute("dealInfo", testService.selectDealTest(7)); // 12번 게시글 정보
 
-		model.addAttribute("atchList", testService.selectDealAtchTest(7)); // 12번 게시글 첨부파일 목록
+      model.addAttribute("atchList", testService.selectDealAtchTest(7)); // 12번 게시글 첨부파일 목록
 
-		model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
+      model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
 
-		return "common/cmUpdateForm";
-	}
+      return "common/cmUpdateForm";
+   }
 
-	@RequestMapping("/deleteTest")
-	@ResponseBody
-	public int deleteFileTest(@RequestBody List<AtchVO> deleteList) {
-		int cnt = atchService.deleteFile(deleteList);
-		return cnt;
-	}
+   @RequestMapping("/deleteTest")
+   @ResponseBody
+   public int deleteFileTest(@RequestBody List<AtchVO> deleteList) {
+      int cnt = atchService.deleteFile(deleteList);
+      return cnt;
+   }
 
-	@RequestMapping("/updateTestSubmit")
-	@ResponseBody
-	public DealVO updateTestSubmit(DealVO vo, List<MultipartFile> files) {
+   @RequestMapping("/my/updateTestSubmit")
+   @ResponseBody
+   public DealVO updateTestSubmit(DealVO vo, List<MultipartFile> files) {
 
-		System.out.println("updateTestSubmit왔음 =======");
+      System.out.println("updateTestSubmit왔음 =======");
 
-		int fileUpdateCnt = atchService.insertFile(vo.getAtchId(), files);
-		System.out.println("넣을 파일 리스트(atchvo)" + files);
-		System.out.println("수정할 dealVO ==============================" + vo);
+      int fileUpdateCnt = atchService.insertFile(vo.getAtchId(), files);
+      System.out.println("넣을 파일 리스트(atchvo)" + files);
+      System.out.println("수정할 dealVO ==============================" + vo);
 
-		testService.updateDealTest(vo);
+      testService.updateDealTest(vo);
 
-		return vo;
-	}
+      return vo;
+   }
 
-	// ▷ delete 테스트 -----------------------------------
-	@RequestMapping("/deleteAllTest/{dlNo}")
-	public String deleteAllTest(@PathVariable int dlNo) {
-		System.out.println(dlNo + " => 삭제할 글 번호");
+   // ▷ delete 테스트 -----------------------------------
+   @RequestMapping("/my/deleteAllTest/{dlNo}")
+   public String deleteAllTest(@PathVariable int dlNo) {
+      System.out.println(dlNo + " => 삭제할 글 번호");
 
-		DealVO dVO = testService.selectDealTest(dlNo);
-		System.out.println(dVO + " => 삭제할 글 정보");
+      DealVO dVO = testService.selectDealTest(dlNo);
+      System.out.println(dVO + " => 삭제할 글 정보");
 
-		List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
-		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+      List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
+      System.out.println(atchList + " => 삭제할 첨부파일들 정보");
 
-		int delDeal = testService.deleteDealTest(dVO);
-		System.out.println("게시글 삭제했으면 1 => " + delDeal);
+      int delDeal = testService.deleteDealTest(dVO);
+      System.out.println("게시글 삭제했으면 1 => " + delDeal);
 
-		int delAtch = atchService.deleteFile(atchList);
-		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
+      int delAtch = atchService.deleteFile(atchList);
+      System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
 
-		return "deal/dealMain";
-	}
+      return "deal/dealMain";
+   }
 
 }

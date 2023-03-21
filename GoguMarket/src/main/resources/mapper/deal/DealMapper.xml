@@ -177,15 +177,15 @@
 	<select id="dealListSelect" 
 			parameterType="com.goguma.deal.vo.DealSearchVO"
 			resultType="com.goguma.deal.vo.DealVO">
-	select * 
-			from (select rownum rn,a.* from(
+		SELECT * 
+			FROM (select rownum rn,a.* from(
 			SELECT d.* ,
 		       (SELECT ATCH_PATH
 	       		FROM ATCH
 	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
 			FROM DEAL d
 			
-			<include refid="creiteria"></include>
+		<include refid="creiteria"></include>
 		<if test="orderby != null and orderby != ''" >
 			order by ${orderby} desc
 		</if>

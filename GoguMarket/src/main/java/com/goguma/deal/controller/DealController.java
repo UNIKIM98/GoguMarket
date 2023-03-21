@@ -86,7 +86,7 @@ public class DealController {
 		model.addAttribute("lists", dealService.dealListSelect(svo)); // 전체건수를 담을 모델
 		model.addAttribute("category", codeService.codeList("002")); // 공통코드 002(중고거래) 카테고리를 담을 모델
 
-		scvo.setPstSe("중고거래"); // 검색어 왜 두번씩 드가냐
+		scvo.setPstSe("중고거래"); // 
 		scvo.setStts("1"); // 처음 들어갈때 상태값은 1
 		model.addAttribute("word", searchService.getPopularWord()); // 인기검색어가 담길 모델 = 관리자페이지에서 stts="2"인 아이들만 출력이된다.
 		if (scvo.getSearchTtl() != null && !scvo.getSearchTtl().equals("")) {
@@ -138,9 +138,7 @@ public class DealController {
 		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 dlno를 이용한 ntsl_id가 가진 총 데이터건수
 
 		model.addAttribute("list", dealService.getDealSeller(svo));		// 판매자의 다른 상품들
-
 		model.addAttribute("profile", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
-
 		model.addAttribute("category", codeService.codeList("002")); 	// string 공통코드 넣으면 모든테이블이나옴 저기서 나는
 		
 
@@ -151,7 +149,6 @@ public class DealController {
 
 		DealSearchVO dsvo = new DealSearchVO();
 		dsvo.setDlTtl(vo.getDlTtl());
-		
 		model.addAttribute("prc", dealService.selectPrice(dsvo));	// 시세를 담는 모델 : 새로운 생성자를 만들어서 제목을 담고 시세를 조회한다.
 
 		return "deal/dealdetail";
