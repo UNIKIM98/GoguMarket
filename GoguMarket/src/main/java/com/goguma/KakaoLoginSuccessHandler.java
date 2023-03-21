@@ -23,10 +23,10 @@ public class KakaoLoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
-
+		System.out.println("카카오로그인석세스헴들러=====================");
 		HttpSession session = request.getSession();
 		MemVO mvo = (MemVO) session.getAttribute("user");
-
+		
 		session.setAttribute("userId", mvo.getUserId()); // 아이디
 		session.setAttribute("userSe", "ROLE_USER"); // 권한
 		session.setAttribute("nickNm", mvo.getNickNm()); // 닉네임

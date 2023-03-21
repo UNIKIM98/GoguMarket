@@ -75,7 +75,7 @@
 										<!-- ■■↑ form id 새로 지정해주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="row">
 											<div class="col-lg-12">
-												<h4 class="blog-section-title border-left mb-30">중고거래상품등록</h4>
+												<h4 class="blog-section-title border-left mb-30">다중파일업로드 공통 포맷</h4>
 											</div>
 										</div>
 										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
@@ -89,7 +89,7 @@
 													 class="message-box box-shadow white-bg"></div>
 											</div>
 										</div>
-										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="col-lg-10 mb-10">
 											<label for="cate">카테고리<span> *</span></label> 
 											<select name="cate" id="cate">
@@ -203,15 +203,15 @@
 					isSubmitOk = false;
 				}
 			}
-		
+
 		//==============================================================================
-		//✅ 화면/배열에서 delete 실행하는 함수
+		//✅ 데이터 submit
 			function submitForm() {
 				// 선택한 카테고리 > hidden input value로 넣기
 				var ctgry = $("#cate option:selected").val(); 
 				$("#ctgry").val(ctgry); 
 				
-				// 네고여부 > 체크시 value로 Y 주기  //디폴트 N(java에서 처리할 예정~!)
+				// 네고여부 > 체크시 value로 Y 주기  //디폴트 N
 				console.log($('#negoYn'))
 				if ($('#negoYn').is(":checked")) {
 					console.log("checked!")
@@ -220,10 +220,7 @@
 				
 				//submit 전 체크하기
 				if(submitCheck()){
-				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				var formData = new FormData($("#dFrm")[0]);
-				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-				
 				formData.append("deleteFiles", deleteFileList);
 
 				for (var i = 0; i < inputFileList.length; i++) {
@@ -231,7 +228,6 @@
 						formData.append("files", inputFileList[i]);
 					}
 				}
-				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				$.ajax({	url : "/testFormSubmit",
 							type : "POST",
 							data : formData,
@@ -247,11 +243,11 @@
 								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
 							}
 						});
-				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
 				}
 			}
+		
 		//==============================================================================
-		//✅ 화면/배열에서 delete 실행하는 함수
+		//✅ form 유효성 체크
 			function submitCheck(){
 			//1. 파일 업로드 여부
 			if(inputFileList.length==0){
@@ -284,7 +280,6 @@
 			}else{
 				isSubmitOk = true;
 			}		
-			
 			return isSubmitOk;			
 		}
 

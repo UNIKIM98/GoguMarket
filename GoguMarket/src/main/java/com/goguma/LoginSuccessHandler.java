@@ -81,9 +81,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			out.flush();}catch (IOException e) {
 				e.printStackTrace();
 			}
-		
-		 //response.sendRedirect("/");
-
 	}
 
 }

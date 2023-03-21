@@ -59,7 +59,6 @@ public class OAuthAttributes {
 		String email = (String) kakao_account.get("email");
 		String userId = "kakao"+"_"+email.split("@")[0];
 		String uuid = UUID.randomUUID().toString().substring(0, 6);
-
 		return new OAuthAttributes(attributes, 
 									userNameAttributeName, 
 									userId,

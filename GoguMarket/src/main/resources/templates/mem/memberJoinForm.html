@@ -36,8 +36,8 @@
                               <tr>
                                  <th><label for="userId">아이디<span> *</span></label></th>
                                  <td><input type="text" id="userId" name="userId"
-                                          placeholder="아이디를 입력하세요." required="required"
-                                          style="width: 40%; margin-right: 50px;">
+	                                          placeholder="아이디를 입력하세요." required="required"
+	                                          style="width: 40%; margin-right: 50px;">
                                     <button class="submit-btn-1 btn-hover-1"
                                           onclick="userIdCkAjax()" id="userIdBtn" value="1"
                                           type="button">중복확인</button>
@@ -46,24 +46,24 @@
                               <tr>
                                  <th><label for="userPw">비밀번호<span> *</span></label></th>
                                  <td><input type="password" id="userPw" name="userPw"
-                                          placeholder="영문/숫자/특수문자 포함 9~20자리 입력해주세요."
-                                          required="required" 
-                                          style="width: 60%;"> <br> 
+	                                        placeholder="영문/숫자/특수문자 포함 9~20자리 입력해주세요."
+	                                        required="required" 
+	                                        style="width: 60%;"> <br> 
                                  </td>
                               </tr>
                               <tr>
                                  <th><label for="userPwCk">비밀번호 확인<span> *</span></label></th>
                                  <td><input type="password" id="userPwCk" name="userPwCk"
-                                          required="required" 
-                                          placeholder="비밀번호를 한 번 더 입력해주세요."
-                                          style="width: 60%;">
+	                                        required="required" 
+	                                        placeholder="비밀번호를 한 번 더 입력해주세요."
+	                                        style="width: 60%;">
                                  </td>
                               </tr>
                               <tr>
                                  <th><label for="eml">이메일주소 <span>*</span></label></th>
                                  <td><input type="text" id="eml" name="eml"
-                                          placeholder="example@email.com"
-                                          style="width: 38%; margin-right: 50px;">
+	                                        placeholder="example@email.com"
+	                                        style="width: 38%; margin-right: 50px;">
                                  <button class="submit-btn-1 btn-hover-1" type="button" 
                                  		 onclick="emlDupCkAjax()"
                                  		 id="emlBtn"
@@ -73,7 +73,7 @@
                               <tr>
                                  <th><label for="emlCk">이메일 인증확인 <span>*</span></label></th>
                                  <td><input type="text" id="emlCk" name="emlCk"
-                                          placeholder="인증번호를 입력해주세요." style="width: 38%; margin-right: 50px;">
+                                            placeholder="인증번호를 입력해주세요." style="width: 38%; margin-right: 50px;">
                                  <button class="submit-btn-1 btn-hover-1" type="button" 
                                  		 onclick="issecureRandomOk()" 
                                  		 id="emlAuthBtn"
@@ -83,21 +83,21 @@
                               <tr>
                                  <th><label for="userNm">이름<span> *</span></label></th>
                                  <td><input type="text" id="userNm" name="userNm"
-                                          placeholder="이름을 입력하세요." 
-                                          required="required"
-                                          style="width: 60%;">
+                                            placeholder="이름을 입력하세요." 
+                                            required="required"
+                                            style="width: 60%;">
                                  </td>
                               </tr>
                               <tr>
                                  <th><label for="nickNm">닉네임<span> *</span></label></th>
                                  <td><input type="text" id="nickNm" name="nickNm"
-                                          placeholder="닉네임을 입력하세요." 
-                                          required="required"
-                                          style="width: 40%; margin-right: 50px;">
+                                            placeholder="닉네임을 입력하세요." 
+                                            required="required"
+                                            style="width: 40%; margin-right: 50px;">
                                     <button class="submit-btn-1 btn-hover-1"
-	                                          onclick="nickNmCkAjax()" 
-	                                          id="nickNmBtn" value="1"
-	                                          type="button">중복확인</button>
+	                                        onclick="nickNmCkAjax()" 
+	                                        id="nickNmBtn" value="1"
+	                                        type="button">중복확인</button>
                                     </td>
                               </tr>
                               <tr>
@@ -375,6 +375,7 @@
     	            })
     	  	}
          }
+      
       // ==============================================================
       // ❤️ 아이디 유효성 체크
       function isUserIdOk(){

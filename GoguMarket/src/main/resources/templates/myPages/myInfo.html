@@ -176,7 +176,7 @@
 				$('#userPwCk').on("change", function(){
 					isSamePw();
 				})
-				
+
 				// # 휴대번호 유효성 체크
 				$("#mblTelno").on("change",function(){
 					ismblTelnoOk();
@@ -235,6 +235,7 @@
 						`)
 				
 			}
+			
 	// ==============================================================
 	// ❤️ 이메일 중복체크 Ajax
 	   function emlDupCkAjax(){
@@ -292,6 +293,7 @@
 					  alert("인증번호가 일치하지 않습니다.");
 				  }
 			  }
+		
 		// ==============================================================
 		// ❤️ 프로필사진 변경/삭제
 			function inputProfile(e){
@@ -307,7 +309,7 @@
 					$("#pfTrgt").append(
 								`
 								<img style="${img_style}" src="${e.target.result}" onerror="this.onerror=null; this.src='/img/logo/003.png'"
-																	   id="file${fileNum}" onclick="fileDelete('file${fileNum}"')>
+																	   id="file${fileNum}" onclick="fileDelete('file${fileNum}')">
 								`		
 					)
 					fileNum++;
