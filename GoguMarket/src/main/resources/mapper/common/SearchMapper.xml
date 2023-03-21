@@ -46,7 +46,7 @@
         </if>
 	</select>
 	
-	<!-- 중고거래 검색어 삭제 웨얼절 저거되나?if걸어야됨 -->
+	<!-- 중고거래 검색어 삭제 -->
 	<delete id="deleteWord"
 			parameterType="com.goguma.common.vo.SearchVO">
 		delete from search

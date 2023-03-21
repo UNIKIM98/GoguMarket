@@ -96,8 +96,7 @@
 						});
 						
 						}
-
-				// 넘길 값들 순위랑 검색어 . 순위 어케 넘기지
+				//
 			}
 			// submit 전 체크하기 . 수정 (검색어등록) 아작스
 				
@@ -153,7 +152,7 @@
 					</div>
 					<div class="table-responsive">
 
-						<!-- 왼쪽부분 : 현재 저장 되어있는 db값 불러오기 -->
+						<!-- 현재 저장 되어있는 db값 불러오기 -->
 						<form id="keywordFrm" method="post" onsubmit="return false">
 								<input type="hidden" name="pstSe" id="pstSe"> 
 								<input type="hidden" name="stts" id="stts"> 
@@ -167,19 +166,16 @@
 											<th>순위</th>
 											<th>검색어</th>
 											<th>삭제</th>
-											
 										</tr>
 									</thead>
 									<tbody id="word">
 										<tr th:each="word, i : ${word}">
-											
 											<td th:text=${i.index+1}></td>
 											<td th:text="${word.searchTtl}"></td>
 											<td><input type="hidden" th:name="|sList[${i.index}].searchTtl|" id="searchTtl" th:value="${word.searchTtl}">
 											<button class="btn btn-primary"
 													style="height: 25px; line-height: 15px"
 													onclick="deletekeyword(event)" th:id="${word.searchTtl}">삭제</button></td>
-											
 										</tr>
 									</tbody>
 								</table>

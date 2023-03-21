@@ -52,7 +52,7 @@ public class DealServiceImpl implements DealService {
 		// 게시글 끌어올리기
 		PointVO pvo = new PointVO();
 		pvo.setPoint(-200);
-		pvo.setUserId(userId); // 세션의 현재 유저아이디 불러와야되는데 유유
+		pvo.setUserId(userId); // 세션의 현재 유저아이디
 		pvo.setPointMthd("끌어올리기");
 		pmap.insertUsedPoint(pvo);
 		
