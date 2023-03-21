@@ -39,21 +39,19 @@ public class AuctController {
 	@Autowired
 	private CommonCodeService codeService; // 공통코드 영역
 
+	// ▼전체 품목 리스트
 	@GetMapping("/goguma/auctList")
 	public String getauctList(Model model, AuctVO vo, AuctMemVO mvo) {
-		// 전체품목 리스트
-		
-		// 아래는 auctService의 getAuctList실행값을 model에 담고 이름은 lists라고 명명합니다.
+		// 각각 서비스의 실핼값을 지정된 이름의 model값에 담아줌
 		model.addAttribute("lists", auctService.getAuctList());
 		model.addAttribute("nowPrcs", auctMemService.selectNowPrc());
 
-		System.out.println(model); // 모델 확인
 		return "auction/auctList";
 	}
-	@GetMapping("/goguma/auctListAjax") // 메인화면 AJAX
+	// ▼전체 품목 리스트 AJAX 미사용시 제거
+	@GetMapping("/goguma/auctListAjax")
 	@ResponseBody
 	public List<AuctVO> getauctListAjax(Model model, AuctVO vo, AuctMemVO mvo) {
-		// 전체품목 리스트
 		
 		List<AuctVO> lists = auctService.getAuctList();
 		
@@ -62,17 +60,14 @@ public class AuctController {
 		
 		return lists;
 	}
-
-	@GetMapping("/goguma/auctSelect/{auctNo}") // 경매 번호에 따른 단일페이지 번호 변경
+	// ▼단일품목 조회
+	@GetMapping("/goguma/auctSelect/{auctNo}")
 	public String auctSelect(@PathVariable int auctNo, Model model) {
-		// 단일품목 값
-
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
-
-		vo = auctService.getAuct(vo); // 단건조회 서비스 불러오기
-
-		int auctDday = auctService.auctDday(auctNo);
+		vo = auctService.getAuct(vo); // 단건조회 서비스
+		int auctDday = auctService.auctDday(auctNo); // Dday서비스
+		
 		List<AtchVO> atchList = atchService.selectAtch(vo.getAtchId()); // 첨부파일서비스 리스트로 조회
 		List<AuctMemVO> avoList = auctMemService.selectAuctMem(auctNo); // 입찰자 서비스 불러오기
 		
@@ -81,22 +76,17 @@ public class AuctController {
 		model.addAttribute("Dday", auctDday); // Dday계산기 담아줌
 		model.addAttribute("file", auctService.selectAuctAtch(auctNo)); // 게시글 모든 이미지
 		
-		System.out.println(auctService.selectAuctAtch(auctNo));
-		System.out.println("auctSelect 왔음"+vo);
-		
 		if (avoList.size() == 0) {
 			model.addAttribute("auctMem", "nothing");
 		} else {
-			model.addAttribute("auctMem", avoList); // 오류나면 여기한번 보기
+			model.addAttribute("auctMem", avoList);
 		}
 
 		return "auction/auctSelect";
 	}
-
+	// ▼상품등록폼 이동
 	@GetMapping("/my/auctInsertForm")
 	public String auctInsertForm(Model model) {
-		// 상품등록폼 이동
-
 		List<CommonCodeVO> codeList = codeService.codeList("002");
 		codeList.remove(0);
 
@@ -104,12 +94,10 @@ public class AuctController {
 		return "auction/auctInsertForm";
 
 	}
-
-	@PostMapping("/my/auctInsert") // 등록 매핑
+	// ▼상품등록
+	@PostMapping("/my/auctInsert")
 	@ResponseBody
 	public String auctInsert(AuctVO vo, List<MultipartFile> files, HttpServletRequest request) {
-		// ▲ 리턴타입 스트링으로 바꿔주기! :
-		System.out.println(files + "======넘어온 파일들");
 		String result = "fail";
 		int atchId = atchService.insertFile(files);
 		int atchList = atchService.insertFile(atchId, files);
@@ -117,12 +105,10 @@ public class AuctController {
 		HttpSession session = request.getSession(); // 세션값 받아옴
 		String myId = (String) session.getAttribute("userId"); // 세션값 중 아이디만 받아옴
 		vo.setUserId(myId); // 세션값으로 아이디 설정
+		
 		if (vo.getQuickPrc() == 0) {
 			System.out.println("즉구가 없음");
 		}
-		System.out.println(atchId + " : files/////////");
-		System.out.println(vo);
-		System.out.println(atchList);
 		if (atchId > 0) {
 			vo.setAtchId(atchId);
 		}
@@ -133,36 +119,26 @@ public class AuctController {
 		}
 		return result;
 	}
-
+	// ▼전체 품목 리스트
 	@RequestMapping("/my/auctDelete/{auctNo}")
 	public void auctDelete(@PathVariable int auctNo, HttpServletResponse response) {
-		System.out.println(auctNo + " => 삭제할 글 번호");
-
 		AuctVO vo = new AuctVO();
 		vo.setAuctNo(auctNo);
 		vo = auctService.getAuct(vo);
-		System.out.println(vo + " => 삭제할 글 정보");
 
-		List<AtchVO> atchList = auctService.selectAuctAtch(auctNo);
-		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
+		List<AtchVO> atchList = auctService.selectAuctAtch(auctNo); //삭제할 첨부파일 정보
 
-		int delAuct = auctService.deleteAuct(vo);
-		System.out.println("게시글 삭제했으면 1 => " + delAuct);
-
-		int delAtch = atchService.deleteFile(atchList);
-		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
+		int delAuct = auctService.deleteAuct(vo); //경매 삭제 서비스
+		int delAtch = atchService.deleteFile(atchList); //첨부파일 삭제 서비스
 
 		try {
 			if (delAuct > 0) {
-				System.out.println("왔니..delAcut 안쪽임");
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
 				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/goguma/auctList';");
-
 				out.println("</script>");
-
 				out.flush();
 
 			} else {
@@ -179,20 +155,14 @@ public class AuctController {
 			e.printStackTrace();
 		}
 	}
-
+	// ▼마이페이지 등록한 경매품 리스트 이동
 	@GetMapping("/my/allAuction")
 	public String allAuction(Model model, HttpServletRequest request) {
-		// 마이페이지 나의 모든 경매 이동
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		List<AuctVO> myAuctList = auctService.selectUserId(userId); // 세션의(String)userId로 서비스 실행. 값은 여러개라 List입니다.
 
-		// 세션의 id값과 작성 글의 id값이 같은 게시물만 보여준다.
-		HttpSession session = request.getSession(); // 세션값을 가져옵니다
-		String userId = (String) session.getAttribute("userId"); // 세션값중 "userId"를 String으로가져오고 userId라 명명합니다.
-		List<AuctVO> myAuctList = auctService.selectUserId(userId); // userId로 매퍼문 돌립니다. 값은 여러개라 List입니다.
-
-		model.addAttribute("myAuctList", myAuctList); // 모델에 잘 요리된 myAuctList를 담아줍니다.
-
-		// 낙찰자 ID클릭시 이름, 계좌 전송하는것 구현?
-		System.out.println("==============================마이페이지" + model);
+		model.addAttribute("myAuctList", myAuctList); // 실행된 값을 model에 담아줌
 
 		return "auction/allAuction";
 
