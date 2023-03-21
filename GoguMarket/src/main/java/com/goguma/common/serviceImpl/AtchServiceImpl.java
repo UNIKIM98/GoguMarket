@@ -113,13 +113,10 @@ public class AtchServiceImpl implements AtchService {
 	@Override
 	public int deleteFile(List<AtchVO> atchVOs) {
 		int cnt = 0;
-		System.out.println("파일삭제왔음  impl");
 		if (atchVOs != null && !atchVOs.isEmpty()) {
-			System.out.println("if문");
 
 			for (AtchVO atch : atchVOs) {
 				atch = atchMapper.selectFile(atch);
-				System.out.println("for문");
 
 				File file = new File(saveFolder + atch.getAtchNm());
 				System.out.println(file);
@@ -128,7 +125,6 @@ public class AtchServiceImpl implements AtchService {
 				if (result) {
 					cnt += 1;
 					atchMapper.deleteFile(atch);
-					System.out.println("삭제완료===============");
 				}
 			}
 		}

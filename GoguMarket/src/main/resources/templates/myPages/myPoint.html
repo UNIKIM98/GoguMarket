@@ -5,6 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/myPages/myPoint.css">
+	<style>
+	#scrollDiv::-webkit-scrollbar {
+	    width: 8px;  /* 스크롤바의 너비 */
+	}
+	
+	#scrollDiv::-webkit-scrollbar-thumb {
+	    height: 30%; /* 스크롤바의 길이 */
+	    background: #FCD052; /* 스크롤바의 색상 */
+	    
+	    border-radius: 10px;
+	}
+	
+	#scrollDiv::-webkit-scrollbar-track {
+	    background: rgb(186, 127, 155, .1);  /*스크롤바 뒷 배경 색상*/
+	}
+	</style>
 </head>
 <body>
 	<div layout:fragment="myContent">
@@ -47,7 +63,8 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="payment-details p-30">
+							
+								<div class="payment-details p-30" style="overflow-y: scroll; height: 400px;" id="scrollDiv">
 									<h6 class="widget-title border-left mb-20"
 										style="display: inline-block;">
 										<span style="color: #C04A82" id="ttlTrgt">전체</span> 적립 내역
@@ -61,7 +78,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="payment-details p-30">
+								<div class="payment-details p-30" style="overflow-y: scroll; height: 400px;" id="scrollDiv">
 									<h6 class="widget-title border-left mb-20"
 										style="display: inline-block;">포인트 사용 내역</h6>
 									<table class="usedTable">
