@@ -364,8 +364,7 @@ public class DealController {
 	// ▷ 마이페이지 / 중고거래 : 끌어올리기 데이터는 impl에서 vo담았음
 	@RequestMapping("/my/myDealSubmit") // 게시글업데이트..
 	@ResponseBody
-	public int mydeal(Model model, DealVO dVO, PointVO pVO, String userId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public int mydeal(Model model, DealVO dVO, PointVO pVO, String userId, HttpSession session) {
 		userId = (String) session.getAttribute("userId");
 
 		int cnt = dealService.updateYmd(dVO, userId); // pointVO에 userId담아줄라공~
@@ -376,8 +375,7 @@ public class DealController {
 	// ===========================
 	// ▷ 마이페이지 / 중고거래 가계부 : 이것도 왠지 셀렉트문 두개 말고.. 매퍼 쿼리에서 where if문으로 제어해야될거같은데
 	@RequestMapping("/my/myCashbook")
-	public String mycashbook(String userId, Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public String mycashbook(String userId, Model model, HttpSession session) {
 		userId = (String) session.getAttribute("userId");
 
 		model.addAttribute("cashSell", dealService.selectCashNtsl(userId)); // 판매자일때 건수+데이터조회
@@ -414,7 +412,7 @@ public class DealController {
 	// ▶ 관리자 실검 관리
 	@RequestMapping("/admin/adminKeywordbox") //
 
-	public String adminKeywordbox(Model model, @ModelAttribute("dsvo") DealSearchVO svo, Paging paging) {
+	public String adminKeywordbox(Model model, @ModelAttribute("dsvo") DealSearchVO svo) {
 
 		model.addAttribute("word", searchService.getPopularWord()); // stts=1인 실검가져오기
 
@@ -457,8 +455,7 @@ public class DealController {
 		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 deal테이블에 있는 총 데이터건수
 
 		model.addAttribute("lists", dealService.dealListSelect(svo));
-		model.addAttribute("category", codeService.codeList("002")); // string 공통코드 넣으면 모든테이블이나옴 저기서 나는
-																		// common_detail_code만 들고오면됨
+		model.addAttribute("category", codeService.codeList("002")); // 공통코드
 		return "admin/adminDeal"; // 뷰페이지명
 	}
 

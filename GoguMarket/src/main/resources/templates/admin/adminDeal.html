@@ -109,16 +109,16 @@
 							<thead>
 								<tr>
 									<th width="63px;">글번호</th>
+									<th width="80px;" style="word-break:break-all;">첨부파일</th>
 									<th width="88px;">판매자</th>
 									<th width="88px;">구매자</th>
-									<th width="75px;" style="word-break:break-all;">카테고리 코드</th>
+									<th width="75px;" style="word-break:break-all;">카테고리</th>
 									<th width="110px;">등록일</th>
 									<th>제목</th>
 									<th>내용</th>
 									<th>가격</th>
 									<th style="word-break:break-all;">거래상태</th>
 									<th>조회수</th>
-									<th width="80px;" style="word-break:break-all;">첨부파일아이디</th>
 									<th width="80px;">상세조회</th>
 								</tr>
 							</thead>
@@ -128,18 +128,20 @@
 									onmouseover='this.style.background="#fcecae";'
 									onmouseleave='this.style.background="#FFFFFF";'>
 									<td th:text="${deal.dlNo}"></td>
+									<td><img onerror="this.onerror=null; this.src='/img/logo/001.png'" 
+									style="width:70px; height:70px;" th:src="${deal.atchNm}"></td>
 									<td th:text="${deal.ntslId}"  style="word-break:break-all;"></td>
 									<td th:text="${deal.prchsId}"  style="word-break:break-all;"></td>
 									<td th:text="${deal.ctgryNm}"></td>
 									<td th:text="${#dates.format(deal.dlYmd, 'yyyy-MM-dd')}"></td>
 <!-- 									th:text="${#dates.format(sim.RSVT_YMD, 'yyyy-MM-dd')}" -->
 									<td th:text="${deal.dlTtl}" style="word-break:break-all;"></td>
-									<td th:text="${deal.dlCn}"  style="word-break:break-all;"></td>
+									<td th:text="${deal.dlCn}"  style="text-align:left; word-break:break-all;"></td>
 									<td th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" th:if="${deal.dlPrc} !=0"></td>
 									<td th:if="${deal.dlPrc} ==0">무료나눔</td>
 									<td th:text="${deal.stts}"></td>
 									<td th:text="${deal.inqCnt}"></td>
-									<td><img style="width:70px;" th:src="${deal.atchNm}"></td>
+									
 									<td>
 										<button 
 										th:onclick="|location.href='@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}'|"
