@@ -130,7 +130,7 @@
 									<td th:text="${deal.dlNo}"></td>
 									<td th:text="${deal.ntslId}"  style="word-break:break-all;"></td>
 									<td th:text="${deal.prchsId}"  style="word-break:break-all;"></td>
-									<td th:text="${deal.ctgry}"></td>
+									<td th:text="${deal.ctgryNm}"></td>
 									<td th:text="${#dates.format(deal.dlYmd, 'yyyy-MM-dd')}"></td>
 <!-- 									th:text="${#dates.format(sim.RSVT_YMD, 'yyyy-MM-dd')}" -->
 									<td th:text="${deal.dlTtl}" style="word-break:break-all;"></td>
@@ -139,7 +139,7 @@
 									<td th:if="${deal.dlPrc} ==0">무료나눔</td>
 									<td th:text="${deal.stts}"></td>
 									<td th:text="${deal.inqCnt}"></td>
-									<td th:text="${deal.atchId}"></td>
+									<td><img style="width:70px;" th:src="${deal.atchNm}"></td>
 									<td>
 										<button 
 										th:onclick="|location.href='@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}'|"

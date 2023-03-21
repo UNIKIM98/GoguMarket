@@ -76,22 +76,24 @@ public class DealController {
 	// ▷ 중고마켓 메인페이지
 	@RequestMapping("/goguma/dealMain") // 중고거래 메인 페이지 : 판매중인 물건만 보임
 	public String dealMain(Paging paging, Model model, SearchVO scvo, @ModelAttribute("dsvo") DealSearchVO svo) {
+		// 판매중인 데이터만만 보이도록
 		paging.setPageUnit(8); // 한 페이지에 출력할 글 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
+		svo.setStts("판매중"); 
 		svo.setFirst(paging.getFirst()); // 첫번째글 
 		svo.setLast(paging.getLast());	 // 마지막글 
 		paging.setTotalRecord(dealService.getcountTotal(svo)); // 전체 레코드 건수
-
-		svo.setStts("판매중"); // 판매중인 데이터만만 보이도록
 		model.addAttribute("lists", dealService.dealListSelect(svo)); // 전체건수를 담을 모델
-		model.addAttribute("category", codeService.codeList("002")); // 공통코드 002(중고거래) 카테고리를 담을 모델
 
-		scvo.setPstSe("중고거래"); // 
-		scvo.setStts("1"); // 처음 들어갈때 상태값은 1
-		model.addAttribute("word", searchService.getPopularWord()); // 인기검색어가 담길 모델 = 관리자페이지에서 stts="2"인 아이들만 출력이된다.
+		// 검색어저장시 null값이 아닌 값만 들어가도록 한다
 		if (scvo.getSearchTtl() != null && !scvo.getSearchTtl().equals("")) {
+			scvo.setPstSe("중고거래"); // 
+			scvo.setStts("1"); // 처음 들어갈때 상태값은 1
 			searchService.insertSearch(scvo);
-		} // 검색어저장시 null값이 아닌 값만 들어가도록 한다
+		} 
+		
+		model.addAttribute("category", codeService.codeList("002")); // 공통코드 002(중고거래) 카테고리를 담을 모델
+		model.addAttribute("word", searchService.getPopularWord()); // 인기검색어가 담길 모델 = 관리자페이지에서 stts="2"인 아이들만 출력이된다.
 		return "deal/dealMain";
 	}
 
@@ -108,8 +110,10 @@ public class DealController {
 	// ▷ 중고마켓 게시글 작성 submit
 	@RequestMapping("/my/dealformsubmit") // 딜폼창확인
 	@ResponseBody
-	public String dealform( HttpServletRequest request, String userId, DealVO vo, List<MultipartFile> files) {
-		HttpSession session = request.getSession();
+	public String dealform( HttpSession session, 
+			                String userId, 
+			                DealVO vo, 
+			                List<MultipartFile> files) {
 		userId = (String) session.getAttribute("userId"); // 현재 로그인한 세션값으로 판매글을 등록할것이다
 
 		int atchId = atchService.insertFile(files);		  // 첨부파일
@@ -126,30 +130,30 @@ public class DealController {
 	@RequestMapping("/goguma/dealdetail/{dlNo}")
 	public String getDeal(@PathVariable int dlNo, Model model, Paging paging, DealSearchVO svo) {
 		
-		DealVO vo = dealService.selectDeal(dlNo);	// 페이징 하기위한 재료들 svo에 담는다
+		DealVO vo = dealService.selectDeal(dlNo);	// 판매자아이디를 구하기위해  단건조회
 
+		// 단건조회 내의 탭페이지에서 판매자의 다른 모든 판매 상품 목록들을 페이징
 		paging.setPageUnit(3); // 한 페이지에 출력할 레코드 건수
 		paging.setPageSize(10); // 한 페이지에 보여질 페이지 갯수
 
 		svo.setFirst(paging.getFirst());
 		svo.setLast(paging.getLast());
-
 		svo.setNtslId(vo.getNtslId()); // 현재 판매자의 아이디를 넣어주기
 		paging.setTotalRecord(dealService.getcountTotal(svo)); // 현재 dlno를 이용한 ntsl_id가 가진 총 데이터건수
-
 		model.addAttribute("list", dealService.getDealSeller(svo));		// 판매자의 다른 상품들
+		
+		
 		model.addAttribute("profile", dealService.selectNtslDeal(svo)); // 판매자 정보를 보여줄 모델
 		model.addAttribute("category", codeService.codeList("002")); 	// string 공통코드 넣으면 모든테이블이나옴 저기서 나는
-		
-
-		model.addAttribute("deal", dealService.selectDeal(dlNo));		// 상품정보
+		model.addAttribute("deal", vo);									// 상품정보
 		model.addAttribute("ct", dealService.getDealCtgry(dlNo)); 		// 카테고리
 		model.addAttribute("file", dealService.selectDealAtch(dlNo)); 	// 해당게시글 첨부파일들
 		model.addAttribute("cnt", dealService.dealHitUpdate(dlNo));		// 조회수
-
+		
+		// 시세를 담는 모델 : 새로운 생성자를 만들어서 제목을 담고 시세를 조회한다.
 		DealSearchVO dsvo = new DealSearchVO();
 		dsvo.setDlTtl(vo.getDlTtl());
-		model.addAttribute("prc", dealService.selectPrice(dsvo));	// 시세를 담는 모델 : 새로운 생성자를 만들어서 제목을 담고 시세를 조회한다.
+		model.addAttribute("prc", dealService.selectPrice(dsvo));	
 
 		return "deal/dealdetail";
 	}
@@ -170,14 +174,15 @@ public class DealController {
 	// ▷ 중고거래 리뷰 작성 submit
 	@RequestMapping("/my/dealReviewsubmit")
 	@ResponseBody
-	public int dealReview(PointVO pvo, DealReviewVO rvo, DealRvVoteVO vtList, String userId,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		userId = (String) session.getAttribute("userId");
+	public int dealReview(PointVO pvo, 
+			              DealReviewVO rvo, 
+			              DealRvVoteVO vtList, 
+			              String userId,
+			              HttpSession session) {
 
-		List<String> list = vtList.getVtList();
-		// 리뷰 인서트
-		int rvNo = rvService.insertDealRv(rvo, list, userId);
+		userId = (String) session.getAttribute("userId");
+		// 투표 !, 리뷰 인서트
+		int rvNo = rvService.insertDealRv(rvo, vtList.getVtList(), userId);
 
 		return rvo.getDlNo();
 	}
@@ -210,20 +215,25 @@ public class DealController {
 	public void dealUpdateSubmit(DealVO dVO, HttpServletResponse response) throws IOException {
 		int cnt = dealService.updatePrchsStts(dVO);
 
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
 		if (cnt > 0) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
 
 			out.println("<script language='javascript'>");
 			out.println("alert('[구매완료] 구매완료 페이지로 이동합니다.'); location.href='/my/myDeal';");
 			out.println("</script>");
 
 			out.flush();
+		} else {
+			out.println("<script language='javascript'>");
+			out.println("alert('[구매실패] 이전 페이지로 이동합니다.'); history.back();");
+			out.println("</script>");
 		}
 	}
 
 	// ===========================
-	// ▷ 중고거래 게시글 수정
+	// ▷ 중고거래 게시글 수정폼
 	@GetMapping("/my/dealupdate/{dlNo}")
 	public String updateTest(Model model, HttpServletRequest request, @PathVariable int dlNo) {
 		// 임시로그인 : 세션에 아이디, 거래지역 담기
@@ -234,8 +244,8 @@ public class DealController {
 		mVO = memService.selectUser(mVO);
 
 		// 게시글 정보 담기
-		model.addAttribute("dealInfo", testService.selectDealTest(dlNo)); // 7번 게시글 정보
-		model.addAttribute("atchList", testService.selectDealAtchTest(dlNo)); // 7번 게시글 첨부파일 목록
+		model.addAttribute("dealInfo", testService.selectDealTest(dlNo)); // n번 게시글 정보
+		model.addAttribute("atchList", testService.selectDealAtchTest(dlNo)); // n번 게시글 첨부파일 목록
 		model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
 
 		return "deal/dealUpdateForm";
@@ -252,30 +262,21 @@ public class DealController {
 	public void deleteDeal(@PathVariable int dlNo, HttpServletResponse response) {
 
 		DealVO dVO = testService.selectDealTest(dlNo);
-
 		List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
-
 		int delDeal = testService.deleteDealTest(dVO);
-
 		int delAtch = atchService.deleteFile(atchList);
 
 		try {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
 			if (delDeal > 0) {
-//				System.out.println("왔니..delAcut 안쪽임");
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
 
 				out.println("<script language='javascript'>");
 				out.println("alert('[삭제완료] 게시글 삭제가 정상적으로 완료되었습니다. :D '); location.href='/goguma/dealMain';");
-
 				out.println("</script>");
-
 				out.flush();
 
 			} else {
-				response.setContentType("text/html; charset=UTF-8");
-
-				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
 				out.println("alert('[삭제실패] 게시글 삭제 중 오류가 발생하였습니다 :( '); location.href='/goguma/dealMain';");
 				out.println("</script>");
@@ -348,13 +349,13 @@ public class DealController {
 		model.addAttribute("dealList", dealService.selectNtslDeal(svo)); // 판매중 내역
 
 		// 판매완료 내역
-		svo.setStts("판매완료");
-		model.addAttribute("dealsold", dealService.selectNtslDeal(svo)); // 판매완료 내역
+		DealSearchVO searchvo = new DealSearchVO();
+		searchvo.setStts("판매완료");
+		model.addAttribute("dealsold", dealService.selectNtslDeal(searchvo)); // 판매완료 내역
 
-		svo.setPrchsId(userId);
-		svo.setNtslId(null);
-
-		model.addAttribute("buyList", dealService.selectNtslDeal(svo)); // 구매내역
+		searchvo = new DealSearchVO();
+		searchvo.setPrchsId(userId);
+		model.addAttribute("buyList", dealService.selectNtslDeal(searchvo)); // 구매내역
 
 		return "myPages/myDeal";
 	}

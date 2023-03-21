@@ -177,12 +177,26 @@
 	<select id="dealListSelect" 
 			parameterType="com.goguma.deal.vo.DealSearchVO"
 			resultType="com.goguma.deal.vo.DealVO">
-		SELECT * 
-			FROM (select rownum rn,a.* from(
-			SELECT d.* ,
-		       (SELECT ATCH_PATH
-	       		FROM ATCH
-	       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
+		SELECT * FROM (select rownum rn,a.* from(
+		
+			SELECT NTSL_ID,
+					PRCHS_ID,
+					CTGRY,
+					FIND_CODE ('002',CTGRY) CTGRY_NM, 
+					DL_YMD,
+					DL_TTL,
+					DL_CN,
+					DL_PRC,
+					STTS,
+					INQ_CNT,
+					PRCHS_YMD,
+					ATCH_ID,
+					AREA,
+					NEGO_YN,
+					DL_NO ,
+			       (SELECT ATCH_PATH
+		       		FROM ATCH
+		       		WHERE ATCH_ID = d.ATCH_ID AND ROWNUM=1) ATCH_NM 
 			FROM DEAL d
 			
 		<include refid="creiteria"></include>

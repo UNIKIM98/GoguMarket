@@ -43,5 +43,7 @@ public class DealVO extends AtchVO{
 	private String commonDetailCode;
 	private String commonNm;
 	private String commonCn;
+	
+	private String ctgryNm;
 
 }
