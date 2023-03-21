@@ -94,7 +94,6 @@ public class AtchServiceImpl implements AtchService {
 
 				atchMapper.insertFile(atch);
 			}
-
 		}
 		return atchId;
 	}

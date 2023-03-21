@@ -32,7 +32,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
 
 		OAuth2User oAuth2User = oAuth2UserService.loadUser(oAuth2UserRequest);
-
 		// 현재 진행중인 서비스를 구분하기 위해 문자열로 받음.
 		// oAuth2UserRequest.getClientRegistration().getRegistrationId()에 값이 들어있다.
 		// {registrationId='naver'} 이런식으로

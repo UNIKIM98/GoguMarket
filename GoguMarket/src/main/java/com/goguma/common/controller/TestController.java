@@ -101,7 +101,7 @@ public class TestController {
 		return "myPages/myAttend";
 	}
 
-	// ▷ insertForm 테스트 -----------------------------------
+	// ▷ insertForm 공통 -----------------------------------
 	@GetMapping("/biz/insertTest")
 	public String testForm(Model model) {
 		model.addAttribute("category", codeService.codeList("002"));
@@ -133,11 +133,11 @@ public class TestController {
 		mVO = memService.selectUser(mVO);
 
 		// 게시글 정보 담기
-		model.addAttribute("dealInfo", testService.selectDealTest(7)); // 12번 게시글 정보
+		model.addAttribute("dealInfo", testService.selectDealTest(7)); // 임시 12번 게시글 정보
 
-		model.addAttribute("atchList", testService.selectDealAtchTest(7)); // 12번 게시글 첨부파일 목록
+		model.addAttribute("atchList", testService.selectDealAtchTest(7)); // 임시 12번 게시글 첨부파일 목록
 
-		model.addAttribute("category", codeService.codeList("002")); // 카테고리 정보
+		model.addAttribute("category", codeService.codeList("002")); // 임시 카테고리 정보
 
 		return "common/cmUpdateForm";
 	}
@@ -167,19 +167,12 @@ public class TestController {
 	// ▷ delete 테스트 -----------------------------------
 	@RequestMapping("/deleteAllTest/{dlNo}")
 	public String deleteAllTest(@PathVariable int dlNo) {
-		System.out.println(dlNo + " => 삭제할 글 번호");
 
 		DealVO dVO = testService.selectDealTest(dlNo);
-		System.out.println(dVO + " => 삭제할 글 정보");
 
 		List<AtchVO> atchList = testService.selectDealAtchTest(dlNo);
-		System.out.println(atchList + " => 삭제할 첨부파일들 정보");
-
 		int delDeal = testService.deleteDealTest(dVO);
-		System.out.println("게시글 삭제했으면 1 => " + delDeal);
-
 		int delAtch = atchService.deleteFile(atchList);
-		System.out.println("첨부파일 삭제했으면 1 이상 => " + delAtch);
 
 		return "deal/dealMain";
 	}

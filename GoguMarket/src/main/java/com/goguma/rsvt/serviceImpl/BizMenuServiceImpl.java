@@ -40,9 +40,9 @@ public class BizMenuServiceImpl implements BizMenuService {
 
 		int cnt = 0;
 
-//		if(file.delete()) {
-//			cnt = map.deleteMenu(menuNo);
-//		};
+		if(file.delete()) {
+			cnt = map.deleteMenu(menuNo);
+		};
 
 		return cnt;
 	}
