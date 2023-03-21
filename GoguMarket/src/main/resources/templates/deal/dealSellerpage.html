@@ -89,26 +89,25 @@
 						<div class="single-product-tab reviews-tab">
 							<ul class="nav nav-tabs mb-20">
 								<li class="nav-item"><a class="nav-link active"
-									href="#description" data-bs-toggle="tab" role="tab"
-									data-bs-target="#description">판매물품</a></li>
-								<li class="nav-item"><a class="nav-link"
 									data-bs-toggle="tab" role="tab" data-bs-target="#reviews">거래
 										후기</a></li>
+								<li class="nav-item"><a class="nav-link"
+									href="#description" data-bs-toggle="tab" role="tab"
+									data-bs-target="#description">판매물품</a></li>
 								<li class="nav-item"><a class="nav-link"
 									data-bs-toggle="tab" role="tab" data-bs-target="#mannor">매너
 										칭찬</a></li>
 							</ul>
-<!-- 안에 시작 -->
+					<!-- 안에 시작 -->
 							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active show"
+								<div role="tabpanel" class="tab-pane show"
 									id="description" style="width: 100%;">
 									<p>판매자가 현재 판매하고 있는 물품 리스트 페이지 입니다</p>
 
 								
 										<div class="featured-product">
 												<form name="frm" align="center">
-													<input type="hidden" name="page" value="1"> <input
-														type="hidden" name="tabName" value="description">
+													<input type="hidden" name="page" value="1"> 
 														<div class="row">
 														<div class="col-lg-12">
 													<div class="col-3 product-item mr-30" th:each="deal:${dealList}">
@@ -131,15 +130,15 @@
 												</form>
 											
 										</div>
-									<div align="center">
-										<a
-											th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}"
-											th:href="|javascript:gopage(${num})|"
-											th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a>
-									</div>
+<!-- 									<div align="center"> -->
+<!-- 										<a -->
+<!-- 											th:each="num : *{#numbers.sequence(paging.startPage, paging.endPage)}" -->
+<!-- 											th:href="|javascript:gopage(${num})|" -->
+<!-- 											th:class="${paging.page}==${num} ? 'active'"> [[${num}]]</a> -->
+<!-- 									</div> -->
 								</div>
 
-								<div role="tabpanel" class="tab-pane" id="reviews">
+								<div role="tabpanel" class="tab-pane active" id="reviews">
 									<p>판매자님이 보낸 거래 후기들의 리스트입니다.</p>
 									<div class="reviews-tab-desc">
 										<form name="frmSearch" align="center">
