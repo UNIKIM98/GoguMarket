@@ -33,11 +33,6 @@
                             </thead>
 
                             <tbody>
-                                <th:block th:if="${#lists.isEmpty(mybidList)}">
-                                    <tr>
-                                        <td colspan="6" style="text-align: center;">입찰하신 상품이 없습니다.</td>
-                                    </tr>
-                                </th:block>
                                 <th:block th:if="${not #lists.isEmpty(mybidList)}">
                                     <tr th:each="mybidList:${mybidList}"
                                         onmouseover='this.style.background="#fcecae";'
@@ -48,8 +43,14 @@
                                         <td th:text="${mybidList.userId}"></td>
                                         <td th:text="${mybidList.auctTtl}"></td>
                                         <td th:text="${#dates.format(mybidList.auctYmd, 'yyyy/MM/dd')}"></td>
-                                        <td th:text="${mybidList.nowPrc}"></td>
+                                        <td th:text="${#numbers.formatInteger(mybidList.nowPrc, 3, 'COMMA')}"></td>
+                                        
                                         <td><a th:href="@{/goguma/auctSelect/{mybidList}(mybidList = ${mybidList.auctNo})}">이동</a></td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(mybidList)}">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center;">입찰하신 상품이 없습니다.</td>
                                     </tr>
                                 </th:block>
                             </tbody>

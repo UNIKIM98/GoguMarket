@@ -12,18 +12,7 @@
 
 
 <style>
-/* @font-face { */
-/* 	font-family: 'S-CoreDream-3Light'; */
-/* 	src: */
-/* 		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') */
-/* 		format('woff'); */
-/* 	font-weight: normal; */
-/* 	font-style: normal; */
-/* } */
 
-/* * { */
-/* 	font-family: 'S-CoreDream-3Light'; */
-/* } */
 
 #uploadFileList {
 	width: 100%;
@@ -76,12 +65,12 @@
 										<!-- ■■↑ form id 새로 지정해주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="row">
 											<div class="col-lg-12">
-												<h4 class="blog-section-title border-left mb-30">중고거래상품등록</h4>
+												<h3 class="blog-section-title border-left mb-30">중고마켓상품등록</h3>
 											</div>
 										</div>
 										<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의2 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="col-lg-10" id="inputFile">
-											<label for="files">상품사진<span> *</span></label> <input
+											<label for="files" style="color:#C04A82; font-weight:bold;">상품사진<span> *</span></label> <input
 												type="file" id="files" placeholder="첨부파일"
 												multiple="multiple"> <br> <span id="fileErrMsg"></span>
 											<div id="fileList">
@@ -91,7 +80,7 @@
 										</div>
 										<!-- ■■■↑ 건드리면 죽음뿐.■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 										<div class="col-lg-10 mb-10">
-											<label for="cate">카테고리<span> *</span></label> <select
+											<label style="color:#C04A82; font-weight:bold;" for="cate">카테고리<span> *</span></label> <select
 												name="cate" id="cate">
 												<option value="" disabled selected>선택</option>
 												<option th:each="ct : ${category}" th:text="${ct.commonNm}"
@@ -100,34 +89,36 @@
 												name="ctgry" id="ctgry" placeholder="카테고리">
 										</div>
 										<div class="col-lg-10 ">
-											<label for="dlTtl">글제목<span> *</span></label> <input
+											<label style="color:#C04A82; font-weight:bold;"for="dlTtl">글제목<span> *</span></label> <input
 												type="text" name="dlTtl" id="dlTtl"
 												placeholder="글 제목을 입력하세요.">
 										</div>
 										<div class="col-lg-10">
-											<label for="dlCn">상품설명<span> *</span></label>
+											<label style="color:#C04A82; font-weight:bold;" for="dlCn">상품설명<span> *</span></label>
 											<textarea class="custom-textarea" name="dlCn" id="dlCn"
 												placeholder="게시글 내용을 작성해주세요. 단, 판매금지 물품은 게시가 제한될 수 있어요 :)"></textarea>
 										</div>
 
 										<div class="col-lg-10">
-											<label for="dlPrc">상품가격<span> *</span></label> <input
+											<label style="color:#C04A82; font-weight:bold;" for="dlPrc">상품가격<span> *</span></label> <input
 												type="text" name="dlPrc" id="dlPrc" placeholder="상품가격"
 												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 										</div>
 										<div class="col-lg-10">
-											<label for="area">거래지역</label> <input type="text" name="area"
+											<label style="color:#C04A82; font-weight:bold;" for="area">거래지역</label> <input type="text" name="area"
 												id="area" th:value="${session.addr}" readonly="readonly"/>
 										</div>
 										<div class="col-lg-10">
-											<label for="negoYn">가격 제안받기</label> <input type="checkbox"
+											<label style="color:#C04A82; font-weight:bold;" for="negoYn">가격 제안받기</label> <input type="checkbox"
 
 												name="negoYn" id="negoYn" style="margin: 0px">
 										</div>
 										<input type="hidden" name="stts" id="stts" value="판매중">
 										<input type="hidden" name="ntslId" id="ntslId"
 											th:value="${session.userId}"> 
+										
 										<input
+											style="margin-left:450px; color:#fff; background-color:#C04A82;"
 											class="submit-btn-1 mt-30 btn-hover-1" type="submit"
 											id="btnSave" role="button" value="등록하기">
 									</form>
@@ -154,15 +145,11 @@
 					if($("#cate").val() == "FR"){
 						//의 밸류가 무나면 가격 dlprc disabled한당
 						$("#dlPrc").attr("readonly",true).val("0");
-						
 					}
 				})
-				
 				$("#btnSave").on("click", function() {
 					submitForm();
 				});
-				
-				
 			});
 		
 		//==============================================================================
@@ -230,13 +217,10 @@
 					console.log("checked!")
 		            $('#negoYn').val("Y");
 		        }
-					
 				$('#stts').val("판매중"); // 인서트할때 늘 판매중으로 들어가게..
 				//submit 전 체크하기
 				if(submitCheck()){
-				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				var formData = new FormData($("#dFrm")[0]);
-				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				
 				formData.append("deleteFiles", deleteFileList);
 
@@ -245,7 +229,6 @@
 						formData.append("files", inputFileList[i]);
 					}
 				}
-				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				$.ajax({	url : "/my/dealformsubmit",
 							type : "POST",
 							data : formData,
@@ -261,7 +244,6 @@
 								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
 							}
 						});
-				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
 				}
 			}
 		//==============================================================================
@@ -272,36 +254,28 @@
 				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
 				isSubmitOk = false;
 			}
-			
 			//2. 카테고리 선택 여부
 			else if($("#ctgry").val()==""){
 				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
 				isSubmitOk = false;
 			}
-			
 			//3. 글제목 작성 여부
 			else if($("#dlTtl").val()==""){
 				$("#dlTtl").focus();
 				isSubmitOk = false;
 			}
-			
 			//4. 글내용 작성 여부
 			else if($("#dlCn").val()==""){
 				$("#dlCn").focus();
 				isSubmitOk = false;
 			}
-			
-			
 			//5. 상품가격 작성 여부
-			// 카테고리.value도 () 가 아니면 ~하게따도 추가해야된다구함미다..
 			else if($("#dlPrc").val()==""){
 			   $("#dlPrc").focus();
 				isSubmitOk = false;
 			}else{
 				isSubmitOk = true;
 			}		
-			
-			
 			
 			return isSubmitOk;			
 		}

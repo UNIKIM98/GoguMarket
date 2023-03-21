@@ -12,10 +12,6 @@ var Sns = document.getElementById("mySns");
 // Get the button that opens the modal
 var Snsbtn = document.getElementById("clickSns");
 
-var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
-
-
-var reInput = document.getElementById("reInput");
 //📌	 공통변수 선언부
 var fileCount = 0; //현재 첨부파일 개수
 var totalCount = 10; // 첨부 가능한 파일 개수
@@ -35,25 +31,6 @@ function insertSns(){
 	auctModal.style.display = "block"; //개인 게시글 창 활성화
 
 }
-$.ajax({
-    url: "/auctSelect/{auctNo}",
-    type: "Post",
-    dataType: 'json',
-    contentType: 'application/json; charset = utf-8',
-    success: function (result) {
-        console.log(result)
-
-
-
-
-    },
-    error: function (err) {
-        console.log(err);
-    }
-})
-
-
-
 
 //✅ exFile 중에서 삭제할 파일 정보 
 function deleteFile(id, atchId, atchNo) {
@@ -96,8 +73,8 @@ window.onclick = function (event) {
         auctModal.style.display = "none";
     }
 
-    if (event.target == Sns) {
-        Sns.style.display = "none";
+    if (event.target == auctModal) {
+        auctModal.style.display = "none";
     }
 };
 

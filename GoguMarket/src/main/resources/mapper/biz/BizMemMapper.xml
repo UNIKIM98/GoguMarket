@@ -11,9 +11,13 @@
 	<!-- 개별조회(가게상세페이지) : 비즈 프로필사진 join 완-->
 	<select id="bizInfo" parameterType="String"
 		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT bm.*, a.atch_path
-		FROM biz_mem bm LEFT JOIN atch a 
-						ON bm.prof_atch_id = a.atch_id
+		SELECT bm.*, 
+		       a.atch_path
+		       
+		FROM biz_mem bm 
+		LEFT JOIN atch a 
+		  ON bm.prof_atch_id = a.atch_id
+		  
 		WHERE bm.biz_no = #{bizNo}
 	</select>
 
@@ -90,30 +94,33 @@
 		FROM biz_dangol d
 		RIGHT JOIN biz_mem m
 		ON d.biz_no = m.biz_no
-		GROUP BY d.biz_no, m.biz_no
+		GROUP BY m.biz_no
 		ORDER BY biz_no
 	</select>
 
 	<!-- 리뷰 수 카운팅 -->
 	<select id="BizReviewCnt"
 		resultType="com.goguma.biz.vo.BizMemVO">
-		SELECT count(rw.res_rv_no) rwCount, m.biz_no
+		SELECT count(rw.res_rv_no) rwCount, 
+		       m.biz_no
+		
 		FROM rsvt_rv rw
 		JOIN rsvt r
-		ON rw.rsvt_no = r.rsvt_no
-		RIGHT JOIN biz_mem m
-		ON r.biz_no = m.biz_no
-		GROUP BY r.biz_no, m.biz_no
+		  ON rw.rsvt_no = r.rsvt_no
+	   RIGHT JOIN biz_mem m
+		  ON r.biz_no = m.biz_no
+		  
+		GROUP BY m.biz_no
 	</select>
 
 	<!-- 가게정보 첨부파일 -->
 	<select id="bizImgList" resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT b.*,
-		(SELECT atch_path
-		FROM atch
-		WHERE b.atch_id = atch_id
-		AND ROWNUM = 1) atch_nm
-		FROM biz_mem b
+			   ( SELECT atch_path
+				   FROM atch
+				  WHERE b.atch_id = atch_id
+				    AND ROWNUM = 1) atch_nm
+		 FROM biz_mem b
 		ORDER BY b.biz_no
 	</select>
 
@@ -121,7 +128,8 @@
 	<select id="bizDetailImg"
 		resultType="com.goguma.biz.vo.BizMemVO">
 		SELECT b.biz_no, a.*
-		FROM biz_mem b RIGHT JOIN atch a
+		FROM biz_mem b 
+		RIGHT JOIN atch a
 		ON b.atch_id = a.atch_id
 		WHERE b.biz_no = #{bizNo}
 	</select>

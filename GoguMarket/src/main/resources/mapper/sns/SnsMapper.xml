@@ -55,7 +55,7 @@
 	<insert id="insertSns" parameterType="com.goguma.sns.vo.SnsVO">
 		<selectKey keyProperty="snsNo" resultType="int"
 			order="BEFORE">
-			SELECT NVL(MAX(sns_No),0)+1
+			SELECT NVL(MAX(TO_NUMBER(sns_No)),0)+1
 			AS snsNo
 			FROM SNS
 		</selectKey>

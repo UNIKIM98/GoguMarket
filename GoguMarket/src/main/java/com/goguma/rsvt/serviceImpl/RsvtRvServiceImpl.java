@@ -24,8 +24,8 @@ public class RsvtRvServiceImpl implements RsvtRvService{
 
 	//비즈페이지 후기리스트
 	@Override
-	public List<RsvtRvVO> selectReviewList(String bizNo) {
-		return map.selectReviewList(bizNo);
+	public List<RsvtRvVO> selectReviewList(BizSearchVO bvo) {
+		return map.selectReviewList(bvo);
 	}
 	
 	//비즈페이지 후기리스트 카운팅

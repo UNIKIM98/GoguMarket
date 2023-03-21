@@ -10,6 +10,22 @@
 			AND pst_Se = #{pstSe}
 		</if>
 	</sql>
+	
+	<select id="selectNotify"
+		parameterType="com.goguma.common.vo.AlarmVO"
+		resultType="com.goguma.common.vo.AlarmVO">
+		select *
+		from (select rownum rn,a.* from(select * from alarm
+
+		<include refid="creiteria"></include>
+		order by alm_no desc
+		<![CDATA[
+		) a where rownum <= #{last} )b where rn >= #{first}
+		]]>
+		
+
+	</select>
+	
 
 	<insert id="insertAlarm">
 		INSERT INTO alarm VALUES(ALARM_SEQ.nextval,#{userId},
@@ -34,20 +50,7 @@
 
 	</select>
 
-	<select id="selectNotify"
-		parameterType="com.goguma.common.vo.AlarmVO"
-		resultType="com.goguma.common.vo.AlarmVO">
-		select *
-		from (select rownum rn,a.* from(select * from alarm
-
-		<include refid="creiteria"></include>
-		order by alm_no desc
-		<![CDATA[
-		) a where rownum <= #{last} )b where rn >= #{first}
-		]]>
-		
-
-	</select>
+	
 
 	<update id="updateNotify"
 		parameterType="com.goguma.common.vo.AlarmVO">

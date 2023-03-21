@@ -59,7 +59,7 @@
                                         <td th:text="${myAuctList.inqCnt}"></td>
                                         <td th:text="${myAuctList.prchsId}"></td>
                                         <td th:if="${myAuctList.prchsPrc != 0}"
-                                            th:text="${myAuctList.prchsPrc}"></td>
+                                            th:text="${#numbers.formatInteger(myAuctList.prchsPrc, 3, 'COMMA')}"></td>
                                         <td th:if="${myAuctList.prchsPrc == 0}"></td>
                                         <td th:text="${#dates.format(myAuctList.prchsYmd, 'yyyy/MM/dd')}"></td>
                                         <td><a th:href="@{/goguma/auctSelect/{myAuctList}(myAuctList = ${myAuctList.auctNo})}">이동</a></td>

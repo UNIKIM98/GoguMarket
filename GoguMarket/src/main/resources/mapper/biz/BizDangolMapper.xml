@@ -13,19 +13,24 @@
 	
 	<!-- shop06단골 카운팅(가게번호)-->
 	<select id="selectShopDangolCnt" parameterType="String" resultType="int">
-		SELECT count(d.dg_no) dCount, m.biz_no
-		FROM biz_dangol d RIGHT JOIN biz_mem m
-				ON d.biz_no = m.biz_no
-                WHERE d.biz_no = 'bn001'
-				GROUP BY d.biz_no,  m.biz_no
-				ORDER BY #{bizNo}
+		SELECT count(d.dg_no) dCount, 
+		       m.biz_no
+		       
+		  FROM biz_dangol d RIGHT 
+		  JOIN biz_mem m
+		    ON d.biz_no = m.biz_no
+		  
+         WHERE d.biz_no = 'bn001'
+         
+         GROUP BY d.biz_no,  m.biz_no
+	     ORDER BY #{bizNo}
 	</select>
 	
 	<!-- shop06단골 기간 -->
 	<select id="selectDangolPeriod" resultType="int">
 		SELECT COUNT(*) AS count
 		FROM biz_dangol
-		WHERE dangol_ymd BETWEEN SYSDATE - 10 AND SYSDATE
+		WHERE dangol_ymd BETWEEN TRUNC(SYSDATE - 10) AND TRUNC(SYSDATE)
 	</select>
 	
 	<!-- 단골리스트 출력 -->

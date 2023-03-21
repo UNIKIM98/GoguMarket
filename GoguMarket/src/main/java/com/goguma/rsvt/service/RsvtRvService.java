@@ -10,7 +10,7 @@ public interface RsvtRvService {
 	List<RsvtRvVO> rsvtReview(String bizNo);
 	
 	//비즈페이지 후기리스트
-	List<RsvtRvVO> selectReviewList(String bizNo);
+	List<RsvtRvVO> selectReviewList(BizSearchVO bvo);
 	
 	//비즈페이지 후기 수 카운팅
 	int selectReviewCnt(String bizNo);

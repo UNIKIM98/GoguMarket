@@ -93,10 +93,10 @@ public class RsvtController {
 	// 예약상세내역 메뉴부분 ajax(mybook01, 02에서 사용)
 	@GetMapping("/my/myRsvtAjax")
 	@ResponseBody
-	public List<Map> myRsvtAjax(RsvtVO vo) {
-		int rsvtNo = vo.getRsvtNo();		// 예약번호 가져오기
+	public List<Map> myRsvtAjax(String rsvtNo) {
+		//int rsvtNo = vo.getRsvtNo();		// 예약번호 가져오기
 		
-		return rsvtService.selectMyRsvtDetail(Integer.toString(rsvtNo));
+		return rsvtService.selectMyRsvtDetail(rsvtNo);
 	}
 
 	// 예약상세내역 예악자부분 ajax
@@ -110,8 +110,8 @@ public class RsvtController {
 
 	// 예약수정
 	@GetMapping("/my/modifyRsvt/{rsvtNo}")
-	public String mybook02(@PathVariable int rsvtNo, Model model) {
-		model.addAttribute("rsvt", rsvtService.selectRsvtOne(Integer.toString(rsvtNo)));
+	public String mybook02(@PathVariable String rsvtNo, Model model) {
+		model.addAttribute("rsvt", rsvtService.selectRsvtOne(rsvtNo));
 		
 		return "myPages/mybook02";
 	}
@@ -119,7 +119,9 @@ public class RsvtController {
 	// 예약페이지 form submit - js gotoOrder()함수에서 ajax 호출한거 받아옴
 	@PostMapping("/my/orderFormSubmit")
 	@ResponseBody
-	public int orderFormSubmit(RsvtVO rsvtInfo, RsvtMenuVO menuInfo, HttpServletRequest request) {
+	public int orderFormSubmit(RsvtVO rsvtInfo, 
+			                   RsvtMenuVO menuInfo, 
+			                   HttpServletRequest request) {
 		HttpSession session = request.getSession();					// 세션에서 로그인한 아이디 불러오기
 		String userId = (String) session.getAttribute("userId");
 
