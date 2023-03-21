@@ -55,9 +55,6 @@ public class AuctController {
 		
 		List<AuctVO> lists = auctService.getAuctList();
 		
-		System.out.println(lists);
-		
-		
 		return lists;
 	}
 	// ▼단일품목 조회
