@@ -585,10 +585,10 @@
 				data: JSON.stringify(payment),
 				contentType: "application/json; charset=utf-8",
 				success: function(rsvtNo){
-						swal('성공!', "예약이 정상적으로 완료되었습니다.", 'success');
-						
-						//예약완료 페이지로 이동(예약번호 파라미터)
-						location.href="/my/rsvtComplete/"+rsvtNo;
+						swal('성공!', "예약이 정상적으로 완료되었습니다.", 'success').then(function(){
+							//예약완료 페이지로 이동(예약번호 파라미터)
+							location.href="/my/rsvtComplete/"+rsvtNo;
+						});
 					}
 				,error : function(err){
 					swal('앗!', "결제 실패..", 'error');
