@@ -88,9 +88,8 @@
 
 			});
 
-			function keyValue() {
-				$
-						.ajax({
+			function keyValue() { // 1. 공통코드를 조회루 select 출력
+				$.ajax({
 							url : "/admin/keyValue",
 							type : "GET",
 							async : false,
@@ -105,9 +104,9 @@
 										.each(
 												function(index, obj) {
 													$(".pstSe")
-															.find("#pstSe")
-															.append(
-																	`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
+														.find("#pstSe")
+														.append(
+																`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
 												});
 
 							},
@@ -117,36 +116,35 @@
 						});
 			}
 
-			function sendAlarm() {
+			function sendAlarm() { // 2. 알림을 보내는 함수
 
 				console.log(almCn);
 
-				formData = $("#alarmForm").serialize();
+				formData = $("#alarmForm").serialize(); // 알림에 관한 form데이터를 가지고옴
 				console.log(formData)
 
-				$
-						.ajax({
-							url : "/admin/insertAlarm",
-							type : "POST",
-							data : formData,
-							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-							success : function(data) {
-								if (data != 0) {
-									alert("알림 전송에 성공하였습니다.")
-									location.href = link;
+				$.ajax({
+						url : "/admin/insertAlarm",
+						type : "POST",
+						data : formData,
+						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+						success : function(data) {
+							if (data != 0) {
+								alert("알림 전송에 성공하였습니다.")
+								location.href = link;
 
-								} else {
-									alert("알림 전송에 실패 하였습니다.")
+							} else {
+								alert("알림 전송에 실패 하였습니다.")
 
-								}
-							},
-							error : function() {
-								console.log(error);
 							}
-						})
+						},
+						error : function() {
+							console.log(error);
+						}
+					})
 			}
 
-			function exitAlarm() {
+			function exitAlarm() { // 3.알림을 전송하지 않고 나가는 함수
 
 				let confirmMessage = confirm("알림 보내기를 취소하시겠습니까?");
 
