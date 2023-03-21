@@ -56,7 +56,7 @@ public class WebSecurityConfig {
 				
 				// 경로에 따른 접근권한 부여
 				.antMatchers("/", "/home", "/goguma/**", "/css/**", "/attech/**", "/fonts/**", 
-							"/images/**", "/img/**", "/js/**", "/lib/**", "/scss/**", "/vendor/**", "/style.css").permitAll()
+							"/images/**", "/img/**", "/js/**", "/lib/**", "/scss/**", "/vendor/**", "/style.css", "/upload/**").permitAll()
 				.antMatchers("/my/**").hasAnyRole("USER", "ADMIN", "BIZ")
 				.antMatchers("/biz/**").hasAnyRole("BIZ", "ADMIN")
 				.antMatchers("/admin/**").hasRole("ADMIN")

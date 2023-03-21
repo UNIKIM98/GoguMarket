@@ -40,9 +40,9 @@
 												<a th:href="@{/goguma/dealdetail/{dlNo}(dlNo = ${d.DL_NO})}">
 													<img th:if="${d.ATCH_PATH!=0}" th:src="${d.ATCH_PATH}"
 													alt="중고사진"
-													onerror="this.onerror=null; this.src='/img/logo/003.png'" />
+													onerror="this.onerror=null; this.src='/img/logo/003.png'" style="height:270px"/>
 													<img th:if="${d.ATCH_PATH==0}"
-													th:src="/img/logo/003.png" alt="중고사진" />
+													th:src="/img/logo/003.png" alt="중고사진" th:style="height:270px"/>
 												</a>
 											</div>
 											<div class="product-info">
@@ -88,8 +88,10 @@
 									<div class="up-comming-pro-img f-left">
 										<a href="#"> <img th:if="${auct[0].ATCH_PATH!=0}"
 											th:src="${auct[0].ATCH_PATH}" alt="경매사진"
+											style="height:370px"
 											onerror="this.onerror=null; this.src='/img/logo/003.png'" />
 											<img th:if="${auct[0].ATCH_PATH==0}"
+											style="height:370px"
 											th:src="/img/logo/003.png" alt="경매사진" />
 
 										</a>
