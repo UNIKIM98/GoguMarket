@@ -6,7 +6,7 @@ layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>중고거래상품 메인 페이지입니다</title>
+
   <script src="https://code.jquery.com/jquery-3.6.3.js"
 	integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
 	crossorigin="anonymous"></script>
@@ -139,7 +139,6 @@ layout:decorate="~{layouts/layout}">
 		                                        <div class="row">
 		                                        <div class="col-2" style="padding: 15px 15px 0 15px;">
 		                                            <select style="width:150px;" name="ctgry">
-		                                            
 		                                                <!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
 		                                                <option value="">전체 카테고리
 		                                                <option th:each="ct : ${category}" th:text="${ct.commonNm}"
@@ -174,8 +173,8 @@ layout:decorate="~{layouts/layout}">
                         </div>
                     </div>
                     
+                    <!-- 인기검색어 롤링박스 -->
                     <div class="col-lg-3" style="margin-top:0px;">
-                <!-- 인기검색어 롤링박스 -->
 		              <h3><span>🍠인기검색어</span></h3>
 		                <div class="rolling_box">
 		                    <ul id ="rolling_box">
@@ -184,117 +183,106 @@ layout:decorate="~{layouts/layout}">
 		                    <li class="" id ="third"><p></p></li>
 		                    </ul>
 		                </div>
-		                
 		            </div>
-                    
                 </div>
             </div>
         </div>
-         
-            
-        </div>
+    </div>
 
 		
         <!-- Start page content -->
         <section id="page-content" class="page-wrapper section">
-            
             <div class="mb-80">
-
             <!-- PRODUCT TAB SECTION START -->
-            <div>
-                <div class="container">
-                    <div class="row">
-                       
-                        <div class="col-lg-6">
-                            <div class=" text-end f-right">
-                               
-                            </div>
-                        </div>
-                       <!-- Nav tabs -->
-                        <div class="col-lg-10">
-                                <ul>
-                                    <li style="display: inline-block;"><a th:class="'dl_ymd'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_ymd')">최신순</a></li>
-                                    &nbsp; &nbsp;
-                                    <li style="display: inline-block;"><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
-                                     &nbsp; &nbsp;
-                                    <li style="display: inline-block;"><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
-                                   
-                                </ul>  
-	                       </div>
-	                        <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/my/dealform'"><span>판매글등록</span></a></div>
-                        <hr>
-                        <div class="col-lg-12">
-                            <div>
-                                <!-- popular-product start -->
-                                <div id="popular-product">
-                                    <div class="row">
-                                        <!-- product-item start -->
-                                       <div class="container">
-							                <div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:200px;" align="center">
-	                                       	</div>  
-	                                        	<div align="center" th:if="${#lists.isEmpty(lists)}" th:text="'검색어와 일치하는 판매글이 없습니다'"></div>
-                                        	 <div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:200px;" align="center">
-	                                       	</div>  
-                                        </div>
-                                        <!-- 판매완료가 아닌 상태인 물품만 보여줍니다.  -->
-                                        <!--  th:if="${deal.stts != '판매완료'}" 이거쓰면 빵꾸나서 컨트롤러로제어해야.. -->
-                                        <div th:each="deal : ${lists}" class="col-lg-3 col-md-4">
-                                            <div class="product-item product-item-2"  >
-                                                <div class="product-img">
-                                                    <a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}">
-                                                        <img th:src="${deal.atchNm}"style="width:270px; height:270px;" 
-                                                        onerror="this.onerror=null; this.src='/img/logo/001.png'"/>
-                                                    </a>
-                                                </div>
-                                                <div class="product-info">
-                                                    
-                                                    <h4 th:text="${deal.dlTtl}">Product Name</h4>
-                                                    <!-- 카테고리 버튼이쁘길래 모양 저걸로함  -->
-													<a class="button small"
-														th:each="c : ${category}"
-														th:if="${deal.ctgry == c.commonDetailCode && deal.ctgry != 'FR'}"
-														th:text="${c.commonNm}" ></a>
-                                                    <h4 style="color:#C04A82;" th:if="${deal.ctgry != 'FR'}"
-                                                    	th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" class="pro-price"
-                                                    	>$ 869.00</h4>
-                                                    <h4 style="color:#FCD052; margin-top:22px;" th:if="${deal.dlPrc == 0}">무료나눔</h4>
-                                                </div>
-                                                
-                                                <!-- 마우스 오버시 : 거래지역(판매글의) & 내가 판매중인 글 표시 -->
-                                                <ul class="action-button">
-                                                    <li>
-                                                        <p th:text="${deal.area}" th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}"></p>
-                                                    </li>
-                                                    <li>
-													    <span th:if="${session.userId == deal.ntslId}" th:inline="text" th:text="'내가 판매중인 게시글입니다'"></span>
-													</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- product-item end -->
-                                    </div>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class=" text-end f-right">
                                 </div>
-                           
-							         <!-- 스타일 적용한 페이징 번호 띄웢루 곳-->
-				                     <ul class="shop-pagination box-shadow text-center ptblr-10-30">
-				                        <li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-				                        <li
-				                           th:each="num: *{#numbers.sequence(paging.startPage, paging.endPage)}"
-				                          th:class="${paging.page}==${num} ? 'active'"><a
-				                           th:href="|javascript:gopage(${num})|">[[${num}]]</a></li>
-				
-				                        <li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
-				                     </ul>
-			                                <!-- new-arrival end -->
-                         
-                                <!-- special-offer end -->
+                            </div>
+                        <!-- Nav tabs -->
+                            <div class="col-lg-10">
+                                    <ul>
+                                        <li style="display: inline-block;"><a th:class="'dl_ymd'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_ymd')">최신순</a></li>
+                                        &nbsp; &nbsp;
+                                        <li style="display: inline-block;"><a th:class="'inq_cnt'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('inq_cnt')">인기순</a></li>
+                                        &nbsp; &nbsp;
+                                        <li style="display: inline-block;"><a th:class="'dl_prc'==${dsvo.orderby}?'active'" href="#" onclick="javascript:SearchSubmit('dl_prc')">가격순 </a></li>
+                                    </ul>  
+                            </div>
+                                <div class="col-lg-2"><a class="button small mb-20" onclick="location.href='/my/dealform'"><span>판매글등록</span></a></div>
+                            <hr>
+                            <div class="col-lg-12">
+                                <div>
+                                    <!-- popular-product start -->
+                                    <div id="popular-product">
+                                        <div class="row">
+                                            <!-- product-item start -->
+                                        <div class="container">
+                                                <div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:200px;" align="center">
+                                                </div>  
+                                                    <div align="center" th:if="${#lists.isEmpty(lists)}" th:text="'검색어와 일치하는 판매글이 없습니다'"></div>
+                                                <div th:if="${#lists.isEmpty(lists)}" style=" width:100%; height:200px;" align="center">
+                                                </div>  
+                                            </div>
+                                            <!-- 판매완료가 아닌 상태인 물품만 보여줍니다.  -->
+                                            <!--  th:if="${deal.stts != '판매완료'}" 이거쓰면 빵꾸나서 컨트롤러로제어해야.. -->
+                                            <div th:each="deal : ${lists}" class="col-lg-3 col-md-4">
+                                                <div class="product-item product-item-2"  >
+                                                    <div class="product-img">
+                                                        <a th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}">
+                                                            <img th:src="${deal.atchNm}"style="width:270px; height:270px;" 
+                                                            onerror="this.onerror=null; this.src='/img/logo/001.png'"/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-info">
+                                                        
+                                                        <h4 th:text="${deal.dlTtl}">Product Name</h4>
+                                                        <!-- 카테고리 버튼이쁘길래 모양 저걸로함  -->
+                                                        <a class="button small"
+                                                            th:each="c : ${category}"
+                                                            th:if="${deal.ctgry == c.commonDetailCode && deal.ctgry != 'FR'}"
+                                                            th:text="${c.commonNm}" ></a>
+                                                        <h4 style="color:#C04A82;" th:if="${deal.ctgry != 'FR'}"
+                                                            th:text="${#numbers.formatInteger(deal.dlPrc, 3, 'COMMA') + '원'}" class="pro-price"
+                                                            >$ 869.00</h4>
+                                                        <h4 style="color:#FCD052; margin-top:22px;" th:if="${deal.dlPrc == 0}">무료나눔</h4>
+                                                    </div>
+                                                    
+                                                    <!-- 마우스 오버시 : 거래지역(판매글의) & 내가 판매중인 글 표시 -->
+                                                    <ul class="action-button">
+                                                        <li>
+                                                            <p th:text="${deal.area}" th:href="@{/goguma/dealdetail/{dlNo}(dlNo=${deal.dlNo})}"></p>
+                                                        </li>
+                                                        <li>
+                                                            <span th:if="${session.userId == deal.ntslId}" th:inline="text" th:text="'내가 판매중인 게시글입니다'"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- product-item end -->
+                                        </div>
+                                    </div>
+                            
+                                        <!-- 스타일 적용한 페이징 번호 띄웢루 곳-->
+                                        <ul class="shop-pagination box-shadow text-center ptblr-10-30">
+                                            <li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
+                                            <li
+                                            th:each="num: *{#numbers.sequence(paging.startPage, paging.endPage)}"
+                                            th:class="${paging.page}==${num} ? 'active'"><a
+                                            th:href="|javascript:gopage(${num})|">[[${num}]]</a></li>
+                    
+                                            <li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
+                                        </ul>
+                                                <!-- new-arrival end -->
+                                    <!-- special-offer end -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- PRODUCT TAB SECTION END -->
-
             </div>            
         </section>
         <!-- End page content -->
@@ -386,17 +374,7 @@ layout:decorate="~{layouts/layout}">
     }, timer);
 	</script>
 </div>
-<!--     jquery latest version -->
-<!--     <script src="js/vendor/jquery-3.6.0.min.js"></script> -->
-<!--     <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script> -->
-<!--     Bootstrap framework js -->
-<!--     <script src="js/bootstrap.bundle.min.js"></script> -->
-<!--     jquery.nivo.slider js -->
-<!--     <script src="lib/js/jquery.nivo.slider.js"></script> -->
-<!--     All js plugins included in this file. -->
-<!--     <script src="js/plugins.js"></script> -->
-<!--     Main js file that contents all jQuery plugins activation. -->
-<!--     <script src="js/main.js"></script> -->
+
 
 </body>
 
