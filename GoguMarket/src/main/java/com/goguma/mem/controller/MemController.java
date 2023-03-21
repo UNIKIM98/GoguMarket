@@ -129,7 +129,7 @@ public class MemController {
 	}
 
 	// ===========================================================
-	// ❤️ 회원정보 수정
+	// ❤️ 비밀번호확인창으로 이동
 	@GetMapping("/my/myInfoCheck/{value}")
 	public String myInfoCheck(@PathVariable String value, Model model) {
 		model.addAttribute("pwCkPage", value);
@@ -137,11 +137,12 @@ public class MemController {
 	}
 	
 	// ===========================================================
-	// ❤️ 회원정보 수정 Ajax
+	// ❤️ 비밀번호 확인
 	@PostMapping("/my/myPwCh")
 	public String myPwCh(HttpServletRequest request, MemVO checkVO, Model model, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-
+		System.out.println("페이지ㅣㅣㅣㅣㅣㅣㅣ"+checkVO.getPwCkPage());
+		System.out.println(checkVO.getPwCkPage().equals("info"));
 		// 비교할 memVO
 		MemVO mVO = new MemVO();
 		mVO.setUserId((String) session.getAttribute("userId"));
@@ -149,18 +150,19 @@ public class MemController {
 
 		// 받은 pw 암호화하기
 		String userPw = checkVO.getUserPw();
+		model.addAttribute("userInfo", mVO);
 
 		// 돌아갈 페이지 설정
 		String page = "myPages/myInfoCheck";
 		try {
 			if (bCryptPasswordEncoder.matches(userPw, mVO.getUserPw())) {
 				// model에 유저 정보 담아주고
-				model.addAttribute("userInfo", mVO);
 
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 
 				out.flush();
+
 				if(checkVO.getPwCkPage().equals("info")) {
 					page = "myPages/myInfo";					
 				}else if(checkVO.getPwCkPage().equals("goodBye")) {
@@ -206,7 +208,6 @@ public class MemController {
 
 				out.println("<script language='javascript'>");
 				out.println("alert('비밀번호를 성공적으로 변경하였습니다. 로그인을 해주세요'); location.href='/goguma/login';");
-				// ※ 메인페이지로 가게 고쳐야함!!
 
 				out.println("</script>");
 
@@ -217,8 +218,7 @@ public class MemController {
 
 				PrintWriter out = response.getWriter();
 				out.println("<script language='javascript'>");
-				out.println("alert('[비밀번호 변경 실패] 다시 시도해주세요 :(');location.href='/goguma/login';"); // ※ 메인페이지로 가게
-																									// 고쳐야함!!
+				out.println("alert('[비밀번호 변경 실패] 다시 시도해주세요 :(');location.href='/goguma/login';"); 
 				out.println("</script>");
 
 				out.flush();
