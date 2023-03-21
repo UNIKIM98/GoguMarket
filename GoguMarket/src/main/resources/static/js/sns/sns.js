@@ -1,94 +1,36 @@
+
+
 var modal = document.getElementById("myModal"); // 글쓰기창 전체 화면
 
-var btn = document.getElementById("myBtn"); // 글쓰기 활성화
+var btn = document.getElementById("myBtn"); // 글쓰기 활성화 버튼
 
 var span = document.getElementsByClassName("close1")[0]; //글쓰기 비활성화 위한 x버튼
 
-var Sns = document.getElementById("mySns");
+var Sns = document.getElementById("mySns"); //개인 sns 창 화면
 // Get the button that opens the modal
 var Snsbtn = document.getElementById("clickSns");
 
-var replyInput = document.getElementById("replyInput"); //인ㅍㅅ
-
-var reInput = document.getElementById("reInput");
-
-
-
-
-/*const rrpWriteHtml;
-*/
-
-//외부 파일 로드
-/*$(document).ready(function()
-{
-  $.get("../templates/sns/rrpWrite.html", function(html_string)
-   {
-		console.log("테스트 입니다 html 파일 : " + html_string);
-	  alert(html_string); 
-	  rrpWriteHtml = html_string;
-   },'html');
-});
-*/
-
-
-reInput.onclick = function() {
-	reInput.style.display = "block";
-
-
-
-};
-
-
-btn.onclick = function() {
+btn.onclick = function() { //글쓰기 창 활성화
 	modal.style.display = "block";
 
 };
-
-//----------------공통코드 출력-------------------------
-
-/*function keyValue() {
-	$.ajax({
-		url:"/keyValue",
-		type: "GET",
-		async: false,
-		dataType: "JSON",
-		contentType: "application/json; charset = utf-8",
-		success: function(data) {
-			console.log(data);
-			$(".pstSe").find("#pstSe").append(
-				`<option value="">전체</option>`);
-			$(data["searchlist"])
-				.each(
-					function(index, obj) {
-						$(".pstSe")
-							.find("#pstSe")
-							.append(
-								`<option id="${obj.commonDetailCode}" value="${obj.commonDetailCode}">${obj.commonNm}</option>`);
-					});
-		},
-		error: function(data) {
-			console.log(error);
-		},
-	});
-}
-*/
-
-
-//------------------ 개인 게시글-------------------------
-
-
-
 
 function insertSns() {
 	modal.style.display = "block"; //글쓰기 창 활성화
 
 }
 
+
+
+
+//------------------ 여기까지 모달-------------------------
+
+
+//------------------ 개인 게시글 시작-------------------------
+
 function snsModal(id) {
 	//활상화
 	Sns.style.display = "block"; //개인 게시글 창 활성화
-
-
 
 
 	$("#replyUserId").val("[[${session.userId}]]")
@@ -97,15 +39,13 @@ function snsModal(id) {
 	console.log(id);
 	Number(id);
 
-	console.log('gdgdgd')
-
 	//단건조회
 	$.ajax({
 		url: "/goguma/selectSns",
 		type: "GET",
 		data: { id },
 		dataType: "json",
-	}).then((obj) => {
+	}).then((obj) => { // 해당 게시글 정보를 modal 창에 추가
 
 		$("#mySns #snsNo").val(obj.sns.snsNo);
 		$("#CN").text(obj.sns.snsCn);
@@ -115,11 +55,9 @@ function snsModal(id) {
 		$("#replySnsNo").val(obj.sns.snsNo);
 
 	});
-	SelectCmntlist(id);
+	SelectCmntlist(id); //댓글 조회
 	//리턴된 값을 태그를 찾아서 넣음
 }
-
-
 
 /*function checkParReply(item, groupNo) {
 	// 아이템 오브젝트 포리치 돌려서 같은 item.cmntNo가 groupNo인 사람이 있는지 찾아야함
@@ -147,9 +85,7 @@ function getUser() {// 세션에 담긴 회원 정보를 가져옴
 }
 
 
-
-
-function SelectCmntlist(snsNo) {
+function SelectCmntlist(snsNo) { //해당 게시글 번호를 가지고 댓글 답글 조회
 
 
 	var forCnt = 0;
@@ -164,12 +100,12 @@ function SelectCmntlist(snsNo) {
 			console.log(data);
 			$("#Sns-reply").empty();
 			$(data).each(function(index, item) {
-				if (item.groupNo > 0) {
-					$("#loadDiv").load("/sns/rrpView.html", function(result) {
-						var addedDiv = $("#rrplyGroup_" + item.groupNo).append(result);
+				if (item.groupNo > 0) { // 답글
+					$("#loadDiv").load("/sns/rrpView.html", function(result) { // 답글 뷰 페이지를 로드해옴
+						var addedDiv = $("#rrplyGroup_" + item.groupNo).append(result); //답글 정보를 append
 						$(addedDiv).find(".rrpBox").each(function(index, obj) {
-							if ($(obj).hasClass("set") == false) {
-								$(obj).addClass("set");
+							if ($(obj).hasClass("set") == false) { //set 이라는 class 이름을 가지고 있으면 false
+								$(obj).addClass("set"); 		   //단건을 추가하고 추가완료된 단건에는 class="set"
 								$(obj).find("#rrpView").attr('action', 'rreplyEdit(' + item.cmntNo + ',' + item.snsNo + ',' + item.cmntMem);
 								$(obj).find("#rrpContent").attr("id", "rrpContent" + item.cmntNo);
 								$(obj).find("#rrpAtchPath").attr("src", item.atchPath);
@@ -179,10 +115,11 @@ function SelectCmntlist(snsNo) {
 								$(obj).find("#rrpCmntMem").text(item.cmntMem);
 								$(obj).find("#rrpCmntYmd").text(item.cmntYmd);
 								$(obj).find("#cmntCn").text(item.cmntCn);
-								if ((user[0].userId == item.cmntMem) == true) {
+								
+								if ((user[0].userId == item.cmntMem) == true) { //세션 아이디와 답글 작성자가 같으면 수정 삭제 버튼 활성화
 									$(obj).find("#delbutton").attr("onclick",)
 									$(obj).find("#editbutton").attr("onclick", "rreplyEditForm(" + item.cmntNo + "," + item.snsNo + ")")
-								} else {
+								} else {										//세션 아이디와 답글 작성자가 다르면 제거
 									$(obj).find("#delbutton").remove();
 									$(obj).find("#editbutton").remove();
 								}
@@ -194,7 +131,7 @@ function SelectCmntlist(snsNo) {
 					console.log("cmntCn : " + item.cmntCn);
 					forCnt++;
 
-					$("#loadDiv").load("/sns/replyView.html", function(result) {
+					$("#loadDiv").load("/sns/replyView.html", function(result) { // 답글과 같음
 						var addedDiv = $("#Sns-reply").append(result);
 						$(addedDiv).find(".replyGroup").each(function(index, obj) {
 							if ($(obj).hasClass("set") == false) {
@@ -240,7 +177,7 @@ function SelectCmntlist(snsNo) {
 
 
 
-function ShowRrpInput(cmntNo, replySnsNo) {
+function ShowRrpInput(cmntNo, replySnsNo) {		
 	console.log("내가 띄운 답답답글의 번호 : " + cmntNo);
 
 	$("#loadDiv").load("/sns/rrpWrite.html", function(result) {

@@ -41,11 +41,11 @@
 		from (select rownum rn,a.* from(select * from alarm
 
 		<include refid="creiteria"></include>
-		
+		order by alm_no desc
 		<![CDATA[
 		) a where rownum <= #{last} )b where rn >= #{first}
 		]]>
-		order by alm_ymd desc
+		
 
 	</select>
 
