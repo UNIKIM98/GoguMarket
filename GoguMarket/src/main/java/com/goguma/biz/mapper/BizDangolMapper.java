@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.goguma.biz.vo.BizDangolVO;
+import com.goguma.biz.vo.BizSearchVO;
 
 public interface BizDangolMapper {
 
@@ -17,7 +18,7 @@ public interface BizDangolMapper {
 	int selectDangolPeriod(String bizNo);
 	
 	//단골리스트
-	List<Map> selectDangolList(String bizNo);
+	List<Map> selectDangolList(BizSearchVO bvo);
 	
 	//단골 한명
 	List<BizDangolVO> selectDangolPersonal(String userId);

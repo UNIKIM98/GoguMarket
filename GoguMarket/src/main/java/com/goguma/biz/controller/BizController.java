@@ -221,10 +221,14 @@ public class BizController {
 	
 	//단골페이지 출력
 	@GetMapping("/biz/dangolList")
-	public String shop06(Model model, HttpServletRequest request, @ModelAttribute("bobo") BizSearchVO bvo,
-			PagingVO pvo) {
+	public String shop06(Model model, 
+						 HttpServletRequest request, 
+						 @ModelAttribute("bobo") BizSearchVO bvo,
+						 PagingVO pvo) {
 		HttpSession session = request.getSession();				//세션에서 정보 가져오기
 		String bizNo = (String) session.getAttribute("bizNo");
+
+		model.addAttribute("biz", memService.bizInfo(bizNo));					// 가게 정보
 
 		// 페이징
 		pvo.setPageUnit(3); // 한페이지에 몇건씩 보여줄건지
@@ -232,13 +236,13 @@ public class BizController {
 
 		bvo.setFirst(pvo.getFirst());
 		bvo.setLast(pvo.getLast());
-
-		pvo.setTotalRecord(dangolService.selectShopDangolCnt(bizNo));
-
+		bvo.setBizNo(bizNo);
+		
+		model.addAttribute("dg", dangolService.selectDangolList(bvo));			// 단골 리스트 출력
 		model.addAttribute("cnt", dangolService.selectShopDangolCnt(bizNo));	// 단골 수 카운팅
 		model.addAttribute("prd", dangolService.selectDangolPeriod(bizNo));		// 단골 집계 기간
-		model.addAttribute("dg", dangolService.selectDangolList(bizNo));		// 단골 리스트 출력
-		model.addAttribute("biz", memService.bizInfo(bizNo));					// 가게 정보
+		
+		pvo.setTotalRecord(dangolService.selectShopDangolCnt(bizNo));
 		
 		return "biz/shop06";
 	}
