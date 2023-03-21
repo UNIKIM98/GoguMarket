@@ -145,15 +145,11 @@
 					if($("#cate").val() == "FR"){
 						//의 밸류가 무나면 가격 dlprc disabled한당
 						$("#dlPrc").attr("readonly",true).val("0");
-						
 					}
 				})
-				
 				$("#btnSave").on("click", function() {
 					submitForm();
 				});
-				
-				
 			});
 		
 		//==============================================================================
@@ -221,13 +217,10 @@
 					console.log("checked!")
 		            $('#negoYn').val("Y");
 		        }
-					
 				$('#stts').val("판매중"); // 인서트할때 늘 판매중으로 들어가게..
 				//submit 전 체크하기
 				if(submitCheck()){
-				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의3 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				var formData = new FormData($("#dFrm")[0]);
-				// ■■■↑ 주의1에서 지정한 폼 id 적어주세요 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				
 				formData.append("deleteFiles", deleteFileList);
 
@@ -236,7 +229,6 @@
 						formData.append("files", inputFileList[i]);
 					}
 				}
-				// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 주의4 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				$.ajax({	url : "/my/dealformsubmit",
 							type : "POST",
 							data : formData,
@@ -252,7 +244,6 @@
 								alert("[작성 실패] 게시글 작성을 실패하였습니다. :(");
 							}
 						});
-				// ■■■↑ ①url ②alert 내용 ③success > location.href 경로 바꿔주세요 ■■■■■■■■■■■■■■
 				}
 			}
 		//==============================================================================
@@ -263,36 +254,28 @@
 				$("#fileErrMsg").text("✅ 상품 사진을 등록해주세요.")
 				isSubmitOk = false;
 			}
-			
 			//2. 카테고리 선택 여부
 			else if($("#ctgry").val()==""){
 				$("#ctgryErrMsg").text("✅ 카테고리를 선택해주세요.")
 				isSubmitOk = false;
 			}
-			
 			//3. 글제목 작성 여부
 			else if($("#dlTtl").val()==""){
 				$("#dlTtl").focus();
 				isSubmitOk = false;
 			}
-			
 			//4. 글내용 작성 여부
 			else if($("#dlCn").val()==""){
 				$("#dlCn").focus();
 				isSubmitOk = false;
 			}
-			
-			
 			//5. 상품가격 작성 여부
-			// 카테고리.value도 () 가 아니면 ~하게따도 추가해야된다구함미다..
 			else if($("#dlPrc").val()==""){
 			   $("#dlPrc").focus();
 				isSubmitOk = false;
 			}else{
 				isSubmitOk = true;
 			}		
-			
-			
 			
 			return isSubmitOk;			
 		}

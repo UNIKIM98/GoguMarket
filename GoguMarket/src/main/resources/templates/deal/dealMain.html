@@ -132,40 +132,38 @@ layout:decorate="~{layouts/layout}">
                         <div class="newsletter"> 
                         	<div class="newsletter-info text-center">
 		                        <form name="frmSearch" align="center">
-				                    
 		                                <div class="subcribe clearfix">
 		                                        <input type="hidden" name="page" value="1"> 
 		                                        <input type="hidden" name="orderby" value="dl_ymd"> 
 		                                        <div class="row">
-		                                        <div class="col-2" style="padding: 15px 15px 0 15px;">
-		                                            <select style="width:150px;" name="ctgry">
-		                                                <!-- 선택한값을 네임에 담아줘야된다..위에 주소창에 뜸 -->
-		                                                <option value="">전체 카테고리
-		                                                <option th:each="ct : ${category}" th:text="${ct.commonNm}"
-		                                                    th:value="${ct.commonDetailCode}"
-		                                                    th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
-		                                            </select> 
-		                                             <!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
-			                                        <select style="width:150px; " id="searchType" name="searchType" title="검색 유형 선택">
-			                                            <option value="">전체 글 유형</option>
-			                                            <option value="dlTtl" th:selected="'dlTtl'==${dsvo.searchType}">글제목</option>
-			                                            <option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
-			                                            <option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
-			                                        </select> 
-			                                        </div>
-			                                <div class="col-8">
-			                                <div class="row">
-			                                <div class="col-6">
-			                                	<input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
-			                                           placeholder="검색어를 입력하세요" title="키워드 입력"
-			                                           style="margin-top:20px;"/>
-			                               </div>
-			                                <div class="col-4">
-			                                    <button class="submit-btn-2 btn-hover-2" type="submit" style="width:95px; margin-top:20px;" >검색</button>
-				                                <button class="submit-btn-2 btn-hover-2" style="width:95px; margin-top:20px;" onclick="resetSearch()" type="button">리셋</button>
-			                                </div>
-			                                </div>
-			                                </div>
+			                                        <div class="col-2" style="padding: 15px 15px 0 15px;">
+			                                            <select style="width:150px;" name="ctgry">
+			                                                <option value="">전체 카테고리
+			                                                <option th:each="ct : ${category}" th:text="${ct.commonNm}"
+			                                                    th:value="${ct.commonDetailCode}"
+			                                                    th:selected="${ct.commonDetailCode}==${dsvo.ctgry}">
+			                                            </select> 
+			                                             <!-- 키워드별검색 + 키워드저장(실검에쓸) -->                                                        
+				                                        <select style="width:150px; " id="searchType" name="searchType" title="검색 유형 선택">
+				                                            <option value="">전체 글 유형</option>
+				                                            <option value="dlTtl" th:selected="'dlTtl'==${dsvo.searchType}">글제목</option>
+				                                            <option value="dlCn" th:selected="'dlCn'==${dsvo.searchType}">글내용</option>
+				                                            <option value="ntslId" th:selected="'ntslId'==${dsvo.searchType}">판매자</option>
+				                                        </select> 
+				                                        </div>
+				                                <div class="col-8">
+					                                <div class="row">
+						                                <div class="col-6">
+						                                	<input th:value="${dsvo.searchTtl}" type="text" name="searchTtl" id="searchTtl"
+						                                           placeholder="검색어를 입력하세요" title="키워드 입력"
+						                                           style="margin-top:20px;"/>
+						                               </div>
+						                                <div class="col-4">
+						                                    <button class="submit-btn-2 btn-hover-2" type="submit" style="width:95px; margin-top:20px;" >검색</button>
+							                                <button class="submit-btn-2 btn-hover-2" style="width:95px; margin-top:20px;" onclick="resetSearch()" type="button">리셋</button>
+						                                </div>
+					                                </div>
+				                                </div>
 			                                </div>
 		                             </div>
 		                        </form>
@@ -227,7 +225,6 @@ layout:decorate="~{layouts/layout}">
                                                 </div>  
                                             </div>
                                             <!-- 판매완료가 아닌 상태인 물품만 보여줍니다.  -->
-                                            <!--  th:if="${deal.stts != '판매완료'}" 이거쓰면 빵꾸나서 컨트롤러로제어해야.. -->
                                             <div th:each="deal : ${lists}" class="col-lg-3 col-md-4">
                                                 <div class="product-item product-item-2"  >
                                                     <div class="product-img">
@@ -237,7 +234,6 @@ layout:decorate="~{layouts/layout}">
                                                         </a>
                                                     </div>
                                                     <div class="product-info">
-                                                        
                                                         <h4 th:text="${deal.dlTtl}">Product Name</h4>
                                                         <!-- 카테고리 버튼이쁘길래 모양 저걸로함  -->
                                                         <a class="button small"
@@ -249,7 +245,6 @@ layout:decorate="~{layouts/layout}">
                                                             >$ 869.00</h4>
                                                         <h4 style="color:#FCD052; margin-top:22px;" th:if="${deal.dlPrc == 0}">무료나눔</h4>
                                                     </div>
-                                                    
                                                     <!-- 마우스 오버시 : 거래지역(판매글의) & 내가 판매중인 글 표시 -->
                                                     <ul class="action-button">
                                                         <li>
@@ -306,7 +301,6 @@ layout:decorate="~{layouts/layout}">
 		  rollingData.push(index + " " + Data[i].searchTtl);
 		  console.log(rollingData);
 		}
-
 
     let timer = 2000 // 롤링되는 주기 입니다 (1000 => 1초)
 
