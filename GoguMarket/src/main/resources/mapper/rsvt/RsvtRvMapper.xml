@@ -16,12 +16,16 @@
 	</select>
 	
 	<!-- 비즈페이지 후기 리스트 -->
-	<select id="selectReviewList" parameterType="String" resultType="com.goguma.rsvt.vo.RsvtRvVO">
+	<select id="selectReviewList" parameterType="com.goguma.biz.vo.BizSearchVO" resultType="com.goguma.rsvt.vo.RsvtRvVO">
+	SELECT * FROM(SELECT rownum rn, a.* FROM(
 		SELECT rownum, m.nick_nm, rv.rv_cn, rv.rv_ymd
 		FROM rsvt_rv rv, rsvt r, mem m 
 		WHERE rv.rsvt_no = r.rsvt_no
 			AND r.user_id = m.user_id
 			AND r.biz_no = #{bizNo}
+		<![CDATA[
+		) a WHERE rownum <= #{last} ) b WHERE rn >= #{first}
+		]]>
 	</select>
 	
 	<!-- 비즈페이지 후기리스트 카운팅 -->
