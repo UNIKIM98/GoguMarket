@@ -65,7 +65,7 @@ textarea {
 									<form id="sortFrm">
 										<ul class="nav f-right mt-10">
 											<li><a class="active" href="#popular-product"
-												data-bs-toggle="tab" name="sort"
+												data-bs-toggle="tab" name="sort" jd="current"
 												onclick="selectSnsList('current')">최근순 </a>||</li>
 											<li><a href="#special-offer" data-bs-toggle="tab"
 												name="sort" onclick="selectSnsList('view')"> &nbsp;조회순 </a></li>
@@ -92,7 +92,7 @@ textarea {
 		<div id="myModal" class="modal">
 			<!-- Modal content -->
 			<div class="modal-content" style="width: 500px;">
-			<div style="margin-left:450px;">
+				<div style="margin-left: 450px;">
 					<button style="color: black; padding: 10px; width: 50px;">x</button>
 				</div>
 				<div class="modal-body"
@@ -132,11 +132,11 @@ textarea {
 						<!--  -->
 						<input type="hidden" name="area" id="area"
 							th:value="${session.dealArea}">
-							
 
-							<button class="submit-btn-1 btn-hover-1 f-right mb-10"
-								type="submit">complete</button>
-					
+
+						<button class="submit-btn-1 btn-hover-1 f-right mb-10"
+							type="submit">complete</button>
+
 					</div>
 				</form>
 			</div>
@@ -190,103 +190,101 @@ textarea {
 
 		</div>
 		<div id="loadDiv" style="display: none"></div>
+
 		<script th:inline="javascript">
 		
 
 		let user = new Array();
 		
 			$(document).ready(function () {
-			selectSnsList()
+			
+			
+			selectSnsList() // 동네 생활 페이지 입장시 게시물을 조회
 		
 			
-		
-		
-		
 		});
 		
 			function readURL(input) { // 게시글 입력시 사진 미리보기
-				console.log('함수 입장')
-			  if (input.files && input.files[0]) {
+
+				if (input.files && input.files[0]) {
 			    var reader = new FileReader();
 			    reader.onload = function(e) {
-			      document.getElementById('preview').src = e.target.result;
+			      document.getElementById('preview').src = e.target.result; // 내가 첨부한 이미지를 넣는다.
 			    };
 			    reader.readAsDataURL(input.files[0]);
 			  } else {
-			    document.getElementById('preview').src = "";
+			    document.getElementById('preview').src ="";
 			  }
 			}
 			
 		
-		
-		function selectSnsList(sort){
 			
-			getUser();
-			
-			console.log(user)
-				formData=[];
-		
-				formData = $("#searchForm").serialize();
-			
-				console.log(formData);
+			function selectSnsList(sort){ //정렬 정보를 가지고 게시글 조회
 				
-				if(sort == 'current'){
-					
-					formData += "&current=" + sort;
-				}else{
-					formData += "&view=" + sort;
-				}
+				getUser(); // 세션 유저의 정보를 가져오는 함수
+				
+				
+					formData=[];
 			
-				console.log(formData)
-			$.ajax({
-				url : "/goguma/selectSnsList", // 데이터를 가져올 경로 설정
-				type : "GET", // 데이터를 가져오는 방식
-				data:formData,
-				dataType : 'json',
-				contentType : 'application/json; charset = utf-8',
-				success : function(result) {
-						  console.log(result)
-						  
-						  if(result == 0) {
-							  $("#list").load("/sns/noSns.html")
-						}
-						  
+					formData = $("#searchForm").serialize(); // form데이터에 검색어를 가지고온다.
+					
+					if(sort == 'current'){   // 정렬 키워드를 가지고와서 url에 붙인다.
 						
-						  
-						  $("#list").empty()
-						  
-						  for(sns of result){
-							  $("#list").append(`
-									  <div class="col-lg-4 col-md-6">
-			                            <div class="blog-item" onclick="snsModal(${sns.snsNo})" style="height:350px; width:350px;">
-			                                <img src="${sns.atchPath}" alt="" onerror="this.onerror=null; this.src='/img/logo/003.png'" style="height:350px; width:100%;">
-			                                <div class="blog-desc">
-											<h5 class="blog-title">
-												<a href="#">${sns.userId} / ${sns.snsYmd} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수:${sns.inqCnt}</a>
-												
-											</h5>
-											<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
-	            							<input type="hidden" id="userId" name="userId" value="${sns.userId}">
-											<h5 class="blog-title">
-												<a href="single-blog.html">${sns.hash}</a>
-											
-											</h5>
-											<br>
-											<h5 class="blog-title">${sns.snsCn}</h5>
-										</div>
-										</div>
-										
-			                            </div>
-			                        </div>
-							`)
-		           							 }
-											},
-						error : function(err) {
-							console.log(err);
+						formData += "&current=" + sort; //최근순
+						
+					}else{
+						
+						formData += "&view=" + sort;   //조회순
+					}
+				
+					console.log(formData)
+				$.ajax({
+					url : "/goguma/selectSnsList", 
+					type : "GET", 
+					data:formData,
+					dataType : 'json',
+					contentType : 'application/json; charset = utf-8',
+					success : function(result) {
+							  console.log(result)
+							  
+							  if(result == 0) { // 조회된 검색물이 없을떄 로드 하는 if문
+								  $("#list").load("/sns/noSns.html") 
+								}
+							  
+							 $("#list").empty() // 기존에 있던 조회물을 비우고 새로 출력
+							  
+							  for(sns of result){
+								  $("#list").append(`
+													  <div class="col-lg-4 col-md-6">
+							                            <div class="blog-item" onclick="snsModal(${sns.snsNo})" style="height:350px; width:350px;">
+							                                <img src="${sns.atchPath}" alt="" onerror="this.onerror=null; this.src='/img/logo/003.png'" style="height:350px; width:100%;">
+							                                <div class="blog-desc">
+															<h5 class="blog-title">
+																<a href="#">${sns.userId} / ${sns.snsYmd} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수:${sns.inqCnt}</a>
+																
+															</h5>
+															<input type="hidden" id="snsNo" name="snsNo" value="${sns.snsNo}">
+					            							<input type="hidden" id="userId" name="userId" value="${sns.userId}">
+															<h5 class="blog-title">
+																<a href="single-blog.html">${sns.hash}</a>
+															
+															</h5>
+															<br>
+															<h5 class="blog-title">${sns.snsCn}</h5>
+														</div>
+														</div>
+														
+							                            </div>
+							                        </div>
+													`)
+			           							 }
+												},
+							error : function(err) {
+								console.log(err);
+							}
+						})
 						}
-					})
-		}
-		
+			
 		
 		
 			</script>

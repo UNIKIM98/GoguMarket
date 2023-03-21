@@ -1,24 +1,22 @@
 
 $(document).ready(function() {
+	$("#alarmId").hide(); // 알람 표시를 감추고 있다가
 
-	setInterval(() => checkNotifyHome(), 2000);
+	setInterval(() => checkNotifyHome(), 2000); // 업데이할 시간초 / 실행 함수
 
 });
 
 
 function checkNotifyHome() {
-	console.log("새로고침");
 	$.ajax({
 		url: "/my/checkNotifyCount",
 		async: false,
 		type: 'GET',
 		success: function(data) {
-			
 			console.log(data);
+			if (data > 0) {	 // 알림이 count 되면 
+				$("#alarmId").show(); // 알림을 다시 보여줌
 			
-			if (data > 0) {
-//			$("#alarmId").text(data); //실시간 알림
-				loadNotifyHome(data);
 
 			}
 		},
@@ -27,12 +25,6 @@ function checkNotifyHome() {
 		},
 	});
 }
-
-
-		function loadNotifyHome(data) {
-			$("#alarmId").text(data);
-
-		}
 
 
 
