@@ -8,7 +8,9 @@
 </head>
 <body>
 	<div layout:fragment="myContent">
-
+	<!-- 얼럿창 커스텀 -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="tab-content">
@@ -240,7 +242,7 @@
 		//오늘 이전 날짜 선택안되게
 		var today = new Date().toISOString().split('T')[0];
 	    if (obj.value < today) {
-	    	alert("오늘 이후의 날짜만 선택해주세요")
+	    	swal('앗!','오늘 이후의 날짜만 선택해주세요', "warning");
 	    	obj.value = today;
 	    }
 			
@@ -265,10 +267,10 @@
 		
 		//0이 아닐때만 실행
 		if($('#totalSum').val() == 0){
-			alert("메뉴 수량을 확인해주세요")
+			swal('앗!',"메뉴 수량을 확인해주세요", "warning");
 			return false;
 		}else if($('#rsvtNope').val() == 0 || $('#rsvtNope').val() > 11){
-			alert("인원을 확인해주세요")
+			swal('앗!',"인원을 확인해주세요", "warning");
 			return false;
 		}else{
 			modifyAjax(rsvtNo);
@@ -287,12 +289,13 @@
 			processData : false,
             contentType : false,
             success: function(result){
-            	console.log(result);
-            	alert("예약변경이 접수되었습니다.");
-            	window.location.href="/my/myReservation";
+            	swal('완료!', "예약변경이 접수되었습니다.", 'success').then(function(){            		
+	            	window.location.href="/my/myReservation";
+            	});
             	
             }, error: function(err){
-            	alert("인서트-실패")
+            	swal('저런!', "인서트-실패", 'error');
+            	
             }
 		});
 		//form데이터 submit

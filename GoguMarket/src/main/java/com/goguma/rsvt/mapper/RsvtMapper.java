@@ -39,14 +39,9 @@ public interface RsvtMapper {
 	
 	//비즈페이지 예약리스트 조회
 	List<RsvtVO> selectBizRsvt(String bizNo);
-	
 
 	// ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저
 	void deleteAllRsvt(int rsvtNo);
-
-	//메뉴변경 insert
-//	int insertModifyMenu(RsvtUpMenuVO upVo);
-//	List<RsvtUpMenuVO> insertModifyMenu();
 	
 	//rsvt테이블 예약상태 업데이트(->예약변경)
 	int updateRsvtStts(String rsvtNo);
@@ -59,8 +54,5 @@ public interface RsvtMapper {
 	
 	//rsvt테이블 예약상태 업데이트(->예약확정)
 	int updateRsvtSttsCompl(String rsvtNo);
-
-
-	
 
 }
