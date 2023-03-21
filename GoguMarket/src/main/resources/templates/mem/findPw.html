@@ -120,7 +120,6 @@
 			// ❤️ 비밀번호 변경하기
 			function changePw(){
 				$("#pageTtl").text("비밀번호 변경");
-				console.log("changeId > "+userId);
 				$("#frmTbl").children().remove();
 				$("#frmTbl").append(
 				`
@@ -189,7 +188,6 @@
 					type : 'get',
 					success : function(result) {
 						secureRandom = result;
-						console.log(result);
 					},
 					error : function(err) {
 						alert("⚠ 이메일 전송 중 오류가 발생했습니다.")
@@ -221,8 +219,6 @@
 					url : '/goguma/checkIdEmlAjax/' + userId + '/' + eml,
 					type : 'get',
 					success : function(result) {
-						console.log(result)
-
 						afterCheckIdEmlAjax(result);
 					},
 					error : function(err) {

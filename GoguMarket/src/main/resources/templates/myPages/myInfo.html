@@ -264,7 +264,6 @@
 			    		  $("#emlBtn").val("0");
 			    		  $("#emlCk").val("");
 			    	  }
-		    	  console.log(eml);
 		      }
 
 		// ==============================================================
@@ -276,7 +275,6 @@
 			  		  success: function(result){
 			  			secureRandom = result;
 			  			alert("입력하신 이메일로 인증번호가 발송되었습니다. 이메일을 확인해주세요 :D")
-			  			  console.log(result);
 			  		  },
 			  		  error: function(err){
 			  			  console.log(err);
@@ -530,7 +528,6 @@
 					type : "post",
 					data :  userId,
 					success : function(delCnt) {
-							console.log(delCnt)
 					},
 					error : function(err){
 						alert("[삭제실패] 첨부파일 삭제 중 오류가 발생하였습니다. :(");

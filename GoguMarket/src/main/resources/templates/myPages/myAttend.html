@@ -100,9 +100,7 @@
 	// ❤️ 오늘 출석 여부 확인
 		function isAttendYn(result) {
 			let findToday = result.aList;
-					console.log(findToday)
 			for (i in findToday) {
-				console.log(i)
 				if (findToday[i].attendYmd == today) {
 					todayPoint = findToday[i].point;
 					attendYn = true;
@@ -145,7 +143,6 @@
 				dataType : 'json',
 				contentType : 'application/json; charset = utf-8',
 				success : function(aVO) {
-					console.log(aVO);
 					afterInsert(aVO);
 				},
 				error : function(err) {
@@ -157,7 +154,6 @@
 	// ==============================================================
 	// ❤️ 출석 후 포인트 알림
 		function afterInsert(aVO) {
-			console.log(aVO)
 			alert("[출석완료] " + aVO.point + " 포인트가 적립되었습니다! 🎉");
 			makeCal();
 		}
