@@ -219,9 +219,8 @@ public class DealController {
 		PrintWriter out = response.getWriter();
 
 		if (cnt > 0) {
-
 			out.println("<script language='javascript'>");
-			out.println("alert('[구매완료] 구매완료 페이지로 이동합니다.'); location.href='/my/myDeal';");
+			out.println("alert('[구매완료] 리뷰작성을 완료해주세요'); history.go(-2);");
 			out.println("</script>");
 
 			out.flush();
