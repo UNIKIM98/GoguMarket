@@ -72,7 +72,8 @@
 																<div class="name-commenter f-left">
 																	<h6 class="media-heading" th:text="${r.USER_ID}">판매자아이디자리
 																	</h6>
-																	<p style="margin-left:20px;"class="mb-10" th:text="${r.RV_YMD}"></p>
+																	<p style="margin-left:20px;"class="mb-10" 
+																	th:text="${#numbers.formatInteger(r.RV_YMD, 3, 'COMMA') + '원'}"></p>
 																</div>
 																&nbsp;&nbsp;&nbsp;
 																<div class="f-right">
