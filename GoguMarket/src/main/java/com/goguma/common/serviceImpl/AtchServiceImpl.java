@@ -51,7 +51,6 @@ public class AtchServiceImpl implements AtchService {
 				atch.setAtchId(atchId);
 				atch.setAtchNm(fileName);
 				atch.setOrgnlNm(file.getOriginalFilename());
-				atch.setExtn("jpg"); // ※ 변경해야함! 파일타입 : jpg, jpeg, img, png, gif
 				atch.setAtchSize(file.getSize());
 				atch.setAtchPath("/upload/" + fileName);
 
@@ -88,7 +87,6 @@ public class AtchServiceImpl implements AtchService {
 				atch.setAtchId(atchId);
 				atch.setAtchNm(fileName);
 				atch.setOrgnlNm(file.getOriginalFilename());
-				atch.setExtn("jpg"); // ※ 변경해야함! 파일타입 : jpg, jpeg, img, png, gif
 				atch.setAtchSize(file.getSize());
 				atch.setAtchPath("/upload/" + fileName);
 
