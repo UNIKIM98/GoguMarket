@@ -85,7 +85,6 @@
 					FROM rsvt_menu
 					WHERE rsvt_no = #{rsvtNo}
 					) subquery), '카드결제')
-
 	</insert>
 	
 	<!-- 예약목록 가져오기 -->
@@ -175,7 +174,7 @@
 	    WHERE rsvt_no = #{rsvtNo}
 	</delete>
 	
-	<!-- ❤️ 확인 후 주석 삭제해주세요 >> 예약 삭제 프로시저-->
+	<!-- 예약 삭제 프로시저-->
 	<select id="deleteAllRsvt" parameterType="int">
     { CALL p_delete_rsvt(#{value, mode=IN, jdbcType=INTEGER}) }
 	</select>
